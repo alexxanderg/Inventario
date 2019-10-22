@@ -48,6 +48,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblCreditos;
+	private JButton btnNewButton;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -166,6 +167,10 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		lblCreditos.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblCreditos.setBounds(0, 372, 597, 14);
 		contentPane.add(lblCreditos);
+		
+		btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(128, 171, 469, 184);
+		contentPane.add(btnNewButton);
 		cargar();
 	}
 	public void actionPerformed(ActionEvent e) {
