@@ -166,6 +166,10 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		lblCreditos.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblCreditos.setBounds(0, 372, 597, 14);
 		contentPane.add(lblCreditos);
+		
+		JButton btnBotonDePrueba = new JButton("boton de prueba");
+		btnBotonDePrueba.setBounds(477, 230, 106, 85);
+		contentPane.add(btnBotonDePrueba);
 		cargar();
 	}
 	public void actionPerformed(ActionEvent e) {
