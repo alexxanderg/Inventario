@@ -130,6 +130,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbProductos;
 		tb.setModel(dtm);
+		tbProductos.setRowHeight(30);
 		dtm.setColumnIdentifiers(new Object[]{"Codigo", "Producto", "Detalle", "Uni. Medida", "Cantidad","PrecioVenta","PrecioComp"});
 		consultas model = new consultas();
 		rs = model.cargarProductos();
