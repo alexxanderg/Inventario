@@ -93,7 +93,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		usuario = temp2;
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1096, 778);
+		setBounds(100, 100, 1096, 710);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -133,7 +133,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		contentPane.add(lblCdigo);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 278, 1061, 450);
+		scrollPane.setBounds(10, 278, 1061, 382);
 		contentPane.add(scrollPane);
 
 		tbProductos = new JTable();
@@ -244,7 +244,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		try {
 			while (rs.next()) {
 				// ac.addItem(rs.getString("codproducto"));
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("producto") + "_" + rs.getString("codproducto"));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -258,8 +258,8 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(11)); // Codigo
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(30)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(45)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(8)); // Uni Med
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(6)); // Stock
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // PrecioCompra

@@ -71,7 +71,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where producto = '" + prod + "' and detalles = '" + det + "'" );
+			rs = st.executeQuery("select * from tb_productos where producto = '" + prod + "' and codproducto = '" + det + "'" );
 		} catch (Exception e) {
 		}
 		return rs;

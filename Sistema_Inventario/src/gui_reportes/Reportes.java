@@ -87,6 +87,9 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	Ventas v;
 	private JButton btngenerarReporteVentas;
 	private JComboBox <Usuarios> cbUsuarios;
+	private JLabel lblsegnCodigoDe;
+	private JTextField txtIdenificador;
+	private JButton btnAlmacen;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -169,7 +172,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblVerTotalDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		btnGenerarMenores = new JButton("Crear");
-		btnGenerarMenores.setBounds(1033, 174, 146, 35);
+		btnGenerarMenores.setBounds(1033, 158, 146, 35);
 		btnGenerarMenores.addActionListener(this);
 		btnGenerarMenores.setForeground(new Color(255, 255, 255));
 		btnGenerarMenores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -215,7 +218,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 				textField_3.setEditable(false);
 				textField_3.setColumns(10);
 				textField_3.setBackground(Color.DARK_GRAY);
-				textField_3.setBounds(635, 314, 618, 18);
+				textField_3.setBounds(635, 351, 618, 18);
 				contentPane.add(textField_3);
 		contentPane.add(btnCerrar);
 		contentPane.add(lblVer);
@@ -231,12 +234,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblVerProductos = new JLabel("<html>Ver productos con<br> stock menor a: </html>");
 		lblVerProductos.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductos.setBounds(680, 158, 242, 51);
+		lblVerProductos.setBounds(680, 142, 242, 51);
 		contentPane.add(lblVerProductos);
 
 		lblVerProductosMayores = new JLabel("<html>Ver productos con<br>stock mayor a: </html>");
 		lblVerProductosMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductosMayores.setBounds(680, 220, 242, 51);
+		lblVerProductosMayores.setBounds(680, 204, 242, 51);
 		contentPane.add(lblVerProductosMayores);
 
 		txtCrearReportes = new JTextField();
@@ -259,7 +262,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtMenores.setBackground(SystemColor.controlHighlight);
 		txtMenores.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		txtMenores.setBounds(933, 175, 95, 34);
+		txtMenores.setBounds(933, 159, 95, 34);
 		contentPane.add(txtMenores);
 		txtMenores.setColumns(10);
 
@@ -269,7 +272,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMayores.setBackground(SystemColor.controlHighlight);
 		txtMayores.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtMayores.setColumns(10);
-		txtMayores.setBounds(933, 236, 95, 35);
+		txtMayores.setBounds(933, 220, 95, 35);
 		contentPane.add(txtMayores);
 
 		btnGenerarMayores = new JButton("Crear");
@@ -277,7 +280,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnGenerarMayores.setForeground(Color.WHITE);
 		btnGenerarMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		btnGenerarMayores.setBackground(new Color(30, 144, 255));
-		btnGenerarMayores.setBounds(1033, 236, 146, 35);
+		btnGenerarMayores.setBounds(1033, 220, 146, 35);
 		contentPane.add(btnGenerarMayores);
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
@@ -288,44 +291,47 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia<br>de ticket de venta</html>");
 		lblImprimirCopiaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImprimirCopiaDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
-		lblImprimirCopiaDe.setBounds(736, 365, 507, 78);
+		lblImprimirCopiaDe.setBounds(746, 380, 507, 78);
 		contentPane.add(lblImprimirCopiaDe);
 
 		lblNCopias = new JLabel("Cantidad de copias:");
 		lblNCopias.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNCopias.setBounds(680, 475, 192, 30);
+		lblNCopias.setBounds(690, 490, 192, 30);
 		contentPane.add(lblNCopias);
 
 		txtNCopias = new JTextField();
+		txtNCopias.setEnabled(false);
 		txtNCopias.setText("1");
 		txtNCopias.addKeyListener(this);
 		txtNCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNCopias.setColumns(10);
 		txtNCopias.setBackground(SystemColor.controlHighlight);
-		txtNCopias.setBounds(882, 470, 146, 35);
+		txtNCopias.setBounds(892, 485, 146, 35);
 		contentPane.add(txtNCopias);
 
 		btnImprimir = new JButton("IMPRIMIR");
+		btnImprimir.setEnabled(false);
 		btnImprimir.addActionListener(this);
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		btnImprimir.setBackground(new Color(30, 144, 255));
-		btnImprimir.setBounds(1033, 467, 166, 91);
+		btnImprimir.setBounds(1043, 482, 166, 91);
 		contentPane.add(btnImprimir);
 
 		txtNVentaCopia = new JTextField();
+		txtNVentaCopia.setEnabled(false);
 		txtNVentaCopia.addKeyListener(this);
 		txtNVentaCopia.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVentaCopia.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVentaCopia.setColumns(10);
 		txtNVentaCopia.setBackground(SystemColor.controlHighlight);
-		txtNVentaCopia.setBounds(882, 523, 146, 35);
+		txtNVentaCopia.setBounds(892, 538, 146, 35);
 		contentPane.add(txtNVentaCopia);
 
 		lblNVenta = new JLabel("Ticket de venta N\u00B0:");
 		lblNVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNVenta.setBounds(680, 528, 192, 30);
+		lblNVenta.setBounds(690, 543, 192, 30);
 		contentPane.add(lblNVenta);
 		
 		btngenerarReporteVentas = new JButton("<html>VER\u00A0VENTAS<br>\u00A0Y DETALLES</html>");
@@ -343,7 +349,29 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setBounds(169, 136, 285, 33);
 		contentPane.add(cbUsuarios);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
+		
+		lblsegnCodigoDe = new JLabel("<html>Seg\u00FAn c\u00F3digo de almac\u00E9n </html>");
+		lblsegnCodigoDe.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblsegnCodigoDe.setBounds(680, 266, 242, 51);
+		contentPane.add(lblsegnCodigoDe);
+		
+		txtIdenificador = new JTextField();
+		txtIdenificador.addKeyListener(this);
+		txtIdenificador.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtIdenificador.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		txtIdenificador.setColumns(10);
+		txtIdenificador.setBackground(SystemColor.controlHighlight);
+		txtIdenificador.setBounds(933, 282, 95, 35);
+		contentPane.add(txtIdenificador);
+		
+		btnAlmacen = new JButton("Crear");
+		btnAlmacen.addActionListener(this);
+		btnAlmacen.setForeground(Color.WHITE);
+		btnAlmacen.setFont(new Font("Dialog", Font.BOLD, 25));
+		btnAlmacen.setBackground(new Color(30, 144, 255));
+		btnAlmacen.setBounds(1033, 282, 146, 35);
+		contentPane.add(btnAlmacen);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtIdenificador, btnAlmacen, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
 		cargar();
@@ -359,6 +387,9 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnAlmacen) {
+			actionPerformedBtnAlmacen(arg0);
+		}
 		if (arg0.getSource() == btnImprimir) {
 			actionPerformedBtnImprimir(arg0);
 		}
@@ -605,6 +636,9 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	}
 
 	public void keyTyped(KeyEvent arg0) {
+		if (arg0.getSource() == txtIdenificador) {
+			keyTypedTxtIdenificador(arg0);
+		}
 		if (arg0.getSource() == txtNCopias) {
 			keyTypedTxtNCopias(arg0);
 		}
@@ -712,4 +746,30 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		}
 	}
 	
+	protected void actionPerformedBtnAlmacen(ActionEvent arg0) {
+		if (txtIdenificador.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Llene el campo correctamente");
+		else {
+			Connection con = null;
+			try {
+				con = MySQLConexion.getConection();
+				String identificador = txtIdenificador.getText() + "%";
+				
+				Map<String, Object> parameters = new HashMap();
+				parameters.put("prtIdentificador", identificador);
+				new AbstractJasperReports().createReport(con, "rCardexAlmacen.jasper", parameters);
+				AbstractJasperReports.showViewer();
+				con.close();
+				txtIdenificador.setText(null);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "No se encontraron productos " + e);
+			}
+		}
+	}
+	protected void keyTypedTxtIdenificador(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER) {
+			actionPerformedBtnAlmacen(null);
+		}		
+	}
 }

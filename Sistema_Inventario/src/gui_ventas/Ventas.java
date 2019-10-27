@@ -301,6 +301,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblNombreDeCliente);
 
 		txtCopias = new JTextField();
+		txtCopias.setEditable(false);
 		txtCopias.addKeyListener(this);
 		txtCopias.setText("0");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -510,7 +511,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void cargar() {
-		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		if (nventana == 1)
 			txtVentaDeProductos.setText("VENTA DE PRODUTOS");
@@ -525,7 +526,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				// ac.addItem(rs.getString("codproducto")); //codigo de barras
 				// ac.addItem(rs.getString("producto") + "("+
 				// rs.getString("cantidad") + ")");
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("producto") + "_" + rs.getString("codproducto"));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -543,8 +544,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbCompras.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(4)); // Cantidad
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(37)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(52)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Stock
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Precio
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // SubTotal

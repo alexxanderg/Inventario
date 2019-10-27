@@ -233,13 +233,11 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		
 		/*Trae la informacion de producto y detalle a sus respectivos textfield*/		
 		ac = new TextAutoCompleter(txtProducto);
-		ac1 = new TextAutoCompleter(txtDeta);
 		consultas model1 = new consultas();
 		ResultSet rs1 = model1.cargarProductos( );
 		try {
 			while (rs1.next()) {
 				ac.addItem(rs1.getString("producto"));
-				ac1.addItem(rs1.getString("detalles"));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -280,7 +278,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		int rs = 0;
 		try {
 			if (txtCodigo.getText().length() == 0 || txtProducto.getText().length() == 0
-					|| txtDeta.getText().length() == 0 || txtCantidad.getText().length() == 0
+					|| txtCantidad.getText().length() == 0
 					|| txtPreComInd.getText().length() == 0 || txtPrecioVenInd.getText().length() == 0
 					|| cbUMedida.getSelectedIndex() == -1) {
 				this.setAlwaysOnTop(false);
