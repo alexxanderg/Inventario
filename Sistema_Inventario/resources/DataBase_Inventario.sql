@@ -42,6 +42,18 @@ foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
 );
 
+create table tb_ingreso_productos(
+	 coding int primary key auto_increment,
+	 codproducto varchar(40),
+	 Cantidad float,
+	 precioCo float,
+	 precioVe float,
+	 fechaingreso datetime,
+	 usuario varchar(20),
+     foreign key(codproducto) references tb_productos(codproducto),
+     foreign key(usuario) references tb_usuarios(usuario)
+);
+
 -- Usuarios de prueba
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);
 insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0);
