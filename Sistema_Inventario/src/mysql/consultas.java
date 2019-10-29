@@ -144,6 +144,28 @@ public class consultas {
 		return rs;
 	}
 	
+	public int registrarFechaIngreso(String cod, float cant,float precioCo,float precioVe,java.sql.Date fechaingreso,String usuario){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_ingreso_productos (codproducto,cantidad,precioCo,precioVe,fechaingreso,usuario" + " values ( ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, cod);
+			prepareStmt.setFloat(2, cant);
+			prepareStmt.setFloat(3, precioCo);
+			prepareStmt.setFloat(4, precioVe);
+			prepareStmt.setDate(5, fechaingreso);
+			prepareStmt.setString(6, usuario);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al añadir stock: " + e);
+		}
+		return 0;
+	}
+	
 	public ResultSet eliminarProducto(String cod, String nom){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;

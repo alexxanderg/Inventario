@@ -1008,7 +1008,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(null, this);
+		NuevoProducto np = new NuevoProducto(null, this,null);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
 		this.setEnabled(false);

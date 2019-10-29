@@ -283,7 +283,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	protected void actionPerformedBtnAgregar(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(this, null);
+		NuevoProducto np = new NuevoProducto(this, null,null);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
 		this.setEnabled(false);

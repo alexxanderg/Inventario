@@ -19,6 +19,7 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -54,12 +55,13 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 	MantenimientoProductos inv;
 	consultas model = new consultas();
 	Ventas v;
+	String usuario;
 	private JTextField txtNuevoProducto;
 	private JTextField txtDeta;
 
 	public static void main(String[] args) {
 		try {
-			NuevoProducto dialog = new NuevoProducto(null, null);
+			NuevoProducto dialog = new NuevoProducto(null, null,null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -67,9 +69,10 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		}
 	}
 
-	public NuevoProducto(MantenimientoProductos temp2, Ventas temp3) {
+	public NuevoProducto(MantenimientoProductos temp2, Ventas temp3,String temp4) {
 		inv = temp2;
 		v = temp3;
+		usuario = temp4;
 		setAlwaysOnTop(true);
 		setBounds(100, 100, 526, 569);
 		getContentPane().setLayout(null);
@@ -295,6 +298,12 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 				rs = model.ingresarProducto(txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(),
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),
 						Float.parseFloat("" + pc), Float.parseFloat("" + pv));
+				
+				java.sql.Date date = (java.sql.Date) new Date();
+				date.getTime();
+				
+				rs = model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv), date, usuario);
+				
 				if (rs == 0) {
 					if (inv != null) {
 						inv.cargarDatos();
