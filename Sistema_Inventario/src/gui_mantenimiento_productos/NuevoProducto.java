@@ -299,10 +299,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),
 						Float.parseFloat("" + pc), Float.parseFloat("" + pv));
 				
-				java.sql.Date date = (java.sql.Date) new Date();
-				date.getTime();
-				
-				rs = model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv), date, usuario);
+				rs = model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv), usuario);
 				
 				if (rs == 0) {
 					if (inv != null) {
@@ -328,7 +325,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 					JOptionPane.showMessageDialog(null, "Ya existe producto con este código");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
+			JOptionPane.showMessageDialog(null, "Error al registrar ingreso: "+e);
 		}
 	}
 

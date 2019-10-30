@@ -144,20 +144,23 @@ public class consultas {
 		return rs;
 	}
 	
-	public int registrarFechaIngreso(String cod, float cant,float precioCo,float precioVe,java.sql.Date fechaingreso,String usuario){
+	public int registrarFechaIngreso(String cod, float cant,float precioCo,float precioVe,String usuario){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		
+		java.util.Date date = new Date();
+		Object date2 = new java.sql.Timestamp(date.getTime());
+		
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ingreso_productos (codproducto,cantidad,precioCo,precioVe,fechaingreso,usuario" + " values ( ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ingreso_productos (codproducto,cantidad,precioCo,precioVe,fechaingreso,nombreusu)" + " values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);
 			prepareStmt.setFloat(2, cant);
 			prepareStmt.setFloat(3, precioCo);
 			prepareStmt.setFloat(4, precioVe);
-			prepareStmt.setDate(5, fechaingreso);
+			prepareStmt.setObject(5, date2);
 			prepareStmt.setString(6, usuario);
 			prepareStmt.execute();
 		} catch (Exception e) {
@@ -166,7 +169,7 @@ public class consultas {
 		return 0;
 	}
 	
-	public ResultSet eliminarProducto(String cod, String nom){
+	public ResultSet eliminarProducto(String cod, String nom){ 
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;

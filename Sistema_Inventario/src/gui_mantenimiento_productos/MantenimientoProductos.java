@@ -283,7 +283,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	protected void actionPerformedBtnAgregar(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(this, null,null);
+		NuevoProducto np = new NuevoProducto(this, null,usuario);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
 		this.setEnabled(false);
@@ -479,8 +479,10 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		try {
 			String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
+			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
 
-			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, this);
+			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto,preciocoProducto,preciovePoducto,this,usuario);
 			as.setVisible(true);
 			this.setEnabled(false);
 		} catch (Exception e) {

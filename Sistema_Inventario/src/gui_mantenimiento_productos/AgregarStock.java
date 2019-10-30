@@ -23,11 +23,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowListener;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.awt.event.WindowEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
 
 public class AgregarStock extends JDialog implements ActionListener, WindowListener {
 	private JLabel lblStockActual;
@@ -36,18 +39,29 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JTextField txtCantidadAdicinal;
 	private JButton btnGuardar;
 
+	String usuario;
 	String cod;
 	String cantActual;
+	String precioCo;
+	String precioVe;
 	MantenimientoProductos mp;
 	consultas model = new consultas();
 	ResultSet rs;
 	private JTextField txtAgregarStock;
+	private JLabel lblPrecioCompra;
+	private JLabel lblPrecioVenta;
+	private JLabel lblFechaDeIngreso;
+	private JTextField txtPrecioCompra;
+	private JTextField txtPrecioVenta;
+	private JDateChooser fecha_ingreso;
+	private JCheckBox chckbxNotaAlSeleccionar;
+	private JCheckBox chckbxnotaAlSeleccionar;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			AgregarStock dialog = new AgregarStock(null, null, null);
+			AgregarStock dialog = new AgregarStock(null, null,null,null, null,null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -55,16 +69,16 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public AgregarStock(String temp, String temp2, MantenimientoProductos temp3) {
+	public AgregarStock(String temp, String temp2, String temp5, String temp6, MantenimientoProductos temp3, String temp4) {
 		addWindowListener(this);
 		cod = temp;
 		cantActual = temp2;
 		mp = temp3;
+		usuario = temp4;
+		precioCo = temp5;
+		precioVe = temp6;
 		setResizable(false);
-		setBounds(100, 100, 560, 265);
+		setBounds(100, 100, 560, 481);
 		getContentPane().setLayout(null);
 		
 		lblStockActual = new JLabel("Stock actual:");
@@ -113,7 +127,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		btnGuardar.setForeground(SystemColor.menu);
 		btnGuardar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnGuardar.setBackground(new Color(30, 144, 255));
-		btnGuardar.setBounds(0, 181, 554, 55);
+		btnGuardar.setBounds(0, 397, 554, 55);
 		getContentPane().add(btnGuardar);
 		
 		txtAgregarStock = new JTextField();
@@ -130,6 +144,70 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		txtAgregarStock.setBackground(Color.DARK_GRAY);
 		txtAgregarStock.setBounds(0, 0, 554, 58);
 		getContentPane().add(txtAgregarStock);
+		
+		this.lblPrecioCompra = new JLabel("Precio Compra:");
+		this.lblPrecioCompra.setVerticalAlignment(SwingConstants.BOTTOM);
+		this.lblPrecioCompra.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblPrecioCompra.setForeground(Color.BLACK);
+		this.lblPrecioCompra.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
+		this.lblPrecioCompra.setBounds(40, 162, 271, 38);
+		getContentPane().add(this.lblPrecioCompra);
+		
+		this.lblPrecioVenta = new JLabel("Precio Venta:");
+		this.lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
+		this.lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblPrecioVenta.setForeground(Color.BLACK);
+		this.lblPrecioVenta.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
+		this.lblPrecioVenta.setBounds(40, 255, 271, 38);
+		getContentPane().add(this.lblPrecioVenta);
+		
+		this.lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
+		this.lblFechaDeIngreso.setVerticalAlignment(SwingConstants.BOTTOM);
+		this.lblFechaDeIngreso.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblFechaDeIngreso.setForeground(Color.BLACK);
+		this.lblFechaDeIngreso.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
+		this.lblFechaDeIngreso.setBounds(40, 348, 271, 38);
+		getContentPane().add(this.lblFechaDeIngreso);
+		
+		this.txtPrecioCompra = new JTextField();
+		this.txtPrecioCompra.setText("<dynamic>");
+		this.txtPrecioCompra.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.txtPrecioCompra.setForeground(SystemColor.windowBorder);
+		this.txtPrecioCompra.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		this.txtPrecioCompra.setEditable(false);
+		this.txtPrecioCompra.setColumns(10);
+		this.txtPrecioCompra.setBackground(SystemColor.controlHighlight);
+		this.txtPrecioCompra.setBounds(321, 175, 166, 25);
+		getContentPane().add(this.txtPrecioCompra);
+		
+		this.txtPrecioVenta = new JTextField();
+		this.txtPrecioVenta.setText("<dynamic>");
+		this.txtPrecioVenta.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.txtPrecioVenta.setForeground(SystemColor.windowBorder);
+		this.txtPrecioVenta.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		this.txtPrecioVenta.setEditable(false);
+		this.txtPrecioVenta.setColumns(10);
+		this.txtPrecioVenta.setBackground(SystemColor.controlHighlight);
+		this.txtPrecioVenta.setBounds(321, 267, 166, 25);
+		getContentPane().add(this.txtPrecioVenta);
+		
+		this.fecha_ingreso = new JDateChooser();
+		this.fecha_ingreso.setBounds(321, 366, 166, 20);
+		getContentPane().add(this.fecha_ingreso);
+		
+		this.chckbxNotaAlSeleccionar = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Compra a la base de datos</left></html");
+		this.chckbxNotaAlSeleccionar.setVerticalAlignment(SwingConstants.TOP);
+		this.chckbxNotaAlSeleccionar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.chckbxNotaAlSeleccionar.setForeground(Color.RED);
+		this.chckbxNotaAlSeleccionar.setBounds(40, 198, 271, 61);
+		getContentPane().add(this.chckbxNotaAlSeleccionar);
+		
+		this.chckbxnotaAlSeleccionar = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Venta a la base de datos</left></html");
+		this.chckbxnotaAlSeleccionar.setVerticalAlignment(SwingConstants.TOP);
+		this.chckbxnotaAlSeleccionar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.chckbxnotaAlSeleccionar.setForeground(Color.RED);
+		this.chckbxnotaAlSeleccionar.setBounds(40, 300, 271, 55);
+		getContentPane().add(this.chckbxnotaAlSeleccionar);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidadAdicinal, btnGuardar}));
 		cargar();
 	}
@@ -162,6 +240,12 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	public void cargar(){
 		this.setLocationRelativeTo(null);
 		txtStockActual.setText(cantActual);
+		txtPrecioCompra.setText(precioCo);
+		txtPrecioVenta.setText(precioVe);
+		
+		java.util.Date date = new Date();
+		date.getTime();
+		fecha_ingreso.setDate(date);
 	}
 	
 	protected void actionPerformedBtnGuardar(ActionEvent arg0) {
