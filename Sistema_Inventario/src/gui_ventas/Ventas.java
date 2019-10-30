@@ -1076,9 +1076,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 	protected void mouseClickedTbCompras(MouseEvent arg0) {
 		try {
-			String producto = tbCompras.getValueAt(tbCompras.getSelectedRow(), 1).toString() + " "
-					+ tbCompras.getValueAt(tbCompras.getSelectedRow(), 2).toString();
-			;
+			String producto = tbCompras.getValueAt(tbCompras.getSelectedRow(), 1).toString().toString();
 			String cantidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString();
 			String preUnidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 4).toString();
 			String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
