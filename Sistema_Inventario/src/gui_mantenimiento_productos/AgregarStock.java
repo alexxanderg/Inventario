@@ -31,6 +31,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AgregarStock extends JDialog implements ActionListener, WindowListener {
 	private JLabel lblStockActual;
@@ -54,8 +56,8 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JTextField txtPrecioCompra;
 	private JTextField txtPrecioVenta;
 	private JDateChooser fecha_ingreso;
-	private JCheckBox chckbxNotaAlSeleccionar;
-	private JCheckBox chckbxnotaAlSeleccionar;
+	private JCheckBox chckbxPC;
+	private JCheckBox chckbxPV;
 	/**
 	 * Launch the application.
 	 */
@@ -195,19 +197,31 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.fecha_ingreso.setBounds(321, 366, 166, 20);
 		getContentPane().add(this.fecha_ingreso);
 		
-		this.chckbxNotaAlSeleccionar = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Compra a la base de datos</left></html");
-		this.chckbxNotaAlSeleccionar.setVerticalAlignment(SwingConstants.TOP);
-		this.chckbxNotaAlSeleccionar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		this.chckbxNotaAlSeleccionar.setForeground(Color.RED);
-		this.chckbxNotaAlSeleccionar.setBounds(40, 198, 271, 61);
-		getContentPane().add(this.chckbxNotaAlSeleccionar);
+		this.chckbxPC = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Compra a la base de datos</left></html");
+		this.chckbxPC.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedChckbxPC(arg0);
+			}
+		});
+		this.chckbxPC.setVerticalAlignment(SwingConstants.TOP);
+		this.chckbxPC.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.chckbxPC.setForeground(Color.RED);
+		this.chckbxPC.setBounds(40, 198, 271, 61);
+		getContentPane().add(this.chckbxPC);
 		
-		this.chckbxnotaAlSeleccionar = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Venta a la base de datos</left></html");
-		this.chckbxnotaAlSeleccionar.setVerticalAlignment(SwingConstants.TOP);
-		this.chckbxnotaAlSeleccionar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		this.chckbxnotaAlSeleccionar.setForeground(Color.RED);
-		this.chckbxnotaAlSeleccionar.setBounds(40, 300, 271, 55);
-		getContentPane().add(this.chckbxnotaAlSeleccionar);
+		this.chckbxPV = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Venta a la base de datos</left></html");
+		this.chckbxPV.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedChckbxPV(e);
+			}
+		});
+		this.chckbxPV.setVerticalAlignment(SwingConstants.TOP);
+		this.chckbxPV.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.chckbxPV.setForeground(Color.RED);
+		this.chckbxPV.setBounds(40, 300, 271, 55);
+		getContentPane().add(this.chckbxPV);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidadAdicinal, btnGuardar}));
 		cargar();
 	}
@@ -248,7 +262,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		fecha_ingreso.setDate(date);
 	}
 	
-	protected void actionPerformedBtnGuardar(ActionEvent arg0) {
+	public void actualizar_ingresar(){
 		try {
 			float ci = Float.parseFloat(cantActual);
 			float ca = Float.parseFloat(txtCantidadAdicinal.getText());
@@ -256,7 +270,19 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 			if(ca <= 0)
 				JOptionPane.showMessageDialog(null, "Ingrese un numero mayor a cero");
 			else{
+				float pc = Float.parseFloat(txtPrecioCompra.getText());
+				float pv = Float.parseFloat(txtPrecioVenta.getText());
+				
+				//Cambio de utils a sql.Date para envio
+				Date  date = fecha_ingreso.getDate();
+				long d = date.getTime();
+				Object date2 = new java.sql.Timestamp(d);
+				
+				//Consultas
 				model.ingresarStock(cod, total);
+				model.registrarFechaIngreso(cod, total, pc, pv, date2, usuario);
+				model.modificarPC_PV(cod, pc, pv);
+				
 				mp.setEnabled(true);
 				mp.cargarDatos();
 				mp.selecionarProducto(cod);
@@ -267,6 +293,10 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
 		}
+	}
+	
+	protected void actionPerformedBtnGuardar(ActionEvent arg0) {
+		actualizar_ingresar();
 		
 	}
 	protected void keyTypedTxtCantidadAdicinal(KeyEvent arg0) {
@@ -280,6 +310,20 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		}
 		if (c == '.' && txtCantidadAdicinal.getText().contains(".")) {
 			arg0.consume();
+		}
+	}
+	protected void mouseClickedChckbxPC(MouseEvent arg0) {
+		if (chckbxPC.isSelected()) {
+			txtPrecioCompra.setEditable(true);
+		}else {
+			txtPrecioCompra.setEditable(false);
+		}
+	}
+	protected void mouseClickedChckbxPV(MouseEvent e) {
+		if (chckbxPV.isSelected()) {
+			txtPrecioVenta.setEditable(true);
+		}else {
+			txtPrecioVenta.setEditable(false);
 		}
 	}
 }

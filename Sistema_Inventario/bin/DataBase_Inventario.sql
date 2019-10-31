@@ -45,13 +45,12 @@ primary key (codventa, codproducto)
 create table tb_ingreso_productos(
 	 coding int primary key auto_increment,
 	 codproducto varchar(40),
-	 Cantidad float,
+	 cantidad float,
 	 precioCo float,
 	 precioVe float,
 	 fechaingreso datetime,
-	 usuario varchar(20),
-     foreign key(codproducto) references tb_productos(codproducto),
-     foreign key(usuario) references tb_usuarios(usuario)
+	 nombreusu varchar(50),
+     foreign key(codproducto) references tb_productos(codproducto)
 );
 
 -- Usuarios de prueba

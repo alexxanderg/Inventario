@@ -126,6 +126,25 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet modificarPC_PV(String cod, float prec, float prev){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set precioCo=?, precioVe=? where codproducto=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setFloat(1, prec);
+			prepareStmt.setFloat(2, prev);
+			prepareStmt.setString(3, cod);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	
 	public ResultSet ingresarStock(String cod, float cant){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -144,13 +163,13 @@ public class consultas {
 		return rs;
 	}
 	
-	public int registrarFechaIngreso(String cod, float cant,float precioCo,float precioVe,String usuario){
+	public int registrarFechaIngreso(String cod, float cant,float precioCo,float precioVe,Object date2,String usuario){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		
 		java.util.Date date = new Date();
-		Object date2 = new java.sql.Timestamp(date.getTime());
+		//Object date2 = new java.sql.Timestamp(date.getTime());
 		
 		try {
 			st = con.createStatement();
@@ -168,6 +187,7 @@ public class consultas {
 		}
 		return 0;
 	}
+	
 	
 	public ResultSet eliminarProducto(String cod, String nom){ 
 		Connection con = MySQLConexion.getConection();

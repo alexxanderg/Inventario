@@ -299,7 +299,10 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),
 						Float.parseFloat("" + pc), Float.parseFloat("" + pv));
 				
-				rs = model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv), usuario);
+				java.util.Date date = new Date();
+				Object date2 = new java.sql.Timestamp(date.getTime());
+				//Date date2 = new java.sql.Date(date.getTime());
+				rs = model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv),date2, usuario);
 				
 				if (rs == 0) {
 					if (inv != null) {
