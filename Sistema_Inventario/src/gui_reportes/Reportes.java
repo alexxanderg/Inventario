@@ -87,6 +87,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	Ventas v;
 	private JButton btngenerarReporteVentas;
 	private JComboBox <Usuarios> cbUsuarios;
+	private JButton btnVerProductosIngresados;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -114,7 +115,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		setContentPane(contentPane);
 
 		btnGenerarRVD = new JButton("<html>VER SOLO VENTAS</html>");
-		btnGenerarRVD.setBounds(25, 391, 260, 62);
+		btnGenerarRVD.setBounds(25, 363, 260, 62);
 		btnGenerarRVD.setForeground(new Color(255, 255, 255));
 		btnGenerarRVD.setBackground(new Color(30, 144, 255));
 		btnGenerarRVD.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
@@ -128,15 +129,15 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnCerrar.addActionListener(this);
 
 		lblVer = new JLabel("VENTAS REALIZADAS POR:");
-		lblVer.setBounds(25, 93, 574, 32);
+		lblVer.setBounds(25, 63, 574, 32);
 		lblVer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVer.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		calendar = new JCalendar();
-		calendar.setBounds(25, 180, 260, 200);
+		calendar.setBounds(25, 152, 260, 200);
 
 		calendar_1 = new JCalendar();
-		calendar_1.setBounds(339, 180, 260, 200);
+		calendar_1.setBounds(339, 152, 260, 200);
 
 		lblAl = new JLabel("al:");
 		lblAl.setBounds(286, 294, 55, 38);
@@ -144,20 +145,20 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblAl.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 
 		lblVerDetalleDe = new JLabel("DETALLE DE VENTA");
-		lblVerDetalleDe.setBounds(25, 494, 574, 38);
+		lblVerDetalleDe.setBounds(25, 520, 574, 38);
 		lblVerDetalleDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerDetalleDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		txtNVenta = new JTextField();
 		txtNVenta.addKeyListener(this);
-		txtNVenta.setBounds(251, 559, 161, 34);
+		txtNVenta.setBounds(251, 572, 161, 34);
 		txtNVenta.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVenta.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVenta.setColumns(10);
 		txtNVenta.setBackground(SystemColor.controlHighlight);
 
 		btnGenerarRVDetallada = new JButton("Crear");
-		btnGenerarRVDetallada.setBounds(417, 558, 141, 35);
+		btnGenerarRVDetallada.setBounds(417, 572, 141, 35);
 		btnGenerarRVDetallada.addActionListener(this);
 		btnGenerarRVDetallada.setForeground(new Color(255, 255, 255));
 		btnGenerarRVDetallada.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -201,7 +202,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 						textField_1.setEditable(false);
 						textField_1.setColumns(10);
 						textField_1.setBackground(Color.DARK_GRAY);
-						textField_1.setBounds(0, 475, 619, 18);
+						textField_1.setBounds(0, 491, 619, 18);
 						contentPane.add(textField_1);
 		
 				textField_3 = new JTextField();
@@ -282,7 +283,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
 		lblNmeroDeVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNmeroDeVenta.setBounds(64, 563, 192, 30);
+		lblNmeroDeVenta.setBounds(49, 572, 192, 30);
 		contentPane.add(lblNmeroDeVenta);
 
 		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia<br>de ticket de venta</html>");
@@ -337,12 +338,24 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btngenerarReporteVentas.setForeground(Color.WHITE);
 		btngenerarReporteVentas.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
-		btngenerarReporteVentas.setBounds(339, 391, 260, 62);
+		btngenerarReporteVentas.setBounds(339, 363, 260, 62);
 		contentPane.add(btngenerarReporteVentas);
 		
 		cbUsuarios = new JComboBox();
-		cbUsuarios.setBounds(169, 136, 285, 33);
+		cbUsuarios.setBounds(167, 106, 285, 33);
 		contentPane.add(cbUsuarios);
+		
+		this.btnVerProductosIngresados = new JButton("Ver productos ingresados en esas fechas");
+		this.btnVerProductosIngresados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnVerProductosIngresados(arg0);
+			}
+		});
+		this.btnVerProductosIngresados.setForeground(Color.WHITE);
+		this.btnVerProductosIngresados.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
+		this.btnVerProductosIngresados.setBounds(25, 436, 574, 38);
+		this.contentPane.add(this.btnVerProductosIngresados);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
@@ -711,5 +724,33 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 			}
 		}
 	}
-	
+	protected void actionPerformedBtnVerProductosIngresados(ActionEvent arg0) {
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+			String usu = cbUsuarios.getSelectedItem().toString();
+
+			int añoi = calendar.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+			int añof = calendar_1.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			Map parameters = new HashMap();
+			parameters.put("prtFechaI", fechai);
+			parameters.put("prmtFechaF", fechaf);
+
+			/*new AbstractJasperReports().createReport(con, "rVentas.jasper", parameters);
+			AbstractJasperReports.showViewer();*/
+			new AbstractJasperReports().createReport(con, "rFechaIngreso.jasper", parameters);
+			AbstractJasperReports.showViewer();
+			con.close();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		}
+	}
 }

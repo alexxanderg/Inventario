@@ -68,6 +68,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 	MantenimientoProductos mp;
 	EleccionVentanas el;
 	private JTextField txtModificarProducto;
+	private JLabel label;
 	
 	public static void main(String[] args) {
 		try {
@@ -90,7 +91,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		mp = temp7;
 		
 		addWindowListener(this);
-		setBounds(100, 100, 526, 611);
+		setBounds(100, 100, 526, 683);
 		getContentPane().setLayout(null);
 		setResizable(false);
 		setAlwaysOnTop(true);
@@ -205,7 +206,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		btnModificar.setForeground(SystemColor.menu);
 		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(0, 529, 520, 55);
+		btnModificar.setBounds(0, 599, 520, 55);
 		getContentPane().add(btnModificar);
 		
 		lblUMedida = new JLabel("U. MEDIDA:");
@@ -236,6 +237,13 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtModificarProducto.setBackground(Color.DARK_GRAY);
 		txtModificarProducto.setBounds(0, 0, 520, 58);
 		getContentPane().add(txtModificarProducto);
+		
+		this.label = new JLabel("<html>ATENCI\u00D3N: Si modifica aqu\u00ED su Stock(cantidad), no ser\u00E1 registrado en los reportes<br>ya que se considera como una correci\u00F3n solamente.<br>Para  hacerlo debe ir al bot\u00F3n: AGREGAR STOCK</html>");
+		this.label.setHorizontalAlignment(SwingConstants.CENTER);
+		this.label.setForeground(Color.RED);
+		this.label.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		this.label.setBounds(0, 526, 500, 59);
+		getContentPane().add(this.label);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, txtProducto, txtDeta, cbUMedida, txtCantidad, txtPreComInd, txtPrecioVenInd, btnModificar}));
 		cargarDatos();
 	}
