@@ -51,6 +51,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JComboBox;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import com.toedter.calendar.JDateChooser;
 
 public class Reportes extends JFrame implements ActionListener, WindowListener, KeyListener {
 
@@ -59,8 +60,6 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JButton btnCerrar;
 	private JTextField txtCrearReportes;
 	private JLabel lblVer;
-	private JCalendar calendar;
-	private JCalendar calendar_1;
 	private JLabel lblAl;
 	private JTextField textField;
 	private JLabel lblVerDetalleDe;
@@ -88,6 +87,14 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JButton btngenerarReporteVentas;
 	private JComboBox <Usuarios> cbUsuarios;
 	private JButton btnVerProductosIngresados;
+	private JDateChooser calendar;
+	private JDateChooser calendar_1;
+	private JTextField textField_2;
+	private JDateChooser calendar_2;
+	private JDateChooser calendar_3;
+	private JLabel label;
+	private JLabel lblRegistroDeIngresos;
+	private JTextField textField_4;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -109,13 +116,13 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		addWindowListener(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1259, 641);
+		setBounds(100, 100, 1259, 656);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		btnGenerarRVD = new JButton("<html>VER SOLO VENTAS</html>");
-		btnGenerarRVD.setBounds(25, 363, 260, 62);
+		btnGenerarRVD.setBounds(25, 225, 260, 62);
 		btnGenerarRVD.setForeground(new Color(255, 255, 255));
 		btnGenerarRVD.setBackground(new Color(30, 144, 255));
 		btnGenerarRVD.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
@@ -133,14 +140,8 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblVer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVer.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
-		calendar = new JCalendar();
-		calendar.setBounds(25, 152, 260, 200);
-
-		calendar_1 = new JCalendar();
-		calendar_1.setBounds(339, 152, 260, 200);
-
 		lblAl = new JLabel("al:");
-		lblAl.setBounds(286, 294, 55, 38);
+		lblAl.setBounds(286, 155, 55, 38);
 		lblAl.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAl.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 
@@ -165,7 +166,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnGenerarRVDetallada.setBackground(new Color(30, 144, 255));
 
 		lblVerTotalDe = new JLabel("KARDEX");
-		lblVerTotalDe.setBounds(770, 93, 360, 38);
+		lblVerTotalDe.setBounds(771, 93, 360, 38);
 		lblVerTotalDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerTotalDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
@@ -216,13 +217,11 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 				textField_3.setEditable(false);
 				textField_3.setColumns(10);
 				textField_3.setBackground(Color.DARK_GRAY);
-				textField_3.setBounds(635, 314, 618, 18);
+				textField_3.setBounds(635, 298, 618, 18);
 				contentPane.add(textField_3);
 		contentPane.add(btnCerrar);
 		contentPane.add(lblVer);
-		contentPane.add(calendar);
 		contentPane.add(lblAl);
-		contentPane.add(calendar_1);
 		contentPane.add(btnGenerarRVD);
 		contentPane.add(lblVerDetalleDe);
 		contentPane.add(btnGenerarRVDetallada);
@@ -338,7 +337,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btngenerarReporteVentas.setForeground(Color.WHITE);
 		btngenerarReporteVentas.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
-		btngenerarReporteVentas.setBounds(339, 363, 260, 62);
+		btngenerarReporteVentas.setBounds(339, 225, 260, 62);
 		contentPane.add(btngenerarReporteVentas);
 		
 		cbUsuarios = new JComboBox();
@@ -356,6 +355,62 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
 		this.btnVerProductosIngresados.setBounds(25, 436, 574, 38);
 		this.contentPane.add(this.btnVerProductosIngresados);
+		
+		this.calendar = new JDateChooser();
+		this.calendar.setBounds(25, 158, 141, 32);
+		this.contentPane.add(this.calendar);
+		
+		this.calendar_1 = new JDateChooser();
+		this.calendar_1.setBounds(458, 158, 141, 32);
+		this.contentPane.add(this.calendar_1);
+		
+		this.textField_2 = new JTextField();
+		this.textField_2.setRequestFocusEnabled(false);
+		this.textField_2.setIgnoreRepaint(true);
+		this.textField_2.setHorizontalAlignment(SwingConstants.CENTER);
+		this.textField_2.setForeground(Color.ORANGE);
+		this.textField_2.setFont(new Font("Dialog", Font.BOLD, 28));
+		this.textField_2.setFocusable(false);
+		this.textField_2.setFocusTraversalKeysEnabled(false);
+		this.textField_2.setEditable(false);
+		this.textField_2.setColumns(10);
+		this.textField_2.setBackground(Color.DARK_GRAY);
+		this.textField_2.setBounds(0, 298, 618, 18);
+		this.contentPane.add(this.textField_2);
+		
+		this.calendar_2 = new JDateChooser();
+		this.calendar_2.setBounds(25, 382, 141, 32);
+		this.contentPane.add(this.calendar_2);
+		
+		this.calendar_3 = new JDateChooser();
+		this.calendar_3.setBounds(458, 382, 141, 32);
+		this.contentPane.add(this.calendar_3);
+		
+		this.label = new JLabel("al:");
+		this.label.setHorizontalAlignment(SwingConstants.CENTER);
+		this.label.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
+		this.label.setBounds(286, 376, 55, 38);
+		this.contentPane.add(this.label);
+		
+		this.lblRegistroDeIngresos = new JLabel("PRODUCTOS INGRESADOS");
+		this.lblRegistroDeIngresos.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblRegistroDeIngresos.setFont(new Font("Dialog", Font.BOLD, 28));
+		this.lblRegistroDeIngresos.setBounds(10, 327, 598, 38);
+		this.contentPane.add(this.lblRegistroDeIngresos);
+		
+		this.textField_4 = new JTextField();
+		this.textField_4.setRequestFocusEnabled(false);
+		this.textField_4.setIgnoreRepaint(true);
+		this.textField_4.setHorizontalAlignment(SwingConstants.CENTER);
+		this.textField_4.setForeground(Color.ORANGE);
+		this.textField_4.setFont(new Font("Dialog", Font.BOLD, 28));
+		this.textField_4.setFocusable(false);
+		this.textField_4.setFocusTraversalKeysEnabled(false);
+		this.textField_4.setEditable(false);
+		this.textField_4.setColumns(10);
+		this.textField_4.setBackground(Color.DARK_GRAY);
+		this.textField_4.setBounds(0, 613, 1253, 18);
+		this.contentPane.add(this.textField_4);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
@@ -369,6 +424,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
 		cbUsuarios.addItem(todos);
 		usu.cargarUsuarios(cbUsuarios);
+		java.util.Date date = new Date();
+		date.getTime();
+		calendar.setDate(date);
+		calendar_1.setDate(date);
+		calendar_2.setDate(date);
+		calendar_3.setDate(date);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -730,14 +791,14 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 			con = MySQLConexion.getConection();
 			String usu = cbUsuarios.getSelectedItem().toString();
 
-			int añoi = calendar.getCalendar().get(Calendar.YEAR);
-			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añoi = calendar_2.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar_2.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar_2.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = calendar_1.getCalendar().get(Calendar.YEAR);
-			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añof = calendar_3.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_3.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_3.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);

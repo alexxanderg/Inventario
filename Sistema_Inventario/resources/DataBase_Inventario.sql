@@ -44,7 +44,7 @@ primary key (codventa, codproducto)
 
 create table tb_ingreso_productos(
 	 coding int primary key auto_increment,
-	 codproducto varchar(40),
+	 codproducto varchar(100) not null,
 	 cantidad float,
 	 precioCo float,
 	 precioVe float,

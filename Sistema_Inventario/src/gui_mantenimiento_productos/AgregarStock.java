@@ -280,7 +280,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				
 				//Consultas
 				model.ingresarStock(cod, total);
-				model.registrarFechaIngreso(cod, total, pc, pv, date2, usuario);
+				model.registrarFechaIngreso(cod, ca, pc, pv, date2, usuario);
 				model.modificarPC_PV(cod, pc, pv);
 				
 				mp.setEnabled(true);

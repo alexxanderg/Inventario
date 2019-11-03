@@ -27,7 +27,7 @@ public class consultas {
 		try {
 			con = null;
 			con = MySQLConexion.getConection();
-			String sql = "select * from tb_usuarios where usuario = ? and pass = ? ";
+			String sql = "select * from tb_usuarios where usuario = BINARY ? and pass = BINARY? ";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, u.getUsuario());
 			pst.setString(2, u.getPassword());
@@ -211,6 +211,21 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_ventas_detalle where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, cod);		
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	public ResultSet eliminarProductoIngreso(String cod, String nom){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "delete from tb_ingreso_productos where codproducto = ?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);		
 			prepareStmt.execute();

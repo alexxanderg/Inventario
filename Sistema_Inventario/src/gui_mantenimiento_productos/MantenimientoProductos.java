@@ -309,13 +309,14 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	protected void actionPerformedBtnEliminar(ActionEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Realmente desea eliminar el producto?", "Confirmar eliminación",
+		int opc = JOptionPane.showConfirmDialog(null, "¿Realmente desea eliminar el producto?\nAl eliminar el producto tambien estará eliminando la informacion\nde venta detalle y ingreso relacionada con el producto eliminado", "Confirmar eliminación",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 			try {
 				String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 				String nombreProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 1));
+				model.eliminarProductoIngreso(codigoProducto, nombreProducto);
 				model.eliminarProductoDetalle(codigoProducto, nombreProducto);
 				model.eliminarProducto(codigoProducto, nombreProducto);
 				cargarDatos();
