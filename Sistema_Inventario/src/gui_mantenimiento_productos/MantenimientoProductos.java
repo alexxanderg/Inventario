@@ -452,11 +452,29 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 						String cantidadProducto = rs.getString("cantidad");
 						String preciocoProducto = rs.getString("precioCo");
 						String preciovePoducto = rs.getString("precioVe");
-						ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-								uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto, this);
-						mp.setVisible(true);
-						this.setEnabled(false);
-						txtCodigo.setText("");
+						
+						String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
+						int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+						
+						if (seleccion == 0) {//Modificar
+							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
+									uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto, this);
+							mp.setVisible(true);
+							this.setEnabled(false);
+							txtCodigo.setText("");						
+						}
+						if (seleccion == 1) {// agregar
+							txtCodigo.setText("");
+							
+							try {
+								AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto, this, usuario);
+								as.setVisible(true);
+								this.setEnabled(false);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Error al abrir Agregar Stock: " + e1.getMessage());
+							}
+						}
 					}
 
 				} catch (Exception e2) {

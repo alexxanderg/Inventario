@@ -47,7 +47,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos order by producto");
+			rs = st.executeQuery("select * from db_inventario.tb_productos order by producto");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -57,6 +57,7 @@ public class consultas {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
+		
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_productos where codproducto = '" + Prod + "' or producto = '" + Prod + "'");
@@ -71,7 +72,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where producto = '" + prod + "' and detalles = '" + det + "'" );
+			rs = st.executeQuery("select * from db_inventario.tb_productos where producto like '"+ prod + "' and detalles like '" + det +"';" );
 		} catch (Exception e) {
 		}
 		return rs;
