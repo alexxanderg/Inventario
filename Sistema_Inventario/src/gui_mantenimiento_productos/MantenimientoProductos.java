@@ -241,6 +241,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		ac = new TextAutoCompleter(txtCodigo);
 		consultas model = new consultas();
 		ResultSet rs = model.cargarProductos();
+		ac.setMode(0);
 		try {
 			while (rs.next()) {
 				// ac.addItem(rs.getString("codproducto"));
