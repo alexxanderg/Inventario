@@ -530,6 +530,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
+
+		ac.setMode(0);
 		tbCompras.setModel(dtm);
 		dtm.setColumnIdentifiers(
 				new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
