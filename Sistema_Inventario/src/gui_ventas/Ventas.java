@@ -301,6 +301,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblNombreDeCliente);
 
 		txtCopias = new JTextField();
+		txtCopias.setEnabled(false);
 		txtCopias.addKeyListener(this);
 		txtCopias.setText("0");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -472,7 +473,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				float cant = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
 				float preU = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
 				double subT = cant * preU;
-				subT = redondearDecimales(subT, 1);
+				subT = redondearDecimales(subT, 2);
 				tbCompras.setValueAt(subT, i, 5);
 			} catch (Exception e) {
 				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -488,8 +489,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			for (int i = 0; i < tbCompras.getRowCount(); i++) {
 				try {
 					Total = Total + Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-					Total = redondearDecimales(Total, 1);
-					lblTotal.setText("" + Total + "0");
+					Total = redondearDecimales(Total, 2);
+					lblTotal.setText("" + Total);
 					txtPaga.setText(null);
 					txtVuelto.setText(null);
 				} catch (Exception e) {
@@ -736,10 +737,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						// CALCULO DE PRECIOS
 						for (int i = 0; i < listprod.size(); i++) {
 							pretotV = pretotV + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioVe());
-							pretotV = redondearDecimales(pretotV, 1);
+							pretotV = redondearDecimales(pretotV, 2);
 							pretotC = pretotC + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioCo());
-							pretotC = redondearDecimales(pretotC, 1);
-							totalOriginalV = totalOriginalV + redondearDecimales(listprod.get(i).getPrecioVe(), 1);
+							pretotC = redondearDecimales(pretotC, 2);
+							totalOriginalV = totalOriginalV + redondearDecimales(listprod.get(i).getPrecioVe(), 2);
 						}
 
 						int codVenta = 0;
@@ -748,9 +749,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 							float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
 							double gananciaOriginal = pretotV - pretotC;
-							gananciaOriginal = redondearDecimales(gananciaOriginal, 1);
+							gananciaOriginal = redondearDecimales(gananciaOriginal, 2);
 							double gananciaFinal = preTotalVentaFinal - pretotC;
-							gananciaFinal = redondearDecimales(gananciaFinal, 1);
+							gananciaFinal = redondearDecimales(gananciaFinal, 2);
 							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal);
 							rs = model.ObtenerUltimoCodigo();
 							try {
@@ -774,15 +775,15 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 										y = listprod.size();
 									}
 								}
-								preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 1);
+								preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 2);
 
 								double preTotalUnidadOriginal = cantventa * preVeUnidadOriginal;
-								preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 1);
+								preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 2);
 
 								double preUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
-								preUnidadFinal = redondearDecimales(preUnidadFinal, 1);
+								preUnidadFinal = redondearDecimales(preUnidadFinal, 2);
 								double preTotalUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 1);
+								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 2);
 
 								model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
 										preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
@@ -887,7 +888,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			 * redondearDecimales(preUnidad, 2); preSubTotal =
 			 * redondearDecimales(preSubTotal, 2);
 			 */
-			temp = redondearDecimales(temp, 1);
+			temp = redondearDecimales(temp, 2);
 			// JOptionPane.showMessageDialog(null, cantidad + " - " + preUnidad
 			// + " - " + preSubTotal + " - " + temp);
 
@@ -1035,10 +1036,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void actualizartabla(float cant, float preu, float preo, float pret) {
-		tbCompras.setValueAt(redondearDecimales(cant, 1), tbCompras.getSelectedRow(), 0);
-		tbCompras.setValueAt(redondearDecimales(preu, 1), tbCompras.getSelectedRow(), 4);
-		tbCompras.setValueAt(redondearDecimales(preo, 1), tbCompras.getSelectedRow(), 7);
-		tbCompras.setValueAt(redondearDecimales(pret, 1), tbCompras.getSelectedRow(), 5);
+		tbCompras.setValueAt(redondearDecimales(cant, 2), tbCompras.getSelectedRow(), 0);
+		tbCompras.setValueAt(redondearDecimales(preu, 2), tbCompras.getSelectedRow(), 4);
+		tbCompras.setValueAt(redondearDecimales(preo, 2), tbCompras.getSelectedRow(), 7);
+		tbCompras.setValueAt(redondearDecimales(pret, 2), tbCompras.getSelectedRow(), 5);
 		// sumarSubTotales();
 		sumarTotal();
 	}
@@ -1047,11 +1048,11 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		try {
 			double pagacon = Float.parseFloat(txtPaga.getText());
 			double tot = Float.parseFloat(lblTotal.getText());
-			double vuelto = redondearDecimales(pagacon - tot, 1);
+			double vuelto = redondearDecimales(pagacon - tot, 2);
 			if (vuelto < 0)
 				txtVuelto.setText("0.00");
 			else
-				txtVuelto.setText("" + vuelto + "0");
+				txtVuelto.setText("" + vuelto);
 		} catch (Exception e2) {
 			txtVuelto.setText("0.00");
 		}

@@ -292,8 +292,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 				this.setAlwaysOnTop(false);
 				double pc = Float.parseFloat(txtPreComInd.getText());
 				double pv = Float.parseFloat(txtPrecioVenInd.getText());
-				pc = redondearDecimales(pc, 1);
-				pv = redondearDecimales(pv, 1);
+				pc = redondearDecimales(pc, 2);
+				pv = redondearDecimales(pv, 2);
 				model.modificarProducto(codigoProducto, txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat(""+pc), Float.parseFloat(""+pv));
 				mp.selecionarProducto(txtCodigo.getText());
 				mp.cargarDatos();

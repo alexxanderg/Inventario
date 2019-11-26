@@ -293,8 +293,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 				this.setAlwaysOnTop(false);
 				double pc = Float.parseFloat(txtPreComInd.getText());
 				double pv = Float.parseFloat(txtPrecioVenInd.getText());
-				pc = redondearDecimales(pc, 1);
-				pv = redondearDecimales(pv, 1);
+				pc = redondearDecimales(pc, 2);
+				pv = redondearDecimales(pv, 2);
 				rs = model.ingresarProducto(txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(),
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),
 						Float.parseFloat("" + pc), Float.parseFloat("" + pv));

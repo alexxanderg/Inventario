@@ -136,7 +136,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnCerrar.addActionListener(this);
 
 		lblVer = new JLabel("VENTAS REALIZADAS POR:");
-		lblVer.setBounds(25, 63, 574, 32);
+		lblVer.setBounds(25, 63, 574, 45);
 		lblVer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVer.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
@@ -146,20 +146,20 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblAl.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 
 		lblVerDetalleDe = new JLabel("DETALLE DE VENTA");
-		lblVerDetalleDe.setBounds(25, 520, 574, 38);
+		lblVerDetalleDe.setBounds(25, 327, 574, 38);
 		lblVerDetalleDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerDetalleDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		txtNVenta = new JTextField();
 		txtNVenta.addKeyListener(this);
-		txtNVenta.setBounds(251, 572, 161, 34);
+		txtNVenta.setBounds(251, 379, 161, 34);
 		txtNVenta.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVenta.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVenta.setColumns(10);
 		txtNVenta.setBackground(SystemColor.controlHighlight);
 
 		btnGenerarRVDetallada = new JButton("Crear");
-		btnGenerarRVDetallada.setBounds(417, 572, 141, 35);
+		btnGenerarRVDetallada.setBounds(417, 379, 141, 35);
 		btnGenerarRVDetallada.addActionListener(this);
 		btnGenerarRVDetallada.setForeground(new Color(255, 255, 255));
 		btnGenerarRVDetallada.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -203,7 +203,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 						textField_1.setEditable(false);
 						textField_1.setColumns(10);
 						textField_1.setBackground(Color.DARK_GRAY);
-						textField_1.setBounds(0, 491, 619, 18);
+						textField_1.setBounds(0, 425, 619, 18);
 						contentPane.add(textField_1);
 		
 				textField_3 = new JTextField();
@@ -282,21 +282,24 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
 		lblNmeroDeVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNmeroDeVenta.setBounds(49, 572, 192, 30);
+		lblNmeroDeVenta.setBounds(49, 379, 192, 30);
 		contentPane.add(lblNmeroDeVenta);
 
 		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia<br>de ticket de venta</html>");
+		lblImprimirCopiaDe.setEnabled(false);
 		lblImprimirCopiaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImprimirCopiaDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 		lblImprimirCopiaDe.setBounds(736, 365, 507, 78);
 		contentPane.add(lblImprimirCopiaDe);
 
 		lblNCopias = new JLabel("Cantidad de copias:");
+		lblNCopias.setEnabled(false);
 		lblNCopias.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		lblNCopias.setBounds(680, 475, 192, 30);
 		contentPane.add(lblNCopias);
 
 		txtNCopias = new JTextField();
+		txtNCopias.setEnabled(false);
 		txtNCopias.setText("1");
 		txtNCopias.addKeyListener(this);
 		txtNCopias.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -307,6 +310,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(txtNCopias);
 
 		btnImprimir = new JButton("IMPRIMIR");
+		btnImprimir.setEnabled(false);
 		btnImprimir.addActionListener(this);
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -315,6 +319,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(btnImprimir);
 
 		txtNVentaCopia = new JTextField();
+		txtNVentaCopia.setEnabled(false);
 		txtNVentaCopia.addKeyListener(this);
 		txtNVentaCopia.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVentaCopia.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -324,6 +329,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(txtNVentaCopia);
 
 		lblNVenta = new JLabel("Ticket de venta N\u00B0:");
+		lblNVenta.setEnabled(false);
 		lblNVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		lblNVenta.setBounds(680, 528, 192, 30);
 		contentPane.add(lblNVenta);
@@ -353,7 +359,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.btnVerProductosIngresados.setForeground(Color.WHITE);
 		this.btnVerProductosIngresados.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
-		this.btnVerProductosIngresados.setBounds(25, 436, 574, 38);
+		this.btnVerProductosIngresados.setBounds(25, 564, 574, 38);
 		this.contentPane.add(this.btnVerProductosIngresados);
 		
 		this.calendar = new JDateChooser();
@@ -379,23 +385,23 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.textField_2);
 		
 		this.calendar_2 = new JDateChooser();
-		this.calendar_2.setBounds(25, 382, 141, 32);
+		this.calendar_2.setBounds(25, 510, 141, 32);
 		this.contentPane.add(this.calendar_2);
 		
 		this.calendar_3 = new JDateChooser();
-		this.calendar_3.setBounds(458, 382, 141, 32);
+		this.calendar_3.setBounds(458, 510, 141, 32);
 		this.contentPane.add(this.calendar_3);
 		
 		this.label = new JLabel("al:");
 		this.label.setHorizontalAlignment(SwingConstants.CENTER);
 		this.label.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
-		this.label.setBounds(286, 376, 55, 38);
+		this.label.setBounds(286, 504, 55, 38);
 		this.contentPane.add(this.label);
 		
 		this.lblRegistroDeIngresos = new JLabel("PRODUCTOS INGRESADOS");
 		this.lblRegistroDeIngresos.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblRegistroDeIngresos.setFont(new Font("Dialog", Font.BOLD, 28));
-		this.lblRegistroDeIngresos.setBounds(10, 327, 598, 38);
+		this.lblRegistroDeIngresos.setBounds(10, 455, 598, 38);
 		this.contentPane.add(this.lblRegistroDeIngresos);
 		
 		this.textField_4 = new JTextField();

@@ -296,7 +296,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			float preu = Float.parseFloat(txtPUnidad.getText());
 			float pret = Float.parseFloat(txtSTotal.getText());
 			double stTemp = cant * preu;
-			stTemp = redondearDecimales(stTemp,1);
+			stTemp = redondearDecimales(stTemp,2);
 			txtSTotal.setText(""+stTemp);
 		} catch (Exception e) {
 			txtSTotal.setText("0.00");
@@ -309,7 +309,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			float preu = Float.parseFloat(txtPUnidad.getText());
 			float pret = Float.parseFloat(txtSTotal.getText());
 			double stTemp = cant * preu;
-			stTemp = redondearDecimales(stTemp,1);
+			stTemp = redondearDecimales(stTemp,2);
 			txtSTotal.setText(""+stTemp);
 		} catch (Exception e) {
 			txtSTotal.setText("0.00");
@@ -322,7 +322,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			float preu = Float.parseFloat(txtPUnidad.getText());
 			float pret = Float.parseFloat(txtSTotal.getText());
 			double pu = pret/cant;
-			pu = redondearDecimales(pu,1);
+			pu = redondearDecimales(pu,2);
 			txtPUnidad.setText(""+pu);
 		} catch (Exception e) {
 			txtPUnidad.setText("0.00");

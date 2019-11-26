@@ -40,7 +40,7 @@ public class Usuarios {
 	
 	@Override
 	public String toString(){
-		return nombre;
+		return usuario;
 	}
 	
 	public String getUsuario() {

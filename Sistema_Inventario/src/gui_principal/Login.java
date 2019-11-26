@@ -191,7 +191,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			nombreUsuario = usu.getNombre();
 			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario);
 			if(usu.getTipo() == 0){
-				EleccionVentanas el = new EleccionVentanas(nombreUsuario );
+				EleccionVentanas el = new EleccionVentanas(usuIngre);
 				el.setLocationRelativeTo(null);
 				el.setVisible(true);
 				txtUsuario.requestFocus();
