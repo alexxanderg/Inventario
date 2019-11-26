@@ -98,4 +98,8 @@ where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 and v.usuario = 'alex';
 
 
+select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = ''
+ 
+
+
 
