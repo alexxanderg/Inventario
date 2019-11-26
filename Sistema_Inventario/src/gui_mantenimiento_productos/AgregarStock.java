@@ -197,7 +197,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.fecha_ingreso.setBounds(321, 366, 166, 20);
 		getContentPane().add(this.fecha_ingreso);
 		
-		this.chckbxPC = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Compra a la base de datos</left></html");
+		this.chckbxPC = new JCheckBox("<html><left>Marque la casilla si desea modificar el precio de compra.</left></html");
 		this.chckbxPC.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -210,7 +210,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.chckbxPC.setBounds(40, 198, 271, 61);
 		getContentPane().add(this.chckbxPC);
 		
-		this.chckbxPV = new JCheckBox("<html><left>NOTA: Al seleccionar esta casilla actualizar\u00E1 este Precio de Venta a la base de datos</left></html");
+		this.chckbxPV = new JCheckBox("<html><left>Marque la casilla si desea modificar el precio de venta.</left></html");
 		this.chckbxPV.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

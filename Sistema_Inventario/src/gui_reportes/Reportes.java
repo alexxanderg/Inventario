@@ -95,6 +95,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JLabel label;
 	private JLabel lblRegistroDeIngresos;
 	private JTextField textField_4;
+	private JLabel lblDel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -122,7 +123,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		setContentPane(contentPane);
 
 		btnGenerarRVD = new JButton("<html>VER SOLO VENTAS</html>");
-		btnGenerarRVD.setBounds(25, 225, 260, 62);
+		btnGenerarRVD.setBounds(25, 220, 260, 62);
 		btnGenerarRVD.setForeground(new Color(255, 255, 255));
 		btnGenerarRVD.setBackground(new Color(30, 144, 255));
 		btnGenerarRVD.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
@@ -141,25 +142,25 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblVer.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		lblAl = new JLabel("al:");
-		lblAl.setBounds(286, 155, 55, 38);
-		lblAl.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAl.setBounds(339, 160, 55, 38);
+		lblAl.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAl.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 
 		lblVerDetalleDe = new JLabel("DETALLE DE VENTA");
-		lblVerDetalleDe.setBounds(25, 520, 574, 38);
+		lblVerDetalleDe.setBounds(25, 327, 574, 38);
 		lblVerDetalleDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerDetalleDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		txtNVenta = new JTextField();
 		txtNVenta.addKeyListener(this);
-		txtNVenta.setBounds(251, 572, 161, 34);
+		txtNVenta.setBounds(251, 379, 161, 34);
 		txtNVenta.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVenta.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVenta.setColumns(10);
 		txtNVenta.setBackground(SystemColor.controlHighlight);
 
 		btnGenerarRVDetallada = new JButton("Crear");
-		btnGenerarRVDetallada.setBounds(417, 572, 141, 35);
+		btnGenerarRVDetallada.setBounds(417, 379, 141, 35);
 		btnGenerarRVDetallada.addActionListener(this);
 		btnGenerarRVDetallada.setForeground(new Color(255, 255, 255));
 		btnGenerarRVDetallada.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -203,7 +204,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 						textField_1.setEditable(false);
 						textField_1.setColumns(10);
 						textField_1.setBackground(Color.DARK_GRAY);
-						textField_1.setBounds(0, 491, 619, 18);
+						textField_1.setBounds(0, 425, 619, 18);
 						contentPane.add(textField_1);
 		
 				textField_3 = new JTextField();
@@ -282,7 +283,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
 		lblNmeroDeVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNmeroDeVenta.setBounds(49, 572, 192, 30);
+		lblNmeroDeVenta.setBounds(49, 379, 192, 30);
 		contentPane.add(lblNmeroDeVenta);
 
 		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia<br>de ticket de venta</html>");
@@ -337,7 +338,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btngenerarReporteVentas.setForeground(Color.WHITE);
 		btngenerarReporteVentas.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
-		btngenerarReporteVentas.setBounds(339, 225, 260, 62);
+		btngenerarReporteVentas.setBounds(339, 220, 260, 62);
 		contentPane.add(btngenerarReporteVentas);
 		
 		cbUsuarios = new JComboBox();
@@ -353,15 +354,15 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.btnVerProductosIngresados.setForeground(Color.WHITE);
 		this.btnVerProductosIngresados.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
-		this.btnVerProductosIngresados.setBounds(25, 436, 574, 38);
+		this.btnVerProductosIngresados.setBounds(25, 552, 574, 38);
 		this.contentPane.add(this.btnVerProductosIngresados);
 		
 		this.calendar = new JDateChooser();
-		this.calendar.setBounds(25, 158, 141, 32);
+		this.calendar.setBounds(144, 160, 141, 32);
 		this.contentPane.add(this.calendar);
 		
 		this.calendar_1 = new JDateChooser();
-		this.calendar_1.setBounds(458, 158, 141, 32);
+		this.calendar_1.setBounds(458, 160, 141, 32);
 		this.contentPane.add(this.calendar_1);
 		
 		this.textField_2 = new JTextField();
@@ -379,23 +380,23 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.textField_2);
 		
 		this.calendar_2 = new JDateChooser();
-		this.calendar_2.setBounds(25, 382, 141, 32);
+		this.calendar_2.setBounds(25, 509, 141, 32);
 		this.contentPane.add(this.calendar_2);
 		
 		this.calendar_3 = new JDateChooser();
-		this.calendar_3.setBounds(458, 382, 141, 32);
+		this.calendar_3.setBounds(458, 509, 141, 32);
 		this.contentPane.add(this.calendar_3);
 		
 		this.label = new JLabel("al:");
 		this.label.setHorizontalAlignment(SwingConstants.CENTER);
 		this.label.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
-		this.label.setBounds(286, 376, 55, 38);
+		this.label.setBounds(286, 503, 55, 38);
 		this.contentPane.add(this.label);
 		
 		this.lblRegistroDeIngresos = new JLabel("PRODUCTOS INGRESADOS");
 		this.lblRegistroDeIngresos.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblRegistroDeIngresos.setFont(new Font("Dialog", Font.BOLD, 28));
-		this.lblRegistroDeIngresos.setBounds(10, 327, 598, 38);
+		this.lblRegistroDeIngresos.setBounds(10, 454, 598, 38);
 		this.contentPane.add(this.lblRegistroDeIngresos);
 		
 		this.textField_4 = new JTextField();
@@ -411,6 +412,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.textField_4.setBackground(Color.DARK_GRAY);
 		this.textField_4.setBounds(0, 613, 1253, 18);
 		this.contentPane.add(this.textField_4);
+		
+		lblDel = new JLabel("del:");
+		lblDel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDel.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
+		lblDel.setBounds(25, 160, 55, 38);
+		contentPane.add(lblDel);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
