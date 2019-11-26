@@ -27,7 +27,7 @@ public class consultas {
 		try {
 			con = null;
 			con = MySQLConexion.getConection();
-			String sql = "select * from tb_usuarios where usuario = BINARY ? and pass = BINARY? ";
+			String sql = "select * from tb_usuarios where usuario = BINARY ? and pass = BINARY ? ";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, u.getUsuario());
 			pst.setString(2, u.getPassword());
