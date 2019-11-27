@@ -96,6 +96,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JLabel lblRegistroDeIngresos;
 	private JTextField textField_4;
 	private JLabel lblDel;
+	private JLabel lblDel_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -380,7 +381,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.textField_2);
 		
 		this.calendar_2 = new JDateChooser();
-		this.calendar_2.setBounds(25, 509, 141, 32);
+		this.calendar_2.setBounds(144, 509, 141, 32);
 		this.contentPane.add(this.calendar_2);
 		
 		this.calendar_3 = new JDateChooser();
@@ -388,9 +389,9 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.calendar_3);
 		
 		this.label = new JLabel("al:");
-		this.label.setHorizontalAlignment(SwingConstants.CENTER);
+		this.label.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
-		this.label.setBounds(286, 503, 55, 38);
+		this.label.setBounds(339, 503, 55, 38);
 		this.contentPane.add(this.label);
 		
 		this.lblRegistroDeIngresos = new JLabel("PRODUCTOS INGRESADOS");
@@ -418,6 +419,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblDel.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 		lblDel.setBounds(25, 160, 55, 38);
 		contentPane.add(lblDel);
+		
+		lblDel_1 = new JLabel("del:");
+		lblDel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDel_1.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
+		lblDel_1.setBounds(25, 503, 55, 38);
+		contentPane.add(lblDel_1);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
