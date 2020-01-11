@@ -27,6 +27,10 @@ prep2		float
 
 );
 
+
+alter table tb_productos
+  add prep2		float;
+
 create table tb_ventas(
 codventa	int primary key auto_increment,
 cliente		varchar(50),
@@ -84,6 +88,8 @@ select * from tb_productos;
 select * from tb_ventas;
 select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
+
+select * from tb_productos where codproducto = 1;
 
 select * from tb_ventas;
 select sum(totventa), sum(ganancia) from tb_ventas;

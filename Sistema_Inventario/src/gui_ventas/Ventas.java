@@ -9,7 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.AbstractJasperReports;
+import clases.Cliente;
 import clases.Productos;
+import gui_clientes.NuevoCliente;
 import gui_ventas.ListaDeProductos;
 import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.EleccionVentanas;
@@ -63,6 +65,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JComboBox;
 
 public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
 
@@ -88,7 +91,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JLabel label_2;
 	private JTextField txtVuelto;
 	private JLabel label_3;
-	private JTextField txtCliente;
 	private JLabel lblNombreDeCliente;
 	private JTextField txtCopias;
 	private JLabel lblNImpresiones;
@@ -102,7 +104,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	int nventana = 0;
 	private JLabel lblLogo;
 	private JButton btnReportes;
-	private JDateChooser calendar;
+	private JComboBox <Cliente> cbClientes;
+	private JButton btnAnadirCliente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -124,7 +127,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1413, 791);
+		setBounds(100, 100, 1386, 747);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -143,7 +146,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		lblTotal.setBackground(new Color(50, 205, 50));
 		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotal.setBounds(1123, 356, 202, 50);
+		lblTotal.setBounds(1123, 436, 202, 50);
 		contentPane.add(lblTotal);
 		btnNuevaVentana.setForeground(new Color(0, 255, 0));
 		btnNuevaVentana.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 39));
@@ -242,7 +245,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.BLACK);
 		label.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label.setBounds(979, 147, 178, 38);
+		label.setBounds(979, 227, 178, 38);
 		contentPane.add(label);
 
 		label_1 = new JLabel("S/.");
@@ -250,7 +253,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setForeground(Color.BLACK);
 		label_1.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_1.setBounds(979, 181, 76, 38);
+		label_1.setBounds(979, 261, 76, 38);
 		contentPane.add(label_1);
 
 		txtPaga = new JTextField();
@@ -260,7 +263,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtPaga.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPaga.setColumns(10);
 		txtPaga.setBackground(SystemColor.controlHighlight);
-		txtPaga.setBounds(1022, 189, 181, 34);
+		txtPaga.setBounds(1022, 269, 181, 34);
 		contentPane.add(txtPaga);
 
 		label_2 = new JLabel("Su vuelto es:");
@@ -268,7 +271,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(Color.BLACK);
 		label_2.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_2.setBounds(979, 240, 257, 38);
+		label_2.setBounds(979, 320, 257, 38);
 		contentPane.add(label_2);
 
 		txtVuelto = new JTextField();
@@ -278,7 +281,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtVuelto.setEditable(false);
 		txtVuelto.setColumns(10);
 		txtVuelto.setBackground(SystemColor.controlHighlight);
-		txtVuelto.setBounds(1022, 279, 181, 34);
+		txtVuelto.setBounds(1022, 359, 181, 34);
 		contentPane.add(txtVuelto);
 
 		label_3 = new JLabel("S/.");
@@ -286,16 +289,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(Color.BLACK);
 		label_3.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_3.setBounds(979, 275, 64, 38);
+		label_3.setBounds(979, 355, 64, 38);
 		contentPane.add(label_3);
-
-		txtCliente = new JTextField();
-		txtCliente.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCliente.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		txtCliente.setColumns(10);
-		txtCliente.setBackground(SystemColor.controlHighlight);
-		txtCliente.setBounds(979, 102, 346, 34);
-		contentPane.add(txtCliente);
 
 		lblNombreDeCliente = new JLabel("Nombre de Cliente:");
 		lblNombreDeCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -325,7 +320,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		lblTotalS.setBackground(new Color(50, 205, 50));
 		lblTotalS.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalS.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotalS.setBounds(982, 356, 175, 50);
+		lblTotalS.setBounds(982, 436, 143, 50);
 		contentPane.add(lblTotalS);
 
 		lblLogo = new JLabel("");
@@ -347,11 +342,22 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnReportes.setBounds(642, 166, 139, 86);
 		contentPane.add(btnReportes);
 		
-		calendar = new JDateChooser();
-		calendar.setBounds(992, 417, 166, 20);
-		contentPane.add(calendar);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtCliente, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
+		cbClientes = new JComboBox();
+		//cbClientes.setSelectedIndex(0);
+		cbClientes.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
+		cbClientes.setBounds(979, 114, 346, 38);
+		contentPane.add(cbClientes);
+		
+		btnAnadirCliente = new JButton("+");
+		btnAnadirCliente.addActionListener(this);
+		btnAnadirCliente.setBackground(new Color(50, 205, 50));
+		btnAnadirCliente.setForeground(new Color(255, 255, 255));
+		btnAnadirCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnAnadirCliente.setBounds(1269, 155, 56, 38);
+		contentPane.add(btnAnadirCliente);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
 		cargar();
+		//cargarBuscadorCliente();
 	}
 
 	public void windowActivated(WindowEvent arg0) {
@@ -415,6 +421,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnAnadirCliente) {
+			actionPerformedBtnAnadirCliente(arg0);
+		}
 		if (arg0.getSource() == btnNuevoProducto) {
 			actionPerformedBtnNuevoProducto(arg0);
 		}
@@ -518,6 +527,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	public void cargar() {
 		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
+
+		Cliente cliente = new Cliente();
+		cliente.cargarEmpresas(cbClientes);
+		
 		if (nventana == 1)
 			txtVentaDeProductos.setText("VENTA DE PRODUTOS");
 		else
@@ -542,6 +555,20 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		dtm.setColumnIdentifiers(
 				new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
 		ajustarAnchoColumnas();
+	}
+	
+	public void cargarBuscadorCliente() {
+		consultas model = new consultas();
+		ResultSet rs = model.cargarClientes();
+		ac.setMode(0);
+		try {
+			while (rs.next()) {
+				// ac.addItem(rs.getString("codproducto"));
+				ac.addItem(rs.getString("id") + "_" + rs.getString("nombre"));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
 	}
 
 	private int anchoColumna(int porcentaje) {
@@ -750,30 +777,16 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 						int codVenta = 0;
 						try {
-							String cliente = txtCliente.getText();
+							String cliente = cbClientes.getSelectedItem().toString();
+							int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
 
 							float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
 							double gananciaOriginal = pretotV - pretotC;
 							gananciaOriginal = redondearDecimales(gananciaOriginal, 1);
 							double gananciaFinal = preTotalVentaFinal - pretotC;
 							gananciaFinal = redondearDecimales(gananciaFinal, 1);
-							Object date2 = null;
-							
-							try {									
-									//Cambio de utils a sql.Date para envio
-									Date  date = calendar.getDate();
-									long d = date.getTime();
-									date2 = new java.sql.Timestamp(d);
-									
 								
-							} catch (Exception e) {
-								JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
-							}
-											
-							
-							
-							
-							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal, date2);
+							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente);
 							rs = model.ObtenerUltimoCodigo();
 							try {
 								while (rs.next())
@@ -930,7 +943,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			sumarSubTotales();
 			sumarTotal();
 			txtProductos.requestFocus();
-			txtCliente.setText(null);
 			txtPaga.setText(null);
 			txtVuelto.setText(null);
 		} catch (Exception e) {
@@ -1132,5 +1144,16 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		Reportes r = new Reportes(usuario, this);
 		r.setVisible(true);
 		dispose();
+	}
+	
+	protected void actionPerformedBtnAnadirCliente(ActionEvent arg0) {
+		NuevoCliente nc = new NuevoCliente(null, this, usuario);
+		nc.setVisible(true);
+		nc.setLocationRelativeTo(null);
+		this.setEnabled(false);		
+	}
+	
+	public void anadirClienteCombpo(Cliente c){
+		cbClientes.addItem(c);
 	}
 }

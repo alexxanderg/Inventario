@@ -23,8 +23,15 @@ import java.awt.Component;
 import javax.swing.JCheckBox;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JRadioButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
-public class ModificarPrecioVenta extends JFrame implements ActionListener, WindowListener, KeyListener, PropertyChangeListener {
+public class ModificarPrecioVenta extends JFrame implements ActionListener, WindowListener, KeyListener, ItemListener{
 
 	private JPanel contentPane;
 	private JLabel txtTitulo;
@@ -48,6 +55,11 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	private JButton btnEliminarProducto;
 	private JTextField txtOrigen;
 	private JCheckBox chckbxMostrar;
+	private JLabel lblPromo1;
+	private JTextField txtPromo1;
+	private JLabel lblPromo2;
+	private JTextField txtPromo2;
+	private JComboBox cbPrecio;
 	
 	/**
 	 * Launch the application.
@@ -80,7 +92,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		addWindowListener(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 533, 400);
+		setBounds(100, 100, 533, 517);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -99,34 +111,36 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(lblNewLabel);
 		
 		lblPrecioPorUnidad = new JLabel("Precio por unidad:");
+		lblPrecioPorUnidad.setEnabled(false);
 		lblPrecioPorUnidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblPrecioPorUnidad.setBounds(62, 166, 195, 31);
+		lblPrecioPorUnidad.setBounds(62, 214, 195, 31);
 		contentPane.add(lblPrecioPorUnidad);
 		
 		lblSubtotal = new JLabel("SubTotal:");
 		lblSubtotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblSubtotal.setBounds(62, 208, 115, 31);
+		lblSubtotal.setBounds(62, 383, 115, 31);
 		contentPane.add(lblSubtotal);
 		
 		txtCantidad = new JTextField();
 		txtCantidad.addKeyListener(this);
 		txtCantidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
-		txtCantidad.setBounds(300, 124, 172, 31);
+		txtCantidad.setBounds(260, 124, 212, 31);
 		contentPane.add(txtCantidad);
 		txtCantidad.setColumns(10);
 		
 		txtPUnidad = new JTextField();
+		txtPUnidad.setEnabled(false);
 		txtPUnidad.addKeyListener(this);
 		txtPUnidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
 		txtPUnidad.setColumns(10);
-		txtPUnidad.setBounds(300, 166, 172, 31);
+		txtPUnidad.setBounds(260, 214, 212, 31);
 		contentPane.add(txtPUnidad);
 		
 		txtSTotal = new JTextField();
 		txtSTotal.addKeyListener(this);
 		txtSTotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
 		txtSTotal.setColumns(10);
-		txtSTotal.setBounds(300, 208, 172, 31);
+		txtSTotal.setBounds(260, 383, 212, 31);
 		contentPane.add(txtSTotal);
 		
 		btnCambiar = new JButton("Cambiar");
@@ -137,7 +151,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(textField);
 		textField.setColumns(10);
 		btnCambiar.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		btnCambiar.setBounds(96, 314, 327, 52);
+		btnCambiar.setBounds(102, 425, 327, 52);
 		contentPane.add(btnCambiar);
 		
 		btnMenos1 = new JButton("-1");
@@ -167,7 +181,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		JLabel lblPrecioOrigen = new JLabel("Precio Origen:\r\n");
 		lblPrecioOrigen.setVisible(false);
 		lblPrecioOrigen.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblPrecioOrigen.setBounds(62, 246, 195, 31);
+		lblPrecioOrigen.setBounds(447, 446, 70, 31);
 		contentPane.add(lblPrecioOrigen);
 		
 		txtOrigen = new JTextField();
@@ -176,16 +190,51 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		txtOrigen.setText("<dynamic>");
 		txtOrigen.setFont(new Font("Dialog", Font.BOLD, 15));
 		txtOrigen.setColumns(10);
-		txtOrigen.setBounds(300, 246, 172, 31);
+		txtOrigen.setBounds(447, 414, 70, 31);
 		contentPane.add(txtOrigen);
 		
 		chckbxMostrar = new JCheckBox("Mostrar");
 		chckbxMostrar.setVisible(false);
 		chckbxMostrar.addActionListener(this);
-		chckbxMostrar.addPropertyChangeListener(this);
 		chckbxMostrar.setFont(new Font("Dialog", Font.BOLD, 16));
-		chckbxMostrar.setBounds(62, 284, 97, 23);
+		chckbxMostrar.setBounds(472, 394, 45, 23);
 		contentPane.add(chckbxMostrar);
+		
+		lblPromo1 = new JLabel("Promo1:");
+		lblPromo1.setEnabled(false);
+		lblPromo1.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblPromo1.setBounds(62, 262, 195, 31);
+		contentPane.add(lblPromo1);
+		
+		txtPromo1 = new JTextField();
+		txtPromo1.setEnabled(false);
+		txtPromo1.setText("<dynamic>");
+		txtPromo1.setFont(new Font("Dialog", Font.BOLD, 15));
+		txtPromo1.setColumns(10);
+		txtPromo1.setBounds(260, 262, 212, 31);
+		contentPane.add(txtPromo1);
+		
+		lblPromo2 = new JLabel("Promo2:");
+		lblPromo2.setEnabled(false);
+		lblPromo2.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblPromo2.setBounds(62, 308, 195, 31);
+		contentPane.add(lblPromo2);
+		
+		txtPromo2 = new JTextField();
+		txtPromo2.setEnabled(false);
+		txtPromo2.setText("<dynamic>");
+		txtPromo2.setFont(new Font("Dialog", Font.BOLD, 15));
+		txtPromo2.setColumns(10);
+		txtPromo2.setBounds(260, 308, 212, 31);
+		contentPane.add(txtPromo2);
+		
+		cbPrecio = new JComboBox();
+		cbPrecio.addItemListener(this);
+		cbPrecio.setFont(new Font("Dialog", Font.BOLD, 16));
+		cbPrecio.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un precio:", "Precio unitario", "Promoci\u00F3n 1", "Promoci\u00F3n 2"}));
+		cbPrecio.setBounds(62, 172, 198, 31);
+		contentPane.add(cbPrecio);
+		
 		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, txtPUnidad, txtSTotal, btnEliminarProducto, btnMenos1, btnMas1, btnCambiar}));
 		cargar();
 	}
@@ -367,4 +416,54 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			txtOrigen.setVisible(false);
 		}
 	}
+	public void itemStateChanged(ItemEvent arg0) {
+		if (arg0.getSource() == cbPrecio) {
+			itemStateChangedComboBox(arg0);
+		}
+	}
+	
+	protected void itemStateChangedComboBox(ItemEvent arg0) {
+		if(cbPrecio.getSelectedIndex() == 0){
+			lblPrecioPorUnidad.setEnabled(false);
+			txtPUnidad.setEnabled(false);
+			
+			lblPromo1.setEnabled(false);
+			txtPromo1.setEnabled(false);
+			
+			lblPromo2.setEnabled(false);
+			txtPromo2.setEnabled(false);
+		}
+		if(cbPrecio.getSelectedIndex() == 1){
+			lblPrecioPorUnidad.setEnabled(true);
+			txtPUnidad.setEnabled(true);
+			
+			lblPromo1.setEnabled(false);
+			txtPromo1.setEnabled(false);
+			
+			lblPromo2.setEnabled(false);
+			txtPromo2.setEnabled(false);
+		}
+		if(cbPrecio.getSelectedIndex() == 2){
+			lblPrecioPorUnidad.setEnabled(false);
+			txtPUnidad.setEnabled(false);
+			
+			lblPromo1.setEnabled(true);
+			txtPromo1.setEnabled(true);
+			
+			lblPromo2.setEnabled(false);
+			txtPromo2.setEnabled(false);
+		}
+		if(cbPrecio.getSelectedIndex() == 3){
+			lblPrecioPorUnidad.setEnabled(false);
+			txtPUnidad.setEnabled(false);
+			
+			lblPromo1.setEnabled(false);
+			txtPromo1.setEnabled(false);
+			
+			lblPromo2.setEnabled(true);			
+			txtPromo2.setEnabled(true);
+		}
+	}
+	
+	
 }
