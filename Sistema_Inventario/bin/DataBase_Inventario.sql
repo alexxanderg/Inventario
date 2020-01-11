@@ -38,8 +38,12 @@ fecha		datetime,
 usuario		varchar(20),
 totcompra 	float,
 totventa	float,
-ganancia	float
+ganancia	float,
+idcliente	int
 );
+
+alter table tb_ventas
+  add idcliente		int;
 
 create table tb_ventas_detalle(
 codventa	int not null,
@@ -80,6 +84,8 @@ correo		varchar(50)
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);
 insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0);
 
+insert into tb_clientes values(	null, 'DNI', '76784966', 'Alexander Gamarra', 'La Encalada', '986865523', 'agamarra@bytexbyte.com.pe');
+insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe');
 
 
 use db_inventario;
@@ -88,8 +94,9 @@ select * from tb_productos;
 select * from tb_ventas;
 select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
+select * from tb_clientes;
 
-select * from tb_productos where codproducto = 1;
+select * from tb_clientes order by id desc limit 1;
 
 select * from tb_ventas;
 select sum(totventa), sum(ganancia) from tb_ventas;
