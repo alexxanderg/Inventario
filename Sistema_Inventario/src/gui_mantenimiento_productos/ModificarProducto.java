@@ -69,6 +69,18 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 	EleccionVentanas el;
 	private JTextField txtModificarProducto;
 	private JLabel label;
+	private JTextField txtPrePromo2;
+	private JTextField txtCantPromo2;
+	private JTextField txtPromo2;
+	private JTextField txtPrePromo1;
+	private JTextField txtCantPromo1;
+	private JTextField txtPromo1;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
+	private JLabel label_4;
+	private JLabel label_5;
+	private JLabel label_6;
 	
 	public static void main(String[] args) {
 		try {
@@ -91,7 +103,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		mp = temp7;
 		
 		addWindowListener(this);
-		setBounds(100, 100, 526, 683);
+		setBounds(100, 100, 526, 991);
 		getContentPane().setLayout(null);
 		setResizable(false);
 		setAlwaysOnTop(true);
@@ -206,7 +218,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		btnModificar.setForeground(SystemColor.menu);
 		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(0, 599, 520, 55);
+		btnModificar.setBounds(0, 907, 520, 55);
 		getContentPane().add(btnModificar);
 		
 		lblUMedida = new JLabel("U. MEDIDA:");
@@ -242,8 +254,110 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.label.setHorizontalAlignment(SwingConstants.CENTER);
 		this.label.setForeground(Color.RED);
 		this.label.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		this.label.setBounds(0, 526, 500, 59);
+		this.label.setBounds(0, 847, 500, 59);
 		getContentPane().add(this.label);
+		
+		txtPrePromo2 = new JTextField();
+		txtPrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPrePromo2.setForeground(SystemColor.windowBorder);
+		txtPrePromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtPrePromo2.setColumns(10);
+		txtPrePromo2.setBackground(SystemColor.controlHighlight);
+		txtPrePromo2.setBounds(253, 774, 204, 25);
+		getContentPane().add(txtPrePromo2);
+		
+		txtCantPromo2 = new JTextField();
+		txtCantPromo2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtCantPromo2.setForeground(SystemColor.windowBorder);
+		txtCantPromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtCantPromo2.setColumns(10);
+		txtCantPromo2.setBackground(SystemColor.controlHighlight);
+		txtCantPromo2.setBounds(253, 720, 204, 25);
+		getContentPane().add(txtCantPromo2);
+		
+		txtPromo2 = new JTextField();
+		txtPromo2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPromo2.setForeground(SystemColor.windowBorder);
+		txtPromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtPromo2.setColumns(10);
+		txtPromo2.setBackground(SystemColor.controlHighlight);
+		txtPromo2.setBounds(253, 671, 204, 25);
+		getContentPane().add(txtPromo2);
+		
+		txtPrePromo1 = new JTextField();
+		txtPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPrePromo1.setForeground(SystemColor.windowBorder);
+		txtPrePromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtPrePromo1.setColumns(10);
+		txtPrePromo1.setBackground(SystemColor.controlHighlight);
+		txtPrePromo1.setBounds(253, 622, 204, 25);
+		getContentPane().add(txtPrePromo1);
+		
+		txtCantPromo1 = new JTextField();
+		txtCantPromo1.setHorizontalAlignment(SwingConstants.LEFT);
+		txtCantPromo1.setForeground(SystemColor.windowBorder);
+		txtCantPromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtCantPromo1.setColumns(10);
+		txtCantPromo1.setBackground(SystemColor.controlHighlight);
+		txtCantPromo1.setBounds(253, 573, 204, 25);
+		getContentPane().add(txtCantPromo1);
+		
+		txtPromo1 = new JTextField();
+		txtPromo1.setHorizontalAlignment(SwingConstants.LEFT);
+		txtPromo1.setForeground(SystemColor.windowBorder);
+		txtPromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtPromo1.setColumns(10);
+		txtPromo1.setBackground(SystemColor.controlHighlight);
+		txtPromo1.setBounds(253, 524, 204, 25);
+		getContentPane().add(txtPromo1);
+		
+		label_1 = new JLabel("PROMOCION 1:");
+		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_1.setHorizontalAlignment(SwingConstants.LEFT);
+		label_1.setForeground(new Color(50, 205, 50));
+		label_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_1.setBounds(10, 511, 211, 38);
+		getContentPane().add(label_1);
+		
+		label_2 = new JLabel("CANTIDAD PROMO 1:");
+		label_2.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_2.setHorizontalAlignment(SwingConstants.LEFT);
+		label_2.setForeground(new Color(50, 205, 50));
+		label_2.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_2.setBounds(10, 560, 235, 38);
+		getContentPane().add(label_2);
+		
+		label_3 = new JLabel("PRECIO PROMO1 :");
+		label_3.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_3.setHorizontalAlignment(SwingConstants.LEFT);
+		label_3.setForeground(new Color(50, 205, 50));
+		label_3.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_3.setBounds(10, 609, 211, 38);
+		getContentPane().add(label_3);
+		
+		label_4 = new JLabel("PROMOCION 2:");
+		label_4.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_4.setHorizontalAlignment(SwingConstants.LEFT);
+		label_4.setForeground(new Color(30, 144, 255));
+		label_4.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_4.setBounds(10, 658, 211, 38);
+		getContentPane().add(label_4);
+		
+		label_5 = new JLabel("CANTIDAD PROMO 2:");
+		label_5.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_5.setHorizontalAlignment(SwingConstants.LEFT);
+		label_5.setForeground(new Color(30, 144, 255));
+		label_5.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_5.setBounds(10, 707, 235, 38);
+		getContentPane().add(label_5);
+		
+		label_6 = new JLabel("PRECIO PROMO 2:");
+		label_6.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_6.setHorizontalAlignment(SwingConstants.LEFT);
+		label_6.setForeground(new Color(30, 144, 255));
+		label_6.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_6.setBounds(10, 761, 211, 38);
+		getContentPane().add(label_6);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, txtProducto, txtDeta, cbUMedida, txtCantidad, txtPreComInd, txtPrecioVenInd, btnModificar}));
 		cargarDatos();
 	}

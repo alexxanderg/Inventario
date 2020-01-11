@@ -16,7 +16,15 @@ detalles	varchar(100),
 unimedida	varchar(10),
 cantidad	float,
 precioCo	float,
-precioVe	float
+precioVe	float,
+
+promo1		varchar(20),
+cantp1		float,
+prep1		float,
+promo2		varchar(20),
+cantp2		float,
+prep2		float
+
 );
 
 create table tb_ventas(
@@ -52,6 +60,17 @@ create table tb_ingreso_productos(
 	 nombreusu varchar(50),
      foreign key(codproducto) references tb_productos(codproducto)
 );
+
+create table tb_clientes(
+id			int primary key auto_increment,
+tipodoc		varchar(10),
+nrodoc		varchar(11),
+nombre		varchar(150),
+direccion	varchar(150),
+telefono	varchar(15),
+correo		varchar(50)
+);
+
 
 -- Usuarios de prueba
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);
@@ -112,8 +131,8 @@ where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 and v.usuario = 'alex';
 
 
-select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = ''
+select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = '';
  
-
+select sum(precioVe) from tb_productos where cantidad > 0 order by producto
 
 
