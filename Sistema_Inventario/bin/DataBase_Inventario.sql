@@ -57,17 +57,26 @@ create table tb_ingreso_productos(
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);
 insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0);
 
+
+
 use db_inventario;
 select * from tb_usuarios;
 select * from tb_productos; 
 select * from tb_ventas;
 select * from tb_ventas_detalle;
+select * from tb_ingreso_productos;
+
+select * from tb_ventas;
+select sum(totventa), sum(ganancia) from tb_ventas;
+
+select codventa, cliente, fecha, usuario, totcompra, totventa, ganancia, (sum(totventa)), (sum(ganancia)) from tb_ventas;
 
 -- delete from tb_ventas where codventa = 2;
 -- delete from tb_ventas where codventa = 52;
 -- drop table tb_productos;
 -- drop table tb_ventas;
 -- drop table tb_ventas_detalle;
+-- drop table tb_ingreso_productos;
 
 -- PRUEBAS ------------------------------------------------------------------------
 
@@ -75,6 +84,11 @@ select * from tb_ventas_detalle;
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2019-09-07 23:59:59';
 
+update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
+
+update tb_ventas set usuario='admin' where usuario='Alexander Gamarra';
+
+SET SQL_SAFE_UPDATES = 0;
 
 select vd.codventa,pr.producto,vd.cantidad,vd.prevenOri,vd.totvenOri,vd.prevenFin,vd.totvenFin from db_inventario.tb_ventas_detalle vd 
 inner join tb_productos pr on vd.codproducto=pr.codproducto where vd.codventa = 6;

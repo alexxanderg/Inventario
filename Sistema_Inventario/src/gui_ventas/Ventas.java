@@ -62,6 +62,7 @@ import java.awt.Component;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
 
@@ -101,6 +102,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	int nventana = 0;
 	private JLabel lblLogo;
 	private JButton btnReportes;
+	private JDateChooser calendar;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -344,6 +346,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnReportes.setBackground(new Color(30, 144, 255));
 		btnReportes.setBounds(642, 166, 139, 86);
 		contentPane.add(btnReportes);
+		
+		calendar = new JDateChooser();
+		calendar.setBounds(992, 417, 166, 20);
+		contentPane.add(calendar);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtCliente, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
 		cargar();
 	}
@@ -751,7 +757,23 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 							gananciaOriginal = redondearDecimales(gananciaOriginal, 1);
 							double gananciaFinal = preTotalVentaFinal - pretotC;
 							gananciaFinal = redondearDecimales(gananciaFinal, 1);
-							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal);
+							Object date2 = null;
+							
+							try {									
+									//Cambio de utils a sql.Date para envio
+									Date  date = calendar.getDate();
+									long d = date.getTime();
+									date2 = new java.sql.Timestamp(d);
+									
+								
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
+							}
+											
+							
+							
+							
+							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal, date2);
 							rs = model.ObtenerUltimoCodigo();
 							try {
 								while (rs.next())

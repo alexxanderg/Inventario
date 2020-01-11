@@ -306,7 +306,7 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia){
+	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia, Object d2){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		java.util.Date d = new java.util.Date();
@@ -321,7 +321,7 @@ public class consultas {
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, cliente);
-			prepareStmt.setObject(3, date2);
+			prepareStmt.setObject(3, d2);
 			prepareStmt.setString(4, usuario);
 			prepareStmt.setDouble(5, totCompra);
 			prepareStmt.setDouble(6, totVenta);
