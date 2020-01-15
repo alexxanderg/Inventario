@@ -535,7 +535,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 					new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
 					AbstractJasperReports.showViewer();					
 				}else{
-					new AbstractJasperReports().createReport(con, "rrVentasVendedorTodosXMpago.jasper", parameters);
+					new AbstractJasperReports().createReport(con, "rVentasVendedorTodosXMpago.jasper", parameters);
 					AbstractJasperReports.showViewer();
 				}
 			}
