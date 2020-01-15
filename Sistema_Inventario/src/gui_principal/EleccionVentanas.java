@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import gui_clientes.MantenimientoClientes;
 import gui_mantenimiento_productos.MantenimientoProductos;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_reportes.Reportes;
@@ -31,7 +30,6 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.Icon;
 
 public class EleccionVentanas extends JFrame implements ActionListener, WindowListener {
 
@@ -44,7 +42,6 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	private JButton btnReportes;
 	
 	String usuario;
-	private JButton btnClientes;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,7 +61,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		setResizable(false);
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1060, 571);
+		setBounds(100, 100, 707, 571);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(30, 144, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,7 +87,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		txtqueDeseaHacer.setBackground(Color.DARK_GRAY);
 		txtqueDeseaHacer.setFont(new Font("Perpetua", Font.ITALIC, 25));
 		txtqueDeseaHacer.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtqueDeseaHacer.setBounds(0, 0, 1055, 53);
+		txtqueDeseaHacer.setBounds(0, 0, 700, 53);
 		contentPane.add(txtqueDeseaHacer);
 		txtqueDeseaHacer.setColumns(10);
 		
@@ -127,19 +124,8 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		btnVentas.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnVentas.setText("VENDER");
 		btnVentas.addActionListener(this);
-		btnVentas.setBounds(352, 277, 703, 267);
+		btnVentas.setBounds(352, 276, 350, 267);
 		contentPane.add(btnVentas);
-		
-
-		btnClientes = new JButton(new ImageIcon(this.getClass().getResource("/imgclientes.png")));
-		btnClientes.addActionListener(this);
-		//btnClientes = new JButton((Icon) null);
-		btnClientes.setText("CLIENTES");
-		btnClientes.setForeground(Color.WHITE);
-		btnClientes.setFont(new Font("Dialog", Font.BOLD, 20));
-		btnClientes.setBackground(Color.DARK_GRAY);
-		btnClientes.setBounds(704, 74, 351, 200);
-		contentPane.add(btnClientes);
 		
 		cargar();
 	}
@@ -197,9 +183,6 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnClientes) {
-			actionPerformedBtnClientes(e);
-		}
 		if (e.getSource() == btnVolver) {
 			actionPerformedBtnVolver(e);
 		}
@@ -254,11 +237,5 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		v.setLocationRelativeTo(null);
 		v.setVisible(true);
 		this.setVisible(false);
-	}
-	
-	protected void actionPerformedBtnClientes(ActionEvent e) {
-		MantenimientoClientes c = new MantenimientoClientes(usuario);
-		c.setVisible(true);
-		dispose();
 	}
 }
