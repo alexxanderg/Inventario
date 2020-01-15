@@ -78,13 +78,13 @@ public class consultas {
 		return rs;
 	}
 	
-	public int ingresarProducto(String cod, String prod, String det, String umed, float cant, float prec, float prev){
+	public int ingresarProducto(String cod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, producto, detalles, unimedida, cantidad, precioCo,  precioVe)" + " values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_productos (codproducto, producto, detalles, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);
 			prepareStmt.setString(2, prod);
@@ -93,6 +93,12 @@ public class consultas {
 			prepareStmt.setFloat(5, cant);
 			prepareStmt.setFloat(6, prec);
 			prepareStmt.setFloat(7, prev);
+			prepareStmt.setString(8, promo1);
+			prepareStmt.setFloat(9, cpromo1);
+			prepareStmt.setFloat(10, ppromo1);
+			prepareStmt.setString(11, promo2);
+			prepareStmt.setFloat(12, cpromo2);
+			prepareStmt.setFloat(13, ppromo2);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;//0= se creo correctamente
@@ -103,13 +109,13 @@ public class consultas {
 		
 	}
 	
-	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String umed, float cant, float prec, float prev){
+	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, unimedida=?, cantidad=?, precioCo=?, precioVe=? where codproducto=?";
+			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, newcod);
 			prepareStmt.setString(2, prod);
@@ -118,7 +124,13 @@ public class consultas {
 			prepareStmt.setFloat(5, cant);
 			prepareStmt.setFloat(6, prec);
 			prepareStmt.setFloat(7, prev);
-			prepareStmt.setString(8, cod);
+			prepareStmt.setString(8, promo1);
+			prepareStmt.setFloat(9, cpromo1);
+			prepareStmt.setFloat(10, ppromo1);
+			prepareStmt.setString(11, promo2);
+			prepareStmt.setFloat(12, cpromo2);
+			prepareStmt.setFloat(13, ppromo2);
+			prepareStmt.setString(14, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {
@@ -306,7 +318,108 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia){
+	public ResultSet buscarCliente(String id){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_clientes where id = '" + id + "'");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarClientes(){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_clientes order by nombre");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarUltimoCliente(){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_clientes order by id desc limit 1");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public int crearCliente(String nombre, String documento, String nroDocumento, String direccion, String correo, String telefono){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_clientes (id, tipodoc, nrodoc, nombre, direccion, telefono, correo)" + " values (?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setString(2, documento );
+			prepareStmt.setString(3, nroDocumento);
+			prepareStmt.setString(4, nombre);
+			prepareStmt.setString(5, direccion);
+			prepareStmt.setString(6, telefono );
+			prepareStmt.setString(7, correo);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "CLIENTE CREADO CORRECTAMENTE");
+			return 0;//0= se creo correctamente
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: CLIENTE EXISTENTE");
+			return 1;//1= NO se creo correctamente
+		}
+	}
+	
+	public ResultSet modificarCliente(int id, String nombre, String documento, String nroDocumento, String direccion, String correo, String telefono){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_clientes set tipodoc=?, nrodoc=?, nombre=?, direccion=?, telefono=?, correo=? where id=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, documento );
+			prepareStmt.setString(2, nroDocumento);
+			prepareStmt.setString(3, nombre);
+			prepareStmt.setString(4, direccion);
+			prepareStmt.setString(5, telefono);
+			prepareStmt.setString(6, correo);
+			prepareStmt.setInt(7, id);
+			prepareStmt.execute();
+
+			JOptionPane.showMessageDialog(null, "Cliente modificado correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet eliminarCliente(String usu){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "delete from tb_usuarios where usuario = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, usu);		
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia, int idcliente, String nota, int metpago){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		java.util.Date d = new java.util.Date();
@@ -317,7 +430,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ventas (codventa, cliente, fecha, usuario, totcompra, totventa, ganancia)" + " values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ventas (codventa, cliente, fecha, usuario, totcompra, totventa, ganancia, idcliente, nota, metpago)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, cliente);
@@ -326,6 +439,9 @@ public class consultas {
 			prepareStmt.setDouble(5, totCompra);
 			prepareStmt.setDouble(6, totVenta);
 			prepareStmt.setDouble(7, ganancia);
+			prepareStmt.setDouble(8, idcliente);
+			prepareStmt.setString(9, nota);
+			prepareStmt.setInt(10, metpago);
 			prepareStmt.execute();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);

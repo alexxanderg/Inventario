@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import clases.AbstractJasperReports;
+import clases.Cliente;
 import clases.Usuarios;
 import gui_principal.EleccionVentanas;
 import gui_ventas.Ventas;
@@ -52,6 +53,7 @@ import javax.swing.JComboBox;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.DefaultComboBoxModel;
 
 public class Reportes extends JFrame implements ActionListener, WindowListener, KeyListener {
 
@@ -97,6 +99,10 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JTextField textField_4;
 	private JLabel lblDel;
 	private JLabel lblDel_1;
+	private JComboBox cbMetodoPago;
+	private JLabel lblComprasDeCliente;
+	private JButton btnVerComprasCliente;
+	private JComboBox <Cliente> cbCliente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -118,7 +124,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		addWindowListener(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1259, 656);
+		setBounds(100, 100, 1259, 706);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -148,20 +154,20 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblAl.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
 
 		lblVerDetalleDe = new JLabel("DETALLE DE VENTA");
-		lblVerDetalleDe.setBounds(25, 327, 574, 38);
+		lblVerDetalleDe.setBounds(25, 364, 574, 38);
 		lblVerDetalleDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerDetalleDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		txtNVenta = new JTextField();
 		txtNVenta.addKeyListener(this);
-		txtNVenta.setBounds(251, 379, 161, 34);
+		txtNVenta.setBounds(251, 416, 161, 34);
 		txtNVenta.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVenta.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVenta.setColumns(10);
 		txtNVenta.setBackground(SystemColor.controlHighlight);
 
 		btnGenerarRVDetallada = new JButton("Crear");
-		btnGenerarRVDetallada.setBounds(417, 379, 141, 35);
+		btnGenerarRVDetallada.setBounds(417, 416, 141, 35);
 		btnGenerarRVDetallada.addActionListener(this);
 		btnGenerarRVDetallada.setForeground(new Color(255, 255, 255));
 		btnGenerarRVDetallada.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -181,7 +187,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.setLayout(null);
 
 		textField = new JTextField();
-		textField.setBounds(618, 63, 18, 549);
+		textField.setBounds(618, 63, 18, 614);
 		textField.setRequestFocusEnabled(false);
 		textField.setIgnoreRepaint(true);
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -205,7 +211,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 						textField_1.setEditable(false);
 						textField_1.setColumns(10);
 						textField_1.setBackground(Color.DARK_GRAY);
-						textField_1.setBounds(0, 425, 619, 18);
+						textField_1.setBounds(0, 487, 1253, 18);
 						contentPane.add(textField_1);
 		
 				textField_3 = new JTextField();
@@ -284,18 +290,18 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
 		lblNmeroDeVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNmeroDeVenta.setBounds(49, 379, 192, 30);
+		lblNmeroDeVenta.setBounds(49, 416, 192, 30);
 		contentPane.add(lblNmeroDeVenta);
 
-		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia<br>de ticket de venta</html>");
+		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia de ticket</html>");
 		lblImprimirCopiaDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImprimirCopiaDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
-		lblImprimirCopiaDe.setBounds(736, 365, 507, 78);
+		lblImprimirCopiaDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		lblImprimirCopiaDe.setBounds(669, 496, 584, 51);
 		contentPane.add(lblImprimirCopiaDe);
 
 		lblNCopias = new JLabel("Cantidad de copias:");
 		lblNCopias.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNCopias.setBounds(680, 475, 192, 30);
+		lblNCopias.setBounds(680, 558, 192, 30);
 		contentPane.add(lblNCopias);
 
 		txtNCopias = new JTextField();
@@ -305,7 +311,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtNCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNCopias.setColumns(10);
 		txtNCopias.setBackground(SystemColor.controlHighlight);
-		txtNCopias.setBounds(882, 470, 146, 35);
+		txtNCopias.setBounds(882, 553, 146, 35);
 		contentPane.add(txtNCopias);
 
 		btnImprimir = new JButton("IMPRIMIR");
@@ -313,7 +319,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		btnImprimir.setBackground(new Color(30, 144, 255));
-		btnImprimir.setBounds(1033, 467, 166, 91);
+		btnImprimir.setBounds(1035, 553, 166, 91);
 		contentPane.add(btnImprimir);
 
 		txtNVentaCopia = new JTextField();
@@ -322,12 +328,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtNVentaCopia.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtNVentaCopia.setColumns(10);
 		txtNVentaCopia.setBackground(SystemColor.controlHighlight);
-		txtNVentaCopia.setBounds(882, 523, 146, 35);
+		txtNVentaCopia.setBounds(882, 606, 146, 35);
 		contentPane.add(txtNVentaCopia);
 
 		lblNVenta = new JLabel("Ticket de venta N\u00B0:");
 		lblNVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNVenta.setBounds(680, 528, 192, 30);
+		lblNVenta.setBounds(680, 611, 192, 30);
 		contentPane.add(lblNVenta);
 		
 		btngenerarReporteVentas = new JButton("<html>VER\u00A0VENTAS<br>\u00A0Y DETALLES</html>");
@@ -343,7 +349,8 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(btngenerarReporteVentas);
 		
 		cbUsuarios = new JComboBox();
-		cbUsuarios.setBounds(167, 106, 285, 33);
+		cbUsuarios.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		cbUsuarios.setBounds(22, 106, 260, 33);
 		contentPane.add(cbUsuarios);
 		
 		this.btnVerProductosIngresados = new JButton("Ver productos ingresados en esas fechas");
@@ -355,7 +362,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.btnVerProductosIngresados.setForeground(Color.WHITE);
 		this.btnVerProductosIngresados.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
-		this.btnVerProductosIngresados.setBounds(25, 552, 574, 38);
+		this.btnVerProductosIngresados.setBounds(25, 603, 574, 38);
 		this.contentPane.add(this.btnVerProductosIngresados);
 		
 		this.calendar = new JDateChooser();
@@ -381,23 +388,23 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.textField_2);
 		
 		this.calendar_2 = new JDateChooser();
-		this.calendar_2.setBounds(144, 509, 141, 32);
+		this.calendar_2.setBounds(144, 560, 141, 32);
 		this.contentPane.add(this.calendar_2);
 		
 		this.calendar_3 = new JDateChooser();
-		this.calendar_3.setBounds(458, 509, 141, 32);
+		this.calendar_3.setBounds(458, 560, 141, 32);
 		this.contentPane.add(this.calendar_3);
 		
 		this.label = new JLabel("al:");
 		this.label.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
-		this.label.setBounds(339, 503, 55, 38);
+		this.label.setBounds(339, 554, 55, 38);
 		this.contentPane.add(this.label);
 		
-		this.lblRegistroDeIngresos = new JLabel("PRODUCTOS INGRESADOS");
+		this.lblRegistroDeIngresos = new JLabel("INGRESO DE PRODUCTOS");
 		this.lblRegistroDeIngresos.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblRegistroDeIngresos.setFont(new Font("Dialog", Font.BOLD, 28));
-		this.lblRegistroDeIngresos.setBounds(10, 454, 598, 38);
+		this.lblRegistroDeIngresos.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		this.lblRegistroDeIngresos.setBounds(10, 505, 598, 38);
 		this.contentPane.add(this.lblRegistroDeIngresos);
 		
 		this.textField_4 = new JTextField();
@@ -411,7 +418,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.textField_4.setEditable(false);
 		this.textField_4.setColumns(10);
 		this.textField_4.setBackground(Color.DARK_GRAY);
-		this.textField_4.setBounds(0, 613, 1253, 18);
+		this.textField_4.setBounds(0, 659, 1253, 18);
 		this.contentPane.add(this.textField_4);
 		
 		lblDel = new JLabel("del:");
@@ -423,8 +430,36 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblDel_1 = new JLabel("del:");
 		lblDel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDel_1.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
-		lblDel_1.setBounds(25, 503, 55, 38);
+		lblDel_1.setBounds(25, 554, 55, 38);
 		contentPane.add(lblDel_1);
+		
+		cbMetodoPago = new JComboBox();
+		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Todos los metodos de pago", "Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
+		cbMetodoPago.setBounds(339, 106, 260, 33);
+		contentPane.add(cbMetodoPago);
+		
+		lblComprasDeCliente = new JLabel("COMPRAS DE CLIENTE");
+		lblComprasDeCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblComprasDeCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		lblComprasDeCliente.setBounds(764, 332, 347, 38);
+		contentPane.add(lblComprasDeCliente);
+		
+		btnVerComprasCliente = new JButton("Ver productos ingresados en esas fechas");
+		btnVerComprasCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnVerComprasCliente(arg0);
+			}
+		});
+		btnVerComprasCliente.setForeground(Color.WHITE);
+		btnVerComprasCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		btnVerComprasCliente.setBackground(new Color(30, 144, 255));
+		btnVerComprasCliente.setBounds(661, 425, 574, 38);
+		contentPane.add(btnVerComprasCliente);
+		
+		cbCliente = new JComboBox();
+		cbCliente.setBounds(822, 381, 242, 33);
+		contentPane.add(cbCliente);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbUsuarios, btnGenerarRVD, btngenerarReporteVentas, txtNVenta, btnGenerarRVDetallada, txtMenores, btnGenerarMenores, txtMayores, btnGenerarMayores, txtNCopias, txtNVentaCopia, btnImprimir, btnCerrar}));
 		
 		
@@ -433,6 +468,10 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 	private void cargar() {
 		this.setLocationRelativeTo(null);
+		
+
+		Cliente cliente = new Cliente();
+		cliente.cargarEmpresas(cbCliente);
 		
 		Usuarios usu = new Usuarios();
 		Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
@@ -472,6 +511,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		try {
 			con = MySQLConexion.getConection();
 			String usu = cbUsuarios.getSelectedItem().toString();
+			int metpago = cbMetodoPago.getSelectedIndex()-1;
 
 			int añoi = calendar.getCalendar().get(Calendar.YEAR);
 			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
@@ -485,18 +525,30 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);
 			parameters.put("prtFechaF", fechaf);
+			parameters.put("metpago", metpago);
 
 			/*new AbstractJasperReports().createReport(con, "rVentas.jasper", parameters);
 			AbstractJasperReports.showViewer();*/
 			
 			if(usu.equals("TODOS")){
-				new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if (metpago == -1) {
+					new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();					
+				}else{
+					new AbstractJasperReports().createReport(con, "rVentasVendedorTodosXMpago.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
 			}
 			else{
 				parameters.put("prmtVendedor", usu);
-				new AbstractJasperReports().createReport(con, "rVentasVendedor.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if (metpago == -1) {
+					new AbstractJasperReports().createReport(con, "rVentasVendedorTodoMetodoxUsuario.jasper", parameters);
+					AbstractJasperReports.showViewer();			
+				}
+				else{
+					new AbstractJasperReports().createReport(con, "rVentasVendedor.jasper", parameters);
+					AbstractJasperReports.showViewer();					
+				}
 			}			
 			con.close();
 		} catch (Exception e) {
@@ -509,6 +561,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		try {
 			con = MySQLConexion.getConection();
 			String usu = cbUsuarios.getSelectedItem().toString();
+			int metpago = cbMetodoPago.getSelectedIndex()-1;
 			
 			int añoi = calendar.getCalendar().get(Calendar.YEAR);
 			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
@@ -532,15 +585,28 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", timeStampDateI);
 			parameters.put("prtFechaF", timeStampDateF);
+			parameters.put("metpago", metpago);
+			parameters.put("usu", usu);
 
 			if(usu.equals("TODOS")){
-				new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if (metpago == -1) {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();					
+				} else {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedorTodosXMpago.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
 			}
 			else{
 				parameters.put("prmtVendedor", usu);
-				new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if (metpago == -1) {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedorTodoMetodoxUsuario.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else{
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
+					AbstractJasperReports.showViewer();					
+				}
 			}
 			con.close();
 		} catch (Exception ex) {
@@ -827,5 +893,23 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
+	}
+	
+	protected void actionPerformedBtnVerComprasCliente(ActionEvent arg0) {
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+			
+			String nrodoc = cbCliente.getItemAt(cbCliente.getSelectedIndex()).getNrodoc();
+			
+			Map<String, Object> parameters = new HashMap();
+			parameters.put("prtNroDoc", nrodoc);
+			new AbstractJasperReports().createReport(con, "rComprasCliente.jasper", parameters);
+			AbstractJasperReports.showViewer();
+			con.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "No se encontó la venta " + e);
+		}
+		
 	}
 }
