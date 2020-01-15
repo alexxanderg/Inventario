@@ -9,7 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.AbstractJasperReports;
+import clases.Cliente;
 import clases.Productos;
+import gui_clientes.NuevoCliente;
 import gui_ventas.ListaDeProductos;
 import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.EleccionVentanas;
@@ -62,6 +64,9 @@ import java.awt.Component;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
 
@@ -87,7 +92,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JLabel label_2;
 	private JTextField txtVuelto;
 	private JLabel label_3;
-	private JTextField txtCliente;
 	private JLabel lblNombreDeCliente;
 	private JTextField txtCopias;
 	private JLabel lblNImpresiones;
@@ -101,6 +105,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	int nventana = 0;
 	private JLabel lblLogo;
 	private JButton btnReportes;
+	private JComboBox <Cliente> cbClientes;
+	private JButton btnAnadirCliente;
+	private JTextField txtInfoAdicional;
+	private JLabel lblInfomacinAdicional;
+	private JLabel lblMetodoDePago;
+	private JComboBox<Cliente> cbMetodoPago;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -122,7 +132,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1413, 791);
+		setBounds(100, 100, 1386, 747);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -141,7 +151,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		lblTotal.setBackground(new Color(50, 205, 50));
 		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotal.setBounds(1123, 356, 202, 50);
+		lblTotal.setBounds(1123, 556, 202, 50);
 		contentPane.add(lblTotal);
 		btnNuevaVentana.setForeground(new Color(0, 255, 0));
 		btnNuevaVentana.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 39));
@@ -240,7 +250,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.BLACK);
 		label.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label.setBounds(979, 147, 178, 38);
+		label.setBounds(979, 347, 178, 38);
 		contentPane.add(label);
 
 		label_1 = new JLabel("S/.");
@@ -248,7 +258,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setForeground(Color.BLACK);
 		label_1.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_1.setBounds(979, 181, 76, 38);
+		label_1.setBounds(979, 381, 76, 38);
 		contentPane.add(label_1);
 
 		txtPaga = new JTextField();
@@ -258,7 +268,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtPaga.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPaga.setColumns(10);
 		txtPaga.setBackground(SystemColor.controlHighlight);
-		txtPaga.setBounds(1022, 189, 181, 34);
+		txtPaga.setBounds(1022, 389, 181, 34);
 		contentPane.add(txtPaga);
 
 		label_2 = new JLabel("Su vuelto es:");
@@ -266,7 +276,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(Color.BLACK);
 		label_2.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_2.setBounds(979, 240, 257, 38);
+		label_2.setBounds(979, 440, 257, 38);
 		contentPane.add(label_2);
 
 		txtVuelto = new JTextField();
@@ -276,7 +286,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtVuelto.setEditable(false);
 		txtVuelto.setColumns(10);
 		txtVuelto.setBackground(SystemColor.controlHighlight);
-		txtVuelto.setBounds(1022, 279, 181, 34);
+		txtVuelto.setBounds(1022, 479, 181, 34);
 		contentPane.add(txtVuelto);
 
 		label_3 = new JLabel("S/.");
@@ -284,16 +294,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(Color.BLACK);
 		label_3.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_3.setBounds(979, 275, 64, 38);
+		label_3.setBounds(979, 475, 64, 38);
 		contentPane.add(label_3);
-
-		txtCliente = new JTextField();
-		txtCliente.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCliente.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		txtCliente.setColumns(10);
-		txtCliente.setBackground(SystemColor.controlHighlight);
-		txtCliente.setBounds(979, 102, 346, 34);
-		contentPane.add(txtCliente);
 
 		lblNombreDeCliente = new JLabel("Nombre de Cliente:");
 		lblNombreDeCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -302,7 +304,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		txtCopias = new JTextField();
 		txtCopias.addKeyListener(this);
-		txtCopias.setText("0");
+		txtCopias.setText("2");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCopias.setForeground(Color.BLACK);
 		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -323,7 +325,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		lblTotalS.setBackground(new Color(50, 205, 50));
 		lblTotalS.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalS.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotalS.setBounds(982, 356, 175, 50);
+		lblTotalS.setBounds(982, 556, 143, 50);
 		contentPane.add(lblTotalS);
 
 		lblLogo = new JLabel("");
@@ -344,8 +346,48 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnReportes.setBackground(new Color(30, 144, 255));
 		btnReportes.setBounds(642, 166, 139, 86);
 		contentPane.add(btnReportes);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtCliente, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
+		
+		cbClientes = new JComboBox();
+		//cbClientes.setSelectedIndex(0);
+		cbClientes.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
+		cbClientes.setBounds(979, 103, 346, 38);
+		contentPane.add(cbClientes);
+		
+		btnAnadirCliente = new JButton("+");
+		btnAnadirCliente.addActionListener(this);
+		btnAnadirCliente.setBackground(new Color(50, 205, 50));
+		btnAnadirCliente.setForeground(new Color(255, 255, 255));
+		btnAnadirCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnAnadirCliente.setBounds(1269, 141, 56, 38);
+		contentPane.add(btnAnadirCliente);
+		
+		txtInfoAdicional = new JTextField();
+		txtInfoAdicional.setHorizontalAlignment(SwingConstants.LEFT);
+		txtInfoAdicional.setForeground(SystemColor.windowBorder);
+		txtInfoAdicional.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtInfoAdicional.setColumns(10);
+		txtInfoAdicional.setBackground(SystemColor.controlHighlight);
+		txtInfoAdicional.setBounds(979, 213, 346, 34);
+		contentPane.add(txtInfoAdicional);
+		
+		lblInfomacinAdicional = new JLabel("Informaci\u00F3n adicional:");
+		lblInfomacinAdicional.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
+		lblInfomacinAdicional.setBounds(979, 179, 311, 34);
+		contentPane.add(lblInfomacinAdicional);
+		
+		lblMetodoDePago = new JLabel("Metodo de pago:");
+		lblMetodoDePago.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
+		lblMetodoDePago.setBounds(979, 263, 311, 34);
+		contentPane.add(lblMetodoDePago);
+		
+		cbMetodoPago = new JComboBox();
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
+		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
+		cbMetodoPago.setBounds(979, 298, 346, 38);
+		contentPane.add(cbMetodoPago);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
 		cargar();
+		//cargarBuscadorCliente();
 	}
 
 	public void windowActivated(WindowEvent arg0) {
@@ -409,6 +451,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnAnadirCliente) {
+			actionPerformedBtnAnadirCliente(arg0);
+		}
 		if (arg0.getSource() == btnNuevoProducto) {
 			actionPerformedBtnNuevoProducto(arg0);
 		}
@@ -472,7 +517,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				float cant = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
 				float preU = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
 				double subT = cant * preU;
-				subT = redondearDecimales(subT, 1);
+				subT = redondearDecimales(subT, 2);
 				tbCompras.setValueAt(subT, i, 5);
 			} catch (Exception e) {
 				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -488,7 +533,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			for (int i = 0; i < tbCompras.getRowCount(); i++) {
 				try {
 					Total = Total + Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-					Total = redondearDecimales(Total, 1);
+					Total = redondearDecimales(Total, 2);
 					lblTotal.setText("" + Total + "0");
 					txtPaga.setText(null);
 					txtVuelto.setText(null);
@@ -510,8 +555,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void cargar() {
-		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		 this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
+
+		Cliente cliente = new Cliente();
+		cliente.cargarEmpresas(cbClientes);
+		
 		if (nventana == 1)
 			txtVentaDeProductos.setText("VENTA DE PRODUTOS");
 		else
@@ -536,6 +585,20 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		dtm.setColumnIdentifiers(
 				new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
 		ajustarAnchoColumnas();
+	}
+	
+	public void cargarBuscadorCliente() {
+		consultas model = new consultas();
+		ResultSet rs = model.cargarClientes();
+		ac.setMode(0);
+		try {
+			while (rs.next()) {
+				// ac.addItem(rs.getString("codproducto"));
+				ac.addItem(rs.getString("id") + "_" + rs.getString("nombre"));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
 	}
 
 	private int anchoColumna(int porcentaje) {
@@ -702,6 +765,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		if (opc == 0) {
 			// int rpt = verificarTabla();
 			int rpt = 1;
+			String cli = null;
+			String nrodoc = null;
 			if (rpt == 1) {
 				double pretotC = 0;
 				double pretotV = 0;
@@ -736,22 +801,29 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						// CALCULO DE PRECIOS
 						for (int i = 0; i < listprod.size(); i++) {
 							pretotV = pretotV + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioVe());
-							pretotV = redondearDecimales(pretotV, 1);
+							pretotV = redondearDecimales(pretotV, 2);
 							pretotC = pretotC + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioCo());
-							pretotC = redondearDecimales(pretotC, 1);
-							totalOriginalV = totalOriginalV + redondearDecimales(listprod.get(i).getPrecioVe(), 1);
+							pretotC = redondearDecimales(pretotC, 2);
+							totalOriginalV = totalOriginalV + redondearDecimales(listprod.get(i).getPrecioVe(), 2);
 						}
 
 						int codVenta = 0;
 						try {
-							String cliente = txtCliente.getText();
+							cli = cbClientes.getSelectedItem().toString();
+							int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
+							nrodoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
+							
 
 							float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
 							double gananciaOriginal = pretotV - pretotC;
-							gananciaOriginal = redondearDecimales(gananciaOriginal, 1);
+							gananciaOriginal = redondearDecimales(gananciaOriginal, 2);
 							double gananciaFinal = preTotalVentaFinal - pretotC;
-							gananciaFinal = redondearDecimales(gananciaFinal, 1);
-							model.Vender(cliente, usuario, pretotC, preTotalVentaFinal, gananciaFinal);
+							gananciaFinal = redondearDecimales(gananciaFinal, 2);
+							String nota = txtInfoAdicional.getText();
+							int metpago = cbMetodoPago.getSelectedIndex();
+							
+							
+							model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota, metpago);
 							rs = model.ObtenerUltimoCodigo();
 							try {
 								while (rs.next())
@@ -774,15 +846,15 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 										y = listprod.size();
 									}
 								}
-								preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 1);
+								preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 2);
 
 								double preTotalUnidadOriginal = cantventa * preVeUnidadOriginal;
-								preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 1);
+								preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 2);
 
 								double preUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
-								preUnidadFinal = redondearDecimales(preUnidadFinal, 1);
+								preUnidadFinal = redondearDecimales(preUnidadFinal, 2);
 								double preTotalUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 1);
+								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 2);
 
 								model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
 										preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
@@ -795,15 +867,17 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 						// IMPRIMIR TICKET
 						int copias = Integer.parseInt(txtCopias.getText());
-						String pagocon = txtPaga.getText().toString();
-						String vueltoes = txtVuelto.getText().toString();
+						String nota = txtInfoAdicional.getText();
 						Connection con = null;
+						
 						for (int i = 0; i < copias; i++) {
 							try {
 								Map<String, Object> parameters = new HashMap();
 								parameters.put("prtNVenta", codVenta);
-								parameters.put("prtPaga", pagocon);
-								parameters.put("prtVuelto", vueltoes);
+								parameters.put("prtCliente", cli);
+								parameters.put("prtNroDoc", nrodoc);
+								parameters.put("prtVendedor", usuario);
+								parameters.put("prtNota", nota);
 								/*
 								 * new AbstractJasperReports().createReport(
 								 * con.getConn(), "rPrueba.jasper", null);
@@ -811,19 +885,30 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 								 */
 								try {
 									con = MySQLConexion.getConection();
-									JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("bin/rComprobante.jasper");
-									JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters,con);
-									// AbstractJasperReports.showViewer();
+									/*JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("bin/rComprobante.jasper");
+									JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, con);
+									AbstractJasperReports.showViewer();
 									JasperPrintManager.printReport(jasperPrint, false);
+									
+									*/
+									JasperPrint impressao = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"), parameters, con);
+									
+									//AbstractJasperReports.showViewer();
+									JasperPrintManager.printReport(impressao, false);
+									/*this.setAlwaysOnTop(false);
+									//JOptionPane.showMessageDialog(null, "VENTA CORRECTA");  
+									this.setAlwaysOnTop(true);
+									*/
+									
 								} catch (JRException ex) {
-									System.err.println("Error iReport: " + ex.getMessage());
+									//JOptionPane.showMessageDialog(null, "ERROR " + ex.getMessage());
+									//System.err.println("Error iReport: " + ex.getMessage());
 								}
 
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, "ERROR " + e);
 							}
 						}
-						
 						JOptionPane.showMessageDialog(null, "VENTA CORRECTA :)");
 						limpiar();
 					}
@@ -887,7 +972,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			 * redondearDecimales(preUnidad, 2); preSubTotal =
 			 * redondearDecimales(preSubTotal, 2);
 			 */
-			temp = redondearDecimales(temp, 1);
+			temp = redondearDecimales(temp, 2);
 			// JOptionPane.showMessageDialog(null, cantidad + " - " + preUnidad
 			// + " - " + preSubTotal + " - " + temp);
 
@@ -908,7 +993,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			sumarSubTotales();
 			sumarTotal();
 			txtProductos.requestFocus();
-			txtCliente.setText(null);
 			txtPaga.setText(null);
 			txtVuelto.setText(null);
 		} catch (Exception e) {
@@ -1024,7 +1108,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		String preUnidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 4).toString();
 		String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 		String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen);
+		String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
+		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen, cod);
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER) {
 			cp.setVisible(true);
@@ -1035,10 +1120,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void actualizartabla(float cant, float preu, float preo, float pret) {
-		tbCompras.setValueAt(redondearDecimales(cant, 1), tbCompras.getSelectedRow(), 0);
-		tbCompras.setValueAt(redondearDecimales(preu, 1), tbCompras.getSelectedRow(), 4);
-		tbCompras.setValueAt(redondearDecimales(preo, 1), tbCompras.getSelectedRow(), 7);
-		tbCompras.setValueAt(redondearDecimales(pret, 1), tbCompras.getSelectedRow(), 5);
+		tbCompras.setValueAt(redondearDecimales(cant, 2), tbCompras.getSelectedRow(), 0);
+		tbCompras.setValueAt(redondearDecimales(preu, 2), tbCompras.getSelectedRow(), 4);
+		tbCompras.setValueAt(redondearDecimales(preo, 2), tbCompras.getSelectedRow(), 7);
+		tbCompras.setValueAt(redondearDecimales(pret, 2), tbCompras.getSelectedRow(), 5);
 		// sumarSubTotales();
 		sumarTotal();
 	}
@@ -1047,7 +1132,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		try {
 			double pagacon = Float.parseFloat(txtPaga.getText());
 			double tot = Float.parseFloat(lblTotal.getText());
-			double vuelto = redondearDecimales(pagacon - tot, 1);
+			double vuelto = redondearDecimales(pagacon - tot, 2);
 			if (vuelto < 0)
 				txtVuelto.setText("0.00");
 			else
@@ -1084,7 +1169,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			String preUnidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 4).toString();
 			String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 			String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
-			ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,preOrigen);
+			String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
+			ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,preOrigen, cod);
 
 			cp.setVisible(true);
 			this.setEnabled(false);
@@ -1110,5 +1196,16 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		Reportes r = new Reportes(usuario, this);
 		r.setVisible(true);
 		dispose();
+	}
+	
+	protected void actionPerformedBtnAnadirCliente(ActionEvent arg0) {
+		NuevoCliente nc = new NuevoCliente(null, this, usuario);
+		nc.setVisible(true);
+		nc.setLocationRelativeTo(null);
+		this.setEnabled(false);		
+	}
+	
+	public void anadirClienteCombpo(Cliente c){
+		cbClientes.addItem(c);
 	}
 }

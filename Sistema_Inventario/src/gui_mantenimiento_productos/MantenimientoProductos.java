@@ -93,7 +93,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		usuario = temp2;
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1096, 778);
+		setBounds(100, 100, 1096, 731);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -133,7 +133,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		contentPane.add(lblCdigo);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 278, 1061, 450);
+		scrollPane.setBounds(10, 278, 1061, 402);
 		contentPane.add(scrollPane);
 
 		tbProductos = new JTable();

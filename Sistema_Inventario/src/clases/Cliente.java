@@ -1,4 +1,5 @@
 package clases;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComboBox;
@@ -10,7 +11,6 @@ public class Cliente {
 	String tipodoc;
 	String nrodoc;
 	String nombre;
-	/* Pryebaskasdlñasdcasasdfasdf*/
 	String direccion;
 	String telefono;
 	String correo;
@@ -105,4 +105,5 @@ public class Cliente {
 	public void setRs(ResultSet rs) {
 		this.rs = rs;
 	}
+	
 }
