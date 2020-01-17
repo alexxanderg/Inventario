@@ -23,10 +23,12 @@ cantp1		float,
 prep1		float,
 promo2		varchar(20),
 cantp2		float,
-prep2		float
+prep2		float,
+
+marca		varchar(40),
+color		varchar(40)
 
 );
-
 
 alter table tb_productos
   add prep2		float;

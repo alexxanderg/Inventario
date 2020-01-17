@@ -48,12 +48,13 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblCreditos;
+	
+	consultas model = new consultas();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					
+				try {					
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeela");
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
@@ -69,8 +70,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 					
-					//UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-					
+					//UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");					
 					Login frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
@@ -192,6 +192,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario);
 			if(usu.getTipo() == 0){
 				EleccionVentanas el = new EleccionVentanas(nombreUsuario );
+				model.registrarUsuarioIngreso(usuIngre);
 				el.setLocationRelativeTo(null);
 				el.setVisible(true);
 				txtUsuario.requestFocus();
@@ -201,6 +202,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			}
 			else{
 				Ventas v = new Ventas(1, null, nombreUsuario);
+				model.registrarUsuarioIngreso(usuIngre);
 				v.setVisible(true);
 				txtUsuario.setText(null);
 				txtPass.setText(null);

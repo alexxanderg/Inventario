@@ -1,5 +1,6 @@
 package mysql;
 
+import java.awt.HeadlessException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,6 +42,50 @@ public class consultas {
 		return usuario;
 	}
 	
+//	public int registrarUsuarioIngreso(String usu){
+//		Connection con = MySQLConexion.getConection();
+//		java.sql.Statement st;
+//		ResultSet rs = null;
+//		
+//		java.util.Date date = new Date();
+//		//Object date2 = new java.sql.Timestamp(date.getTime());
+//		
+//		try {
+//			st = con.createStatement();
+//			String sql = "insert into tb_registro_ingreso(fecha_registro,usuario)values(now(),?)";
+//			PreparedStatement prepareStmt = con.prepareStatement(sql);
+//			prepareStmt.setString(1, usu);
+//			prepareStmt.execute();
+//		} catch (Exception e) {
+//			JOptionPane.showMessageDialog(null, "ERROR al añadir stock: " + e);
+//		}
+//		return 0;
+//	}
+	
+	public ResultSet registrarUsuarioIngreso(String usu){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st = null;
+		java.sql.Statement st1 = null;
+		ResultSet rs = null;
+		try {
+			st1 = con.createStatement();
+			rs = st1.executeQuery("select * from db_inventario.tb_registro_ingreso where usuario='"+usu+"' and day(fecha_registro)=day(now())");
+			if(rs.next()==true){
+//				JOptionPane.showMessageDialog(null, "Ya creado");
+			}else{
+				st = con.createStatement();
+				String sql = "insert into tb_registro_ingreso(fecha_registro,usuario)values(now(),?)";
+				PreparedStatement prepareStmt = con.prepareStatement(sql);
+				prepareStmt.setString(1, usu);
+				prepareStmt.execute();
+//				JOptionPane.showMessageDialog(null, "USUARIO CREADO CORRECTAMENTE");				
+			}			
+		} catch (Exception e) {
+//			JOptionPane.showMessageDialog(null, "Error");
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarProductos(){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -78,13 +123,13 @@ public class consultas {
 		return rs;
 	}
 	
-	public int ingresarProducto(String cod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2){
+	public int ingresarProducto(String cod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2,String marca,String color){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, producto, detalles, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_productos (codproducto, producto, detalles, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2,marca,color)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);
 			prepareStmt.setString(2, prod);
@@ -99,6 +144,8 @@ public class consultas {
 			prepareStmt.setString(11, promo2);
 			prepareStmt.setFloat(12, cpromo2);
 			prepareStmt.setFloat(13, ppromo2);
+			prepareStmt.setString(14, marca);
+			prepareStmt.setString(15, color);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;//0= se creo correctamente
@@ -109,13 +156,13 @@ public class consultas {
 		
 	}
 	
-	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2){
+	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2,String marca,String color){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
+			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, newcod);
 			prepareStmt.setString(2, prod);
@@ -130,7 +177,9 @@ public class consultas {
 			prepareStmt.setString(11, promo2);
 			prepareStmt.setFloat(12, cpromo2);
 			prepareStmt.setFloat(13, ppromo2);
-			prepareStmt.setString(14, cod);
+			prepareStmt.setString(14, marca);
+			prepareStmt.setString(15, color);
+			prepareStmt.setString(16, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {

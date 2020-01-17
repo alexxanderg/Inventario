@@ -9,8 +9,10 @@ public class Productos {
 	float cantventa;
 	float precioCo;
 	float precioVe;
+	String marca;
+	String color;
 	
-	public Productos(String codigo, String producto, String detalles, String unimedida, float cantidad, float cantventa, float precioCo, float precioVe){
+	public Productos(String codigo, String producto, String detalles, String unimedida, float cantidad, float cantventa, float precioCo, float precioVe,String marca,String color){
 		this.codigo = codigo;
 		this.producto = producto;
 		this.detalles = detalles;
@@ -19,6 +21,8 @@ public class Productos {
 		this.cantventa = cantventa;
 		this.precioCo = precioCo;
 		this.precioVe = precioVe;
+		this.marca = marca;
+		this.color = color;
 	}
 
 	public float getCantventa() {
@@ -83,6 +87,22 @@ public class Productos {
 
 	public void setPrecioVe(float precioVe) {
 		this.precioVe = precioVe;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 }

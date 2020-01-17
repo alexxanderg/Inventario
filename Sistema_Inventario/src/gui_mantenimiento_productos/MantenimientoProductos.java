@@ -223,14 +223,14 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle", "Uni. Medida", "Cantidad",
+		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Marca","Color", "Uni. Medida", "Cantidad",
 				"PrecioCompra", "PrecioVenta" });
 		consultas model = new consultas();
 		rs = model.cargarProductos();
 		try {
 			while (rs.next())
 				dtm.addRow(new Object[] { rs.getString("codproducto"), rs.getString("producto"),
-						rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("cantidad"),
+						rs.getString("detalles"),rs.getString("marca"),rs.getString("color"), rs.getString("unimedida"), rs.getFloat("cantidad"),
 						rs.getFloat("precioCo"), rs.getFloat("precioVe") });
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -262,9 +262,11 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(30)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(8)); // Uni Med
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(6)); // Stock
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // PrecioCompra
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // PrecioVenta
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(4)); // Stock
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(5)); // PrecioCompra
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(5)); // PrecioVenta
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(6)); // Marca
+		tcm.getColumn(8).setPreferredWidth(anchoColumna(6)); // Color
 
 		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -300,8 +302,10 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
 			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
 			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			String marcaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
+			String colorProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
 			ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-					uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto, this);
+					uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto, colorProducto, this);
 			mp.setVisible(true);
 			this.setEnabled(false);
 		} catch (Exception e) {
@@ -412,6 +416,8 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 					String cantidadProducto = rs.getString("cantidad");
 					String preciocoProducto = rs.getString("precioCo");
 					String preciovePoducto = rs.getString("precioVe");
+					String marcaProducto = rs.getString("marca");
+					String colorProducto = rs.getString("color");
 					
 					String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
 					int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
@@ -419,7 +425,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 					
 					if (seleccion == 0) {//Modificar
 						ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-								uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto, this);
+								uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
 						mp.setVisible(true);
 						this.setEnabled(false);
 						txtCodigo.setText("");						
@@ -453,6 +459,8 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 						String cantidadProducto = rs.getString("cantidad");
 						String preciocoProducto = rs.getString("precioCo");
 						String preciovePoducto = rs.getString("precioVe");
+						String marcaProducto = rs.getString("marca");
+						String colorProducto = rs.getString("color");
 						
 						String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
 						int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
@@ -460,7 +468,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 						
 						if (seleccion == 0) {//Modificar
 							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-									uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto, this);
+									uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
 							mp.setVisible(true);
 							this.setEnabled(false);
 							txtCodigo.setText("");						

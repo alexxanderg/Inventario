@@ -790,7 +790,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 									float cantventa = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
 									float pCo = rs.getFloat("precioCo");
 									float pVe = rs.getFloat("precioVe");
-									p = new Productos(cod, prod, det, umed, cant, cantventa, pCo, pVe);
+									String marca = rs.getString("marca");
+									String color = rs.getString("color");
+									p = new Productos(cod, prod, det, umed, cant, cantventa, pCo, pVe,marca,color);
 								}
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, "ERROR: " + e);
