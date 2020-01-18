@@ -9,6 +9,13 @@ nombre		varchar(50),
 tipo 	 	int
 );
 
+create table tb_registro_ingreso(
+id			int primary key auto_increment,
+fecha_registro	datetime,
+usuario		varchar(20),
+foreign key (usuario) references tb_usuarios(usuario)
+);
+
 create table tb_productos(
 codproducto	varchar(100) not null primary key,
 producto	varchar(40),
