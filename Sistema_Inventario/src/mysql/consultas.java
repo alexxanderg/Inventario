@@ -97,6 +97,17 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet cargarProductosSinStock(){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from db_inventario.tb_productos where cantidad > 0 order by producto");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
 	
 	public ResultSet buscarProducto(String Prod){
 		Connection con = MySQLConexion.getConection();

@@ -479,7 +479,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 	
 	protected void actionPerformedBtnCrear(ActionEvent arg0) {
 		try {
-			if(txtCodigo.getText().length() == 0 || txtProducto.getText().length() == 0 || txtDeta.getText().length() == 0 || txtCantidad.getText().length() == 0 || txtPreComInd.getText().length() == 0 || txtPrecioVenInd.getText().length() == 0 || cbUMedida.getSelectedIndex() == -1 || txtMarca.getText().length() == 0 || txtColor.getText().length() == 0){
+			if(txtCodigo.getText().length() == 0 || txtProducto.getText().length() == 0 || txtDeta.getText().length() == 0 || txtCantidad.getText().length() == 0 || txtPreComInd.getText().length() == 0 || txtPrecioVenInd.getText().length() == 0 || cbUMedida.getSelectedIndex() == -1){
 				this.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
 				this.setAlwaysOnTop(true);

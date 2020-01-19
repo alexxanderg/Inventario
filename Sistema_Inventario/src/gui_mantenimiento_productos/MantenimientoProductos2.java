@@ -73,6 +73,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 	private JLabel lblNuevoProducto;
 	private JLabel lblModificarProducto;
 	private JLabel lblEliminarProducto;
+	private JButton button;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -86,8 +87,6 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 			}
 		});
 	}
-	String cod;
-	
 
 	public MantenimientoProductos2(String temp2) {
 		usuario = temp2;
@@ -154,7 +153,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		lblNuevoProducto.setBounds(110, 196, 166, 26);
 		contentPane.add(lblNuevoProducto);
 
-		lblModificarProducto = new JLabel("Modificar producto");
+		lblModificarProducto = new JLabel("Registro 0\r\n");
 		lblModificarProducto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblModificarProducto.setFont(new Font("EngraversGothic BT", Font.PLAIN, 15));
 		lblModificarProducto.setBounds(269, 196, 160, 26);
@@ -165,13 +164,24 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		lblEliminarProducto.setFont(new Font("EngraversGothic BT", Font.PLAIN, 15));
 		lblEliminarProducto.setBounds(450, 196, 160, 26);
 		contentPane.add(lblEliminarProducto);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.txtCodigo, this.contentPane, this.lblCdigo, this.scrollPane, this.tbProductos}));
+
+		this.button = new JButton((Icon) null);
+		this.button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedButton(arg0);
+			}
+		});
+		this.button.setBackground(Color.BLACK);
+		this.button.setBounds(269, 86, 160, 105);
+		this.contentPane.add(this.button);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { this.txtCodigo, this.contentPane,
+				this.lblCdigo, this.scrollPane, this.tbProductos }));
 
 		cargarDatos();
 		cargarBuscador();
 		ajustarAnchoColumnas();
 		colortabla();
-		
+
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -180,7 +190,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		}
 	}
 
-	public void colortabla(){
+	public void colortabla() {
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
 		headerRenderer.setBackground(new Color(239, 198, 46));
 
@@ -188,21 +198,22 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 			tbProductos.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
 		}
 	}
+
 	public void cargarDatos() {
 		this.setLocationRelativeTo(null);
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Marca","Color", "Uni. Medida", "Cantidad",
-				"PrecioCompra", "PrecioVenta" });
+		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle", "Marca", "Color", "Uni. Medida",
+				"Cantidad", "Registro" });
 		consultas model = new consultas();
-		rs = model.cargarProductos();
+		rs = model.cargarProductosSinStock();
 		try {
 			while (rs.next())
 				dtm.addRow(new Object[] { rs.getString("codproducto"), rs.getString("producto"),
-						rs.getString("detalles"),rs.getString("marca"),rs.getString("color"), rs.getString("unimedida"), rs.getFloat("cantidad"),
-						rs.getFloat("precioCo"), rs.getFloat("precioVe") });
+						rs.getString("detalles"), rs.getString("marca"), rs.getString("color"),
+						rs.getString("unimedida"), rs.getFloat("cantidad"), "0" });
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -229,31 +240,30 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Codigo
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(25)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(12)); // Codigo
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(24)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(24)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Uni Med
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(6)); // Stock
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // PrecioCompra
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(10)); // PrecioVenta
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Stock
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(7)); // PrecioCompra
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(7)); // PrecioVenta
 		tcm.getColumn(7).setPreferredWidth(anchoColumna(6)); // Marca
-		tcm.getColumn(8).setPreferredWidth(anchoColumna(6)); // Color
 
-//		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
-//		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
-//		tbProductos.getColumnModel().getColumn(3).setCellRenderer(tcr0);
-//
-//		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-//		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-//		tbProductos.getColumnModel().getColumn(4).setCellRenderer(tcr);
-//
-//		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
-//		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
-//		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);
-//
-//		DefaultTableCellRenderer tcr3 = new DefaultTableCellRenderer();
-//		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
-//		tbProductos.getColumnModel().getColumn(6).setCellRenderer(tcr3);
+		// DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
+		// tcr0.setHorizontalAlignment(SwingConstants.CENTER);
+		// tbProductos.getColumnModel().getColumn(3).setCellRenderer(tcr0);
+
+		// DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		// tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		// tbProductos.getColumnModel().getColumn(4).setCellRenderer(tcr);
+		//
+		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
+		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
+		tbProductos.getColumnModel().getColumn(6).setCellRenderer(tcr2);
+
+		DefaultTableCellRenderer tcr3 = new DefaultTableCellRenderer();
+		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
+		tbProductos.getColumnModel().getColumn(7).setCellRenderer(tcr3);
 	}
 
 	public void windowActivated(WindowEvent arg0) {
@@ -283,32 +293,35 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 	protected void windowClosingThis(WindowEvent arg0) {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Cerrar Sistema?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0){
+		if (opc == 0) {
 			try {
 				DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
-				Date today = Calendar.getInstance().getTime();       
+				Date today = Calendar.getInstance().getTime();
 				String reportDate = df.format(today);
-				File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
-				directorio.mkdirs(); 
+				File directorio = new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA");
+				directorio.mkdirs();
 				Process p;
 				p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
 				InputStream is = p.getInputStream();
-				FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+				FileOutputStream fos = new FileOutputStream(
+						"D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  " + reportDate + ".sql");
 				byte[] buffer = new byte[1000];
 				int leido = is.read(buffer);
-				while(leido>0){
+				while (leido > 0) {
 					fos.write(buffer, 0, leido);
 					leido = is.read(buffer);
 				}
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
+				// JOptionPane.showMessageDialog(null, "Copia de segudidad
+				// creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA /
+				// ");
+				// JOptionPane.showMessageDialog(null, "Copia de segudidad
+				// realizada correctamente");
 				fos.close();
 			} catch (IOException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+				// JOptionPane.showMessageDialog(null, e1);
 			}
 			System.exit(0);
-		}
-		else
+		} else
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	}
 
@@ -334,6 +347,11 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 					limpiar();
 				} else {
 					String codigoProducto = rs.getString("codproducto");
+
+					selecionarProducto(codigoProducto);
+
+					txtCodigo.setText("");
+
 					String nombreProducto = rs.getString("producto");
 					String detalleProducto = rs.getString("detalles");
 					String uniMedidaProducto = rs.getString("unimedida");
@@ -342,32 +360,32 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 					String preciovePoducto = rs.getString("precioVe");
 					String marcaProducto = rs.getString("marca");
 					String colorProducto = rs.getString("color");
-					selecionarProducto(codigoProducto);
-					
-					
-					/*String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
-					int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-					
-					if (seleccion == 0) {//Modificar
-						ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-								uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
-						mp.setVisible(true);
-						this.setEnabled(false);
-						txtCodigo.setText("");						
-					}
-					if (seleccion == 1) {// agregar
-						txtCodigo.setText("");
-						
-						try {
-							AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto, this, usuario);
-							as.setVisible(true);
-							this.setEnabled(false);
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(null, "Error al abrir Agregar Stock: " + e.getMessage());
-						}
-					}*/
-					
+
+					/*
+					 * String[] opciones = { "MODIFICAR", "AGREGAR STOCK",
+					 * "CANCELAR" }; int seleccion =
+					 * JOptionPane.showOptionDialog(null,
+					 * "Seleccione una opcion", "Seleccione una opcion",
+					 * JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+					 * null, opciones, opciones[0]);
+					 * 
+					 * if (seleccion == 0) {//Modificar ModificarProducto mp =
+					 * new ModificarProducto(codigoProducto, nombreProducto,
+					 * detalleProducto, uniMedidaProducto, cantidadProducto,
+					 * preciocoProducto,
+					 * preciovePoducto,marcaProducto,colorProducto, this);
+					 * mp.setVisible(true); this.setEnabled(false);
+					 * txtCodigo.setText(""); } if (seleccion == 1) {// agregar
+					 * txtCodigo.setText("");
+					 * 
+					 * try { AgregarStock as = new AgregarStock(codigoProducto,
+					 * cantidadProducto, preciocoProducto, preciovePoducto,
+					 * this, usuario); as.setVisible(true);
+					 * this.setEnabled(false); } catch (Exception e) {
+					 * JOptionPane.showMessageDialog(null,
+					 * "Error al abrir Agregar Stock: " + e.getMessage()); } }
+					 */
+
 				}
 			} catch (Exception e) {
 				try {
@@ -379,6 +397,10 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 						limpiar();
 					} else {
 						String codigoProducto = rs.getString("codproducto");
+
+						selecionarProducto(codigoProducto);
+
+						txtCodigo.setText("");
 						String nombreProducto = rs.getString("producto");
 						String detalleProducto = rs.getString("detalles");
 						String uniMedidaProducto = rs.getString("unimedida");
@@ -387,30 +409,32 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 						String preciovePoducto = rs.getString("precioVe");
 						String marcaProducto = rs.getString("marca");
 						String colorProducto = rs.getString("color");
-						selecionarProducto(codigoProducto);
 						/*
-						String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
-						int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-						
-						if (seleccion == 0) {//Modificar
-							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-									uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
-							mp.setVisible(true);
-							this.setEnabled(false);
-							txtCodigo.setText("");						
-						}
-						if (seleccion == 1) {// agregar
-							txtCodigo.setText("");
-							
-							try {
-								AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto, this, usuario);
-								as.setVisible(true);
-								this.setEnabled(false);
-							} catch (Exception e1) {
-								JOptionPane.showMessageDialog(null, "Error al abrir Agregar Stock: " + e1.getMessage());
-							}
-						}*/
+						 * String[] opciones = { "MODIFICAR", "AGREGAR STOCK",
+						 * "CANCELAR" }; int seleccion =
+						 * JOptionPane.showOptionDialog(null,
+						 * "Seleccione una opcion", "Seleccione una opcion",
+						 * JOptionPane.DEFAULT_OPTION,
+						 * JOptionPane.QUESTION_MESSAGE, null, opciones,
+						 * opciones[0]);
+						 * 
+						 * if (seleccion == 0) {//Modificar ModificarProducto mp
+						 * = new ModificarProducto(codigoProducto,
+						 * nombreProducto, detalleProducto, uniMedidaProducto,
+						 * cantidadProducto, preciocoProducto,
+						 * preciovePoducto,marcaProducto,colorProducto, this);
+						 * mp.setVisible(true); this.setEnabled(false);
+						 * txtCodigo.setText(""); } if (seleccion == 1) {//
+						 * agregar txtCodigo.setText("");
+						 * 
+						 * try { AgregarStock as = new
+						 * AgregarStock(codigoProducto, cantidadProducto,
+						 * preciocoProducto, preciovePoducto, this, usuario);
+						 * as.setVisible(true); this.setEnabled(false); } catch
+						 * (Exception e1) { JOptionPane.showMessageDialog(null,
+						 * "Error al abrir Agregar Stock: " + e1.getMessage());
+						 * } }
+						 */
 					}
 
 				} catch (Exception e2) {
@@ -436,10 +460,13 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		int cantProductos = tbProductos.getRowCount();
 		for (int i = 0; i < cantProductos; i++) {
 			if (cod.equals(tbProductos.getValueAt(i, 0))) {
-				ColorearFilas colorfilas = new ColorearFilas(cod);
-				tbProductos.setDefaultRenderer(tbProductos.getColumnClass(0), colorfilas);
-				
 				tbProductos.setRowSelectionInterval(i, i);
+				int registro = Integer.parseInt(tbProductos.getValueAt(i, 7).toString());
+				// JOptionPane.showMessageDialog(null, registro);
+				registro++;
+				// JOptionPane.showMessageDialog(null, registro);
+				tbProductos.setValueAt(registro, i, 7);
+
 				break;
 			}
 		}
@@ -449,5 +476,19 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		EleccionVentanas el = new EleccionVentanas(usuario);
 		el.setVisible(true);
 		dispose();
+	}
+
+	protected void actionPerformedButton(ActionEvent arg0) {
+		int cantProductos = tbProductos.getRowCount();
+		int selec = tbProductos.getSelectedRow();
+		//JOptionPane.showMessageDialog(null, selec + " " + cantProductos);
+		if(selec == cantProductos-1)
+			selec = -1;
+		for (int i = selec + 1; i < cantProductos; i++) {
+			if (Integer.parseInt(tbProductos.getValueAt(i, 7).toString()) == 0) {
+				tbProductos.setRowSelectionInterval(i, i);
+				i = cantProductos;
+			}
+		}
 	}
 }
