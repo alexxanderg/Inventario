@@ -90,7 +90,7 @@ fecha		datetime,
 nota		varchar(200)
 );
 
-create table tb__kardex_detalles(
+create table tb_kardex_detalles(
 idkardex	int not null,
 codproducto varchar(100) not null,
 registros	int not null,
@@ -116,6 +116,10 @@ select * from tb_ventas;
 select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
 select * from tb_clientes;
+select * from tb_kardex;
+select * from tb_kardex_detalles;
+
+select idkardex from tb_kardex order by idkardex desc limit 1;
 
 select * from tb_clientes order by id desc limit 1;
 
@@ -195,7 +199,9 @@ from tb_ventas_detalle vd inner join tb_productos pr
 inner join tb_ventas v on vd.codproducto = pr.codproducto 
 where vd.codventa = 50 and vd.codventa = v.codventa;
 
+select producto from tb_productos where codproducto like 'pol01%' limit 1;
 
-
-
+select p.producto, p.detalles, p.marca, p.color, p.cantidad, kd.registros from tb_kardex_detalles kd
+inner join tb_productos p on p.codproducto = kd.codproducto
+where kd.idkardex = 4;
 
