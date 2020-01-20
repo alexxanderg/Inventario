@@ -633,17 +633,19 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 	public void limpiar() {
 		// txtCodigo.setText(null);
 		txtProducto.setText(null);
-		txtCantidad.setText(null);
-		txtPreComInd.setText(null);
-		txtPrecioVenInd.setText(null);
-		cbUMedida.setSelectedIndex(0);
 		txtDeta.setText(null);
-		txtCantPromo1.setText(null);
-		txtPromo1.setText(null);
-		txtPrePromo1.setText(null);
-		txtPromo2.setText(null);
-		txtCantPromo2.setText(null);
-		txtPrePromo2.setText(null);
+		txtMarca.setText(null);
+		txtColor.setText(null);
+		txtCantidad.setText("1");
+		txtPreComInd.setText("0");
+		txtPrecioVenInd.setText("0");
+		cbUMedida.setSelectedIndex(0);
+		txtCantPromo1.setText("0");
+		txtPromo1.setText("0");
+		txtPrePromo1.setText("0");
+		txtPromo2.setText("0");
+		txtCantPromo2.setText("0");
+		txtPrePromo2.setText("0");
 	}
 
 	public void windowActivated(WindowEvent arg0) {
