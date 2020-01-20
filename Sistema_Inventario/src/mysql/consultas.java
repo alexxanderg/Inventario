@@ -308,6 +308,18 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarHistorialKardex(){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_kardex order by idkardex desc");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarUsuarios(){
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -477,6 +489,66 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 		return rs;
+	}
+	
+	public void registrarKardex(Object date2, String nota){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_kardex (idkardex, fecha, nota)" + " values (?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setObject(2, date2);
+			prepareStmt.setString(3, nota);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "KARDEX REGISTRADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: KARDEX EXISTENTE");
+		}
+	}
+	
+	public ResultSet ObtenerUltimoKardex(){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select idkardex from tb_kardex order by idkardex desc limit 1");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet ObtenerNombreProducto(String cod){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select producto from tb_productos where codproducto like '" + cod + "%' limit 1");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public void registrarDetallesKardex(int idkardex, String codigoProducto, int registros){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_kardex_detalles (idkardex, codproducto, registros)" + " values (?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, idkardex);
+			prepareStmt.setString(2, codigoProducto);
+			prepareStmt.setInt(3, registros);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "DETALLE DE KARDEX REGISTRADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR EN DETALLE DE  KARDEX " + e);
+		}
 	}
 	
 	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia, int idcliente, String nota, int metpago){

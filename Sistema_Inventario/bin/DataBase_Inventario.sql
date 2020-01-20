@@ -37,9 +37,6 @@ color		varchar(40)
 
 );
 
-alter table tb_productos
-  add prep2		float;
-
 create table tb_ventas(
 codventa	int primary key auto_increment,
 cliente		varchar(50),
@@ -52,9 +49,6 @@ idcliente	int,
 nota		varchar(200),
 metpago		tinyint -- 0Efectivo 1Depósito BCP 2Depósito BBVA 3Depósito INTERBANK 4Transferencia BCP 5Transferencia BBVA 6Transferencia INTERBANK 7Pago con tarjeta BCP 8Pago con tarjeta BBVA 9Pago con tarjeta INTERBANK 10CRÉDITO
 );
-
-alter table tb_ventas
-  add metpago		tinyint;
 
 create table tb_ventas_detalle(
 codventa	int not null,
@@ -70,14 +64,14 @@ primary key (codventa, codproducto)
 );
 
 create table tb_ingreso_productos(
-	 coding int primary key auto_increment,
-	 codproducto varchar(100) not null,
-	 cantidad float,
-	 precioCo float,
-	 precioVe float,
-	 fechaingreso datetime,
-	 nombreusu varchar(50),
-     foreign key(codproducto) references tb_productos(codproducto)
+ coding int primary key auto_increment,
+ codproducto varchar(100) not null,
+ cantidad float,
+ precioCo float,
+ precioVe float,
+ fechaingreso datetime,
+ nombreusu varchar(50),
+ foreign key(codproducto) references tb_productos(codproducto)
 );
 
 create table tb_clientes(
@@ -90,7 +84,23 @@ telefono	varchar(15),
 correo		varchar(50)
 );
 
+create table tb_kardex(
+idkardex	int primary key auto_increment,
+fecha		datetime,
+nota		varchar(200)
+);
 
+create table tb__kardex_detalles(
+idkardex	int not null,
+codproducto varchar(100) not null,
+registros	int not null,
+foreign key (idkardex) references tb_kardex(idkardex),
+foreign key(codproducto) references tb_productos(codproducto)
+);
+
+alter table tb_ventas
+  add metpago		tinyint;
+  
 -- Usuarios de prueba
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);
 insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0);

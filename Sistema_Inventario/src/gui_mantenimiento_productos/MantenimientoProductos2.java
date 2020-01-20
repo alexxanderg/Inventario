@@ -70,10 +70,8 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 	ResultSet rs;
 	String usuario;
 	consultas model = new consultas();
-	private JLabel lblNuevoProducto;
-	private JLabel lblModificarProducto;
-	private JLabel lblEliminarProducto;
-	private JButton button;
+	private JButton btnBuscarProducto0;
+	private JTextField txtNota;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,17 +102,17 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		txtCodigo.setFont(new Font("Swis721 LtEx BT", Font.BOLD | Font.ITALIC, 20));
 		txtCodigo.setColumns(10);
 		txtCodigo.setBackground(SystemColor.controlHighlight);
-		txtCodigo.setBounds(139, 233, 932, 34);
+		txtCodigo.setBounds(158, 135, 913, 34);
 		contentPane.add(txtCodigo);
 
 		lblCdigo = new JLabel("Buscar:");
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigo.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblCdigo.setBounds(10, 229, 138, 38);
+		lblCdigo.setBounds(10, 131, 138, 38);
 		contentPane.add(lblCdigo);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 278, 1061, 402);
+		scrollPane.setBounds(10, 180, 1061, 501);
 		contentPane.add(scrollPane);
 
 		tbProductos = new JTable();
@@ -135,7 +133,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 
 		txtMantenimientoDeProductos = new JTextField();
 		txtMantenimientoDeProductos.setForeground(new Color(255, 255, 255));
-		txtMantenimientoDeProductos.setText("ALMAC\u00C9N");
+		txtMantenimientoDeProductos.setText("VERIFICACI\u00D3N DE INVENTARIO");
 		txtMantenimientoDeProductos.setRequestFocusEnabled(false);
 		txtMantenimientoDeProductos.setIgnoreRepaint(true);
 		txtMantenimientoDeProductos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -148,37 +146,42 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		txtMantenimientoDeProductos.setBounds(0, 0, 1080, 75);
 		contentPane.add(txtMantenimientoDeProductos);
 
-		lblNuevoProducto = new JLabel("Crear Nuevo producto");
-		lblNuevoProducto.setFont(new Font("EngraversGothic BT", Font.PLAIN, 15));
-		lblNuevoProducto.setBounds(110, 196, 166, 26);
-		contentPane.add(lblNuevoProducto);
-
-		lblModificarProducto = new JLabel("Registro 0\r\n");
-		lblModificarProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificarProducto.setFont(new Font("EngraversGothic BT", Font.PLAIN, 15));
-		lblModificarProducto.setBounds(269, 196, 160, 26);
-		contentPane.add(lblModificarProducto);
-
-		lblEliminarProducto = new JLabel("Eliminar producto");
-		lblEliminarProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEliminarProducto.setFont(new Font("EngraversGothic BT", Font.PLAIN, 15));
-		lblEliminarProducto.setBounds(450, 196, 160, 26);
-		contentPane.add(lblEliminarProducto);
-
-		this.button = new JButton((Icon) null);
-		this.button.addActionListener(new ActionListener() {
+		this.btnBuscarProducto0 = new JButton((Icon) null);
+		btnBuscarProducto0.setForeground(new Color(255, 255, 255));
+		btnBuscarProducto0.setFont(new Font("Century Gothic", Font.BOLD, 15));
+		btnBuscarProducto0.setText("Buscar producto con registro 0");
+		this.btnBuscarProducto0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedButton(arg0);
 			}
 		});
-		this.button.setBackground(Color.BLACK);
-		this.button.setBounds(269, 86, 160, 105);
-		this.contentPane.add(this.button);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { this.txtCodigo, this.contentPane,
-				this.lblCdigo, this.scrollPane, this.tbProductos }));
+		this.btnBuscarProducto0.setBackground(new Color(30, 144, 255));
+		this.btnBuscarProducto0.setBounds(158, 86, 320, 38);
+		this.contentPane.add(this.btnBuscarProducto0);
+		
+		JButton btnGuardar = new JButton((Icon) null);
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnGuardar(e);
+			}
+		});
+		btnGuardar.setText("GUARDAR");
+		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		btnGuardar.setBackground(new Color(30, 144, 255));
+		btnGuardar.setBounds(840, 86, 231, 38);
+		contentPane.add(btnGuardar);
+		
+		txtNota = new JTextField();
+		txtNota.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		txtNota.setText("Si desea, deje una nota aqu\u00ED.");
+		txtNota.setBounds(482, 86, 348, 38);
+		contentPane.add(txtNota);
+		txtNota.setColumns(10);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, btnBuscarProducto0, txtNota, btnGuardar, btnVolver}));
 
 		cargarDatos();
-		cargarBuscador();
+		//cargarBuscador();
 		ajustarAnchoColumnas();
 		colortabla();
 
@@ -205,8 +208,8 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle", "Marca", "Color", "Uni. Medida",
-				"Cantidad", "Registro" });
+		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle", "Marca", "Color", "U. Med.",
+				"Cantidad", "Registros" });
 		consultas model = new consultas();
 		rs = model.cargarProductosSinStock();
 		try {
@@ -240,14 +243,14 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(12)); // Codigo
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Codigo
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(24)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(24)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Uni Med
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Stock
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(7)); // PrecioCompra
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(7)); // PrecioVenta
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(6)); // Marca
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(8)); // Marca
 
 		// DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		// tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -311,11 +314,6 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 					fos.write(buffer, 0, leido);
 					leido = is.read(buffer);
 				}
-				// JOptionPane.showMessageDialog(null, "Copia de segudidad
-				// creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA /
-				// ");
-				// JOptionPane.showMessageDialog(null, "Copia de segudidad
-				// realizada correctamente");
 				fos.close();
 			} catch (IOException e1) {
 				// JOptionPane.showMessageDialog(null, e1);
@@ -360,32 +358,6 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 					String preciovePoducto = rs.getString("precioVe");
 					String marcaProducto = rs.getString("marca");
 					String colorProducto = rs.getString("color");
-
-					/*
-					 * String[] opciones = { "MODIFICAR", "AGREGAR STOCK",
-					 * "CANCELAR" }; int seleccion =
-					 * JOptionPane.showOptionDialog(null,
-					 * "Seleccione una opcion", "Seleccione una opcion",
-					 * JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-					 * null, opciones, opciones[0]);
-					 * 
-					 * if (seleccion == 0) {//Modificar ModificarProducto mp =
-					 * new ModificarProducto(codigoProducto, nombreProducto,
-					 * detalleProducto, uniMedidaProducto, cantidadProducto,
-					 * preciocoProducto,
-					 * preciovePoducto,marcaProducto,colorProducto, this);
-					 * mp.setVisible(true); this.setEnabled(false);
-					 * txtCodigo.setText(""); } if (seleccion == 1) {// agregar
-					 * txtCodigo.setText("");
-					 * 
-					 * try { AgregarStock as = new AgregarStock(codigoProducto,
-					 * cantidadProducto, preciocoProducto, preciovePoducto,
-					 * this, usuario); as.setVisible(true);
-					 * this.setEnabled(false); } catch (Exception e) {
-					 * JOptionPane.showMessageDialog(null,
-					 * "Error al abrir Agregar Stock: " + e.getMessage()); } }
-					 */
-
 				}
 			} catch (Exception e) {
 				try {
@@ -409,32 +381,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 						String preciovePoducto = rs.getString("precioVe");
 						String marcaProducto = rs.getString("marca");
 						String colorProducto = rs.getString("color");
-						/*
-						 * String[] opciones = { "MODIFICAR", "AGREGAR STOCK",
-						 * "CANCELAR" }; int seleccion =
-						 * JOptionPane.showOptionDialog(null,
-						 * "Seleccione una opcion", "Seleccione una opcion",
-						 * JOptionPane.DEFAULT_OPTION,
-						 * JOptionPane.QUESTION_MESSAGE, null, opciones,
-						 * opciones[0]);
-						 * 
-						 * if (seleccion == 0) {//Modificar ModificarProducto mp
-						 * = new ModificarProducto(codigoProducto,
-						 * nombreProducto, detalleProducto, uniMedidaProducto,
-						 * cantidadProducto, preciocoProducto,
-						 * preciovePoducto,marcaProducto,colorProducto, this);
-						 * mp.setVisible(true); this.setEnabled(false);
-						 * txtCodigo.setText(""); } if (seleccion == 1) {//
-						 * agregar txtCodigo.setText("");
-						 * 
-						 * try { AgregarStock as = new
-						 * AgregarStock(codigoProducto, cantidadProducto,
-						 * preciocoProducto, preciovePoducto, this, usuario);
-						 * as.setVisible(true); this.setEnabled(false); } catch
-						 * (Exception e1) { JOptionPane.showMessageDialog(null,
-						 * "Error al abrir Agregar Stock: " + e1.getMessage());
-						 * } }
-						 */
+					
 					}
 
 				} catch (Exception e2) {
@@ -490,5 +437,48 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 				i = cantProductos;
 			}
 		}
+	}
+	
+	protected void actionPerformedBtnGuardar(ActionEvent e) {
+		String nota = txtNota.getText();
+		if(nota.equals("Si desea, deje una nota aquí."))
+			nota = "";
+		java.util.Date date = new Date();
+		Object date2 = new java.sql.Timestamp(date.getTime());
+		//Date date2 = new java.sql.Date(date.getTime());
+		model.registrarKardex(date2, nota);
+		
+		rs = model.ObtenerUltimoKardex();
+		int idkardex = -1;
+		try {
+			rs.next();
+			idkardex = rs.getInt("idkardex");
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo kardex: " + ex);
+		}
+		
+		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
+		try {
+			int cantProductos = tbProductos.getRowCount();
+			for (int i = 0; i < cantProductos; i++) {
+			String codigoProducto = String.valueOf(tm.getValueAt(i, 0));
+			/*String nombreProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 1));
+			String detalleProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 2));
+			String marcaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 3));
+			String colorProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
+			String uniMedidaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
+			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));*/
+			int registros = Integer.parseInt(String.valueOf(tm.getValueAt(i, 7)));
+			
+			model.registrarDetallesKardex(idkardex, codigoProducto, registros);
+			}
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+		}
+		
+		EleccionVentanas el = new EleccionVentanas(usuario);
+		el.setVisible(true);
+		dispose();
 	}
 }

@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import gui_clientes.MantenimientoClientes;
+import gui_mantenimiento_productos.HistorialKardex;
 import gui_mantenimiento_productos.MantenimientoProductos;
+import gui_mantenimiento_productos.MantenimientoProductos2;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_reportes.Reportes;
 import gui_ventas.Ventas;
@@ -45,6 +47,8 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	
 	String usuario;
 	private JButton btnClientes;
+	private JButton btnRealizarKardex;
+	private JButton btnHistorialDeKardex;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -100,7 +104,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		btnAlmacen.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnAlmacen.setText("ALMACÉN");
 		btnAlmacen.addActionListener(this);
-		btnAlmacen.setBounds(0, 74, 350, 200);
+		btnAlmacen.setBounds(0, 74, 350, 252);
 		contentPane.add(btnAlmacen);
 		
 		btnUsuarios = new JButton(new ImageIcon(this.getClass().getResource("/imgusuarios.png")));
@@ -118,7 +122,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		btnReportes.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnReportes.setText("REPORTES");
 		btnReportes.addActionListener(this);
-		btnReportes.setBounds(0, 277, 350, 267);
+		btnReportes.setBounds(352, 277, 350, 267);
 		contentPane.add(btnReportes);
 		
 		btnVentas = new JButton(new ImageIcon(this.getClass().getResource("/imgvender.png")));
@@ -127,7 +131,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		btnVentas.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnVentas.setText("VENDER");
 		btnVentas.addActionListener(this);
-		btnVentas.setBounds(352, 277, 703, 267);
+		btnVentas.setBounds(704, 277, 351, 267);
 		contentPane.add(btnVentas);
 		
 
@@ -140,6 +144,30 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 		btnClientes.setBackground(Color.DARK_GRAY);
 		btnClientes.setBounds(704, 74, 351, 200);
 		contentPane.add(btnClientes);
+		
+		btnRealizarKardex = new JButton("REALIZAR KARDEX");
+		btnRealizarKardex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnRealizarKardex(e);
+			}
+		});
+		btnRealizarKardex.setForeground(Color.WHITE);
+		btnRealizarKardex.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		btnRealizarKardex.setBackground(Color.DARK_GRAY);
+		btnRealizarKardex.setBounds(0, 329, 350, 109);
+		contentPane.add(btnRealizarKardex);
+		
+		btnHistorialDeKardex = new JButton("HISTORIAL DE KARDEX");
+		btnHistorialDeKardex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnHistorialDeKardex(e);
+			}
+		});
+		btnHistorialDeKardex.setForeground(Color.WHITE);
+		btnHistorialDeKardex.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		btnHistorialDeKardex.setBackground(Color.DARK_GRAY);
+		btnHistorialDeKardex.setBounds(0, 441, 350, 102);
+		contentPane.add(btnHistorialDeKardex);
 		
 		cargar();
 	}
@@ -259,6 +287,18 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	protected void actionPerformedBtnClientes(ActionEvent e) {
 		MantenimientoClientes c = new MantenimientoClientes(usuario);
 		c.setVisible(true);
+		dispose();
+	}
+	
+	protected void actionPerformedBtnRealizarKardex(ActionEvent e) {
+		MantenimientoProductos2 mp2 = new MantenimientoProductos2(usuario);
+		mp2.setVisible(true);
+		dispose();
+	}
+	
+	protected void actionPerformedBtnHistorialDeKardex(ActionEvent e) {
+		HistorialKardex hk = new HistorialKardex(usuario);
+		hk.setVisible(true);
 		dispose();
 	}
 }

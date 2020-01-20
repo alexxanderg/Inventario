@@ -156,7 +156,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnNuevaVentana.setForeground(new Color(0, 255, 0));
 		btnNuevaVentana.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 39));
 		btnNuevaVentana.setBackground(Color.BLACK);
-		btnNuevaVentana.setBounds(1288, 0, 103, 58);
+		btnNuevaVentana.setBounds(1269, 0, 103, 58);
 		contentPane.add(btnNuevaVentana);
 		txtProductos.setHorizontalAlignment(SwingConstants.LEFT);
 		txtProductos.setBackground(SystemColor.controlHighlight);
@@ -303,8 +303,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblNombreDeCliente);
 
 		txtCopias = new JTextField();
+		txtCopias.setEditable(false);
 		txtCopias.addKeyListener(this);
-		txtCopias.setText("2");
+		txtCopias.setText("0");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCopias.setForeground(Color.BLACK);
 		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
