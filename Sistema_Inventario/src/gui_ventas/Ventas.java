@@ -563,9 +563,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		cliente.cargarEmpresas(cbClientes);
 		
 		if (nventana == 1)
-			txtVentaDeProductos.setText("VENTA DE PRODUTOS");
+			txtVentaDeProductos.setText("VENTA DE PRODUCTOS");
 		else
-			txtVentaDeProductos.setText("VENTA DE PRODUTOS (Ventana " + nventana + ")");
+			txtVentaDeProductos.setText("VENTA DE PRODUCTOS (Ventana " + nventana + ")");
 		ac = new TextAutoCompleter(txtProductos);
 		consultas model = new consultas();
 		tbCompras.setRowHeight(30);

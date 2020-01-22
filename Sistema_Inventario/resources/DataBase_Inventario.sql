@@ -35,7 +35,7 @@ prep2		float,
 marca		varchar(40),
 color		varchar(40)
 
-);
+);  
 
 create table tb_ventas(
 codventa	int primary key auto_increment,

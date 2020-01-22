@@ -303,7 +303,7 @@ public class HistorialKardex extends JFrame implements ActionListener, WindowLis
 			
 			con.close();
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontraron datos: " + ex);
+			JOptionPane.showMessageDialog(null, "Seleccione una fila");
 		}
 		
 	}
