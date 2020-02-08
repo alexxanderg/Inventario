@@ -35,7 +35,11 @@ prep2		float,
 marca		varchar(40),
 color		varchar(40)
 
-);  
+);
+
+alter table tb_productos
+  add color		varchar(40);
+  
 
 create table tb_ventas(
 codventa	int primary key auto_increment,
@@ -139,7 +143,7 @@ select codventa, cliente, fecha, usuario, totcompra, totventa, ganancia, (sum(to
 
 -- ALTER TABLE tb_ventas_detalle MODIFY cantidad float;   SE ALTERA SI ES NECESARIO
 
-select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2019-09-07 23:59:59';
+select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
 update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
 

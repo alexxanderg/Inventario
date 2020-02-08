@@ -525,9 +525,9 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		try {
 			String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
-			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
-			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
-			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
 
 			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto,preciocoProducto,preciovePoducto,this,usuario);
 			as.setVisible(true);
@@ -537,3 +537,6 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		}
 	}
 }
+
+
+
