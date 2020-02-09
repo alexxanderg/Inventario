@@ -274,13 +274,13 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				float pv = Float.parseFloat(txtPrecioVenta.getText());
 				
 				//Cambio de utils a sql.Date para envio
-				Date  date = fecha_ingreso.getDate();
-				long d = date.getTime();
-				Object date2 = new java.sql.Timestamp(d);
+				//Date  date = fecha_ingreso.getDate();
+				//long d = date.getTime();
+				//Object date2 = new java.sql.Timestamp(d);
 				
 				//Consultas
 				model.ingresarStock(cod, total);
-				model.registrarFechaIngreso(cod, ca, pc, pv, date2, usuario);
+				model.registrarFechaIngreso(cod, ca, pc, pv, usuario);
 				model.modificarPC_PV(cod, pc, pv);
 				
 				mp.setEnabled(true);

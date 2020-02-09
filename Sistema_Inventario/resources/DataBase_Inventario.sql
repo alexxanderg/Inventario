@@ -36,6 +36,14 @@ marca		varchar(40),
 color		varchar(40)
 
 );
+/*
+	Alterar las columnas de la tabla
+*/
+alter table tb_productos add(
+	laboratorio varchar(50),
+    fechaVenc	date,
+    nrolote		int
+);
 
 alter table tb_productos
   add color		varchar(40);

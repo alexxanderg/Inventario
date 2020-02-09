@@ -105,7 +105,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	int nventana = 0;
 	private JLabel lblLogo;
 	private JButton btnReportes;
-	private JComboBox <Cliente> cbClientes;
+	private JComboBox<Cliente> cbClientes;
 	private JButton btnAnadirCliente;
 	private JTextField txtInfoAdicional;
 	private JLabel lblInfomacinAdicional;
@@ -335,7 +335,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		Image img = new ImageIcon(this.getClass().getResource("/imgalmacen.png")).getImage();
 		lblLogo.setIcon(new ImageIcon(img));
 		contentPane.add(lblLogo);
-		
+
 		btnReportes = new JButton("Reportes");
 		btnReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -347,13 +347,13 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnReportes.setBackground(new Color(30, 144, 255));
 		btnReportes.setBounds(642, 166, 139, 86);
 		contentPane.add(btnReportes);
-		
+
 		cbClientes = new JComboBox();
-		//cbClientes.setSelectedIndex(0);
+		// cbClientes.setSelectedIndex(0);
 		cbClientes.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbClientes.setBounds(979, 103, 346, 38);
 		contentPane.add(cbClientes);
-		
+
 		btnAnadirCliente = new JButton("+");
 		btnAnadirCliente.addActionListener(this);
 		btnAnadirCliente.setBackground(new Color(50, 205, 50));
@@ -361,7 +361,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnAnadirCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnAnadirCliente.setBounds(1269, 141, 56, 38);
 		contentPane.add(btnAnadirCliente);
-		
+
 		txtInfoAdicional = new JTextField();
 		txtInfoAdicional.setHorizontalAlignment(SwingConstants.LEFT);
 		txtInfoAdicional.setForeground(SystemColor.windowBorder);
@@ -370,25 +370,29 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtInfoAdicional.setBackground(SystemColor.controlHighlight);
 		txtInfoAdicional.setBounds(979, 213, 346, 34);
 		contentPane.add(txtInfoAdicional);
-		
+
 		lblInfomacinAdicional = new JLabel("Informaci\u00F3n adicional:");
 		lblInfomacinAdicional.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		lblInfomacinAdicional.setBounds(979, 179, 311, 34);
 		contentPane.add(lblInfomacinAdicional);
-		
+
 		lblMetodoDePago = new JLabel("Metodo de pago:");
 		lblMetodoDePago.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		lblMetodoDePago.setBounds(979, 263, 311, 34);
 		contentPane.add(lblMetodoDePago);
-		
+
 		cbMetodoPago = new JComboBox();
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(
+				new String[] { "Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK",
+						"Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP",
+						"Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO" }));
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtProductos, txtPaga, txtCopias, btnVender, btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtProductos, txtPaga, txtCopias, btnVender,
+				btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana }));
 		cargar();
-		//cargarBuscadorCliente();
+		// cargarBuscadorCliente();
 	}
 
 	public void windowActivated(WindowEvent arg0) {
@@ -406,32 +410,35 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		else {
 			int opc = JOptionPane.showConfirmDialog(null, "¿Cerrar Sistema?", "Confirmación", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
-			if (opc == 0){
+			if (opc == 0) {
 				try {
 					DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
-					Date today = Calendar.getInstance().getTime();       
+					Date today = Calendar.getInstance().getTime();
 					String reportDate = df.format(today);
-					File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
-					directorio.mkdirs(); 
+					File directorio = new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA");
+					directorio.mkdirs();
 					Process p;
 					p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
 					InputStream is = p.getInputStream();
-					FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+					FileOutputStream fos = new FileOutputStream(
+							"D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  " + reportDate + ".sql");
 					byte[] buffer = new byte[1000];
 					int leido = is.read(buffer);
-					while(leido>0){
+					while (leido > 0) {
 						fos.write(buffer, 0, leido);
 						leido = is.read(buffer);
 					}
-					//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
-					//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
+					// JOptionPane.showMessageDialog(null, "Copia de segudidad
+					// creada en: \n D:/ INFORMACION DEL SISTEMA /
+					// BACKUP_SISTEMA / ");
+					// JOptionPane.showMessageDialog(null, "Copia de segudidad
+					// realizada correctamente");
 					fos.close();
 				} catch (IOException e1) {
-					//JOptionPane.showMessageDialog(null, e1);
+					// JOptionPane.showMessageDialog(null, e1);
 				}
 				System.exit(0);
-			}
-			else
+			} else
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
 	}
@@ -479,7 +486,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void keyPressed(KeyEvent e) {
-		//De alguna manera el txtproductos y txtpaga comparten este keypressed(Arreglar)
+		// De alguna manera el txtproductos y txtpaga comparten este
+		// keypressed(Arreglar)
 		if (e.getSource() == tbCompras) {
 			keyPressedTbCompras(e);
 		}
@@ -493,17 +501,18 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 	public void keyTyped(KeyEvent e) {
 		char c = e.getKeyChar();
-		/*if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE)
-				&& (c != (char) KeyEvent.VK_ENTER) && (c != '.')) {
-			e.consume();
-		}*/
+		/*
+		 * if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c !=
+		 * (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) &&
+		 * (c != '.')) { e.consume(); }
+		 */
 		if (txtPaga.getText().length() == 10) {
 			e.consume();
 		}
 		if (c == '.' && txtPaga.getText().contains(".")) {
 			e.consume();
 		}
-		
+
 		if (e.getSource() == txtCopias) {
 			keyTypedTxtCopias(e);
 		}
@@ -556,12 +565,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void cargar() {
-		 this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 
 		Cliente cliente = new Cliente();
 		cliente.cargarEmpresas(cbClientes);
-		
+
 		if (nventana == 1)
 			txtVentaDeProductos.setText("VENTA DE PRODUCTOS");
 		else
@@ -587,7 +596,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
 		ajustarAnchoColumnas();
 	}
-	
+
 	public void cargarBuscadorCliente() {
 		consultas model = new consultas();
 		ResultSet rs = model.cargarClientes();
@@ -643,7 +652,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 			int flag = 0;
 			float cantidad = 0;
-			for (int i = 0; i < tbCompras.getRowCount(); i++) { //AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
+			for (int i = 0; i < tbCompras.getRowCount(); i++) { // AQUÍ ENTRA SI
+																// YA EXISTE EL
+																// PRODUCTO EN
+																// LA TABLA
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
@@ -666,11 +678,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 					rs.beforeFirst();
 					while (rs.next()) {
 						dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
-								rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto") ,rs.getFloat("precioCo")});
+								rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
+								rs.getFloat("precioCo") });
 						tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
 					}
 				} catch (Exception e) {
-					 JOptionPane.showMessageDialog(null, "ERROR: " + e);
+					JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 				txtProductos.setText(null);
 				txtProductos.requestFocus();
@@ -678,14 +691,14 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			sumarSubTotales();
 			sumarTotal();
 
-		} catch (Exception e) { //AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO
+		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO
 			try {
 				String pcompleto = txtProductos.getText();
 				rs = model.buscarProducto(pcompleto);
 				int flag = 0;
 				float cantidad = 0;
 				for (int i = 0; i < tbCompras.getRowCount(); i++) {
-					try {//AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
+					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
 						rs.beforeFirst();
 						while (rs.next()) {
 							if (rs.getString("codproducto").equals(tbCompras.getValueAt(i, 6))) {
@@ -705,8 +718,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						rs.beforeFirst();
 						while (rs.next()) {
 							dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
-									rs.getString("cantidad"), rs.getFloat("precioVe"), "",
-									rs.getString("codproducto"), rs.getFloat("precioCo")});
+									rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
+									rs.getFloat("precioCo") });
 							tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
@@ -786,6 +799,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 								while (rs.next()) {
 									String prod = rs.getString("producto");
 									String det = rs.getString("detalles");
+									String lab = rs.getString("laboratorio");
+									Date fecVen = rs.getDate("fechaVenc");
+									float nrolote = rs.getFloat("nrolote");
 									String umed = rs.getString("unimedida");
 									float cant = rs.getFloat("cantidad");
 									float cantventa = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
@@ -793,7 +809,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 									float pVe = rs.getFloat("precioVe");
 									String marca = rs.getString("marca");
 									String color = rs.getString("color");
-									p = new Productos(cod, prod, det, umed, cant, cantventa, pCo, pVe,marca,color);
+									p = new Productos(cod, prod, det, lab, fecVen, nrolote, umed, cant, cantventa, pCo,
+											pVe, marca, color);
 								}
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -815,7 +832,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 							cli = cbClientes.getSelectedItem().toString();
 							int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
 							nrodoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
-							
 
 							float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
 							double gananciaOriginal = pretotV - pretotC;
@@ -824,9 +840,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 							gananciaFinal = redondearDecimales(gananciaFinal, 2);
 							String nota = txtInfoAdicional.getText();
 							int metpago = cbMetodoPago.getSelectedIndex();
-							
-							
-							model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota, metpago);
+
+							model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota,
+									metpago);
 							rs = model.ObtenerUltimoCodigo();
 							try {
 								while (rs.next())
@@ -872,7 +888,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						int copias = Integer.parseInt(txtCopias.getText());
 						String nota = txtInfoAdicional.getText();
 						Connection con = null;
-						
+
 						for (int i = 0; i < copias; i++) {
 							try {
 								Map<String, Object> parameters = new HashMap();
@@ -888,24 +904,36 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 								 */
 								try {
 									con = MySQLConexion.getConection();
-									/*JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("bin/rComprobante.jasper");
-									JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, con);
-									AbstractJasperReports.showViewer();
-									JasperPrintManager.printReport(jasperPrint, false);
-									
-									*/
-									JasperPrint impressao = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"), parameters, con);
-									
-									//AbstractJasperReports.showViewer();
+									/*
+									 * JasperReport reporte = (JasperReport)
+									 * JRLoader.loadObjectFromFile(
+									 * "bin/rComprobante.jasper"); JasperPrint
+									 * jasperPrint =
+									 * JasperFillManager.fillReport(reporte,
+									 * parameters, con);
+									 * AbstractJasperReports.showViewer();
+									 * JasperPrintManager.printReport(
+									 * jasperPrint, false);
+									 * 
+									 */
+									JasperPrint impressao = JasperFillManager.fillReport(
+											getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+											parameters, con);
+
+									// AbstractJasperReports.showViewer();
 									JasperPrintManager.printReport(impressao, false);
-									/*this.setAlwaysOnTop(false);
-									//JOptionPane.showMessageDialog(null, "VENTA CORRECTA");  
-									this.setAlwaysOnTop(true);
-									*/
-									
+									/*
+									 * this.setAlwaysOnTop(false);
+									 * //JOptionPane.showMessageDialog(null,
+									 * "VENTA CORRECTA");
+									 * this.setAlwaysOnTop(true);
+									 */
+
 								} catch (JRException ex) {
-									//JOptionPane.showMessageDialog(null, "ERROR " + ex.getMessage());
-									//System.err.println("Error iReport: " + ex.getMessage());
+									// JOptionPane.showMessageDialog(null,
+									// "ERROR " + ex.getMessage());
+									// System.err.println("Error iReport: " +
+									// ex.getMessage());
 								}
 
 							} catch (Exception e) {
@@ -919,22 +947,16 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			}
 		}
 	}
-	
+
 	/*
-			try {
-				con = MySQLConexion.getConection();
-				String nventa = txtNVenta.getText();
-				Map<String, Object> parameters = new HashMap();
-				parameters.put("prtCodVen", Integer.parseInt(nventa));
-				new AbstractJasperReports().createReport(con, "rVentaDetalle.jasper", parameters);
-				AbstractJasperReports.showViewer();
-				con.close();
-				txtNVenta.setText(null);
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "No se encontó la venta " + e);
-			}
-		}
-	}*/
+	 * try { con = MySQLConexion.getConection(); String nventa =
+	 * txtNVenta.getText(); Map<String, Object> parameters = new HashMap();
+	 * parameters.put("prtCodVen", Integer.parseInt(nventa)); new
+	 * AbstractJasperReports().createReport(con, "rVentaDetalle.jasper",
+	 * parameters); AbstractJasperReports.showViewer(); con.close();
+	 * txtNVenta.setText(null); } catch (Exception e) {
+	 * JOptionPane.showMessageDialog(null, "No se encontó la venta " + e); } } }
+	 */
 
 	public int verificarStock() {
 		for (int i = 0; i < tbCompras.getRowCount(); i++) {
@@ -1057,18 +1079,21 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			try {
 				rs.beforeFirst();
 				while (rs.next()) {
-//					new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
+					// new Object[] { "Cant.", "Producto", "Detalle", "Stock",
+					// "Precio Uni", "SubTotal", "Cod.", "PC" });
 					ResultSet rs2 = model.buscarProducto(rs.getString("codproducto"));
 					rs2.next();
-					dtm.addRow(new Object[] { 
-							rs.getString("cantidad"), //
-							rs2.getString("producto"),
-							rs2.getString("detalles"),
-							Float.parseFloat(rs2.getString("cantidad")) + Float.parseFloat(rs.getString("cantidad")), //Stock de la tabla
-							rs.getFloat("prevenFin"), //Precio al que se ha vendido si hay modificacion
+					dtm.addRow(new Object[] { rs.getString("cantidad"), //
+							rs2.getString("producto"), rs2.getString("detalles"),
+							Float.parseFloat(rs2.getString("cantidad")) + Float.parseFloat(rs.getString("cantidad")), // Stock
+																														// de
+																														// la
+																														// tabla
+							rs.getFloat("prevenFin"), // Precio al que se ha
+														// vendido si hay
+														// modificacion
 							"0", // Sub total temporal
-							rs.getString("codproducto"),
-							rs2.getFloat("precioCo")}); //Codigo
+							rs.getString("codproducto"), rs2.getFloat("precioCo") }); // Codigo
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -1097,7 +1122,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(null, this,null);
+		NuevoProducto np = new NuevoProducto(null, this, null);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
 		this.setEnabled(false);
@@ -1112,7 +1137,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 		String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
 		String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen, cod);
+		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen,
+				cod);
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER) {
 			cp.setVisible(true);
@@ -1173,7 +1199,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 			String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
 			String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-			ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,preOrigen, cod);
+			ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,
+					preOrigen, cod);
 
 			cp.setVisible(true);
 			this.setEnabled(false);
@@ -1182,7 +1209,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
-		
+
 	}
 
 	protected void keyTypedTxtCopias(KeyEvent arg0) {
@@ -1195,20 +1222,21 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			arg0.consume();
 		}
 	}
+
 	protected void actionPerformedBtnReportes(ActionEvent arg0) {
 		Reportes r = new Reportes(usuario, this);
 		r.setVisible(true);
 		dispose();
 	}
-	
+
 	protected void actionPerformedBtnAnadirCliente(ActionEvent arg0) {
 		NuevoCliente nc = new NuevoCliente(null, this, usuario);
 		nc.setVisible(true);
 		nc.setLocationRelativeTo(null);
-		this.setEnabled(false);		
+		this.setEnabled(false);
 	}
-	
-	public void anadirClienteCombpo(Cliente c){
+
+	public void anadirClienteCombpo(Cliente c) {
 		cbClientes.addItem(c);
 	}
 }

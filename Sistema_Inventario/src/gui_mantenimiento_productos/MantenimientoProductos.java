@@ -223,15 +223,17 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Marca","Color", "Uni. Medida", "Cantidad",
-				"PrecioCompra", "PrecioVenta" });
+		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle", "Marca", "Color", "Laboratorio",
+				"F. Vencimiento", "Nro Lote", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });
 		consultas model = new consultas();
 		rs = model.cargarProductos();
 		try {
 			while (rs.next())
-				dtm.addRow(new Object[] { rs.getString("codproducto"), rs.getString("producto"),
-						rs.getString("detalles"),rs.getString("marca"),rs.getString("color"), rs.getString("unimedida"), rs.getFloat("cantidad"),
-						rs.getFloat("precioCo"), rs.getFloat("precioVe") });
+				dtm.addRow(
+						new Object[] { rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles"),
+								rs.getString("marca"), rs.getString("color"),rs.getString("laboratorio"),rs.getString("fechaVenc"),rs.getString("nrolote"),
+								rs.getString("unimedida"),
+								rs.getFloat("cantidad"), rs.getFloat("precioCo"), rs.getFloat("precioVe") });
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -258,15 +260,18 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(12)); // Codigo
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(24)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20)); // Detalle
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Uni Med
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(8)); // Stock
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(7)); // PrecioCompra
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(7 )); // PrecioVenta
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(6)); // Marca
-		tcm.getColumn(8).setPreferredWidth(anchoColumna(6)); // Color
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Codigo
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(12)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(8)); // Detalle
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(8)); // Marca
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(8)); // Color
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(8)); // Laboratorio
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(8)); // F. Vencimiento
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(8)); // Nto Lote
+		tcm.getColumn(8).setPreferredWidth(anchoColumna(8)); // Uni. Medida
+		tcm.getColumn(9).setPreferredWidth(anchoColumna(8)); // Cantidad
+		tcm.getColumn(10).setPreferredWidth(anchoColumna(8)); // PrecioCompra
+		tcm.getColumn(11).setPreferredWidth(anchoColumna(8)); // PrecioVenta
 
 		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -275,18 +280,18 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		DefaultTableCellRenderer tcr3 = new DefaultTableCellRenderer();
 		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(6).setCellRenderer(tcr3);
-		
+
 		DefaultTableCellRenderer tcr4 = new DefaultTableCellRenderer();
 		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(7).setCellRenderer(tcr4);
-		
+
 		DefaultTableCellRenderer tcr5 = new DefaultTableCellRenderer();
 		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(8).setCellRenderer(tcr5);
 	}
 
 	protected void actionPerformedBtnAgregar(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(this, null,usuario);
+		NuevoProducto np = new NuevoProducto(this, null, usuario);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
 		this.setEnabled(false);
@@ -300,11 +305,14 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 			String detalleProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 2));
 			String marcaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 3));
 			String colorProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
-			String uniMedidaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
-			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
-			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
-			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
-			ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
+			String laboratorio = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
+			String fechavencimiento = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			String nroLote = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
+			String uniMedidaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
+			String cantidadProducto= String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 9));
+			String preciocoProducto  = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 11));
+			ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto, laboratorio,fechavencimiento,nroLote,
 					uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto, colorProducto, this);
 			mp.setVisible(true);
 			this.setEnabled(false);
@@ -314,8 +322,9 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	protected void actionPerformedBtnEliminar(ActionEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Realmente desea eliminar el producto?\nAl eliminar el producto tambien estará eliminando la informacion\nde venta detalle y ingreso relacionada con el producto eliminado", "Confirmar eliminación",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null,
+				"¿Realmente desea eliminar el producto?\nAl eliminar el producto tambien estará eliminando la informacion\nde venta detalle y ingreso relacionada con el producto eliminado",
+				"Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 			try {
@@ -359,32 +368,35 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	protected void windowClosingThis(WindowEvent arg0) {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Cerrar Sistema?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0){
+		if (opc == 0) {
 			try {
 				DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
-				Date today = Calendar.getInstance().getTime();       
+				Date today = Calendar.getInstance().getTime();
 				String reportDate = df.format(today);
-				File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
-				directorio.mkdirs(); 
+				File directorio = new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA");
+				directorio.mkdirs();
 				Process p;
 				p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
 				InputStream is = p.getInputStream();
-				FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+				FileOutputStream fos = new FileOutputStream(
+						"D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  " + reportDate + ".sql");
 				byte[] buffer = new byte[1000];
 				int leido = is.read(buffer);
-				while(leido>0){
+				while (leido > 0) {
 					fos.write(buffer, 0, leido);
 					leido = is.read(buffer);
 				}
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
+				// JOptionPane.showMessageDialog(null, "Copia de segudidad
+				// creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA /
+				// ");
+				// JOptionPane.showMessageDialog(null, "Copia de segudidad
+				// realizada correctamente");
 				fos.close();
 			} catch (IOException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+				// JOptionPane.showMessageDialog(null, e1);
 			}
 			System.exit(0);
-		}
-		else
+		} else
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	}
 
@@ -412,36 +424,41 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 					String codigoProducto = rs.getString("codproducto");
 					String nombreProducto = rs.getString("producto");
 					String detalleProducto = rs.getString("detalles");
+					String laboratorio = rs.getString("laboratorio");
+					String fechaVenc = rs.getString("fechaVenc");
+					String nroLote = rs.getString("nrolote");
 					String uniMedidaProducto = rs.getString("unimedida");
 					String cantidadProducto = rs.getString("cantidad");
 					String preciocoProducto = rs.getString("precioCo");
 					String preciovePoducto = rs.getString("precioVe");
 					String marcaProducto = rs.getString("marca");
 					String colorProducto = rs.getString("color");
-					
+
 					String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
 					int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-					
-					if (seleccion == 0) {//Modificar
+
+					if (seleccion == 0) {// Modificar
 						ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-								uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
+								laboratorio, fechaVenc, nroLote, uniMedidaProducto, cantidadProducto, preciocoProducto,
+								preciovePoducto, marcaProducto, colorProducto, this);
 						mp.setVisible(true);
 						this.setEnabled(false);
-						txtCodigo.setText("");						
+						txtCodigo.setText("");
 					}
 					if (seleccion == 1) {// agregar
 						txtCodigo.setText("");
-						
+
 						try {
-							AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto, this, usuario);
+							AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto,
+									preciovePoducto, this, usuario);
 							as.setVisible(true);
 							this.setEnabled(false);
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(null, "Error al abrir Agregar Stock: " + e.getMessage());
 						}
 					}
-					
+
 				}
 			} catch (Exception e) {
 				try {
@@ -455,29 +472,35 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 						String codigoProducto = rs.getString("codproducto");
 						String nombreProducto = rs.getString("producto");
 						String detalleProducto = rs.getString("detalles");
+						String laboratorio = rs.getString("laboratorio");
+						String fechaVenc = rs.getString("fechaVenc");
+						String nroLote = rs.getString("nrolote");
 						String uniMedidaProducto = rs.getString("unimedida");
 						String cantidadProducto = rs.getString("cantidad");
 						String preciocoProducto = rs.getString("precioCo");
 						String preciovePoducto = rs.getString("precioVe");
 						String marcaProducto = rs.getString("marca");
 						String colorProducto = rs.getString("color");
-						
+
 						String[] opciones = { "MODIFICAR", "AGREGAR STOCK", "CANCELAR" };
-						int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-						
-						if (seleccion == 0) {//Modificar
-							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto,
-									uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto,colorProducto, this);
+						int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion",
+								"Seleccione una opcion", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								opciones, opciones[0]);
+
+						if (seleccion == 0) {// Modificar
+							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto,
+									detalleProducto,laboratorio, fechaVenc,nroLote, uniMedidaProducto, cantidadProducto, preciocoProducto,
+									preciovePoducto, marcaProducto, colorProducto, this);
 							mp.setVisible(true);
 							this.setEnabled(false);
-							txtCodigo.setText("");						
+							txtCodigo.setText("");
 						}
 						if (seleccion == 1) {// agregar
 							txtCodigo.setText("");
-							
+
 							try {
-								AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto, this, usuario);
+								AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto,
+										preciovePoducto, this, usuario);
 								as.setVisible(true);
 								this.setEnabled(false);
 							} catch (Exception e1) {
@@ -525,11 +548,12 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		try {
 			String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
-			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
-			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
-			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
+			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 9));
+			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 11));
 
-			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto,preciocoProducto,preciovePoducto,this,usuario);
+			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto,
+					this, usuario);
 			as.setVisible(true);
 			this.setEnabled(false);
 		} catch (Exception e) {
@@ -537,6 +561,3 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		}
 	}
 }
-
-
-

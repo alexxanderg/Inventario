@@ -1,5 +1,7 @@
 package clases;
 
+import java.util.Date;
+
 public class Productos {
 	String codigo;
 	String producto;
@@ -11,8 +13,13 @@ public class Productos {
 	float precioVe;
 	String marca;
 	String color;
-	
-	public Productos(String codigo, String producto, String detalles, String unimedida, float cantidad, float cantventa, float precioCo, float precioVe,String marca,String color){
+
+	String laboratorio;
+	Date fechavenci;
+	float nrolote;
+
+	public Productos(String codigo, String producto, String detalles,String laboratorio, Date fechavenci, float nrolote , String unimedida, float cantidad, float cantventa,
+			float precioCo, float precioVe, String marca, String color) {
 		this.codigo = codigo;
 		this.producto = producto;
 		this.detalles = detalles;
@@ -23,6 +30,33 @@ public class Productos {
 		this.precioVe = precioVe;
 		this.marca = marca;
 		this.color = color;
+		this.laboratorio = laboratorio;
+		this.fechavenci=fechavenci;
+		this.nrolote = nrolote;
+	}
+
+	public String getLaboratorio() {
+		return laboratorio;
+	}
+
+	public void setLaboratorio(String laboratorio) {
+		this.laboratorio = laboratorio;
+	}
+
+	public Date getFechavenci() {
+		return fechavenci;
+	}
+
+	public void setFechavenci(Date fechavenci) {
+		this.fechavenci = fechavenci;
+	}
+
+	public float getNrolote() {
+		return nrolote;
+	}
+
+	public void setNrolote(float nrolote) {
+		this.nrolote = nrolote;
 	}
 
 	public float getCantventa() {
@@ -104,5 +138,5 @@ public class Productos {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
+
 }
