@@ -41,7 +41,7 @@ color		varchar(40)
 */
 alter table tb_productos add(
 	laboratorio varchar(50),
-    fechaVenc	timestamp,
+    fechaVenc	date,
     nrolote		int
 );
 
