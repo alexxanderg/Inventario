@@ -100,6 +100,18 @@ public class consultas {
 		}
 		return rs;
 	}
+	//
+	public ResultSet cargarCategoria() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select distinct categoria from db_inventario.tb_productos order by categoria");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
 
 	public ResultSet cargarProductosSinStock() {
 		Connection con = MySQLConexion.getConection();
@@ -140,7 +152,7 @@ public class consultas {
 		return rs;
 	}
 
-	public int ingresarProducto(String cod, String prod, String det, String lab, java.sql.Date fec_venc, String nrolote,
+	public int ingresarProducto(String cod, String prod, String det, String cat, String lab, java.sql.Date fec_venc, String nrolote,
 			String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2,
 			float cpromo2, float ppromo2, String marca, String color) {
 		Connection con = MySQLConexion.getConection();
@@ -148,27 +160,28 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, producto, detalles,laboratorio,fechaVenc, nrolote, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2,marca,color)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)";
+			String sql = "insert into tb_productos (codproducto, producto, detalles,categoria,laboratorio,fechaVenc, nrolote, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2,marca,color)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);
 			prepareStmt.setString(2, prod);
 			prepareStmt.setString(3, det);
-			prepareStmt.setString(4, lab);
-			prepareStmt.setDate(5, fec_venc);
-			prepareStmt.setFloat(6, Float.parseFloat(nrolote));
-			prepareStmt.setString(7, umed);
-			prepareStmt.setFloat(8, cant);
-			prepareStmt.setFloat(9, prec);
-			prepareStmt.setFloat(10, prev);
-			prepareStmt.setString(11, promo1);
-			prepareStmt.setFloat(12, cpromo1);
-			prepareStmt.setFloat(13, ppromo1);
-			prepareStmt.setString(14, promo2);
-			prepareStmt.setFloat(15, cpromo2);
-			prepareStmt.setFloat(16, ppromo2);
-			prepareStmt.setString(17, marca);
-			prepareStmt.setString(18, color);
+			prepareStmt.setString(4, cat);
+			prepareStmt.setString(5, lab);
+			prepareStmt.setDate(6, fec_venc);
+			prepareStmt.setFloat(7, Float.parseFloat(nrolote));
+			prepareStmt.setString(8, umed);
+			prepareStmt.setFloat(9, cant);
+			prepareStmt.setFloat(10, prec);
+			prepareStmt.setFloat(11, prev);
+			prepareStmt.setString(12, promo1);
+			prepareStmt.setFloat(13, cpromo1);
+			prepareStmt.setFloat(14, ppromo1);
+			prepareStmt.setString(15, promo2);
+			prepareStmt.setFloat(16, cpromo2);
+			prepareStmt.setFloat(17, ppromo2);
+			prepareStmt.setString(18, marca);
+			prepareStmt.setString(19, color);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;// 0= se creo correctamente
@@ -179,7 +192,7 @@ public class consultas {
 
 	}
 
-	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String laboratorio,
+	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String cat, String laboratorio,
 			java.sql.Date fecVen, String nroLote, String umed, float cant, float prec, float prev, String promo1,
 			float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2, String marca, String color) {
 		Connection con = MySQLConexion.getConection();
@@ -187,27 +200,28 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, newcod);
 			prepareStmt.setString(2, prod);
 			prepareStmt.setString(3, det);
-			prepareStmt.setString(4, laboratorio);
-			prepareStmt.setDate(5, fecVen);
-			prepareStmt.setFloat(6, Float.parseFloat(nroLote));
-			prepareStmt.setString(7, umed);
-			prepareStmt.setFloat(8, cant);
-			prepareStmt.setFloat(9, prec);
-			prepareStmt.setFloat(10, prev);
-			prepareStmt.setString(11, promo1);
-			prepareStmt.setFloat(12, cpromo1);
-			prepareStmt.setFloat(13, ppromo1);
-			prepareStmt.setString(14, promo2);
-			prepareStmt.setFloat(15, cpromo2);
-			prepareStmt.setFloat(16, ppromo2);
-			prepareStmt.setString(17, marca);
-			prepareStmt.setString(18, color);
-			prepareStmt.setString(19, cod);
+			prepareStmt.setString(4, cat);
+			prepareStmt.setString(5, laboratorio);
+			prepareStmt.setDate(6, fecVen);
+			prepareStmt.setFloat(7, Float.parseFloat(nroLote));
+			prepareStmt.setString(8, umed);
+			prepareStmt.setFloat(9, cant);
+			prepareStmt.setFloat(10, prec);
+			prepareStmt.setFloat(11, prev);
+			prepareStmt.setString(12, promo1);
+			prepareStmt.setFloat(13, cpromo1);
+			prepareStmt.setFloat(14, ppromo1);
+			prepareStmt.setString(15, promo2);
+			prepareStmt.setFloat(16, cpromo2);
+			prepareStmt.setFloat(17, ppromo2);
+			prepareStmt.setString(18, marca);
+			prepareStmt.setString(19, color);
+			prepareStmt.setString(20, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {

@@ -799,6 +799,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 								while (rs.next()) {
 									String prod = rs.getString("producto");
 									String det = rs.getString("detalles");
+									String cat = rs.getString("categoria");
 									String lab = rs.getString("laboratorio");
 									Date fecVen = rs.getDate("fechaVenc");
 									float nrolote = rs.getFloat("nrolote");
@@ -809,7 +810,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 									float pVe = rs.getFloat("precioVe");
 									String marca = rs.getString("marca");
 									String color = rs.getString("color");
-									p = new Productos(cod, prod, det, lab, fecVen, nrolote, umed, cant, cantventa, pCo,
+									p = new Productos(cod, prod, det, cat, lab, fecVen, nrolote, umed, cant, cantventa, pCo,
 											pVe, marca, color);
 								}
 							} catch (Exception e) {

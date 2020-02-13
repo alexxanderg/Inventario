@@ -17,8 +17,10 @@ public class Productos {
 	String laboratorio;
 	Date fechavenci;
 	float nrolote;
+	
+	String categoria;
 
-	public Productos(String codigo, String producto, String detalles,String laboratorio, Date fechavenci, float nrolote , String unimedida, float cantidad, float cantventa,
+	public Productos(String codigo, String producto, String detalles,String categoria,String laboratorio, Date fechavenci, float nrolote , String unimedida, float cantidad, float cantventa,
 			float precioCo, float precioVe, String marca, String color) {
 		this.codigo = codigo;
 		this.producto = producto;
@@ -33,6 +35,7 @@ public class Productos {
 		this.laboratorio = laboratorio;
 		this.fechavenci=fechavenci;
 		this.nrolote = nrolote;
+		this.categoria = categoria;
 	}
 
 	public String getLaboratorio() {
@@ -49,6 +52,14 @@ public class Productos {
 
 	public void setFechavenci(Date fechavenci) {
 		this.fechavenci = fechavenci;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public float getNrolote() {
