@@ -149,7 +149,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		this.btnBuscarProducto0 = new JButton((Icon) null);
 		btnBuscarProducto0.setForeground(new Color(255, 255, 255));
 		btnBuscarProducto0.setFont(new Font("Century Gothic", Font.BOLD, 15));
-		btnBuscarProducto0.setText("Buscar producto con registro 0");
+		btnBuscarProducto0.setText("Buscar productos disparejos");
 		this.btnBuscarProducto0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedButton(arg0);
@@ -432,7 +432,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		if(selec == cantProductos-1)
 			selec = -1;
 		for (int i = selec + 1; i < cantProductos; i++) {
-			if (Integer.parseInt(tbProductos.getValueAt(i, 7).toString()) == 0) {
+			if (Float.parseFloat(tbProductos.getValueAt(i, 7).toString()) != Float.parseFloat((tbProductos.getValueAt(i, 6).toString()))) {
 				tbProductos.setRowSelectionInterval(i, i);
 				i = cantProductos;
 			}

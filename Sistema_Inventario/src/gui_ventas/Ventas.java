@@ -382,7 +382,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblMetodoDePago);
 		
 		cbMetodoPago = new JComboBox();
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK"}));
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);

@@ -294,17 +294,20 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(lblNmeroDeVenta);
 
 		lblImprimirCopiaDe = new JLabel("<html>\u00A0Imprimir copia de ticket</html>");
+		lblImprimirCopiaDe.setEnabled(false);
 		lblImprimirCopiaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImprimirCopiaDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		lblImprimirCopiaDe.setBounds(669, 496, 584, 51);
 		contentPane.add(lblImprimirCopiaDe);
 
 		lblNCopias = new JLabel("Cantidad de copias:");
+		lblNCopias.setEnabled(false);
 		lblNCopias.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		lblNCopias.setBounds(680, 558, 192, 30);
 		contentPane.add(lblNCopias);
 
 		txtNCopias = new JTextField();
+		txtNCopias.setEnabled(false);
 		txtNCopias.setText("1");
 		txtNCopias.addKeyListener(this);
 		txtNCopias.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -315,6 +318,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(txtNCopias);
 
 		btnImprimir = new JButton("IMPRIMIR");
+		btnImprimir.setEnabled(false);
 		btnImprimir.addActionListener(this);
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -323,6 +327,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(btnImprimir);
 
 		txtNVentaCopia = new JTextField();
+		txtNVentaCopia.setEnabled(false);
 		txtNVentaCopia.addKeyListener(this);
 		txtNVentaCopia.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtNVentaCopia.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -332,6 +337,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		contentPane.add(txtNVentaCopia);
 
 		lblNVenta = new JLabel("Ticket de venta N\u00B0:");
+		lblNVenta.setEnabled(false);
 		lblNVenta.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		lblNVenta.setBounds(680, 611, 192, 30);
 		contentPane.add(lblNVenta);
