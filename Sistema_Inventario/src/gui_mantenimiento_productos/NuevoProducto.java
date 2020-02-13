@@ -82,6 +82,12 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 	private JDateChooser fecVencimiento;
 	private JLabel label_2;
 	private JTextField txtNroLote;
+	private JLabel label_3;
+	private JLabel label_4;
+	private JLabel label_5;
+	private JLabel label_6;
+	private JLabel label_7;
+	private JLabel label_8;
 
 	public static void main(String[] args) {
 		try {
@@ -445,6 +451,48 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		this.txtNroLote.setBackground(SystemColor.controlHighlight);
 		this.txtNroLote.setBounds(255, 318, 253, 25);
 		getContentPane().add(this.txtNroLote);
+		
+		label_3 = new JLabel("*");
+		label_3.setHorizontalAlignment(SwingConstants.LEFT);
+		label_3.setForeground(Color.RED);
+		label_3.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_3.setBounds(103, 54, 20, 33);
+		getContentPane().add(label_3);
+		
+		label_4 = new JLabel("*");
+		label_4.setHorizontalAlignment(SwingConstants.LEFT);
+		label_4.setForeground(Color.RED);
+		label_4.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_4.setBounds(125, 95, 20, 33);
+		getContentPane().add(label_4);
+		
+		label_5 = new JLabel("*");
+		label_5.setHorizontalAlignment(SwingConstants.LEFT);
+		label_5.setForeground(Color.RED);
+		label_5.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_5.setBounds(103, 131, 20, 33);
+		getContentPane().add(label_5);
+		
+		label_6 = new JLabel("*");
+		label_6.setHorizontalAlignment(SwingConstants.LEFT);
+		label_6.setForeground(Color.RED);
+		label_6.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_6.setBounds(125, 384, 20, 33);
+		getContentPane().add(label_6);
+		
+		label_7 = new JLabel("*");
+		label_7.setHorizontalAlignment(SwingConstants.LEFT);
+		label_7.setForeground(Color.RED);
+		label_7.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_7.setBounds(209, 422, 20, 33);
+		getContentPane().add(label_7);
+		
+		label_8 = new JLabel("*");
+		label_8.setHorizontalAlignment(SwingConstants.LEFT);
+		label_8.setForeground(Color.RED);
+		label_8.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_8.setBounds(187, 458, 20, 33);
+		getContentPane().add(label_8);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, txtProducto, txtDeta, txtMarca, txtColor, cbUMedida, txtCantidad, txtPreComInd, txtPrecioVenInd, txtPromo1, txtCantPromo1, txtPrePromo1, txtPromo2, txtCantPromo2, txtPrePromo2, btnCrear}));
 		cargar();
 	}
@@ -529,19 +577,31 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 				prePromo1 = redondearDecimales(prePromo1, 1);
 				cantPromo2 = redondearDecimales(cantPromo2, 1);
 				prePromo2 = redondearDecimales(prePromo2, 1);
+				String nrolote = "0";
 				
-				//Cambio de utils a sql.Date para envio
-				Date  datevencimiento = fecVencimiento.getDate();
-				long d = datevencimiento.getTime();
-				java.sql.Date fechavencimineto = new java.sql.Date(d);
+				java.sql.Date fechavencimineto = null;
+				try {
+					//Cambio de utils a sql.Date para envio
+					Date  datevencimiento = fecVencimiento.getDate();
+					long d = datevencimiento.getTime();
+					fechavencimineto = new java.sql.Date(d);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					nrolote = txtNroLote.getText();
+					if(nrolote.length() == 0)
+						nrolote = "0";
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 				
-				rs = model.ingresarProducto(txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtLaboratorio.getText(),fechavencimineto,Float.parseFloat(txtNroLote.getText()),	
+				rs = model.ingresarProducto(txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtLaboratorio.getText(),fechavencimineto, nrolote,	
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),	
 						Float.parseFloat("" + pc), Float.parseFloat("" + pv), 
 						promo1, Float.parseFloat(""+cantPromo1), Float.parseFloat(""+prePromo1), promo2, Float.parseFloat(""+cantPromo2), Float.parseFloat(""+prePromo2),txtMarca.getText(),txtColor.getText());
 
 				if (rs == 0) {
-					JOptionPane.showMessageDialog(null, "se ingreso correctamente");
 					model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat("" + pc), Float.parseFloat("" + pv), usuario);
 					if (inv != null) {
 						inv.cargarDatos();
@@ -563,7 +623,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 						v.sumarTotal();
 					}
 				} else
-					JOptionPane.showMessageDialog(null, "Ya existe producto con este código");
+					JOptionPane.showMessageDialog(null, "Ya existe producto con este código ");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar ingreso: "+e);
@@ -692,7 +752,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		txtDeta.setText(null);
 		txtLaboratorio.setText(null);
 		fecVencimiento.setDate(fecha);
-		txtNroLote.setText(null);
+		txtNroLote.setText("0");
 		txtMarca.setText(null);
 		txtColor.setText(null);
 		txtCantidad.setText("1");

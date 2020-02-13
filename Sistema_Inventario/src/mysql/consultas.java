@@ -140,7 +140,7 @@ public class consultas {
 		return rs;
 	}
 
-	public int ingresarProducto(String cod, String prod, String det, String lab, java.sql.Date fec_venc, float nrolote,
+	public int ingresarProducto(String cod, String prod, String det, String lab, java.sql.Date fec_venc, String nrolote,
 			String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2,
 			float cpromo2, float ppromo2, String marca, String color) {
 		Connection con = MySQLConexion.getConection();
@@ -156,7 +156,7 @@ public class consultas {
 			prepareStmt.setString(3, det);
 			prepareStmt.setString(4, lab);
 			prepareStmt.setDate(5, fec_venc);
-			prepareStmt.setFloat(6, nrolote);
+			prepareStmt.setFloat(6, Float.parseFloat(nrolote));
 			prepareStmt.setString(7, umed);
 			prepareStmt.setFloat(8, cant);
 			prepareStmt.setFloat(9, prec);
@@ -180,7 +180,7 @@ public class consultas {
 	}
 
 	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String laboratorio,
-			java.sql.Date fecVen, float nroLote, String umed, float cant, float prec, float prev, String promo1,
+			java.sql.Date fecVen, String nroLote, String umed, float cant, float prec, float prev, String promo1,
 			float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2, String marca, String color) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -194,7 +194,7 @@ public class consultas {
 			prepareStmt.setString(3, det);
 			prepareStmt.setString(4, laboratorio);
 			prepareStmt.setDate(5, fecVen);
-			prepareStmt.setFloat(6, nroLote);
+			prepareStmt.setFloat(6, Float.parseFloat(nroLote));
 			prepareStmt.setString(7, umed);
 			prepareStmt.setFloat(8, cant);
 			prepareStmt.setFloat(9, prec);

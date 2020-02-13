@@ -473,7 +473,6 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtProducto.setText(nombreProducto);
 		txtLaboratorio.setText(laboratorio);
 		fecVencimiento.setDate(Utilitarios.textoAFecha(fechaVen));
-		txtNroLote.setText(nroLote);
 		txtCantidad.setText(cantidadProducto);
 		txtDeta.setText(detalleProducto);
 		txtPreComInd.setText(preciocoProducto);
@@ -489,6 +488,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		double prep2 = 0;
 		String marca ="";
 		String color ="";
+		String nroLote = "";
+		String laboratorio = "";
 		
 		rs = model.buscarProducto(codigoProducto);
 		try {
@@ -501,6 +502,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 				prep2 = rs.getFloat("prep2");
 				marca=rs.getString("marca");
 				color=rs.getString("color");
+				nroLote = "" + rs.getInt("nrolote");
+				laboratorio = rs.getString("laboratorio");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -514,6 +517,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPrePromo2.setText(""+prep2);
 		txtMarca.setText(marca);
 		txtColor.setText(color);
+		txtNroLote.setText(nroLote);
+		txtLaboratorio.setText(laboratorio);
 		
 		switch(uniMedidaProducto){
 		case "Unidad":
@@ -560,13 +565,26 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 				prePromo1 = redondearDecimales(prePromo1, 1);
 				cantPromo2 = redondearDecimales(cantPromo2, 1);
 				prePromo2 = redondearDecimales(prePromo2, 1);
+
+				String nrolote = "0";
+				java.sql.Date fechavencimineto = null;
+				try {
+					//Cambio de utils a sql.Date para envio
+					Date  datevencimiento = fecVencimiento.getDate();
+					long d = datevencimiento.getTime();
+					fechavencimineto = new java.sql.Date(d);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				try {
+					nrolote = txtNroLote.getText();
+					if(nrolote.length() == 0)
+						nrolote = "0";
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 				
-				//Cambio de utils a sql.Date para envio
-				Date  date = fecVencimiento.getDate();
-				long d = date.getTime();
-				java.sql.Date fechavencimineto = new java.sql.Date(d);
-				
-				model.modificarProducto(codigoProducto, txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtLaboratorio.getText(),fechavencimineto,Float.parseFloat(txtNroLote.getText()),cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat(""+pc), Float.parseFloat(""+pv)
+				model.modificarProducto(codigoProducto, txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtLaboratorio.getText(),fechavencimineto,nrolote,cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat(""+pc), Float.parseFloat(""+pv)
 				, promo1, Float.parseFloat(""+cantPromo1), Float.parseFloat(""+prePromo1), promo2, Float.parseFloat(""+cantPromo2), Float.parseFloat(""+prePromo2),marca,color		);
 				
 				mp.cargarDatos();
