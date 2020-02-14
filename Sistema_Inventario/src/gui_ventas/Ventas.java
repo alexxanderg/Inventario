@@ -67,6 +67,11 @@ import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
 
@@ -86,10 +91,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JButton btnNuevaVentana;
 	private JButton btnNuevoProducto;
 	private JLabel lblTotal;
-	private JLabel label;
+	private JLabel lblPaga;
 	private JLabel label_1;
 	private JTextField txtPaga;
-	private JLabel label_2;
+	private JLabel lblVuelto;
 	private JTextField txtVuelto;
 	private JLabel label_3;
 	private JLabel lblNombreDeCliente;
@@ -245,13 +250,13 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnNuevoProducto.setBounds(642, 69, 298, 86);
 		contentPane.add(btnNuevoProducto);
 
-		label = new JLabel("Paga con:");
-		label.setVerticalAlignment(SwingConstants.BOTTOM);
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(Color.BLACK);
-		label.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label.setBounds(979, 347, 178, 38);
-		contentPane.add(label);
+		lblPaga = new JLabel("Paga con:");
+		lblPaga.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPaga.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPaga.setForeground(Color.BLACK);
+		lblPaga.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
+		lblPaga.setBounds(979, 347, 346, 38);
+		contentPane.add(lblPaga);
 
 		label_1 = new JLabel("S/.");
 		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -271,13 +276,13 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtPaga.setBounds(1022, 389, 181, 34);
 		contentPane.add(txtPaga);
 
-		label_2 = new JLabel("Su vuelto es:");
-		label_2.setVerticalAlignment(SwingConstants.BOTTOM);
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setForeground(Color.BLACK);
-		label_2.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_2.setBounds(979, 440, 257, 38);
-		contentPane.add(label_2);
+		lblVuelto = new JLabel("Su vuelto es:");
+		lblVuelto.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblVuelto.setHorizontalAlignment(SwingConstants.LEFT);
+		lblVuelto.setForeground(Color.BLACK);
+		lblVuelto.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
+		lblVuelto.setBounds(979, 440, 257, 38);
+		contentPane.add(lblVuelto);
 
 		txtVuelto = new JTextField();
 		txtVuelto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -382,10 +387,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblMetodoDePago);
 
 		cbMetodoPago = new JComboBox();
-		cbMetodoPago.setModel(new DefaultComboBoxModel(
-				new String[] { "Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK",
-						"Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP",
-						"Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO" }));
+		cbMetodoPago.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				itemStateChangedCbMetodoPago(arg0);
+			}
+		});
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);
@@ -943,6 +950,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						}
 						JOptionPane.showMessageDialog(null, "VENTA CORRECTA :)");
 						limpiar();
+
+						/*lblPaga.setText("Paga con: ");
+						lblVuelto.setText("Su vuelto es: ");*/
 					}
 				}
 			}
@@ -1239,5 +1249,16 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 	public void anadirClienteCombpo(Cliente c) {
 		cbClientes.addItem(c);
+	}
+	protected void itemStateChangedCbMetodoPago(ItemEvent arg0) {
+		/*if(cbMetodoPago.getSelectedItem().equals("CRÉDITO")){
+			lblPaga.setText("Deja a cuenta: ");
+			lblVuelto.setText("Debe: ");
+		}
+		
+		else{
+			lblPaga.setText("Paga con: ");
+			lblVuelto.setText("Su vuelto es: ");
+		}*/
 	}
 }

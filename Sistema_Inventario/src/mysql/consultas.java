@@ -107,7 +107,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select distinct categoria from db_inventario.tb_productos order by categoria");
+			rs = st.executeQuery("select distinct categoria from db_inventario.tb_productos");
 		} catch (Exception e) {
 		}
 		return rs;

@@ -223,15 +223,15 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color", "Laboratorio",
-				"F. Vencimiento", "Nro Lote", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });
+		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
+				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });
 		consultas model = new consultas();
 		rs = model.cargarProductos();
 		try {
 			while (rs.next())
 				dtm.addRow(
 						new Object[] { rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles"),rs.getString("categoria"),
-								rs.getString("marca"), rs.getString("color"),rs.getString("laboratorio"),rs.getString("fechaVenc"),rs.getString("nrolote"),
+								rs.getString("marca"), rs.getString("color"),rs.getString("fechaVenc"),
 								rs.getString("unimedida"),
 								rs.getFloat("cantidad"), rs.getFloat("precioCo"), rs.getFloat("precioVe") });
 		} catch (Exception e) {
@@ -259,7 +259,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	public void ajustarAnchoColumnas() {
-		TableColumnModel tcm = tbProductos.getColumnModel();
+	/*	TableColumnModel tcm = tbProductos.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Codigo
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(12)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(8)); // Detalle
@@ -272,7 +272,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tcm.getColumn(9).setPreferredWidth(anchoColumna(7)); // Uni. Medida
 		tcm.getColumn(10).setPreferredWidth(anchoColumna(7)); // Cantidad
 		tcm.getColumn(11).setPreferredWidth(anchoColumna(7)); // PrecioCompra
-		tcm.getColumn(12).setPreferredWidth(anchoColumna(7)); // PrecioVenta
+		tcm.getColumn(12).setPreferredWidth(anchoColumna(7)); // PrecioVenta*/
 
 		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -307,19 +307,19 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 			String categoriaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 3));
 			String marcaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 4));
 			String colorProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 5));
-			String laboratorio = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
-			String fechavencimiento = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
-			String nroLote = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
-			String uniMedidaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 9));
-			String cantidadProducto= String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
-			String preciocoProducto  = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 11));
-			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 12));
-			ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto, categoriaProducto, laboratorio,fechavencimiento,nroLote,
+			//String laboratorio = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			String fechavencimiento = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 6));
+			//String nroLote = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
+			String uniMedidaProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 7));
+			String cantidadProducto= String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
+			String preciocoProducto  = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 9));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
+			ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto, categoriaProducto, fechavencimiento,
 					uniMedidaProducto, cantidadProducto, preciocoProducto, preciovePoducto,marcaProducto, colorProducto, this);
 			mp.setVisible(true);
 			this.setEnabled(false);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar");
+			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar " + e);
 		}
 	}
 
@@ -443,7 +443,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 
 					if (seleccion == 0) {// Modificar
 						ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto, detalleProducto, categoriaProducto,
-								laboratorio, fechaVenc, nroLote, uniMedidaProducto, cantidadProducto, preciocoProducto,
+								fechaVenc, uniMedidaProducto, cantidadProducto, preciocoProducto,
 								preciovePoducto, marcaProducto, colorProducto, this);
 						mp.setVisible(true);
 						this.setEnabled(false);
@@ -493,7 +493,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 
 						if (seleccion == 0) {// Modificar
 							ModificarProducto mp = new ModificarProducto(codigoProducto, nombreProducto,
-									detalleProducto, categoriaProducto, laboratorio, fechaVenc,nroLote, uniMedidaProducto, cantidadProducto, preciocoProducto,
+									detalleProducto, categoriaProducto, fechaVenc, uniMedidaProducto, cantidadProducto, preciocoProducto,
 									preciovePoducto, marcaProducto, colorProducto, this);
 							mp.setVisible(true);
 							this.setEnabled(false);
@@ -552,9 +552,9 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		try {
 			String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
-			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
-			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 11));
-			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 12));
+			String cantidadProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 8));
+			String preciocoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 9));
+			String preciovePoducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 10));
 
 			AgregarStock as = new AgregarStock(codigoProducto, cantidadProducto, preciocoProducto, preciovePoducto,
 					this, usuario);

@@ -168,12 +168,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnGenerarRVDetallada.setBackground(new Color(30, 144, 255));
 
 		lblVerTotalDe = new JLabel("KARDEX");
-		lblVerTotalDe.setBounds(768, 320, 360, 32);
+		lblVerTotalDe.setBounds(801, 74, 360, 32);
 		lblVerTotalDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVerTotalDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		btnGenerarMenores = new JButton("Crear");
-		btnGenerarMenores.setBounds(1033, 379, 146, 35);
+		btnGenerarMenores.setBounds(1066, 133, 146, 35);
 		btnGenerarMenores.addActionListener(this);
 		btnGenerarMenores.setForeground(new Color(255, 255, 255));
 		btnGenerarMenores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -205,7 +205,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 						textField_1.setEditable(false);
 						textField_1.setColumns(10);
 						textField_1.setBackground(Color.DARK_GRAY);
-						textField_1.setBounds(0, 487, 1253, 18);
+						textField_1.setBounds(0, 487, 628, 18);
 						contentPane.add(textField_1);
 		
 				textField_3 = new JTextField();
@@ -233,12 +233,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblVerProductos = new JLabel("<html>Ver productos con<br> stock menor a: </html>");
 		lblVerProductos.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductos.setBounds(680, 363, 242, 51);
+		lblVerProductos.setBounds(713, 117, 242, 51);
 		contentPane.add(lblVerProductos);
 
 		lblVerProductosMayores = new JLabel("<html>Ver productos con<br>stock mayor a: </html>");
 		lblVerProductosMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductosMayores.setBounds(680, 425, 242, 51);
+		lblVerProductosMayores.setBounds(713, 179, 242, 51);
 		contentPane.add(lblVerProductosMayores);
 
 		txtCrearReportes = new JTextField();
@@ -261,7 +261,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtMenores.setBackground(SystemColor.controlHighlight);
 		txtMenores.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		txtMenores.setBounds(933, 380, 95, 34);
+		txtMenores.setBounds(966, 134, 95, 34);
 		contentPane.add(txtMenores);
 		txtMenores.setColumns(10);
 
@@ -271,7 +271,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMayores.setBackground(SystemColor.controlHighlight);
 		txtMayores.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtMayores.setColumns(10);
-		txtMayores.setBounds(933, 441, 95, 35);
+		txtMayores.setBounds(966, 195, 95, 35);
 		contentPane.add(txtMayores);
 
 		btnGenerarMayores = new JButton("Crear");
@@ -279,7 +279,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnGenerarMayores.setForeground(Color.WHITE);
 		btnGenerarMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		btnGenerarMayores.setBackground(new Color(30, 144, 255));
-		btnGenerarMayores.setBounds(1033, 441, 146, 35);
+		btnGenerarMayores.setBounds(1066, 195, 146, 35);
 		contentPane.add(btnGenerarMayores);
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
@@ -393,7 +393,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblComprasDeCliente = new JLabel("COMPRAS DE CLIENTE");
 		lblComprasDeCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblComprasDeCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblComprasDeCliente.setBounds(749, 516, 347, 38);
+		lblComprasDeCliente.setBounds(782, 327, 347, 38);
 		contentPane.add(lblComprasDeCliente);
 		
 		btnVerComprasCliente = new JButton("Ver productos ingresados en esas fechas");
@@ -405,11 +405,11 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnVerComprasCliente.setForeground(Color.WHITE);
 		btnVerComprasCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnVerComprasCliente.setBackground(new Color(30, 144, 255));
-		btnVerComprasCliente.setBounds(646, 609, 574, 38);
+		btnVerComprasCliente.setBounds(679, 420, 574, 38);
 		contentPane.add(btnVerComprasCliente);
 		
 		cbCliente = new JComboBox();
-		cbCliente.setBounds(807, 565, 242, 33);
+		cbCliente.setBounds(840, 376, 242, 33);
 		contentPane.add(cbCliente);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.cbUsuarios, this.btnGenerarRVD, this.btngenerarReporteVentas, this.txtNVenta, this.btnGenerarRVDetallada, this.txtMenores, this.btnGenerarMenores, this.txtMayores, this.btnGenerarMayores, this.btnCerrar}));
 		
