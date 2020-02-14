@@ -72,6 +72,7 @@ import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
 
 public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
 
@@ -116,6 +117,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JLabel lblInfomacinAdicional;
 	private JLabel lblMetodoDePago;
 	private JComboBox<Cliente> cbMetodoPago;
+	private JButton btnModificarDetalleDe;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -170,12 +172,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(txtProductos);
 		txtProductos.setColumns(10);
 
-		btnLista = new JButton("<html>\u00A0Lista<br>completa</html>");
+		btnLista = new JButton("<html><center>Lista<br>completa</center></html>");
 		btnLista.addActionListener(this);
 		btnLista.setBackground(new Color(30, 144, 255));
 		btnLista.setForeground(new Color(255, 255, 255));
-		btnLista.setFont(new Font("Century Gothic", Font.BOLD, 23));
-		btnLista.setBounds(334, 69, 298, 86);
+		btnLista.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		btnLista.setBounds(642, 166, 139, 86);
 		contentPane.add(btnLista);
 
 		lblBuscarProducto = new JLabel("BUSCAR PRODUCTO:");
@@ -211,10 +213,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnVolver.setBounds(0, 0, 143, 58);
 		contentPane.add(btnVolver);
 
-		btnDevolucion = new JButton("<html>Eliminar<br>venta</html>");
+		btnDevolucion = new JButton("<html><center>Eliminar / modificar<br>venta</center></html>");
 		btnDevolucion.addActionListener(this);
 		btnDevolucion.setForeground(Color.WHITE);
-		btnDevolucion.setFont(new Font("Century Gothic", Font.BOLD, 23));
+		btnDevolucion.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnDevolucion.setBackground(new Color(30, 144, 255));
 		btnDevolucion.setBounds(334, 166, 298, 86);
 		contentPane.add(btnDevolucion);
@@ -237,17 +239,17 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnLimpiarTabla = new JButton("<html>Limpiar<br>ventana</html>");
 		btnLimpiarTabla.addActionListener(this);
 		btnLimpiarTabla.setForeground(Color.WHITE);
-		btnLimpiarTabla.setFont(new Font("Century Gothic", Font.BOLD, 23));
+		btnLimpiarTabla.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnLimpiarTabla.setBackground(new Color(220, 20, 60));
 		btnLimpiarTabla.setBounds(791, 166, 149, 86);
 		contentPane.add(btnLimpiarTabla);
 
-		btnNuevoProducto = new JButton("<html>\u00A0Nuevo<br>producto</html>");
+		btnNuevoProducto = new JButton("<html><center>Nuevo<br>producto</center></html>");
 		btnNuevoProducto.addActionListener(this);
 		btnNuevoProducto.setForeground(Color.WHITE);
-		btnNuevoProducto.setFont(new Font("Century Gothic", Font.BOLD, 23));
+		btnNuevoProducto.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnNuevoProducto.setBackground(new Color(30, 144, 255));
-		btnNuevoProducto.setBounds(642, 69, 298, 86);
+		btnNuevoProducto.setBounds(642, 69, 139, 86);
 		contentPane.add(btnNuevoProducto);
 
 		lblPaga = new JLabel("Paga con:");
@@ -348,9 +350,9 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			}
 		});
 		btnReportes.setForeground(Color.WHITE);
-		btnReportes.setFont(new Font("Century Gothic", Font.BOLD, 23));
+		btnReportes.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnReportes.setBackground(new Color(30, 144, 255));
-		btnReportes.setBounds(642, 166, 139, 86);
+		btnReportes.setBounds(791, 69, 149, 86);
 		contentPane.add(btnReportes);
 
 		cbClientes = new JComboBox();
@@ -368,6 +370,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(btnAnadirCliente);
 
 		txtInfoAdicional = new JTextField();
+		txtInfoAdicional.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				keyTypedTxtInfoAdicional(arg0);
+			}
+		});
 		txtInfoAdicional.setHorizontalAlignment(SwingConstants.LEFT);
 		txtInfoAdicional.setForeground(SystemColor.windowBorder);
 		txtInfoAdicional.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -396,6 +404,13 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);
+		
+		btnModificarDetalleDe = new JButton("<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
+		btnModificarDetalleDe.setForeground(Color.WHITE);
+		btnModificarDetalleDe.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		btnModificarDetalleDe.setBackground(new Color(30, 144, 255));
+		btnModificarDetalleDe.setBounds(334, 69, 298, 86);
+		contentPane.add(btnModificarDetalleDe);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtProductos, txtPaga, txtCopias, btnVender,
 				btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana }));
 		cargar();
@@ -1031,6 +1046,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			txtProductos.requestFocus();
 			txtPaga.setText(null);
 			txtVuelto.setText(null);
+			txtInfoAdicional.setText(null);
+			cbClientes.setSelectedIndex(0);
+			cbMetodoPago.setSelectedIndex(0);
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Seleccione producto a eliminar");
 		}
@@ -1260,5 +1279,11 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			lblPaga.setText("Paga con: ");
 			lblVuelto.setText("Su vuelto es: ");
 		}*/
+	}
+	protected void keyTypedTxtInfoAdicional(KeyEvent arg0) {
+		char c = arg0.getKeyChar();
+		if (txtInfoAdicional.getText().length() == 199) {
+			arg0.consume();
+		}
 	}
 }

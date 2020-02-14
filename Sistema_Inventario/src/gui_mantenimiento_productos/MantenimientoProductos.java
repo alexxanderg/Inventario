@@ -273,7 +273,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		tcm.getColumn(10).setPreferredWidth(anchoColumna(7)); // Cantidad
 		tcm.getColumn(11).setPreferredWidth(anchoColumna(7)); // PrecioCompra
 		tcm.getColumn(12).setPreferredWidth(anchoColumna(7)); // PrecioVenta*/
-
+/*
 		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);
@@ -288,7 +288,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 
 		DefaultTableCellRenderer tcr5 = new DefaultTableCellRenderer();
 		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(8).setCellRenderer(tcr5);
+		tbProductos.getColumnModel().getColumn(8).setCellRenderer(tcr5);*/
 	}
 
 	protected void actionPerformedBtnAgregar(ActionEvent arg0) {
