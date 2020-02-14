@@ -45,6 +45,10 @@ alter table tb_productos add(
     nrolote		int
 );
 
+alter table tb_productos add(
+	categoria varchar(50)
+);
+
 alter table tb_productos
   add color		varchar(40);
   
@@ -137,6 +141,8 @@ select * from tb_clientes order by id desc limit 1;
 
 select * from tb_ventas;
 select sum(totventa), sum(ganancia) from tb_ventas;
+
+select distinct categoria from db_inventario.tb_productos order by categoria;
 
 select codventa, cliente, fecha, usuario, totcompra, totventa, ganancia, (sum(totventa)), (sum(ganancia)) from tb_ventas;
 
