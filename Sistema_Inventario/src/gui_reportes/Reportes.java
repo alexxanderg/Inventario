@@ -97,6 +97,13 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JLabel lblComprasDeCliente;
 	private JButton btnVerComprasCliente;
 	private JComboBox <Cliente> cbCliente;
+	private JLabel lblProductosAVencer;
+	private JLabel lblDesde;
+	private JButton btnVerProductosQue;
+	private JDateChooser calendar_4;
+	private JLabel lblHasta;
+	private JDateChooser calendar_5;
+	private JTextField textField_5;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -405,12 +412,64 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnVerComprasCliente.setForeground(Color.WHITE);
 		btnVerComprasCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnVerComprasCliente.setBackground(new Color(30, 144, 255));
-		btnVerComprasCliente.setBounds(679, 420, 574, 38);
+		btnVerComprasCliente.setBounds(655, 420, 574, 38);
 		contentPane.add(btnVerComprasCliente);
 		
 		cbCliente = new JComboBox();
-		cbCliente.setBounds(840, 376, 242, 33);
+		cbCliente.setBounds(819, 373, 242, 33);
 		contentPane.add(cbCliente);
+		
+		this.lblProductosAVencer = new JLabel("PRODUCTOS A VENCER");
+		this.lblProductosAVencer.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblProductosAVencer.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		this.lblProductosAVencer.setBounds(646, 505, 598, 38);
+		this.contentPane.add(this.lblProductosAVencer);
+		
+		this.lblDesde = new JLabel("desde:");
+		this.lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblDesde.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
+		this.lblDesde.setBounds(661, 554, 109, 38);
+		this.contentPane.add(this.lblDesde);
+		
+		this.btnVerProductosQue = new JButton("Ver productos que venceran en esas fechas");
+		this.btnVerProductosQue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnVerProductosQue(e);
+			}
+		});
+		this.btnVerProductosQue.setForeground(Color.WHITE);
+		this.btnVerProductosQue.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		this.btnVerProductosQue.setBackground(new Color(30, 144, 255));
+		this.btnVerProductosQue.setBounds(661, 603, 574, 38);
+		this.contentPane.add(this.btnVerProductosQue);
+		
+		this.calendar_4 = new JDateChooser();
+		this.calendar_4.setBounds(780, 560, 141, 32);
+		this.contentPane.add(this.calendar_4);
+		
+		this.lblHasta = new JLabel("hasta:");
+		this.lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblHasta.setFont(new Font("Tw Cen MT", Font.BOLD, 28));
+		this.lblHasta.setBounds(975, 554, 109, 38);
+		this.contentPane.add(this.lblHasta);
+		
+		this.calendar_5 = new JDateChooser();
+		this.calendar_5.setBounds(1094, 560, 141, 32);
+		this.contentPane.add(this.calendar_5);
+		
+		this.textField_5 = new JTextField();
+		this.textField_5.setRequestFocusEnabled(false);
+		this.textField_5.setIgnoreRepaint(true);
+		this.textField_5.setHorizontalAlignment(SwingConstants.CENTER);
+		this.textField_5.setForeground(Color.ORANGE);
+		this.textField_5.setFont(new Font("Dialog", Font.BOLD, 28));
+		this.textField_5.setFocusable(false);
+		this.textField_5.setFocusTraversalKeysEnabled(false);
+		this.textField_5.setEditable(false);
+		this.textField_5.setColumns(10);
+		this.textField_5.setBackground(Color.DARK_GRAY);
+		this.textField_5.setBounds(635, 487, 618, 18);
+		this.contentPane.add(this.textField_5);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.cbUsuarios, this.btnGenerarRVD, this.btngenerarReporteVentas, this.txtNVenta, this.btnGenerarRVDetallada, this.txtMenores, this.btnGenerarMenores, this.txtMayores, this.btnGenerarMayores, this.btnCerrar}));
 		
 		
@@ -434,6 +493,8 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		calendar_1.setDate(date);
 		calendar_2.setDate(date);
 		calendar_3.setDate(date);
+		calendar_4.setDate(date);
+		calendar_5.setDate(date);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -816,7 +877,32 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
 	}
-	
+	protected void actionPerformedBtnVerProductosQue(ActionEvent e) {
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+
+			int añoi = calendar_4.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar_4.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar_4.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+			int añof = calendar_5.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_5.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_5.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			Map parameters = new HashMap();
+			parameters.put("prtFechaI", fechai);
+			parameters.put("prmtFechaF", fechaf);
+
+			new AbstractJasperReports().createReport(con, "rFechaVencer.jasper", parameters);
+			AbstractJasperReports.showViewer();
+			con.close();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		}
+	}
 	protected void actionPerformedBtnVerComprasCliente(ActionEvent arg0) {
 		Connection con = null;
 		try {
@@ -834,4 +920,5 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		}
 		
 	}
+
 }
