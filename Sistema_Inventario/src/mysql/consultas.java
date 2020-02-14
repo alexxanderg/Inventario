@@ -691,6 +691,24 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet modificarInformacion(String info, int id){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_ventas set nota=? where codventa=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, info);
+			prepareStmt.setInt(2, id);
+			prepareStmt.execute();
+
+			JOptionPane.showMessageDialog(null, "Información Alterada");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
 
 	public ResultSet ProductosVendidos(int numVenta) {
 		Connection con = MySQLConexion.getConection();

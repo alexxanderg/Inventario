@@ -118,6 +118,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JLabel lblMetodoDePago;
 	private JComboBox<Cliente> cbMetodoPago;
 	private JButton btnModificarDetalleDe;
+	private JButton btnalterarInformacion;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -218,7 +219,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnDevolucion.setForeground(Color.WHITE);
 		btnDevolucion.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnDevolucion.setBackground(new Color(30, 144, 255));
-		btnDevolucion.setBounds(334, 166, 298, 86);
+		btnDevolucion.setBounds(334, 194, 298, 58);
 		contentPane.add(btnDevolucion);
 
 		txtVentaDeProductos = new JTextField();
@@ -400,17 +401,33 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				itemStateChangedCbMetodoPago(arg0);
 			}
 		});
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(
+				new String[] { "Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK",
+						"Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP",
+						"Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO" }));
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);
-		
-		btnModificarDetalleDe = new JButton("<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
+
+		btnModificarDetalleDe = new JButton(
+				"<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
 		btnModificarDetalleDe.setForeground(Color.WHITE);
 		btnModificarDetalleDe.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnModificarDetalleDe.setBackground(new Color(30, 144, 255));
-		btnModificarDetalleDe.setBounds(334, 69, 298, 86);
+		btnModificarDetalleDe.setBounds(334, 125, 298, 58);
 		contentPane.add(btnModificarDetalleDe);
+
+		this.btnalterarInformacion = new JButton("<html><center>Alterar Informacion</center></html>");
+		this.btnalterarInformacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnalterarInformacion(e);
+			}
+		});
+		this.btnalterarInformacion.setForeground(Color.WHITE);
+		this.btnalterarInformacion.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		this.btnalterarInformacion.setBackground(new Color(30, 144, 255));
+		this.btnalterarInformacion.setBounds(334, 69, 298, 45);
+		this.contentPane.add(this.btnalterarInformacion);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtProductos, txtPaga, txtCopias, btnVender,
 				btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana }));
 		cargar();
@@ -832,8 +849,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 									float pVe = rs.getFloat("precioVe");
 									String marca = rs.getString("marca");
 									String color = rs.getString("color");
-									p = new Productos(cod, prod, det, cat, lab, fecVen, nrolote, umed, cant, cantventa, pCo,
-											pVe, marca, color);
+									p = new Productos(cod, prod, det, cat, lab, fecVen, nrolote, umed, cant, cantventa,
+											pCo, pVe, marca, color);
 								}
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -966,8 +983,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						JOptionPane.showMessageDialog(null, "VENTA CORRECTA :)");
 						limpiar();
 
-						/*lblPaga.setText("Paga con: ");
-						lblVuelto.setText("Su vuelto es: ");*/
+						/*
+						 * lblPaga.setText("Paga con: "); lblVuelto.setText(
+						 * "Su vuelto es: ");
+						 */
 					}
 				}
 			}
@@ -1049,7 +1068,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			txtInfoAdicional.setText(null);
 			cbClientes.setSelectedIndex(0);
 			cbMetodoPago.setSelectedIndex(0);
-			
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Seleccione producto a eliminar");
 		}
@@ -1076,6 +1095,36 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		}
 	}
 
+	protected void actionPerformedBtnalterarInformacion(ActionEvent e) {
+		int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
+				"Alerta!\nEsta operación modificará la información adicional \nSi está seguro de seguir ingrese el número de venta."));
+		alterarInformacion(numVenta);
+
+	}
+	public void alterarInformacion(int numVenta) {
+		rs = model.VerificarVenta(numVenta);
+		String codventa = null;
+		String nota = null;
+		try {
+			rs.next();
+			codventa = rs.getString("codventa");
+			nota = rs.getString("nota");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		if (codventa != null) {
+			String info = JOptionPane.showInputDialog(
+					"N° de Venta: " + codventa + "\n Información:\n"+nota);
+			if ((info != null) && (info .length() > 0)) {
+				rs = model.modificarInformacion(info, numVenta);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Cancelo la petición");
+			}
+		} else
+			JOptionPane.showMessageDialog(null, "NO EXISTE LA VENTA");
+	}
+
 	protected void actionPerformedBtnDevolucion(ActionEvent arg0) {
 		String[] opciones = { "ELIMINAR", "MODIFICAR", "CANCELAR" };
 		int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
@@ -1094,6 +1143,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			eliminarVenta(numVenta, seleccion);
 		}
 	}
+
+	
 
 	public void eliminarVenta(int numVenta, int seleccion) {
 		rs = model.VerificarVenta(numVenta);
@@ -1269,21 +1320,22 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	public void anadirClienteCombpo(Cliente c) {
 		cbClientes.addItem(c);
 	}
+
 	protected void itemStateChangedCbMetodoPago(ItemEvent arg0) {
-		/*if(cbMetodoPago.getSelectedItem().equals("CRÉDITO")){
-			lblPaga.setText("Deja a cuenta: ");
-			lblVuelto.setText("Debe: ");
-		}
-		
-		else{
-			lblPaga.setText("Paga con: ");
-			lblVuelto.setText("Su vuelto es: ");
-		}*/
+		/*
+		 * if(cbMetodoPago.getSelectedItem().equals("CRÉDITO")){
+		 * lblPaga.setText("Deja a cuenta: "); lblVuelto.setText("Debe: "); }
+		 * 
+		 * else{ lblPaga.setText("Paga con: "); lblVuelto.setText(
+		 * "Su vuelto es: "); }
+		 */
 	}
+
 	protected void keyTypedTxtInfoAdicional(KeyEvent arg0) {
 		char c = arg0.getKeyChar();
 		if (txtInfoAdicional.getText().length() == 199) {
 			arg0.consume();
 		}
 	}
+
 }
