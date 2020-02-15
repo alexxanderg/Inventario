@@ -122,7 +122,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		mp = temp11;
 		
 		addWindowListener(this);
-		setBounds(100, 100, 526, 845);
+		setBounds(100, 100, 526, 792);
 		getContentPane().setLayout(null);
 		setResizable(false);
 		setAlwaysOnTop(true);
@@ -130,7 +130,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigo.setForeground(SystemColor.desktop);
 		lblCdigo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCdigo.setBounds(10, 69, 138, 25);
+		lblCdigo.setBounds(8, 49, 138, 25);
 		getContentPane().add(lblCdigo);
 		
 		txtCodigo = new JTextField();
@@ -141,14 +141,14 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtCodigo.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtCodigo.setColumns(10);
 		txtCodigo.setBackground(SystemColor.controlHighlight);
-		txtCodigo.setBounds(158, 71, 352, 25);
+		txtCodigo.setBounds(156, 51, 352, 25);
 		getContentPane().add(txtCodigo);
 		
 		lblProducto = new JLabel("PRODUCTO:");
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setForeground(SystemColor.desktop);
 		lblProducto.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblProducto.setBounds(10, 105, 148, 23);
+		lblProducto.setBounds(8, 85, 148, 23);
 		getContentPane().add(lblProducto);
 		
 		txtProducto = new JTextField();
@@ -158,7 +158,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtProducto.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtProducto.setColumns(10);
 		txtProducto.setBackground(SystemColor.controlHighlight);
-		txtProducto.setBounds(158, 105, 352, 25);
+		txtProducto.setBounds(156, 85, 352, 25);
 		getContentPane().add(txtProducto);
 		
 		lblCantidad = new JLabel("DETALLES:");
@@ -166,7 +166,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCantidad.setForeground(SystemColor.desktop);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantidad.setBounds(12, 139, 146, 29);
+		lblCantidad.setBounds(10, 119, 146, 29);
 		getContentPane().add(lblCantidad);
 		
 		txtDeta = new JTextArea();
@@ -175,7 +175,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtDeta.setForeground(SystemColor.windowBorder);
 		txtDeta.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtDeta.setBackground(Color.LIGHT_GRAY);
-		txtDeta.setBounds(158, 139, 352, 29);
+		txtDeta.setBounds(156, 119, 352, 29);
 		getContentPane().add(txtDeta);
 		
 		lblPrecio = new JLabel("PRE. COMPRA INDV:");
@@ -183,7 +183,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setForeground(SystemColor.desktop);
 		lblPrecio.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecio.setBounds(12, 395, 243, 25);
+		lblPrecio.setBounds(10, 375, 243, 25);
 		getContentPane().add(lblPrecio);
 		
 		txtPreComInd = new JTextField();
@@ -193,7 +193,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPreComInd.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPreComInd.setColumns(10);
 		txtPreComInd.setBackground(SystemColor.controlHighlight);
-		txtPreComInd.setBounds(255, 397, 253, 25);
+		txtPreComInd.setBounds(253, 377, 253, 25);
 		getContentPane().add(txtPreComInd);
 		
 		lblCantdad = new JLabel("CANTIDAD:");
@@ -201,7 +201,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCantdad.setForeground(SystemColor.desktop);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantdad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantdad.setBounds(12, 359, 159, 23);
+		lblCantdad.setBounds(10, 339, 159, 23);
 		getContentPane().add(lblCantdad);
 		
 		txtCantidad = new JTextField();
@@ -211,7 +211,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtCantidad.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtCantidad.setColumns(10);
 		txtCantidad.setBackground(SystemColor.controlHighlight);
-		txtCantidad.setBounds(257, 359, 251, 25);
+		txtCantidad.setBounds(255, 339, 251, 25);
 		getContentPane().add(txtCantidad);
 		
 		lblPrecioVenta = new JLabel("PRE. VENTA INDV:");
@@ -219,7 +219,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblPrecioVenta.setForeground(SystemColor.desktop);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioVenta.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecioVenta.setBounds(10, 430, 215, 25);
+		lblPrecioVenta.setBounds(8, 410, 215, 25);
 		getContentPane().add(lblPrecioVenta);
 		
 		txtPrecioVenInd = new JTextField();
@@ -229,7 +229,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPrecioVenInd.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPrecioVenInd.setColumns(10);
 		txtPrecioVenInd.setBackground(SystemColor.controlHighlight);
-		txtPrecioVenInd.setBounds(255, 432, 253, 25);
+		txtPrecioVenInd.setBounds(253, 412, 253, 25);
 		getContentPane().add(txtPrecioVenInd);
 		
 		btnModificar = new JButton("MODIFICAR");
@@ -237,7 +237,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		btnModificar.setForeground(SystemColor.menu);
 		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(0, 759, 520, 55);
+		btnModificar.setBounds(-2, 726, 520, 37);
 		getContentPane().add(btnModificar);
 		
 		lblUMedida = new JLabel("U. MEDIDA:");
@@ -245,13 +245,13 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setForeground(Color.BLACK);
 		lblUMedida.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblUMedida.setBounds(12, 321, 171, 25);
+		lblUMedida.setBounds(10, 301, 171, 25);
 		getContentPane().add(lblUMedida);
 		
 		cbUMedida = new JComboBox();
 		cbUMedida.setModel(new DefaultComboBoxModel(new String[] {"Unidad", "Kilo", "Litro", "Gramo"}));
 		cbUMedida.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		cbUMedida.setBounds(255, 323, 253, 25);
+		cbUMedida.setBounds(253, 303, 253, 25);
 		getContentPane().add(cbUMedida);
 		
 		txtModificarProducto = new JTextField();
@@ -266,14 +266,14 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtModificarProducto.setEditable(false);
 		txtModificarProducto.setColumns(10);
 		txtModificarProducto.setBackground(Color.DARK_GRAY);
-		txtModificarProducto.setBounds(0, 0, 520, 58);
+		txtModificarProducto.setBounds(-2, 0, 520, 38);
 		getContentPane().add(txtModificarProducto);
 		
 		this.label = new JLabel("<html>ATENCI\u00D3N: Si modifica aqu\u00ED su Stock(cantidad), no ser\u00E1 registrado en los reportes<br>ya que se considera como una correci\u00F3n solamente.<br>Para  hacerlo debe ir al bot\u00F3n: AGREGAR STOCK</html>");
 		this.label.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label.setForeground(Color.RED);
 		this.label.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		this.label.setBounds(10, 689, 500, 59);
+		this.label.setBounds(8, 669, 500, 59);
 		getContentPane().add(this.label);
 		
 		txtPrePromo2 = new JTextField();
@@ -282,7 +282,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPrePromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPrePromo2.setColumns(10);
 		txtPrePromo2.setBackground(SystemColor.controlHighlight);
-		txtPrePromo2.setBounds(255, 653, 255, 25);
+		txtPrePromo2.setBounds(253, 633, 255, 25);
 		getContentPane().add(txtPrePromo2);
 		
 		txtCantPromo2 = new JTextField();
@@ -291,7 +291,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtCantPromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtCantPromo2.setColumns(10);
 		txtCantPromo2.setBackground(SystemColor.controlHighlight);
-		txtCantPromo2.setBounds(257, 617, 253, 25);
+		txtCantPromo2.setBounds(255, 597, 253, 25);
 		getContentPane().add(txtCantPromo2);
 		
 		txtPromo2 = new JTextField();
@@ -300,7 +300,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPromo2.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPromo2.setColumns(10);
 		txtPromo2.setBackground(SystemColor.controlHighlight);
-		txtPromo2.setBounds(257, 581, 253, 25);
+		txtPromo2.setBounds(255, 561, 253, 25);
 		getContentPane().add(txtPromo2);
 		
 		txtPrePromo1 = new JTextField();
@@ -309,7 +309,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPrePromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPrePromo1.setColumns(10);
 		txtPrePromo1.setBackground(SystemColor.controlHighlight);
-		txtPrePromo1.setBounds(255, 545, 253, 25);
+		txtPrePromo1.setBounds(253, 525, 253, 25);
 		getContentPane().add(txtPrePromo1);
 		
 		txtCantPromo1 = new JTextField();
@@ -318,7 +318,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtCantPromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtCantPromo1.setColumns(10);
 		txtCantPromo1.setBackground(SystemColor.controlHighlight);
-		txtCantPromo1.setBounds(253, 504, 255, 25);
+		txtCantPromo1.setBounds(251, 484, 255, 25);
 		getContentPane().add(txtCantPromo1);
 		
 		txtPromo1 = new JTextField();
@@ -327,7 +327,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPromo1.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtPromo1.setColumns(10);
 		txtPromo1.setBackground(SystemColor.controlHighlight);
-		txtPromo1.setBounds(255, 468, 253, 25);
+		txtPromo1.setBounds(253, 448, 253, 25);
 		getContentPane().add(txtPromo1);
 		
 		label_1 = new JLabel("PROMOCION 1:");
@@ -335,7 +335,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setForeground(new Color(50, 205, 50));
 		label_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_1.setBounds(12, 468, 211, 25);
+		label_1.setBounds(10, 448, 211, 25);
 		getContentPane().add(label_1);
 		
 		label_2 = new JLabel("CANTIDAD PROMO 1:");
@@ -343,7 +343,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(new Color(50, 205, 50));
 		label_2.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_2.setBounds(10, 504, 235, 25);
+		label_2.setBounds(8, 484, 235, 25);
 		getContentPane().add(label_2);
 		
 		label_3 = new JLabel("PRECIO PROMO1 :");
@@ -351,7 +351,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(new Color(50, 205, 50));
 		label_3.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_3.setBounds(14, 545, 211, 25);
+		label_3.setBounds(12, 525, 211, 25);
 		getContentPane().add(label_3);
 		
 		label_4 = new JLabel("PROMOCION 2:");
@@ -359,7 +359,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(new Color(30, 144, 255));
 		label_4.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_4.setBounds(10, 581, 211, 25);
+		label_4.setBounds(8, 561, 211, 25);
 		getContentPane().add(label_4);
 		
 		label_5 = new JLabel("CANTIDAD PROMO 2:");
@@ -367,7 +367,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_5.setHorizontalAlignment(SwingConstants.LEFT);
 		label_5.setForeground(new Color(30, 144, 255));
 		label_5.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_5.setBounds(14, 617, 235, 25);
+		label_5.setBounds(12, 597, 235, 25);
 		getContentPane().add(label_5);
 		
 		label_6 = new JLabel("PRECIO PROMO 2:");
@@ -375,7 +375,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_6.setHorizontalAlignment(SwingConstants.LEFT);
 		label_6.setForeground(new Color(30, 144, 255));
 		label_6.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_6.setBounds(12, 653, 211, 25);
+		label_6.setBounds(10, 633, 211, 25);
 		getContentPane().add(label_6);
 		
 		this.label_7 = new JLabel("COLOR:");
@@ -383,7 +383,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_7.setForeground(Color.BLACK);
 		this.label_7.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.label_7.setBounds(10, 249, 215, 25);
+		this.label_7.setBounds(8, 229, 215, 25);
 		getContentPane().add(this.label_7);
 		
 		this.label_8 = new JLabel("MARCA:");
@@ -391,7 +391,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_8.setForeground(Color.BLACK);
 		this.label_8.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.label_8.setBounds(10, 213, 215, 25);
+		this.label_8.setBounds(8, 193, 215, 25);
 		getContentPane().add(this.label_8);
 		
 		this.txtMarca = new JTextField();
@@ -401,7 +401,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.txtMarca.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		this.txtMarca.setColumns(10);
 		this.txtMarca.setBackground(SystemColor.controlHighlight);
-		this.txtMarca.setBounds(255, 215, 253, 25);
+		this.txtMarca.setBounds(253, 195, 253, 25);
 		getContentPane().add(this.txtMarca);
 		
 		this.txtColor = new JTextField();
@@ -411,7 +411,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.txtColor.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		this.txtColor.setColumns(10);
 		this.txtColor.setBackground(SystemColor.controlHighlight);
-		this.txtColor.setBounds(255, 249, 253, 25);
+		this.txtColor.setBounds(253, 229, 253, 25);
 		getContentPane().add(this.txtColor);
 		
 		this.lblLaboratorio = new JLabel("LABORATORIO:");
@@ -439,7 +439,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.lblFVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblFVencimiento.setForeground(Color.BLACK);
 		this.lblFVencimiento.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.lblFVencimiento.setBounds(10, 285, 215, 25);
+		this.lblFVencimiento.setBounds(8, 265, 215, 25);
 		getContentPane().add(this.lblFVencimiento);
 		
 		this.lblNroLote = new JLabel("NRO. LOTE:");
@@ -463,14 +463,14 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		getContentPane().add(this.txtNroLote);
 		
 		this.fecVencimiento = new JDateChooser();
-		this.fecVencimiento.setBounds(255, 285, 253, 25);
+		this.fecVencimiento.setBounds(253, 265, 253, 25);
 		getContentPane().add(this.fecVencimiento);
 		
 		this.lblCategora = new JLabel("CATEGOR\u00CDA:");
 		this.lblCategora.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblCategora.setForeground(Color.BLACK);
 		this.lblCategora.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.lblCategora.setBounds(10, 179, 148, 23);
+		this.lblCategora.setBounds(8, 159, 148, 23);
 		getContentPane().add(this.lblCategora);
 		
 		this.txtCategoria = new JTextField();
@@ -480,14 +480,14 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.txtCategoria.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		this.txtCategoria.setColumns(10);
 		this.txtCategoria.setBackground(SystemColor.controlHighlight);
-		this.txtCategoria.setBounds(255, 179, 255, 25);
+		this.txtCategoria.setBounds(253, 159, 255, 25);
 		getContentPane().add(this.txtCategoria);
 		
 		label_9 = new JLabel("*");
 		label_9.setHorizontalAlignment(SwingConstants.LEFT);
 		label_9.setForeground(Color.RED);
 		label_9.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		label_9.setBounds(138, 167, 20, 33);
+		label_9.setBounds(136, 147, 20, 33);
 		getContentPane().add(label_9);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, txtProducto, txtDeta, txtCategoria, txtMarca, txtColor, cbUMedida, txtCantidad, txtPreComInd, txtPrecioVenInd, txtPromo1, txtCantPromo1, txtPrePromo1, txtPromo2, txtCantPromo2, txtPrePromo2, btnModificar}));
 		cargarDatos();
