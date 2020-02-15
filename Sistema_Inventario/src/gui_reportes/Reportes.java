@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import clases.AbstractJasperReports;
+import clases.Categoria;
 import clases.Cliente;
 import clases.Usuarios;
 import gui_principal.EleccionVentanas;
@@ -104,6 +105,8 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	private JLabel lblHasta;
 	private JDateChooser calendar_5;
 	private JTextField textField_5;
+	private JComboBox<Categoria> cbCategoria;
+	private JLabel lblcategoria;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -180,7 +183,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblVerTotalDe.setFont(new Font("EngraversGothic BT", Font.BOLD, 35));
 
 		btnGenerarMenores = new JButton("Crear");
-		btnGenerarMenores.setBounds(1066, 133, 146, 35);
+		btnGenerarMenores.setBounds(1068, 185, 146, 35);
 		btnGenerarMenores.addActionListener(this);
 		btnGenerarMenores.setForeground(new Color(255, 255, 255));
 		btnGenerarMenores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -240,12 +243,12 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		lblVerProductos = new JLabel("<html>Ver productos con<br> stock menor a: </html>");
 		lblVerProductos.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductos.setBounds(713, 117, 242, 51);
+		lblVerProductos.setBounds(715, 169, 242, 51);
 		contentPane.add(lblVerProductos);
 
 		lblVerProductosMayores = new JLabel("<html>Ver productos con<br>stock mayor a: </html>");
 		lblVerProductosMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblVerProductosMayores.setBounds(713, 179, 242, 51);
+		lblVerProductosMayores.setBounds(715, 231, 242, 51);
 		contentPane.add(lblVerProductosMayores);
 
 		txtCrearReportes = new JTextField();
@@ -268,7 +271,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtMenores.setBackground(SystemColor.controlHighlight);
 		txtMenores.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		txtMenores.setBounds(966, 134, 95, 34);
+		txtMenores.setBounds(968, 186, 95, 34);
 		contentPane.add(txtMenores);
 		txtMenores.setColumns(10);
 
@@ -278,7 +281,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		txtMayores.setBackground(SystemColor.controlHighlight);
 		txtMayores.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		txtMayores.setColumns(10);
-		txtMayores.setBounds(966, 195, 95, 35);
+		txtMayores.setBounds(968, 247, 95, 35);
 		contentPane.add(txtMayores);
 
 		btnGenerarMayores = new JButton("Crear");
@@ -286,7 +289,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnGenerarMayores.setForeground(Color.WHITE);
 		btnGenerarMayores.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		btnGenerarMayores.setBackground(new Color(30, 144, 255));
-		btnGenerarMayores.setBounds(1066, 195, 146, 35);
+		btnGenerarMayores.setBounds(1068, 247, 146, 35);
 		contentPane.add(btnGenerarMayores);
 
 		lblNmeroDeVenta = new JLabel("N\u00FAmero de venta: ");
@@ -419,7 +422,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		cbCliente.setBounds(819, 373, 242, 33);
 		contentPane.add(cbCliente);
 		
-		this.lblProductosAVencer = new JLabel("PRODUCTOS A VENCER");
+		this.lblProductosAVencer = new JLabel("PRODUCTOS POR VENCER");
 		this.lblProductosAVencer.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblProductosAVencer.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		this.lblProductosAVencer.setBounds(646, 505, 598, 38);
@@ -470,6 +473,15 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.textField_5.setBackground(Color.DARK_GRAY);
 		this.textField_5.setBounds(635, 487, 618, 18);
 		this.contentPane.add(this.textField_5);
+		
+		cbCategoria = new JComboBox();
+		cbCategoria.setBounds(972, 125, 242, 33);
+		contentPane.add(cbCategoria);
+		
+		lblcategoria = new JLabel("<html>Categoria:</html>");
+		lblcategoria.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		lblcategoria.setBounds(715, 125, 242, 31);
+		contentPane.add(lblcategoria);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.cbUsuarios, this.btnGenerarRVD, this.btngenerarReporteVentas, this.txtNVenta, this.btnGenerarRVDetallada, this.txtMenores, this.btnGenerarMenores, this.txtMayores, this.btnGenerarMayores, this.btnCerrar}));
 		
 		
@@ -477,11 +489,26 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 	}
 
 	private void cargar() {
+		
+		if(v != null){
+			btnGenerarRVD.setEnabled(false);
+			btnGenerarRVDetallada.setEnabled(false);
+			btnVerProductosIngresados.setEnabled(false);
+			btnGenerarMenores.setEnabled(false);
+			btnGenerarMayores.setEnabled(false);
+		}
+			
+		
 		this.setLocationRelativeTo(null);
 		
 
 		Cliente cliente = new Cliente();
 		cliente.cargarEmpresas(cbCliente);
+		
+		Categoria categoria = new Categoria();
+		Categoria todaCategoria = new Categoria("TODAS");
+		cbCategoria.addItem(todaCategoria);
+		categoria.cargarCategorias(cbCategoria);
 		
 		Usuarios usu = new Usuarios();
 		Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
@@ -705,15 +732,29 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		else {
 			Connection con = null;
 			try {
-
-				con = MySQLConexion.getConection();
-				float menores = Float.parseFloat(txtMenores.getText());
-				Map<String, Object> parameters = new HashMap();
-				parameters.put("prtcantidad", menores);
-				new AbstractJasperReports().createReport(con, "rCardexMenores.jasper", parameters);
-				AbstractJasperReports.showViewer();
-				con.close();
-				txtMenores.setText(null);
+				if(!(cbCategoria.getSelectedItem().toString().equals("TODAS"))){
+					String categoria  = cbCategoria.getSelectedItem().toString();
+					
+					con = MySQLConexion.getConection();
+					float menores = Float.parseFloat(txtMenores.getText());
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("prtcantidad", menores);
+					parameters.put("categoria", categoria);
+					new AbstractJasperReports().createReport(con, "rCardexMenoresCategoria.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					con.close();
+					txtMenores.setText(null);
+				}
+				else{
+					con = MySQLConexion.getConection();
+					float menores = Float.parseFloat(txtMenores.getText());
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("prtcantidad", menores);
+					new AbstractJasperReports().createReport(con, "rCardexMenores.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					con.close();
+					txtMenores.setText(null);
+				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "No se encontraron productos " + e);
 			}
@@ -726,14 +767,29 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		else {
 			Connection con = null;
 			try {
-				con = MySQLConexion.getConection();
-				float mayores = Float.parseFloat(txtMayores.getText());
-				Map<String, Object> parameters = new HashMap();
-				parameters.put("prtcantidad", mayores);
-				new AbstractJasperReports().createReport(con, "rCardexMayores.jasper", parameters);
-				AbstractJasperReports.showViewer();
-				con.close();
-				txtMayores.setText(null);
+				if(!(cbCategoria.getSelectedItem().toString().equals("TODAS"))){
+					String categoria  = cbCategoria.getSelectedItem().toString();
+					con = MySQLConexion.getConection();
+					float mayores = Float.parseFloat(txtMayores.getText());
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("prtcantidad", mayores);
+					parameters.put("categoria", categoria);
+					new AbstractJasperReports().createReport(con, "rCardexMayoresCategoria.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					con.close();
+					txtMayores.setText(null);
+				}
+				else{
+					con = MySQLConexion.getConection();
+					float mayores = Float.parseFloat(txtMayores.getText());
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("prtcantidad", mayores);
+					new AbstractJasperReports().createReport(con, "rCardexMayores.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					con.close();
+					txtMayores.setText(null);
+				}
+			
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "No se encontraron productos " + e);
 			}
@@ -920,5 +976,4 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		}
 		
 	}
-
 }

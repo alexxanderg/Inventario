@@ -117,7 +117,6 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private JLabel lblInfomacinAdicional;
 	private JLabel lblMetodoDePago;
 	private JComboBox<Cliente> cbMetodoPago;
-	private JButton btnModificarDetalleDe;
 	private JButton btnalterarInformacion;
 
 	public static void main(String[] args) {
@@ -219,7 +218,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnDevolucion.setForeground(Color.WHITE);
 		btnDevolucion.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		btnDevolucion.setBackground(new Color(30, 144, 255));
-		btnDevolucion.setBounds(334, 194, 298, 58);
+		btnDevolucion.setBounds(334, 166, 298, 86);
 		contentPane.add(btnDevolucion);
 
 		txtVentaDeProductos = new JTextField();
@@ -409,15 +408,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		cbMetodoPago.setBounds(979, 298, 346, 38);
 		contentPane.add(cbMetodoPago);
 
-		btnModificarDetalleDe = new JButton(
-				"<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
-		btnModificarDetalleDe.setForeground(Color.WHITE);
-		btnModificarDetalleDe.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnModificarDetalleDe.setBackground(new Color(30, 144, 255));
-		btnModificarDetalleDe.setBounds(334, 125, 298, 58);
-		contentPane.add(btnModificarDetalleDe);
-
-		this.btnalterarInformacion = new JButton("<html><center>Alterar Informacion</center></html>");
+		this.btnalterarInformacion = new JButton("<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
 		this.btnalterarInformacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnalterarInformacion(e);
@@ -426,7 +417,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		this.btnalterarInformacion.setForeground(Color.WHITE);
 		this.btnalterarInformacion.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		this.btnalterarInformacion.setBackground(new Color(30, 144, 255));
-		this.btnalterarInformacion.setBounds(334, 69, 298, 45);
+		this.btnalterarInformacion.setBounds(334, 69, 298, 86);
 		this.contentPane.add(this.btnalterarInformacion);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtProductos, txtPaga, txtCopias, btnVender,
 				btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana }));
@@ -1096,25 +1087,39 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnalterarInformacion(ActionEvent e) {
-		int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
-				"Alerta!\nEsta operación modificará la información adicional \nSi está seguro de seguir ingrese el número de venta."));
-		alterarInformacion(numVenta);
-
+		try {
+			int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
+					"Ingrese el número de la venta que desea modificar su información"));
+			alterarInformacion(numVenta);	
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 	}
 	public void alterarInformacion(int numVenta) {
 		rs = model.VerificarVenta(numVenta);
 		String codventa = null;
 		String nota = null;
+		String vendedor = null;
+		String fecha = null;
 		try {
 			rs.next();
 			codventa = rs.getString("codventa");
 			nota = rs.getString("nota");
+			vendedor = rs.getString("usuario");
+			fecha = rs.getDate("fecha").toString();
+			/*SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	        Date dateStr = formatter.parse(fecha);
+	        fecha = formatter.format(dateStr);*/
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 		if (codventa != null) {
 			String info = JOptionPane.showInputDialog(
-					"N° de Venta: " + codventa + "\n Información:\n"+nota);
+					"N° de Venta: " + codventa + 
+					"\nVendedor: " + vendedor + 
+					"\nFecha: " + fecha + 
+					"\nInformación registrada actualmente:\n"+nota);
 			if ((info != null) && (info .length() > 0)) {
 				rs = model.modificarInformacion(info, numVenta);
 			}
@@ -1337,5 +1342,4 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			arg0.consume();
 		}
 	}
-
 }
