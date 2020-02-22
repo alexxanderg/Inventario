@@ -124,8 +124,8 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblProducto = new JLabel("Nombre:");
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProducto.setForeground(SystemColor.desktop);
-		lblProducto.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblProducto.setForeground(Color.BLACK);
+		lblProducto.setFont(new Font("Arial", Font.BOLD, 18));
 		lblProducto.setBounds(10, 76, 109, 25);
 		getContentPane().add(lblProducto);
 
@@ -142,24 +142,24 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblPrecio = new JLabel("Direcci\u00F3n: ");
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecio.setForeground(SystemColor.desktop);
-		lblPrecio.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecio.setForeground(Color.BLACK);
+		lblPrecio.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecio.setBounds(10, 194, 235, 25);
 		getContentPane().add(lblPrecio);
 
 		lblCantdad = new JLabel("Nro. Documento:");
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCantdad.setForeground(SystemColor.desktop);
+		lblCantdad.setForeground(Color.BLACK);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantdad.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCantdad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantdad.setBounds(10, 156, 211, 25);
 		getContentPane().add(lblCantdad);
 
 		lblPrecioVenta = new JLabel("Correo:");
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPrecioVenta.setForeground(SystemColor.desktop);
+		lblPrecioVenta.setForeground(Color.BLACK);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecioVenta.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecioVenta.setBounds(10, 232, 211, 25);
 		getContentPane().add(lblPrecioVenta);
 
@@ -175,7 +175,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUMedida.setForeground(Color.BLACK);
-		lblUMedida.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblUMedida.setFont(new Font("Arial", Font.BOLD, 18));
 		lblUMedida.setBounds(10, 120, 171, 25);
 		getContentPane().add(lblUMedida);
 
@@ -197,8 +197,8 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblPromocion = new JLabel("Tel\u00E9fono:");
 		lblPromocion.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPromocion.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPromocion.setForeground(SystemColor.desktop);
-		lblPromocion.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPromocion.setForeground(Color.BLACK);
+		lblPromocion.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPromocion.setBounds(10, 268, 211, 25);
 		getContentPane().add(lblPromocion);
 		

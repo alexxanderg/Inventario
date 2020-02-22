@@ -247,7 +247,8 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 		try {
 			while (rs.next()) {
 				// ac.addItem(rs.getString("codproducto"));
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("codproducto") + "_"  + rs.getString("producto") + "_" + rs.getString("detalles") + "_"  + rs.getString("marca") + "_"  + rs.getString("color"));
+				
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -325,7 +326,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 
 	protected void actionPerformedBtnEliminar(ActionEvent arg0) {
 		int opc = JOptionPane.showConfirmDialog(null,
-				"¿Realmente desea eliminar el producto?\nAl eliminar el producto tambien estará eliminando la informacion\nde venta detalle y ingreso relacionada con el producto eliminado",
+				"¿Realmente desea eliminar el producto?\nAl eliminar el producto tambien estará siendo borrado este \nde sus ventas, ingresos y registros de kardex",
 				"Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
@@ -334,6 +335,7 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 				String nombreProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 1));
 				model.eliminarProductoIngreso(codigoProducto, nombreProducto);
 				model.eliminarProductoDetalle(codigoProducto, nombreProducto);
+				model.eliminarProductoDetalleKardex(codigoProducto, nombreProducto);
 				model.eliminarProducto(codigoProducto, nombreProducto);
 				cargarDatos();
 				ajustarAnchoColumnas();
@@ -415,9 +417,12 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 			try {
 				String pcompleto = txtCodigo.getText();
 				String[] parts = pcompleto.split("_");
-				String prd = parts[0]; // 123
-				String dtll = parts[1]; // 654321
-				rs = model.buscarProductoDetalle(prd, dtll);
+				String codp = parts[0]; // cod
+				String prod = parts[1]; // prod
+				String dtll = parts[1]; // deta
+				String marc = parts[1]; // marca
+				String colo = parts[1]; // color
+				rs = model.buscarProductoDetalle(prod, dtll, codp);
 				rs.next();
 				if (rs.equals(null)) {
 					JOptionPane.showMessageDialog(null, "Producto no registrado");
@@ -428,7 +433,8 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 					String detalleProducto = rs.getString("detalles");
 					String categoriaProducto = rs.getString("categoria");
 					String laboratorio = rs.getString("laboratorio");
-					String fechaVenc = rs.getString("fechaVenc");
+					String fechaVenc = null;
+					fechaVenc = rs.getString("fechaVenc");
 					String nroLote = rs.getString("nrolote");
 					String uniMedidaProducto = rs.getString("unimedida");
 					String cantidadProducto = rs.getString("cantidad");

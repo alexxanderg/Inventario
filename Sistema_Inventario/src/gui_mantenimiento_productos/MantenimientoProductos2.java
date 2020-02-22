@@ -336,9 +336,12 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 			try {
 				String pcompleto = txtCodigo.getText();
 				String[] parts = pcompleto.split("_");
-				String prd = parts[0]; // 123
-				String dtll = parts[1]; // 654321
-				rs = model.buscarProductoDetalle(prd, dtll);
+				String codp = parts[0]; // cod
+				String prod = parts[1]; // prod
+				String dtll = parts[1]; // deta
+				String marc = parts[1]; // marca
+				String colo = parts[1]; // color
+				rs = model.buscarProductoDetalle(prod, dtll, codp);
 				rs.next();
 				if (rs.equals(null)) {
 					JOptionPane.showMessageDialog(null, "Producto no registrado");

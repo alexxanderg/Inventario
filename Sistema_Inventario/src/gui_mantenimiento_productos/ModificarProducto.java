@@ -130,7 +130,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		setAlwaysOnTop(true);
 		lblCdigo = new JLabel("C\u00D3DIGO:");
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCdigo.setForeground(SystemColor.desktop);
+		lblCdigo.setForeground(Color.BLACK);
 		lblCdigo.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCdigo.setBounds(8, 49, 96, 25);
 		getContentPane().add(lblCdigo);
@@ -148,7 +148,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		
 		lblProducto = new JLabel("PRODUCTO:");
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblProducto.setForeground(SystemColor.desktop);
+		lblProducto.setForeground(Color.BLACK);
 		lblProducto.setFont(new Font("Arial", Font.BOLD, 18));
 		lblProducto.setBounds(8, 85, 148, 23);
 		getContentPane().add(lblProducto);
@@ -165,7 +165,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		
 		lblCantidad = new JLabel("DETALLES:");
 		lblCantidad.setVerticalAlignment(SwingConstants.TOP);
-		lblCantidad.setForeground(SystemColor.desktop);
+		lblCantidad.setForeground(Color.BLACK);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantidad.setBounds(10, 119, 146, 29);
@@ -183,7 +183,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblPrecio = new JLabel("PRE. COMPRA INDV:");
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPrecio.setForeground(SystemColor.desktop);
+		lblPrecio.setForeground(Color.BLACK);
 		lblPrecio.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecio.setBounds(10, 375, 243, 25);
 		getContentPane().add(lblPrecio);
@@ -200,7 +200,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		
 		lblCantdad = new JLabel("CANTIDAD:");
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCantdad.setForeground(SystemColor.desktop);
+		lblCantdad.setForeground(Color.BLACK);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantdad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantdad.setBounds(10, 339, 159, 23);
@@ -218,7 +218,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		
 		lblPrecioVenta = new JLabel("PRE. VENTA INDV:");
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPrecioVenta.setForeground(SystemColor.desktop);
+		lblPrecioVenta.setForeground(Color.BLACK);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioVenta.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecioVenta.setBounds(8, 410, 215, 25);
@@ -521,7 +521,10 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtProducto.setText(nombreProducto);
 		txtCategoria.setText(categoriaProducto);
 		//txtLaboratorio.setText(laboratorio);
-		fecVencimiento.setDate(Utilitarios.textoAFecha(fechaVen));
+		try {
+			fecVencimiento.setDate(Utilitarios.textoAFecha(fechaVen));
+		} catch (Exception e) {
+		}
 		txtCantidad.setText(cantidadProducto);
 		txtDeta.setText(detalleProducto);
 		txtPreComInd.setText(preciocoProducto);

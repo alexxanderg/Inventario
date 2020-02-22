@@ -139,14 +139,14 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet buscarProductoDetalle(String prod, String det) {
+	public ResultSet buscarProductoDetalle(String prod, String det, String codp) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from db_inventario.tb_productos where producto like '" + prod
-					+ "' and detalles like '" + det + "';");
+					+ "' and detalles like '" + det + "' or codproducto = '" + codp + "';");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -317,6 +317,21 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_ventas_detalle where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, cod);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	public ResultSet eliminarProductoDetalleKardex(String cod, String nom) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "delete from tb_kardex_detalles where codproducto = ?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, cod);
 			prepareStmt.execute();

@@ -311,7 +311,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		txtCopias = new JTextField();
 		txtCopias.addKeyListener(this);
-		txtCopias.setText("1");
+		txtCopias.setText("2");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCopias.setForeground(Color.BLACK);
 		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -613,7 +613,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				// ac.addItem(rs.getString("codproducto")); //codigo de barras
 				// ac.addItem(rs.getString("producto") + "("+
 				// rs.getString("cantidad") + ")");
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("codproducto") + "_"  + rs.getString("producto") + "_" + rs.getString("detalles") + "_"  + rs.getString("marca") + "_"  + rs.getString("color"));
+				//ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -647,8 +648,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	private void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbCompras.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(4)); // Cantidad
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(37)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(22)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(40)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Stock
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Precio
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // SubTotal
@@ -675,9 +676,12 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
 			String pcompleto = txtProductos.getText();
 			String[] parts = pcompleto.split("_");
-			String prd = parts[0]; // 123
-			String dtll = parts[1]; // 654321
-			rs = model.buscarProductoDetalle(prd, dtll);
+			String codp = parts[0]; // cod
+			String prod = parts[1]; // prod
+			String dtll = parts[1]; // deta
+			String marc = parts[1]; // marca
+			String colo = parts[1]; // color
+			rs = model.buscarProductoDetalle(prod, dtll, codp);
 
 			int flag = 0;
 			float cantidad = 0;
@@ -706,7 +710,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
-						dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
+						dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles") + " - " + rs.getString("marca") + " - " + rs.getString("color"),
 								rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
 								rs.getFloat("precioCo") });
 						tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
