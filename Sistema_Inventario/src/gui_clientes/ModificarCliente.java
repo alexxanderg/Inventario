@@ -97,7 +97,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblCdigo = new JLabel("ID:");
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigo.setForeground(SystemColor.desktop);
-		lblCdigo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblCdigo.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCdigo.setBounds(10, 80, 138, 25);
 		getContentPane().add(lblCdigo);
 		
@@ -115,7 +115,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblProducto = new JLabel("Nombre:");
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setForeground(SystemColor.desktop);
-		lblProducto.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblProducto.setFont(new Font("Arial", Font.BOLD, 18));
 		lblProducto.setBounds(10, 125, 148, 23);
 		getContentPane().add(lblProducto);
 		
@@ -133,7 +133,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setForeground(SystemColor.desktop);
-		lblPrecio.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecio.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecio.setBounds(12, 245, 243, 25);
 		getContentPane().add(lblPrecio);
 		
@@ -151,7 +151,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantdad.setForeground(SystemColor.desktop);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantdad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblCantdad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantdad.setBounds(12, 209, 211, 23);
 		getContentPane().add(lblCantdad);
 		
@@ -169,7 +169,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioVenta.setForeground(SystemColor.desktop);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVenta.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecioVenta.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecioVenta.setBounds(10, 280, 253, 25);
 		getContentPane().add(lblPrecioVenta);
 		
@@ -195,7 +195,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblUMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setForeground(Color.BLACK);
-		lblUMedida.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblUMedida.setFont(new Font("Arial", Font.BOLD, 18));
 		lblUMedida.setBounds(12, 171, 171, 25);
 		getContentPane().add(lblUMedida);
 		
@@ -233,7 +233,7 @@ public class ModificarCliente extends JDialog implements ActionListener, KeyList
 		lblTelfono.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblTelfono.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTelfono.setForeground(SystemColor.desktop);
-		lblTelfono.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblTelfono.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTelfono.setBounds(12, 318, 211, 25);
 		getContentPane().add(lblTelfono);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtId, txtNombre, cbDoc, txtNroDoc, txtDireccion, txtCorreo, txtTelefono, btnModificar}));

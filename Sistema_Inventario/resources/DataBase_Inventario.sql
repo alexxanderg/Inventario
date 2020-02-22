@@ -113,9 +113,6 @@ registros	int not null,
 foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
-
-alter table tb_ventas
-  add metpago		tinyint;
   
 -- Usuarios de prueba
 insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1);

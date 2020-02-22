@@ -153,8 +153,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblCdigo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigo.setForeground(SystemColor.desktop);
-		lblCdigo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCdigo.setBounds(11, 42, 138, 23);
+		lblCdigo.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCdigo.setBounds(11, 42, 83, 23);
 		getContentPane().add(lblCdigo);
 
 		txtCodigo = new JTextField();
@@ -171,8 +171,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProducto.setForeground(SystemColor.desktop);
-		lblProducto.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblProducto.setBounds(11, 76, 178, 25);
+		lblProducto.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblProducto.setBounds(11, 76, 135, 25);
 		getContentPane().add(lblProducto);
 
 		txtProducto = new JTextField();
@@ -189,32 +189,32 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblCantidad.setVerticalAlignment(SwingConstants.TOP);
 		lblCantidad.setForeground(SystemColor.desktop);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantidad.setBounds(11, 112, 178, 25);
+		lblCantidad.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCantidad.setBounds(11, 112, 113, 25);
 		getContentPane().add(lblCantidad);
 
 		lblPrecio = new JLabel("PRE. COMPRA INDV:");
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setForeground(SystemColor.desktop);
-		lblPrecio.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecio.setBounds(11, 365, 235, 25);
+		lblPrecio.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecio.setBounds(11, 365, 195, 25);
 		getContentPane().add(lblPrecio);
 
 		lblCantdad = new JLabel("CANTIDAD:");
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantdad.setForeground(SystemColor.desktop);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantdad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantdad.setBounds(11, 327, 159, 25);
+		lblCantdad.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCantdad.setBounds(11, 327, 113, 25);
 		getContentPane().add(lblCantdad);
 
 		lblPrecioVenta = new JLabel("PRE. VENTA INDV:");
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioVenta.setForeground(SystemColor.desktop);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVenta.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecioVenta.setBounds(11, 403, 211, 25);
+		lblPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecioVenta.setBounds(11, 403, 175, 25);
 		getContentPane().add(lblPrecioVenta);
 
 		btnCrear = new JButton("CREAR");
@@ -229,8 +229,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUMedida.setForeground(Color.BLACK);
-		lblUMedida.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblUMedida.setBounds(11, 291, 171, 25);
+		lblUMedida.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblUMedida.setBounds(11, 291, 113, 25);
 		getContentPane().add(lblUMedida);
 
 		txtNuevoProducto = new JTextField();
@@ -257,12 +257,12 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		txtDeta.setBounds(159, 112, 352, 25);
 		getContentPane().add(txtDeta);
 
-		lblPromocion = new JLabel("PROMOCION 1:");
+		lblPromocion = new JLabel("NOMBRE PROMO 1:");
 		lblPromocion.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPromocion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPromocion.setForeground(new Color(50, 205, 50));
-		lblPromocion.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPromocion.setBounds(11, 439, 211, 25);
+		lblPromocion.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPromocion.setBounds(11, 439, 214, 25);
 		getContentPane().add(lblPromocion);
 
 		txtPromo1 = new JTextField();
@@ -279,8 +279,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblCantidadPromo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadPromo.setForeground(new Color(50, 205, 50));
-		lblCantidadPromo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantidadPromo.setBounds(11, 475, 235, 25);
+		lblCantidadPromo.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCantidadPromo.setBounds(11, 475, 214, 25);
 		getContentPane().add(lblCantidadPromo);
 
 		txtCantPromo1 = new JTextField();
@@ -297,8 +297,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblPrecioPromo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioPromo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioPromo.setForeground(new Color(50, 205, 50));
-		lblPrecioPromo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecioPromo.setBounds(11, 511, 211, 25);
+		lblPrecioPromo.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecioPromo.setBounds(11, 511, 195, 25);
 		getContentPane().add(lblPrecioPromo);
 
 		txtPrePromo1 = new JTextField();
@@ -311,12 +311,12 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		txtPrePromo1.setBounds(254, 511, 257, 25);
 		getContentPane().add(txtPrePromo1);
 
-		lblPromocion_1 = new JLabel("PROMOCION 2:");
+		lblPromocion_1 = new JLabel("NOMBRE PROMO 2:");
 		lblPromocion_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPromocion_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPromocion_1.setForeground(new Color(30, 144, 255));
-		lblPromocion_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPromocion_1.setBounds(11, 547, 211, 25);
+		lblPromocion_1.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPromocion_1.setBounds(11, 547, 195, 25);
 		getContentPane().add(lblPromocion_1);
 
 		txtPromo2 = new JTextField();
@@ -333,8 +333,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblCantidadPromo_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadPromo_1.setForeground(new Color(30, 144, 255));
-		lblCantidadPromo_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCantidadPromo_1.setBounds(11, 583, 235, 25);
+		lblCantidadPromo_1.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblCantidadPromo_1.setBounds(11, 583, 195, 25);
 		getContentPane().add(lblCantidadPromo_1);
 
 		txtCantPromo2 = new JTextField();
@@ -351,8 +351,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		lblPrecioPromo_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioPromo_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioPromo_1.setForeground(new Color(30, 144, 255));
-		lblPrecioPromo_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblPrecioPromo_1.setBounds(11, 619, 211, 25);
+		lblPrecioPromo_1.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblPrecioPromo_1.setBounds(11, 619, 195, 25);
 		getContentPane().add(lblPrecioPromo_1);
 
 		txtPrePromo2 = new JTextField();
@@ -376,8 +376,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		this.lblMarca.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblMarca.setForeground(Color.BLACK);
-		this.lblMarca.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.lblMarca.setBounds(10, 183, 211, 25);
+		this.lblMarca.setFont(new Font("Arial", Font.PLAIN, 18));
+		this.lblMarca.setBounds(10, 183, 84, 25);
 		getContentPane().add(this.lblMarca);
 
 		this.txtMarca = new JTextField();
@@ -393,8 +393,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		this.lblColor.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblColor.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblColor.setForeground(Color.BLACK);
-		this.lblColor.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.lblColor.setBounds(10, 219, 211, 25);
+		this.lblColor.setFont(new Font("Arial", Font.PLAIN, 18));
+		this.lblColor.setBounds(10, 219, 84, 25);
 		getContentPane().add(this.lblColor);
 
 		this.txtColor = new JTextField();
@@ -429,8 +429,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		this.label_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_1.setForeground(Color.BLACK);
-		this.label_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.label_1.setBounds(11, 255, 215, 25);
+		this.label_1.setFont(new Font("Arial", Font.PLAIN, 18));
+		this.label_1.setBounds(11, 255, 164, 25);
 		getContentPane().add(this.label_1);
 
 		this.fecVencimiento = new JDateChooser();
@@ -495,8 +495,8 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		this.lblCategoria.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblCategoria.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblCategoria.setForeground(Color.BLACK);
-		this.lblCategoria.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		this.lblCategoria.setBounds(11, 150, 142, 25);
+		this.lblCategoria.setFont(new Font("Arial", Font.PLAIN, 18));
+		this.lblCategoria.setBounds(11, 150, 127, 25);
 		getContentPane().add(this.lblCategoria);
 
 		this.txtCategoria = new JTextField();
@@ -636,6 +636,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 				if (rs == 0) {
 					model.registrarFechaIngreso(txtCodigo.getText(), Float.parseFloat(txtCantidad.getText()),
 							Float.parseFloat("" + pc), Float.parseFloat("" + pv), usuario);
+
 					if (inv != null) {
 						inv.cargarDatos();
 						inv.selecionarProducto(txtCodigo.getText());
@@ -786,7 +787,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 		java.util.Date fecha = new Date();
 		txtProducto.setText(null);
 		txtDeta.setText(null);
-		txtCategoria.setText(null);
+		txtCategoria.setText("General");
 		txtLaboratorio.setText(null);
 		fecVencimiento.setDate(fecha);
 		txtNroLote.setText("0");

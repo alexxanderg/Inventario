@@ -74,11 +74,11 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 	private JTextField txtPrePromo1;
 	private JTextField txtCantPromo1;
 	private JTextField txtPromo1;
-	private JLabel label_1;
+	private JLabel lblNombrePromo;
 	private JLabel label_2;
 	private JLabel label_3;
 	private JLabel label_4;
-	private JLabel label_5;
+	private JLabel lblNombrePromo_1;
 	private JLabel label_6;
 	private JLabel label_7;
 	private JLabel label_8;
@@ -93,6 +93,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 	private JLabel lblCategora;
 	private JTextField txtCategoria;
 	private JLabel label_9;
+	private JLabel label_10;
+	private JLabel label_11;
 	
 	public static void main(String[] args) {
 		try {
@@ -129,8 +131,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCdigo = new JLabel("C\u00D3DIGO:");
 		lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigo.setForeground(SystemColor.desktop);
-		lblCdigo.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblCdigo.setBounds(8, 49, 138, 25);
+		lblCdigo.setFont(new Font("Arial", Font.BOLD, 18));
+		lblCdigo.setBounds(8, 49, 96, 25);
 		getContentPane().add(lblCdigo);
 		
 		txtCodigo = new JTextField();
@@ -147,7 +149,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblProducto = new JLabel("PRODUCTO:");
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setForeground(SystemColor.desktop);
-		lblProducto.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblProducto.setFont(new Font("Arial", Font.BOLD, 18));
 		lblProducto.setBounds(8, 85, 148, 23);
 		getContentPane().add(lblProducto);
 		
@@ -165,7 +167,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCantidad.setVerticalAlignment(SwingConstants.TOP);
 		lblCantidad.setForeground(SystemColor.desktop);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblCantidad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantidad.setBounds(10, 119, 146, 29);
 		getContentPane().add(lblCantidad);
 		
@@ -182,7 +184,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setForeground(SystemColor.desktop);
-		lblPrecio.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecio.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecio.setBounds(10, 375, 243, 25);
 		getContentPane().add(lblPrecio);
 		
@@ -200,7 +202,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantdad.setForeground(SystemColor.desktop);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantdad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblCantdad.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCantdad.setBounds(10, 339, 159, 23);
 		getContentPane().add(lblCantdad);
 		
@@ -218,7 +220,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioVenta.setForeground(SystemColor.desktop);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVenta.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecioVenta.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPrecioVenta.setBounds(8, 410, 215, 25);
 		getContentPane().add(lblPrecioVenta);
 		
@@ -244,7 +246,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		lblUMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setForeground(Color.BLACK);
-		lblUMedida.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblUMedida.setFont(new Font("Arial", Font.BOLD, 18));
 		lblUMedida.setBounds(10, 301, 171, 25);
 		getContentPane().add(lblUMedida);
 		
@@ -330,19 +332,19 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		txtPromo1.setBounds(253, 448, 253, 25);
 		getContentPane().add(txtPromo1);
 		
-		label_1 = new JLabel("PROMOCION 1:");
-		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setForeground(new Color(50, 205, 50));
-		label_1.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_1.setBounds(10, 448, 211, 25);
-		getContentPane().add(label_1);
+		lblNombrePromo = new JLabel("NOMBRE PROMO 1:");
+		lblNombrePromo.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNombrePromo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombrePromo.setForeground(new Color(50, 205, 50));
+		lblNombrePromo.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNombrePromo.setBounds(10, 448, 211, 25);
+		getContentPane().add(lblNombrePromo);
 		
 		label_2 = new JLabel("CANTIDAD PROMO 1:");
 		label_2.setVerticalAlignment(SwingConstants.BOTTOM);
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(new Color(50, 205, 50));
-		label_2.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_2.setFont(new Font("Arial", Font.BOLD, 18));
 		label_2.setBounds(8, 484, 235, 25);
 		getContentPane().add(label_2);
 		
@@ -350,7 +352,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_3.setVerticalAlignment(SwingConstants.BOTTOM);
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(new Color(50, 205, 50));
-		label_3.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_3.setFont(new Font("Arial", Font.BOLD, 18));
 		label_3.setBounds(12, 525, 211, 25);
 		getContentPane().add(label_3);
 		
@@ -358,23 +360,23 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_4.setVerticalAlignment(SwingConstants.BOTTOM);
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(new Color(30, 144, 255));
-		label_4.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_4.setFont(new Font("Arial", Font.BOLD, 18));
 		label_4.setBounds(8, 561, 211, 25);
 		getContentPane().add(label_4);
 		
-		label_5 = new JLabel("CANTIDAD PROMO 2:");
-		label_5.setVerticalAlignment(SwingConstants.BOTTOM);
-		label_5.setHorizontalAlignment(SwingConstants.LEFT);
-		label_5.setForeground(new Color(30, 144, 255));
-		label_5.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		label_5.setBounds(12, 597, 235, 25);
-		getContentPane().add(label_5);
+		lblNombrePromo_1 = new JLabel("NOMBRE PROMO 2:");
+		lblNombrePromo_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNombrePromo_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombrePromo_1.setForeground(new Color(30, 144, 255));
+		lblNombrePromo_1.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNombrePromo_1.setBounds(12, 597, 235, 25);
+		getContentPane().add(lblNombrePromo_1);
 		
 		label_6 = new JLabel("PRECIO PROMO 2:");
 		label_6.setVerticalAlignment(SwingConstants.BOTTOM);
 		label_6.setHorizontalAlignment(SwingConstants.LEFT);
 		label_6.setForeground(new Color(30, 144, 255));
-		label_6.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		label_6.setFont(new Font("Arial", Font.BOLD, 18));
 		label_6.setBounds(10, 633, 211, 25);
 		getContentPane().add(label_6);
 		
@@ -382,7 +384,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.label_7.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_7.setForeground(Color.BLACK);
-		this.label_7.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		this.label_7.setFont(new Font("Arial", Font.BOLD, 18));
 		this.label_7.setBounds(8, 229, 215, 25);
 		getContentPane().add(this.label_7);
 		
@@ -390,7 +392,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.label_8.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_8.setForeground(Color.BLACK);
-		this.label_8.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		this.label_8.setFont(new Font("Arial", Font.BOLD, 18));
 		this.label_8.setBounds(8, 193, 215, 25);
 		getContentPane().add(this.label_8);
 		
@@ -438,7 +440,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.lblFVencimiento.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblFVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblFVencimiento.setForeground(Color.BLACK);
-		this.lblFVencimiento.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		this.lblFVencimiento.setFont(new Font("Arial", Font.BOLD, 18));
 		this.lblFVencimiento.setBounds(8, 265, 215, 25);
 		getContentPane().add(this.lblFVencimiento);
 		
@@ -469,7 +471,7 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		this.lblCategora = new JLabel("CATEGOR\u00CDA:");
 		this.lblCategora.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblCategora.setForeground(Color.BLACK);
-		this.lblCategora.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		this.lblCategora.setFont(new Font("Arial", Font.BOLD, 18));
 		this.lblCategora.setBounds(8, 159, 148, 23);
 		getContentPane().add(this.lblCategora);
 		
@@ -489,6 +491,20 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 		label_9.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		label_9.setBounds(136, 147, 20, 33);
 		getContentPane().add(label_9);
+		
+		label_10 = new JLabel("*");
+		label_10.setHorizontalAlignment(SwingConstants.LEFT);
+		label_10.setForeground(Color.RED);
+		label_10.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_10.setBounds(126, 75, 20, 33);
+		getContentPane().add(label_10);
+		
+		label_11 = new JLabel("*");
+		label_11.setHorizontalAlignment(SwingConstants.LEFT);
+		label_11.setForeground(Color.RED);
+		label_11.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		label_11.setBounds(126, 115, 20, 33);
+		getContentPane().add(label_11);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, txtProducto, txtDeta, txtCategoria, txtMarca, txtColor, cbUMedida, txtCantidad, txtPreComInd, txtPrecioVenInd, txtPromo1, txtCantPromo1, txtPrePromo1, txtPromo2, txtCantPromo2, txtPrePromo2, btnModificar}));
 		cargarDatos();
 	}

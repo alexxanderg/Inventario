@@ -125,8 +125,8 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblProducto.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProducto.setForeground(SystemColor.desktop);
-		lblProducto.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		lblProducto.setBounds(10, 76, 178, 25);
+		lblProducto.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblProducto.setBounds(10, 76, 109, 25);
 		getContentPane().add(lblProducto);
 
 		txtNombre = new JTextField();
@@ -143,7 +143,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setForeground(SystemColor.desktop);
-		lblPrecio.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecio.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrecio.setBounds(10, 194, 235, 25);
 		getContentPane().add(lblPrecio);
 
@@ -151,7 +151,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblCantdad.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantdad.setForeground(SystemColor.desktop);
 		lblCantdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantdad.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblCantdad.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCantdad.setBounds(10, 156, 211, 25);
 		getContentPane().add(lblCantdad);
 
@@ -159,7 +159,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblPrecioVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioVenta.setForeground(SystemColor.desktop);
 		lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioVenta.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrecioVenta.setBounds(10, 232, 211, 25);
 		getContentPane().add(lblPrecioVenta);
 
@@ -175,7 +175,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblUMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUMedida.setForeground(Color.BLACK);
-		lblUMedida.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblUMedida.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblUMedida.setBounds(10, 120, 171, 25);
 		getContentPane().add(lblUMedida);
 
@@ -198,7 +198,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 		lblPromocion.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPromocion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPromocion.setForeground(SystemColor.desktop);
-		lblPromocion.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblPromocion.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPromocion.setBounds(10, 268, 211, 25);
 		getContentPane().add(lblPromocion);
 		
