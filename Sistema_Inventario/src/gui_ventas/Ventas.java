@@ -310,9 +310,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		contentPane.add(lblNombreDeCliente);
 
 		txtCopias = new JTextField();
-		txtCopias.setEditable(false);
 		txtCopias.addKeyListener(this);
-		txtCopias.setText("0");
+		txtCopias.setText("1");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCopias.setForeground(Color.BLACK);
 		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
