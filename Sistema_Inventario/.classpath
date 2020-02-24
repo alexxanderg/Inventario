@@ -20,5 +20,7 @@
 	<classpathentry kind="lib" path="B:/Desarrollo/Eclipse/GIT/Inventario/Sistema_Inventario/resources/Librerias/pdfa-7.1.4.jar"/>
 	<classpathentry kind="lib" path="B:/Desarrollo/Eclipse/GIT/Inventario/Sistema_Inventario/resources/Librerias/poi-3.17.jar"/>
 	<classpathentry kind="lib" path="B:/Desarrollo/Eclipse/GIT/Inventario/Sistema_Inventario/resources/Librerias/Util.jar"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

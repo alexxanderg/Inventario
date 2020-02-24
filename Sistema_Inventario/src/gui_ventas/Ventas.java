@@ -233,7 +233,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtVentaDeProductos.setEditable(false);
 		txtVentaDeProductos.setColumns(10);
 		txtVentaDeProductos.setBackground(Color.DARK_GRAY);
-		txtVentaDeProductos.setBounds(122, 0, 1228, 58);
+		txtVentaDeProductos.setBounds(144, 0, 1206, 58);
 		contentPane.add(txtVentaDeProductos);
 
 		btnLimpiarTabla = new JButton("<html>Limpiar<br>ventana</html>");

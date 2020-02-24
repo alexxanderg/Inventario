@@ -15,6 +15,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.SpringLayout;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
 public class Prueba extends JFrame {
 
@@ -23,8 +31,6 @@ public class Prueba extends JFrame {
 	private JButton button2;
 	private JPanel panel;
 	private JDesktopPane desktopPane;
-	private JPanel panel_1;
-	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -54,45 +60,94 @@ public class Prueba extends JFrame {
 		contentPane.setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 52, 205, 677);
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
-		panel.setLayout(null);
 		
-		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(11, 5, 184, 23);
-		panel.add(btnNewButton);
-		
-		button2 = new JButton("New button");
+		button2 = new JButton("Ventas");
+		button2.setHorizontalAlignment(SwingConstants.RIGHT);
+		button2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		button2.setForeground(Color.WHITE);
+		button2.setBackground(new Color(220, 20, 60));
+		button2.setBounds(0, 174, 230, 50);
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedButton2(arg0);
 			}
 		});
-		button2.setBounds(10, 160, 185, 23);
-		panel.add(button2);
+		panel.setLayout(null);
 		
-		panel_1 = new JPanel();
-		panel_1.setVisible(false);
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(11, 27, 184, 134);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-		
-		btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setForeground(Color.RED);
-		btnNewButton_1.setBounds(29, 11, 155, 23);
-		panel_1.add(btnNewButton_1);
-		
-		desktopPane = new JDesktopPane();
-		desktopPane.setBounds(277, 84, 963, 608);
-		contentPane.add(desktopPane);
+		btnNewButton = new JButton("Almac\u00E9n");
+		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(new Color(220, 20, 60));
+		btnNewButton.setBounds(0, 113, 230, 50);
+		panel.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnNewButton(arg0);
 			}
 		});
+		panel.add(button2);
+		
+		btnUsuario = new JButton("Usuarios");
+		btnUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnUsuario.setForeground(Color.WHITE);
+		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnUsuario.setBackground(new Color(220, 20, 60));
+		btnUsuario.setBounds(0, 235, 230, 50);
+		panel.add(btnUsuario);
+		
+		btnClientes = new JButton("Clientes");
+		btnClientes.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnClientes.setForeground(Color.WHITE);
+		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnClientes.setBackground(new Color(220, 20, 60));
+		btnClientes.setBounds(0, 296, 230, 50);
+		panel.add(btnClientes);
+		
+		btnReportes = new JButton("Reportes");
+		btnReportes.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnReportes.setForeground(Color.WHITE);
+		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnReportes.setBackground(new Color(220, 20, 60));
+		btnReportes.setBounds(0, 357, 230, 50);
+		panel.add(btnReportes);
+		
+		btnConfiguraciones = new JButton("Configuraciones");
+		btnConfiguraciones.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnConfiguraciones.setForeground(Color.WHITE);
+		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnConfiguraciones.setBackground(new Color(220, 20, 60));
+		btnConfiguraciones.setBounds(0, 418, 230, 50);
+		panel.add(btnConfiguraciones);
+		
+		desktopPane = new JDesktopPane();
+		desktopPane.setBounds(231, 50, 1119, 679);
+		contentPane.add(desktopPane);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.GRAY);
+		panel_1.setForeground(Color.GRAY);
+		panel_1.setBounds(230, 0, 1119, 50);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO");
+		lblNewLabel.setBounds(413, 0, 293, 50);
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_1.add(lblNewLabel);
 	}
 	Pruebainterna pi;
+	private JPanel panel_1;
+	private JLabel lblNewLabel;
+	private JButton btnUsuario;
+	private JButton btnClientes;
+	private JButton btnReportes;
+	private JButton btnConfiguraciones;
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
 
 		try{
@@ -101,15 +156,7 @@ public class Prueba extends JFrame {
 			pi.show();
 			pi.setMaximum(true);
 			
-			if(panel_1.isVisible()){
-				panel_1.setVisible(false);
-				button2.setBounds(11, 27, 155, 23);
-			}
-			else{
-				panel_1.setVisible(true);
-				button2.setBounds(10, 160, 185, 23);
-				
-			}
+			
 		}catch(Exception f){
 			JOptionPane.showMessageDialog(null, "dsad: " + f );
 		}	
