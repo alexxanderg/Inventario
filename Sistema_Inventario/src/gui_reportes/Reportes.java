@@ -395,7 +395,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		lblComprasDeCliente.setBounds(782, 327, 347, 38);
 		contentPane.add(lblComprasDeCliente);
 
-		btnVerComprasCliente = new JButton("Ver productos ingresados en esas fechas");
+		btnVerComprasCliente = new JButton("Ver compras del cliente");
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnVerComprasCliente(arg0);
@@ -404,7 +404,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		btnVerComprasCliente.setForeground(Color.WHITE);
 		btnVerComprasCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
 		btnVerComprasCliente.setBackground(new Color(30, 144, 255));
-		btnVerComprasCliente.setBounds(655, 420, 574, 38);
+		btnVerComprasCliente.setBounds(786, 420, 314, 38);
 		contentPane.add(btnVerComprasCliente);
 
 		cbCliente = new JComboBox();

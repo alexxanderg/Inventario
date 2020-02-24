@@ -139,7 +139,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1386, 747);
+		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -163,7 +163,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		btnNuevaVentana.setForeground(new Color(0, 255, 0));
 		btnNuevaVentana.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 39));
 		btnNuevaVentana.setBackground(Color.BLACK);
-		btnNuevaVentana.setBounds(1269, 0, 103, 58);
+		btnNuevaVentana.setBounds(1247, 0, 103, 58);
 		contentPane.add(btnNuevaVentana);
 		txtProductos.setHorizontalAlignment(SwingConstants.LEFT);
 		txtProductos.setBackground(SystemColor.controlHighlight);
@@ -233,7 +233,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		txtVentaDeProductos.setEditable(false);
 		txtVentaDeProductos.setColumns(10);
 		txtVentaDeProductos.setBackground(Color.DARK_GRAY);
-		txtVentaDeProductos.setBounds(122, 0, 1269, 58);
+		txtVentaDeProductos.setBounds(122, 0, 1228, 58);
 		contentPane.add(txtVentaDeProductos);
 
 		btnLimpiarTabla = new JButton("<html>Limpiar<br>ventana</html>");
@@ -595,7 +595,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void cargar() {
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 
 		Cliente cliente = new Cliente();
