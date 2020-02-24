@@ -12,6 +12,9 @@ import javax.swing.JMenuItem;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+import java.awt.event.ActionEvent;
 
 public class Pruebainterna extends JInternalFrame {
 	private JButton btnNewButton;
@@ -63,10 +66,15 @@ public class Pruebainterna extends JInternalFrame {
 		getContentPane().add(lblNewLabel);
 		
 		btnX = new JButton("X");
+		this.btnX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnX(arg0);
+			}
+		});
 		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
 		btnX.setForeground(new Color(255, 255, 255));
 		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1053, 0, 63, 30);
+		btnX.setBounds(1040, 0, 63, 30);
 		getContentPane().add(btnX);
 		
 		menuBar = new JMenuBar();
@@ -98,5 +106,13 @@ public class Pruebainterna extends JInternalFrame {
 		menuBar.add(mnIngresarStockA);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+	}
+	protected void actionPerformedBtnX(ActionEvent arg0) {
+		try {
+			this.setClosed(true);
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

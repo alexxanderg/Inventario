@@ -1,4 +1,4 @@
-package gui_ventas;
+package gui_principal;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.poi.ss.usermodel.Picture;
+
+import gui_mantenimiento_productos.InternalMantenimiento;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,7 +27,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 
-public class Prueba extends JFrame {
+public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnNewButton;
@@ -40,7 +42,7 @@ public class Prueba extends JFrame {
 	private JButton btnReportes;
 	private JButton btnConfiguraciones;
 
-	Pruebainterna pi = new Pruebainterna();
+	InternalMantenimiento pi = new InternalMantenimiento();
 
 	/**
 	 * Launch the application.
@@ -49,7 +51,7 @@ public class Prueba extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Prueba frame = new Prueba();
+					VentanaPrincipal frame = new VentanaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +63,7 @@ public class Prueba extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Prueba() {
+	public VentanaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
@@ -157,7 +159,7 @@ public class Prueba extends JFrame {
 			if (pi.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya está abierto");
 			} else {
-					pi = new Pruebainterna();
+					pi = new InternalMantenimiento();
 					desktopPane.add(pi);
 					pi.show();
 					pi.setMaximum(true);
