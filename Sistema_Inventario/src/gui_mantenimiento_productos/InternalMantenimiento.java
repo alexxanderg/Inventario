@@ -24,6 +24,8 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -143,41 +145,92 @@ public class InternalMantenimiento extends JInternalFrame {
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
-		
-		cargarDatos();
+		cargar();
 		cargarBuscador();
-		ajustarAnchoColumnas();
-	}
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
-	
-	public void cargarDatos() {
+	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbProductos;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
-				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });
+		
+		// CARGAR ATRIBUTOS EN TABLA
+		String atribTodos = "";
+		try {
+			rs = model.cargarAtributosProd();
+			rs.next();
+			atribTodos = rs.getString("atributosprod");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar atributos: " + e);
+		}
+
+        List<String> list = new ArrayList<String>();
+        list.add("ID");
+        list.add("CÓDIGO");
+        list.add("NOMBRE");
+        list.add("DESCRIPCIÓN");
+		String[] parts = atribTodos.split(",");
+		for (int x=0; x<parts.length; x++){
+			if(parts[x].equals("marca"))
+				list.add("MARCA");
+			if(parts[x].equals("color"))
+				list.add("COLOR");
+			if(parts[x].equals("lote"))
+				list.add("LOTE");
+			if(parts[x].equals("laboratorio"))
+				list.add("LAB");
+			if(parts[x].equals("fvencimiento"))
+				list.add("FE. VENC");
+		}
+		list.add("CATEGORIA");
+		list.add("ALMACÉN");
+		list.add("STOCK");
+		list.add("PRE CO");
+		list.add("PRE VE");
+		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
+		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
+				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
+		dtm.setColumnIdentifiers(columnas);
+		
 		consultas model = new consultas();
 		rs = model.cargarProductos();
+
+		List<String> listProds = new ArrayList<String>();
 		try {
-			while (rs.next())
-				dtm.addRow(
-						new Object[] { rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles"),rs.getString("categoria"),
-								rs.getString("marca"), rs.getString("color"),rs.getString("fechaVenc"),
-								rs.getString("unimedida"),
-								rs.getFloat("cantidad"), rs.getFloat("precioCo"), rs.getFloat("precioVe") });
+			while (rs.next()){
+		        listProds.add(rs.getString("codproducto"));
+		        listProds.add(rs.getString("codbarra"));
+		        listProds.add(rs.getString("producto"));
+		        listProds.add(rs.getString("detalles"));
+		        for (int x=0; x<parts.length; x++){
+					if(parts[x].equals("marca"))
+						listProds.add(rs.getString("marca"));
+					if(parts[x].equals("color"))
+						listProds.add(rs.getString("color"));
+					if(parts[x].equals("lote"))
+						listProds.add(rs.getString("lote"));
+					if(parts[x].equals("laboratorio"))
+						listProds.add(rs.getString("laboratorio"));
+					if(parts[x].equals("fvencimiento"))
+						listProds.add(rs.getString("fechaVenc"));
+				}
+		        listProds.add(rs.getString("categoria"));
+		        listProds.add(rs.getString("almacen"));
+		        listProds.add(rs.getString("cantidad"));
+		        listProds.add(rs.getString("precioCo"));
+		        listProds.add(rs.getString("precioVe"));
+	        }
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
 		}
+
+		String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
+		dtm.addRow(columnasProds);
+		
+		ajustarAnchoColumnas();
 	}
+	
 	
 	public void cargarBuscador() {
 		ac = new TextAutoCompleter(txtCodigo);
@@ -199,35 +252,23 @@ public class InternalMantenimiento extends JInternalFrame {
 	}
 
 	public void ajustarAnchoColumnas() {
-		/*TableColumnModel tcm = tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Codigo
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(12)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(8)); // Detalle
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(8)); // Categoria
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(8)); // Marca
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(7)); // Color
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(7)); // Laboratorio
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(7)); // F. Vencimiento
-		tcm.getColumn(8).setPreferredWidth(anchoColumna(7)); // Nto Lote
-		tcm.getColumn(9).setPreferredWidth(anchoColumna(7)); // Uni. Medida
-		tcm.getColumn(10).setPreferredWidth(anchoColumna(7)); // Cantidad
-		tcm.getColumn(11).setPreferredWidth(anchoColumna(7)); // PrecioCompra
-		tcm.getColumn(12).setPreferredWidth(anchoColumna(7)); // PrecioVenta
-*//*
-		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
+		TableColumnModel tcm = tbProductos.getColumnModel(); // 
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
+		
+		/*DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);
+		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);*/
+	}
 
-		DefaultTableCellRenderer tcr3 = new DefaultTableCellRenderer();
-		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(6).setCellRenderer(tcr3);
-
-		DefaultTableCellRenderer tcr4 = new DefaultTableCellRenderer();
-		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(7).setCellRenderer(tcr4);
-
-		DefaultTableCellRenderer tcr5 = new DefaultTableCellRenderer();
-		tcr3.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(8).setCellRenderer(tcr5);*/
+	protected void actionPerformedBtnX(ActionEvent arg0) {
+		try {
+			this.setClosed(true);
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

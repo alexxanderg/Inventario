@@ -95,7 +95,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from db_inventario.tb_productos order by producto");
+			rs = st.executeQuery("select * from tb_productos  where estado = 0 order by producto");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -776,6 +776,35 @@ public class consultas {
 			rs = st.executeQuery("select * from tb_productos");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error model");
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarAtributosProd() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_configuraciones");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet modificarAtributosProductos(String atributos) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_configuraciones set atributosprod = ? where idconfig = 1";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, atributos);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "Atributos corregidos correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
 		}
 		return rs;
 	}

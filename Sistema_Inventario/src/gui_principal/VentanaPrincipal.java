@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.poi.ss.usermodel.Picture;
 
+import gui_configuracion.Configuraciones;
 import gui_mantenimiento_productos.InternalMantenimiento;
 
 import javax.swing.JButton;
@@ -43,6 +44,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnConfiguraciones;
 
 	InternalMantenimiento pi = new InternalMantenimiento();
+	Configuraciones config = new Configuraciones();
 
 	/**
 	 * Launch the application.
@@ -128,6 +130,11 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones");
+		btnConfiguraciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnConfiguraciones(arg0);
+			}
+		});
 		btnConfiguraciones.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -170,5 +177,20 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	protected void actionPerformedButton2(ActionEvent arg0) {
+	}
+	
+	protected void actionPerformedBtnConfiguraciones(ActionEvent arg0) {
+		try {
+			if (config.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+			} else {
+				config = new Configuraciones();
+					desktopPane.add(config);
+					config.show();
+					config.setMaximum(true);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}	
 	}
 }
