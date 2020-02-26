@@ -52,6 +52,7 @@ public class VentanaPrincipal extends JFrame {
 
     Ventas2 ventas = new Ventas2(null);
 	InternalMantenimiento vmantenimiento = new InternalMantenimiento(null);
+	gui_mantenimiento_usuarios.InternalMantenimiento vmantenimientoUsu = new gui_mantenimiento_usuarios.InternalMantenimiento(null);
 	Configuraciones config = new Configuraciones();
 
     Color colorSelec = new Color(242, 136, 113);
@@ -287,6 +288,23 @@ public class VentanaPrincipal extends JFrame {
 	protected void actionPerformedBtnClientes(ActionEvent arg0) {
 	}
 	protected void actionPerformedBtnUsuario(ActionEvent e) {
+		try {
+			if (vmantenimientoUsu.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				vmantenimientoUsu.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				btnUsuario.setBackground(colorSelec);
+			} else {
+				vmantenimientoUsu = new gui_mantenimiento_usuarios.InternalMantenimiento(this);
+					desktopPane.add(vmantenimientoUsu);
+					vmantenimientoUsu.show();
+					vmantenimientoUsu.setMaximum(true);
+					pintarBotones();
+					btnUsuario.setBackground(colorSelec);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
 	}
 	protected void actionPerformedBtnReportes(ActionEvent e) {
 	}
