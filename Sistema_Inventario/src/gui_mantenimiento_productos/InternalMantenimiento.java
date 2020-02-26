@@ -37,6 +37,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
+import javax.swing.ListSelectionModel;
 
 public class InternalMantenimiento extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -87,7 +88,7 @@ public class InternalMantenimiento extends JInternalFrame {
 		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
 		btnX.setForeground(new Color(255, 255, 255));
 		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1040, 0, 63, 30);
+		btnX.setBounds(1030, 0, 63, 30);
 		getContentPane().add(btnX);
 		
 		this.lblCdigo = new JLabel("Buscar:");
@@ -105,13 +106,16 @@ public class InternalMantenimiento extends JInternalFrame {
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
+		scrollPane.setAutoscrolls(true);
 		this.scrollPane.setBounds(10, 90, 1083, 519);
 		getContentPane().add(this.scrollPane);
 		
 		tbProductos = new JTable();
-		tbProductos.setFont(new Font("Tw Cen MT", Font.ITALIC, 17));
+		tbProductos.setAutoCreateRowSorter(true);
+		tbProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbProductos.setFont(new Font("Arial", Font.ITALIC, 14));
 		tbProductos.setBackground(Color.WHITE);
-		tbProductos.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbProductos);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
@@ -122,19 +126,19 @@ public class InternalMantenimiento extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("Crear nuevo producto");
+		mnCrearProducto = new JMenu("|Crear nuevo producto| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearProducto.setForeground(new Color(30, 144, 255));
+		mnCrearProducto.setForeground(new Color(65, 105, 225));
 		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnCrearProducto);
 		
-		mnModificarProducto = new JMenu("Modificar producto");
+		mnModificarProducto = new JMenu("|Modificar producto| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -143,20 +147,60 @@ public class InternalMantenimiento extends JInternalFrame {
 		});
 		mnModificarProducto.setForeground(new Color(60, 179, 113));
 		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("Eliminar producto");
+		mnNewMenu_2 = new JMenu("|Eliminar producto| ");
+		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnNewMenu_2(e);
+			}
+		});
 		mnNewMenu_2.setForeground(new Color(220, 20, 60));
 		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnNewMenu_2);
 		
-		mnIngresarStockA = new JMenu("Ingresar stock a producto");
-		mnIngresarStockA.setForeground(new Color(255, 140, 0));
+		mnIngresarStockA = new JMenu("|Agregar stock| ");
+		mnIngresarStockA.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnIngresarStockA(e);
+			}
+		});
+		mnIngresarStockA.setForeground(new Color(75, 0, 130));
 		mnIngresarStockA.setBackground(SystemColor.control);
-		mnIngresarStockA.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		mnIngresarStockA.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnIngresarStockA);
+		
+		mnOtrasOpciones = new JMenu("|Otras opciones|");
+		mnOtrasOpciones.setForeground(new Color(255, 69, 0));
+		mnOtrasOpciones.setFont(new Font("Arial", Font.BOLD, 22));
+		mnOtrasOpciones.setBackground(SystemColor.menu);
+		menuBar.add(mnOtrasOpciones);
+		
+		mntmRealizarKardex = new JMenuItem("Realizar Kardex");
+		mntmRealizarKardex.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMntmRealizarKardex(e);
+			}
+		});
+		mntmRealizarKardex.setForeground(new Color(255, 69, 0));
+		mntmRealizarKardex.setFont(new Font("Arial", Font.PLAIN, 20));
+		mnOtrasOpciones.add(mntmRealizarKardex);
+		
+		mntmVerHistorial = new JMenuItem("Ver Historial de Kardex");
+		mntmVerHistorial.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMntmVerHistorial(e);
+			}
+		});
+		mntmVerHistorial.setForeground(new Color(255, 69, 0));
+		mntmVerHistorial.setFont(new Font("Arial", Font.PLAIN, 20));
+		mnOtrasOpciones.add(mntmVerHistorial);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -202,6 +246,7 @@ public class InternalMantenimiento extends JInternalFrame {
 		list.add("ALMACÉN");
 		list.add("STOCK");
 		list.add("PREC. CO");
+		list.add("% GAN");
 		list.add("PREC. VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
@@ -243,6 +288,7 @@ public class InternalMantenimiento extends JInternalFrame {
 		        listProds.add(rs.getString("almacen"));
 		        listProds.add(rs.getString("cantidad"));
 		        listProds.add(rs.getString("precioCo"));
+		        listProds.add(rs.getString("ptjganancia"));
 		        listProds.add(rs.getString("precioVe"));
 		        
 		        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -309,20 +355,38 @@ public class InternalMantenimiento extends JInternalFrame {
 	}
 	
 	NuevoProducto2 np = new NuevoProducto2(this);
+	private JMenu mnOtrasOpciones;
+	private JMenuItem mntmRealizarKardex;
+	private JMenuItem mntmVerHistorial;
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
 			if (np.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				np.setVisible(true); 
 			} else {
 				np = new NuevoProducto2(this);
 				np.setLocationRelativeTo(null);
-				np.setVisible(true);;
+				np.setVisible(true);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
 	
-	protected void mouseClickedMnModificarProducto(MouseEvent e) {		
+	protected void mouseClickedMnModificarProducto(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, "Cargar el id del producto seleccionado. Con ello cargar los datos directamente de la base de datos para ser modificados");
+	}
+	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, "No elimina, solo cambia de estado al producto a 1 y vuelve a cargar la tabla");
+	}
+	protected void mouseClickedMnIngresarStockA(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, "Ingresa stock con nuevos atributos creados en la DB");
+	}
+	protected void mouseClickedMntmRealizarKardex(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, "Realizar kardex");
+	}
+	protected void mouseClickedMntmVerHistorial(MouseEvent e) {
+		JOptionPane.showMessageDialog(null, "Historial kardex");
 	}
 }

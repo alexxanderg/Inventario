@@ -42,53 +42,6 @@ public class consultas {
 		return usuario;
 	}
 
-	// public int registrarUsuarioIngreso(String usu){
-	// Connection con = MySQLConexion.getConection();
-	// java.sql.Statement st;
-	// ResultSet rs = null;
-	//
-	// java.util.Date date = new Date();
-	// //Object date2 = new java.sql.Timestamp(date.getTime());
-	//
-	// try {
-	// st = con.createStatement();
-	// String sql = "insert into
-	// tb_registro_ingreso(fecha_registro,usuario)values(now(),?)";
-	// PreparedStatement prepareStmt = con.prepareStatement(sql);
-	// prepareStmt.setString(1, usu);
-	// prepareStmt.execute();
-	// } catch (Exception e) {
-	// JOptionPane.showMessageDialog(null, "ERROR al añadir stock: " + e);
-	// }
-	// return 0;
-	// }
-
-	public ResultSet registrarUsuarioIngreso(String usu) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st = null;
-		java.sql.Statement st1 = null;
-		ResultSet rs = null;
-		try {
-			st1 = con.createStatement();
-			rs = st1.executeQuery("select * from db_inventario.tb_registro_ingreso where usuario='" + usu
-					+ "' and day(fecha_registro)=day(now())");
-			if (rs.next() == true) {
-				// JOptionPane.showMessageDialog(null, "Ya creado");
-			} else {
-				st = con.createStatement();
-				String sql = "insert into tb_registro_ingreso(fecha_registro,usuario)values(now(),?)";
-				PreparedStatement prepareStmt = con.prepareStatement(sql);
-				prepareStmt.setString(1, usu);
-				prepareStmt.execute();
-				// JOptionPane.showMessageDialog(null, "USUARIO CREADO
-				// CORRECTAMENTE");
-			}
-		} catch (Exception e) {
-			// JOptionPane.showMessageDialog(null, "Error");
-		}
-		return rs;
-	}
-
 	public ResultSet cargarProductos() {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;

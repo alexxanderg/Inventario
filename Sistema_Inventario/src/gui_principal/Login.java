@@ -91,7 +91,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		setTitle("Login");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 599, 415);
+		setBounds(100, 100, 601, 415);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.menu);
@@ -166,16 +166,13 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		lblCreditos.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblCreditos.setBounds(0, 372, 597, 14);
 		contentPane.add(lblCreditos);
-		cargar();
+
+		this.setLocationRelativeTo(null);
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnIngresar) {
 			actionPerformedBtnIngresar(e);
 		}
-	}
-	
-	public void cargar(){
-		this.setLocationRelativeTo(null);
 	}
 	
 	public void actionPerformedBtnIngresar(ActionEvent e) {
@@ -191,22 +188,20 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			nombreUsuario = usu.getNombre();
 			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario);
 			if(usu.getTipo() == 0){
-				EleccionVentanas el = new EleccionVentanas(nombreUsuario );
-				model.registrarUsuarioIngreso(usuIngre);
-				el.setLocationRelativeTo(null);
-				el.setVisible(true);
-				txtUsuario.requestFocus();
-				txtUsuario.setText(null);
-				txtPass.setText(null);
-				this.setVisible(false);
+				VentanaPrincipal vp = new VentanaPrincipal();
+				vp.lblUsuario.setText(nombreUsuario);
+				vp.lblTipo.setText("ADMINISTRADOR");
+				vp.activarOpciones(0);
+				vp.setVisible(true);
+				this.dispose();
 			}
 			else{
-				Ventas v = new Ventas(1, null, nombreUsuario);
-				model.registrarUsuarioIngreso(usuIngre);
-				v.setVisible(true);
-				txtUsuario.setText(null);
-				txtPass.setText(null);
-				dispose();
+				VentanaPrincipal vp = new VentanaPrincipal();
+				vp.lblUsuario.setText(nombreUsuario);
+				vp.lblTipo.setText("VENDEDOR");
+				vp.activarOpciones(1);
+				vp.setVisible(true);
+				this.dispose();
 			}
 		}
 		else

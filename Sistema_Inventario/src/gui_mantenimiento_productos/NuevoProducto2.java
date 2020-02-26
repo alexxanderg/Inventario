@@ -35,6 +35,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class NuevoProducto2 extends JFrame {
 
@@ -162,7 +164,7 @@ public class NuevoProducto2 extends JFrame {
 		txtCodbarras.setBounds(211, 54, 300, 25);
 		contentPane.add(txtCodbarras);
 		
-		lblNombre = new JLabel("Nombre:");
+		lblNombre = new JLabel("Nombre Producto:");
 		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombre.setForeground(Color.DARK_GRAY);
@@ -213,7 +215,7 @@ public class NuevoProducto2 extends JFrame {
 		lblCategora = new JLabel("Categor\u00EDa");
 		lblCategora.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCategora.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCategora.setForeground(Color.BLACK);
+		lblCategora.setForeground(Color.DARK_GRAY);
 		lblCategora.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCategora.setBounds(12, 196, 190, 25);
 		contentPane.add(lblCategora);
@@ -239,7 +241,7 @@ public class NuevoProducto2 extends JFrame {
 		lblMarca.setVisible(false);
 		lblMarca.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMarca.setForeground(Color.BLACK);
+		lblMarca.setForeground(Color.DARK_GRAY);
 		lblMarca.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblMarca.setBounds(11, 268, 191, 25);
 		contentPane.add(lblMarca);
@@ -265,7 +267,7 @@ public class NuevoProducto2 extends JFrame {
 		lblColor.setVisible(false);
 		lblColor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblColor.setForeground(Color.BLACK);
+		lblColor.setForeground(Color.DARK_GRAY);
 		lblColor.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblColor.setBounds(11, 304, 191, 25);
 		contentPane.add(lblColor);
@@ -287,11 +289,11 @@ public class NuevoProducto2 extends JFrame {
 		txtColor.setBounds(212, 304, 300, 25);
 		contentPane.add(txtColor);
 		
-		lblFechaVencimiento = new JLabel("Fecha vencimiento:");
+		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
 		lblFechaVencimiento.setVisible(false);
 		lblFechaVencimiento.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFechaVencimiento.setForeground(Color.BLACK);
+		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblFechaVencimiento.setBounds(533, 18, 193, 25);
 		contentPane.add(lblFechaVencimiento);
@@ -303,27 +305,10 @@ public class NuevoProducto2 extends JFrame {
 		dateFechaVenc.setBounds(738, 18, 300, 25);
 		contentPane.add(dateFechaVenc);
 		
-		lblUniMedida = new JLabel("Uni. Medida");
-		lblUniMedida.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblUniMedida.setHorizontalAlignment(SwingConstants.LEFT);
-		lblUniMedida.setForeground(Color.BLACK);
-		lblUniMedida.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblUniMedida.setBounds(12, 160, 190, 25);
-		contentPane.add(lblUniMedida);
-		
-		cbUnidadMedida = new JComboBox();
-		cbUnidadMedida.setBackground(new Color(245, 245, 245));
-		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
-		cbUnidadMedida.setSelectedIndex(10);
-		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbUnidadMedida.setBounds(213, 160, 299, 25);
-		contentPane.add(cbUnidadMedida);
-		
 		lblCantidadActual = new JLabel("Stock inicial:");
 		lblCantidadActual.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadActual.setForeground(Color.BLACK);
+		lblCantidadActual.setForeground(Color.DARK_GRAY);
 		lblCantidadActual.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCantidadActual.setBounds(11, 340, 190, 25);
 		contentPane.add(lblCantidadActual);
@@ -344,10 +329,32 @@ public class NuevoProducto2 extends JFrame {
 		txtStockInicial.setBounds(212, 342, 150, 25);
 		contentPane.add(txtStockInicial);
 		
+		lblUniMedida = new JLabel("Uni. Medida");
+		lblUniMedida.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblUniMedida.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUniMedida.setForeground(Color.DARK_GRAY);
+		lblUniMedida.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblUniMedida.setBounds(12, 160, 190, 25);
+		contentPane.add(lblUniMedida);
+		
+		cbUnidadMedida = new JComboBox();
+		cbUnidadMedida.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				itemStateChangedCbUnidadMedida(arg0);
+			}
+		});
+		cbUnidadMedida.setBackground(new Color(245, 245, 245));
+		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
+		cbUnidadMedida.setSelectedIndex(10);
+		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbUnidadMedida.setBounds(213, 160, 299, 25);
+		contentPane.add(cbUnidadMedida);
+		
 		lblPrecioDeCompra = new JLabel("Precio de Compra:");
 		lblPrecioDeCompra.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioDeCompra.setForeground(Color.BLACK);
+		lblPrecioDeCompra.setForeground(Color.DARK_GRAY);
 		lblPrecioDeCompra.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrecioDeCompra.setBounds(12, 412, 190, 25);
 		contentPane.add(lblPrecioDeCompra);
@@ -375,7 +382,7 @@ public class NuevoProducto2 extends JFrame {
 		lblPrecioDeVenta = new JLabel("Precio de Venta:");
 		lblPrecioDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioDeVenta.setForeground(Color.BLACK);
+		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
 		lblPrecioDeVenta.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrecioDeVenta.setBounds(12, 450, 190, 25);
 		contentPane.add(lblPrecioDeVenta);
@@ -454,7 +461,7 @@ public class NuevoProducto2 extends JFrame {
 		txtCantPromo1.setBounds(738, 160, 300, 25);
 		contentPane.add(txtCantPromo1);
 		
-		lblPrePromo1 = new JLabel("PRECIO PROMO1 :");
+		lblPrePromo1 = new JLabel("PRECIO PROMO 1:");
 		lblPrePromo1.setVisible(false);
 		lblPrePromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -586,7 +593,7 @@ public class NuevoProducto2 extends JFrame {
 		lblLote.setVisible(false);
 		lblLote.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblLote.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLote.setForeground(Color.BLACK);
+		lblLote.setForeground(Color.DARK_GRAY);
 		lblLote.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblLote.setBounds(532, 92, 194, 25);
 		contentPane.add(lblLote);
@@ -612,7 +619,7 @@ public class NuevoProducto2 extends JFrame {
 		lblLaboratorio.setVisible(false);
 		lblLaboratorio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblLaboratorio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLaboratorio.setForeground(Color.BLACK);
+		lblLaboratorio.setForeground(Color.DARK_GRAY);
 		lblLaboratorio.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblLaboratorio.setBounds(532, 54, 194, 25);
 		contentPane.add(lblLaboratorio);
@@ -637,7 +644,7 @@ public class NuevoProducto2 extends JFrame {
 		lblAlmacn = new JLabel("Almac\u00E9n");
 		lblAlmacn.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblAlmacn.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAlmacn.setForeground(Color.BLACK);
+		lblAlmacn.setForeground(Color.DARK_GRAY);
 		lblAlmacn.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblAlmacn.setBounds(11, 232, 191, 25);
 		contentPane.add(lblAlmacn);
@@ -681,7 +688,7 @@ public class NuevoProducto2 extends JFrame {
 		lblCantidadMnima = new JLabel("Stock m\u00EDnimo:");
 		lblCantidadMnima.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadMnima.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadMnima.setForeground(Color.BLACK);
+		lblCantidadMnima.setForeground(Color.DARK_GRAY);
 		lblCantidadMnima.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCantidadMnima.setBounds(11, 376, 190, 25);
 		contentPane.add(lblCantidadMnima);
@@ -795,6 +802,11 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(txtPtjGanancia);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnCancelar(arg0);
+			}
+		});
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
@@ -871,14 +883,23 @@ public class NuevoProducto2 extends JFrame {
 	
 	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
 		try {
-			double preco = Float.parseFloat(txtPrecioCompra.getText());
-			double preve = Float.parseFloat(txtPrecioVenta.getText());
-			double ptjga = Float.parseFloat(txtPtjGanancia.getText());
-			double newpreve = preco + (preco * (ptjga*0.01));
-			newpreve = redondearDecimales(newpreve, 2);
-			txtPrecioVenta.setText(""+newpreve);
+			if(txtPrecioCompra.getText().equals("0"))
+				txtPtjGanancia.setText("");
+			else{
+				double preco = Float.parseFloat(txtPrecioCompra.getText());
+				double preve = Float.parseFloat(txtPrecioVenta.getText());
+				double ptjga = Float.parseFloat(txtPtjGanancia.getText());
+				double newpreve = preco + (preco * (ptjga*0.01));
+				newpreve = redondearDecimales(newpreve, 2);
+				txtPrecioVenta.setText(""+newpreve);
+			}
 		} catch (Exception e2) {
-			txtPrecioVenta.setText(txtPrecioCompra.getText());
+			if(txtPrecioCompra.getText().length() == 0){
+				txtPrecioCompra.setText("");
+				txtPtjGanancia.setText("");				
+			}
+			else
+				txtPrecioVenta.setText(txtPrecioCompra.getText());
 		}	
 	}
 	protected void keyTypedTxtPrecioCompra(KeyEvent e) {
@@ -892,12 +913,16 @@ public class NuevoProducto2 extends JFrame {
 	}
 	protected void keyReleasedTxtPtjGanancia(KeyEvent e) {
 		try {
-			double preco = Float.parseFloat(txtPrecioCompra.getText());
-			double preve = Float.parseFloat(txtPrecioVenta.getText());
-			double ptjga = Float.parseFloat(txtPtjGanancia.getText());
-			double newpreve = preco + (preco * (ptjga*0.01));
-			newpreve = redondearDecimales(newpreve, 2);
-			txtPrecioVenta.setText(""+newpreve);
+			if(txtPrecioCompra.getText().length() == 0 && txtPtjGanancia.getText().length() == 0)
+				txtPrecioVenta.setText("");
+			else{
+				double preco = Float.parseFloat(txtPrecioCompra.getText());
+				double preve = Float.parseFloat(txtPrecioVenta.getText());
+				double ptjga = Float.parseFloat(txtPtjGanancia.getText());
+				double newpreve = preco + (preco * (ptjga*0.01));
+				newpreve = redondearDecimales(newpreve, 2);
+				txtPrecioVenta.setText(""+newpreve);
+			}
 		} catch (Exception e2) {
 			txtPrecioVenta.setText(txtPrecioCompra.getText());
 		}		
@@ -913,11 +938,15 @@ public class NuevoProducto2 extends JFrame {
 	}
 	protected void keyReleasedTxtPrecioVenta(KeyEvent e) {
 		try {
-			double preco = Float.parseFloat(txtPrecioCompra.getText());
-			double preve = Float.parseFloat(txtPrecioVenta.getText());
-			double newptj = ((preve-preco)/preco) * 100;
-			newptj = redondearDecimales(newptj, 2);
-			txtPtjGanancia.setText(""+newptj);
+			if((txtPrecioCompra.getText().equals("0")) || txtPrecioCompra.getText().length() == 0)
+				txtPtjGanancia.setText("");
+			else{
+				double preco = Float.parseFloat(txtPrecioCompra.getText());
+				double preve = Float.parseFloat(txtPrecioVenta.getText());
+				double newptj = ((preve-preco)/preco) * 100;
+				newptj = redondearDecimales(newptj, 2);
+				txtPtjGanancia.setText(""+newptj);
+			}
 		} catch (Exception e2) {
 			txtPtjGanancia.setText("");
 		}		
@@ -1167,6 +1196,20 @@ public class NuevoProducto2 extends JFrame {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
+		}
+	}
+	
+	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
+		this.dispose();
+	}
+	protected void itemStateChangedCbUnidadMedida(ItemEvent arg0) {
+		if(cbUnidadMedida.getSelectedIndex() == 9){
+			txtStockInicial.setText("99999999");
+			txtStockInicial.setEditable(false);
+		}
+		else{
+			txtStockInicial.setText("");
+			txtStockInicial.setEditable(true);
 		}
 	}
 }

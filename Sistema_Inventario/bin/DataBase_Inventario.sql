@@ -17,7 +17,8 @@ nrodoc		varchar(11),
 nombre		varchar(150),
 direccion	varchar(150),
 telefono	varchar(15),
-correo		varchar(50)
+correo		varchar(50),
+estado		tinyint -- 0ACTIVO 1INACTIVO
 );
 
 create table tb_productos(
