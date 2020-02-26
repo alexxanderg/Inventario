@@ -6,6 +6,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -374,11 +375,43 @@ public class InternalMantenimiento extends JInternalFrame {
 		}
 	}
 	
+	// De manera global
+	
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		JOptionPane.showMessageDialog(null, "Cargar el id del producto seleccionado. Con ello cargar los datos directamente de la base de datos para ser modificados");
+		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
+		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
+		try {		
+			ModificarProducto2 mp = new ModificarProducto2(codigoProducto,this);;
+			try { 
+				if (mp.isShowing()) {
+					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+					mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+					mp.setVisible(true); 
+				} else {
+					mp.setLocationRelativeTo(null);
+					mp.setVisible(true);
+				}
+			} catch (Exception f) {
+				JOptionPane.showMessageDialog(null, "Error: " + f);
+			}
+		} catch(Exception e1){
+			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar " + e);
+		}		
 	}
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
+		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
+		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
+		
 		JOptionPane.showMessageDialog(null, "No elimina, solo cambia de estado al producto a 1 y vuelve a cargar la tabla");
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer DESHABILITAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+		if (opc == 0) {
+			model.deshabilitarProducto(Integer.parseInt(codigoProducto));
+			cargar();
+		}else{
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		}
 	}
 	protected void mouseClickedMnIngresarStockA(MouseEvent e) {
 		JOptionPane.showMessageDialog(null, "Ingresa stock con nuevos atributos creados en la DB");

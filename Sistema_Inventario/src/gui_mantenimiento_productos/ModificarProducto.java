@@ -621,8 +621,8 @@ public class ModificarProducto extends JDialog implements ActionListener, KeyLis
 					// TODO: handle exception
 				}
 				
-				model.modificarProducto(codigoProducto, txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtCategoria.getText(), txtLaboratorio.getText(),fechavencimineto,nrolote,cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat(""+pc), Float.parseFloat(""+pv)
-				, promo1, Float.parseFloat(""+cantPromo1), Float.parseFloat(""+prePromo1), promo2, Float.parseFloat(""+cantPromo2), Float.parseFloat(""+prePromo2),marca,color		);
+/*				model.modificarProducto(codigoProducto, txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(), txtCategoria.getText(), txtLaboratorio.getText(),fechavencimineto,nrolote,cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()), Float.parseFloat(""+pc), Float.parseFloat(""+pv)
+				, promo1, Float.parseFloat(""+cantPromo1), Float.parseFloat(""+prePromo1), promo2, Float.parseFloat(""+cantPromo2), Float.parseFloat(""+prePromo2),marca,color		);*/
 				
 				mp.cargarDatos();
 				mp.selecionarProducto(txtCodigo.getText());

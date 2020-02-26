@@ -150,38 +150,81 @@ public class consultas {
 
 	}
 
-	public ResultSet modificarProducto(String cod, String newcod, String prod, String det, String cat, String laboratorio,
-			java.sql.Date fecVen, String nroLote, String umed, float cant, float prec, float prev, String promo1,
-			float cpromo1, float ppromo1, String promo2, float cpromo2, float ppromo2, String marca, String color) {
+	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
+			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
+			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2,int cod) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
+
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setString(1, newcod);
-			prepareStmt.setString(2, prod);
-			prepareStmt.setString(3, det);
-			prepareStmt.setString(4, cat);
-			prepareStmt.setString(5, laboratorio);
-			prepareStmt.setDate(6, fecVen);
-			prepareStmt.setFloat(7, Float.parseFloat(nroLote));
-			prepareStmt.setString(8, umed);
-			prepareStmt.setFloat(9, cant);
-			prepareStmt.setFloat(10, prec);
-			prepareStmt.setFloat(11, prev);
-			prepareStmt.setString(12, promo1);
-			prepareStmt.setFloat(13, cpromo1);
-			prepareStmt.setFloat(14, ppromo1);
-			prepareStmt.setString(15, promo2);
-			prepareStmt.setFloat(16, cpromo2);
-			prepareStmt.setFloat(17, ppromo2);
-			prepareStmt.setString(18, marca);
-			prepareStmt.setString(19, color);
-			prepareStmt.setString(20, cod);
+			prepareStmt.setString(1, codbarra);
+			prepareStmt.setString(2, nombreprod);
+			prepareStmt.setString(3, descripcion);
+			prepareStmt.setString(4, marca);
+			prepareStmt.setString(5, color);
+			prepareStmt.setString(6, lote);
+			prepareStmt.setString(7, laboratiorio);
+			prepareStmt.setString(8, umedida);
+			prepareStmt.setDate(9, fec_venc);
+			prepareStmt.setString(10, categoria);
+			prepareStmt.setString(11, almacen);
+			prepareStmt.setDouble(12, stockini);
+			prepareStmt.setDouble(13, stockmin);
+			prepareStmt.setDouble(14, preco);
+			prepareStmt.setDouble(15, preve);
+			prepareStmt.setDouble(16, ptjgana);
+			prepareStmt.setString(17, nombrePromo1);
+			prepareStmt.setDouble(18, cantPromo1);
+			prepareStmt.setDouble(19, prePromo1);
+			prepareStmt.setString(20, nombrePromo2);
+			prepareStmt.setDouble(21, cantPromo2);
+			prepareStmt.setDouble(22, prePromo2);
+			prepareStmt.setInt(23, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet deshabilitarProducto(int cod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set estado = 1 where codproducto=?";
+
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, cod);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet habilitarProducto(int cod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set estado = 0 where codproducto=?";
+
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, cod);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -774,6 +817,19 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select codproducto from tb_productos order by codproducto desc limit 1");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	public ResultSet cargarProdId(String Prod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(
+					"select * from tb_productos where codproducto ="+Prod);
 		} catch (Exception e) {
 		}
 		return rs;
