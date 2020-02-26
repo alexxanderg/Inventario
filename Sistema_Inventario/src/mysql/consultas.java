@@ -152,41 +152,46 @@ public class consultas {
 		return rs;
 	}
 
-	public int ingresarProducto(String cod, String prod, String det, String cat, String lab, java.sql.Date fec_venc, String nrolote,
-			String umed, float cant, float prec, float prev, String promo1, float cpromo1, float ppromo1, String promo2,
-			float cpromo2, float ppromo2, String marca, String color) {
+	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
+			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, Object fechavencimineto, String laboratiorio,
+			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, producto, detalles,categoria,laboratorio,fechaVenc, nrolote, unimedida, cantidad, precioCo,  precioVe, promo1, cantp1, prep1, promo2, cantp2, prep2,marca,color)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
+			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setString(1, cod);
-			prepareStmt.setString(2, prod);
-			prepareStmt.setString(3, det);
-			prepareStmt.setString(4, cat);
-			prepareStmt.setString(5, lab);
-			prepareStmt.setDate(6, fec_venc);
-			prepareStmt.setFloat(7, Float.parseFloat(nrolote));
-			prepareStmt.setString(8, umed);
-			prepareStmt.setFloat(9, cant);
-			prepareStmt.setFloat(10, prec);
-			prepareStmt.setFloat(11, prev);
-			prepareStmt.setString(12, promo1);
-			prepareStmt.setFloat(13, cpromo1);
-			prepareStmt.setFloat(14, ppromo1);
-			prepareStmt.setString(15, promo2);
-			prepareStmt.setFloat(16, cpromo2);
-			prepareStmt.setFloat(17, ppromo2);
-			prepareStmt.setString(18, marca);
-			prepareStmt.setString(19, color);
+			prepareStmt.setString(1, null);
+			prepareStmt.setString(2, codbarra);
+			prepareStmt.setString(3, nombreprod);
+			prepareStmt.setString(4, descripcion);
+			prepareStmt.setString(5, marca);
+			prepareStmt.setString(6, color);
+			prepareStmt.setString(7, lote);
+			prepareStmt.setString(8, laboratiorio);
+			prepareStmt.setString(9, umedida);
+			prepareStmt.setObject(10, fechavencimineto);
+			prepareStmt.setString(11, categoria);
+			prepareStmt.setString(12, almacen);
+			prepareStmt.setDouble(13, stockini);
+			prepareStmt.setDouble(14, stockmin);
+			prepareStmt.setDouble(15, preco);
+			prepareStmt.setDouble(16, preve);
+			prepareStmt.setDouble(17, ptjgana);
+			prepareStmt.setInt(18, 0);
+			prepareStmt.setString(19, nombrePromo1);
+			prepareStmt.setDouble(20, cantPromo1);
+			prepareStmt.setDouble(21, prePromo1);
+			prepareStmt.setString(22, nombrePromo2);
+			prepareStmt.setDouble(23, cantPromo2);
+			prepareStmt.setDouble(24, prePromo2);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;// 0= se creo correctamente
 		} catch (Exception e) {
-			// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, e);
 			return 1; // 1= encontró producto con mismo codigo
 		}
 
@@ -266,30 +271,30 @@ public class consultas {
 		return rs;
 	}
 
-	public int registrarFechaIngreso(String cod, float cant, float precioCo, float precioVe, String usuario) {
+	public int registrarFechaIngreso(int id, double stockini, double precioCoOld, double precioVeOld, double precioCoNew, double precioVeNew, String nombreusu, Object fActual) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
-		// java.util.Date date = new Date();
-		// Object date2 = new java.sql.Timestamp(date.getTime());
-
-		java.util.Date date = new Date();
-		Object date2 = new java.sql.Timestamp(date.getTime());
-
+		
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ingreso_productos (codproducto,cantidad,precioCo,precioVe,fechaingreso,nombreusu)"
-					+ " values (?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ingreso_productos (coding, codproducto, cantidad, precioCoOld, precioVeOld, precioCoNew, precioVeNew, nombreusu, fechaingreso)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setString(1, cod);
-			prepareStmt.setFloat(2, cant);
-			prepareStmt.setFloat(3, precioCo);
-			prepareStmt.setFloat(4, precioVe);
-			prepareStmt.setObject(5, date2);
-			prepareStmt.setString(6, usuario);
+			prepareStmt.setString(1, null);
+			prepareStmt.setInt(2, id);
+			prepareStmt.setDouble(3, stockini);
+			prepareStmt.setDouble(4, precioCoOld);
+			prepareStmt.setDouble(5, precioVeOld);
+			prepareStmt.setDouble(6, precioCoNew);
+			prepareStmt.setDouble(7, precioVeNew);
+			prepareStmt.setString(8, nombreusu);
+			prepareStmt.setObject(9, fActual);
 			prepareStmt.execute();
+
+			JOptionPane.showMessageDialog(null, "Registrado correctamente");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al registrar Fecha ingreso: " + e);
 		}
 		return 0;
 	}
@@ -592,6 +597,7 @@ public class consultas {
 	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia,
 			int idcliente, String nota, int metpago) {
 		Connection con = MySQLConexion.getConection();
+		
 		java.sql.Statement st;
 		java.util.Date d = new java.util.Date();
 		// java.sql.Date date2 = new java.sql.Date(d.getTime());
@@ -805,6 +811,18 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "Atributos corregidos correctamente");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarID() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select codproducto from tb_productos order by codproducto desc limit 1");
+		} catch (Exception e) {
 		}
 		return rs;
 	}

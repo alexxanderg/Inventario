@@ -22,7 +22,7 @@ correo		varchar(50)
 
 create table tb_productos(
 codproducto	int primary key auto_increment,
-codbarra	varchar(100) ,
+codbarra	varchar(100),
 producto	varchar(200),
 detalles	varchar(200),
 marca		varchar(30),
@@ -121,6 +121,7 @@ insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencim
 insert into tb_clientes values(	null, 'DNI', '76784966', 'Alexander Gamarra', 'La Encalada', '986865523', 'agamarra@bytexbyte.com.pe');
 insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe');
 
+insert into tb_productos values(null, '123456789', 'USB 64GB', '3.0', 'Sony', 'Negro', null, null, 'Unidad', null, 'General', 'Principal', 5, 2, 40.5, 55.9, 10, 0, null, 0, 0, null, 0, 0);
 
 use db_inventario;
 select * from tb_usuarios;
@@ -131,6 +132,8 @@ select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
 select * from tb_clientes;
 select * from tb_kardex_detalles;
+select * from tb_configuraciones;
+
 
 
   

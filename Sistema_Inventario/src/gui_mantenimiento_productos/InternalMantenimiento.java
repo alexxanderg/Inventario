@@ -11,6 +11,8 @@ import javax.swing.table.TableColumnModel;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 
+import gui_configuracion.Configuraciones;
+import gui_principal.VentanaPrincipal;
 import mysql.consultas;
 
 import javax.swing.JMenuBar;
@@ -31,10 +33,13 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 
 public class InternalMantenimiento extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnNewMenu;
+	private JMenu mnCrearProducto;
 	private JMenu mnNewMenu_1;
 	private JMenu mnNewMenu_2;
 	private JMenu mnIngresarStockA;
@@ -45,20 +50,18 @@ public class InternalMantenimiento extends JInternalFrame {
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
 	
+	VentanaPrincipal vp;
 	
 	JTable tb;
 	ResultSet rs;
 	String usuario;
 	consultas model = new consultas();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InternalMantenimiento frame = new InternalMantenimiento();
+					InternalMantenimiento frame = new InternalMantenimiento(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,13 +70,12 @@ public class InternalMantenimiento extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public InternalMantenimiento() {
+	public InternalMantenimiento(VentanaPrincipal vp) {
+		this.vp = vp;
+		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("ALMAC\u00C9N");
-		setBounds(100, 100, 1119, 679);
+		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
 		btnX = new JButton("X");
@@ -116,14 +118,21 @@ public class InternalMantenimiento extends JInternalFrame {
 
 		
 		menuBar = new JMenuBar();
+		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnNewMenu = new JMenu("Crear nuevo producto");
-		mnNewMenu.setForeground(new Color(30, 144, 255));
-		mnNewMenu.setBackground(SystemColor.control);
-		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu);
+		mnCrearProducto = new JMenu("Crear nuevo producto");
+		mnCrearProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnCrearProducto(arg0);
+			}
+		});
+		mnCrearProducto.setForeground(new Color(30, 144, 255));
+		mnCrearProducto.setBackground(SystemColor.control);
+		mnCrearProducto.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		menuBar.add(mnCrearProducto);
 		
 		mnNewMenu_1 = new JMenu("Modificar producto");
 		mnNewMenu_1.setForeground(new Color(60, 179, 113));
@@ -196,9 +205,10 @@ public class InternalMantenimiento extends JInternalFrame {
 		consultas model = new consultas();
 		rs = model.cargarProductos();
 
-		List<String> listProds = new ArrayList<String>();
 		try {
 			while (rs.next()){
+				List<String> listProds = new ArrayList<String>();
+				
 		        listProds.add(rs.getString("codproducto"));
 		        listProds.add(rs.getString("codbarra"));
 		        listProds.add(rs.getString("producto"));
@@ -220,14 +230,14 @@ public class InternalMantenimiento extends JInternalFrame {
 		        listProds.add(rs.getString("cantidad"));
 		        listProds.add(rs.getString("precioCo"));
 		        listProds.add(rs.getString("precioVe"));
+		        
+		        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
+				dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
 	        }
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
 		}
-
-		String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
-		dtm.addRow(columnasProds);
-		
+				
 		ajustarAnchoColumnas();
 	}
 	
@@ -267,8 +277,23 @@ public class InternalMantenimiento extends JInternalFrame {
 		try {
 			this.setClosed(true);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	NuevoProducto2 np = new NuevoProducto2(usuario);
+	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
+		try {
+			if (np.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+			} else {
+				np = new NuevoProducto2(vp.lblUsuario.getText());
+				np.setLocationRelativeTo(null);
+				np.setVisible(true);;
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}	
+		
 	}
 }

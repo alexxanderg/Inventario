@@ -31,19 +31,19 @@ import javax.swing.JLabel;
 public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JButton btnNewButton;
+	private JButton btnInventario;
 	private JButton button2;
 	private JPanel panel;
 	private JDesktopPane desktopPane;
-
 	private JPanel panel_1;
 	private JLabel lblNewLabel;
 	private JButton btnUsuario;
 	private JButton btnClientes;
 	private JButton btnReportes;
 	private JButton btnConfiguraciones;
+	public JLabel lblUsuario;
 
-	InternalMantenimiento pi = new InternalMantenimiento();
+	InternalMantenimiento vmantenimiento = new InternalMantenimiento(null);
 	Configuraciones config = new Configuraciones();
 
 	/**
@@ -67,7 +67,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public VentanaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1366, 768);
+		setBounds(100, 100, 1380, 735);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,14 +91,14 @@ public class VentanaPrincipal extends JFrame {
 		});
 		panel.setLayout(null);
 
-		btnNewButton = new JButton("Almac\u00E9n");
-		btnNewButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(new Color(220, 20, 60));
-		btnNewButton.setBounds(0, 113, 230, 50);
-		panel.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
+		btnInventario = new JButton("Inventario");
+		btnInventario.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnInventario.setForeground(Color.WHITE);
+		btnInventario.setBackground(new Color(220, 20, 60));
+		btnInventario.setBounds(0, 113, 230, 50);
+		panel.add(btnInventario);
+		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnNewButton(arg0);
 			}
@@ -141,15 +141,22 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setBackground(new Color(220, 20, 60));
 		btnConfiguraciones.setBounds(0, 418, 230, 50);
 		panel.add(btnConfiguraciones);
+		
+		lblUsuario = new JLabel("Aqui Va El Nombre del Usuario");
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUsuario.setForeground(Color.WHITE);
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuario.setBounds(0, 76, 230, 36);
+		panel.add(lblUsuario);
 
 		desktopPane = new JDesktopPane();
-		desktopPane.setBounds(231, 50, 1119, 679);
+		desktopPane.setBounds(231, 50, 1134, 679);
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
 		panel_1.setBackground(Color.GRAY);
 		panel_1.setForeground(Color.GRAY);
-		panel_1.setBounds(230, 0, 1119, 50);
+		panel_1.setBounds(230, 0, 1134, 50);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -159,17 +166,23 @@ public class VentanaPrincipal extends JFrame {
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel);
+		
+		cargar();
+	}
+	
+	private void cargar(){
+		this.setLocationRelativeTo(null);
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent arg0) {
 		try {
-			if (pi.isShowing()) {
+			if (vmantenimiento.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya está abierto");
 			} else {
-					pi = new InternalMantenimiento();
-					desktopPane.add(pi);
-					pi.show();
-					pi.setMaximum(true);
+					vmantenimiento = new InternalMantenimiento(this);
+					desktopPane.add(vmantenimiento);
+					vmantenimiento.show();
+					vmantenimiento.setMaximum(true);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);

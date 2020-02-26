@@ -625,7 +625,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-
+/*
 				rs = model.ingresarProducto(txtCodigo.getText(), txtProducto.getText(), txtDeta.getText(),
 						txtCategoria.getText(), txtLaboratorio.getText(), fechavencimineto, nrolote,
 						cbUMedida.getSelectedItem().toString(), Float.parseFloat(txtCantidad.getText()),
@@ -657,7 +657,7 @@ public class NuevoProducto extends JDialog implements ActionListener, KeyListene
 						v.sumarTotal();
 					}
 				} else
-					JOptionPane.showMessageDialog(null, "Ya existe producto con este código ");
+					JOptionPane.showMessageDialog(null, "Ya existe producto con este código ");*/
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar ingreso: " + e);
