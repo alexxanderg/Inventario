@@ -134,8 +134,7 @@ select * from tb_clientes;
 select * from tb_kardex_detalles;
 select * from tb_configuraciones;
 
-
-
+select codproducto from tb_productos order by codproducto desc limit 1 ;
   
 -- delete from tb_ventas where codventa = 2;
 -- delete from tb_ventas where codventa = 52;

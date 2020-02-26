@@ -153,7 +153,7 @@ public class consultas {
 	}
 
 	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
-			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, Object fechavencimineto, String laboratiorio,
+			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -172,7 +172,7 @@ public class consultas {
 			prepareStmt.setString(7, lote);
 			prepareStmt.setString(8, laboratiorio);
 			prepareStmt.setString(9, umedida);
-			prepareStmt.setObject(10, fechavencimineto);
+			prepareStmt.setDate(10, fec_venc);
 			prepareStmt.setString(11, categoria);
 			prepareStmt.setString(12, almacen);
 			prepareStmt.setDouble(13, stockini);
@@ -291,8 +291,7 @@ public class consultas {
 			prepareStmt.setString(8, nombreusu);
 			prepareStmt.setObject(9, fActual);
 			prepareStmt.execute();
-
-			JOptionPane.showMessageDialog(null, "Registrado correctamente");
+			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al registrar Fecha ingreso: " + e);
 		}

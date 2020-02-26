@@ -31,6 +31,10 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
 
 public class NuevoProducto2 extends JFrame {
 
@@ -81,9 +85,6 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel lblNota;
 	private JLabel lblCantidadMnima;
 	private JTextField txtStockMinimo;
-
-	ResultSet rs;
-	consultas model = new consultas();
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel label_2;
@@ -95,8 +96,11 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel label_8;
 	private JLabel lblDeGanancia;
 	private JTextField txtPtjGanancia;
-	
-	public String nomUsuario = null;
+
+	ResultSet rs;
+	consultas model = new consultas();
+	InternalMantenimiento mantenimientoProductos;
+	private JButton btnCancelar;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -114,8 +118,8 @@ public class NuevoProducto2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto2(String nomUsuario) {
-		this.nomUsuario = nomUsuario;
+	public NuevoProducto2(InternalMantenimiento mantenimientoProductos) {
+		this.mantenimientoProductos = mantenimientoProductos;
 		
 		
 		addWindowListener(new WindowAdapter() {
@@ -129,6 +133,7 @@ public class NuevoProducto2 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1057, 522);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -136,51 +141,72 @@ public class NuevoProducto2 extends JFrame {
 		lblCdigoIntbarras = new JLabel("Cod. Interno/Barras:");
 		lblCdigoIntbarras.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigoIntbarras.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCdigoIntbarras.setForeground(Color.BLACK);
+		lblCdigoIntbarras.setForeground(Color.DARK_GRAY);
 		lblCdigoIntbarras.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCdigoIntbarras.setBounds(11, 54, 190, 23);
 		contentPane.add(lblCdigoIntbarras);
 		
 		txtCodbarras = new JTextField();
+		txtCodbarras.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtCodbarras.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCodbarras(e);
+			}
+		});
 		txtCodbarras.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCodbarras.setForeground(SystemColor.windowBorder);
+		txtCodbarras.setForeground(Color.DARK_GRAY);
 		txtCodbarras.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCodbarras.setColumns(10);
-		txtCodbarras.setBackground(SystemColor.controlHighlight);
+		txtCodbarras.setBackground(new Color(245, 245, 245));
 		txtCodbarras.setBounds(211, 54, 300, 25);
 		contentPane.add(txtCodbarras);
 		
 		lblNombre = new JLabel("Nombre:");
 		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombre.setForeground(Color.BLACK);
+		lblNombre.setForeground(Color.DARK_GRAY);
 		lblNombre.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblNombre.setBounds(11, 88, 190, 25);
 		contentPane.add(lblNombre);
 		
 		txtNombreProducto = new JTextField();
+		txtNombreProducto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtNombreProducto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNombreProducto(e);
+			}
+		});
 		txtNombreProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombreProducto.setForeground(SystemColor.windowBorder);
+		txtNombreProducto.setForeground(Color.DARK_GRAY);
 		txtNombreProducto.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombreProducto.setColumns(10);
-		txtNombreProducto.setBackground(SystemColor.controlHighlight);
+		txtNombreProducto.setBackground(new Color(245, 245, 245));
 		txtNombreProducto.setBounds(211, 88, 300, 25);
 		contentPane.add(txtNombreProducto);
 		
 		lblDescripcin = new JLabel("Descripci\u00F3n:");
 		lblDescripcin.setVerticalAlignment(SwingConstants.TOP);
 		lblDescripcin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDescripcin.setForeground(Color.BLACK);
+		lblDescripcin.setForeground(Color.DARK_GRAY);
 		lblDescripcin.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblDescripcin.setBounds(11, 124, 190, 25);
 		contentPane.add(lblDescripcin);
 		
 		txtDescripcion = new JTextField();
+		txtDescripcion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtDescripcion(e);
+			}
+		});
 		txtDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
-		txtDescripcion.setForeground(SystemColor.windowBorder);
+		txtDescripcion.setForeground(Color.DARK_GRAY);
 		txtDescripcion.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtDescripcion.setColumns(10);
-		txtDescripcion.setBackground(SystemColor.controlHighlight);
+		txtDescripcion.setBackground(new Color(245, 245, 245));
 		txtDescripcion.setBounds(211, 124, 300, 25);
 		contentPane.add(txtDescripcion);
 		
@@ -193,12 +219,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblCategora);
 		
 		txtCategoria = new JTextField();
+		txtCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtCategoria.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCategoria(e);
+			}
+		});
 		txtCategoria.setText("General");
 		txtCategoria.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCategoria.setForeground(SystemColor.windowBorder);
+		txtCategoria.setForeground(Color.DARK_GRAY);
 		txtCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCategoria.setColumns(10);
-		txtCategoria.setBackground(SystemColor.controlHighlight);
+		txtCategoria.setBackground(new Color(245, 245, 245));
 		txtCategoria.setBounds(212, 196, 300, 25);
 		contentPane.add(txtCategoria);
 		
@@ -212,12 +245,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblMarca);
 		
 		txtMarca = new JTextField();
+		txtMarca.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtMarca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtMarca(e);
+			}
+		});
 		txtMarca.setVisible(false);
 		txtMarca.setHorizontalAlignment(SwingConstants.LEFT);
-		txtMarca.setForeground(SystemColor.windowBorder);
+		txtMarca.setForeground(Color.DARK_GRAY);
 		txtMarca.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMarca.setColumns(10);
-		txtMarca.setBackground(SystemColor.controlHighlight);
+		txtMarca.setBackground(new Color(245, 245, 245));
 		txtMarca.setBounds(212, 268, 300, 25);
 		contentPane.add(txtMarca);
 		
@@ -231,12 +271,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblColor);
 		
 		txtColor = new JTextField();
+		txtColor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtColor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtColor(e);
+			}
+		});
 		txtColor.setVisible(false);
 		txtColor.setHorizontalAlignment(SwingConstants.LEFT);
-		txtColor.setForeground(SystemColor.windowBorder);
+		txtColor.setForeground(Color.DARK_GRAY);
 		txtColor.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtColor.setColumns(10);
-		txtColor.setBackground(SystemColor.controlHighlight);
+		txtColor.setBackground(new Color(245, 245, 245));
 		txtColor.setBounds(212, 304, 300, 25);
 		contentPane.add(txtColor);
 		
@@ -250,6 +297,8 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblFechaVencimiento);
 		
 		dateFechaVenc = new JDateChooser();
+		dateFechaVenc.setFont(new Font("Arial", Font.PLAIN, 16));
+		dateFechaVenc.setForeground(Color.DARK_GRAY);
 		dateFechaVenc.setVisible(false);
 		dateFechaVenc.setBounds(738, 18, 300, 25);
 		contentPane.add(dateFechaVenc);
@@ -263,6 +312,8 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblUniMedida);
 		
 		cbUnidadMedida = new JComboBox();
+		cbUnidadMedida.setBackground(new Color(245, 245, 245));
+		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
 		cbUnidadMedida.setSelectedIndex(10);
 		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -278,12 +329,18 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
-		txtStockInicial.setText("0");
+		txtStockInicial.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtStockInicial.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtStockInicial(e);
+			}
+		});
 		txtStockInicial.setHorizontalAlignment(SwingConstants.LEFT);
-		txtStockInicial.setForeground(SystemColor.windowBorder);
+		txtStockInicial.setForeground(Color.DARK_GRAY);
 		txtStockInicial.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockInicial.setColumns(10);
-		txtStockInicial.setBackground(SystemColor.controlHighlight);
+		txtStockInicial.setBackground(new Color(245, 245, 245));
 		txtStockInicial.setBounds(212, 342, 150, 25);
 		contentPane.add(txtStockInicial);
 		
@@ -296,12 +353,22 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblPrecioDeCompra);
 		
 		txtPrecioCompra = new JTextField();
-		txtPrecioCompra.setText("0");
+		txtPrecioCompra.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtPrecioCompra.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtPrecioCompra(e);
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtPrecioCompra(e);
+			}
+		});
 		txtPrecioCompra.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPrecioCompra.setForeground(SystemColor.windowBorder);
+		txtPrecioCompra.setForeground(Color.DARK_GRAY);
 		txtPrecioCompra.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioCompra.setColumns(10);
-		txtPrecioCompra.setBackground(SystemColor.controlHighlight);
+		txtPrecioCompra.setBackground(new Color(245, 245, 245));
 		txtPrecioCompra.setBounds(213, 414, 149, 25);
 		contentPane.add(txtPrecioCompra);
 		
@@ -314,12 +381,22 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtPrecioVenta = new JTextField();
-		txtPrecioVenta.setText("0");
+		txtPrecioVenta.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtPrecioVenta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtPrecioVenta(e);
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtPrecioVenta(e);
+			}
+		});
 		txtPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPrecioVenta.setForeground(SystemColor.windowBorder);
+		txtPrecioVenta.setForeground(Color.DARK_GRAY);
 		txtPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioVenta.setColumns(10);
-		txtPrecioVenta.setBackground(SystemColor.controlHighlight);
+		txtPrecioVenta.setBackground(new Color(245, 245, 245));
 		txtPrecioVenta.setBounds(213, 450, 149, 25);
 		contentPane.add(txtPrecioVenta);
 		
@@ -327,19 +404,26 @@ public class NuevoProducto2 extends JFrame {
 		lblNombrePromo1.setVisible(false);
 		lblNombrePromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombrePromo1.setForeground(new Color(50, 205, 50));
+		lblNombrePromo1.setForeground(new Color(32, 178, 170));
 		lblNombrePromo1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblNombrePromo1.setBounds(533, 124, 193, 25);
 		contentPane.add(lblNombrePromo1);
 		
 		txtNombrePromo1 = new JTextField();
+		txtNombrePromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
+		txtNombrePromo1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNombrePromo1(e);
+			}
+		});
 		txtNombrePromo1.setVisible(false);
 		txtNombrePromo1.setText("0");
 		txtNombrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombrePromo1.setForeground(SystemColor.windowBorder);
+		txtNombrePromo1.setForeground(Color.DARK_GRAY);
 		txtNombrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo1.setColumns(10);
-		txtNombrePromo1.setBackground(SystemColor.controlHighlight);
+		txtNombrePromo1.setBackground(new Color(245, 245, 245));
 		txtNombrePromo1.setBounds(738, 124, 300, 25);
 		contentPane.add(txtNombrePromo1);
 		
@@ -347,19 +431,26 @@ public class NuevoProducto2 extends JFrame {
 		lblCantidadPromo1.setVisible(false);
 		lblCantidadPromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadPromo1.setForeground(new Color(50, 205, 50));
+		lblCantidadPromo1.setForeground(new Color(32, 178, 170));
 		lblCantidadPromo1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCantidadPromo1.setBounds(533, 160, 193, 25);
 		contentPane.add(lblCantidadPromo1);
 		
 		txtCantPromo1 = new JTextField();
+		txtCantPromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
+		txtCantPromo1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCantPromo1(e);
+			}
+		});
 		txtCantPromo1.setVisible(false);
 		txtCantPromo1.setText("0");
 		txtCantPromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCantPromo1.setForeground(SystemColor.windowBorder);
+		txtCantPromo1.setForeground(Color.DARK_GRAY);
 		txtCantPromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo1.setColumns(10);
-		txtCantPromo1.setBackground(SystemColor.controlHighlight);
+		txtCantPromo1.setBackground(new Color(245, 245, 245));
 		txtCantPromo1.setBounds(738, 160, 300, 25);
 		contentPane.add(txtCantPromo1);
 		
@@ -367,19 +458,26 @@ public class NuevoProducto2 extends JFrame {
 		lblPrePromo1.setVisible(false);
 		lblPrePromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrePromo1.setForeground(new Color(50, 205, 50));
+		lblPrePromo1.setForeground(new Color(32, 178, 170));
 		lblPrePromo1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrePromo1.setBounds(533, 196, 193, 25);
 		contentPane.add(lblPrePromo1);
 		
 		txtPrePromo1 = new JTextField();
+		txtPrePromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
+		txtPrePromo1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtPrePromo1(e);
+			}
+		});
 		txtPrePromo1.setVisible(false);
 		txtPrePromo1.setText("0");
 		txtPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPrePromo1.setForeground(SystemColor.windowBorder);
+		txtPrePromo1.setForeground(Color.DARK_GRAY);
 		txtPrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo1.setColumns(10);
-		txtPrePromo1.setBackground(SystemColor.controlHighlight);
+		txtPrePromo1.setBackground(new Color(245, 245, 245));
 		txtPrePromo1.setBounds(738, 196, 300, 25);
 		contentPane.add(txtPrePromo1);
 		
@@ -387,19 +485,26 @@ public class NuevoProducto2 extends JFrame {
 		lblNombrePromo2.setVisible(false);
 		lblNombrePromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombrePromo2.setForeground(new Color(30, 144, 255));
+		lblNombrePromo2.setForeground(new Color(147, 112, 219));
 		lblNombrePromo2.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblNombrePromo2.setBounds(533, 232, 193, 25);
 		contentPane.add(lblNombrePromo2);
 		
 		txtNombrePromo2 = new JTextField();
+		txtNombrePromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
+		txtNombrePromo2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNombrePromo2(e);
+			}
+		});
 		txtNombrePromo2.setVisible(false);
 		txtNombrePromo2.setText("0");
 		txtNombrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombrePromo2.setForeground(SystemColor.windowBorder);
+		txtNombrePromo2.setForeground(Color.DARK_GRAY);
 		txtNombrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo2.setColumns(10);
-		txtNombrePromo2.setBackground(SystemColor.controlHighlight);
+		txtNombrePromo2.setBackground(new Color(245, 245, 245));
 		txtNombrePromo2.setBounds(738, 232, 300, 25);
 		contentPane.add(txtNombrePromo2);
 		
@@ -407,19 +512,26 @@ public class NuevoProducto2 extends JFrame {
 		lblCantidadPromo2.setVisible(false);
 		lblCantidadPromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadPromo2.setForeground(new Color(30, 144, 255));
+		lblCantidadPromo2.setForeground(new Color(147, 112, 219));
 		lblCantidadPromo2.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblCantidadPromo2.setBounds(533, 268, 193, 25);
 		contentPane.add(lblCantidadPromo2);
 		
 		txtCantPromo2 = new JTextField();
+		txtCantPromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
+		txtCantPromo2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCantPromo2(e);
+			}
+		});
 		txtCantPromo2.setVisible(false);
 		txtCantPromo2.setText("0");
 		txtCantPromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCantPromo2.setForeground(SystemColor.windowBorder);
+		txtCantPromo2.setForeground(Color.DARK_GRAY);
 		txtCantPromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo2.setColumns(10);
-		txtCantPromo2.setBackground(SystemColor.controlHighlight);
+		txtCantPromo2.setBackground(new Color(245, 245, 245));
 		txtCantPromo2.setBounds(738, 268, 300, 25);
 		contentPane.add(txtCantPromo2);
 		
@@ -427,38 +539,46 @@ public class NuevoProducto2 extends JFrame {
 		lblPrePromo2.setVisible(false);
 		lblPrePromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrePromo2.setForeground(new Color(30, 144, 255));
+		lblPrePromo2.setForeground(new Color(147, 112, 219));
 		lblPrePromo2.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblPrePromo2.setBounds(533, 304, 193, 25);
 		contentPane.add(lblPrePromo2);
 		
 		txtPrePromo2 = new JTextField();
+		txtPrePromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
+		txtPrePromo2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtPrePromo2(e);
+			}
+		});
 		txtPrePromo2.setVisible(false);
 		txtPrePromo2.setText("0");
 		txtPrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPrePromo2.setForeground(SystemColor.windowBorder);
+		txtPrePromo2.setForeground(Color.DARK_GRAY);
 		txtPrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo2.setColumns(10);
-		txtPrePromo2.setBackground(SystemColor.controlHighlight);
+		txtPrePromo2.setBackground(new Color(245, 245, 245));
 		txtPrePromo2.setBounds(738, 304, 300, 25);
 		contentPane.add(txtPrePromo2);
 		
 		lblId = new JLabel("ID:");
 		lblId.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblId.setHorizontalAlignment(SwingConstants.LEFT);
-		lblId.setForeground(Color.BLACK);
+		lblId.setForeground(Color.DARK_GRAY);
 		lblId.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblId.setBounds(11, 18, 190, 23);
 		contentPane.add(lblId);
 		
 		txtID = new JTextField();
+		txtID.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtID.setEditable(false);
 		txtID.setText("0");
 		txtID.setHorizontalAlignment(SwingConstants.LEFT);
-		txtID.setForeground(SystemColor.windowBorder);
+		txtID.setForeground(Color.DARK_GRAY);
 		txtID.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtID.setColumns(10);
-		txtID.setBackground(SystemColor.controlHighlight);
+		txtID.setBackground(new Color(245, 245, 245));
 		txtID.setBounds(211, 18, 300, 25);
 		contentPane.add(txtID);
 		
@@ -472,12 +592,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblLote);
 		
 		txtLote = new JTextField();
+		txtLote.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtLote.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtLote(e);
+			}
+		});
 		txtLote.setVisible(false);
 		txtLote.setHorizontalAlignment(SwingConstants.LEFT);
-		txtLote.setForeground(SystemColor.windowBorder);
+		txtLote.setForeground(Color.DARK_GRAY);
 		txtLote.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLote.setColumns(10);
-		txtLote.setBackground(SystemColor.controlHighlight);
+		txtLote.setBackground(new Color(245, 245, 245));
 		txtLote.setBounds(738, 89, 300, 25);
 		contentPane.add(txtLote);
 		
@@ -491,12 +618,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblLaboratorio);
 		
 		txtLaboratorio = new JTextField();
+		txtLaboratorio.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtLaboratorio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtLaboratorio(e);
+			}
+		});
 		txtLaboratorio.setVisible(false);
 		txtLaboratorio.setHorizontalAlignment(SwingConstants.LEFT);
-		txtLaboratorio.setForeground(SystemColor.windowBorder);
+		txtLaboratorio.setForeground(Color.DARK_GRAY);
 		txtLaboratorio.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLaboratorio.setColumns(10);
-		txtLaboratorio.setBackground(SystemColor.controlHighlight);
+		txtLaboratorio.setBackground(new Color(245, 245, 245));
 		txtLaboratorio.setBounds(738, 54, 300, 25);
 		contentPane.add(txtLaboratorio);
 		
@@ -509,31 +643,38 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblAlmacn);
 		
 		txtAlmacen = new JTextField();
+		txtAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtAlmacen.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtAlmacen(e);
+			}
+		});
 		txtAlmacen.setText("Principal");
 		txtAlmacen.setHorizontalAlignment(SwingConstants.LEFT);
-		txtAlmacen.setForeground(SystemColor.windowBorder);
+		txtAlmacen.setForeground(Color.DARK_GRAY);
 		txtAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtAlmacen.setColumns(10);
-		txtAlmacen.setBackground(SystemColor.controlHighlight);
+		txtAlmacen.setBackground(new Color(245, 245, 245));
 		txtAlmacen.setBounds(212, 232, 300, 25);
 		contentPane.add(txtAlmacen);
 		
-		btnCrearProducto = new JButton("CREAR PRODUCTO");
+		btnCrearProducto = new JButton("Crear");
 		btnCrearProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCrearProducto(arg0);
 			}
 		});
 		btnCrearProducto.setForeground(SystemColor.menu);
-		btnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 30));
+		btnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCrearProducto.setBackground(new Color(30, 144, 255));
-		btnCrearProducto.setBounds(533, 414, 505, 61);
+		btnCrearProducto.setBounds(798, 414, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
 		lblNota = new JLabel("<html>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
-		lblNota.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
 		lblNota.setBounds(533, 367, 505, 36);
 		contentPane.add(lblNota);
 		
@@ -546,12 +687,19 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblCantidadMnima);
 		
 		txtStockMinimo = new JTextField();
+		txtStockMinimo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtStockMinimo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtStockMinimo(e);
+			}
+		});
 		txtStockMinimo.setText("1");
 		txtStockMinimo.setHorizontalAlignment(SwingConstants.LEFT);
-		txtStockMinimo.setForeground(SystemColor.windowBorder);
+		txtStockMinimo.setForeground(Color.DARK_GRAY);
 		txtStockMinimo.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockMinimo.setColumns(10);
-		txtStockMinimo.setBackground(SystemColor.controlHighlight);
+		txtStockMinimo.setBackground(new Color(245, 245, 245));
 		txtStockMinimo.setBounds(212, 378, 150, 25);
 		contentPane.add(txtStockMinimo);
 		
@@ -621,21 +769,38 @@ public class NuevoProducto2 extends JFrame {
 		lblDeGanancia = new JLabel("% de ganancia:");
 		lblDeGanancia.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDeGanancia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDeGanancia.setForeground(new Color(186, 85, 211));
-		lblDeGanancia.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblDeGanancia.setForeground(new Color(30, 144, 255));
+		lblDeGanancia.setFont(new Font("Arial", Font.BOLD, 18));
 		lblDeGanancia.setBounds(372, 412, 139, 25);
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
-		txtPtjGanancia.setText("0");
+		txtPtjGanancia.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		txtPtjGanancia.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				keyTypedTxtPtjGanancia(arg0);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtPtjGanancia(e);
+			}
+		});
 		txtPtjGanancia.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPtjGanancia.setForeground(new Color(186, 85, 211));
+		txtPtjGanancia.setForeground(Color.DARK_GRAY);
 		txtPtjGanancia.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPtjGanancia.setColumns(10);
-		txtPtjGanancia.setBackground(SystemColor.controlHighlight);
-		txtPtjGanancia.setBounds(382, 450, 117, 25);
+		txtPtjGanancia.setBackground(new Color(245, 245, 245));
+		txtPtjGanancia.setBounds(382, 450, 121, 25);
 		contentPane.add(txtPtjGanancia);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtID, txtCodbarras, txtNombreProducto, txtDescripcion, cbUnidadMedida, txtCategoria, txtAlmacen, txtMarca, txtColor, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setForeground(SystemColor.menu);
+		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnCancelar.setBackground(new Color(220, 20, 60));
+		btnCancelar.setBounds(533, 414, 240, 61);
+		contentPane.add(btnCancelar);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, cbUnidadMedida, txtCategoria, txtAlmacen, txtMarca, txtColor, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
 		
 		cargar();
 		
@@ -704,9 +869,207 @@ public class NuevoProducto2 extends JFrame {
 		
 	}
 	
+	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
+		try {
+			double preco = Float.parseFloat(txtPrecioCompra.getText());
+			double preve = Float.parseFloat(txtPrecioVenta.getText());
+			double ptjga = Float.parseFloat(txtPtjGanancia.getText());
+			double newpreve = preco + (preco * (ptjga*0.01));
+			newpreve = redondearDecimales(newpreve, 2);
+			txtPrecioVenta.setText(""+newpreve);
+		} catch (Exception e2) {
+			txtPrecioVenta.setText(txtPrecioCompra.getText());
+		}	
+	}
+	protected void keyTypedTxtPrecioCompra(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtPrecioCompra.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtPrecioCompra.getText().contains("."))
+			e.consume();
+	}
+	protected void keyReleasedTxtPtjGanancia(KeyEvent e) {
+		try {
+			double preco = Float.parseFloat(txtPrecioCompra.getText());
+			double preve = Float.parseFloat(txtPrecioVenta.getText());
+			double ptjga = Float.parseFloat(txtPtjGanancia.getText());
+			double newpreve = preco + (preco * (ptjga*0.01));
+			newpreve = redondearDecimales(newpreve, 2);
+			txtPrecioVenta.setText(""+newpreve);
+		} catch (Exception e2) {
+			txtPrecioVenta.setText(txtPrecioCompra.getText());
+		}		
+	}
+	protected void keyTypedTxtPtjGanancia(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtPtjGanancia.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtPtjGanancia.getText().contains("."))
+			e.consume();
+	}
+	protected void keyReleasedTxtPrecioVenta(KeyEvent e) {
+		try {
+			double preco = Float.parseFloat(txtPrecioCompra.getText());
+			double preve = Float.parseFloat(txtPrecioVenta.getText());
+			double newptj = ((preve-preco)/preco) * 100;
+			newptj = redondearDecimales(newptj, 2);
+			txtPtjGanancia.setText(""+newptj);
+		} catch (Exception e2) {
+			txtPtjGanancia.setText("");
+		}		
+	}
+	protected void keyTypedTxtPrecioVenta(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtPrecioVenta.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtPrecioVenta.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtStockInicial(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtStockInicial.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtStockInicial.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtStockMinimo(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtStockMinimo.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtStockMinimo.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtCodbarras(KeyEvent e) {
+		if (txtCodbarras.getText().length() == 100)
+			e.consume();
+	}
+	protected void keyTypedTxtNombreProducto(KeyEvent e) {
+		if (txtNombreProducto.getText().length() == 200)
+			e.consume();
+	}
+	protected void keyTypedTxtDescripcion(KeyEvent e) {
+		if (txtDescripcion.getText().length() == 200)
+			e.consume();
+	}
+	protected void keyTypedTxtCategoria(KeyEvent e) {
+		if (txtCategoria.getText().length() == 30)
+			e.consume();
+	}
+	protected void keyTypedTxtAlmacen(KeyEvent e) {
+		if (txtAlmacen.getText().length() == 50)
+			e.consume();
+	}
+	protected void keyTypedTxtMarca(KeyEvent e) {
+		if (txtMarca.getText().length() == 30)
+			e.consume();
+	}
+	protected void keyTypedTxtColor(KeyEvent e) {
+		if (txtColor.getText().length() == 30)
+			e.consume();
+	}
+	protected void keyTypedTxtLaboratorio(KeyEvent e) {
+		if (txtLaboratorio.getText().length() == 50)
+			e.consume();
+	}
+	protected void keyTypedTxtLote(KeyEvent e) {
+		if (txtLote.getText().length() == 50)
+			e.consume();
+	}
+	protected void keyTypedTxtNombrePromo1(KeyEvent e) {
+		if (txtNombrePromo1.getText().length() == 20)
+			e.consume();
+	}
+	protected void keyTypedTxtCantPromo1(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtCantPromo1.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtCantPromo1.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtPrePromo1(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtPrePromo1.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtPrePromo1.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtNombrePromo2(KeyEvent e) {
+		if (txtNombrePromo2.getText().length() == 20)
+			e.consume();
+	}
+	protected void keyTypedTxtCantPromo2(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtCantPromo2.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtCantPromo2.getText().contains("."))
+			e.consume();
+	}
+	protected void keyTypedTxtPrePromo2(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
+			e.consume();		
+		if (txtPrePromo2.getText().length() == 8)
+			e.consume();
+		if (c == '.' && txtPrePromo2.getText().contains("."))
+			e.consume();
+	}
 	protected void windowClosingThis(WindowEvent arg0) {
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //CERRAR VENTANA
 		this.dispose();
+	}
+	
+
+	public double redondearDecimales(double valorInicial, int numeroDecimales) {
+		double parteEntera, resultado;
+		resultado = valorInicial;
+		parteEntera = Math.floor(resultado);
+		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
+		resultado = Math.round(resultado);
+		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
+		return resultado;
+	}
+	public void limpiar() {
+		txtID.setText("" + (Integer.parseInt(txtID.getText())+1));;
+		txtCodbarras.setText(null);
+		txtNombreProducto.setText(null);
+		txtDescripcion.setText(null);
+		cbUnidadMedida.setSelectedIndex(10);
+		txtCategoria.setText(null);
+		txtAlmacen.setText(null);
+		txtMarca.setText(null);
+		txtColor.setText(null);
+		txtStockInicial.setText(null);
+		txtStockMinimo.setText("1");
+		txtPrecioCompra.setText(null);
+		txtPrecioVenta.setText(null);
+		txtPtjGanancia.setText(null);
+		dateFechaVenc.setDate(null);
+		txtLaboratorio.setText(null);
+		txtLote.setText(null);
+		txtNombrePromo1.setText("0");
+		txtCantPromo1.setText("0");
+		txtPrePromo1.setText("0");
+		txtNombrePromo2.setText("0");
+		txtCantPromo2.setText("0");
+		txtPrePromo2.setText("0");
+		
+		txtCodbarras.requestFocus();
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
@@ -729,16 +1092,17 @@ public class NuevoProducto2 extends JFrame {
 				String color = ""; 		color = txtColor.getText();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
 				double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
-				double precoNew = 0; 		if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
+				double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
 				double ptjgana = 0; 	if(txtPtjGanancia.getText().length()>0) ptjgana = Float.parseFloat(txtPtjGanancia.getText());
-				double preveNew = 0; 		if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
+				double preveNew = 0; 	if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
 				
-				Object fechaVencimineto = null;
-				try {
-					java.util.Date d = new java.util.Date();
-					java.util.Date date = new Date();
-					fechaVencimineto = new java.sql.Timestamp(date.getTime());					
-				} catch (Exception e) {	JOptionPane.showMessageDialog(null, "Error al obtener fecha: " + e); }
+				java.sql.Date fechaVencimiento = null;
+				try { // Cambio de utils a sql.Date para envio
+					Date datevencimiento = dateFechaVenc.getDate();
+					long d = datevencimiento.getTime();
+					fechaVencimiento = new java.sql.Date(d);
+				} catch (Exception e) {
+				}		
 				
 				String laboratiorio = ""; 	laboratiorio = txtLaboratorio.getText();
 				String lote = ""; 	lote = txtLote.getText();
@@ -764,14 +1128,20 @@ public class NuevoProducto2 extends JFrame {
 				}
 				
 				java.util.Date date = new Date(); // FECHA ACTUAL
-				Object date2 = new java.sql.Timestamp(date.getTime());
+				Object fechaActual = new java.sql.Timestamp(date.getTime());
+				
+				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 				
 				rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
-						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimineto, laboratiorio,
+						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
 						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2);
 
 				if (rs == 0) {
-					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, date2);
+					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
+					mantenimientoProductos.cargar();
+					mantenimientoProductos.selecionarProducto(""+id);
+					limpiar();
+					
 					/*if (inv != null) {
 						inv.cargarDatos();
 						inv.selecionarProducto(txtCodigo.getText());
@@ -798,15 +1168,5 @@ public class NuevoProducto2 extends JFrame {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
 		}
-	}
-	
-	public double redondearDecimales(double valorInicial, int numeroDecimales) {
-		double parteEntera, resultado;
-		resultado = valorInicial;
-		parteEntera = Math.floor(resultado);
-		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
-		resultado = Math.round(resultado);
-		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
-		return resultado;
 	}
 }

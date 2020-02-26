@@ -26,6 +26,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -40,7 +41,7 @@ import java.awt.Cursor;
 public class InternalMantenimiento extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
-	private JMenu mnNewMenu_1;
+	private JMenu mnModificarProducto;
 	private JMenu mnNewMenu_2;
 	private JMenu mnIngresarStockA;
 	private JButton btnX;
@@ -50,11 +51,10 @@ public class InternalMantenimiento extends JInternalFrame {
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
 	
-	VentanaPrincipal vp;
+	public VentanaPrincipal vp;
 	
 	JTable tb;
 	ResultSet rs;
-	String usuario;
 	consultas model = new consultas();
 
 	public static void main(String[] args) {
@@ -134,11 +134,17 @@ public class InternalMantenimiento extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
-		mnNewMenu_1 = new JMenu("Modificar producto");
-		mnNewMenu_1.setForeground(new Color(60, 179, 113));
-		mnNewMenu_1.setBackground(SystemColor.control);
-		mnNewMenu_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu_1);
+		mnModificarProducto = new JMenu("Modificar producto");
+		mnModificarProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnModificarProducto(e);
+			}
+		});
+		mnModificarProducto.setForeground(new Color(60, 179, 113));
+		mnModificarProducto.setBackground(SystemColor.control);
+		mnModificarProducto.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		menuBar.add(mnModificarProducto);
 		
 		mnNewMenu_2 = new JMenu("Eliminar producto");
 		mnNewMenu_2.setForeground(new Color(220, 20, 60));
@@ -190,13 +196,13 @@ public class InternalMantenimiento extends JInternalFrame {
 			if(parts[x].equals("laboratorio"))
 				list.add("LAB");
 			if(parts[x].equals("fvencimiento"))
-				list.add("FE. VENC");
+				list.add("FECHA VENC.");
 		}
 		list.add("CATEGORIA");
 		list.add("ALMACÉN");
 		list.add("STOCK");
-		list.add("PRE CO");
-		list.add("PRE VE");
+		list.add("PREC. CO");
+		list.add("PREC. VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
@@ -208,7 +214,6 @@ public class InternalMantenimiento extends JInternalFrame {
 		try {
 			while (rs.next()){
 				List<String> listProds = new ArrayList<String>();
-				
 		        listProds.add(rs.getString("codproducto"));
 		        listProds.add(rs.getString("codbarra"));
 		        listProds.add(rs.getString("producto"));
@@ -222,8 +227,17 @@ public class InternalMantenimiento extends JInternalFrame {
 						listProds.add(rs.getString("lote"));
 					if(parts[x].equals("laboratorio"))
 						listProds.add(rs.getString("laboratorio"));
-					if(parts[x].equals("fvencimiento"))
-						listProds.add(rs.getString("fechaVenc"));
+					if(parts[x].equals("fvencimiento")){
+						try {
+							// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
+							SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+							// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
+							String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
+							listProds.add(fechaOrdenada);
+						} catch (Exception e) {
+							listProds.add("");
+						}
+					}
 				}
 		        listProds.add(rs.getString("categoria"));
 		        listProds.add(rs.getString("almacen"));
@@ -237,7 +251,6 @@ public class InternalMantenimiento extends JInternalFrame {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
 		}
-				
 		ajustarAnchoColumnas();
 	}
 	
@@ -268,6 +281,10 @@ public class InternalMantenimiento extends JInternalFrame {
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
 		
+		for(int i=0; i<tbProductos.getColumnCount(); i++)
+			if(tbProductos.getColumnName(i).equals("FECHA VENC."))
+				tcm.getColumn(i).setPreferredWidth(anchoColumna(10)); // FECHA DE VENCIMIENTO
+		
 		/*DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);*/
@@ -281,19 +298,31 @@ public class InternalMantenimiento extends JInternalFrame {
 		}
 	}
 	
-	NuevoProducto2 np = new NuevoProducto2(usuario);
+	public void selecionarProducto(String id) {
+		int cantProductos = tbProductos.getRowCount();
+		for (int i = 0; i < cantProductos; i++) {
+			if (id.equals(tbProductos.getValueAt(i, 0))) {
+				tbProductos.setRowSelectionInterval(i, i);
+				break;
+			}
+		}
+	}
+	
+	NuevoProducto2 np = new NuevoProducto2(this);
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
 			if (np.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya está abierto");
 			} else {
-				np = new NuevoProducto2(vp.lblUsuario.getText());
+				np = new NuevoProducto2(this);
 				np.setLocationRelativeTo(null);
 				np.setVisible(true);;
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}	
-		
+		}
+	}
+	
+	protected void mouseClickedMnModificarProducto(MouseEvent e) {		
 	}
 }
