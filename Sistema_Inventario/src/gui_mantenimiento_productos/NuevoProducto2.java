@@ -23,6 +23,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -33,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.UIManager;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -47,7 +50,6 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel lblDescripcin;
 	private JTextField txtDescripcion;
 	private JLabel lblCategora;
-	private JTextField txtCategoria;
 	private JLabel lblMarca;
 	private JTextField txtMarca;
 	private JLabel lblColor;
@@ -81,7 +83,6 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel lblLaboratorio;
 	private JTextField txtLaboratorio;
 	private JLabel lblAlmacn;
-	private JTextField txtAlmacen;
 	private JButton btnCrearProducto;
 	private JLabel lblNota;
 	private JLabel lblCantidadMnima;
@@ -99,11 +100,12 @@ public class NuevoProducto2 extends JFrame {
 	private JTextField txtPtjGanancia;
 	private JButton btnCancelar;
 	private JComboBox <Categoria> cbCategoria;
-
+	private JComboBox <Almacen> cbAlmacen;
+	
 	ResultSet rs;
 	consultas model = new consultas();
 	InternalMantenimiento mantenimientoProductos;
-	private JComboBox <Almacen> cbAlmacen;
+	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -218,25 +220,8 @@ public class NuevoProducto2 extends JFrame {
 		lblCategora.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCategora.setForeground(Color.DARK_GRAY);
 		lblCategora.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCategora.setBounds(12, 196, 190, 25);
+		lblCategora.setBounds(11, 268, 190, 25);
 		contentPane.add(lblCategora);
-		
-		txtCategoria = new JTextField();
-		txtCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtCategoria.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtCategoria(e);
-			}
-		});
-		txtCategoria.setText("General");
-		txtCategoria.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCategoria.setForeground(Color.DARK_GRAY);
-		txtCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtCategoria.setColumns(10);
-		txtCategoria.setBackground(new Color(245, 245, 245));
-		txtCategoria.setBounds(453, 196, 59, 25);
-		contentPane.add(txtCategoria);
 		
 		lblMarca = new JLabel("Marca:");
 		lblMarca.setVisible(false);
@@ -244,7 +229,7 @@ public class NuevoProducto2 extends JFrame {
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMarca.setForeground(Color.DARK_GRAY);
 		lblMarca.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMarca.setBounds(11, 268, 191, 25);
+		lblMarca.setBounds(11, 160, 191, 25);
 		contentPane.add(lblMarca);
 		
 		txtMarca = new JTextField();
@@ -261,7 +246,7 @@ public class NuevoProducto2 extends JFrame {
 		txtMarca.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMarca.setColumns(10);
 		txtMarca.setBackground(new Color(245, 245, 245));
-		txtMarca.setBounds(212, 268, 300, 25);
+		txtMarca.setBounds(211, 160, 301, 25);
 		contentPane.add(txtMarca);
 		
 		lblColor = new JLabel("Color:");
@@ -270,7 +255,7 @@ public class NuevoProducto2 extends JFrame {
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblColor.setForeground(Color.DARK_GRAY);
 		lblColor.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblColor.setBounds(11, 304, 191, 25);
+		lblColor.setBounds(11, 196, 191, 25);
 		contentPane.add(lblColor);
 		
 		txtColor = new JTextField();
@@ -287,7 +272,7 @@ public class NuevoProducto2 extends JFrame {
 		txtColor.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtColor.setColumns(10);
 		txtColor.setBackground(new Color(245, 245, 245));
-		txtColor.setBounds(212, 304, 300, 25);
+		txtColor.setBounds(211, 196, 301, 25);
 		contentPane.add(txtColor);
 		
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
@@ -315,6 +300,7 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
+		txtStockInicial.setText("0");
 		txtStockInicial.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtStockInicial.addKeyListener(new KeyAdapter() {
 			@Override
@@ -335,10 +321,11 @@ public class NuevoProducto2 extends JFrame {
 		lblUniMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUniMedida.setForeground(Color.DARK_GRAY);
 		lblUniMedida.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblUniMedida.setBounds(12, 160, 190, 25);
+		lblUniMedida.setBounds(11, 232, 190, 25);
 		contentPane.add(lblUniMedida);
 		
 		cbUnidadMedida = new JComboBox();
+		cbUnidadMedida.setEditable(true);
 		cbUnidadMedida.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				itemStateChangedCbUnidadMedida(arg0);
@@ -349,7 +336,7 @@ public class NuevoProducto2 extends JFrame {
 		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
 		cbUnidadMedida.setSelectedIndex(10);
 		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbUnidadMedida.setBounds(213, 160, 238, 25);
+		cbUnidadMedida.setBounds(212, 232, 238, 25);
 		contentPane.add(cbUnidadMedida);
 		
 		lblPrecioDeCompra = new JLabel("Precio de Compra:");
@@ -361,6 +348,7 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblPrecioDeCompra);
 		
 		txtPrecioCompra = new JTextField();
+		txtPrecioCompra.setText("0");
 		txtPrecioCompra.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPrecioCompra.addKeyListener(new KeyAdapter() {
 			@Override
@@ -389,6 +377,7 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtPrecioVenta = new JTextField();
+		txtPrecioVenta.setText("0");
 		txtPrecioVenta.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPrecioVenta.addKeyListener(new KeyAdapter() {
 			@Override
@@ -647,25 +636,8 @@ public class NuevoProducto2 extends JFrame {
 		lblAlmacn.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAlmacn.setForeground(Color.DARK_GRAY);
 		lblAlmacn.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblAlmacn.setBounds(11, 232, 191, 25);
+		lblAlmacn.setBounds(11, 304, 191, 25);
 		contentPane.add(lblAlmacn);
-		
-		txtAlmacen = new JTextField();
-		txtAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtAlmacen.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtAlmacen(e);
-			}
-		});
-		txtAlmacen.setText("Principal");
-		txtAlmacen.setHorizontalAlignment(SwingConstants.LEFT);
-		txtAlmacen.setForeground(Color.DARK_GRAY);
-		txtAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtAlmacen.setColumns(10);
-		txtAlmacen.setBackground(new Color(245, 245, 245));
-		txtAlmacen.setBounds(453, 232, 59, 25);
-		contentPane.add(txtAlmacen);
 		
 		btnCrearProducto = new JButton("Crear");
 		btnCrearProducto.addActionListener(new ActionListener() {
@@ -729,7 +701,7 @@ public class NuevoProducto2 extends JFrame {
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_2.setBounds(193, 196, 20, 25);
+		label_2.setBounds(193, 304, 20, 25);
 		contentPane.add(label_2);
 		
 		label_3 = new JLabel("*");
@@ -771,7 +743,7 @@ public class NuevoProducto2 extends JFrame {
 		label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		label_8.setForeground(Color.RED);
 		label_8.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_8.setBounds(193, 160, 20, 25);
+		label_8.setBounds(193, 268, 20, 25);
 		contentPane.add(label_8);
 		
 		lblDeGanancia = new JLabel("% de ganancia:");
@@ -783,6 +755,7 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
+		txtPtjGanancia.setText("0");
 		txtPtjGanancia.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtPtjGanancia.addKeyListener(new KeyAdapter() {
 			@Override
@@ -815,19 +788,21 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		cbCategoria = new JComboBox();
+		cbCategoria.setEditable(true);
 		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbCategoria.setBackground(new Color(245, 245, 245));
-		cbCategoria.setBounds(211, 196, 240, 25);
+		cbCategoria.setBounds(210, 268, 240, 25);
 		contentPane.add(cbCategoria);
 		
 		cbAlmacen = new JComboBox();
+		cbAlmacen.setEditable(true);
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbAlmacen.setBackground(new Color(245, 245, 245));
-		cbAlmacen.setBounds(211, 232, 240, 25);
+		cbAlmacen.setBounds(211, 304, 240, 25);
 		contentPane.add(cbAlmacen);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, cbUnidadMedida, txtCategoria, txtAlmacen, txtMarca, txtColor, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
 		
 		cargar();
 		
@@ -894,18 +869,51 @@ public class NuevoProducto2 extends JFrame {
 			}
 		}
 		
+		
 		// COMBO CATEGORIA
 		Categoria categoria = new Categoria();
-		Categoria todasCategorias = new Categoria("General");
-		cbCategoria.addItem(todasCategorias);
 		categoria.cargarCategorias(cbCategoria);
+		AutoCompleteDecorator.decorate(cbCategoria);
+		/*if(cbCategoria.getItemCount() == 0){
+			Categoria todasCategorias = new Categoria(".General");
+			cbCategoria.addItem(todasCategorias);
+		}*/
 		
 		// COMBO ALMACEN
 		Almacen almacen = new Almacen();
-		Almacen todosAlmacenes = new Almacen("Principal");
-		cbAlmacen.addItem(todosAlmacenes);
 		almacen.cargarAlmacenes(cbAlmacen);
+		AutoCompleteDecorator.decorate(cbAlmacen);
+		/*if(cbAlmacen.getItemCount() == 0){
+			Almacen todosAlmacenes = new Almacen(".Principal");
+			cbAlmacen.addItem(todosAlmacenes);
+		}*/
 		
+		if(cbCategoria.getItemCount() == 0 && cbAlmacen.getItemCount() == 0){
+			Categoria todasCategorias = new Categoria(".General");
+			cbCategoria.addItem(todasCategorias);
+			Almacen todosAlmacenes = new Almacen(".Principal");
+			cbAlmacen.addItem(todosAlmacenes);
+			
+			txtNombreProducto.setText("#");
+			primeravez = 1;
+			actionPerformedBtnCrearProducto(null);	
+			//PONERLO COMO INACTIVO
+			int codigoProducto = 1;
+		}
+		else
+			primeravez = 0;
+	}
+	
+	private void recargarCombos(){
+		cbCategoria.removeAllItems();
+		Categoria categoria = new Categoria();
+		categoria.cargarCategorias(cbCategoria);
+		AutoCompleteDecorator.decorate(cbCategoria);
+		
+		cbAlmacen.removeAllItems();
+		Almacen almacen = new Almacen();
+		almacen.cargarAlmacenes(cbAlmacen);
+		AutoCompleteDecorator.decorate(cbAlmacen);
 	}
 	
 	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
@@ -1017,14 +1025,6 @@ public class NuevoProducto2 extends JFrame {
 		if (txtDescripcion.getText().length() == 200)
 			e.consume();
 	}
-	protected void keyTypedTxtCategoria(KeyEvent e) {
-		if (txtCategoria.getText().length() == 30)
-			e.consume();
-	}
-	protected void keyTypedTxtAlmacen(KeyEvent e) {
-		if (txtAlmacen.getText().length() == 50)
-			e.consume();
-	}
 	protected void keyTypedTxtMarca(KeyEvent e) {
 		if (txtMarca.getText().length() == 30)
 			e.consume();
@@ -1106,15 +1106,15 @@ public class NuevoProducto2 extends JFrame {
 		txtNombreProducto.setText(null);
 		txtDescripcion.setText(null);
 		cbUnidadMedida.setSelectedIndex(10);
-		txtCategoria.setText(null);
-		txtAlmacen.setText(null);
+		cbCategoria.setSelectedIndex(1);
+		cbAlmacen.setSelectedIndex(1);
 		txtMarca.setText(null);
 		txtColor.setText(null);
-		txtStockInicial.setText(null);
+		txtStockInicial.setText("0");
 		txtStockMinimo.setText("1");
-		txtPrecioCompra.setText(null);
-		txtPrecioVenta.setText(null);
-		txtPtjGanancia.setText(null);
+		txtPrecioCompra.setText("0");
+		txtPrecioVenta.setText("0");
+		txtPtjGanancia.setText("0");
 		dateFechaVenc.setDate(null);
 		txtLaboratorio.setText(null);
 		txtLote.setText(null);
@@ -1126,24 +1126,26 @@ public class NuevoProducto2 extends JFrame {
 		txtPrePromo2.setText("0");
 		
 		txtCodbarras.requestFocus();
+		recargarCombos();
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		int rs = 0;
 		try {
-			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || txtCategoria.getText().length() == 0 
-					|| txtAlmacen.getText().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
+			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbCategoria.getSelectedItem().toString().length() == 0 
+					|| cbAlmacen.getSelectedItem().toString().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
 					|| txtPrecioCompra.getText().length() == 0 || txtPrecioVenta.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
-			} else {
-				
+			} else {				
 				int id = 0;				id = Integer.parseInt(txtID.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
 				String nombreprod = ""; nombreprod = txtNombreProducto.getText();
 				String descripcion = "";descripcion = txtDescripcion.getText();
 				String umedida = ""; 	umedida = cbUnidadMedida.getSelectedItem().toString();
-				String categoria = ""; 	categoria = txtCategoria.getText();
-				String almacen = ""; 	almacen = txtAlmacen.getText();
+				String categoria = ""; 	categoria = cbCategoria.getSelectedItem().toString();
+					if(categoria.equals("General")) categoria = ".General";
+				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
+					if(almacen.equals("Principal")) almacen = ".Principal";
 				String marca = ""; 		marca = txtMarca.getText();
 				String color = ""; 		color = txtColor.getText();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
@@ -1188,9 +1190,14 @@ public class NuevoProducto2 extends JFrame {
 				
 				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 				
-				rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
-						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2);
+				if(primeravez == 0) // NO
+					rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
+							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
+				else // 1 SI
+					rs = model.ingresarProductoPrimeraVez(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
+							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
 
 				if (rs == 0) {
 					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
@@ -1219,10 +1226,10 @@ public class NuevoProducto2 extends JFrame {
 						v.sumarTotal();
 					}*/
 				} else
-					JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");
+						JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
+				//JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
 		}
 	}
 	
@@ -1235,7 +1242,7 @@ public class NuevoProducto2 extends JFrame {
 			txtStockInicial.setEditable(false);
 		}
 		else{
-			txtStockInicial.setText("");
+			txtStockInicial.setText("0");
 			txtStockInicial.setEditable(true);
 		}
 	}

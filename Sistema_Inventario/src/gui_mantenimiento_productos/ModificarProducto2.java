@@ -1126,7 +1126,6 @@ public class ModificarProducto2 extends JFrame {
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
-		int rs = 0;
 		try {
 			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || txtCategoria.getText().length() == 0 
 					|| txtAlmacen.getText().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
