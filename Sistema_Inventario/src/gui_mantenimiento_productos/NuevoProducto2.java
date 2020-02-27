@@ -2,14 +2,12 @@ package gui_mantenimiento_productos;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -18,8 +16,9 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import com.toedter.calendar.JDateChooser;
 
+import clases.Almacen;
+import clases.Categoria;
 import mysql.consultas;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -98,11 +97,13 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel label_8;
 	private JLabel lblDeGanancia;
 	private JTextField txtPtjGanancia;
+	private JButton btnCancelar;
+	private JComboBox <Categoria> cbCategoria;
 
 	ResultSet rs;
 	consultas model = new consultas();
 	InternalMantenimiento mantenimientoProductos;
-	private JButton btnCancelar;
+	private JComboBox <Almacen> cbAlmacen;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -234,7 +235,7 @@ public class NuevoProducto2 extends JFrame {
 		txtCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCategoria.setColumns(10);
 		txtCategoria.setBackground(new Color(245, 245, 245));
-		txtCategoria.setBounds(212, 196, 300, 25);
+		txtCategoria.setBounds(453, 196, 59, 25);
 		contentPane.add(txtCategoria);
 		
 		lblMarca = new JLabel("Marca:");
@@ -348,7 +349,7 @@ public class NuevoProducto2 extends JFrame {
 		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
 		cbUnidadMedida.setSelectedIndex(10);
 		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbUnidadMedida.setBounds(213, 160, 299, 25);
+		cbUnidadMedida.setBounds(213, 160, 238, 25);
 		contentPane.add(cbUnidadMedida);
 		
 		lblPrecioDeCompra = new JLabel("Precio de Compra:");
@@ -663,7 +664,7 @@ public class NuevoProducto2 extends JFrame {
 		txtAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtAlmacen.setColumns(10);
 		txtAlmacen.setBackground(new Color(245, 245, 245));
-		txtAlmacen.setBounds(212, 232, 300, 25);
+		txtAlmacen.setBounds(453, 232, 59, 25);
 		contentPane.add(txtAlmacen);
 		
 		btnCrearProducto = new JButton("Crear");
@@ -812,6 +813,20 @@ public class NuevoProducto2 extends JFrame {
 		btnCancelar.setBackground(new Color(220, 20, 60));
 		btnCancelar.setBounds(533, 414, 240, 61);
 		contentPane.add(btnCancelar);
+		
+		cbCategoria = new JComboBox();
+		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbCategoria.setBackground(new Color(245, 245, 245));
+		cbCategoria.setBounds(211, 196, 240, 25);
+		contentPane.add(cbCategoria);
+		
+		cbAlmacen = new JComboBox();
+		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbAlmacen.setBackground(new Color(245, 245, 245));
+		cbAlmacen.setBounds(211, 232, 240, 25);
+		contentPane.add(cbAlmacen);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, cbUnidadMedida, txtCategoria, txtAlmacen, txtMarca, txtColor, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
 		
 		cargar();
@@ -878,6 +893,18 @@ public class NuevoProducto2 extends JFrame {
 				txtPrePromo2.setVisible(true);
 			}
 		}
+		
+		// COMBO CATEGORIA
+		Categoria categoria = new Categoria();
+		Categoria todasCategorias = new Categoria("General");
+		cbCategoria.addItem(todasCategorias);
+		categoria.cargarCategorias(cbCategoria);
+		
+		// COMBO ALMACEN
+		Almacen almacen = new Almacen();
+		Almacen todosAlmacenes = new Almacen("Principal");
+		cbAlmacen.addItem(todosAlmacenes);
+		almacen.cargarAlmacenes(cbAlmacen);
 		
 	}
 	

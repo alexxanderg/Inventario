@@ -817,12 +817,7 @@ public class ModificarProducto2 extends JFrame {
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, cbUnidadMedida, txtCategoria, txtAlmacen, txtMarca, txtColor, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
 		
 		cargar();
-		option();
 		
-		
-	}
-	private void option(){
-		JOptionPane.showMessageDialog(null,"El codigo es: " +codigoPro);
 	}
 	
 	private void cargar(){
@@ -855,7 +850,7 @@ public class ModificarProducto2 extends JFrame {
 			txtPrePromo2.setText(""+ rs.getFloat("prep2"));
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, "No existe el producto");
 		}
 		
 		// CARGAR ATRIBUTOS
@@ -1215,6 +1210,7 @@ public class ModificarProducto2 extends JFrame {
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
 	}
+	
 	protected void itemStateChangedCbUnidadMedida(ItemEvent arg0) {
 		if(cbUnidadMedida.getSelectedIndex() == 9){
 			txtStockInicial.setText("99999999");

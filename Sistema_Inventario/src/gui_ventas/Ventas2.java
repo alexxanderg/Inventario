@@ -90,7 +90,7 @@ public class Ventas2 extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("ALMAC\u00C9N");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 1134, 669);
 		getContentPane().setLayout(null);
 		
 		btnX = new JButton("X");
@@ -122,7 +122,7 @@ public class Ventas2 extends JInternalFrame {
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 290, 1083, 320);
+		this.scrollPane.setBounds(10, 290, 1083, 310);
 		getContentPane().add(this.scrollPane);
 		
 		tbCarrito = new JTable();

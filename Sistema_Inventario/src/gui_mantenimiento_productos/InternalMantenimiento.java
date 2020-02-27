@@ -378,7 +378,6 @@ public class InternalMantenimiento extends JInternalFrame {
 	// De manera global
 	
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, "Cargar el id del producto seleccionado. Con ello cargar los datos directamente de la base de datos para ser modificados");
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 		try {		

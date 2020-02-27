@@ -65,6 +65,18 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet cargarAlmacen() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select distinct almacen from tb_productos");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
 
 	public ResultSet cargarProductosSinStock() {
 		Connection con = MySQLConexion.getConection();
@@ -825,7 +837,6 @@ public class consultas {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
-
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
