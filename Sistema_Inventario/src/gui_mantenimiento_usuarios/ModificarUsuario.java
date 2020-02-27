@@ -180,7 +180,7 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 				this.setAlwaysOnTop(true);
 				if (opc == 0){
 					this.setAlwaysOnTop(false);
-					model.modificarUsuario(usu, txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
+//					model.modificarUsuario(usu, txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
 					mu.cargarUsuarios();
 					mu.seleccionarUsuario(txtUsuario.getText());
 					mu.setEnabled(true);

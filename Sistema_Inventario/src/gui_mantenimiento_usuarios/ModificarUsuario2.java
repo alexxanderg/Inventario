@@ -1,7 +1,11 @@
-package gui_mantenimiento_usuarios;
+ package gui_mantenimiento_usuarios;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import mysql.consultas;
 import javax.swing.JLabel;
@@ -15,16 +19,16 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.text.Normalizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import gui_mantenimiento_usuarios.InternalMantenimiento;
-
 import java.awt.Component;
 
-public class NuevoUsuario2 extends JDialog implements ActionListener, WindowListener {
+public class ModificarUsuario2 extends JDialog implements ActionListener, WindowListener, KeyListener {
 	private JLabel lblUsuario;
 	private JTextField txtUsuario;
 	private JLabel lblContrasea;
@@ -33,17 +37,18 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 	private JLabel lblTipo;
 	private JComboBox cbTipo;
 	private JTextField txtPass;
-	private JButton btnCrear;
+	private JButton btnModificar;
 	
+	
+	InternalMantenimiento mantenimientoUsuarios;
+	String usuario;
 	ResultSet rs;
 	consultas model = new consultas();
-	InternalMantenimiento mantenimientoUsuarios;
-	
-	private JTextField txtAgregarUsuario;
+	private JTextField txtModificarUsuarios;
 	
 	public static void main(String[] args) {
 		try {
-			NuevoUsuario2 dialog = new NuevoUsuario2(null);
+			ModificarUsuario2 dialog = new ModificarUsuario2(null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -52,15 +57,16 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 	}
 
 	
-	public NuevoUsuario2(InternalMantenimiento mantenimientoUsuarios) {
-		this.mantenimientoUsuarios = mantenimientoUsuarios;
-		
+	public ModificarUsuario2(String usuario, InternalMantenimiento mantenimientoUsuarios) {
 		setResizable(false);
+		this.mantenimientoUsuarios = mantenimientoUsuarios;
+		this.usuario = usuario;
+		
 		addWindowListener(this);
 		setBounds(100, 100, 688, 356);
 		getContentPane().setLayout(null);
 		
-		lblUsuario = new JLabel("Usuario:");
+		lblUsuario = new JLabel("USUARIO:");
 		lblUsuario.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUsuario.setForeground(Color.BLACK);
 		lblUsuario.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -68,6 +74,7 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		getContentPane().add(lblUsuario);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.addKeyListener(this);
 		txtUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		txtUsuario.setForeground(SystemColor.windowBorder);
 		txtUsuario.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -76,14 +83,14 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		txtUsuario.setBounds(10, 139, 316, 34);
 		getContentPane().add(txtUsuario);
 		
-		lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea = new JLabel("CONTRASE\u00D1A:");
 		lblContrasea.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblContrasea.setForeground(Color.BLACK);
 		lblContrasea.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
 		lblContrasea.setBounds(344, 90, 205, 38);
 		getContentPane().add(lblContrasea);
 		
-		lblNombre = new JLabel("Nombre:");
+		lblNombre = new JLabel("NOMBRE:");
 		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombre.setForeground(Color.BLACK);
 		lblNombre.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -91,6 +98,7 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(this);
 		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNombre.setForeground(SystemColor.windowBorder);
 		txtNombre.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -99,7 +107,7 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		txtNombre.setBounds(158, 195, 502, 34);
 		getContentPane().add(txtNombre);
 		
-		lblTipo = new JLabel("Tipo:");
+		lblTipo = new JLabel("TIPO:");
 		lblTipo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblTipo.setForeground(Color.BLACK);
 		lblTipo.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
@@ -113,6 +121,7 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		getContentPane().add(cbTipo);
 		
 		txtPass = new JTextField();
+		txtPass.addKeyListener(this);
 		txtPass.setHorizontalAlignment(SwingConstants.LEFT);
 		txtPass.setForeground(SystemColor.windowBorder);
 		txtPass.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -121,33 +130,50 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 		txtPass.setBounds(344, 139, 316, 34);
 		getContentPane().add(txtPass);
 		
-		btnCrear = new JButton("CREAR");
-		btnCrear.addActionListener(this);
-		btnCrear.setForeground(SystemColor.menu);
-		btnCrear.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		btnCrear.setBackground(new Color(30, 144, 255));
-		btnCrear.setBounds(434, 254, 226, 38);
-		getContentPane().add(btnCrear);
+		btnModificar = new JButton("MODIFICAR");
+		btnModificar.addActionListener(this);
+		btnModificar.setForeground(SystemColor.menu);
+		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		btnModificar.setBackground(new Color(30, 144, 255));
+		btnModificar.setBounds(394, 254, 266, 38);
+		getContentPane().add(btnModificar);
 		cbTipo.setSelectedIndex(-1);
 		
-		txtAgregarUsuario = new JTextField();
-		txtAgregarUsuario.setText("AGREGAR USUARIO");
-		txtAgregarUsuario.setRequestFocusEnabled(false);
-		txtAgregarUsuario.setIgnoreRepaint(true);
-		txtAgregarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtAgregarUsuario.setForeground(Color.WHITE);
-		txtAgregarUsuario.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		txtAgregarUsuario.setFocusable(false);
-		txtAgregarUsuario.setFocusTraversalKeysEnabled(false);
-		txtAgregarUsuario.setEditable(false);
-		txtAgregarUsuario.setColumns(10);
-		txtAgregarUsuario.setBackground(Color.DARK_GRAY);
-		txtAgregarUsuario.setBounds(0, 0, 682, 58);
-		getContentPane().add(txtAgregarUsuario);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtUsuario, txtPass, txtNombre, cbTipo, btnCrear}));
+		txtModificarUsuarios = new JTextField();
+		txtModificarUsuarios.setText("MODIFICAR USUARIO");
+		txtModificarUsuarios.setRequestFocusEnabled(false);
+		txtModificarUsuarios.setIgnoreRepaint(true);
+		txtModificarUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
+		txtModificarUsuarios.setForeground(Color.WHITE);
+		txtModificarUsuarios.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		txtModificarUsuarios.setFocusable(false);
+		txtModificarUsuarios.setFocusTraversalKeysEnabled(false);
+		txtModificarUsuarios.setEditable(false);
+		txtModificarUsuarios.setColumns(10);
+		txtModificarUsuarios.setBackground(Color.DARK_GRAY);
+		txtModificarUsuarios.setBounds(0, 0, 682, 58);
+		getContentPane().add(txtModificarUsuarios);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtUsuario, txtPass, txtNombre, cbTipo, btnModificar}));
+		cargarDatos();
+	}
+	public void cargarDatos(){
+		try {
+			ResultSet rs = model.cargarUsu(usuario);
+			rs.next();
+			txtUsuario.setText(rs.getString("usuario"));
+			txtNombre.setText(rs.getString("nombre"));
+			cbTipo.setSelectedIndex(rs.getInt("tipo"));			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+		
+		/*if(tip.equals("Administrador"))
+			cbTipo.setSelectedIndex(0);
+		if(tip.equals("Vendedor"))
+			cbTipo.setSelectedIndex(1);		*/
 	}
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnCrear) {
+		if (arg0.getSource() == btnModificar) {
 			actionPerformedBtnCrear(arg0);
 		}
 	}
@@ -158,20 +184,30 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
 				this.setAlwaysOnTop(true);
 			}
+			
 			else{
+				ResultSet rs = model.cargarUsu(usuario);
+				rs.next();
+				int codigo = rs.getInt("udusuario");
 				this.setAlwaysOnTop(false);
-				rs = model.ingresarUsuario(txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
-				mantenimientoUsuarios.cargar();
-				mantenimientoUsuarios.selecionarProducto(txtUsuario.getText());
-				dispose();
-				/*mu.setEnabled(true);
-				mu.show();*/
+				int opc = JOptionPane.showConfirmDialog(null, "¿Desea aplicar los cambios?", "Confirmar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				this.setAlwaysOnTop(true);
+				if (opc == 0){
+					this.setAlwaysOnTop(false);
+					model.modificarUsuario(codigo, txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
+					mantenimientoUsuarios.cargar();
+					mantenimientoUsuarios.selecionarProducto(txtUsuario.getText());
+					mantenimientoUsuarios.setEnabled(true);
+					dispose();
+				}
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
-		}
-		
+			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente" +e );
+		}		
 	}
+	
+	
+	
 	public void windowActivated(WindowEvent arg0) {
 	}
 	public void windowClosed(WindowEvent arg0) {
@@ -191,5 +227,35 @@ public class NuevoUsuario2 extends JDialog implements ActionListener, WindowList
 	}
 	protected void windowClosingThis(WindowEvent arg0) {
 		mantenimientoUsuarios.setEnabled(true);
+	}
+	public void keyPressed(KeyEvent arg0) {
+	}
+	public void keyReleased(KeyEvent arg0) {
+	}
+	public void keyTyped(KeyEvent arg0) {
+		if (arg0.getSource() == txtNombre) {
+			keyTypedTxtNombre(arg0);
+		}
+		if (arg0.getSource() == txtPass) {
+			keyTypedTxtPass(arg0);
+		}
+		if (arg0.getSource() == txtUsuario) {
+			keyTypedTxtUsuario(arg0);
+		}
+	}
+	protected void keyTypedTxtUsuario(KeyEvent arg0) {
+		if (txtUsuario.getText().length() == 20){
+			arg0.consume();
+		}
+	}
+	protected void keyTypedTxtPass(KeyEvent arg0) {
+		if (txtPass.getText().length() == 20){
+			arg0.consume();
+		}
+	}
+	protected void keyTypedTxtNombre(KeyEvent arg0) {
+		if (txtNombre.getText().length() == 50){
+			arg0.consume();
+		}
 	}
 }

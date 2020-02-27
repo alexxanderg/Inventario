@@ -246,43 +246,7 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet deshabilitarProducto(int cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-		try {
-			st = con.createStatement();
-			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set estado = 1 where codproducto=?";
-
-			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setInt(1, cod);
-			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}
-		return rs;
-	}
 	
-	public ResultSet habilitarProducto(int cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-		try {
-			st = con.createStatement();
-			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set estado = 0 where codproducto=?";
-
-			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setInt(1, cod);
-			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}
-		return rs;
-	}
 
 	public ResultSet modificarPC_PV(String cod, float prec, float prev) {
 		Connection con = MySQLConexion.getConection();
@@ -413,7 +377,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_usuarios");
+			rs = st.executeQuery("select * from tb_usuarios where estado=0");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -425,7 +389,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_usuarios (usuario, pass, nombre, tipo)" + " values (?, ?, ?, ?)";
+			String sql = "insert into tb_usuarios (usuario, pass, nombre, tipo,estado)" + " values (?, ?, ?, ?,0)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, usu);
 			prepareStmt.setString(2, pass);
@@ -439,19 +403,19 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet modificarUsuario(String usu, String newusu, String pass, String nom, int tip) {
+	public ResultSet modificarUsuario(int usu, String newusu, String pass, String nom, int tip) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_usuarios set usuario=?, pass=?, nombre=?, tipo=? where usuario=?";
+			String sql = "update tb_usuarios set usuario=?, pass=?, nombre=?, tipo=? where udusuario=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, newusu);
 			prepareStmt.setString(2, pass);
 			prepareStmt.setString(3, nom);
 			prepareStmt.setInt(4, tip);
-			prepareStmt.setString(5, usu);
+			prepareStmt.setInt(5, usu);
 			prepareStmt.execute();
 
 			JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
@@ -883,6 +847,75 @@ public class consultas {
 			rs = st.executeQuery(
 					"select * from tb_productos where codproducto ="+Prod);
 		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet deshabilitarProducto(int cod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set estado = 1 where codproducto=?";
+
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, cod);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet habilitarProducto(int cod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_productos set estado = 0 where codproducto=?";
+
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, cod);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " PRODUCTO DESHABILITADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarUsu(String usu) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(
+					"select * from tb_usuarios where usuario ='"+usu+"'");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet deshabilitarUsuario(String usu) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
+			String sql = "update tb_usuarios set estado = 1 where usuario='"+usu+"'";
+
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " USUARIO DESHABILITADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 		return rs;
 	}

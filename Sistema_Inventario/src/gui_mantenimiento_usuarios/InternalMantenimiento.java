@@ -295,36 +295,35 @@ public class InternalMantenimiento extends JInternalFrame {
 	// De manera global
 	
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		/*JOptionPane.showMessageDialog(null, "Cargar el id del producto seleccionado. Con ello cargar los datos directamente de la base de datos para ser modificados");
+		JOptionPane.showMessageDialog(null, "Cargar el id del usuario seleccionado. Con ello cargar los datos directamente de la base de datos para ser modificados");
 		DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-		String codigoProducto = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0));
+		String codigoUsuario = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 1));
 		try {		
-			ModificarProducto2 mp = new ModificarProducto2(codigoProducto,this);;
+			ModificarUsuario2 mu = new ModificarUsuario2(codigoUsuario,this);;
 			try { 
-				if (mp.isShowing()) {
+				if (mu.isShowing()) {
 					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-					mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-					mp.setVisible(true); 
+					//mu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+					mu.setVisible(true); 
 				} else {
-					mp.setLocationRelativeTo(null);
-					mp.setVisible(true);
+					mu.setLocationRelativeTo(null);
+					mu.setVisible(true);
 				}
 			} catch (Exception f) {
 				JOptionPane.showMessageDialog(null, "Error: " + f);
 			}
 		} catch(Exception e1){
 			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar " + e);
-		}		*/
+		}
 	}
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-		String codigoProducto = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0));
-		
+		String codigoProducto = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 1));
 		JOptionPane.showMessageDialog(null, "No elimina, solo cambia de estado al producto a 1 y vuelve a cargar la tabla");
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer DESHABILITAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer DESHABILITAR ESTE USUARIO?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
-			model.deshabilitarProducto(Integer.parseInt(codigoProducto));
+			model.deshabilitarUsuario(codigoProducto);
 			cargar();
 		}else{
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

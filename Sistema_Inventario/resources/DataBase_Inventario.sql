@@ -3,8 +3,9 @@ create database db_inventario;
 use db_inventario;
 
 create table tb_usuarios(
-usuario 	varchar(20) not null primary key,
-pass		varchar(30),
+udusuario	int primary key auto_increment,
+usuario 	varchar(20) not null,
+pass		varchar(30) not null,
 nombre		varchar(50),
 tipo 	 	tinyint, -- 0ADMIN 1VENTAS
 estado		tinyint -- 0ACTIVO 1INACTIVO
@@ -114,8 +115,8 @@ atributosprod	varchar(200)
 
   
 -- Usuarios de prueba
-insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1, 0);
-insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0, 0);
+insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 0);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 0);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,');
 
