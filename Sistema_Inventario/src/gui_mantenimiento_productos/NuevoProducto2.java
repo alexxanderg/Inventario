@@ -18,6 +18,7 @@ import com.toedter.calendar.JDateChooser;
 
 import clases.Almacen;
 import clases.Categoria;
+import clases.UnidadMed;
 import mysql.consultas;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -76,7 +77,6 @@ public class NuevoProducto2 extends JFrame {
 	private JTextField txtCantPromo2;
 	private JLabel lblPrePromo2;
 	private JTextField txtPrePromo2;
-	private JLabel lblId;
 	private JTextField txtID;
 	private JLabel lblLote;
 	private JTextField txtLote;
@@ -87,7 +87,6 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel lblNota;
 	private JLabel lblCantidadMnima;
 	private JTextField txtStockMinimo;
-	private JLabel label;
 	private JLabel label_1;
 	private JLabel label_2;
 	private JLabel label_3;
@@ -101,10 +100,14 @@ public class NuevoProducto2 extends JFrame {
 	private JButton btnCancelar;
 	private JComboBox <Categoria> cbCategoria;
 	private JComboBox <Almacen> cbAlmacen;
+	private JTextField txtCrearProducto;
+	private JLabel lblDistribuidor;
+	private JLabel label_9;
+	private JComboBox cbDistribuidor;
 	
 	ResultSet rs;
 	consultas model = new consultas();
-	InternalMantenimiento mantenimientoProductos;
+	InternalMantenimientoProd mantenimientoProductos;
 	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
 	
 	public static void main(String[] args) {
@@ -123,7 +126,7 @@ public class NuevoProducto2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto2(InternalMantenimiento mantenimientoProductos) {
+	public NuevoProducto2(InternalMantenimientoProd mantenimientoProductos) {
 		this.mantenimientoProductos = mantenimientoProductos;
 		
 		
@@ -133,10 +136,10 @@ public class NuevoProducto2 extends JFrame {
 				windowClosingThis(arg0);
 			}
 		});
-		setTitle("NUEVO PRODUCTO");
+		setTitle("Crear producto");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1057, 522);
+		setBounds(100, 100, 1057, 562);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -144,11 +147,10 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblCdigoIntbarras = new JLabel("Cod. Interno/Barras:");
-		lblCdigoIntbarras.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCdigoIntbarras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCdigoIntbarras.setForeground(Color.DARK_GRAY);
-		lblCdigoIntbarras.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCdigoIntbarras.setBounds(11, 54, 190, 23);
+		lblCdigoIntbarras.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCdigoIntbarras.setBounds(9, 61, 190, 23);
 		contentPane.add(lblCdigoIntbarras);
 		
 		txtCodbarras = new JTextField();
@@ -164,15 +166,14 @@ public class NuevoProducto2 extends JFrame {
 		txtCodbarras.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCodbarras.setColumns(10);
 		txtCodbarras.setBackground(new Color(245, 245, 245));
-		txtCodbarras.setBounds(211, 54, 300, 25);
+		txtCodbarras.setBounds(209, 61, 300, 25);
 		contentPane.add(txtCodbarras);
 		
 		lblNombre = new JLabel("Nombre Producto:");
-		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombre.setForeground(Color.DARK_GRAY);
-		lblNombre.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNombre.setBounds(11, 88, 190, 25);
+		lblNombre.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNombre.setBounds(9, 95, 190, 25);
 		contentPane.add(lblNombre);
 		
 		txtNombreProducto = new JTextField();
@@ -188,15 +189,14 @@ public class NuevoProducto2 extends JFrame {
 		txtNombreProducto.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombreProducto.setColumns(10);
 		txtNombreProducto.setBackground(new Color(245, 245, 245));
-		txtNombreProducto.setBounds(211, 88, 300, 25);
+		txtNombreProducto.setBounds(209, 95, 300, 25);
 		contentPane.add(txtNombreProducto);
 		
 		lblDescripcin = new JLabel("Descripci\u00F3n:");
-		lblDescripcin.setVerticalAlignment(SwingConstants.TOP);
 		lblDescripcin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescripcin.setForeground(Color.DARK_GRAY);
-		lblDescripcin.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblDescripcin.setBounds(11, 124, 190, 25);
+		lblDescripcin.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDescripcin.setBounds(9, 131, 190, 25);
 		contentPane.add(lblDescripcin);
 		
 		txtDescripcion = new JTextField();
@@ -212,24 +212,22 @@ public class NuevoProducto2 extends JFrame {
 		txtDescripcion.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtDescripcion.setColumns(10);
 		txtDescripcion.setBackground(new Color(245, 245, 245));
-		txtDescripcion.setBounds(211, 124, 300, 25);
+		txtDescripcion.setBounds(209, 131, 300, 25);
 		contentPane.add(txtDescripcion);
 		
 		lblCategora = new JLabel("Categor\u00EDa");
-		lblCategora.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCategora.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCategora.setForeground(Color.DARK_GRAY);
-		lblCategora.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCategora.setBounds(11, 268, 190, 25);
+		lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCategora.setBounds(9, 275, 190, 25);
 		contentPane.add(lblCategora);
 		
 		lblMarca = new JLabel("Marca:");
 		lblMarca.setVisible(false);
-		lblMarca.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMarca.setForeground(Color.DARK_GRAY);
-		lblMarca.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblMarca.setBounds(11, 160, 191, 25);
+		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
+		lblMarca.setBounds(9, 167, 191, 25);
 		contentPane.add(lblMarca);
 		
 		txtMarca = new JTextField();
@@ -246,16 +244,15 @@ public class NuevoProducto2 extends JFrame {
 		txtMarca.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMarca.setColumns(10);
 		txtMarca.setBackground(new Color(245, 245, 245));
-		txtMarca.setBounds(211, 160, 301, 25);
+		txtMarca.setBounds(209, 167, 301, 25);
 		contentPane.add(txtMarca);
 		
 		lblColor = new JLabel("Color:");
 		lblColor.setVisible(false);
-		lblColor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblColor.setForeground(Color.DARK_GRAY);
-		lblColor.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblColor.setBounds(11, 196, 191, 25);
+		lblColor.setFont(new Font("Candara", Font.BOLD, 20));
+		lblColor.setBounds(9, 203, 191, 25);
 		contentPane.add(lblColor);
 		
 		txtColor = new JTextField();
@@ -272,31 +269,29 @@ public class NuevoProducto2 extends JFrame {
 		txtColor.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtColor.setColumns(10);
 		txtColor.setBackground(new Color(245, 245, 245));
-		txtColor.setBounds(211, 196, 301, 25);
+		txtColor.setBounds(209, 203, 301, 25);
 		contentPane.add(txtColor);
 		
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
 		lblFechaVencimiento.setVisible(false);
-		lblFechaVencimiento.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
-		lblFechaVencimiento.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblFechaVencimiento.setBounds(533, 18, 193, 25);
+		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblFechaVencimiento.setBounds(532, 61, 193, 25);
 		contentPane.add(lblFechaVencimiento);
 		
 		dateFechaVenc = new JDateChooser();
 		dateFechaVenc.setFont(new Font("Arial", Font.PLAIN, 16));
 		dateFechaVenc.setForeground(Color.DARK_GRAY);
 		dateFechaVenc.setVisible(false);
-		dateFechaVenc.setBounds(738, 18, 300, 25);
+		dateFechaVenc.setBounds(737, 61, 300, 25);
 		contentPane.add(dateFechaVenc);
 		
 		lblCantidadActual = new JLabel("Stock inicial:");
-		lblCantidadActual.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadActual.setForeground(Color.DARK_GRAY);
-		lblCantidadActual.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCantidadActual.setBounds(11, 340, 190, 25);
+		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadActual.setBounds(9, 383, 190, 25);
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
@@ -313,15 +308,14 @@ public class NuevoProducto2 extends JFrame {
 		txtStockInicial.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockInicial.setColumns(10);
 		txtStockInicial.setBackground(new Color(245, 245, 245));
-		txtStockInicial.setBounds(212, 342, 150, 25);
+		txtStockInicial.setBounds(210, 385, 150, 25);
 		contentPane.add(txtStockInicial);
 		
 		lblUniMedida = new JLabel("Uni. Medida");
-		lblUniMedida.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUniMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUniMedida.setForeground(Color.DARK_GRAY);
-		lblUniMedida.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblUniMedida.setBounds(11, 232, 190, 25);
+		lblUniMedida.setFont(new Font("Candara", Font.BOLD, 20));
+		lblUniMedida.setBounds(9, 239, 190, 25);
 		contentPane.add(lblUniMedida);
 		
 		cbUnidadMedida = new JComboBox();
@@ -333,18 +327,15 @@ public class NuevoProducto2 extends JFrame {
 		});
 		cbUnidadMedida.setBackground(new Color(245, 245, 245));
 		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		cbUnidadMedida.setModel(new DefaultComboBoxModel(new String[] {"Caja", "Galon", "Gramo", "Hora", "Kilo", "Litro", "Metro", "Pies", "Pulgadas", "Servicio", "Unidad", "Yardas"}));
-		cbUnidadMedida.setSelectedIndex(10);
 		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbUnidadMedida.setBounds(212, 232, 238, 25);
+		cbUnidadMedida.setBounds(210, 239, 238, 25);
 		contentPane.add(cbUnidadMedida);
 		
 		lblPrecioDeCompra = new JLabel("Precio de Compra:");
-		lblPrecioDeCompra.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeCompra.setForeground(Color.DARK_GRAY);
-		lblPrecioDeCompra.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblPrecioDeCompra.setBounds(12, 412, 190, 25);
+		lblPrecioDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrecioDeCompra.setBounds(10, 455, 190, 25);
 		contentPane.add(lblPrecioDeCompra);
 		
 		txtPrecioCompra = new JTextField();
@@ -365,15 +356,14 @@ public class NuevoProducto2 extends JFrame {
 		txtPrecioCompra.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioCompra.setColumns(10);
 		txtPrecioCompra.setBackground(new Color(245, 245, 245));
-		txtPrecioCompra.setBounds(213, 414, 149, 25);
+		txtPrecioCompra.setBounds(211, 457, 149, 25);
 		contentPane.add(txtPrecioCompra);
 		
 		lblPrecioDeVenta = new JLabel("Precio de Venta:");
-		lblPrecioDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
-		lblPrecioDeVenta.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblPrecioDeVenta.setBounds(12, 450, 190, 25);
+		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrecioDeVenta.setBounds(10, 493, 190, 25);
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtPrecioVenta = new JTextField();
@@ -394,16 +384,15 @@ public class NuevoProducto2 extends JFrame {
 		txtPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioVenta.setColumns(10);
 		txtPrecioVenta.setBackground(new Color(245, 245, 245));
-		txtPrecioVenta.setBounds(213, 450, 149, 25);
+		txtPrecioVenta.setBounds(211, 493, 149, 25);
 		contentPane.add(txtPrecioVenta);
 		
 		lblNombrePromo1 = new JLabel("NOMBRE PROMO 1:");
 		lblNombrePromo1.setVisible(false);
-		lblNombrePromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombrePromo1.setForeground(new Color(32, 178, 170));
-		lblNombrePromo1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNombrePromo1.setBounds(533, 124, 193, 25);
+		lblNombrePromo1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNombrePromo1.setBounds(532, 167, 193, 25);
 		contentPane.add(lblNombrePromo1);
 		
 		txtNombrePromo1 = new JTextField();
@@ -421,16 +410,15 @@ public class NuevoProducto2 extends JFrame {
 		txtNombrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo1.setColumns(10);
 		txtNombrePromo1.setBackground(new Color(245, 245, 245));
-		txtNombrePromo1.setBounds(738, 124, 300, 25);
+		txtNombrePromo1.setBounds(737, 167, 300, 25);
 		contentPane.add(txtNombrePromo1);
 		
 		lblCantidadPromo1 = new JLabel("CANTIDAD PROMO 1:");
 		lblCantidadPromo1.setVisible(false);
-		lblCantidadPromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadPromo1.setForeground(new Color(32, 178, 170));
-		lblCantidadPromo1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCantidadPromo1.setBounds(533, 160, 193, 25);
+		lblCantidadPromo1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadPromo1.setBounds(532, 203, 193, 25);
 		contentPane.add(lblCantidadPromo1);
 		
 		txtCantPromo1 = new JTextField();
@@ -448,16 +436,15 @@ public class NuevoProducto2 extends JFrame {
 		txtCantPromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo1.setColumns(10);
 		txtCantPromo1.setBackground(new Color(245, 245, 245));
-		txtCantPromo1.setBounds(738, 160, 300, 25);
+		txtCantPromo1.setBounds(737, 203, 300, 25);
 		contentPane.add(txtCantPromo1);
 		
 		lblPrePromo1 = new JLabel("PRECIO PROMO 1:");
 		lblPrePromo1.setVisible(false);
-		lblPrePromo1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrePromo1.setForeground(new Color(32, 178, 170));
-		lblPrePromo1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblPrePromo1.setBounds(533, 196, 193, 25);
+		lblPrePromo1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrePromo1.setBounds(532, 239, 193, 25);
 		contentPane.add(lblPrePromo1);
 		
 		txtPrePromo1 = new JTextField();
@@ -475,16 +462,15 @@ public class NuevoProducto2 extends JFrame {
 		txtPrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo1.setColumns(10);
 		txtPrePromo1.setBackground(new Color(245, 245, 245));
-		txtPrePromo1.setBounds(738, 196, 300, 25);
+		txtPrePromo1.setBounds(737, 239, 300, 25);
 		contentPane.add(txtPrePromo1);
 		
 		lblNombrePromo2 = new JLabel("NOMBRE PROMO 2:");
 		lblNombrePromo2.setVisible(false);
-		lblNombrePromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombrePromo2.setForeground(new Color(147, 112, 219));
-		lblNombrePromo2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNombrePromo2.setBounds(533, 232, 193, 25);
+		lblNombrePromo2.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNombrePromo2.setBounds(532, 275, 193, 25);
 		contentPane.add(lblNombrePromo2);
 		
 		txtNombrePromo2 = new JTextField();
@@ -502,16 +488,15 @@ public class NuevoProducto2 extends JFrame {
 		txtNombrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo2.setColumns(10);
 		txtNombrePromo2.setBackground(new Color(245, 245, 245));
-		txtNombrePromo2.setBounds(738, 232, 300, 25);
+		txtNombrePromo2.setBounds(737, 275, 300, 25);
 		contentPane.add(txtNombrePromo2);
 		
 		lblCantidadPromo2 = new JLabel("CANTIDAD PROMO 2:");
 		lblCantidadPromo2.setVisible(false);
-		lblCantidadPromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadPromo2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadPromo2.setForeground(new Color(147, 112, 219));
-		lblCantidadPromo2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCantidadPromo2.setBounds(533, 268, 193, 25);
+		lblCantidadPromo2.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadPromo2.setBounds(532, 311, 193, 25);
 		contentPane.add(lblCantidadPromo2);
 		
 		txtCantPromo2 = new JTextField();
@@ -529,16 +514,15 @@ public class NuevoProducto2 extends JFrame {
 		txtCantPromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo2.setColumns(10);
 		txtCantPromo2.setBackground(new Color(245, 245, 245));
-		txtCantPromo2.setBounds(738, 268, 300, 25);
+		txtCantPromo2.setBounds(737, 311, 300, 25);
 		contentPane.add(txtCantPromo2);
 		
 		lblPrePromo2 = new JLabel("PRECIO PROMO 2:");
 		lblPrePromo2.setVisible(false);
-		lblPrePromo2.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrePromo2.setForeground(new Color(147, 112, 219));
-		lblPrePromo2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblPrePromo2.setBounds(533, 304, 193, 25);
+		lblPrePromo2.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrePromo2.setBounds(532, 347, 193, 25);
 		contentPane.add(lblPrePromo2);
 		
 		txtPrePromo2 = new JTextField();
@@ -556,18 +540,11 @@ public class NuevoProducto2 extends JFrame {
 		txtPrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo2.setColumns(10);
 		txtPrePromo2.setBackground(new Color(245, 245, 245));
-		txtPrePromo2.setBounds(738, 304, 300, 25);
+		txtPrePromo2.setBounds(737, 347, 300, 25);
 		contentPane.add(txtPrePromo2);
 		
-		lblId = new JLabel("ID:");
-		lblId.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblId.setHorizontalAlignment(SwingConstants.LEFT);
-		lblId.setForeground(Color.DARK_GRAY);
-		lblId.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblId.setBounds(11, 18, 190, 23);
-		contentPane.add(lblId);
-		
 		txtID = new JTextField();
+		txtID.setVisible(false);
 		txtID.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtID.setEditable(false);
 		txtID.setText("0");
@@ -576,16 +553,15 @@ public class NuevoProducto2 extends JFrame {
 		txtID.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtID.setColumns(10);
 		txtID.setBackground(new Color(245, 245, 245));
-		txtID.setBounds(211, 18, 300, 25);
+		txtID.setBounds(59, 16, 44, 25);
 		contentPane.add(txtID);
 		
 		lblLote = new JLabel("Lote:");
 		lblLote.setVisible(false);
-		lblLote.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblLote.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLote.setForeground(Color.DARK_GRAY);
-		lblLote.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblLote.setBounds(532, 92, 194, 25);
+		lblLote.setFont(new Font("Candara", Font.BOLD, 20));
+		lblLote.setBounds(531, 135, 194, 25);
 		contentPane.add(lblLote);
 		
 		txtLote = new JTextField();
@@ -602,16 +578,15 @@ public class NuevoProducto2 extends JFrame {
 		txtLote.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLote.setColumns(10);
 		txtLote.setBackground(new Color(245, 245, 245));
-		txtLote.setBounds(738, 89, 300, 25);
+		txtLote.setBounds(737, 132, 300, 25);
 		contentPane.add(txtLote);
 		
 		lblLaboratorio = new JLabel("Laboratorio:");
 		lblLaboratorio.setVisible(false);
-		lblLaboratorio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblLaboratorio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLaboratorio.setForeground(Color.DARK_GRAY);
-		lblLaboratorio.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblLaboratorio.setBounds(532, 54, 194, 25);
+		lblLaboratorio.setFont(new Font("Candara", Font.BOLD, 20));
+		lblLaboratorio.setBounds(531, 97, 194, 25);
 		contentPane.add(lblLaboratorio);
 		
 		txtLaboratorio = new JTextField();
@@ -628,18 +603,17 @@ public class NuevoProducto2 extends JFrame {
 		txtLaboratorio.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLaboratorio.setColumns(10);
 		txtLaboratorio.setBackground(new Color(245, 245, 245));
-		txtLaboratorio.setBounds(738, 54, 300, 25);
+		txtLaboratorio.setBounds(737, 97, 300, 25);
 		contentPane.add(txtLaboratorio);
 		
 		lblAlmacn = new JLabel("Almac\u00E9n");
-		lblAlmacn.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblAlmacn.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAlmacn.setForeground(Color.DARK_GRAY);
-		lblAlmacn.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblAlmacn.setBounds(11, 304, 191, 25);
+		lblAlmacn.setFont(new Font("Candara", Font.BOLD, 20));
+		lblAlmacn.setBounds(9, 311, 191, 25);
 		contentPane.add(lblAlmacn);
 		
-		btnCrearProducto = new JButton("Crear");
+		btnCrearProducto = new JButton("CREAR");
 		btnCrearProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCrearProducto(arg0);
@@ -648,22 +622,21 @@ public class NuevoProducto2 extends JFrame {
 		btnCrearProducto.setForeground(SystemColor.menu);
 		btnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCrearProducto.setBackground(new Color(30, 144, 255));
-		btnCrearProducto.setBounds(798, 414, 240, 61);
+		btnCrearProducto.setBounds(796, 457, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
 		lblNota = new JLabel("<html>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblNota.setBounds(533, 367, 505, 36);
+		lblNota.setBounds(531, 410, 505, 36);
 		contentPane.add(lblNota);
 		
 		lblCantidadMnima = new JLabel("Stock m\u00EDnimo:");
-		lblCantidadMnima.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadMnima.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadMnima.setForeground(Color.DARK_GRAY);
-		lblCantidadMnima.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblCantidadMnima.setBounds(11, 376, 190, 25);
+		lblCantidadMnima.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadMnima.setBounds(9, 419, 190, 25);
 		contentPane.add(lblCantidadMnima);
 		
 		txtStockMinimo = new JTextField();
@@ -680,70 +653,63 @@ public class NuevoProducto2 extends JFrame {
 		txtStockMinimo.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockMinimo.setColumns(10);
 		txtStockMinimo.setBackground(new Color(245, 245, 245));
-		txtStockMinimo.setBounds(212, 378, 150, 25);
+		txtStockMinimo.setBounds(210, 421, 150, 25);
 		contentPane.add(txtStockMinimo);
-		
-		label = new JLabel("*");
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(Color.RED);
-		label.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label.setBounds(193, 18, 20, 25);
-		contentPane.add(label);
 		
 		label_1 = new JLabel("*");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setForeground(Color.RED);
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_1.setBounds(193, 88, 20, 25);
+		label_1.setBounds(191, 94, 20, 25);
 		contentPane.add(label_1);
 		
 		label_2 = new JLabel("*");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_2.setBounds(193, 304, 20, 25);
+		label_2.setBounds(191, 311, 20, 25);
 		contentPane.add(label_2);
 		
 		label_3 = new JLabel("*");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(Color.RED);
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_3.setBounds(193, 232, 20, 25);
+		label_3.setBounds(191, 239, 20, 25);
 		contentPane.add(label_3);
 		
 		label_4 = new JLabel("*");
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_4.setBounds(193, 340, 20, 25);
+		label_4.setBounds(191, 383, 20, 25);
 		contentPane.add(label_4);
 		
 		label_5 = new JLabel("*");
 		label_5.setHorizontalAlignment(SwingConstants.LEFT);
 		label_5.setForeground(Color.RED);
 		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_5.setBounds(193, 376, 20, 25);
+		label_5.setBounds(191, 419, 20, 25);
 		contentPane.add(label_5);
 		
 		label_6 = new JLabel("*");
 		label_6.setHorizontalAlignment(SwingConstants.LEFT);
 		label_6.setForeground(Color.RED);
 		label_6.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_6.setBounds(193, 414, 20, 25);
+		label_6.setBounds(191, 457, 20, 25);
 		contentPane.add(label_6);
 		
 		label_7 = new JLabel("*");
 		label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		label_7.setForeground(Color.RED);
 		label_7.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_7.setBounds(193, 448, 20, 25);
+		label_7.setBounds(191, 491, 20, 25);
 		contentPane.add(label_7);
 		
 		label_8 = new JLabel("*");
 		label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		label_8.setForeground(Color.RED);
 		label_8.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_8.setBounds(193, 268, 20, 25);
+		label_8.setBounds(191, 275, 20, 25);
 		contentPane.add(label_8);
 		
 		lblDeGanancia = new JLabel("% de ganancia:");
@@ -751,7 +717,7 @@ public class NuevoProducto2 extends JFrame {
 		lblDeGanancia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeGanancia.setForeground(new Color(30, 144, 255));
 		lblDeGanancia.setFont(new Font("Arial", Font.BOLD, 18));
-		lblDeGanancia.setBounds(372, 412, 139, 25);
+		lblDeGanancia.setBounds(370, 455, 139, 25);
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
@@ -772,7 +738,7 @@ public class NuevoProducto2 extends JFrame {
 		txtPtjGanancia.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPtjGanancia.setColumns(10);
 		txtPtjGanancia.setBackground(new Color(245, 245, 245));
-		txtPtjGanancia.setBounds(382, 450, 121, 25);
+		txtPtjGanancia.setBounds(380, 493, 121, 25);
 		contentPane.add(txtPtjGanancia);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -784,7 +750,7 @@ public class NuevoProducto2 extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(533, 414, 240, 61);
+		btnCancelar.setBounds(531, 457, 240, 61);
 		contentPane.add(btnCancelar);
 		
 		cbCategoria = new JComboBox();
@@ -792,7 +758,7 @@ public class NuevoProducto2 extends JFrame {
 		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbCategoria.setBackground(new Color(245, 245, 245));
-		cbCategoria.setBounds(210, 268, 240, 25);
+		cbCategoria.setBounds(208, 275, 240, 25);
 		contentPane.add(cbCategoria);
 		
 		cbAlmacen = new JComboBox();
@@ -800,8 +766,45 @@ public class NuevoProducto2 extends JFrame {
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbAlmacen.setBackground(new Color(245, 245, 245));
-		cbAlmacen.setBounds(211, 304, 240, 25);
+		cbAlmacen.setBounds(209, 311, 240, 25);
 		contentPane.add(cbAlmacen);
+		
+		txtCrearProducto = new JTextField();
+		txtCrearProducto.setText("CREAR PRODUCTO");
+		txtCrearProducto.setRequestFocusEnabled(false);
+		txtCrearProducto.setIgnoreRepaint(true);
+		txtCrearProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		txtCrearProducto.setForeground(Color.WHITE);
+		txtCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 25));
+		txtCrearProducto.setFocusable(false);
+		txtCrearProducto.setFocusTraversalKeysEnabled(false);
+		txtCrearProducto.setEditable(false);
+		txtCrearProducto.setColumns(10);
+		txtCrearProducto.setBackground(Color.DARK_GRAY);
+		txtCrearProducto.setBounds(0, 0, 1061, 50);
+		contentPane.add(txtCrearProducto);
+		
+		lblDistribuidor = new JLabel("Distribuidor");
+		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDistribuidor.setForeground(Color.DARK_GRAY);
+		lblDistribuidor.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDistribuidor.setBounds(8, 347, 191, 25);
+		contentPane.add(lblDistribuidor);
+		
+		label_9 = new JLabel("*");
+		label_9.setHorizontalAlignment(SwingConstants.LEFT);
+		label_9.setForeground(Color.RED);
+		label_9.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_9.setBounds(190, 347, 20, 25);
+		contentPane.add(label_9);
+		
+		cbDistribuidor = new JComboBox();
+		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbDistribuidor.setEditable(true);
+		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbDistribuidor.setBackground(new Color(245, 245, 245));
+		cbDistribuidor.setBounds(208, 347, 240, 25);
+		contentPane.add(cbDistribuidor);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
 		
 		cargar();
@@ -868,40 +871,52 @@ public class NuevoProducto2 extends JFrame {
 				txtPrePromo2.setVisible(true);
 			}
 		}
-		
+
+		// COMBO UNIDADES DE MEDIDA
+		UnidadMed unidades = new UnidadMed();
+		unidades.cargarUnidadesMed(cbUnidadMedida);
+		AutoCompleteDecorator.decorate(cbUnidadMedida);
 		
 		// COMBO CATEGORIA
 		Categoria categoria = new Categoria();
 		categoria.cargarCategorias(cbCategoria);
 		AutoCompleteDecorator.decorate(cbCategoria);
-		/*if(cbCategoria.getItemCount() == 0){
-			Categoria todasCategorias = new Categoria(".General");
-			cbCategoria.addItem(todasCategorias);
-		}*/
 		
 		// COMBO ALMACEN
 		Almacen almacen = new Almacen();
 		almacen.cargarAlmacenes(cbAlmacen);
 		AutoCompleteDecorator.decorate(cbAlmacen);
-		/*if(cbAlmacen.getItemCount() == 0){
-			Almacen todosAlmacenes = new Almacen(".Principal");
-			cbAlmacen.addItem(todosAlmacenes);
-		}*/
 		
-		if(cbCategoria.getItemCount() == 0 && cbAlmacen.getItemCount() == 0){
-			Categoria todasCategorias = new Categoria(".General");
-			cbCategoria.addItem(todasCategorias);
-			Almacen todosAlmacenes = new Almacen(".Principal");
-			cbAlmacen.addItem(todosAlmacenes);
+		
+		if(cbCategoria.getItemCount() == 0 && cbAlmacen.getItemCount() == 0 && cbUnidadMedida.getItemCount() == 0){
+			String arrayUmed[] = {"Caja","Galon","Gramo","Hora","Kilo","Litro","Metro","Servicio","Unidad"};
 			
-			txtNombreProducto.setText("#");
-			primeravez = 1;
-			actionPerformedBtnCrearProducto(null);	
-			//PONERLO COMO INACTIVO
-			int codigoProducto = 1;
+			for (int x=0; x<arrayUmed.length; x++){
+				UnidadMed todasUnidades = new UnidadMed(arrayUmed[x]);
+				cbUnidadMedida.addItem(todasUnidades);
+				try {
+					cbUnidadMedida.setSelectedItem(arrayUmed[x]);
+				} catch (Exception e) {
+				}
+				
+				Categoria todasCategorias = new Categoria(".General");
+				cbCategoria.addItem(todasCategorias);
+				Almacen todosAlmacenes = new Almacen(".Principal");
+				cbAlmacen.addItem(todosAlmacenes);
+				
+				txtNombreProducto.setText("}");
+				primeravez = 1;
+				actionPerformedBtnCrearProducto(null);
+				
+				//PONERLO COMO INACTIVO
+				int codigoProducto = 1;
+			}
+			cbUnidadMedida.setSelectedItem("Unidad");
 		}
-		else
+		else{
+			cbUnidadMedida.setSelectedItem("Unidad");
 			primeravez = 0;
+		}
 	}
 	
 	private void recargarCombos(){

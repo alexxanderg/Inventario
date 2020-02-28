@@ -13,7 +13,6 @@ import clases.Cliente;
 import clases.Productos;
 import gui_clientes.NuevoCliente;
 import gui_ventas.ListaDeProductos;
-import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.EleccionVentanas;
 import gui_principal.Login;
 import gui_reportes.Reportes;
@@ -1205,10 +1204,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
-		NuevoProducto np = new NuevoProducto(null, this, null);
+		/*NuevoProducto np = new NuevoProducto(null, this, null);
 		np.setVisible(true);
 		np.setLocationRelativeTo(null);
-		this.setEnabled(false);
+		this.setEnabled(false);*/
 	}
 
 	protected void keyPressedTbCompras(KeyEvent e) {

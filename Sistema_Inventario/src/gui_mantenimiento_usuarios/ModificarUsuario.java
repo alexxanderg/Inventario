@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import mysql.consultas;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +26,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import javax.swing.border.LineBorder;
 
 public class ModificarUsuario extends JDialog implements ActionListener, WindowListener, KeyListener {
 	private JLabel lblUsuario;
@@ -38,19 +38,20 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 	private JComboBox cbTipo;
 	private JTextField txtPass;
 	private JButton btnModificar;
-	
-	String usu;
-	String pass;
-	String nom;
-	String tip;
-	MantenimientoUsuarios mu;
-	ResultSet rs;
-	consultas model = new consultas();
+	private JTextField txtAgregarUsuario;
 	private JTextField txtModificarUsuarios;
+	private JButton btnCancelar;
+	private JButton btnModificarr;
+	
+	
+	MantenimientoUsuarios mantenimientoUsuarios;
+	int idusuario;
+	ResultSet rs;
+	consultas consulta = new consultas();
 	
 	public static void main(String[] args) {
 		try {
-			ModificarUsuario dialog = new ModificarUsuario(null, null, null, null, null);
+			ModificarUsuario dialog = new ModificarUsuario(0, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,150 +60,155 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 	}
 
 	
-	public ModificarUsuario(String temp, String temp2, String temp3, String temp4, MantenimientoUsuarios temp5) {
-		setResizable(false);
-		usu = temp;
-		pass = temp2;
-		nom = temp3;
-		tip = temp4;
-		mu = temp5;
+	public ModificarUsuario(int idusuario, MantenimientoUsuarios mantenimientoUsuarios) {
+		this.mantenimientoUsuarios = mantenimientoUsuarios;
+		this.idusuario = idusuario;
 		
+		setResizable(false);
 		addWindowListener(this);
-		setBounds(100, 100, 688, 356);
+		setBounds(100, 100, 400, 453);
 		getContentPane().setLayout(null);
 		
-		lblUsuario = new JLabel("USUARIO:");
+		lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblUsuario.setForeground(Color.BLACK);
-		lblUsuario.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblUsuario.setBounds(10, 90, 138, 38);
+		lblUsuario.setForeground(Color.DARK_GRAY);
+		lblUsuario.setFont(new Font("Candara", Font.BOLD, 20));
+		lblUsuario.setBounds(10, 131, 138, 38);
 		getContentPane().add(lblUsuario);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.addKeyListener(this);
+		txtUsuario.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		txtUsuario.setForeground(SystemColor.windowBorder);
-		txtUsuario.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtUsuario.setColumns(10);
-		txtUsuario.setBackground(SystemColor.controlHighlight);
-		txtUsuario.setBounds(10, 139, 316, 34);
+		txtUsuario.setBackground(Color.WHITE);
+		txtUsuario.setBounds(10, 167, 370, 34);
 		getContentPane().add(txtUsuario);
 		
-		lblContrasea = new JLabel("CONTRASE\u00D1A:");
+		lblContrasea = new JLabel("Contrase\u00F1a:");
 		lblContrasea.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblContrasea.setForeground(Color.BLACK);
-		lblContrasea.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblContrasea.setBounds(344, 90, 205, 38);
+		lblContrasea.setForeground(Color.DARK_GRAY);
+		lblContrasea.setFont(new Font("Candara", Font.BOLD, 20));
+		lblContrasea.setBounds(10, 201, 205, 34);
 		getContentPane().add(lblContrasea);
 		
-		lblNombre = new JLabel("NOMBRE:");
+		lblNombre = new JLabel("Nombre:");
 		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNombre.setForeground(Color.BLACK);
-		lblNombre.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblNombre.setBounds(10, 191, 138, 38);
+		lblNombre.setForeground(Color.DARK_GRAY);
+		lblNombre.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNombre.setBounds(10, 61, 138, 38);
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
-		txtNombre.addKeyListener(this);
+		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNombre.setForeground(SystemColor.windowBorder);
-		txtNombre.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombre.setColumns(10);
-		txtNombre.setBackground(SystemColor.controlHighlight);
-		txtNombre.setBounds(158, 195, 502, 34);
+		txtNombre.setBackground(Color.WHITE);
+		txtNombre.setBounds(10, 99, 370, 34);
 		getContentPane().add(txtNombre);
 		
-		lblTipo = new JLabel("TIPO:");
+		lblTipo = new JLabel("Tipo de usuario:");
 		lblTipo.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblTipo.setForeground(Color.BLACK);
-		lblTipo.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblTipo.setBounds(10, 249, 138, 38);
+		lblTipo.setForeground(Color.DARK_GRAY);
+		lblTipo.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTipo.setBounds(10, 290, 150, 38);
 		getContentPane().add(lblTipo);
 		
 		cbTipo = new JComboBox();
-		cbTipo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		cbTipo.setBackground(Color.WHITE);
+		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor"}));
-		cbTipo.setBounds(158, 256, 205, 36);
+		cbTipo.setBounds(158, 290, 222, 36);
 		getContentPane().add(cbTipo);
 		
 		txtPass = new JTextField();
-		txtPass.addKeyListener(this);
+		txtPass.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPass.setHorizontalAlignment(SwingConstants.LEFT);
 		txtPass.setForeground(SystemColor.windowBorder);
-		txtPass.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtPass.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPass.setColumns(10);
-		txtPass.setBackground(SystemColor.controlHighlight);
-		txtPass.setBounds(344, 139, 316, 34);
+		txtPass.setBackground(Color.WHITE);
+		txtPass.setBounds(10, 233, 370, 34);
 		getContentPane().add(txtPass);
 		
-		btnModificar = new JButton("MODIFICAR");
-		btnModificar.addActionListener(this);
-		btnModificar.setForeground(SystemColor.menu);
-		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(394, 254, 266, 38);
-		getContentPane().add(btnModificar);
+		btnModificarr = new JButton("MODIFICAR");
+		btnModificarr.addActionListener(this);
+		btnModificarr.setForeground(SystemColor.menu);
+		btnModificarr.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnModificarr.setBackground(new Color(30, 144, 255));
+		btnModificarr.setBounds(205, 360, 175, 38);
+		getContentPane().add(btnModificarr);
 		cbTipo.setSelectedIndex(-1);
 		
-		txtModificarUsuarios = new JTextField();
-		txtModificarUsuarios.setText("MODIFICAR USUARIO");
-		txtModificarUsuarios.setRequestFocusEnabled(false);
-		txtModificarUsuarios.setIgnoreRepaint(true);
-		txtModificarUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		txtModificarUsuarios.setForeground(Color.WHITE);
-		txtModificarUsuarios.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		txtModificarUsuarios.setFocusable(false);
-		txtModificarUsuarios.setFocusTraversalKeysEnabled(false);
-		txtModificarUsuarios.setEditable(false);
-		txtModificarUsuarios.setColumns(10);
-		txtModificarUsuarios.setBackground(Color.DARK_GRAY);
-		txtModificarUsuarios.setBounds(0, 0, 682, 58);
-		getContentPane().add(txtModificarUsuarios);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtUsuario, txtPass, txtNombre, cbTipo, btnModificar}));
-		cargarDatos();
+		txtAgregarUsuario = new JTextField();
+		txtAgregarUsuario.setText("MODIFICAR USUARIO");
+		txtAgregarUsuario.setRequestFocusEnabled(false);
+		txtAgregarUsuario.setIgnoreRepaint(true);
+		txtAgregarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtAgregarUsuario.setForeground(Color.WHITE);
+		txtAgregarUsuario.setFont(new Font("Tahoma", Font.BOLD, 25));
+		txtAgregarUsuario.setFocusable(false);
+		txtAgregarUsuario.setFocusTraversalKeysEnabled(false);
+		txtAgregarUsuario.setEditable(false);
+		txtAgregarUsuario.setColumns(10);
+		txtAgregarUsuario.setBackground(Color.DARK_GRAY);
+		txtAgregarUsuario.setBounds(0, 0, 394, 50);
+		getContentPane().add(txtAgregarUsuario);
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnCancelar(arg0);
+			}
+		});
+		btnCancelar.setForeground(SystemColor.menu);
+		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCancelar.setBackground(new Color(220, 20, 60));
+		btnCancelar.setBounds(10, 360, 175, 38);
+		getContentPane().add(btnCancelar);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtNombre, txtUsuario, txtPass, cbTipo}));
+		
+		cargar();
 	}
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnModificar) {
-			actionPerformedBtnCrear(arg0);
+	public void cargar(){
+		try {
+			ResultSet rs = consulta.cargarUsu(idusuario);
+			rs.next();
+			txtUsuario.setText(rs.getString("usuario"));
+			txtNombre.setText(rs.getString("nombre"));
+			cbTipo.setSelectedIndex(rs.getInt("tipo"));	//0ADMIN 1VENDEDOR		
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar usuarios: " + e);
 		}
 	}
-	protected void actionPerformedBtnCrear(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnModificarr) {
+			actionPerformedBtnModificar(arg0);
+		}
+	}
+	protected void actionPerformedBtnModificar(ActionEvent arg0) {
 		try {
-			if(txtUsuario.getText().length() == 0 || txtPass.getText().length() == 0 || txtNombre.getText().length() == 0 ||cbTipo.getSelectedIndex() == -1 ){
-				this.setAlwaysOnTop(false);
+			if(txtUsuario.getText().length() == 0 || txtPass.getText().length() == 0 || txtNombre.getText().length() == 0 ||cbTipo.getSelectedIndex() == -1 )
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
-				this.setAlwaysOnTop(true);
-			}
-			
 			else{
-				this.setAlwaysOnTop(false);
-				int opc = JOptionPane.showConfirmDialog(null, "¿Desea aplicar los cambios?", "Confirmar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				this.setAlwaysOnTop(true);
+				int opc = JOptionPane.showConfirmDialog(null, "¿Desea modificar el usuario?", "Confirmar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (opc == 0){
 					this.setAlwaysOnTop(false);
-//					model.modificarUsuario(usu, txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
-					mu.cargarUsuarios();
-					mu.seleccionarUsuario(txtUsuario.getText());
-					mu.setEnabled(true);
+					consulta.modificarUsuario(idusuario, txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
+					mantenimientoUsuarios.cargar();
+					mantenimientoUsuarios.selecionarUsuario(""+idusuario);
 					dispose();
 				}
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente" +e );
-		}
-		
-		
-		
+		}		
 	}
 	
-	public void cargarDatos(){
-		txtUsuario.setText(usu);
-		txtNombre.setText(nom);
-		if(tip.equals("Administrador"))
-			cbTipo.setSelectedIndex(0);
-		if(tip.equals("Vendedor"))
-			cbTipo.setSelectedIndex(1);		
-	}
+	
 	
 	public void windowActivated(WindowEvent arg0) {
 	}
@@ -222,7 +228,7 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 	public void windowOpened(WindowEvent arg0) {
 	}
 	protected void windowClosingThis(WindowEvent arg0) {
-		mu.setEnabled(true);
+		mantenimientoUsuarios.setEnabled(true);
 	}
 	public void keyPressed(KeyEvent arg0) {
 	}
@@ -253,5 +259,8 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 		if (txtNombre.getText().length() == 50){
 			arg0.consume();
 		}
+	}
+	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
+		this.dispose();
 	}
 }

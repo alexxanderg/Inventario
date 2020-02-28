@@ -1,59 +1,62 @@
 package gui_mantenimiento_usuarios;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import gui_mantenimiento_usuarios.ModificarUsuario;
-import gui_mantenimiento_usuarios.NuevoUsuario;
-import gui_principal.EleccionVentanas;
+
+import com.mxrck.autocompleter.TextAutoCompleter;
+
+import gui_configuracion.Configuraciones;
+import gui_principal.VentanaPrincipal;
 import mysql.consultas;
-import javax.swing.JLabel;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import java.awt.Color;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.awt.event.WindowEvent;
-import javax.swing.JTextField;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
+import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
+import javax.swing.ListSelectionModel;
 
-public class MantenimientoUsuarios extends JFrame implements ActionListener, WindowListener {
-
-	private JPanel contentPane;
+public class MantenimientoUsuarios extends JInternalFrame {
+	private JMenuBar menuBar;
+	private JMenu mnCrearProducto;
+	private JMenu mnModificarProducto;
+	private JMenu mnNewMenu_2;
+	private JButton btnX;
 	private JScrollPane scrollPane;
+	private TextAutoCompleter ac;
 	private JTable tbUsuarios;
-	private JButton btnAgregar;
-	private JButton btnModificar;
-	private JButton btnEliminar;
-	private JTextField txtUsuarios;
-	private JButton btnVolver;
+	
+	public VentanaPrincipal vp;
 	
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
-	String usuario;
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -67,109 +70,105 @@ public class MantenimientoUsuarios extends JFrame implements ActionListener, Win
 		});
 	}
 
-	public MantenimientoUsuarios(String temp2) {
-		usuario = temp2;
-				
-		setTitle("Mantenimiento de Usuarios");
-		setResizable(false);
-		addWindowListener(this);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 694, 448);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	public MantenimientoUsuarios(VentanaPrincipal vp) {
+		this.vp = vp;
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 135, 658, 263);
-		contentPane.add(scrollPane);
+		getContentPane().setBackground(Color.WHITE);
+		setTitle("ALMAC\u00C9N");
+		setBounds(100, 100, 1134, 679);
+		getContentPane().setLayout(null);
+		
+		btnX = new JButton("X");
+		this.btnX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnX(arg0);
+			}
+		});
+		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+		btnX.setForeground(new Color(255, 255, 255));
+		btnX.setBackground(new Color(220, 20, 60));
+		btnX.setBounds(1030, 0, 63, 30);
+		getContentPane().add(btnX);
+		
+		this.scrollPane = new JScrollPane();
+		scrollPane.setAutoscrolls(true);
+		this.scrollPane.setBounds(10, 41, 1083, 568);
+		getContentPane().add(this.scrollPane);
 		
 		tbUsuarios = new JTable();
+		tbUsuarios.setAutoCreateRowSorter(true);
+		tbUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbUsuarios.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbUsuarios.setBackground(Color.WHITE);
+		tbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbUsuarios);
-		//tbUsuarios.getTableHeader().setResizingAllowed(false);
-		tbUsuarios.getTableHeader().setReorderingAllowed(false) ;
+		// tbProductos.getTableHeader().setResizingAllowed(false);
+		tbUsuarios.getTableHeader().setReorderingAllowed(false);
+
 		
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(this);
-		btnAgregar.setForeground(new Color(255, 255, 255));
-		btnAgregar.setFont(new Font("EngraversGothic BT", Font.BOLD, 28));
-		btnAgregar.setBackground(new Color(30, 144, 255));
-		btnAgregar.setBounds(10, 69, 205, 55);
-		contentPane.add(btnAgregar);
+		menuBar = new JMenuBar();
+		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		menuBar.setBackground(new Color(211, 211, 211));
+		setJMenuBar(menuBar);
 		
-		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(this);
-		btnModificar.setForeground(new Color(255, 255, 255));
-		btnModificar.setFont(new Font("EngraversGothic BT", Font.BOLD, 28));
-		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(232, 69, 219, 55);
-		contentPane.add(btnModificar);
+		mnCrearProducto = new JMenu("|Crear nuevo usuario| ");
+		mnCrearProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnCrearProducto(arg0);
+			}
+		});
+		mnCrearProducto.setForeground(new Color(65, 105, 225));
+		mnCrearProducto.setBackground(SystemColor.control);
+		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnCrearProducto);
 		
-		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(this);
-		btnEliminar.setForeground(new Color(255, 255, 255));
-		btnEliminar.setFont(new Font("EngraversGothic BT", Font.BOLD, 28));
-		btnEliminar.setBackground(new Color(30, 144, 255));
-		btnEliminar.setBounds(461, 69, 205, 55);
-		contentPane.add(btnEliminar);
+		mnModificarProducto = new JMenu("|Modificar usuario| ");
+		mnModificarProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnModificarProducto(e);
+			}
+		});
+		mnModificarProducto.setForeground(new Color(60, 179, 113));
+		mnModificarProducto.setBackground(SystemColor.control);
+		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnModificarProducto);
 		
-		btnVolver = new JButton("VOLVER");
-		btnVolver.addActionListener(this);
-		btnVolver.setForeground(new Color(0, 255, 0));
-		btnVolver.setFont(new Font("EngraversGothic BT", Font.BOLD | Font.ITALIC, 15));
-		btnVolver.setBackground(Color.DARK_GRAY);
-		btnVolver.setBounds(0, 0, 131, 58);
-		contentPane.add(btnVolver);
+		mnNewMenu_2 = new JMenu("|Eliminar usuario| ");
+		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnNewMenu_2(e);
+			}
+		});
+		mnNewMenu_2.setForeground(new Color(220, 20, 60));
+		mnNewMenu_2.setBackground(SystemColor.control);
+		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnNewMenu_2);
+
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
-		txtUsuarios = new JTextField();
-		txtUsuarios.setForeground(new Color(255, 255, 255));
-		txtUsuarios.setText("USUARIOS");
-		txtUsuarios.setRequestFocusEnabled(false);
-		txtUsuarios.setIgnoreRepaint(true);
-		txtUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		txtUsuarios.setFont(new Font("EngraversGothic BT", Font.BOLD, 32));
-		txtUsuarios.setFocusable(false);
-		txtUsuarios.setFocusTraversalKeysEnabled(false);
-		txtUsuarios.setEditable(false);
-		txtUsuarios.setColumns(10);
-		txtUsuarios.setBackground(Color.DARK_GRAY);
-		txtUsuarios.setBounds(0, 0, 688, 58);
-		contentPane.add(txtUsuarios);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAgregar, btnModificar, btnEliminar, scrollPane, tbUsuarios, btnVolver}));
-		cargarUsuarios();
+		cargar();
 	}
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnVolver) {
-			actionPerformedBtnVolver(arg0);
-		}
-		if (arg0.getSource() == btnEliminar) {
-			actionPerformedBtnEliminar(arg0);
-		}
-		if (arg0.getSource() == btnModificar) {
-			actionPerformedBtnModificar(arg0);
-		}
-		if (arg0.getSource() == btnAgregar) {
-			actionPerformedBtnAgregar(arg0);
-		}
-	}
-	public void cargarUsuarios(){
-		this.setLocationRelativeTo(null);
+	
+	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbUsuarios;
-		tb.setModel(dtm);
 		tb.setRowHeight(25);
-		dtm.setColumnIdentifiers(new Object[]{"NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
+		tb.setModel(dtm);
+		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
 		consultas model = new consultas();
 		rs = model.cargarUsuarios();
 		try {
 			while(rs.next()){
 				String u = rs.getString("usuario");
-				if(!u.equals("admin")){
+				if(!u.equals("bxb")){
 					int t = rs.getInt("tipo");
 					if(t == 0)
-						dtm.addRow(new Object[]{rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
+						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
 					if(t == 1)
-						dtm.addRow(new Object[]{rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
+						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
 				}
 			}
 		} catch (Exception e) {
@@ -177,133 +176,92 @@ public class MantenimientoUsuarios extends JFrame implements ActionListener, Win
 		}
 		ajustarAnchoColumnas();
 	}
-	
+		
 	private int anchoColumna(int porcentaje) {
 		return porcentaje * scrollPane.getWidth() / 100;
 	}
+
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbUsuarios.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(40));  // Nombre
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(20));  // Usuario
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Contraseña
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(20));  // Tipo
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // ID
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(40));  // Nombre
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Usuario
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseña
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(20));  // Tipo
 		
-		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
+		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
-		tbUsuarios.getColumnModel().getColumn(3).setCellRenderer(tcr0);
+		tbUsuarios.getColumnModel().getColumn(3).setCellRenderer(tcr0);*/
 	}
-	
-	protected void actionPerformedBtnAgregar(ActionEvent arg0) {
-		NuevoUsuario nu = new NuevoUsuario(this);
-		nu.setVisible(true);
-		nu.setLocationRelativeTo(null);
-		nu.setAlwaysOnTop(true);
-		this.setEnabled(false);
-	}
-	
-	protected void actionPerformedBtnModificar(ActionEvent arg0) {
+
+	protected void actionPerformedBtnX(ActionEvent arg0) {
 		try {
-			DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-			String usuario = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),1));
-			if( usuario.equals("admin"))
-				JOptionPane.showMessageDialog(null, "Este usuario no se puede modificar por seguridad.");
-			else{	 
-				
-					String usu = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),1));
-					String pass = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),2));
-					String nom = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),0));
-					String tip = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),3));					
-					ModificarUsuario mu = new ModificarUsuario(usu, pass, nom, tip, this);
-					mu.setVisible(true);
-					mu.setLocationRelativeTo(null);
-					mu.setAlwaysOnTop(true);		
-					this.setEnabled(false);
-				
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Seleccione el usuario a modificar");
-		}
-		
-		
-	}
-	protected void actionPerformedBtnEliminar(ActionEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el usuario?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0){
-			DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-			String usuario = String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(),1));
-			if( usuario.equals("admin"))
-				JOptionPane.showMessageDialog(null, "Este usuario no se puede borrar por seguridad.");
-			else{
-				try {
-					model.eliminarUsuario(usuario);
-					cargarUsuarios();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "ERROR: "+ e);
-				}
-			}
+			this.setClosed(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
 		}
 	}
 	
-	public void seleccionarUsuario(String usu){
-		int cantUsuarios = tbUsuarios.getRowCount();
-		for(int i = 0; i<cantUsuarios; i++){
-			if(usu.equals(tbUsuarios.getValueAt(i, 0))){
-				tbUsuarios.setRowSelectionInterval(i,i);
+	public void selecionarUsuario(String id) {
+		int cantProductos = tbUsuarios.getRowCount();
+		for (int i = 0; i < cantProductos; i++) {
+			if (id.equals(tbUsuarios.getValueAt(i, 0))) {
+				tbUsuarios.setRowSelectionInterval(i, i);
 				break;
 			}
 		}
 	}
 	
-	public void windowActivated(WindowEvent arg0) {
-	}
-	public void windowClosed(WindowEvent arg0) {
-	}
-	public void windowClosing(WindowEvent arg0) {
-		if (arg0.getSource() == this) {
-			windowClosingThis(arg0);
-		}
-	}
-	public void windowDeactivated(WindowEvent arg0) {
-	}
-	public void windowDeiconified(WindowEvent arg0) {
-	}
-	public void windowIconified(WindowEvent arg0) {
-	}
-	public void windowOpened(WindowEvent arg0) {
-	}
-	protected void windowClosingThis(WindowEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Cerrar Sistema?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0){
-			try {
-				DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
-				Date today = Calendar.getInstance().getTime();       
-				String reportDate = df.format(today);
-				File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
-				directorio.mkdirs(); 
-				Process p;
-				p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
-				InputStream is = p.getInputStream();
-				FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
-				byte[] buffer = new byte[1000];
-				int leido = is.read(buffer);
-				while(leido>0){
-					fos.write(buffer, 0, leido);
-					leido = is.read(buffer);
-				}
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
-				//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
-				fos.close();
-			} catch (IOException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+	NuevoUsuario nu = new NuevoUsuario(this);
+	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
+		try {
+			if (nu.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				// nu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				nu.setVisible(true); 
+			} else {
+				nu = new NuevoUsuario(this);
+				nu.setLocationRelativeTo(null);
+				nu.setVisible(true);
 			}
-			System.exit(0);
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
-		else
-			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	}
-	protected void actionPerformedBtnVolver(ActionEvent arg0) {
-		EleccionVentanas el = new EleccionVentanas(usuario);
-		el.setVisible(true);
-		dispose();
+	
+	// De manera global
+	
+	protected void mouseClickedMnModificarProducto(MouseEvent e) {
+		try {		
+			DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
+			int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
+			ModificarUsuario mu = new ModificarUsuario(idusuario,this);;
+			try { 
+				if (mu.isShowing()) {
+					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+					//mu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+					mu.setVisible(true);
+				} else {
+					mu.setLocationRelativeTo(null);
+					mu.setVisible(true);
+				}
+			} catch (Exception f) {
+				JOptionPane.showMessageDialog(null, "Error: " + f);
+			}
+		} catch(Exception e1){
+			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar");
+		}
+	}
+	
+	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
+		DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
+		int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este usuario?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (opc == 0) {
+			model.deshabilitarUsuario(idusuario);
+			cargar();
+		}else{
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		}
 	}
 }

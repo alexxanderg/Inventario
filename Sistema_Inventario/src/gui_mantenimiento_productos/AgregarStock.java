@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import gui_mantenimiento_productos.MantenimientoProductos;
 import mysql.consultas;
 
 import javax.swing.JLabel;
@@ -46,7 +45,6 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	String cantActual;
 	String precioCo;
 	String precioVe;
-	MantenimientoProductos mp;
 	consultas model = new consultas();
 	ResultSet rs;
 	private JTextField txtAgregarStock;
@@ -63,7 +61,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	 */
 	public static void main(String[] args) {
 		try {
-			AgregarStock dialog = new AgregarStock(null, null,null,null, null,null);
+			AgregarStock dialog = new AgregarStock(null, null,null, null,null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -71,11 +69,10 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		}
 	}
 
-	public AgregarStock(String temp, String temp2, String temp5, String temp6, MantenimientoProductos temp3, String temp4) {
+	public AgregarStock(String temp, String temp2, String temp5, String temp6, String temp4) {
 		addWindowListener(this);
 		cod = temp;
 		cantActual = temp2;
-		mp = temp3;
 		usuario = temp4;
 		precioCo = temp5;
 		precioVe = temp6;
@@ -248,7 +245,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	public void windowOpened(WindowEvent arg0) {
 	}
 	protected void windowClosingThis(WindowEvent arg0) {
-		mp.setEnabled(true);
+		//mp.setEnabled(true);
 	}
 	
 	public void cargar(){
@@ -283,11 +280,11 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				//model.registrarFechaIngreso(cod, ca, pc, pv, usuario);
 				model.modificarPC_PV(cod, pc, pv);
 				
-				mp.setEnabled(true);
+				/*mp.setEnabled(true);
 				mp.cargarDatos();
 				mp.selecionarProducto(cod);
 				mp.ajustarAnchoColumnas();
-				mp.limpiar();
+				mp.limpiar();*/
 				this.dispose();
 			}
 		} catch (Exception e) {
@@ -326,4 +323,5 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 			txtPrecioVenta.setEditable(false);
 		}
 	}
+	
 }

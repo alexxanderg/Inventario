@@ -39,13 +39,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import com.mxrck.autocompleter.TextAutoCompleter;
-
 import clases.ColorearFilas;
 import gui_mantenimiento_productos.AgregarStock;
-import gui_mantenimiento_productos.ModificarProducto;
-import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.EleccionVentanas;
-
 import java.awt.Component;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;

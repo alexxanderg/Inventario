@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.poi.ss.usermodel.Picture;
 
 import gui_configuracion.Configuraciones;
-import gui_mantenimiento_productos.InternalMantenimiento;
+import gui_mantenimiento_productos.InternalMantenimientoProd;
 import gui_ventas.Ventas2;
 
 import javax.swing.ImageIcon;
@@ -51,12 +51,14 @@ public class VentanaPrincipal extends JFrame {
     private JLabel lblLogo;
 
     Ventas2 ventas = new Ventas2(null);
-	InternalMantenimiento vmantenimiento = new InternalMantenimiento(null);
-	gui_mantenimiento_usuarios.InternalMantenimiento vmantenimientoUsu = new gui_mantenimiento_usuarios.InternalMantenimiento(null);
+	InternalMantenimientoProd vmantenimiento = new InternalMantenimientoProd(null);
+	gui_mantenimiento_usuarios.MantenimientoUsuarios vmantenimientoUsu = new gui_mantenimiento_usuarios.MantenimientoUsuarios(null);
 	Configuraciones config = new Configuraciones();
 
     Color colorSelec = new Color(242, 136, 113);
     Color colorDeselec = new Color(220, 20, 60);
+    private JButton btnDistribuidores;
+    private JButton btnCompras;
 	
 	
 	public static void main(String[] args) {
@@ -85,7 +87,7 @@ public class VentanaPrincipal extends JFrame {
 
 		panel = new JPanel();
 		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(0, 0, 230, 729);
+		panel.setBounds(0, 0, 230, 696);
 		contentPane.add(panel);
 
 		btnVentas = new JButton("Ventas ");
@@ -109,7 +111,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(new Color(220, 20, 60));
-		btnInventario.setBounds(0, 231, 230, 50);
+		btnInventario.setBounds(0, 292, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -128,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnUsuario.setBackground(new Color(220, 20, 60));
-		btnUsuario.setBounds(0, 353, 230, 50);
+		btnUsuario.setBounds(0, 475, 230, 50);
 		panel.add(btnUsuario);
 
 		btnClientes = new JButton("Clientes ");
@@ -142,7 +144,7 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnClientes.setBackground(new Color(220, 20, 60));
-		btnClientes.setBounds(0, 292, 230, 50);
+		btnClientes.setBounds(0, 414, 230, 50);
 		panel.add(btnClientes);
 
 		btnReportes = new JButton("Reportes ");
@@ -156,7 +158,7 @@ public class VentanaPrincipal extends JFrame {
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnReportes.setBackground(new Color(220, 20, 60));
-		btnReportes.setBounds(0, 414, 230, 50);
+		btnReportes.setBounds(0, 536, 230, 50);
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones ");
@@ -170,8 +172,24 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnConfiguraciones.setBackground(new Color(220, 20, 60));
-		btnConfiguraciones.setBounds(0, 475, 230, 50);
+		btnConfiguraciones.setBounds(0, 597, 230, 50);
 		panel.add(btnConfiguraciones);
+		
+		btnDistribuidores = new JButton("Distribuidores");
+		btnDistribuidores.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnDistribuidores.setForeground(Color.WHITE);
+		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnDistribuidores.setBackground(new Color(220, 20, 60));
+		btnDistribuidores.setBounds(0, 353, 230, 50);
+		panel.add(btnDistribuidores);
+		
+		btnCompras = new JButton("Compras");
+		btnCompras.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnCompras.setForeground(Color.WHITE);
+		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnCompras.setBackground(new Color(220, 20, 60));
+		btnCompras.setBounds(0, 231, 230, 50);
+		panel.add(btnCompras);
 		
 		lblUsuario = new JLabel("Aqui Va El Nombre del Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -274,7 +292,7 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnInventario.setBackground(colorSelec);
 			} else {
-					vmantenimiento = new InternalMantenimiento(this);
+					vmantenimiento = new InternalMantenimientoProd(this);
 					desktopPane.add(vmantenimiento);
 					vmantenimiento.show();
 					vmantenimiento.setMaximum(true);
@@ -295,7 +313,7 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnUsuario.setBackground(colorSelec);
 			} else {
-				vmantenimientoUsu = new gui_mantenimiento_usuarios.InternalMantenimiento(this);
+				vmantenimientoUsu = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
 					desktopPane.add(vmantenimientoUsu);
 					vmantenimientoUsu.show();
 					vmantenimientoUsu.setMaximum(true);

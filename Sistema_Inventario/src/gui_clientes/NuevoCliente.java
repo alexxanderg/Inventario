@@ -28,7 +28,6 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 
 import clases.Cliente;
 import gui_principal.Login;
-import gui_mantenimiento_productos.MantenimientoProductos;
 import gui_ventas.Ventas;
 import java.awt.Component;
 import java.awt.event.WindowListener;

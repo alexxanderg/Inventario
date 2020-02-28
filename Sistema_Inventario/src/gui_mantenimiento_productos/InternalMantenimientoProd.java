@@ -40,7 +40,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 
-public class InternalMantenimiento extends JInternalFrame {
+public class InternalMantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
@@ -63,7 +63,7 @@ public class InternalMantenimiento extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InternalMantenimiento frame = new InternalMantenimiento(null);
+					InternalMantenimientoProd frame = new InternalMantenimientoProd(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,7 +72,7 @@ public class InternalMantenimiento extends JInternalFrame {
 		});
 	}
 
-	public InternalMantenimiento(VentanaPrincipal vp) {
+	public InternalMantenimientoProd(VentanaPrincipal vp) {
 		this.vp = vp;
 		
 		getContentPane().setBackground(Color.WHITE);
@@ -243,12 +243,13 @@ public class InternalMantenimiento extends JInternalFrame {
 			if(parts[x].equals("fvencimiento"))
 				list.add("FECHA VENC.");
 		}
+		list.add("UNI MED");
 		list.add("CATEGORIA");
 		list.add("ALMACÉN");
 		list.add("STOCK");
-		list.add("PREC. CO");
+		list.add("PREC CO");
 		list.add("% GAN");
-		list.add("PREC. VE");
+		list.add("PREC VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
@@ -285,6 +286,7 @@ public class InternalMantenimiento extends JInternalFrame {
 						}
 					}
 				}
+		        listProds.add(rs.getString("unimedida"));
 		        listProds.add(rs.getString("categoria"));
 		        listProds.add(rs.getString("almacen"));
 		        listProds.add(rs.getString("cantidad"));

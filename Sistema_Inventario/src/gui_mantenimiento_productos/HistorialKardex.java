@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import mysql.MySQLConexion;
 import mysql.consultas;
 import javax.swing.JLabel;
@@ -44,12 +43,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import com.mxrck.autocompleter.TextAutoCompleter;
-
 import clases.AbstractJasperReports;
 import clases.ColorearFilas;
 import gui_mantenimiento_productos.AgregarStock;
-import gui_mantenimiento_productos.ModificarProducto;
-import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.EleccionVentanas;
 
 import java.awt.Component;

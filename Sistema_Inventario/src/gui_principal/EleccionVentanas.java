@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import gui_clientes.MantenimientoClientes;
 import gui_mantenimiento_productos.HistorialKardex;
-import gui_mantenimiento_productos.MantenimientoProductos;
 import gui_mantenimiento_productos.MantenimientoProductos2;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_reportes.Reportes;
@@ -259,15 +258,15 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	
 	
 	protected void actionPerformedBtnAlmacen(ActionEvent e) {
-		MantenimientoProductos mp = new MantenimientoProductos(usuario);
+		/*MantenimientoProductos mp = new MantenimientoProductos(usuario);
 		mp.setVisible(true);
-		dispose();
+		dispose();*/
 	}
 	
 	protected void actionPerformedBtnUsuarios(ActionEvent e) {
-		MantenimientoUsuarios mu = new MantenimientoUsuarios( usuario);
+		/*MantenimientoUsuarios mu = new MantenimientoUsuarios( usuario);
 		mu.setVisible(true);
-		dispose();
+		dispose();*/
 	}
 	
 	

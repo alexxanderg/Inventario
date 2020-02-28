@@ -26,7 +26,6 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import gui_principal.EleccionVentanas;
 import gui_principal.Login;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
-import gui_mantenimiento_productos.MantenimientoProductos;
 import java.awt.Component;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;

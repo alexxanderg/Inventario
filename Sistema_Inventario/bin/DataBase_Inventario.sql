@@ -3,11 +3,12 @@ create database db_inventario;
 use db_inventario;
 
 create table tb_usuarios(
-usuario 	varchar(20) not null primary key,
-pass		varchar(30),
+idusuario	int primary key auto_increment,
+usuario 	varchar(20) not null,
+pass		varchar(30) not null,
 nombre		varchar(50),
 tipo 	 	tinyint, -- 0ADMIN 1VENTAS
-estado		tinyint -- 0ACTIVO 1INACTIVO
+estado		tinyint -- 0INACTIVO 1IACTIVO
 );
 
 create table tb_clientes(
@@ -18,7 +19,7 @@ nombre		varchar(150),
 direccion	varchar(150),
 telefono	varchar(15),
 correo		varchar(50),
-estado		tinyint -- 0ACTIVO 1INACTIVO
+estado		tinyint -- 0INAACTIVO 1ACTIVO
 );
 
 create table tb_productos(
@@ -39,7 +40,7 @@ cantmin		float,
 precioCo	float,
 precioVe	float,
 ptjganancia	float,
-estado		tinyint, -- 0ACTIVO 1INACTIVO
+estado		tinyint, -- 0INACTIVO 1ACTIVO
 
 promo1		varchar(20),
 cantp1		float,
@@ -63,7 +64,7 @@ metpago1	tinyint, -- 0Efectivo 3Pago con tarjeta crédito/débito 2Depósito 3Tr
 montpago1	float,
 metpago2	tinyint, -- 0Efectivo 3Pago con tarjeta crédito/débito 2Depósito 3Transferencia  4CRÉDITO
 montpago2	float,
-estado		tinyint -- 0Activa 1Modificada 2Eliminada
+estado		tinyint -- 1Activa 2Modificada 3Eliminada
 );
 
 create table tb_ventas_detalle(
@@ -114,15 +115,24 @@ atributosprod	varchar(200)
 
   
 -- Usuarios de prueba
-insert into tb_usuarios values('alex', 'Aa123', 'Alexander Gamarra', 1, 0);
-insert into tb_usuarios values(	'admin', 'admin', 'ADMINISTRADOR', 0, 0);
+insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 0);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 0);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,');
 
 insert into tb_clientes values(	null, 'DNI', '76784966', 'Alexander Gamarra', 'La Encalada', '986865523', 'agamarra@bytexbyte.com.pe', 0);
 insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe', 0);
 
-insert into tb_productos values(null, null, 'Datos de combos', null, null, null, null, null, null, null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0);
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Caja', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Galon', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Gramo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Hora', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Kilo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Litro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Metro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Servicio', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Unidad', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+
 insert into tb_productos values(null, '123456789', 'USB 64GB', '3.0', 'Sony', 'Negro', null, null, 'Unidad', null, '.General', '.Principal', 5, 2, 40.5, 55.9, 10, 0, null, 0, 0, null, 0, 0);
 
 use db_inventario;
