@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.poi.ss.usermodel.Picture;
 
+import gui_clientes.MantenimientoClientes2;
 import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.InternalMantenimientoProd;
@@ -56,6 +57,7 @@ public class VentanaPrincipal extends JFrame {
 	InternalMantenimientoProd vProductos = new InternalMantenimientoProd(null);
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
+	MantenimientoClientes2 vCliente = new MantenimientoClientes2(null);
 	Configuraciones config = new Configuraciones();
 
     Color colorSelec = new Color(242, 136, 113);
@@ -335,6 +337,23 @@ public class VentanaPrincipal extends JFrame {
 		}	
 	}
 	protected void actionPerformedBtnClientes(ActionEvent arg0) {
+		try {
+			if (vCliente.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				vCliente.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				btnClientes.setBackground(colorSelec);
+			} else {
+				vCliente = new MantenimientoClientes2(this);
+					desktopPane.add(vCliente);
+					vCliente.show();
+					vCliente.setMaximum(true);
+					pintarBotones();
+					btnClientes.setBackground(colorSelec);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}	
 	}
 	protected void actionPerformedBtnUsuario(ActionEvent e) {
 		try {

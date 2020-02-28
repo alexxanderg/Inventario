@@ -1,4 +1,4 @@
-package gui_mantenimiento_distribuidores;
+package gui_clientes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,10 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,15 +26,16 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
 import mysql.consultas;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class ModificarDistribuidor extends JFrame implements ActionListener, WindowListener, KeyListener  {
-
+public class NuevoCliente2 extends JFrame {
+	private JLabel lblNombre;
+	private JButton btnCrear;
+	private JTextField txtAgregarUsuario;
+	private JButton btnCancelar;
 	private JComboBox cbTipoDoc;
 	private JLabel lblNroDocumento;
 	private JTextField txtNroDoc;
@@ -42,29 +43,23 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 	private JTextField txtNombre;
 	private JLabel lblDireccin;
 	private JTextField txtDireccion;
-	private JLabel lblPersonaDeContacto;
-	private JTextField txtContacto;
 	private JLabel lblTelefono;
 	private JTextField txtTelefono;
 	private JTextField txtCorreo;
 	private JLabel lblCorreo;
 	private JLabel label;
 	private JLabel label_1;
-	private JLabel lblNombre;
-	private JButton btnModificar;
-	private JTextField txtAgregarUsuario;
-	private JButton btnCancelar;
-
-	MantenimientoDistribuidores mantenimientoDistribuidores;
-	int iddistribuidor;
-	ResultSet rs;
-	consultas consulta = new consultas();
 	
+	ResultSet rs;
+	consultas model = new consultas();
+	MantenimientoClientes2 mantenimientoCliente;
+	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarDistribuidor frame = new ModificarDistribuidor(0, null);
+					NuevoCliente2 frame = new NuevoCliente2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,17 +68,19 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public ModificarDistribuidor(int iddistribuidor, MantenimientoDistribuidores mantenimientoDistribuidores) {
-		this.mantenimientoDistribuidores = mantenimientoDistribuidores;
-		this.iddistribuidor = iddistribuidor;
+	public NuevoCliente2(MantenimientoClientes2 mantenimientoCliente) {
+		this.mantenimientoCliente = mantenimientoCliente;
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				windowClosingThis(arg0);
+			}
+		});
+		
 		getContentPane().setBackground(UIManager.getColor("Button.background"));
 		setResizable(false);
-		addWindowListener(this);
-		setBounds(100, 100, 445, 486);
+		setBounds(100, 100, 445, 401);
 		getContentPane().setLayout(null);
 		
 		lblNombre = new JLabel("Tipo Documento");
@@ -93,16 +90,20 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		lblNombre.setBounds(10, 74, 175, 25);
 		getContentPane().add(lblNombre);
 		
-		btnModificar = new JButton("MODIFICAR");
-		btnModificar.addActionListener(this);
-		btnModificar.setForeground(SystemColor.menu);
-		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnModificar.setBackground(new Color(30, 144, 255));
-		btnModificar.setBounds(231, 394, 200, 38);
-		getContentPane().add(btnModificar);
+		btnCrear = new JButton("CREAR");
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnCrear(arg0);
+			}
+		});
+		btnCrear.setForeground(SystemColor.menu);
+		btnCrear.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCrear.setBackground(new Color(30, 144, 255));
+		btnCrear.setBounds(231, 332, 200, 38);
+		getContentPane().add(btnCrear);
 		
 		txtAgregarUsuario = new JTextField();
-		txtAgregarUsuario.setText("MODIFICAR DISTRIBUIDOR");
+		txtAgregarUsuario.setText("CREAR CLIENTE");
 		txtAgregarUsuario.setRequestFocusEnabled(false);
 		txtAgregarUsuario.setIgnoreRepaint(true);
 		txtAgregarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,13 +126,13 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(10, 394, 200, 38);
+		btnCancelar.setBounds(10, 332, 200, 38);
 		getContentPane().add(btnCancelar);
 		
 		cbTipoDoc = new JComboBox();
 		this.cbTipoDoc.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				itemStateChangedCbTipoDoc(e);
+			public void itemStateChanged(ItemEvent arg0) {
+				itemStateChangedCbTipoDoc(arg0);
 			}
 		});
 		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "Pasaporte", "Doc.trib.no.dom.sin.ruc"}));
@@ -173,12 +174,6 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		getContentPane().add(lblNombre_1);
 		
 		txtNombre = new JTextField();
-		txtNombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtNombre(e);
-			}
-		});
 		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNombre.setForeground(SystemColor.windowBorder);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -186,6 +181,12 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setBounds(10, 161, 421, 25);
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNombre(e);
+			}
+		});
 		getContentPane().add(txtNombre);
 		
 		lblDireccin = new JLabel("Direcci\u00F3n");
@@ -209,36 +210,19 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		txtDireccion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtDireccion.setBackground(Color.WHITE);
 		txtDireccion.setBounds(10, 223, 421, 25);
-		getContentPane().add(txtDireccion);
-		
-		lblPersonaDeContacto = new JLabel("Persona de contacto");
-		lblPersonaDeContacto.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPersonaDeContacto.setForeground(Color.DARK_GRAY);
-		lblPersonaDeContacto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPersonaDeContacto.setBounds(10, 259, 175, 25);
-		getContentPane().add(lblPersonaDeContacto);
-		
-		txtContacto = new JTextField();
-		txtContacto.addKeyListener(new KeyAdapter() {
+		txtNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				keyTypedTxtContacto(e);
+				keyTypedTxtDireccion(e);
 			}
 		});
-		txtContacto.setHorizontalAlignment(SwingConstants.LEFT);
-		txtContacto.setForeground(SystemColor.windowBorder);
-		txtContacto.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtContacto.setColumns(10);
-		txtContacto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtContacto.setBackground(Color.WHITE);
-		txtContacto.setBounds(10, 285, 421, 25);
-		getContentPane().add(txtContacto);
+		getContentPane().add(txtDireccion);
 		
 		lblTelefono = new JLabel("Telefono");
 		lblTelefono.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblTelefono.setForeground(Color.DARK_GRAY);
 		lblTelefono.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTelefono.setBounds(10, 321, 175, 25);
+		lblTelefono.setBounds(10, 259, 175, 25);
 		getContentPane().add(lblTelefono);
 		
 		txtTelefono = new JTextField();
@@ -254,7 +238,7 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		txtTelefono.setColumns(10);
 		txtTelefono.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtTelefono.setBackground(Color.WHITE);
-		txtTelefono.setBounds(10, 347, 200, 25);
+		txtTelefono.setBounds(10, 285, 200, 25);
 		getContentPane().add(txtTelefono);
 		
 		txtCorreo = new JTextField();
@@ -270,14 +254,14 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		txtCorreo.setColumns(10);
 		txtCorreo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtCorreo.setBackground(Color.WHITE);
-		txtCorreo.setBounds(231, 347, 200, 25);
+		txtCorreo.setBounds(231, 285, 200, 25);
 		getContentPane().add(txtCorreo);
 		
 		lblCorreo = new JLabel("Correo");
 		lblCorreo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCorreo.setForeground(Color.DARK_GRAY);
 		lblCorreo.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCorreo.setBounds(231, 321, 175, 25);
+		lblCorreo.setBounds(231, 259, 175, 25);
 		getContentPane().add(lblCorreo);
 		
 		label = new JLabel("*");
@@ -293,58 +277,48 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		label_1.setBounds(87, 135, 20, 25);
 		getContentPane().add(label_1);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbTipoDoc, txtNroDoc, txtNombre, txtDireccion, txtContacto, txtTelefono, txtCorreo, btnModificar, btnCancelar}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.cbTipoDoc, this.txtNroDoc, this.txtNombre, this.txtDireccion, this.txtTelefono, this.txtCorreo, this.btnCrear, this.btnCancelar}));
 		
 		cargar();
 	}
 	
-	public void cargar(){
-		try {
-			ResultSet rs = consulta.cargarDistribuidoresId(iddistribuidor);
-			rs.next();
-			cbTipoDoc.setSelectedItem(rs.getString("tipodoc"));
-			txtNroDoc.setText(rs.getString("nrodoc"));
-			txtNombre.setText(rs.getString("nombre"));
-			txtDireccion.setText(rs.getString("direccion"));
-			txtContacto.setText(rs.getString("perscontact"));
-			txtTelefono.setText(rs.getString("telefono"));
-			txtCorreo.setText(rs.getString("correo"));	
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al cargar distribuidores: " + e);
-		}
+	private void cargar(){
 	}
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnModificar) {
-			actionPerformedBtnModificar(arg0);
+		if (arg0.getSource() == btnCrear) {
+			actionPerformedBtnCrear(arg0);
 		}
 	}
-	protected void actionPerformedBtnModificar(ActionEvent arg0) {
+	protected void actionPerformedBtnCrear(ActionEvent arg0) {
 		try {
-			if(txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0)
+			if(txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0){
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
+			}
 			else{
-				int opc = JOptionPane.showConfirmDialog(null, "¿Desea modificar el distribuidor?", "Confirmar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (opc == 0){
-
-					String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
-					String nrodoc = "";	nrodoc = txtNroDoc.getText();
-					String nombre = "";	nombre = txtNombre.getText();
-					String direccion = "";	direccion = txtDireccion.getText();
-					String telefono = "";	telefono = txtTelefono.getText();
-					String contacto = "";	contacto = txtContacto.getText();
-					String correo = "";	correo = txtCorreo.getText();
-					
-					consulta.modificarDistribuidor(iddistribuidor, tipodoc, nrodoc, nombre, direccion, telefono, contacto, correo);
-					mantenimientoDistribuidores.cargar();
-					mantenimientoDistribuidores.selecionarDistribuidor(""+iddistribuidor);
-					dispose();
+				String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
+				String nrodoc = "";	nrodoc = txtNroDoc.getText();
+				String nombre = "";	nombre = txtNombre.getText();
+				String direccion = "";	direccion = txtDireccion.getText();
+				String telefono = "";	telefono = txtTelefono.getText();
+				String correo = "";	correo = txtCorreo.getText();
+				
+				rs = model.crearCliente(nombre, tipodoc, nrodoc, direccion, correo, telefono);
+				mantenimientoCliente.cargar();
+				
+				try {
+					ResultSet rs = model.cargarUltimoDistribuidor();
+					rs.next();
+					int iddistrib = rs.getInt("iddistrib");
+					mantenimientoCliente.selecionarCliente(""+iddistrib);
+				} catch (SQLException e) {
 				}
+				dispose();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente" +e );
-		}		
+			JOptionPane.showMessageDialog(null, "Error al crear distribuidor: " + e);
+		}
+		
 	}
-	
 	public void windowActivated(WindowEvent arg0) {
 	}
 	public void windowClosed(WindowEvent arg0) {
@@ -363,26 +337,12 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 	public void windowOpened(WindowEvent arg0) {
 	}
 	protected void windowClosingThis(WindowEvent arg0) {
-		mantenimientoDistribuidores.setEnabled(true);
-	}
-	public void keyPressed(KeyEvent arg0) {
-	}
-	public void keyReleased(KeyEvent arg0) {
-	}
-	public void keyTyped(KeyEvent arg0) {
-		/*if (arg0.getSource() == txtNombre) {
-			keyTypedTxtNombre(arg0);
-		}
-		if (arg0.getSource() == txtPass) {
-			keyTypedTxtPass(arg0);
-		}
-		if (arg0.getSource() == txtUsuario) {
-			keyTypedTxtUsuario(arg0);
-		}*/
+		mantenimientoCliente.setEnabled(true);
 	}
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
 	}
+
 	protected void keyTypedTxtNroDoc(KeyEvent e) {
 		if (txtNroDoc.getText().length() == 11)
 			e.consume();
@@ -395,10 +355,6 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		if (txtDireccion.getText().length() == 150)
 			e.consume();
 	}
-	protected void keyTypedTxtContacto(KeyEvent e) {
-		if (txtContacto.getText().length() == 150)
-			e.consume();
-	}
 	protected void keyTypedTxtTelefono(KeyEvent e) {
 		if (txtTelefono.getText().length() == 15)
 			e.consume();
@@ -407,12 +363,11 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		if (txtCorreo.getText().length() == 50)
 			e.consume();
 	}
-
-	protected void itemStateChangedCbTipoDoc(ItemEvent e) {
+	protected void itemStateChangedCbTipoDoc(ItemEvent arg0) {
 		if(cbTipoDoc.getSelectedIndex() == 4){
 			txtNroDoc.setText("99999999");
 			txtNroDoc.setEditable(false);
-			txtNombre.setText("Distribuidor Varios");
+			txtNombre.setText("Cliente Varios");
 		}
 		else{
 			txtNroDoc.setText("");

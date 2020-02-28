@@ -534,7 +534,20 @@ public class consultas {
 
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_clientes where id = '" + id + "'");
+			rs = st.executeQuery("select * from tb_clientes where idCLIENTE = '" + id + "'");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarClienteId(int id) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(
+					"select * from tb_clientes where idcliente="+id);
 		} catch (Exception e) {
 		}
 		return rs;
@@ -546,7 +559,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_clientes order by nombre");
+			rs = st.executeQuery("select * from tb_clientes where estado = 1 order by nombre");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -576,15 +589,15 @@ public class consultas {
 		return rs;
 	}
 
-	public int crearCliente(String nombre, String documento, String nroDocumento, String direccion, String correo,
+	public ResultSet crearCliente(String nombre, String documento, String nroDocumento, String direccion, String correo,
 			String telefono) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_clientes (id, tipodoc, nrodoc, nombre, direccion, telefono, correo)"
-					+ " values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_clientes (idcliente, tipodoc, nrodoc, nombre, direccion, telefono, correo, estado)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, 1)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, documento);
@@ -595,11 +608,10 @@ public class consultas {
 			prepareStmt.setString(7, correo);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "CLIENTE CREADO CORRECTAMENTE");
-			return 0;// 0= se creo correctamente
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: CLIENTE EXISTENTE");
-			return 1;// 1= NO se creo correctamente
 		}
+		return rs;
 	}
 
 	public ResultSet modificarCliente(int id, String nombre, String documento, String nroDocumento, String direccion,
@@ -609,7 +621,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "update tb_clientes set tipodoc=?, nrodoc=?, nombre=?, direccion=?, telefono=?, correo=? where id=?";
+			String sql = "update tb_clientes set tipodoc=?, nrodoc=?, nombre=?, direccion=?, telefono=?, correo=? where idcliente=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, documento);
 			prepareStmt.setString(2, nroDocumento);
@@ -626,7 +638,21 @@ public class consultas {
 		}
 		return rs;
 	}
-
+	
+	public ResultSet deshabilitarCliente(int idcliente) {
+		Connection con = MySQLConexion.getConection();
+		ResultSet rs = null;
+		try {
+			String sql = "update tb_clientes set estado = 0 where idcliente='"+idcliente+"'";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " CLIENTE ELIMINADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al eliminar DISTRIBUIDOR: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet eliminarCliente(String usu) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;

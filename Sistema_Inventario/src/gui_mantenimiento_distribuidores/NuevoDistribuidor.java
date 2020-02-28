@@ -28,6 +28,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import mysql.consultas;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class NuevoDistribuidor extends JFrame {
 	private JLabel lblNombre;
@@ -130,6 +132,11 @@ public class NuevoDistribuidor extends JFrame {
 		getContentPane().add(btnCancelar);
 		
 		cbTipoDoc = new JComboBox();
+		this.cbTipoDoc.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				itemStateChangedCbTipoDoc(e);
+			}
+		});
 		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "Pasaporte", "Doc.trib.no.dom.sin.ruc"}));
 		cbTipoDoc.setSelectedIndex(0);
 		cbTipoDoc.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -385,5 +392,17 @@ public class NuevoDistribuidor extends JFrame {
 	protected void keyTypedTxtCorreo(KeyEvent e) {
 		if (txtCorreo.getText().length() == 50)
 			e.consume();
+	}
+	protected void itemStateChangedCbTipoDoc(ItemEvent e) {
+		if(cbTipoDoc.getSelectedIndex() == 4){
+			txtNroDoc.setText("99999999");
+			txtNroDoc.setEditable(false);
+			txtNombre.setText("Distribuidor Varios");
+		}
+		else{
+			txtNroDoc.setText("");
+			txtNroDoc.setEditable(true);
+			txtNombre.setText("");
+		}
 	}
 }

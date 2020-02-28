@@ -259,7 +259,7 @@ public class NuevoCliente extends JDialog implements ActionListener, KeyListener
 				String correo = txtCorreo.getText();
 				String telefono = txtTelefono.getText();
 				
-				rs = model.crearCliente(nombre, documento, nroDocumento, direccion, correo, telefono);
+				// rs = model.crearCliente(nombre, documento, nroDocumento, direccion, correo, telefono);
 				
 				if (rs == 0) {
 					if (cli != null) {
