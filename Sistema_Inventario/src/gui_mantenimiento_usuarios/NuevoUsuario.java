@@ -188,7 +188,7 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 				mantenimientoUsuarios.cargar();
 				
 				try {
-					ResultSet rs = model.cargarUltimoUsuario();
+					ResultSet rs = model.cargarUltimoDistribuidor();
 					rs.next();
 					int idusuario = rs.getInt("idusuario");
 					mantenimientoUsuarios.selecionarUsuario(""+idusuario);

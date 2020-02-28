@@ -2,12 +2,14 @@ package gui_mantenimiento_productos;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -20,6 +22,7 @@ import clases.Almacen;
 import clases.Categoria;
 import clases.UnidadMed;
 import mysql.consultas;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -36,12 +39,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.UIManager;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class NuevoProducto2 extends JFrame {
+public class ModificarProducto extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblCdigoIntbarras;
@@ -97,24 +99,24 @@ public class NuevoProducto2 extends JFrame {
 	private JLabel label_8;
 	private JLabel lblDeGanancia;
 	private JTextField txtPtjGanancia;
-	private JButton btnCancelar;
 	private JComboBox <Categoria> cbCategoria;
 	private JComboBox <Almacen> cbAlmacen;
 	private JTextField txtCrearProducto;
 	private JLabel lblDistribuidor;
 	private JLabel label_9;
 	private JComboBox cbDistribuidor;
-	
+
 	ResultSet rs;
 	consultas model = new consultas();
 	InternalMantenimientoProd mantenimientoProductos;
-	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
+	String idPro;
+	private JButton btnCancelar;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoProducto2 frame = new NuevoProducto2(null);
+					ModificarProducto frame = new ModificarProducto(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -126,8 +128,9 @@ public class NuevoProducto2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto2(InternalMantenimientoProd mantenimientoProductos) {
+	public ModificarProducto(String codigoPro,InternalMantenimientoProd mantenimientoProductos) {
 		this.mantenimientoProductos = mantenimientoProductos;
+		this.idPro = codigoPro;
 		
 		
 		addWindowListener(new WindowAdapter() {
@@ -613,7 +616,7 @@ public class NuevoProducto2 extends JFrame {
 		lblAlmacn.setBounds(9, 311, 191, 25);
 		contentPane.add(lblAlmacn);
 		
-		btnCrearProducto = new JButton("CREAR");
+		btnCrearProducto = new JButton("MODIFICAR");
 		btnCrearProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCrearProducto(arg0);
@@ -770,7 +773,7 @@ public class NuevoProducto2 extends JFrame {
 		contentPane.add(cbAlmacen);
 		
 		txtCrearProducto = new JTextField();
-		txtCrearProducto.setText("CREAR PRODUCTO");
+		txtCrearProducto.setText("MODIFICAR PRODUCTO");
 		txtCrearProducto.setRequestFocusEnabled(false);
 		txtCrearProducto.setIgnoreRepaint(true);
 		txtCrearProducto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -812,14 +815,51 @@ public class NuevoProducto2 extends JFrame {
 	}
 	
 	private void cargar(){
+		// COMBO UNIDADES DE MEDIDA
+		UnidadMed unidades = new UnidadMed();
+		unidades.cargarUnidadesMed(cbUnidadMedida);
+		AutoCompleteDecorator.decorate(cbUnidadMedida);
+		
+		// COMBO CATEGORIA
+		Categoria categoria = new Categoria();
+		categoria.cargarCategorias(cbCategoria);
+		AutoCompleteDecorator.decorate(cbCategoria);
+		
+		// COMBO ALMACEN
+		Almacen almacen = new Almacen();
+		almacen.cargarAlmacenes(cbAlmacen);
+		AutoCompleteDecorator.decorate(cbAlmacen);
+		
 		// CARGAR ID CORRESPONDIENTE
 		try {
-			ResultSet rs = model.cargarID();
+			ResultSet rs = model.cargarProdId(idPro);
 			rs.next();
-			int idSiguiente = rs.getInt("codproducto")+1;
-			txtID.setText(""+idSiguiente);
+			txtID.setText(""+ rs.getInt("codproducto"));
+			txtCodbarras.setText(rs.getString("codbarra"));
+			txtNombreProducto.setText(rs.getString("producto"));
+			txtDescripcion.setText(rs.getString("detalles"));
+			cbUnidadMedida.setSelectedItem(rs.getString("unimedida"));
+			cbCategoria.setSelectedItem(rs.getString("categoria"));
+			cbAlmacen.setSelectedItem(rs.getString("almacen"));
+			txtMarca.setText(rs.getString("marca"));
+			txtColor.setText(rs.getString("color"));
+			txtStockInicial.setText(""+rs.getFloat("cantidad"));
+			txtStockMinimo.setText(""+ rs.getFloat("cantmin") );
+			txtPrecioCompra.setText(""+ rs.getFloat("precioCo"));
+			txtPrecioVenta.setText(""+ rs.getFloat("precioVe"));	
+			txtPtjGanancia.setText(""+ rs.getFloat("ptjganancia"));
+			dateFechaVenc.setDate(rs.getDate("fechaVenc"));
+			txtLaboratorio.setText(rs.getString("laboratorio"));
+			txtLote.setText(rs.getString("lote"));
+			txtNombrePromo1.setText(""+ rs.getFloat("promo1"));
+			txtCantPromo1.setText(""+ rs.getFloat("cantp1"));
+			txtPrePromo1.setText(""+ rs.getFloat("prep1"));
+			txtNombrePromo2.setText(""+ rs.getFloat("promo2"));
+			txtCantPromo2.setText(""+ rs.getFloat("cantp2"));
+			txtPrePromo2.setText(""+ rs.getFloat("prep2"));
+			
 		} catch (Exception e) {
-			txtID.setText("1");
+			JOptionPane.showMessageDialog(null, "No existe el producto");
 		}
 		
 		// CARGAR ATRIBUTOS
@@ -871,64 +911,8 @@ public class NuevoProducto2 extends JFrame {
 				txtPrePromo2.setVisible(true);
 			}
 		}
-
-		// COMBO UNIDADES DE MEDIDA
-		UnidadMed unidades = new UnidadMed();
-		unidades.cargarUnidadesMed(cbUnidadMedida);
-		AutoCompleteDecorator.decorate(cbUnidadMedida);
-		
-		// COMBO CATEGORIA
-		Categoria categoria = new Categoria();
-		categoria.cargarCategorias(cbCategoria);
-		AutoCompleteDecorator.decorate(cbCategoria);
-		
-		// COMBO ALMACEN
-		Almacen almacen = new Almacen();
-		almacen.cargarAlmacenes(cbAlmacen);
-		AutoCompleteDecorator.decorate(cbAlmacen);
 		
 		
-		if(cbCategoria.getItemCount() == 0 && cbAlmacen.getItemCount() == 0 && cbUnidadMedida.getItemCount() == 0){
-			String arrayUmed[] = {"Caja","Galon","Gramo","Hora","Kilo","Litro","Metro","Servicio","Unidad"};
-			
-			for (int x=0; x<arrayUmed.length; x++){
-				UnidadMed todasUnidades = new UnidadMed(arrayUmed[x]);
-				cbUnidadMedida.addItem(todasUnidades);
-				try {
-					cbUnidadMedida.setSelectedItem(arrayUmed[x]);
-				} catch (Exception e) {
-				}
-				
-				Categoria todasCategorias = new Categoria(".General");
-				cbCategoria.addItem(todasCategorias);
-				Almacen todosAlmacenes = new Almacen(".Principal");
-				cbAlmacen.addItem(todosAlmacenes);
-				
-				txtNombreProducto.setText("}");
-				primeravez = 1;
-				actionPerformedBtnCrearProducto(null);
-				
-				//PONERLO COMO INACTIVO
-				int codigoProducto = 1;
-			}
-			cbUnidadMedida.setSelectedItem("Unidad");
-		}
-		else{
-			cbUnidadMedida.setSelectedItem("Unidad");
-			primeravez = 0;
-		}
-	}
-	
-	private void recargarCombos(){
-		cbCategoria.removeAllItems();
-		Categoria categoria = new Categoria();
-		categoria.cargarCategorias(cbCategoria);
-		AutoCompleteDecorator.decorate(cbCategoria);
-		
-		cbAlmacen.removeAllItems();
-		Almacen almacen = new Almacen();
-		almacen.cargarAlmacenes(cbAlmacen);
-		AutoCompleteDecorator.decorate(cbAlmacen);
 	}
 	
 	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
@@ -1121,15 +1105,15 @@ public class NuevoProducto2 extends JFrame {
 		txtNombreProducto.setText(null);
 		txtDescripcion.setText(null);
 		cbUnidadMedida.setSelectedIndex(10);
-		cbCategoria.setSelectedIndex(1);
-		cbAlmacen.setSelectedIndex(1);
+		cbCategoria.setSelectedIndex(0);
+		cbAlmacen.setSelectedIndex(0);
 		txtMarca.setText(null);
 		txtColor.setText(null);
-		txtStockInicial.setText("0");
+		txtStockInicial.setText(null);
 		txtStockMinimo.setText("1");
-		txtPrecioCompra.setText("0");
-		txtPrecioVenta.setText("0");
-		txtPtjGanancia.setText("0");
+		txtPrecioCompra.setText(null);
+		txtPrecioVenta.setText(null);
+		txtPtjGanancia.setText(null);
 		dateFechaVenc.setDate(null);
 		txtLaboratorio.setText(null);
 		txtLote.setText(null);
@@ -1141,26 +1125,23 @@ public class NuevoProducto2 extends JFrame {
 		txtPrePromo2.setText("0");
 		
 		txtCodbarras.requestFocus();
-		recargarCombos();
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
-		int rs = 0;
 		try {
 			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbCategoria.getSelectedItem().toString().length() == 0 
 					|| cbAlmacen.getSelectedItem().toString().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
 					|| txtPrecioCompra.getText().length() == 0 || txtPrecioVenta.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
-			} else {				
+			} else {
+				
 				int id = 0;				id = Integer.parseInt(txtID.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
 				String nombreprod = ""; nombreprod = txtNombreProducto.getText();
 				String descripcion = "";descripcion = txtDescripcion.getText();
 				String umedida = ""; 	umedida = cbUnidadMedida.getSelectedItem().toString();
 				String categoria = ""; 	categoria = cbCategoria.getSelectedItem().toString();
-					if(categoria.equals("General")) categoria = ".General";
 				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
-					if(almacen.equals("Principal")) almacen = ".Principal";
 				String marca = ""; 		marca = txtMarca.getText();
 				String color = ""; 		color = txtColor.getText();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
@@ -1205,54 +1186,34 @@ public class NuevoProducto2 extends JFrame {
 				
 				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 				
-				if(primeravez == 0) // NO
-					rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
-							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
-				else // 1 SI
-					rs = model.ingresarProductoPrimeraVez(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
-							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
+				model.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
+						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2,id);
+				
+				mantenimientoProductos.cargar();
+				mantenimientoProductos.selecionarProducto(""+id);
+				dispose();
 
-				if (rs == 0) {
+				/*if (rs == 0) {
 					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
 					mantenimientoProductos.cargar();
 					mantenimientoProductos.selecionarProducto(""+id);
 					limpiar();
 					
-					/*if (inv != null) {
-						inv.cargarDatos();
-						inv.selecionarProducto(txtCodigo.getText());
-						cargar();
-						this.setAlwaysOnTop(true);
-						inv.ajustarAnchoColumnas();
-						limpiar();
-						txtCodigo.requestFocus();
-					}
-					if (v != null) {
-						v.setVisible(true);
-						v.setEnabled(true);
-						this.dispose();
-						v.dtm.addRow(new Object[] { 1, txtProducto.getText(), txtDeta.getText(), txtCantidad.getText(),
-								txtPrecioVenInd.getText(), txtPrecioVenInd.getText(), txtCodigo.getText(),
-								txtPreComInd.getText() });
-						v.seleccionarRow();
-						// v.sumarSubTotales();
-						v.sumarTotal();
-					}*/
 				} else
-						JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");
+					JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");*/
 			}
 		} catch (Exception e) {
-				//JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
+			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
 		}
 	}
 	
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
 	}
+	
 	protected void itemStateChangedCbUnidadMedida(ItemEvent arg0) {
-		if(cbUnidadMedida.getSelectedIndex() == 9){
+		if(cbUnidadMedida.getSelectedItem().toString().equals("Servicio")){
 			txtStockInicial.setText("99999999");
 			txtStockInicial.setEditable(false);
 		}

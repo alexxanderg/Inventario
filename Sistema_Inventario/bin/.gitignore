@@ -4,6 +4,7 @@
 /clases/
 /gui_clientes/
 /gui_configuracion/
+/gui_mantenimiento_distribuidores/
 /gui_mantenimiento_productos/
 /gui_mantenimiento_usuarios/
 /gui_principal/
@@ -48,4 +49,3 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
-/gui_mantenimiento_distribuidores/

@@ -428,7 +428,7 @@ public class consultas {
 			prepareStmt.setString(2, pass);
 			prepareStmt.setString(3, nom);
 			prepareStmt.setInt(4, tip);
-			prepareStmt.setInt(6, idusuario);
+			prepareStmt.setInt(5, idusuario);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
 		} catch (Exception e) {
@@ -447,6 +447,80 @@ public class consultas {
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, usu);
 			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarDistribuidores() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_distribuidores where estado=1 order by nombre");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarDistribuidoresId(int id) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(
+					"select * from tb_distribuidores where iddistrib="+id);
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet crearDistribuidor(String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String contacto, String correo) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_distribuidores (iddistrib, tipodoc, nrodoc, nombre, direccion, perscontact, telefono, correo, estado)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setString(2, tipodoc);
+			prepareStmt.setString(3, nrodoc);
+			prepareStmt.setString(4, nombre);
+			prepareStmt.setString(5, direccion);
+			prepareStmt.setString(6, contacto);
+			prepareStmt.setString(7, telefono);
+			prepareStmt.setString(8, correo);
+			prepareStmt.setInt(9, 1); //ACTIVO
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "DISTRIBUIDOR CREADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al crear usuario: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet modificarDistribuidor(int iddistribuidor, String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String contacto, String correo) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_distribuidores set tipodoc=?, nrodoc=?, nombre=?, direccion=?, perscontact=?, telefono=?, correo=? where iddistrib=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, tipodoc);
+			prepareStmt.setString(2, nrodoc);
+			prepareStmt.setString(3, nombre);
+			prepareStmt.setString(4, direccion);
+			prepareStmt.setString(5, contacto);
+			prepareStmt.setString(6, telefono);
+			prepareStmt.setString(7, correo);
+			prepareStmt.setInt(8, iddistribuidor);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "Distribuidor modificado correctamente");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -490,13 +564,13 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet cargarUltimoUsuario() {
+	public ResultSet cargarUltimoDistribuidor() {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_usuarios order by idusuario desc limit 1");
+			rs = st.executeQuery("select * from tb_distribuidores order by iddistrib desc limit 1");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -936,6 +1010,19 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, " USUARIO ELIMINADO ");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al eliminar usuario: " + e);
+		}
+		return rs;
+	}
+	public ResultSet deshabilitarDistrib(int distrib) {
+		Connection con = MySQLConexion.getConection();
+		ResultSet rs = null;
+		try {
+			String sql = "update tb_distribuidores set estado = 0 where iddistrib='"+distrib+"'";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " DISTRIBUIDOR ELIMINADO ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al eliminar DISTRIBUIDOR: " + e);
 		}
 		return rs;
 	}

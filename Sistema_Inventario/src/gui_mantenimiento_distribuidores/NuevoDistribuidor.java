@@ -1,143 +1,106 @@
 package gui_mantenimiento_distribuidores;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import mysql.consultas;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.Font;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import gui_mantenimiento_usuarios.MantenimientoUsuarios;
-
-import java.awt.Component;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import mysql.consultas;
 
-public class NuevoDistribuidor extends JDialog implements ActionListener, WindowListener {
-	private JLabel lblUsuario;
-	private JTextField txtUsuario;
-	private JLabel lblContrasea;
+public class NuevoDistribuidor extends JFrame {
 	private JLabel lblNombre;
-	private JTextField txtNombre;
-	private JLabel lblTipo;
-	private JComboBox cbTipo;
-	private JTextField txtPass;
 	private JButton btnCrear;
 	private JTextField txtAgregarUsuario;
 	private JButton btnCancelar;
+	private JComboBox cbTipoDoc;
+	private JLabel lblNroDocumento;
+	private JTextField txtNroDoc;
+	private JLabel lblNombre_1;
+	private JTextField txtNombre;
+	private JLabel lblDireccin;
+	private JTextField txtDireccion;
+	private JLabel lblPersonaDeContacto;
+	private JTextField txtContacto;
+	private JLabel lblTelefono;
+	private JTextField txtTelefono;
+	private JTextField txtCorreo;
+	private JLabel lblCorreo;
+	private JLabel label;
+	private JLabel label_1;
 	
 	ResultSet rs;
 	consultas model = new consultas();
 	MantenimientoDistribuidores mantenimientoDistribuidores;
 	
-	
+
 	public static void main(String[] args) {
-		try {
-			NuevoDistribuidor dialog = new NuevoDistribuidor(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NuevoDistribuidor frame = new NuevoDistribuidor(null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
-	
 	public NuevoDistribuidor(MantenimientoDistribuidores mantenimientoDistribuidores) {
-		getContentPane().setBackground(UIManager.getColor("Button.background"));
 		this.mantenimientoDistribuidores = mantenimientoDistribuidores;
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				windowClosingThis(arg0);
+			}
+		});
 		
+		getContentPane().setBackground(UIManager.getColor("Button.background"));
 		setResizable(false);
-		addWindowListener(this);
-		setBounds(100, 100, 400, 453);
+		setBounds(100, 100, 445, 486);
 		getContentPane().setLayout(null);
 		
-		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblUsuario.setForeground(Color.DARK_GRAY);
-		lblUsuario.setFont(new Font("Candara", Font.BOLD, 20));
-		lblUsuario.setBounds(10, 131, 138, 38);
-		getContentPane().add(lblUsuario);
-		
-		txtUsuario = new JTextField();
-		txtUsuario.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		txtUsuario.setForeground(SystemColor.windowBorder);
-		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtUsuario.setColumns(10);
-		txtUsuario.setBackground(Color.WHITE);
-		txtUsuario.setBounds(10, 167, 370, 34);
-		getContentPane().add(txtUsuario);
-		
-		lblContrasea = new JLabel("Contrase\u00F1a:");
-		lblContrasea.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblContrasea.setForeground(Color.DARK_GRAY);
-		lblContrasea.setFont(new Font("Candara", Font.BOLD, 20));
-		lblContrasea.setBounds(10, 201, 205, 34);
-		getContentPane().add(lblContrasea);
-		
-		lblNombre = new JLabel("Nombre:");
+		lblNombre = new JLabel("Tipo Documento");
 		lblNombre.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNombre.setForeground(Color.DARK_GRAY);
 		lblNombre.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombre.setBounds(10, 61, 138, 38);
+		lblNombre.setBounds(10, 74, 175, 25);
 		getContentPane().add(lblNombre);
 		
-		txtNombre = new JTextField();
-		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombre.setForeground(SystemColor.windowBorder);
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtNombre.setColumns(10);
-		txtNombre.setBackground(Color.WHITE);
-		txtNombre.setBounds(10, 99, 370, 34);
-		getContentPane().add(txtNombre);
-		
-		lblTipo = new JLabel("Tipo de usuario:");
-		lblTipo.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblTipo.setForeground(Color.DARK_GRAY);
-		lblTipo.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTipo.setBounds(10, 290, 150, 38);
-		getContentPane().add(lblTipo);
-		
-		cbTipo = new JComboBox();
-		cbTipo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		cbTipo.setBackground(Color.WHITE);
-		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor"}));
-		cbTipo.setBounds(158, 290, 222, 36);
-		getContentPane().add(cbTipo);
-		
-		txtPass = new JTextField();
-		txtPass.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtPass.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPass.setForeground(SystemColor.windowBorder);
-		txtPass.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtPass.setColumns(10);
-		txtPass.setBackground(Color.WHITE);
-		txtPass.setBounds(10, 233, 370, 34);
-		getContentPane().add(txtPass);
-		
 		btnCrear = new JButton("CREAR");
-		btnCrear.addActionListener(this);
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnCrear(arg0);
+			}
+		});
 		btnCrear.setForeground(SystemColor.menu);
 		btnCrear.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCrear.setBackground(new Color(30, 144, 255));
-		btnCrear.setBounds(205, 360, 175, 38);
+		btnCrear.setBounds(231, 394, 200, 38);
 		getContentPane().add(btnCrear);
-		cbTipo.setSelectedIndex(-1);
 		
 		txtAgregarUsuario = new JTextField();
 		txtAgregarUsuario.setText("CREAR DISTRIBUIDOR");
@@ -151,7 +114,7 @@ public class NuevoDistribuidor extends JDialog implements ActionListener, Window
 		txtAgregarUsuario.setEditable(false);
 		txtAgregarUsuario.setColumns(10);
 		txtAgregarUsuario.setBackground(Color.DARK_GRAY);
-		txtAgregarUsuario.setBounds(0, 0, 394, 50);
+		txtAgregarUsuario.setBounds(0, 0, 439, 50);
 		getContentPane().add(txtAgregarUsuario);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -163,15 +126,181 @@ public class NuevoDistribuidor extends JDialog implements ActionListener, Window
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(10, 360, 175, 38);
+		btnCancelar.setBounds(10, 394, 200, 38);
 		getContentPane().add(btnCancelar);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtNombre, txtUsuario, txtPass, cbTipo, btnCrear}));
+		
+		cbTipoDoc = new JComboBox();
+		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "Pasaporte", "Doc.trib.no.dom.sin.ruc"}));
+		cbTipoDoc.setSelectedIndex(0);
+		cbTipoDoc.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbTipoDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbTipoDoc.setBackground(new Color(245, 245, 245));
+		cbTipoDoc.setBounds(10, 99, 200, 25);
+		getContentPane().add(cbTipoDoc);
+		
+		lblNroDocumento = new JLabel("Nro. Documento");
+		lblNroDocumento.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNroDocumento.setForeground(Color.DARK_GRAY);
+		lblNroDocumento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNroDocumento.setBounds(231, 73, 175, 25);
+		getContentPane().add(lblNroDocumento);
+		
+		txtNroDoc = new JTextField();
+		txtNroDoc.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNroDoc(e);
+			}
+		});
+		txtNroDoc.setHorizontalAlignment(SwingConstants.LEFT);
+		txtNroDoc.setForeground(SystemColor.windowBorder);
+		txtNroDoc.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtNroDoc.setColumns(10);
+		txtNroDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtNroDoc.setBackground(Color.WHITE);
+		txtNroDoc.setBounds(231, 99, 200, 25);
+		getContentPane().add(txtNroDoc);
+		
+		lblNombre_1 = new JLabel("Nombre");
+		lblNombre_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNombre_1.setForeground(Color.DARK_GRAY);
+		lblNombre_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNombre_1.setBounds(10, 135, 175, 25);
+		getContentPane().add(lblNombre_1);
+		
+		txtNombre = new JTextField();
+		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		txtNombre.setForeground(SystemColor.windowBorder);
+		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtNombre.setColumns(10);
+		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtNombre.setBackground(Color.WHITE);
+		txtNombre.setBounds(10, 161, 421, 25);
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtNombre(e);
+			}
+		});
+		getContentPane().add(txtNombre);
+		
+		lblDireccin = new JLabel("Direcci\u00F3n");
+		lblDireccin.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblDireccin.setForeground(Color.DARK_GRAY);
+		lblDireccin.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDireccin.setBounds(10, 197, 175, 25);
+		getContentPane().add(lblDireccin);
+		
+		txtDireccion = new JTextField();
+		txtDireccion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtDireccion(e);
+			}
+		});
+		txtDireccion.setHorizontalAlignment(SwingConstants.LEFT);
+		txtDireccion.setForeground(SystemColor.windowBorder);
+		txtDireccion.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtDireccion.setColumns(10);
+		txtDireccion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtDireccion.setBackground(Color.WHITE);
+		txtDireccion.setBounds(10, 223, 421, 25);
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtDireccion(e);
+			}
+		});
+		getContentPane().add(txtDireccion);
+		
+		lblPersonaDeContacto = new JLabel("Persona de contacto");
+		lblPersonaDeContacto.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPersonaDeContacto.setForeground(Color.DARK_GRAY);
+		lblPersonaDeContacto.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPersonaDeContacto.setBounds(10, 259, 175, 25);
+		getContentPane().add(lblPersonaDeContacto);
+		
+		txtContacto = new JTextField();
+		txtContacto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtContacto(e);
+			}
+		});
+		txtContacto.setHorizontalAlignment(SwingConstants.LEFT);
+		txtContacto.setForeground(SystemColor.windowBorder);
+		txtContacto.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtContacto.setColumns(10);
+		txtContacto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtContacto.setBackground(Color.WHITE);
+		txtContacto.setBounds(10, 285, 421, 25);
+		getContentPane().add(txtContacto);
+		
+		lblTelefono = new JLabel("Telefono");
+		lblTelefono.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTelefono.setForeground(Color.DARK_GRAY);
+		lblTelefono.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTelefono.setBounds(10, 321, 175, 25);
+		getContentPane().add(lblTelefono);
+		
+		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtTelefono(e);
+			}
+		});
+		txtTelefono.setHorizontalAlignment(SwingConstants.LEFT);
+		txtTelefono.setForeground(SystemColor.windowBorder);
+		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTelefono.setColumns(10);
+		txtTelefono.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtTelefono.setBackground(Color.WHITE);
+		txtTelefono.setBounds(10, 347, 200, 25);
+		getContentPane().add(txtTelefono);
+		
+		txtCorreo = new JTextField();
+		txtCorreo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCorreo(e);
+			}
+		});
+		txtCorreo.setHorizontalAlignment(SwingConstants.LEFT);
+		txtCorreo.setForeground(SystemColor.windowBorder);
+		txtCorreo.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtCorreo.setColumns(10);
+		txtCorreo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtCorreo.setBackground(Color.WHITE);
+		txtCorreo.setBounds(231, 347, 200, 25);
+		getContentPane().add(txtCorreo);
+		
+		lblCorreo = new JLabel("Correo");
+		lblCorreo.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblCorreo.setForeground(Color.DARK_GRAY);
+		lblCorreo.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCorreo.setBounds(231, 321, 175, 25);
+		getContentPane().add(lblCorreo);
+		
+		label = new JLabel("*");
+		label.setHorizontalAlignment(SwingConstants.LEFT);
+		label.setForeground(Color.RED);
+		label.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label.setBounds(375, 73, 20, 25);
+		getContentPane().add(label);
+		
+		label_1 = new JLabel("*");
+		label_1.setHorizontalAlignment(SwingConstants.LEFT);
+		label_1.setForeground(Color.RED);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_1.setBounds(87, 135, 20, 25);
+		getContentPane().add(label_1);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{cbTipoDoc, txtNroDoc, txtNombre, txtDireccion, txtContacto, txtTelefono, txtCorreo, btnCrear, btnCancelar}));
 		
 		cargar();
 	}
 	
 	private void cargar(){
-		
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == btnCrear) {
@@ -180,24 +309,32 @@ public class NuevoDistribuidor extends JDialog implements ActionListener, Window
 	}
 	protected void actionPerformedBtnCrear(ActionEvent arg0) {
 		try {
-			if(txtUsuario.getText().length() == 0 || txtPass.getText().length() == 0 || txtNombre.getText().length() == 0 ||cbTipo.getSelectedIndex() == -1 ){
-				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
+			if(txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0){
+				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
 			}
 			else{
-				rs = model.crearUsuario(txtUsuario.getText(), txtPass.getText(), txtNombre.getText(), cbTipo.getSelectedIndex());
+				String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
+				String nrodoc = "";	nrodoc = txtNroDoc.getText();
+				String nombre = "";	nombre = txtNombre.getText();
+				String direccion = "";	direccion = txtDireccion.getText();
+				String telefono = "";	telefono = txtTelefono.getText();
+				String contacto = "";	contacto = txtContacto.getText();
+				String correo = "";	correo = txtCorreo.getText();
+				
+				rs = model.crearDistribuidor(tipodoc, nrodoc, nombre, direccion, telefono, contacto, correo);
 				mantenimientoDistribuidores.cargar();
 				
 				try {
-					ResultSet rs = model.cargarUltimoUsuario();
+					ResultSet rs = model.cargarUltimoDistribuidor();
 					rs.next();
-					int idusuario = rs.getInt("idusuario");
-					mantenimientoDistribuidores.selecionarUsuario(""+idusuario);
+					int iddistrib = rs.getInt("iddistrib");
+					mantenimientoDistribuidores.selecionarDistribuidor(""+iddistrib);
 				} catch (SQLException e) {
 				}
 				dispose();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al crear usuario: " + e);
+			JOptionPane.showMessageDialog(null, "Error al crear distribuidor: " + e);
 		}
 		
 	}
@@ -223,5 +360,30 @@ public class NuevoDistribuidor extends JDialog implements ActionListener, Window
 	}
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
+	}
+
+	protected void keyTypedTxtNroDoc(KeyEvent e) {
+		if (txtNroDoc.getText().length() == 11)
+			e.consume();
+	}
+	protected void keyTypedTxtNombre(KeyEvent e) {
+		if (txtNombre.getText().length() == 150)
+			e.consume();
+	}
+	protected void keyTypedTxtDireccion(KeyEvent e) {
+		if (txtDireccion.getText().length() == 150)
+			e.consume();
+	}
+	protected void keyTypedTxtContacto(KeyEvent e) {
+		if (txtContacto.getText().length() == 150)
+			e.consume();
+	}
+	protected void keyTypedTxtTelefono(KeyEvent e) {
+		if (txtTelefono.getText().length() == 15)
+			e.consume();
+	}
+	protected void keyTypedTxtCorreo(KeyEvent e) {
+		if (txtCorreo.getText().length() == 50)
+			e.consume();
 	}
 }

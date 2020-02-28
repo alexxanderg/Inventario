@@ -49,7 +49,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
-	private JTable tbUsuarios;
+	private JTable tbDistribuidores;
 	
 	public VentanaPrincipal vp;
 	
@@ -95,15 +95,15 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		this.scrollPane.setBounds(10, 41, 1083, 568);
 		getContentPane().add(this.scrollPane);
 		
-		tbUsuarios = new JTable();
-		tbUsuarios.setAutoCreateRowSorter(true);
-		tbUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbUsuarios.setFont(new Font("Arial", Font.ITALIC, 14));
-		tbUsuarios.setBackground(Color.WHITE);
-		tbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		scrollPane.setViewportView(tbUsuarios);
+		tbDistribuidores = new JTable();
+		tbDistribuidores.setAutoCreateRowSorter(true);
+		tbDistribuidores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbDistribuidores.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbDistribuidores.setBackground(Color.WHITE);
+		tbDistribuidores.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		scrollPane.setViewportView(tbDistribuidores);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
-		tbUsuarios.getTableHeader().setReorderingAllowed(false);
+		tbDistribuidores.getTableHeader().setReorderingAllowed(false);
 
 		
 		menuBar = new JMenuBar();
@@ -154,22 +154,15 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 	
 	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
-		tb = this.tbUsuarios;
+		tb = this.tbDistribuidores;
 		tb.setRowHeight(25);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
+		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIÓN", "PERSONA CONTACTO", "TELEFONO", "CORREO"});
 		consultas model = new consultas();
-		rs = model.cargarUsuarios();
+		rs = model.cargarDistribuidores();
 		try {
 			while(rs.next()){
-				String u = rs.getString("usuario");
-				if(!u.equals("bxb")){
-					int t = rs.getInt("tipo");
-					if(t == 0)
-						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
-					if(t == 1)
-						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
-				}
+				dtm.addRow(new Object[]{rs.getInt("iddistrib"), rs.getString("nombre"), rs.getString("tipodoc"), rs.getString("nrodoc"), rs.getString("direccion"), rs.getString("perscontact"), rs.getString("telefono"), rs.getString("correo")});
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar usuarios: " + e.getMessage());
@@ -182,16 +175,12 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 	}
 
 	public void ajustarAnchoColumnas() {
-		TableColumnModel tcm = tbUsuarios.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // ID
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(40));  // Nombre
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Usuario
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseña
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(20));  // Tipo
+		TableColumnModel tcm = tbDistribuidores.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(2));  // 
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(10));  // 
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(10));  // 
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(10));  // 
 		
-		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
-		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
-		tbUsuarios.getColumnModel().getColumn(3).setCellRenderer(tcr0);*/
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -202,63 +191,61 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		}
 	}
 	
-	public void selecionarUsuario(String id) {
-		int cantProductos = tbUsuarios.getRowCount();
-		for (int i = 0; i < cantProductos; i++) {
-			if (id.equals(tbUsuarios.getValueAt(i, 0))) {
-				tbUsuarios.setRowSelectionInterval(i, i);
+	public void selecionarDistribuidor(String id) {
+		int cantDist = tbDistribuidores.getRowCount();
+		for (int i = 0; i < cantDist; i++) {
+			if (id.equals(tbDistribuidores.getValueAt(i, 0).toString())) {
+				tbDistribuidores.setRowSelectionInterval(i, i);
 				break;
 			}
 		}
 	}
 	
-	NuevoDistribuidor nu = new NuevoDistribuidor(this);
+	NuevoDistribuidor nd = new NuevoDistribuidor(this);
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
-			if (nu.isShowing()) {
+			if (nd.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				// nu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				nu.setVisible(true); 
+				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				nd.setVisible(true); 
 			} else {
-				nu = new NuevoDistribuidor(this);
-				nu.setLocationRelativeTo(null);
-				nu.setVisible(true);
+				nd = new NuevoDistribuidor(this);
+				nd.setLocationRelativeTo(null);
+				nd.setVisible(true);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
 	
-	// De manera global
-	
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		try {		
-			DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-			int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
-			ModificarDistribuidor mu = new ModificarDistribuidor(idusuario,this);;
+			DefaultTableModel tm = (DefaultTableModel) tbDistribuidores.getModel();
+			int idDist = Integer.parseInt(String.valueOf(tm.getValueAt(tbDistribuidores.getSelectedRow(), 0)));
+			ModificarDistribuidor md = new ModificarDistribuidor(idDist,this);;
 			try { 
-				if (mu.isShowing()) {
+				if (md.isShowing()) {
 					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 					//mu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-					mu.setVisible(true);
+					md.setVisible(true);
 				} else {
-					mu.setLocationRelativeTo(null);
-					mu.setVisible(true);
+					md.setLocationRelativeTo(null);
+					md.setVisible(true);
 				}
 			} catch (Exception f) {
 				JOptionPane.showMessageDialog(null, "Error: " + f);
 			}
 		} catch(Exception e1){
-			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar");
+			JOptionPane.showMessageDialog(null, "Seleccione el distribuidor a modificar");
 		}
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
-		DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
-		int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este usuario?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		DefaultTableModel tm = (DefaultTableModel) tbDistribuidores.getModel();
+		int iddistrib = Integer.parseInt(String.valueOf(tm.getValueAt(tbDistribuidores.getSelectedRow(), 0)));
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este distribuidor?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
-			model.deshabilitarUsuario(idusuario);
+			model.deshabilitarDistrib(iddistrib);
 			cargar();
 		}else{
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

@@ -205,7 +205,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 	public void selecionarUsuario(String id) {
 		int cantProductos = tbUsuarios.getRowCount();
 		for (int i = 0; i < cantProductos; i++) {
-			if (id.equals(tbUsuarios.getValueAt(i, 0))) {
+			if (id.equals(tbUsuarios.getValueAt(i, 0).toString())) {
 				tbUsuarios.setRowSelectionInterval(i, i);
 				break;
 			}

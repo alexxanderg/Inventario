@@ -357,7 +357,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		}
 	}
 	
-	NuevoProducto2 np = new NuevoProducto2(this);
+	NuevoProducto np = new NuevoProducto(this);
 	private JMenu mnOtrasOpciones;
 	private JMenuItem mntmRealizarKardex;
 	private JMenuItem mntmVerHistorial;
@@ -368,7 +368,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				np.setVisible(true); 
 			} else {
-				np = new NuevoProducto2(this);
+				np = new NuevoProducto(this);
 				np.setLocationRelativeTo(null);
 				np.setVisible(true);
 			}
@@ -383,7 +383,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 		try {		
-			ModificarProducto2 mp = new ModificarProducto2(codigoProducto,this);;
+			ModificarProducto mp = new ModificarProducto(codigoProducto,this);;
 			try { 
 				if (mp.isShowing()) {
 					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
