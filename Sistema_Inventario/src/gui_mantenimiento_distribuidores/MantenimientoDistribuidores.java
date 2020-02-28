@@ -1,4 +1,4 @@
-package gui_mantenimiento_usuarios;
+package gui_mantenimiento_distribuidores;
 
 import java.awt.EventQueue;
 
@@ -41,7 +41,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 
-public class MantenimientoUsuarios extends JInternalFrame {
+public class MantenimientoDistribuidores extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
@@ -61,7 +61,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MantenimientoUsuarios frame = new MantenimientoUsuarios(null);
+					MantenimientoDistribuidores frame = new MantenimientoDistribuidores(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,11 +70,11 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		});
 	}
 
-	public MantenimientoUsuarios(VentanaPrincipal vp) {
+	public MantenimientoDistribuidores(VentanaPrincipal vp) {
 		this.vp = vp;
 		
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("USUARIOS");
+		setTitle("DISTRIBUIDORES");
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
@@ -111,7 +111,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Crear nuevo usuario| ");
+		mnCrearProducto = new JMenu("|Crear nuevo distribuidor| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -123,7 +123,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnCrearProducto);
 		
-		mnModificarProducto = new JMenu("|Modificar usuario| ");
+		mnModificarProducto = new JMenu("|Modificar distribuidor| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -135,7 +135,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Eliminar usuario| ");
+		mnNewMenu_2 = new JMenu("|Eliminar distribuidor| ");
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -212,7 +212,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		}
 	}
 	
-	NuevoUsuario nu = new NuevoUsuario(this);
+	NuevoDistribuidor nu = new NuevoDistribuidor(this);
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
 			if (nu.isShowing()) {
@@ -220,7 +220,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 				// nu.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nu.setVisible(true); 
 			} else {
-				nu = new NuevoUsuario(this);
+				nu = new NuevoDistribuidor(this);
 				nu.setLocationRelativeTo(null);
 				nu.setVisible(true);
 			}
@@ -235,7 +235,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		try {		
 			DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
 			int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
-			ModificarUsuario mu = new ModificarUsuario(idusuario,this);;
+			ModificarDistribuidor mu = new ModificarDistribuidor(idusuario,this);;
 			try { 
 				if (mu.isShowing()) {
 					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");

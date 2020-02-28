@@ -22,6 +22,18 @@ correo		varchar(50),
 estado		tinyint -- 0INAACTIVO 1ACTIVO
 );
 
+create table tb_distribuidores(
+iddistrib	int primary key auto_increment,
+tipodoc		varchar(10),
+nrodoc		varchar(11),
+nombre		varchar(150),
+direccion	varchar(150),
+perscontact	varchar(150),
+telefono	varchar(15),
+correo		varchar(50),
+estado		tinyint -- 0INAACTIVO 1ACTIVO
+);
+
 create table tb_productos(
 codproducto	int primary key auto_increment,
 codbarra	varchar(100),

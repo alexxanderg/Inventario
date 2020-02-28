@@ -11,7 +11,9 @@ import javax.swing.border.EmptyBorder;
 import org.apache.poi.ss.usermodel.Picture;
 
 import gui_configuracion.Configuraciones;
+import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.InternalMantenimientoProd;
+import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_ventas.Ventas2;
 
 import javax.swing.ImageIcon;
@@ -51,8 +53,9 @@ public class VentanaPrincipal extends JFrame {
     private JLabel lblLogo;
 
     Ventas2 ventas = new Ventas2(null);
-	InternalMantenimientoProd vmantenimiento = new InternalMantenimientoProd(null);
-	gui_mantenimiento_usuarios.MantenimientoUsuarios vmantenimientoUsu = new gui_mantenimiento_usuarios.MantenimientoUsuarios(null);
+	InternalMantenimientoProd vProductos = new InternalMantenimientoProd(null);
+	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
+	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
 	Configuraciones config = new Configuraciones();
 
     Color colorSelec = new Color(242, 136, 113);
@@ -176,6 +179,11 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnConfiguraciones);
 		
 		btnDistribuidores = new JButton("Distribuidores");
+		btnDistribuidores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnDistribuidores(arg0);
+			}
+		});
 		btnDistribuidores.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -252,6 +260,8 @@ public class VentanaPrincipal extends JFrame {
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
 			btnVentas.setEnabled(true);
+			btnDistribuidores.setEnabled(true);
+			btnCompras.setEnabled(true);
 			break;
 		}
 	}
@@ -263,6 +273,8 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setBackground(colorDeselec);
 		btnConfiguraciones.setBackground(colorDeselec);
 		btnVentas.setBackground(colorDeselec);
+		btnDistribuidores.setBackground(colorDeselec);
+		btnCompras.setBackground(colorDeselec);
 	}
 
 	protected void actionPerformedBtnVentas(ActionEvent arg0) {
@@ -286,16 +298,16 @@ public class VentanaPrincipal extends JFrame {
 	}
 	protected void actionPerformedBtnInventario(ActionEvent arg0) {
 		try {
-			if (vmantenimiento.isShowing()) {
+			if (vProductos.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vmantenimiento.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				vProductos.setSelected(true); // PONER JINTERNALFRAME DELANTE
 				pintarBotones();
 				btnInventario.setBackground(colorSelec);
 			} else {
-					vmantenimiento = new InternalMantenimientoProd(this);
-					desktopPane.add(vmantenimiento);
-					vmantenimiento.show();
-					vmantenimiento.setMaximum(true);
+					vProductos = new InternalMantenimientoProd(this);
+					desktopPane.add(vProductos);
+					vProductos.show();
+					vProductos.setMaximum(true);
 					pintarBotones();
 					btnInventario.setBackground(colorSelec);
 			}
@@ -303,20 +315,39 @@ public class VentanaPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}			
 	}
+	protected void actionPerformedBtnDistribuidores(ActionEvent arg0) {
+		try {
+			if (vdistribuidores.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				vdistribuidores.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				btnDistribuidores.setBackground(colorSelec);
+			} else {
+					vdistribuidores = new MantenimientoDistribuidores(this);
+					desktopPane.add(vdistribuidores);
+					vdistribuidores.show();
+					vdistribuidores.setMaximum(true);
+					pintarBotones();
+					btnDistribuidores.setBackground(colorSelec);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}	
+	}
 	protected void actionPerformedBtnClientes(ActionEvent arg0) {
 	}
 	protected void actionPerformedBtnUsuario(ActionEvent e) {
 		try {
-			if (vmantenimientoUsu.isShowing()) {
+			if (vUsuarios.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vmantenimientoUsu.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				vUsuarios.setSelected(true); // PONER JINTERNALFRAME DELANTE
 				pintarBotones();
 				btnUsuario.setBackground(colorSelec);
 			} else {
-				vmantenimientoUsu = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
-					desktopPane.add(vmantenimientoUsu);
-					vmantenimientoUsu.show();
-					vmantenimientoUsu.setMaximum(true);
+				vUsuarios = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
+					desktopPane.add(vUsuarios);
+					vUsuarios.show();
+					vUsuarios.setMaximum(true);
 					pintarBotones();
 					btnUsuario.setBackground(colorSelec);
 			}
