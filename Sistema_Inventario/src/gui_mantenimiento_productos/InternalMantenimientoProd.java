@@ -52,9 +52,12 @@ public class InternalMantenimientoProd extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	
 	public VentanaPrincipal vp;
+	private JMenu mnOtrasOpciones;
+	private JMenuItem mntmRealizarKardex;
+	private JMenuItem mntmVerHistorial;
 	
+	NuevoProducto np = new NuevoProducto(this);
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
@@ -357,10 +360,6 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		}
 	}
 	
-	NuevoProducto np = new NuevoProducto(this);
-	private JMenu mnOtrasOpciones;
-	private JMenuItem mntmRealizarKardex;
-	private JMenuItem mntmVerHistorial;
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
 			if (np.isShowing()) {

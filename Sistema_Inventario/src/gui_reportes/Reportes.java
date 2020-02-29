@@ -549,7 +549,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.setLocationRelativeTo(null);
 
 		Cliente cliente = new Cliente();
-		cliente.cargarEmpresas(cbCliente);
+		cliente.cargarClientes(cbCliente);
 
 		Categoria categoria = new Categoria();
 		Categoria todaCategoria = new Categoria("TODAS");

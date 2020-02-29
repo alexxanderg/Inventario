@@ -28,16 +28,16 @@ public class consultas {
 		try {
 			con = null;
 			con = MySQLConexion.getConection();
-			String sql = "select * from tb_usuarios where usuario = BINARY ? and pass = BINARY ? ";
+			String sql = "select * from tb_usuarios where usuario = BINARY ? and pass = BINARY ? and estado = 1";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, u.getUsuario());
 			pst.setString(2, u.getPassword());
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				usuario = new Usuarios(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+				usuario = new Usuarios(rs.getString("usuario"), rs.getString("pass"), rs.getString("nombre"), rs.getInt("tipo"));
 			}
 		} catch (Exception e) {
-			System.out.println("Error en obtener usuario");
+			System.out.println("Error en obtener usuario " + e);
 		}
 		return usuario;
 	}
@@ -123,6 +123,18 @@ public class consultas {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from db_inventario.tb_productos where producto like '" + prod
 					+ "' and detalles like '" + det + "';");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet buscarProductoID(int idprod) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_productos where codproducto = '" + idprod + "'");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -295,7 +307,7 @@ public class consultas {
 		return rs;
 	}
 
-	public int registrarFechaIngreso(int id, double stockini, double precioCoOld, double precioVeOld, double precioCoNew, double precioVeNew, String nombreusu, Object fActual) {
+	public int registrarIngreso(int id, double stockini, double precioCoOld, double precioVeOld, double precioCoNew, double precioVeNew, String nombreusu, Object fActual) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;

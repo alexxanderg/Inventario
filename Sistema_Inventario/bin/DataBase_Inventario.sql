@@ -13,7 +13,7 @@ estado		tinyint -- 0INACTIVO 1IACTIVO
 
 create table tb_clientes(
 idcliente	int primary key auto_increment,
-tipodoc		varchar(10),
+tipodoc		varchar(30),
 nrodoc		varchar(11),
 nombre		varchar(150),
 direccion	varchar(150),
@@ -24,7 +24,7 @@ estado		tinyint -- 0INAACTIVO 1ACTIVO
 
 create table tb_distribuidores(
 iddistrib	int primary key auto_increment,
-tipodoc		varchar(10),
+tipodoc		varchar(30),
 nrodoc		varchar(11),
 nombre		varchar(150),
 direccion	varchar(150),

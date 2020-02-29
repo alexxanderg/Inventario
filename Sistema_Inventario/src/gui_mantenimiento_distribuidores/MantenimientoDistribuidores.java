@@ -201,7 +201,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		}
 	}
 	
-	NuevoDistribuidor nd = new NuevoDistribuidor(this);
+	NuevoDistribuidor nd = new NuevoDistribuidor(this, null);
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
 			if (nd.isShowing()) {
@@ -209,7 +209,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true); 
 			} else {
-				nd = new NuevoDistribuidor(this);
+				nd = new NuevoDistribuidor(this, null);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}

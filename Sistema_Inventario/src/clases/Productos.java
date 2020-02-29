@@ -1,6 +1,12 @@
 package clases;
 
+import java.sql.ResultSet;
 import java.util.Date;
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+import mysql.consultas;
 
 public class Productos {
 	String codigo;
@@ -13,12 +19,11 @@ public class Productos {
 	float precioVe;
 	String marca;
 	String color;
-
 	String laboratorio;
 	Date fechavenci;
 	float nrolote;
-	
 	String categoria;
+	ResultSet rs;
 
 	public Productos(String codigo, String producto, String detalles,String categoria,String laboratorio, Date fechavenci, float nrolote , String unimedida, float cantidad, float cantventa,
 			float precioCo, float precioVe, String marca, String color) {
@@ -37,7 +42,32 @@ public class Productos {
 		this.nrolote = nrolote;
 		this.categoria = categoria;
 	}
+	
+	public Productos(){}
+	public Productos(String producto){
+		this.producto = producto;
+	}
+	
+	public void cargarProductos(JComboBox<Productos> cbProductos){
+		consultas consult = new consultas();
+		rs = consult.cargarProductos();
+		try {
+			while(rs.next())
+				cbProductos.addItem(
+						new Productos(
+								rs.getString("cantidad") + " _ " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + " = S/" + rs.getString("precioVe") + " - ID:" + rs.getString("codproducto")
+								)
+				);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}		
+	}
 
+	@Override
+	public String toString(){
+		return producto;
+	}
+	
 	public String getLaboratorio() {
 		return laboratorio;
 	}

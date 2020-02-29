@@ -20,6 +20,7 @@ import com.toedter.calendar.JDateChooser;
 
 import clases.Almacen;
 import clases.Categoria;
+import clases.Distribuidores;
 import clases.UnidadMed;
 import mysql.consultas;
 
@@ -111,6 +112,7 @@ public class ModificarProducto extends JFrame {
 	InternalMantenimientoProd mantenimientoProductos;
 	String idPro;
 	private JButton btnCancelar;
+	private JButton btnAnadirDistri;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -331,7 +333,7 @@ public class ModificarProducto extends JFrame {
 		cbUnidadMedida.setBackground(new Color(245, 245, 245));
 		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUnidadMedida.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbUnidadMedida.setBounds(210, 239, 238, 25);
+		cbUnidadMedida.setBounds(210, 239, 299, 25);
 		contentPane.add(cbUnidadMedida);
 		
 		lblPrecioDeCompra = new JLabel("Precio de Compra:");
@@ -761,7 +763,7 @@ public class ModificarProducto extends JFrame {
 		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbCategoria.setBackground(new Color(245, 245, 245));
-		cbCategoria.setBounds(208, 275, 240, 25);
+		cbCategoria.setBounds(208, 275, 301, 25);
 		contentPane.add(cbCategoria);
 		
 		cbAlmacen = new JComboBox();
@@ -769,7 +771,7 @@ public class ModificarProducto extends JFrame {
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbAlmacen.setBackground(new Color(245, 245, 245));
-		cbAlmacen.setBounds(209, 311, 240, 25);
+		cbAlmacen.setBounds(209, 311, 300, 25);
 		contentPane.add(cbAlmacen);
 		
 		txtCrearProducto = new JTextField();
@@ -803,12 +805,19 @@ public class ModificarProducto extends JFrame {
 		
 		cbDistribuidor = new JComboBox();
 		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbDistribuidor.setEditable(true);
 		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbDistribuidor.setBackground(new Color(245, 245, 245));
 		cbDistribuidor.setBounds(208, 347, 240, 25);
 		contentPane.add(cbDistribuidor);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto}));
+		
+		btnAnadirDistri = new JButton("+");
+		btnAnadirDistri.setForeground(Color.WHITE);
+		btnAnadirDistri.setFont(new Font("Arial", Font.BOLD, 20));
+		btnAnadirDistri.setBorder(new LineBorder(Color.WHITE, 1, true));
+		btnAnadirDistri.setBackground(new Color(30, 144, 255));
+		btnAnadirDistri.setBounds(455, 347, 54, 25);
+		contentPane.add(btnAnadirDistri);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, cbDistribuidor, btnAnadirDistri, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto, btnCancelar}));
 		
 		cargar();
 		
@@ -829,6 +838,10 @@ public class ModificarProducto extends JFrame {
 		Almacen almacen = new Almacen();
 		almacen.cargarAlmacenes(cbAlmacen);
 		AutoCompleteDecorator.decorate(cbAlmacen);
+
+		// COMBO DISTRIBUIDOR
+		Distribuidores distribuidor = new Distribuidores();
+		distribuidor.cargarDistribuidores(cbDistribuidor);
 		
 		// CARGAR ID CORRESPONDIENTE
 		try {

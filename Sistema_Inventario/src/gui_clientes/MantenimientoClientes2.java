@@ -207,7 +207,7 @@ public class MantenimientoClientes2 extends JInternalFrame {
 		}
 	}
 
-	NuevoCliente2 nd = new NuevoCliente2(this);
+	NuevoCliente nd = new NuevoCliente(this);
 
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
@@ -217,7 +217,7 @@ public class MantenimientoClientes2 extends JInternalFrame {
 				nd.setExtendedState(0); // MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true);
 			} else {
-				nd = new NuevoCliente2(this);
+				nd = new NuevoCliente(this);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}
@@ -230,7 +230,7 @@ public class MantenimientoClientes2 extends JInternalFrame {
 		try {
 			DefaultTableModel tm = (DefaultTableModel) tbCliente.getModel();
 			int idCli = Integer.parseInt(String.valueOf(tm.getValueAt(tbCliente.getSelectedRow(), 0)));
-			ModificarCliente2 md = new ModificarCliente2(idCli, this);
+			ModificarCliente md = new ModificarCliente(idCli, this);
 			try {
 				if (md.isShowing()) {
 					// JOptionPane.showMessageDialog(null, "Ya tiene abierta la

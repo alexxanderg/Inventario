@@ -27,14 +27,14 @@ public class Cliente {
 		this.correo = correo;
 	}
 	
-	public void cargarEmpresas(JComboBox<Cliente> cbEmpresa){
+	public void cargarClientes(JComboBox<Cliente> cbClientes){
 		consultas consult = new consultas();
 		rs = consult.cargarClientes();
 		try {
 			while(rs.next())
-				cbEmpresa.addItem(
+				cbClientes.addItem(
 						new Cliente(
-								rs.getInt("id"),
+								rs.getInt("idcliente"),
 								rs.getString("tipodoc"),
 								rs.getString("nrodoc"),
 								rs.getString("nombre"),

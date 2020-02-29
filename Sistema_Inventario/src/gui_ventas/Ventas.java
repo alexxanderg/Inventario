@@ -11,7 +11,6 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.AbstractJasperReports;
 import clases.Cliente;
 import clases.Productos;
-import gui_clientes.NuevoCliente;
 import gui_ventas.ListaDeProductos;
 import gui_principal.EleccionVentanas;
 import gui_principal.Login;
@@ -595,7 +594,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		this.setLocationRelativeTo(null);
 
 		Cliente cliente = new Cliente();
-		cliente.cargarEmpresas(cbClientes);
+		cliente.cargarClientes(cbClientes);
 
 		if (nventana == 1)
 			txtVentaDeProductos.setText("VENTA DE PRODUCTOS");
@@ -1312,10 +1311,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnAnadirCliente(ActionEvent arg0) {
-		NuevoCliente nc = new NuevoCliente(null, this, usuario);
+		/*NuevoCliente nc = new NuevoCliente(null, this, usuario);
 		nc.setVisible(true);
 		nc.setLocationRelativeTo(null);
-		this.setEnabled(false);
+		this.setEnabled(false);*/
 	}
 
 	public void anadirClienteCombpo(Cliente c) {

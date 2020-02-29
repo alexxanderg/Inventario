@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.poi.ss.usermodel.Picture;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import clases.Cliente;
 import gui_clientes.MantenimientoClientes2;
 import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
@@ -24,6 +26,7 @@ import java.beans.PropertyVetoException;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
@@ -37,6 +40,7 @@ import java.awt.Cursor;
 import javax.swing.border.LineBorder;
 
 public class VentanaPrincipal extends JFrame {
+
 
 	private JPanel contentPane;
 	private JButton btnInventario;
@@ -52,6 +56,9 @@ public class VentanaPrincipal extends JFrame {
 	public JLabel lblUsuario;
     public JLabel lblTipo;
     private JLabel lblLogo;
+    private JButton btnDistribuidores;
+    private JButton btnCompras;
+    private JTextField txtPrueba;
 
     Ventas2 ventas = new Ventas2(null);
 	InternalMantenimientoProd vProductos = new InternalMantenimientoProd(null);
@@ -60,10 +67,12 @@ public class VentanaPrincipal extends JFrame {
 	MantenimientoClientes2 vCliente = new MantenimientoClientes2(null);
 	Configuraciones config = new Configuraciones();
 
-    Color colorSelec = new Color(242, 136, 113);
-    Color colorDeselec = new Color(220, 20, 60);
-    private JButton btnDistribuidores;
-    private JButton btnCompras;
+    //Color colorSelec = new Color(242, 136, 113);
+    //Color colorDeselec = new Color(220, 20, 60);
+	Color colorSelec = new Color(82, 229, 151 );
+    Color colorDeselec = new Color(74, 192, 244);
+    int anchoImgBtn = 45;
+    int altoImgBtn = 45;
 	
 	
 	public static void main(String[] args) {
@@ -94,13 +103,15 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBackground(Color.DARK_GRAY);
 		panel.setBounds(0, 0, 230, 696);
 		contentPane.add(panel);
-
+		
 		btnVentas = new JButton("Ventas ");
 		btnVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnVentas.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnVentas.setIcon(new ImageIcon(imgVentas));
 		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnVentas.setForeground(Color.WHITE);
-		btnVentas.setBackground(new Color(220, 20, 60));
+		btnVentas.setBackground(colorDeselec);
 		btnVentas.setBounds(0, 170, 230, 50);
 		btnVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -112,10 +123,12 @@ public class VentanaPrincipal extends JFrame {
 		
 		btnInventario = new JButton("Inventario ");
 		btnInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnInventario.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnInventario.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgInventario = new ImageIcon(this.getClass().getResource("/imgMenuinventario.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnInventario.setIcon(new ImageIcon(imgInventario));
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnInventario.setForeground(Color.WHITE);
-		btnInventario.setBackground(new Color(220, 20, 60));
+		btnInventario.setBackground(colorDeselec);
 		btnInventario.setBounds(0, 292, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
@@ -131,10 +144,12 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgUsuarios = new ImageIcon(this.getClass().getResource("/imgMenuusuarios.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnUsuario.setIcon(new ImageIcon(imgUsuarios));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnUsuario.setBackground(new Color(220, 20, 60));
+		btnUsuario.setBackground(colorDeselec);
 		btnUsuario.setBounds(0, 475, 230, 50);
 		panel.add(btnUsuario);
 
@@ -145,10 +160,12 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnClientes.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnClientes.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgClientes = new ImageIcon(this.getClass().getResource("/imgMenuclientes.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnClientes.setIcon(new ImageIcon(imgClientes));
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnClientes.setBackground(new Color(220, 20, 60));
+		btnClientes.setBackground(colorDeselec);
 		btnClientes.setBounds(0, 414, 230, 50);
 		panel.add(btnClientes);
 
@@ -159,10 +176,12 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnReportes.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnReportes.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgReportes = new ImageIcon(this.getClass().getResource("/imgMenureportes.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnReportes.setIcon(new ImageIcon(imgReportes));
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnReportes.setBackground(new Color(220, 20, 60));
+		btnReportes.setBackground(colorDeselec);
 		btnReportes.setBounds(0, 536, 230, 50);
 		panel.add(btnReportes);
 
@@ -173,10 +192,12 @@ public class VentanaPrincipal extends JFrame {
 				actionPerformedBtnConfiguraciones(arg0);
 			}
 		});
-		btnConfiguraciones.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnConfiguraciones.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgConfig = new ImageIcon(this.getClass().getResource("/imgMenuconfiguraciones.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnConfiguraciones.setIcon(new ImageIcon(imgConfig));
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnConfiguraciones.setBackground(new Color(220, 20, 60));
+		btnConfiguraciones.setBackground(colorDeselec);
 		btnConfiguraciones.setBounds(0, 597, 230, 50);
 		panel.add(btnConfiguraciones);
 		
@@ -186,18 +207,22 @@ public class VentanaPrincipal extends JFrame {
 				actionPerformedBtnDistribuidores(arg0);
 			}
 		});
-		btnDistribuidores.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnDistribuidores.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgDist = new ImageIcon(this.getClass().getResource("/imgMenudistribuidor.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnDistribuidores.setIcon(new ImageIcon(imgDist));
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnDistribuidores.setBackground(new Color(220, 20, 60));
+		btnDistribuidores.setBackground(colorDeselec);
 		btnDistribuidores.setBounds(0, 353, 230, 50);
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
-		btnCompras.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnCompras.setHorizontalAlignment(SwingConstants.LEFT);
+		Image imgCompras = new ImageIcon(this.getClass().getResource("/imgMenucompras.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
+		btnCompras.setIcon(new ImageIcon(imgCompras));
 		btnCompras.setForeground(Color.WHITE);
 		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnCompras.setBackground(new Color(220, 20, 60));
+		btnCompras.setBackground(colorDeselec);
 		btnCompras.setBounds(0, 231, 230, 50);
 		panel.add(btnCompras);
 		
@@ -210,8 +235,8 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image img = new ImageIcon(this.getClass().getResource("/imgBXB.png")).getImage();
-		lblLogo.setIcon(new ImageIcon(img));
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgBXB.png")).getImage();
+		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblLogo.setBounds(10, 10, 210, 100);
@@ -237,17 +262,26 @@ public class VentanaPrincipal extends JFrame {
 		panel_1.setLayout(null);
 
 		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO");
-		lblNewLabel.setBounds(10, 0, 1114, 50);
+		lblNewLabel.setBounds(10, 0, 1124, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel);
+		
+		txtPrueba = new JTextField();
+		txtPrueba.setVisible(false);
+		txtPrueba.setBounds(0, 0, 33, 20);
+		panel_1.add(txtPrueba);
+		txtPrueba.setColumns(10);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
 		
 		cargar();
 	}
 	
 	private void cargar(){
 		this.setLocationRelativeTo(null);
+
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){
@@ -277,6 +311,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setBackground(colorDeselec);
 		btnDistribuidores.setBackground(colorDeselec);
 		btnCompras.setBackground(colorDeselec);
+		btnClientes.setBackground(colorDeselec);
 	}
 
 	protected void actionPerformedBtnVentas(ActionEvent arg0) {

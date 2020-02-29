@@ -5,9 +5,17 @@ import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import com.mxrck.autocompleter.TextAutoCompleter;
+
+import clases.Cliente;
+import clases.Productos;
+import clases.UnidadMed;
 import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
 import mysql.consultas;
@@ -21,6 +29,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +45,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Ventas2 extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -47,7 +58,7 @@ public class Ventas2 extends JInternalFrame {
 	private TextAutoCompleter ac;
 	private JTable tbCarrito;
 	private JLabel lblCliente;
-	private JComboBox cbClientes;
+	private JComboBox <Cliente> cbClientes;
 	private JButton btnNewCliente;
 	private JLabel label;
 	private JTextField txtInfoAdicional;
@@ -63,6 +74,7 @@ public class Ventas2 extends JInternalFrame {
 	private JLabel lblPagaConS;
 	private JLabel lblSuVueltoEs;
 	private JCheckBox chckbxCodigo;
+	public DefaultTableModel dtm = new DefaultTableModel();
 	
 	public VentanaPrincipal vp;
 	
@@ -108,19 +120,26 @@ public class Ventas2 extends JInternalFrame {
 		this.lblCdigo = new JLabel("Buscar producto:");
 		lblCdigo.setForeground(Color.DARK_GRAY);
 		this.lblCdigo.setFont(new Font("Arial", Font.BOLD, 22));
-		this.lblCdigo.setBounds(10, 251, 195, 34);
+		this.lblCdigo.setBounds(10, 212, 195, 34);
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtBuscarProd = new JTextField();
+		txtBuscarProd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtBuscarProd(e);
+			}
+		});
 		txtBuscarProd.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		this.txtBuscarProd.setHorizontalAlignment(SwingConstants.LEFT);
 		this.txtBuscarProd.setFont(new Font("Arial", Font.ITALIC, 20));
 		this.txtBuscarProd.setColumns(10);
 		this.txtBuscarProd.setBackground(new Color(245, 245, 245));
-		this.txtBuscarProd.setBounds(204, 251, 445, 34);
+		this.txtBuscarProd.setBounds(10, 251, 639, 34);
 		getContentPane().add(this.txtBuscarProd);
 		
 		this.scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
 		this.scrollPane.setBounds(10, 290, 1083, 310);
 		getContentPane().add(this.scrollPane);
@@ -128,7 +147,7 @@ public class Ventas2 extends JInternalFrame {
 		tbCarrito = new JTable();
 		tbCarrito.setAutoCreateRowSorter(true);
 		tbCarrito.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbCarrito.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbCarrito.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
 		tbCarrito.setBackground(Color.WHITE);
 		tbCarrito.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbCarrito);
@@ -226,6 +245,12 @@ public class Ventas2 extends JInternalFrame {
 		getContentPane().add(btnLimpiar);
 		
 		txtPaga = new JTextField();
+		txtPaga.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtPaga(arg0);
+			}
+		});
 		txtPaga.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPaga.setForeground(SystemColor.windowBorder);
 		txtPaga.setFont(new Font("Arial", Font.BOLD, 20));
@@ -266,7 +291,7 @@ public class Ventas2 extends JInternalFrame {
 		chckbxCodigo.setForeground(new Color(30, 144, 255));
 		chckbxCodigo.setFont(new Font("Arial", Font.ITALIC, 13));
 		chckbxCodigo.setBackground(Color.WHITE);
-		chckbxCodigo.setBounds(461, 214, 188, 30);
+		chckbxCodigo.setBounds(535, 214, 114, 30);
 		getContentPane().add(chckbxCodigo);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCarrito.getTableHeader().setReorderingAllowed(false);
@@ -305,22 +330,35 @@ public class Ventas2 extends JInternalFrame {
 		
 		cargar();
 		cargarBuscador();
-	}
-	
-	public void cargar() {
-		
 		ajustarAnchoColumnas();
 	}
 	
+	public void cargar() {
+		tbCarrito.setRowHeight(30);
+		
+		Cliente cliente = new Cliente();
+		cliente.cargarClientes(cbClientes);
+		
+		tbCarrito.setModel(dtm);
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "SubTotal", "IDPROD", "PC" });
+		ajustarAnchoColumnas();
+		
+	}
+	
 	public void cargarBuscador() {
+		
+		
 		ac = new TextAutoCompleter(txtBuscarProd);
 		consultas model = new consultas();
 		ResultSet rs = model.cargarProductos();
 		ac.setMode(0);
 		try {
 			while (rs.next()) {
-				// ac.addItem(rs.getString("codproducto"));
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
+						" = S/" + rs.getString("precioVe") + "(" + rs.getString("codproducto") + ")");
+				
+				
+				
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -332,19 +370,22 @@ public class Ventas2 extends JInternalFrame {
 	}
 
 	public void ajustarAnchoColumnas() {
-		/*TableColumnModel tcm = tbCarrito.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
+		TableColumnModel tcm = tbCarrito.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(7)); // Cantidad
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(60)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Stock
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Precio
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // SubTotal
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(1)); //ID
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(1));//Preco
 		
-		for(int i=0; i<tbCarrito.getColumnCount(); i++)
-			if(tbCarrito.getColumnName(i).equals("FECHA VENC."))
-				tcm.getColumn(i).setPreferredWidth(anchoColumna(10)); // FECHA DE VENCIMIENTO
-		*/
-		/*DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
-		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
-		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);*/
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		tbCarrito.getColumnModel().getColumn(0).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);		
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -355,14 +396,151 @@ public class Ventas2 extends JInternalFrame {
 		}
 	}
 	
-	public void selecionarProducto(String id) {
-		int cantProductos = tbCarrito.getRowCount();
+	public void seleccionarProducto(String id) {
+		/*int cantProductos = tbCarrito.getRowCount();
 		for (int i = 0; i < cantProductos; i++) {
 			if (id.equals(tbCarrito.getValueAt(i, 0))) {
 				tbCarrito.setRowSelectionInterval(i, i);
 				break;
 			}
+		}*/
+	}
+	
+	public void AgregarProductoATabla() {
+		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
+			String busquedacompleta = txtBuscarProd.getText();
+			int idProd = Integer.parseInt( busquedacompleta.substring(busquedacompleta.indexOf("(")+1, busquedacompleta.indexOf(")")));
+			rs = model.buscarProductoID(idProd);
+			int flag = 0;
+			float cantidad = 0;
+			for (int i = 0; i < tbCarrito.getRowCount(); i++) { // AQUÍ ENTRA SI
+																// YA EXISTE EL
+																// PRODUCTO EN
+																// LA TABLA
+				try {
+					rs.beforeFirst();
+					while (rs.next()) {
+						
+						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 5).toString())) {
+							cantidad = (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) + 1);
+							tbCarrito.setValueAt(cantidad, i, 0);
+							flag = 1;
+							txtBuscarProd.setText(null);
+							txtBuscarProd.requestFocus();
+							tbCarrito.setRowSelectionInterval(i, i);
+						}
+					}
+				} catch (SQLException e) {
+					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+				}
+			}
+
+			if (flag == 0) { // AQUÍ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
+				try {
+					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "SubTotal", "ID", "PC" 
+					while (rs.next()) {
+						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote")     
+								, rs.getFloat("cantidad"), rs.getFloat("precioVe"), rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
+								rs.getFloat("precioCo") });
+						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "ERROR: " + e);
+				}
+				txtBuscarProd.setText(null);
+				txtBuscarProd.requestFocus();
+			}
+			sumarSubTotales();
+			sumarTotal();
+
+		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO			
+			try {
+				String pcompleto = txtBuscarProd.getText();
+				rs = model.buscarProducto(pcompleto);
+				int flag = 0;
+				float cantidad = 0;
+				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
+						rs.beforeFirst();
+						while (rs.next()) {
+							if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 6))) {
+								cantidad = (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) + 1);
+								tbCarrito.setValueAt(cantidad, i, 0);
+								flag = 1;
+								txtBuscarProd.setText(null);
+								txtBuscarProd.requestFocus();
+								tbCarrito.setRowSelectionInterval(i, i);
+							}
+						}
+					} catch (SQLException ex) {
+					}
+				}
+				if (flag == 0) { // AQUÍ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
+					try {
+						rs.beforeFirst();
+						while (rs.next()) {
+							dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
+									rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
+									rs.getFloat("precioCo") });
+							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
+						}
+					} catch (Exception ex) {
+					}
+					txtBuscarProd.setText(null);
+					txtBuscarProd.requestFocus();
+				}
+				/*sumarSubTotales();
+				sumarTotal();*/
+
+			} catch (Exception e2) {
+				txtBuscarProd.setText(null);
+			}
+			
 		}
+
+	}
+	
+	public void sumarSubTotales() { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "SubTotal", "ID", "PC" 
+		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			try {
+				float cant = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+				float preU = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+				double subT = cant * preU;
+				subT = redondearDecimales(subT, 2);
+				tbCarrito.setValueAt(subT, i, 4);
+			} catch (Exception e) {
+				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			}
+		}
+	}
+
+	public void sumarTotal() {
+		double Total = 0;
+		if (tbCarrito.getRowCount() < 1)
+			lblTotal.setText("");
+		else {
+			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+				try {
+					Total = Total + Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+					Total = redondearDecimales(Total, 1);
+					lblTotal.setText("" + Total + "0");
+					txtPaga.setText(null);
+					txtVuelto.setText(null);
+				} catch (Exception e) {
+					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+				}
+			}
+		}
+	}
+	
+	public double redondearDecimales(double valorInicial, int numeroDecimales) {
+		double parteEntera, resultado;
+		resultado = valorInicial;
+		parteEntera = Math.floor(resultado);
+		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
+		resultado = Math.round(resultado);
+		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
+		return resultado;
 	}
 	
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
@@ -381,5 +559,23 @@ public class Ventas2 extends JInternalFrame {
 		}
 	}
 	protected void actionPerformedBtnVender(ActionEvent e) {
+	}
+	protected void keyTypedTxtBuscarProd(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER)
+			AgregarProductoATabla();
+	}
+	protected void keyReleasedTxtPaga(KeyEvent arg0) {
+		try {
+			double pagacon = Float.parseFloat(txtPaga.getText());
+			double tot = Float.parseFloat(lblTotal.getText());
+			double vuelto = redondearDecimales(pagacon - tot, 2);
+			if (vuelto < 0)
+				txtVuelto.setText("0.00");
+			else
+				txtVuelto.setText("" + vuelto + "0");
+		} catch (Exception e2) {
+			txtVuelto.setText("0.00");
+		}
 	}
 }

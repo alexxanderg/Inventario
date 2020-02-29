@@ -412,7 +412,7 @@ public class ModificarDistribuidor extends JFrame implements ActionListener, Win
 		if(cbTipoDoc.getSelectedIndex() == 4){
 			txtNroDoc.setText("99999999");
 			txtNroDoc.setEditable(false);
-			txtNombre.setText("Distribuidor Varios");
+			txtNombre.setText(".Distribuidor Varios");
 		}
 		else{
 			txtNroDoc.setText("");
