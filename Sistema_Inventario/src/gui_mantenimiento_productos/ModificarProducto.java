@@ -22,6 +22,7 @@ import clases.Almacen;
 import clases.Categoria;
 import clases.Distribuidores;
 import clases.UnidadMed;
+import gui_mantenimiento_distribuidores.NuevoDistribuidor;
 import mysql.consultas;
 
 import javax.swing.JComboBox;
@@ -105,7 +106,7 @@ public class ModificarProducto extends JFrame {
 	private JTextField txtCrearProducto;
 	private JLabel lblDistribuidor;
 	private JLabel label_9;
-	private JComboBox cbDistribuidor;
+	private JComboBox <Distribuidores> cbDistribuidor;
 
 	ResultSet rs;
 	consultas model = new consultas();
@@ -811,6 +812,11 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(cbDistribuidor);
 		
 		btnAnadirDistri = new JButton("+");
+		btnAnadirDistri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnAnadirDistri(arg0);
+			}
+		});
 		btnAnadirDistri.setForeground(Color.WHITE);
 		btnAnadirDistri.setFont(new Font("Arial", Font.BOLD, 20));
 		btnAnadirDistri.setBorder(new LineBorder(Color.WHITE, 1, true));
@@ -854,6 +860,12 @@ public class ModificarProducto extends JFrame {
 			cbUnidadMedida.setSelectedItem(rs.getString("unimedida"));
 			cbCategoria.setSelectedItem(rs.getString("categoria"));
 			cbAlmacen.setSelectedItem(rs.getString("almacen"));
+			
+			int iddistrib = rs.getInt("iddistrib");
+			for(int i = 0; i<cbDistribuidor.getItemCount(); i++)
+				if(cbDistribuidor.getItemAt(i).getIddist() == iddistrib)
+					cbDistribuidor.setSelectedIndex(i);
+			
 			txtMarca.setText(rs.getString("marca"));
 			txtColor.setText(rs.getString("color"));
 			txtStockInicial.setText(""+rs.getFloat("cantidad"));
@@ -864,10 +876,10 @@ public class ModificarProducto extends JFrame {
 			dateFechaVenc.setDate(rs.getDate("fechaVenc"));
 			txtLaboratorio.setText(rs.getString("laboratorio"));
 			txtLote.setText(rs.getString("lote"));
-			txtNombrePromo1.setText(""+ rs.getFloat("promo1"));
+			txtNombrePromo1.setText(""+ rs.getString("promo1"));
 			txtCantPromo1.setText(""+ rs.getFloat("cantp1"));
 			txtPrePromo1.setText(""+ rs.getFloat("prep1"));
-			txtNombrePromo2.setText(""+ rs.getFloat("promo2"));
+			txtNombrePromo2.setText(""+ rs.getString("promo2"));
 			txtCantPromo2.setText(""+ rs.getFloat("cantp2"));
 			txtPrePromo2.setText(""+ rs.getFloat("prep2"));
 			
@@ -1140,6 +1152,17 @@ public class ModificarProducto extends JFrame {
 		txtCodbarras.requestFocus();
 	}
 	
+	public void recargarCombosDist(int iddist){
+		cbDistribuidor.removeAllItems();
+		Distribuidores dist = new Distribuidores();
+		dist.cargarDistribuidores(cbDistribuidor);
+		
+		for(int i = 0; i<cbDistribuidor.getItemCount(); i++){
+			if(cbDistribuidor.getItemAt(i).getIddist() == iddist)
+				cbDistribuidor.setSelectedIndex(i);
+		}
+	}
+	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		try {
 			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbCategoria.getSelectedItem().toString().length() == 0 
@@ -1174,10 +1197,10 @@ public class ModificarProducto extends JFrame {
 				String laboratiorio = ""; 	laboratiorio = txtLaboratorio.getText();
 				String lote = ""; 	lote = txtLote.getText();
 				
-				String nombrePromo1 = txtPrePromo1.getText();
+				String nombrePromo1 = txtNombrePromo1.getText();
 				double cantPromo1 = Float.parseFloat(txtCantPromo1.getText());
 				double prePromo1 = Float.parseFloat(txtPrePromo1.getText());
-				String nombrePromo2 = txtPrePromo2.getText();
+				String nombrePromo2 = txtNombrePromo2.getText();
 				double cantPromo2 = Float.parseFloat(txtCantPromo2.getText());
 				double prePromo2 = Float.parseFloat(txtPrePromo2.getText());
 				
@@ -1233,6 +1256,22 @@ public class ModificarProducto extends JFrame {
 		else{
 			txtStockInicial.setText("0");
 			txtStockInicial.setEditable(true);
+		}
+	}
+	protected void actionPerformedBtnAnadirDistri(ActionEvent arg0) {
+		NuevoDistribuidor nd = new NuevoDistribuidor(null, null, this);
+		try {
+			if (nd.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				nd.setVisible(true); 
+			} else {
+				nd = new NuevoDistribuidor(null, null, this);
+				nd.setLocationRelativeTo(null);
+				nd.setVisible(true);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
 }

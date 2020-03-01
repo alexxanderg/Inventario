@@ -114,6 +114,19 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet buscarDistribuidor(int iddistrib) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(
+					"select * from tb_distribuidores where iddistrib = " + iddistrib);
+		} catch (Exception e) {
+		}
+		return rs;
+	}
 
 	public ResultSet buscarProductoDetalle(String prod, String det) {
 		Connection con = MySQLConexion.getConection();
@@ -140,7 +153,7 @@ public class consultas {
 		return rs;
 	}
 
-	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
+	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, int primeravez) {
 		Connection con = MySQLConexion.getConection();
@@ -148,8 +161,8 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, codbarra);
@@ -163,18 +176,19 @@ public class consultas {
 			prepareStmt.setDate(10, fec_venc);
 			prepareStmt.setString(11, categoria);
 			prepareStmt.setString(12, almacen);
-			prepareStmt.setDouble(13, stockini);
-			prepareStmt.setDouble(14, stockmin);
-			prepareStmt.setDouble(15, preco);
-			prepareStmt.setDouble(16, preve);
-			prepareStmt.setDouble(17, ptjgana);
-			prepareStmt.setInt(18, 1);
-			prepareStmt.setString(19, nombrePromo1);
-			prepareStmt.setDouble(20, cantPromo1);
-			prepareStmt.setDouble(21, prePromo1);
-			prepareStmt.setString(22, nombrePromo2);
-			prepareStmt.setDouble(23, cantPromo2);
-			prepareStmt.setDouble(24, prePromo2);
+			prepareStmt.setInt(13, iddistrib);
+			prepareStmt.setDouble(14, stockini);
+			prepareStmt.setDouble(15, stockmin);
+			prepareStmt.setDouble(16, preco);
+			prepareStmt.setDouble(17, preve);
+			prepareStmt.setDouble(18, ptjgana);
+			prepareStmt.setInt(19, 1);
+			prepareStmt.setString(20, nombrePromo1);
+			prepareStmt.setDouble(21, cantPromo1);
+			prepareStmt.setDouble(22, prePromo1);
+			prepareStmt.setString(23, nombrePromo2);
+			prepareStmt.setDouble(24, cantPromo2);
+			prepareStmt.setDouble(25, prePromo2);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;// 0= se creo correctamente
@@ -183,7 +197,7 @@ public class consultas {
 			return 1; // 1= encontró producto con mismo codigo
 		}
 	}
-	public int ingresarProductoPrimeraVez(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
+	public int ingresarProductoPrimeraVez(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, int primeravez) {
 		Connection con = MySQLConexion.getConection();
@@ -191,8 +205,8 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, codbarra);
@@ -206,18 +220,19 @@ public class consultas {
 			prepareStmt.setDate(10, fec_venc);
 			prepareStmt.setString(11, categoria);
 			prepareStmt.setString(12, almacen);
-			prepareStmt.setDouble(13, stockini);
-			prepareStmt.setDouble(14, stockmin);
-			prepareStmt.setDouble(15, preco);
-			prepareStmt.setDouble(16, preve);
-			prepareStmt.setDouble(17, ptjgana);
-			prepareStmt.setInt(18, 0);
-			prepareStmt.setString(19, nombrePromo1);
-			prepareStmt.setDouble(20, cantPromo1);
-			prepareStmt.setDouble(21, prePromo1);
-			prepareStmt.setString(22, nombrePromo2);
-			prepareStmt.setDouble(23, cantPromo2);
-			prepareStmt.setDouble(24, prePromo2);
+			prepareStmt.setInt(13, iddistrib);
+			prepareStmt.setDouble(14, stockini);
+			prepareStmt.setDouble(15, stockmin);
+			prepareStmt.setDouble(16, preco);
+			prepareStmt.setDouble(17, preve);
+			prepareStmt.setDouble(18, ptjgana);
+			prepareStmt.setInt(19, 0);
+			prepareStmt.setString(20, nombrePromo1);
+			prepareStmt.setDouble(21, cantPromo1);
+			prepareStmt.setDouble(22, prePromo1);
+			prepareStmt.setString(23, nombrePromo2);
+			prepareStmt.setDouble(24, cantPromo2);
+			prepareStmt.setDouble(25, prePromo2);
 			prepareStmt.execute();
 			return 0;// 0= se creo correctamente
 		} catch (Exception e) {
@@ -583,7 +598,7 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_clientes order by id desc limit 1");
+			rs = st.executeQuery("select * from tb_clientes order by idcliente desc limit 1");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -621,7 +636,7 @@ public class consultas {
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "CLIENTE CREADO CORRECTAMENTE");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: CLIENTE EXISTENTE");
+			JOptionPane.showMessageDialog(null, "ERROR: CLIENTE EXISTENTE " + e);
 		}
 		return rs;
 	}
@@ -994,7 +1009,7 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set estado = 1 where codproducto=?";
+			String sql = "update tb_productos set estado = 0 where codproducto=?";
 
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setInt(1, cod);

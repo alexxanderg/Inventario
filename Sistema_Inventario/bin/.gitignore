@@ -11,6 +11,14 @@
 /gui_reportes/
 /gui_ventas/
 /imgBXB.png
+/imgMenuclientes.png
+/imgMenucompras.png
+/imgMenuconfiguraciones.png
+/imgMenudistribuidor.png
+/imgMenuinventario.png
+/imgMenureportes.png
+/imgMenuusuarios.png
+/imgMenuventas.png
 /imgalmacen.png
 /imgbanner.png
 /imgbtnanadir.png
@@ -49,11 +57,3 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
-/imgMenuclientes.png
-/imgMenucompras.png
-/imgMenuconfiguraciones.png
-/imgMenudistribuidor.png
-/imgMenuinventario.png
-/imgMenureportes.png
-/imgMenuusuarios.png
-/imgMenuventas.png

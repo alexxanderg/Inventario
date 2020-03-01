@@ -41,27 +41,27 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 
-public class MantenimientoClientes2 extends JInternalFrame {
+public class MantenimientoClientes extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnCrearProducto;
-	private JMenu mnModificarProducto;
-	private JMenu mnNewMenu_2;
+	private JMenu mnCrearCliente;
+	private JMenu mnModificarCliente;
+	private JMenu mnEliminarCliente;
 	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbCliente;
 
 	public VentanaPrincipal vp;
-
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
+	NuevoCliente nc = new NuevoCliente(this, null);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MantenimientoClientes2 frame = new MantenimientoClientes2(null);
+					MantenimientoClientes frame = new MantenimientoClientes(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +70,7 @@ public class MantenimientoClientes2 extends JInternalFrame {
 		});
 	}
 
-	public MantenimientoClientes2(VentanaPrincipal vp) {
+	public MantenimientoClientes(VentanaPrincipal vp) {
 		this.vp = vp;
 
 		getContentPane().setBackground(Color.WHITE);
@@ -110,41 +110,41 @@ public class MantenimientoClientes2 extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 
-		mnCrearProducto = new JMenu("|Crear nuevo cliente| ");
-		mnCrearProducto.addMouseListener(new MouseAdapter() {
+		mnCrearCliente = new JMenu("|Crear nuevo cliente| ");
+		mnCrearCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearProducto.setForeground(new Color(65, 105, 225));
-		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
-		menuBar.add(mnCrearProducto);
+		mnCrearCliente.setForeground(new Color(65, 105, 225));
+		mnCrearCliente.setBackground(SystemColor.control);
+		mnCrearCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnCrearCliente);
 
-		mnModificarProducto = new JMenu("|Modificar cliente| ");
-		mnModificarProducto.addMouseListener(new MouseAdapter() {
+		mnModificarCliente = new JMenu("|Modificar cliente| ");
+		mnModificarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		mnModificarProducto.setForeground(new Color(60, 179, 113));
-		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
-		menuBar.add(mnModificarProducto);
+		mnModificarCliente.setForeground(new Color(60, 179, 113));
+		mnModificarCliente.setBackground(SystemColor.control);
+		mnModificarCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnModificarCliente);
 
-		mnNewMenu_2 = new JMenu("|Eliminar cliente| ");
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+		mnEliminarCliente = new JMenu("|Eliminar cliente| ");
+		mnEliminarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnNewMenu_2.setForeground(new Color(220, 20, 60));
-		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 22));
-		menuBar.add(mnNewMenu_2);
+		mnEliminarCliente.setForeground(new Color(220, 20, 60));
+		mnEliminarCliente.setBackground(SystemColor.control);
+		mnEliminarCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		menuBar.add(mnEliminarCliente);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA
 																							// LA
@@ -207,19 +207,17 @@ public class MantenimientoClientes2 extends JInternalFrame {
 		}
 	}
 
-	NuevoCliente nd = new NuevoCliente(this);
-
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
-			if (nd.isShowing()) {
+			if (nc.isShowing()) {
 				// JOptionPane.showMessageDialog(null, "Ya tiene abierta la
 				// ventana");
-				nd.setExtendedState(0); // MOSTRAR VENTANA ABIERTA
-				nd.setVisible(true);
+				nc.setExtendedState(0); // MOSTRAR VENTANA ABIERTA
+				nc.setVisible(true);
 			} else {
-				nd = new NuevoCliente(this);
-				nd.setLocationRelativeTo(null);
-				nd.setVisible(true);
+				nc = new NuevoCliente(this, null);
+				nc.setLocationRelativeTo(null);
+				nc.setVisible(true);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);

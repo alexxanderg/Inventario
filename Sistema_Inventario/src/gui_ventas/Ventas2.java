@@ -16,6 +16,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.Cliente;
 import clases.Productos;
 import clases.UnidadMed;
+import gui_clientes.NuevoCliente;
 import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
 import mysql.consultas;
@@ -75,14 +76,14 @@ public class Ventas2 extends JInternalFrame {
 	private JLabel lblSuVueltoEs;
 	private JCheckBox chckbxCodigo;
 	public DefaultTableModel dtm = new DefaultTableModel();
+	private JMenu mnlistaDeProductos;
+	private JMenu mncrearProductoNuevo;
 	
 	public VentanaPrincipal vp;
-	
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
-	private JMenu mnlistaDeProductos;
-	private JMenu mncrearProductoNuevo;
+	NuevoCliente nc = new NuevoCliente(null, this);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -165,6 +166,11 @@ public class Ventas2 extends JInternalFrame {
 		getContentPane().add(cbClientes);
 		
 		btnNewCliente = new JButton("+");
+		btnNewCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnNewCliente(arg0);
+			}
+		});
 		btnNewCliente.setForeground(Color.WHITE);
 		btnNewCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewCliente.setBackground(new Color(50, 205, 50));
@@ -355,10 +361,7 @@ public class Ventas2 extends JInternalFrame {
 		try {
 			while (rs.next()) {
 				ac.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
-						" = S/" + rs.getString("precioVe") + "(" + rs.getString("codproducto") + ")");
-				
-				
-				
+						" = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -394,6 +397,23 @@ public class Ventas2 extends JInternalFrame {
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void agregarCliente(int iddistrib){
+		try {
+			cbClientes.removeAllItems();
+			Cliente cliente = new Cliente();
+			cliente.cargarClientes(cbClientes);
+			
+			for(int i = 0; i<cbClientes.getItemCount(); i++){
+				JOptionPane.showMessageDialog(null, "" + cbClientes.getItemAt(i).getId() + " - "  + iddistrib);
+				if(cbClientes.getItemAt(i).getId() == iddistrib)
+					cbClientes.setSelectedIndex(i);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al recargar combo");
+		}
+		
 	}
 	
 	public void seleccionarProducto(String id) {
@@ -576,6 +596,23 @@ public class Ventas2 extends JInternalFrame {
 				txtVuelto.setText("" + vuelto + "0");
 		} catch (Exception e2) {
 			txtVuelto.setText("0.00");
+		}
+	}
+	
+	protected void actionPerformedBtnNewCliente(ActionEvent arg0) {
+		try {
+			if (nc.isShowing()) {
+				// JOptionPane.showMessageDialog(null, "Ya tiene abierta la
+				// ventana");
+				nc.setExtendedState(0); // MOSTRAR VENTANA ABIERTA
+				nc.setVisible(true);
+			} else {
+				nc = new NuevoCliente(null, this);
+				nc.setLocationRelativeTo(null);
+				nc.setVisible(true);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
 }

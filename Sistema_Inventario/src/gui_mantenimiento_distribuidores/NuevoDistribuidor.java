@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import gui_mantenimiento_productos.ModificarProducto;
 import gui_mantenimiento_productos.NuevoProducto;
 import mysql.consultas;
 import java.awt.event.ItemListener;
@@ -58,13 +59,14 @@ public class NuevoDistribuidor extends JFrame {
 	consultas model = new consultas();
 	MantenimientoDistribuidores mantenimientoDistribuidores;
 	NuevoProducto np = null;
+	ModificarProducto mp = null;
 	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoDistribuidor frame = new NuevoDistribuidor(null, null);
+					NuevoDistribuidor frame = new NuevoDistribuidor(null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,9 +75,10 @@ public class NuevoDistribuidor extends JFrame {
 		});
 	}
 
-	public NuevoDistribuidor(MantenimientoDistribuidores mantenimientoDistribuidores, NuevoProducto np) {
+	public NuevoDistribuidor(MantenimientoDistribuidores mantenimientoDistribuidores, NuevoProducto np, ModificarProducto mp) {
 		this.mantenimientoDistribuidores = mantenimientoDistribuidores;
 		this.np = np;
+		this.mp = mp;
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -324,29 +327,35 @@ public class NuevoDistribuidor extends JFrame {
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
 			}
 			else{
-					String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
-					String nrodoc = "";	nrodoc = txtNroDoc.getText();
-					String nombre = "";	nombre = txtNombre.getText();
-					String direccion = "";	direccion = txtDireccion.getText();
-					String telefono = "";	telefono = txtTelefono.getText();
-					String contacto = "";	contacto = txtContacto.getText();
-					String correo = "";	correo = txtCorreo.getText();
+				String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
+				String nrodoc = "";	nrodoc = txtNroDoc.getText();
+				String nombre = "";	nombre = txtNombre.getText();
+				String direccion = "";	direccion = txtDireccion.getText();
+				String telefono = "";	telefono = txtTelefono.getText();
+				String contacto = "";	contacto = txtContacto.getText();
+				String correo = "";	correo = txtCorreo.getText();
 
-					rs = model.crearDistribuidor(tipodoc, nrodoc, nombre, direccion, telefono, contacto, correo);
+				rs = model.crearDistribuidor(tipodoc, nrodoc, nombre, direccion, telefono, contacto, correo);
 
-				if(np == null){
+				int iddist = -1;
+				try {
+					ResultSet rs = model.cargarUltimoDistribuidor();
+					rs.next();
+					iddist = rs.getInt("iddistrib");
+				} catch (SQLException e) {
+				}
+					
+				if(mantenimientoDistribuidores != null){
 					mantenimientoDistribuidores.cargar();
-					try {
-						ResultSet rs = model.cargarUltimoDistribuidor();
-						rs.next();
-						int iddistrib = rs.getInt("iddistrib");
-						mantenimientoDistribuidores.selecionarDistribuidor(""+iddistrib);
-					} catch (SQLException e) {
-					}
+					mantenimientoDistribuidores.selecionarDistribuidor(""+iddist);
 					dispose();
 				}
-				else{
-					np.recargarCombosDist();
+				if(np != null){
+					np.recargarCombosDist(iddist);
+					this.dispose();
+				}
+				if(mp != null){
+					mp.recargarCombosDist(iddist);
 					this.dispose();
 				}
 			}

@@ -249,6 +249,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		list.add("UNI MED");
 		list.add("CATEGORIA");
 		list.add("ALMACÉN");
+		list.add("DISTRIBUIDOR");
 		list.add("STOCK");
 		list.add("PREC CO");
 		list.add("% GAN");
@@ -292,6 +293,14 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		        listProds.add(rs.getString("unimedida"));
 		        listProds.add(rs.getString("categoria"));
 		        listProds.add(rs.getString("almacen"));
+		        
+		        int iddistrib = rs.getInt("iddistrib");
+		        try {
+		        	 ResultSet rs2 = model.buscarDistribuidor(iddistrib);
+		        	 rs2.next();
+				     listProds.add(rs2.getString("nombre"));		        	 
+				} catch (Exception e) {}
+		        
 		        listProds.add(rs.getString("cantidad"));
 		        listProds.add(rs.getString("precioCo"));
 		        listProds.add(rs.getString("ptjganancia"));
@@ -403,8 +412,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 		
-		JOptionPane.showMessageDialog(null, "No elimina, solo cambia de estado al producto a 1 y vuelve a cargar la tabla");
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer DESHABILITAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			model.deshabilitarProducto(Integer.parseInt(codigoProducto));

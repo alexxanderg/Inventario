@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Picture;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import clases.Cliente;
-import gui_clientes.MantenimientoClientes2;
+import gui_clientes.MantenimientoClientes;
 import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.InternalMantenimientoProd;
@@ -64,7 +64,7 @@ public class VentanaPrincipal extends JFrame {
 	InternalMantenimientoProd vProductos = new InternalMantenimientoProd(null);
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
-	MantenimientoClientes2 vCliente = new MantenimientoClientes2(null);
+	MantenimientoClientes vCliente = new MantenimientoClientes(null);
 	Configuraciones config = new Configuraciones();
 
     //Color colorSelec = new Color(242, 136, 113);
@@ -281,7 +281,7 @@ public class VentanaPrincipal extends JFrame {
 	private void cargar(){
 		this.setLocationRelativeTo(null);
 
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){
@@ -379,7 +379,7 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnClientes.setBackground(colorSelec);
 			} else {
-				vCliente = new MantenimientoClientes2(this);
+				vCliente = new MantenimientoClientes(this);
 					desktopPane.add(vCliente);
 					vCliente.show();
 					vCliente.setMaximum(true);

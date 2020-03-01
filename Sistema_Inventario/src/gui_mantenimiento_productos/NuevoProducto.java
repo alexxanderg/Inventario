@@ -109,7 +109,7 @@ public class NuevoProducto extends JFrame {
 	private JTextField txtCrearProducto;
 	private JLabel lblDistribuidor;
 	private JLabel label_9;
-	public JComboBox cbDistribuidor;
+	public JComboBox <Distribuidores> cbDistribuidor;
 	
 	ResultSet rs;
 	consultas model = new consultas();
@@ -1045,12 +1045,15 @@ public class NuevoProducto extends JFrame {
 		}
 	}
 	
-	public void recargarCombosDist(){
+	public void recargarCombosDist(int iddist){
 		cbDistribuidor.removeAllItems();
 		Distribuidores dist = new Distribuidores();
 		dist.cargarDistribuidores(cbDistribuidor);
 		
-		cbDistribuidor.setSelectedIndex(cbDistribuidor.getItemCount()-1);
+		for(int i = 0; i<cbDistribuidor.getItemCount(); i++){
+			if(cbDistribuidor.getItemAt(i).getIddist() == iddist)
+				cbDistribuidor.setSelectedIndex(i);
+		}
 	}
 	
 	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
@@ -1247,6 +1250,7 @@ public class NuevoProducto extends JFrame {
 					if(categoria.equals("General")) categoria = ".General";
 				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
 					if(almacen.equals("Principal")) almacen = ".Principal";
+				int iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
 				String marca = ""; 		marca = txtMarca.getText();
 				String color = ""; 		color = txtColor.getText();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
@@ -1292,11 +1296,11 @@ public class NuevoProducto extends JFrame {
 				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 				
 				if(primeravez == 0) // NO
-					rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+					rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
 							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
 							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
 				else // 1 SI
-					rs = model.ingresarProductoPrimeraVez(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+					rs = model.ingresarProductoPrimeraVez(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
 							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
 							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
 
@@ -1352,14 +1356,14 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	protected void actionPerformedBtnAnadirDistri(ActionEvent arg0) {
-		NuevoDistribuidor nd = new NuevoDistribuidor(null, this);
+		NuevoDistribuidor nd = new NuevoDistribuidor(null, this, null);
 		try {
 			if (nd.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true); 
 			} else {
-				nd = new NuevoDistribuidor(null, this);
+				nd = new NuevoDistribuidor(null, this, null);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}

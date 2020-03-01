@@ -53,7 +53,7 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 	private JTextField txtAgregarUsuario;
 	private JButton btnCancelar;
 
-	MantenimientoClientes2 mantenimientoCliente;
+	MantenimientoClientes mantenimientoCliente;
 	int idcliente;
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -74,7 +74,7 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 	/**
 	 * Create the frame.
 	 */
-	public ModificarCliente(int idcliente, MantenimientoClientes2 mantenimientoCliente) {
+	public ModificarCliente(int idcliente, MantenimientoClientes mantenimientoCliente) {
 		this.mantenimientoCliente = mantenimientoCliente;
 		this.idcliente = idcliente;
 

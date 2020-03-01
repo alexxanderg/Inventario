@@ -27,6 +27,9 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import clases.Cliente;
+import gui_ventas.Ventas2;
 import mysql.consultas;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -52,14 +55,14 @@ public class NuevoCliente extends JFrame {
 	
 	ResultSet rs;
 	consultas model = new consultas();
-	MantenimientoClientes2 mantenimientoCliente;
-	
+	MantenimientoClientes mantenimientoCliente = null;
+	Ventas2 ventas = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoCliente frame = new NuevoCliente(null);
+					NuevoCliente frame = new NuevoCliente(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,9 +71,10 @@ public class NuevoCliente extends JFrame {
 		});
 	}
 
-	public NuevoCliente(MantenimientoClientes2 mantenimientoCliente) {
+	public NuevoCliente(MantenimientoClientes mantenimientoCliente, Ventas2 ventas) {
 		this.mantenimientoCliente = mantenimientoCliente;
-
+		this.ventas = ventas; 
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -303,21 +307,29 @@ public class NuevoCliente extends JFrame {
 				String correo = "";	correo = txtCorreo.getText();
 				
 				rs = model.crearCliente(nombre, tipodoc, nrodoc, direccion, correo, telefono);
-				mantenimientoCliente.cargar();
-				
+
+				int idcli = -1;
 				try {
-					ResultSet rs = model.cargarUltimoDistribuidor();
+					ResultSet rs = model.cargarUltimoCliente();
 					rs.next();
-					int iddistrib = rs.getInt("iddistrib");
-					mantenimientoCliente.selecionarCliente(""+iddistrib);
+					idcli = rs.getInt("idcliente");
 				} catch (SQLException e) {
 				}
+				
+				//VERIFICAR QUIEN INVOCO A LA VENTANA
+				if(mantenimientoCliente!=null){
+					mantenimientoCliente.cargar();
+					mantenimientoCliente.selecionarCliente("" + idcli);
+				}
+				else{					
+					ventas.agregarCliente(idcli);
+				}
+				
 				dispose();
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al crear cliente: " + e);
 		}
-		
 	}
 	public void windowActivated(WindowEvent arg0) {
 	}
