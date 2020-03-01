@@ -47,6 +47,7 @@ unimedida	varchar(10),
 fechaVenc	date,
 categoria	varchar(30),
 almacen		varchar(50),
+iddistrib	int,
 cantidad	float,
 cantmin		float,
 precioCo	float,
@@ -59,7 +60,9 @@ cantp1		float,
 prep1		float,
 promo2		varchar(20),
 cantp2		float,
-prep2		float
+prep2		float,
+
+foreign key (iddistrib) references tb_distribuidores(iddistrib)
 );  
 
 create table tb_ventas(
@@ -124,11 +127,10 @@ create table tb_configuraciones(
 idconfig		int primary key auto_increment,
 atributosprod	varchar(200)
 );
-
   
 -- Usuarios de prueba
-insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 0);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 0);
+insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,');
 
