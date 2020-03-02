@@ -69,7 +69,7 @@ create table tb_ventas(
 codventa	int primary key auto_increment,
 idcliente	int,
 fecha		datetime,
-usuario		varchar(50),
+idusuario	int,
 totcompra 	float,
 totventa	float,
 ganancia	float,
@@ -125,14 +125,16 @@ foreign key(codproducto) references tb_productos(codproducto)
 
 create table tb_configuraciones(
 idconfig		int primary key auto_increment,
-atributosprod	varchar(200)
+atributosprod	varchar(200),
+
+ventasinstock 	tinyint -- 0NO 1SI
 );
   
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
 insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
 
-insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,');
+insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0);
 
 insert into tb_clientes values(	null, 'DNI', '76784966', 'Alexander Gamarra', 'La Encalada', '986865523', 'agamarra@bytexbyte.com.pe', 1);
 insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe', 1);
@@ -149,7 +151,7 @@ insert into tb_productos values(null, null, '&', null, null, null, null, null, '
 insert into tb_productos values(null, '123456789', 'USB 64GB', '3.0', 'Sony', 'Negro', null, null, 'Unidad', null, '.General', '.Principal', 5, 2, 40.5, 55.9, 10, 0, null, 0, 0, null, 0, 0);
 
 use db_inventario;
-select * from tb_usuarios;
+select * from tb_usuarios;	
 select * from tb_clientes;
 select * from tb_distribuidores;
 select * from tb_productos; 
