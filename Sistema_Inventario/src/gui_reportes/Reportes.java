@@ -557,8 +557,8 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		categoria.cargarCategorias(cbCategoria);
 
 		Usuarios usu = new Usuarios();
-		Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
-		cbUsuarios.addItem(todos);
+		//Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
+		//cbUsuarios.addItem(todos);
 		usu.cargarUsuarios(cbUsuarios);
 		java.util.Date date = new Date();
 		date.getTime();

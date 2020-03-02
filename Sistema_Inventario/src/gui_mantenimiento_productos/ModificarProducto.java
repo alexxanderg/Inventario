@@ -110,7 +110,7 @@ public class ModificarProducto extends JFrame {
 
 	ResultSet rs;
 	consultas model = new consultas();
-	InternalMantenimientoProd mantenimientoProductos;
+	MantenimientoProd mantenimientoProductos;
 	String idPro;
 	private JButton btnCancelar;
 	private JButton btnAnadirDistri;
@@ -131,7 +131,7 @@ public class ModificarProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModificarProducto(String codigoPro,InternalMantenimientoProd mantenimientoProductos) {
+	public ModificarProducto(String codigoPro,MantenimientoProd mantenimientoProductos) {
 		this.mantenimientoProductos = mantenimientoProductos;
 		this.idPro = codigoPro;
 		

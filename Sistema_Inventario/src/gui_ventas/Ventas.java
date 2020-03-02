@@ -719,7 +719,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO
 			try {
 				String pcompleto = txtProductos.getText();
-				rs = model.buscarProducto(pcompleto);
+				rs = model.buscarProductoBarras(pcompleto);
 				int flag = 0;
 				float cantidad = 0;
 				for (int i = 0; i < tbCompras.getRowCount(); i++) {
@@ -819,7 +819,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 						Productos p = null;
 						for (int i = 0; i < tbCompras.getRowCount(); i++) {
 							String cod = tbCompras.getValueAt(i, 6).toString();
-							rs = model.buscarProducto(cod);
+							rs = model.buscarProductoBarras(cod);
 							try {
 								while (rs.next()) {
 									String prod = rs.getString("producto");
@@ -827,7 +827,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 									String cat = rs.getString("categoria");
 									String lab = rs.getString("laboratorio");
 									Date fecVen = rs.getDate("fechaVenc");
-									float nrolote = rs.getFloat("nrolote");
+									float nrolote = rs.getFloat("lote");
 									String umed = rs.getString("unimedida");
 									float cant = rs.getFloat("cantidad");
 									float cantventa = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
@@ -867,8 +867,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 							String nota = txtInfoAdicional.getText();
 							int metpago = cbMetodoPago.getSelectedIndex();
 
-							model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota,
-									metpago);
+						//	model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota,
+							//		metpago);
 							rs = model.ObtenerUltimoCodigo();
 							try {
 								while (rs.next())
@@ -901,8 +901,8 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 								double preTotalUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
 								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 2);
 
-								model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
-										preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
+								//model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
+									//	preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
 								model.RealizarDescuentoStock(codProducto, cantventa);
 							}
 
@@ -994,7 +994,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			String cod = tbCompras.getValueAt(i, 6).toString();
 			float cantV = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
 			float stock = 0;
-			rs = model.buscarProducto(cod);
+			rs = model.buscarProductoBarras(cod);
 			try {
 				rs.next();
 				stock = rs.getFloat("cantidad");
@@ -1162,7 +1162,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 				while (rs.next()) {
 					// new Object[] { "Cant.", "Producto", "Detalle", "Stock",
 					// "Precio Uni", "SubTotal", "Cod.", "PC" });
-					ResultSet rs2 = model.buscarProducto(rs.getString("codproducto"));
+					ResultSet rs2 = model.buscarProductoBarras(rs.getString("codproducto"));
 					rs2.next();
 					dtm.addRow(new Object[] { rs.getString("cantidad"), //
 							rs2.getString("producto"), rs2.getString("detalles"),

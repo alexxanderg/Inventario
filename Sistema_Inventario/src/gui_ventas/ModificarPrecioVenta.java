@@ -320,7 +320,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		
 
 		consultas model = new consultas();
-		ResultSet rs = model.buscarProducto(cod);
+		ResultSet rs = model.buscarProductoBarras(cod);
 		
 		try {
 			while (rs.next()) {

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import gui_mantenimiento_productos.HistorialKardex;
-import gui_mantenimiento_productos.MantenimientoProductos2;
+import gui_mantenimiento_productos.Kardex;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_reportes.Reportes;
 import gui_ventas.Ventas;
@@ -288,7 +288,7 @@ public class EleccionVentanas extends JFrame implements ActionListener, WindowLi
 	}
 	
 	protected void actionPerformedBtnRealizarKardex(ActionEvent e) {
-		MantenimientoProductos2 mp2 = new MantenimientoProductos2(usuario);
+		Kardex mp2 = new Kardex(usuario);
 		mp2.setVisible(true);
 		dispose();
 	}

@@ -40,7 +40,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 
-public class InternalMantenimientoProd extends JInternalFrame {
+public class MantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
@@ -66,7 +66,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InternalMantenimientoProd frame = new InternalMantenimientoProd(null);
+					MantenimientoProd frame = new MantenimientoProd(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +75,7 @@ public class InternalMantenimientoProd extends JInternalFrame {
 		});
 	}
 
-	public InternalMantenimientoProd(VentanaPrincipal vp) {
+	public MantenimientoProd(VentanaPrincipal vp) {
 		this.vp = vp;
 		
 		getContentPane().setBackground(Color.WHITE);

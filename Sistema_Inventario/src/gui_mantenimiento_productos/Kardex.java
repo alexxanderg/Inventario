@@ -51,7 +51,7 @@ import javax.swing.Icon;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
-public class MantenimientoProductos2 extends JFrame implements ActionListener, WindowListener, KeyListener {
+public class Kardex extends JFrame implements ActionListener, WindowListener, KeyListener {
 
 	private JPanel contentPane;
 	private JTextField txtCodigo;
@@ -73,7 +73,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MantenimientoProductos2 frame = new MantenimientoProductos2(null);
+					Kardex frame = new Kardex(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,7 +82,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 		});
 	}
 
-	public MantenimientoProductos2(String temp2) {
+	public Kardex(String temp2) {
 		usuario = temp2;
 		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -358,7 +358,7 @@ public class MantenimientoProductos2 extends JFrame implements ActionListener, W
 			} catch (Exception e) {
 				try {
 					String pcompleto = txtCodigo.getText();
-					rs = model.buscarProducto(pcompleto);
+					rs = model.buscarProductoBarras(pcompleto);
 					rs.next();
 					if (rs.equals(null)) {
 						JOptionPane.showMessageDialog(null, "Producto no registrado");

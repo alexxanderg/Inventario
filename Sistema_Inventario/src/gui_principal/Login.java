@@ -184,13 +184,16 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		ingresante.setPassword(passIngre);
 		Usuarios usu = modelo.obtenerUsuario(ingresante);
 		String nombreUsuario = null;
+		int idusuario;
 		if(usu!=null){
 			nombreUsuario = usu.getNombre();
+			idusuario = usu.getIdusuario();
 			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario);
 			if(usu.getTipo() == 0){
 				VentanaPrincipal vp = new VentanaPrincipal();
 				vp.lblUsuario.setText(nombreUsuario);
 				vp.lblTipo.setText("ADMINISTRADOR");
+				vp.lblIdusuario.setText(""+idusuario);
 				vp.activarOpciones(0);
 				vp.setVisible(true);
 				this.dispose();
@@ -199,6 +202,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 				VentanaPrincipal vp = new VentanaPrincipal();
 				vp.lblUsuario.setText(nombreUsuario);
 				vp.lblTipo.setText("VENDEDOR");
+				vp.lblIdusuario.setText(""+idusuario);
 				vp.activarOpciones(1);
 				vp.setVisible(true);
 				this.dispose();

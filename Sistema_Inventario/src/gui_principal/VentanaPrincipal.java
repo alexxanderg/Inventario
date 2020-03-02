@@ -15,7 +15,7 @@ import clases.Cliente;
 import gui_clientes.MantenimientoClientes;
 import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
-import gui_mantenimiento_productos.InternalMantenimientoProd;
+import gui_mantenimiento_productos.MantenimientoProd;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_ventas.Ventas2;
 
@@ -59,9 +59,10 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnDistribuidores;
     private JButton btnCompras;
     private JTextField txtPrueba;
+    public JLabel lblIdusuario;
 
     Ventas2 ventas = new Ventas2(null);
-	InternalMantenimientoProd vProductos = new InternalMantenimientoProd(null);
+	MantenimientoProd vProductos = new MantenimientoProd(null);
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
 	MantenimientoClientes vCliente = new MantenimientoClientes(null);
@@ -101,7 +102,7 @@ public class VentanaPrincipal extends JFrame {
 
 		panel = new JPanel();
 		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(0, 0, 230, 696);
+		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
 		btnVentas = new JButton("Ventas ");
@@ -249,6 +250,11 @@ public class VentanaPrincipal extends JFrame {
 		lblTipo.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		lblTipo.setBounds(0, 144, 230, 29);
 		panel.add(lblTipo);
+		
+		lblIdusuario = new JLabel("");
+		lblIdusuario.setForeground(Color.WHITE);
+		lblIdusuario.setBounds(0, 96, 67, 14);
+		panel.add(lblIdusuario);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(230, 50, 1134, 679);
@@ -341,7 +347,7 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnInventario.setBackground(colorSelec);
 			} else {
-					vProductos = new InternalMantenimientoProd(this);
+					vProductos = new MantenimientoProd(this);
 					desktopPane.add(vProductos);
 					vProductos.show();
 					vProductos.setMaximum(true);

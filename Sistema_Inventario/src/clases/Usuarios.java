@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import mysql.consultas;
 
 public class Usuarios {
+	int idusuario;
 	String usuario;
 	String password;
 	String nombre;
@@ -13,8 +14,9 @@ public class Usuarios {
 	ResultSet rs;
 
 	public Usuarios(){}
-	public Usuarios(String id, String password, String nombre, int tipo){
-		this.usuario = id;
+	public Usuarios(int idusuario, String usuario, String password, String nombre, int tipo){
+		this.idusuario = idusuario;
+		this.usuario = usuario;
 		this.password = password;
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -27,6 +29,7 @@ public class Usuarios {
 			while(rs.next())
 				cbUsuarios.addItem(
 						new Usuarios(
+								rs.getInt("idusuario"),
 								rs.getString("usuario"),
 								rs.getString("pass"),
 								rs.getString("nombre"),
@@ -67,6 +70,19 @@ public class Usuarios {
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
+	public int getIdusuario() {
+		return idusuario;
+	}
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
+	}
+	public ResultSet getRs() {
+		return rs;
+	}
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
+	
 	
 }
 

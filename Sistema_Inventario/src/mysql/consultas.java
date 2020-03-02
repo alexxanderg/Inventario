@@ -34,7 +34,7 @@ public class consultas {
 			pst.setString(2, u.getPassword());
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				usuario = new Usuarios(rs.getString("usuario"), rs.getString("pass"), rs.getString("nombre"), rs.getInt("tipo"));
+				usuario = new Usuarios(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("pass"), rs.getString("nombre"), rs.getInt("tipo"));
 			}
 		} catch (Exception e) {
 			System.out.println("Error en obtener usuario " + e);
@@ -101,7 +101,7 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet buscarProducto(String Prod) {
+	public ResultSet buscarProductoBarras(String codbarra) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
@@ -109,7 +109,7 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
-					"select * from tb_productos where codproducto = '" + Prod + "' or producto = '" + Prod + "'");
+					"select * from tb_productos where codbarra = '" + codbarra + "'");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -756,9 +756,8 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR EN DETALLE DE  KARDEX " + e);
 		}
 	}
-
-	public ResultSet Vender(String cliente, String usuario, double totCompra, double totVenta, double ganancia,
-			int idcliente, String nota, int metpago) {
+	
+	public ResultSet Vender(int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2) {
 		Connection con = MySQLConexion.getConection();
 		
 		java.sql.Statement st;
@@ -770,22 +769,26 @@ public class consultas {
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ventas (codventa, cliente, fecha, usuario, totcompra, totventa, ganancia, idcliente, nota, metpago)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ventas (codventa, idcliente, fecha, idusuario, totcompra, totventa, ganancia, descuento, nota, metpago1, montpago1, metpago2, montpago2, estado)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
-			prepareStmt.setString(2, cliente);
+			prepareStmt.setInt(2, idcliente);
 			prepareStmt.setObject(3, date2);
-			prepareStmt.setString(4, usuario);
-			prepareStmt.setDouble(5, totCompra);
-			prepareStmt.setDouble(6, totVenta);
-			prepareStmt.setDouble(7, ganancia);
-			prepareStmt.setDouble(8, idcliente);
+			prepareStmt.setInt(4, idusuario);
+			prepareStmt.setDouble(5, pretotC);
+			prepareStmt.setDouble(6, preTotalVentaFinal);
+			prepareStmt.setDouble(7, gananciaFinal);
+			prepareStmt.setDouble(8, descTotal);
 			prepareStmt.setString(9, nota);
-			prepareStmt.setInt(10, metpago);
+			prepareStmt.setInt(10, metpago1);
+			prepareStmt.setDouble(11, monto1);
+			prepareStmt.setInt(12, metpago2);
+			prepareStmt.setDouble(13, monto2);
+			prepareStmt.setInt(14, 1);
 			prepareStmt.execute();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al registrar venta: " + e);
 		}
 		return rs;
 	}
@@ -803,7 +806,7 @@ public class consultas {
 	}
 
 	public ResultSet RegistarDetalleVenta(int codVenta, String codProducto, float cantidad, double preUnidadOriginal,
-			double preTotalUnidadOriginal, double preUnidadFinal, double preTotalUnidadFinal) {
+			double preTotalUnidadOriginal, double preUnidadFinal, double preTotalUnidadFinal, double desc) {
 
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -812,8 +815,8 @@ public class consultas {
 			st = con.createStatement();
 			// codVenta, codProducto, cantventa, preUnidadOriginal,
 			// preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
-			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, prevenOri, totvenOri, prevenFin, totvenFin)"
-					+ " values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, prevenOri, totvenOri, prevenFin, totvenFin, descuento)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
 			// JOptionPane.showMessageDialog(null, cantidad);
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setInt(1, codVenta);
@@ -823,6 +826,7 @@ public class consultas {
 			prepareStmt.setDouble(5, preTotalUnidadOriginal);
 			prepareStmt.setDouble(6, preUnidadFinal);
 			prepareStmt.setDouble(7, preTotalUnidadFinal);
+			prepareStmt.setDouble(8, desc);
 			prepareStmt.execute();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -855,6 +859,19 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_ventas where codventa = '" + numVenta + "'");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet verificarVentaSinStock() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select ventasinstock from tb_configuraciones");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}

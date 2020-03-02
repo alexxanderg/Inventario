@@ -113,7 +113,7 @@ public class NuevoProducto extends JFrame {
 	
 	ResultSet rs;
 	consultas model = new consultas();
-	InternalMantenimientoProd mantenimientoProductos;
+	MantenimientoProd mantenimientoProductos;
 	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
 	private JButton btnAnadirDistri;
 	
@@ -133,7 +133,7 @@ public class NuevoProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto(InternalMantenimientoProd mantenimientoProductos) {
+	public NuevoProducto(MantenimientoProd mantenimientoProductos) {
 		this.mantenimientoProductos = mantenimientoProductos;
 		
 		
