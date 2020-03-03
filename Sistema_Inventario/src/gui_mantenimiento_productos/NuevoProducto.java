@@ -948,36 +948,8 @@ public class NuevoProducto extends JFrame {
 		Distribuidores distribuidor = new Distribuidores();
 		distribuidor.cargarDistribuidores(cbDistribuidor);
 		
-		
-		if(cbCategoria.getItemCount() == 0 && cbAlmacen.getItemCount() == 0 && cbUnidadMedida.getItemCount() == 0){
-			String arrayUmed[] = {"Caja","Galon","Gramo","Hora","Kilo","Litro","Metro","Servicio","Unidad"};
-			
-			for (int x=0; x<arrayUmed.length; x++){
-				UnidadMed todasUnidades = new UnidadMed(arrayUmed[x]);
-				cbUnidadMedida.addItem(todasUnidades);
-				try {
-					cbUnidadMedida.setSelectedItem(arrayUmed[x]);
-				} catch (Exception e) {
-				}
-				
-				Categoria todasCategorias = new Categoria(".General");
-				cbCategoria.addItem(todasCategorias);
-				Almacen todosAlmacenes = new Almacen(".Principal");
-				cbAlmacen.addItem(todosAlmacenes);
-				
-				txtNombreProducto.setText("}");
-				primeravez = 1;
-				actionPerformedBtnCrearProducto(null);
-				
-				//PONERLO COMO INACTIVO
-				int codigoProducto = 1;
-			}
-			cbUnidadMedida.setSelectedItem("Unidad");
-		}
-		else{
-			cbUnidadMedida.setSelectedItem("Unidad");
-			primeravez = 0;
-		}
+		cbUnidadMedida.setSelectedItem("Unidad");
+		primeravez = 0;
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
@@ -1295,15 +1267,10 @@ public class NuevoProducto extends JFrame {
 				
 				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 				
-				if(primeravez == 0) // NO
-					rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
-							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
-				else // 1 SI
-					rs = model.ingresarProductoPrimeraVez(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
-							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
-
+				rs = model.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
+						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
+						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
+				
 				if (rs == 0) {
 					model.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
 					mantenimientoProductos.cargar();

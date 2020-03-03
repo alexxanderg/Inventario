@@ -287,7 +287,7 @@ public class VentanaPrincipal extends JFrame {
 	private void cargar(){
 		this.setLocationRelativeTo(null);
 
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){

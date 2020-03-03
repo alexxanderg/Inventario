@@ -60,9 +60,7 @@ cantp1		float,
 prep1		float,
 promo2		varchar(20),
 cantp2		float,
-prep2		float,
-
-foreign key (iddistrib) references tb_distribuidores(iddistrib)
+prep2		float
 );  
 
 create table tb_ventas(
@@ -139,15 +137,15 @@ insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencim
 insert into tb_clientes values(	null, 'DNI', '76784966', 'Alexander Gamarra', 'La Encalada', '986865523', 'agamarra@bytexbyte.com.pe', 1);
 insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe', 1);
 
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Caja', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Galon', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Gramo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Hora', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Kilo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Litro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Metro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Servicio', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
-insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Unidad', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Caja', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Galon', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Gramo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Hora', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Kilo', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Litro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Metro', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Servicio', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
+insert into tb_productos values(null, null, '&', null, null, null, null, null, 'Unidad', null, '.General', '.Principal', 0, 0, 0, 0, 0, 0, 0, null, 0, 0, null, 0, 0); -- AGREGA UNIDADES DE MEDIDA
 insert into tb_productos values(null, '123456789', 'USB 64GB', '3.0', 'Sony', 'Negro', null, null, 'Unidad', null, '.General', '.Principal', 5, 2, 40.5, 55.9, 10, 0, null, 0, 0, null, 0, 0);
 
 use db_inventario;

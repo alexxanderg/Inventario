@@ -1218,7 +1218,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 		String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
 		String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen,
+	/*	ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen,
 				cod);
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER) {
@@ -1226,7 +1226,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			this.setEnabled(false);
 			int fila = tbCompras.getSelectedRow() - 1;
 			tbCompras.setRowSelectionInterval(fila, fila);
-		}
+		}*/
 	}
 
 	public void actualizartabla(float cant, float preu, float preo, float pret) {
@@ -1280,13 +1280,13 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 			String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
 			String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
 			String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-			ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,
+		/*	ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,
 					preOrigen, cod);
 
 			cp.setVisible(true);
 			this.setEnabled(false);
 			int fila = tbCompras.getSelectedRow();
-			tbCompras.setRowSelectionInterval(fila, fila);
+			tbCompras.setRowSelectionInterval(fila, fila);*/
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
