@@ -588,7 +588,7 @@ public class Ventas2 extends JInternalFrame {
 				try {
 					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 					while (rs.next()) {
-						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote"),     
+						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
 								rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
 								rs.getFloat("precioCo") });
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
@@ -1017,16 +1017,17 @@ public class Ventas2 extends JInternalFrame {
 	protected void mouseClickedTbCarrito(MouseEvent arg0) {
 		// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 		
-		int idprod = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
-		double cant = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
-		String prod = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
+		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
+		double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
+		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
 		double preU = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
-		double subt = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
+		double desc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
+		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
 		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
 		
+		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
 		
-		
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, prod, cant, preU, subt, preC, idprod);
+		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preU, subT, preC, desc);
 		cp.setVisible(true);
 		
 		this.setEnabled(false);
@@ -1034,11 +1035,17 @@ public class Ventas2 extends JInternalFrame {
 		tbCarrito.setRowSelectionInterval(fila, fila);
 	}
 	
-	public void actualizartabla(float cant, float preu, float preo, float pret) {
+	public void actualizartabla(double cant, double preu, double preo, double pret, double desc, String newUniMed, String oldUniMed) {
+		String nomProd = null;
+		nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
+		String newNomProd = nomProd.replaceAll(oldUniMed, newUniMed);
+		
 		tbCarrito.setValueAt(redondearDecimales(cant, 2), tbCarrito.getSelectedRow(), 0);
+		tbCarrito.setValueAt(newNomProd,					  tbCarrito.getSelectedRow(), 1);
 		tbCarrito.setValueAt(redondearDecimales(preu, 2), tbCarrito.getSelectedRow(), 3);
 		tbCarrito.setValueAt(redondearDecimales(preo, 2), tbCarrito.getSelectedRow(), 7);
 		tbCarrito.setValueAt(redondearDecimales(pret, 2), tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(desc, 2), tbCarrito.getSelectedRow(), 4);
 		sumarSubTotales();
 		sumarTotalGenerales();
 	}

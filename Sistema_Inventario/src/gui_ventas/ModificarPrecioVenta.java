@@ -35,6 +35,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import javax.swing.JToolBar;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ModificarPrecioVenta extends JFrame implements ActionListener, WindowListener, KeyListener, ItemListener{
 
@@ -45,43 +48,52 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	private JLabel lblSubtotal;
 	private JTextField txtCantidad;
 	private JTextField txtPUnidad;
-	private JTextField txtSTotal;
+	private JTextField txtTotal;
 	private JButton btnCambiar;
 	private JButton btnMenos1;
 	private JButton btnMas1;
 	private JButton btnEliminarProducto;
 	private JTextField txtPreCompra;
-	private JCheckBox chckbxMostrar;
 	private JComboBox cbPrecio;
-	
-	
-	String promo1;
-	String cpromo1;
-	String ppromo1;
-	String promo2;
-	String cpromo2;
-	String ppromo2;
-	
-	Ventas2 ventas;
-	String prod;
-	double cant; 
-	double preU;
-	double subt;
-	double preC;
-	int idprod;
 	private JPanel panel;
 	private JLabel lblDescuento;
-	private JTextField textField;
+	private JTextField txtDescuentoIndiv;
 	private JButton btnCancelar;
+	private JLabel lblPreCdescuento;
+	private JTextField txtPreCDesc;
+	private JLabel lblDescuentoTotal;
+	private JTextField txtDescuentoTot;
 	
-	/**
-	 * Launch the application.
-	 */
+	
+	String nomPromo1;
+	String cantPromo1;
+	String prePromo1;
+	String nomPromo2;
+	String cantPromo2;
+	String prePromo2;
+	String uniMedOriginal;
+	double preUniOriginal;
+	
+	Ventas2 ventas;
+	String nomProdVenta;
+	double cantVenta; 
+	double preUniVenta;
+	double subTotVenta;
+	double preCompraVenta;
+	double descVenta;
+	int idProd;
+	String uniMedVenta;
+	private JLabel lblS;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarPrecioVenta frame = new ModificarPrecioVenta(null, null, 0, 0, 0, 0, 0);
+					ModificarPrecioVenta frame = new ModificarPrecioVenta(null, 0, null, null, 0, 0, 0, 0, 0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,21 +102,23 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		});
 	}
 
-	public ModificarPrecioVenta(Ventas2 ventas, String prod, double cant, double preU, double subt, double preC, int idprod) {
-		setTitle("Modificar Producto en venta");
+	public ModificarPrecioVenta(Ventas2 ventas, int idProd, String nomProdVenta, String uniMedVenta, double cantVenta, double preUniVenta, double subTotVenta, double preCompraVenta, double descVenta) {
+		setTitle("Modificar precio de venta");
 		this.ventas = ventas;
-		this.prod = prod;
-		this.cant = cant;
-		this.preU = preU;
-		this.subt = subt;
-		this.preC = preC;
-		this.idprod = idprod;
+		this.nomProdVenta = nomProdVenta;
+		this.uniMedVenta = uniMedVenta;
+		this.cantVenta = cantVenta;
+		this.preUniVenta = preUniVenta;
+		this.subTotVenta = subTotVenta;
+		this.preCompraVenta = preCompraVenta;
+		this.descVenta = descVenta;
+		this.idProd = idProd;
 				
 		setAlwaysOnTop(true);
 		addWindowListener(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 440, 460);
+		setBounds(100, 100, 447, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -112,140 +126,255 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		
 		txtTitulo = new JLabel("TITULO");
 		txtTitulo.setForeground(Color.WHITE);
-		txtTitulo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtTitulo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTitulo.setBounds(0, 0, 437, 50);
+		txtTitulo.setBounds(0, 0, 441, 50);
 		contentPane.add(txtTitulo);
 		
 		lblNewLabel = new JLabel("Cantidad:");
-		lblNewLabel.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblNewLabel.setBounds(42, 124, 144, 31);
+		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNewLabel.setBounds(42, 124, 172, 31);
 		contentPane.add(lblNewLabel);
 		
-		lblPrecioPorUnidad = new JLabel("Precio:");
-		lblPrecioPorUnidad.setEnabled(false);
-		lblPrecioPorUnidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblPrecioPorUnidad.setBounds(42, 208, 144, 31);
+		lblPrecioPorUnidad = new JLabel("Precio original por:");
+		lblPrecioPorUnidad.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPrecioPorUnidad.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrecioPorUnidad.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrecioPorUnidad.setBounds(42, 167, 172, 31);
 		contentPane.add(lblPrecioPorUnidad);
 		
-		lblSubtotal = new JLabel("Precio final:");
-		lblSubtotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblSubtotal.setBounds(42, 317, 144, 31);
+		lblSubtotal = new JLabel("TOTAL:     S/");
+		lblSubtotal.setForeground(new Color(220, 20, 60));
+		lblSubtotal.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblSubtotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSubtotal.setFont(new Font("Candara", Font.BOLD, 25));
+		lblSubtotal.setBounds(45, 348, 216, 31);
 		contentPane.add(lblSubtotal);
 		
 		txtCantidad = new JTextField();
+		txtCantidad.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtCantidad(e);
+			}
+		});
 		txtCantidad.addKeyListener(this);
-		txtCantidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
-		txtCantidad.setBounds(188, 124, 211, 31);
+		txtCantidad.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtCantidad.setBounds(268, 125, 134, 31);
 		contentPane.add(txtCantidad);
 		txtCantidad.setColumns(10);
 		
 		txtPUnidad = new JTextField();
-		txtPUnidad.setEnabled(false);
+		txtPUnidad.setEditable(false);
+		txtPUnidad.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPUnidad(e);
+			}
+		});
 		txtPUnidad.addKeyListener(this);
-		txtPUnidad.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
+		txtPUnidad.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtPUnidad.setColumns(10);
-		txtPUnidad.setBounds(188, 208, 211, 31);
+		txtPUnidad.setBounds(268, 196, 134, 31);
 		contentPane.add(txtPUnidad);
 		
-		txtSTotal = new JTextField();
-		txtSTotal.setEnabled(false);
-		txtSTotal.setForeground(new Color(220, 20, 60));
-		txtSTotal.addKeyListener(this);
-		txtSTotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		txtSTotal.setColumns(10);
-		txtSTotal.setBounds(188, 317, 211, 31);
-		contentPane.add(txtSTotal);
+		txtTotal = new JTextField();
+		txtTotal.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtSTotal(e);
+			}
+		});
+		txtTotal.setForeground(new Color(220, 20, 60));
+		txtTotal.addKeyListener(this);
+		txtTotal.setFont(new Font("Arial", Font.BOLD, 20));
+		txtTotal.setColumns(10);
+		txtTotal.setBounds(268, 348, 134, 31);
+		contentPane.add(txtTotal);
 		
 		btnCambiar = new JButton("Cambiar");
 		btnCambiar.setForeground(new Color(255, 255, 255));
-		btnCambiar.setEnabled(false);
 		btnCambiar.setBackground(new Color(30, 144, 255));
 		btnCambiar.addActionListener(this);
-		btnCambiar.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		btnCambiar.setBounds(224, 368, 175, 43);
+		btnCambiar.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnCambiar.setBounds(227, 407, 175, 43);
 		contentPane.add(btnCambiar);
 		
 		btnMenos1 = new JButton("-1");
 		btnMenos1.addActionListener(this);
 		btnMenos1.setForeground(Color.WHITE);
-		btnMenos1.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		btnMenos1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnMenos1.setBackground(new Color(244, 164, 96));
-		btnMenos1.setBounds(247, 62, 86, 31);
+		btnMenos1.setBounds(224, 61, 86, 31);
 		contentPane.add(btnMenos1);
 		
 		btnMas1 = new JButton("+1");
 		btnMas1.addActionListener(this);
 		btnMas1.setForeground(Color.WHITE);
-		btnMas1.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
+		btnMas1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnMas1.setBackground(new Color(60, 179, 113));
-		btnMas1.setBounds(343, 62, 76, 31);
+		btnMas1.setBounds(323, 61, 76, 31);
 		contentPane.add(btnMas1);
 		
-		btnEliminarProducto = new JButton("Quitar Producto");
+		btnEliminarProducto = new JButton("Eliminar Producto");
 		btnEliminarProducto.addActionListener(this);
 		btnEliminarProducto.setForeground(Color.WHITE);
-		btnEliminarProducto.setFont(new Font("EngraversGothic BT", Font.BOLD, 18));
+		btnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnEliminarProducto.setBackground(new Color(220, 20, 60));
-		btnEliminarProducto.setBounds(10, 63, 227, 31);
+		btnEliminarProducto.setBounds(42, 63, 172, 31);
 		contentPane.add(btnEliminarProducto);
 		
 		txtPreCompra = new JTextField();
-		txtPreCompra.setVisible(false);
 		txtPreCompra.setEditable(false);
+		txtPreCompra.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPreCompra.setText("<dynamic>");
 		txtPreCompra.setFont(new Font("Dialog", Font.BOLD, 15));
 		txtPreCompra.setColumns(10);
-		txtPreCompra.setBounds(0, 27, 45, 31);
+		txtPreCompra.setBounds(0, 49, 42, 31);
 		contentPane.add(txtPreCompra);
-		
-		chckbxMostrar = new JCheckBox("Mostrar");
-		chckbxMostrar.setVisible(false);
-		chckbxMostrar.addActionListener(this);
-		chckbxMostrar.setFont(new Font("Dialog", Font.PLAIN, 12));
-		chckbxMostrar.setBounds(0, 7, 45, 23);
-		contentPane.add(chckbxMostrar);
 		
 		cbPrecio = new JComboBox();
 		cbPrecio.addItemListener(this);
 		cbPrecio.setFont(new Font("Dialog", Font.BOLD, 16));
-		cbPrecio.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un precio:", "Precio unitario"}));
-		cbPrecio.setBounds(188, 166, 211, 31);
+		cbPrecio.setBounds(42, 196, 172, 31);
 		contentPane.add(cbPrecio);
 		
 		panel = new JPanel();
 		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(0, 0, 437, 50);
+		panel.setBounds(0, 0, 441, 50);
 		contentPane.add(panel);
 		
-		lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		lblDescuento.setBounds(42, 250, 144, 31);
+		lblDescuento = new JLabel("Desc. individual:");
+		lblDescuento.setForeground(new Color(102, 205, 170));
+		lblDescuento.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescuento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDescuento.setBounds(42, 226, 172, 31);
 		contentPane.add(lblDescuento);
 		
-		textField = new JTextField();
-		textField.setText("0.0");
-		textField.setFont(new Font("EngraversGothic BT", Font.BOLD, 15));
-		textField.setColumns(10);
-		textField.setBounds(188, 251, 211, 31);
-		contentPane.add(textField);
+		txtDescuentoIndiv = new JTextField();
+		txtDescuentoIndiv.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtDescuentoIndiv(e);
+			}
+		});
+		txtDescuentoIndiv.setForeground(new Color(102, 205, 170));
+		txtDescuentoIndiv.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtDescuento(arg0);
+			}
+		});
+		txtDescuentoIndiv.setText("0.0");
+		txtDescuentoIndiv.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtDescuentoIndiv.setColumns(10);
+		txtDescuentoIndiv.setBounds(268, 227, 134, 31);
+		contentPane.add(txtDescuentoIndiv);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnCancelar(arg0);
+			}
+		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
-		btnCancelar.setFont(new Font("EngraversGothic BT", Font.BOLD, 20));
-		btnCancelar.setEnabled(false);
+		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(39, 368, 175, 43);
+		btnCancelar.setBounds(42, 407, 175, 43);
 		contentPane.add(btnCancelar);
 		
-		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, txtPUnidad, txtSTotal, btnEliminarProducto, btnMenos1, btnMas1, btnCambiar}));
+		lblPreCdescuento = new JLabel("Precio c/descuento:");
+		lblPreCdescuento.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPreCdescuento.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPreCdescuento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPreCdescuento.setBounds(42, 257, 172, 31);
+		contentPane.add(lblPreCdescuento);
+		
+		txtPreCDesc = new JTextField();
+		txtPreCDesc.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtPreCDesc(e);
+			}
+		});
+		txtPreCDesc.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPreCDesc(e);
+			}
+		});
+		txtPreCDesc.setText("0.0");
+		txtPreCDesc.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtPreCDesc.setColumns(10);
+		txtPreCDesc.setBounds(268, 258, 134, 31);
+		contentPane.add(txtPreCDesc);
+		
+		lblDescuentoTotal = new JLabel("Descuento total:");
+		lblDescuentoTotal.setForeground(new Color(102, 205, 170));
+		lblDescuentoTotal.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblDescuentoTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescuentoTotal.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDescuentoTotal.setBounds(42, 316, 172, 31);
+		contentPane.add(lblDescuentoTotal);
+		
+		txtDescuentoTot = new JTextField();
+		txtDescuentoTot.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtDescuentoTot(e);
+			}
+		});
+		txtDescuentoTot.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtDescuentoTot(e);
+			}
+		});
+		txtDescuentoTot.setForeground(new Color(102, 205, 170));
+		txtDescuentoTot.setText("0.0");
+		txtDescuentoTot.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtDescuentoTot.setColumns(10);
+		txtDescuentoTot.setBounds(268, 317, 134, 31);
+		contentPane.add(txtDescuentoTot);
+		
+		lblS = new JLabel("S/");
+		lblS.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblS.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS.setFont(new Font("Candara", Font.BOLD, 20));
+		lblS.setBounds(230, 257, 31, 31);
+		contentPane.add(lblS);
+		
+		label_1 = new JLabel("S/");
+		label_1.setForeground(new Color(102, 205, 170));
+		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_1.setFont(new Font("Candara", Font.BOLD, 20));
+		label_1.setBounds(230, 316, 31, 31);
+		contentPane.add(label_1);
+		
+		label_2 = new JLabel("S/");
+		label_2.setForeground(new Color(102, 205, 170));
+		label_2.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setFont(new Font("Candara", Font.BOLD, 20));
+		label_2.setBounds(230, 226, 31, 31);
+		contentPane.add(label_2);
+		
+		label_3 = new JLabel("S/");
+		label_3.setVerticalAlignment(SwingConstants.BOTTOM);
+		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_3.setFont(new Font("Candara", Font.BOLD, 20));
+		label_3.setBounds(230, 196, 31, 31);
+		contentPane.add(label_3);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, cbPrecio, txtPUnidad, txtDescuentoIndiv, txtTotal, btnCambiar, btnCancelar, btnEliminarProducto, btnMenos1, btnMas1}));
+		
 		cargar();
-		cantidad();
 	}
+	
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == chckbxMostrar) {
-			actionPerformedChckbxMostrar(arg0);
-		}
 		if (arg0.getSource() == btnEliminarProducto) {
 			actionPerformedBtnEliminarProducto(arg0);
 		}
@@ -283,85 +412,70 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		this.dispose();
 	}
 	
+	
+	
 	public void cargar(){
 		this.setLocationRelativeTo(null);
-		txtTitulo.setText(prod);
-		txtCantidad.setText("" + cant);
-		txtPUnidad.setText("" + preU);
-		txtPreCompra.setText(""+preC);
-		txtSTotal.setText(""+subt);
-		
-
+				
 		consultas model = new consultas();
-		ResultSet rs = model.buscarProductoID(idprod);
-		
+		ResultSet rs = model.buscarProductoID(idProd);
 		try {
 			while (rs.next()) {
-				promo1 = rs.getString("promo1");
-				cpromo1 = rs.getString("cantp1");;
-				ppromo1 = rs.getString("prep1");;
-				promo2 = rs.getString("promo2");;
-				cpromo2 = rs.getString("cantp2");;
-				ppromo2 = rs.getString("prep2");;
-				
-				/*
-				lblPromo1.setText(promo1);
-				txtPromo1.setText(ppromo1);
-				lblPromo2.setText(promo2);
-				txtPromo2.setText(ppromo2);*/
-				
+				nomPromo1 	= rs.getString("promo1");
+				cantPromo1	= rs.getString("cantp1");
+				prePromo1 	= rs.getString("prep1");
+				nomPromo2 	= rs.getString("promo2");
+				cantPromo2 	= rs.getString("cantp2");
+				prePromo2 	= rs.getString("prep2");
+				uniMedOriginal = rs.getString("unimedida");
+				preUniOriginal = rs.getFloat("precioVe");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "Error al llamar datos originales " + e);
 		}
-		try {
-			if(!promo1.equals("0"))
-				cbPrecio.addItem(promo1);
-			if(!promo2.equals("0"))
-				cbPrecio.addItem(promo2);
-			cbPrecio.setSelectedIndex(1);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		cbPrecio.setSelectedIndex(1);
+		
+		if( !(uniMedVenta.equals(uniMedOriginal)) )
+			cbPrecio.addItem(uniMedOriginal);
+		else
+			cbPrecio.addItem(uniMedVenta);
+			
+		if(!nomPromo1.equals("0"))
+			cbPrecio.addItem(nomPromo1);
+		if(!nomPromo2.equals("0"))
+			cbPrecio.addItem(nomPromo2);
+		
+		
+		cbPrecio.setSelectedItem(uniMedVenta);
+		/*for (int i = 0; i < cbPrecio.getItemCount(); i++)
+            if (cbPrecio.getItemAt(i).toString().equals(uniMedVenta))
+        		cbPrecio.setSelectedIndex(i);*/
+		txtTitulo.setText(nomProdVenta);
+		txtCantidad.setText("" + cantVenta);
+		txtPUnidad.setText("" + preUniVenta);
+		txtPreCompra.setText("" + preCompraVenta);
+		txtTotal.setText("" + subTotVenta);
+		txtDescuentoIndiv.setText("" + descVenta);		
+		calcular(0);
 	}
 	
 	protected void actionPerformedBtnCambiar(ActionEvent arg0) {
 		try {
-			float cant = Float.parseFloat(txtCantidad.getText());
-			float pre = -1;
-			float cantfinal = -1;
-			
-			switch (cbPrecio.getSelectedIndex()) {
-			case 1:
-				pre = Float.parseFloat(txtPUnidad.getText());
-				cantfinal = cant; 
-				break;
-			case 2:
-				pre = Float.parseFloat(txtPUnidad.getText());
-				cantfinal = cant * Float.parseFloat(cpromo1);
-				break;
-			case 3:
-				pre = Float.parseFloat(txtPUnidad.getText());
-				cantfinal = cant * Float.parseFloat(cpromo2);
-				break;
-			default:
-				break;
-			}
-			
-			float pret = Float.parseFloat(txtSTotal.getText());
-			float preo = Float.parseFloat(txtPreCompra.getText());
-			
-			if(cant <= 0 || pre <= 0 || preo < 0 || pret <=0){
-				this.setAlwaysOnTop(false);
-				JOptionPane.showMessageDialog(null, "Ingrese valores válidos");
-				this.setAlwaysOnTop(true);
+			double newCant = 0; 	newCant = Double.parseDouble(txtCantidad.getText());
+			String newUnimed = "0";	newUnimed = cbPrecio.getSelectedItem().toString();
+			double newPreuni = 0;	newPreuni = Double.parseDouble(txtPUnidad.getText());
+			double newDesc = 0; 	newDesc = Double.parseDouble(txtDescuentoIndiv.getText());
+			double newSTot = 0; 	newSTot = Double.parseDouble(txtTotal.getText());
+					
+			if(newCant<0 || newPreuni<0 || newDesc<0 || newSTot<0){
+				JOptionPane.showMessageDialog(null, "No está permitido valores negativos");
 			}
 			else{
-				
-				
-				ventas.actualizartabla(cantfinal, pre, preo, pret);	
-				ventas.setEnabled(true);
+				if(cbPrecio.getSelectedIndex() == 0)
+					ventas.actualizartabla(newCant, newPreuni, preCompraVenta, newSTot, newDesc, newUnimed, uniMedVenta);
+				if(cbPrecio.getSelectedIndex() == 1)
+					ventas.actualizartabla(newCant, newPreuni, Double.parseDouble(prePromo1), newSTot, newDesc, newUnimed, uniMedVenta);
+				if(cbPrecio.getSelectedIndex() == 2)
+					ventas.actualizartabla(newCant, newPreuni, Double.parseDouble(prePromo2), newSTot, newDesc, newUnimed, uniMedVenta);
 				this.dispose();
 			}
 		} catch (Exception e) {
@@ -380,10 +494,8 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
         return resultado;
     }
 	
-	public void keyPressed(KeyEvent arg0) {
-	}
 	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getSource() == txtSTotal) {
+		if (arg0.getSource() == txtTotal) {
 			keyReleasedTxtSTotal(arg0);
 		}
 		if (arg0.getSource() == txtPUnidad) {
@@ -393,62 +505,103 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			keyReleasedTxtCantidad(arg0);
 		}
 	}
-	public void keyTyped(KeyEvent arg0) {
-	}
 	protected void keyReleasedTxtCantidad(KeyEvent arg0) {
-		cantidad();
-	}
-	
-	public void cantidad(){
-		try {
-			float cant = Float.parseFloat(txtCantidad.getText());
-			float pre = -1;
-			switch (cbPrecio.getSelectedIndex()) {
-			case 0:
-				pre = 0;
-				break;
-			case 1:
-				pre = Float.parseFloat(txtPUnidad.getText());
-				break;
-			case 2:
-				//pre = Float.parseFloat(txtPromo1.getText());
-				break;
-			case 3:
-				//pre = Float.parseFloat(txtPromo2.getText());
-				break;
-
-			default:
-				break;
-			}
-			
-			
-			float pret = Float.parseFloat(txtSTotal.getText());
-			double stTemp = cant * pre;
-			stTemp = redondearDecimales(stTemp,2);
-			txtSTotal.setText(""+stTemp);
-			
-		} catch (Exception e) {
-			txtSTotal.setText("0.00");
-		}
+		calcular(0);
 	}
 	
 	protected void keyReleasedTxtPUnidad(KeyEvent arg0) {
+	}
+	
+	protected void keyReleasedTxtDescuento(KeyEvent arg0) {
 		try {
-			float cant = Float.parseFloat(txtCantidad.getText());
-			float preu = Float.parseFloat(txtPUnidad.getText());
-			float pret = Float.parseFloat(txtSTotal.getText());
-			double stTemp = cant * preu;
-			stTemp = redondearDecimales(stTemp,2);
-			txtSTotal.setText(""+stTemp);
+			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
+				descindiv = redondearDecimales(descindiv, 2);
+			double newcant = Double.parseDouble(txtCantidad.getText());
+				newcant = redondearDecimales(newcant, 2);
+			double desctot = newcant * descindiv;
+				
+			txtDescuentoTot.setText("" + desctot);
+			calcular(0);
+			
 		} catch (Exception e) {
-			txtSTotal.setText("0.00");
+		}
+	}
+	protected void keyReleasedTxtDescuentoTot(KeyEvent arg0) {
+		try {
+			double desctot = Double.parseDouble(txtDescuentoTot.getText());
+				desctot = redondearDecimales(desctot, 2);
+			double newcant = Double.parseDouble(txtCantidad.getText());
+				newcant = redondearDecimales(newcant, 2);
+			double descindiv = desctot/newcant;
+				
+			txtDescuentoIndiv.setText("" + descindiv);
+			calcular(0);
+			
+		} catch (Exception e) {
+		}
+	}
+	protected void keyReleasedTxtPreCDesc(KeyEvent arg0) {
+		try {
+			double preUniCDescu = Double.parseDouble(txtPreCDesc.getText());
+				preUniCDescu = redondearDecimales(preUniCDescu, 2);
+			double newcant = Double.parseDouble(txtCantidad.getText());
+				newcant = redondearDecimales(newcant, 2);
+			
+			double precioUniEnUso = 0;
+			
+			if(cbPrecio.getSelectedIndex() == 0)
+				precioUniEnUso = preUniVenta;
+			if(cbPrecio.getSelectedIndex() == 1)
+				precioUniEnUso = Double.parseDouble(prePromo1);
+			if(cbPrecio.getSelectedIndex() == 2)
+				precioUniEnUso = Double.parseDouble(prePromo2);
+			
+			double descindiv = precioUniEnUso - preUniCDescu;
+				
+			txtDescuentoIndiv.setText("" + descindiv);
+			calcular(1);//1VIENE DE PRECIO CON DESCUENTO
+			
+		} catch (Exception e) {
+		}
+	}
+	
+	
+	public void calcular(int origen){
+		try {
+			if(origen != 1){
+				double precioUniEnUso = 0;
+				
+				if(cbPrecio.getSelectedIndex() == 0)
+					precioUniEnUso = preUniVenta;
+				if(cbPrecio.getSelectedIndex() == 1)
+					precioUniEnUso = Double.parseDouble(prePromo1);
+				if(cbPrecio.getSelectedIndex() == 2)
+					precioUniEnUso = Double.parseDouble(prePromo2);
+				
+				double newCant = 0; 	newCant = Double.parseDouble(txtCantidad.getText());
+				double newPreUniSDesc = 0;	newPreUniSDesc = Double.parseDouble(txtPUnidad.getText());
+				double newPreUniCDesc = 0;	newPreUniCDesc = Double.parseDouble(txtPreCDesc.getText());
+				double newDescIndiv = 0;newDescIndiv = Double.parseDouble(txtDescuentoIndiv.getText());
+				double newDescTot = 0; 	newDescTot = Double.parseDouble(txtDescuentoTot.getText());
+				double preTotal = 0; 	preTotal = Double.parseDouble(txtTotal.getText());
+				
+				newPreUniCDesc = newPreUniSDesc - newDescIndiv;
+				preTotal = newPreUniCDesc * newCant;
+					preTotal = redondearDecimales(preTotal, 1);
+				
+					
+				txtPreCDesc.setText(""+newPreUniCDesc);
+				txtTotal.setText("" + preTotal);
+			}
+		} catch (Exception e) {
+			txtTotal.setText("0");
 		}
 	}
 	
 	protected void keyReleasedTxtSTotal(KeyEvent arg0) {
 		try {
 			float cant = Float.parseFloat(txtCantidad.getText());
-			float pret = Float.parseFloat(txtSTotal.getText());
+			float pret = Float.parseFloat(txtTotal.getText());
 			double pre = pret/cant;
 			pre = redondearDecimales(pre,2);
 			
@@ -479,7 +632,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	protected void actionPerformedBtnMas1(ActionEvent arg0) {
 		try {
 			txtCantidad.setText(""+(Float.parseFloat(txtCantidad.getText()) + 1));
-			cantidad();
+			calcular(0);
 		} catch (Exception e) {
 		}
 	}
@@ -490,7 +643,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				txtCantidad.setText("0.00");
 			else
 				txtCantidad.setText("" + (cant-1));
-			cantidad();
+			calcular(0);
 		} catch (Exception e) {
 		}
 	}
@@ -499,21 +652,8 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		ventas.setEnabled(true);
 		this.dispose();
 	}
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getSource() == chckbxMostrar) {
-			propertyChangeChckbxMostrar(evt);
-		}
-	}
 	protected void propertyChangeChckbxMostrar(PropertyChangeEvent evt) {
 
-	}
-	
-	protected void actionPerformedChckbxMostrar(ActionEvent arg0) {
-		if (chckbxMostrar.isSelected()) {
-			txtPreCompra.setVisible(true);
-		}else {
-			txtPreCompra.setVisible(false);
-		}
 	}
 	public void itemStateChanged(ItemEvent arg0) {
 		if (arg0.getSource() == cbPrecio) {
@@ -523,68 +663,58 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	
 	protected void itemStateChangedComboBox(ItemEvent arg0) {
 		if(cbPrecio.getSelectedIndex() == 0){
-			txtSTotal.setEnabled(false);
-			btnCambiar.setEnabled(false);
-			
-			lblPrecioPorUnidad.setEnabled(false);
-			txtPUnidad.setEnabled(false);
-		/*	
-			lblPromo1.setEnabled(false);
-			txtPromo1.setEnabled(false);
-			
-			lblPromo2.setEnabled(false);
-			txtPromo2.setEnabled(false);	*/		
+			txtPUnidad.setText(""+preUniVenta);
 		}
 		if(cbPrecio.getSelectedIndex() == 1){
-			txtSTotal.setEnabled(true);
-			btnCambiar.setEnabled(true);
-			
-			lblPrecioPorUnidad.setEnabled(true);
-			txtPUnidad.setEnabled(true);
-			/*
-			lblPromo1.setEnabled(false);
-			txtPromo1.setEnabled(false);
-			
-			lblPromo2.setEnabled(false);
-			txtPromo2.setEnabled(false);*/
+			//txtCantidad.setText("1");
+			txtPUnidad.setText(prePromo1);
 		}
 		if(cbPrecio.getSelectedIndex() == 2){
-			txtSTotal.setEnabled(true);
-			btnCambiar.setEnabled(true);
-			
-			lblPrecioPorUnidad.setEnabled(false);
-			txtPUnidad.setEnabled(false);
-			
-		/*	lblPromo1.setEnabled(true);
-			txtPromo1.setEnabled(true);
-			
-			lblPromo2.setEnabled(false);
-			txtPromo2.setEnabled(false);
-			
-			float pu = Float.parseFloat(txtPromo1.getText()) / Float.parseFloat(cpromo1);
-			txtPUnidad.setText("" + redondearDecimales(pu, 2) );*/
-			
+			//txtCantidad.setText("1");
+			txtPUnidad.setText(prePromo2);
 		}
-		if(cbPrecio.getSelectedIndex() == 3){
-			txtSTotal.setEnabled(true);
-			btnCambiar.setEnabled(true);
-			
-			lblPrecioPorUnidad.setEnabled(false);
-			txtPUnidad.setEnabled(false);
-			/*
-			lblPromo1.setEnabled(false);
-			txtPromo1.setEnabled(false);
-			
-			lblPromo2.setEnabled(true);			
-			txtPromo2.setEnabled(true);
-			
-			float pu = Float.parseFloat(txtPromo2.getText()) / Float.parseFloat(cpromo2);
-			txtPUnidad.setText("" + redondearDecimales(pu, 2));*/
-		}
-		cantidad();
+		calcular(0);
 	}
 	
-	public void calcularPreUni(){
+	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
+		this.dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+	
+	private void seleccionarTexto(FocusEvent e){
+		Object o = e.getSource();
+        if(o instanceof javax.swing.JTextField){
+            javax.swing.JTextField txt = (javax.swing.JTextField) o;
+            txt.setSelectionStart(0);
+            txt.setSelectionEnd(txt.getText().length());
+        }
+	}
+	protected void focusGainedTxtPUnidad(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtCantidad(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtSTotal(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtDescuentoIndiv(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtPreCDesc(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtDescuentoTot(FocusEvent e) {
+		seleccionarTexto(e);
 	}
 }
