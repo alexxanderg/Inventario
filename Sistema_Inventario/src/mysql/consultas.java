@@ -762,36 +762,34 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet RegistarDetalleVenta(int codVenta, String codProducto, float cantidad, double preUnidadOriginal,
-			double preTotalUnidadOriginal, double preUnidadFinal, double preTotalUnidadFinal, double desc) {
-
+	public ResultSet RegistarDetalleVenta(int codventa, int codproducto, double cantidad, double preVeSDInd,
+			double preVeSDTot, double descTotal, double subTotal, double ganancia) {
+		
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			// codVenta, codProducto, cantventa, preUnidadOriginal,
-			// preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
-			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, prevenOri, totvenOri, prevenFin, totvenFin, descuento)"
+			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descTotal, subTotal, ganancia)"
 					+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
 			// JOptionPane.showMessageDialog(null, cantidad);
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setInt(1, codVenta);
-			prepareStmt.setString(2, codProducto);
-			prepareStmt.setFloat(3, cantidad);
-			prepareStmt.setDouble(4, preUnidadOriginal);
-			prepareStmt.setDouble(5, preTotalUnidadOriginal);
-			prepareStmt.setDouble(6, preUnidadFinal);
-			prepareStmt.setDouble(7, preTotalUnidadFinal);
-			prepareStmt.setDouble(8, desc);
+			prepareStmt.setInt(1, codventa);
+			prepareStmt.setInt(2, codproducto);
+			prepareStmt.setDouble(3, cantidad);
+			prepareStmt.setDouble(4, preVeSDInd);
+			prepareStmt.setDouble(5, preVeSDTot);
+			prepareStmt.setDouble(6, descTotal);
+			prepareStmt.setDouble(7, subTotal);
+			prepareStmt.setDouble(8, ganancia);
 			prepareStmt.execute();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al registrar detalle de venta: " + e);
 		}
 		return rs;
 	}
 
-	public ResultSet RealizarDescuentoStock(String codProducto, float cantVenta) {
+	public ResultSet RealizarDescuentoStock(int codProducto, double cantVenta) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
@@ -799,8 +797,8 @@ public class consultas {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad=cantidad-? where codProducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setFloat(1, cantVenta);
-			prepareStmt.setString(2, codProducto);
+			prepareStmt.setDouble(1, cantVenta);
+			prepareStmt.setInt(2, codProducto);
 			prepareStmt.execute();
 
 		} catch (Exception e) {

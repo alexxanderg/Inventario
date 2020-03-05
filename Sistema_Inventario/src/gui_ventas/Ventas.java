@@ -763,10 +763,10 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	protected void actionPerformedBtnLista(ActionEvent arg0) {
-		ListaDeProductos lp = new ListaDeProductos(this);
+		/*ListaDeProductos lp = new ListaDeProductos(this);
 		lp.setLocationRelativeTo(null);
 		lp.setVisible(true);
-		this.setEnabled(false);
+		this.setEnabled(false);*/
 	}
 
 	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
@@ -903,7 +903,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 								//model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
 									//	preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
-								model.RealizarDescuentoStock(codProducto, cantventa);
+								//model.RealizarDescuentoStock(codProducto, cantventa);
 							}
 
 						} catch (Exception e) {

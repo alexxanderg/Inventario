@@ -17,6 +17,7 @@ import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.MantenimientoProd;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
+import gui_reportes.Reportes2;
 import gui_ventas.Ventas2;
 
 import javax.swing.ImageIcon;
@@ -66,6 +67,7 @@ public class VentanaPrincipal extends JFrame {
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
 	MantenimientoClientes vCliente = new MantenimientoClientes(null);
+	Reportes2 vReportes = new Reportes2(null);
 	Configuraciones config = new Configuraciones();
 
     //Color colorSelec = new Color(242, 136, 113);
@@ -415,8 +417,27 @@ public class VentanaPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
+	
 	protected void actionPerformedBtnReportes(ActionEvent e) {
+		try {
+			if (vReportes.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				vReportes.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				btnReportes.setBackground(colorSelec);
+			} else {
+				vReportes = new Reportes2(this);
+				desktopPane.add(vReportes);
+				vReportes.show();
+				vReportes.setMaximum(true);
+				pintarBotones();
+				btnReportes.setBackground(colorSelec);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
 	}
+	
 	protected void actionPerformedBtnConfiguraciones(ActionEvent arg0) {
 		try {
 			if (config.isShowing()) {

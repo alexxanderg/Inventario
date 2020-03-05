@@ -525,7 +525,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 		this.contentPane.add(this.label_3);
 
 		this.cbxRanking = new JComboBox();
-		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] { "M\u00C1S VENDIDOS", "MENOS VENDIDOS" }));
+		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] {"M\u00C1S VENDIDOS", "MENOS VENDIDOS"}));
 		this.cbxRanking.setToolTipText("");
 		this.cbxRanking.setBounds(177, 539, 242, 33);
 		this.contentPane.add(this.cbxRanking);

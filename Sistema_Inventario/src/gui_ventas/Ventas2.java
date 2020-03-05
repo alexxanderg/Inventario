@@ -109,7 +109,7 @@ public class Ventas2 extends JInternalFrame {
 	private JLabel lblTotOriginal;
 	private JLabel lblTotalCompra;
 	private JLabel lblGananciaTotal;
-	private JLabel label_2;
+	private JLabel lblElVueltoDe_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -278,6 +278,11 @@ public class Ventas2 extends JInternalFrame {
 		getContentPane().add(txtNroImpresiones);
 		
 		btnLimpiar = new JButton("Limpiar");
+		this.btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnLimpiar(arg0);
+			}
+		});
 		btnLimpiar.setForeground(Color.WHITE);
 		btnLimpiar.setFont(new Font("Arial", Font.BOLD, 25));
 		btnLimpiar.setBackground(new Color(220, 20, 60));
@@ -389,11 +394,11 @@ public class Ventas2 extends JInternalFrame {
 		label_1.setBounds(605, 108, 32, 34);
 		getContentPane().add(label_1);
 		
-		lblElVueltoDe = new JLabel("El vuelto de 0 es:");
-		lblElVueltoDe.setHorizontalAlignment(SwingConstants.LEFT);
+		lblElVueltoDe = new JLabel("S/ 0 es:");
+		lblElVueltoDe.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblElVueltoDe.setForeground(new Color(30, 144, 255));
-		lblElVueltoDe.setFont(new Font("Arial", Font.BOLD, 20));
-		lblElVueltoDe.setBounds(441, 190, 224, 34);
+		lblElVueltoDe.setFont(new Font("Arial", Font.BOLD, 22));
+		lblElVueltoDe.setBounds(441, 227, 139, 34);
 		getContentPane().add(lblElVueltoDe);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
@@ -446,12 +451,12 @@ public class Ventas2 extends JInternalFrame {
 		lblIGV.setBounds(911, 58, 197, 30);
 		getContentPane().add(lblIGV);
 		
-		label_2 = new JLabel("S/");
-		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setForeground(new Color(30, 144, 255));
-		label_2.setFont(new Font("Arial", Font.BOLD, 22));
-		label_2.setBounds(548, 227, 32, 34);
-		getContentPane().add(label_2);
+		lblElVueltoDe_1 = new JLabel("El vuelto de");
+		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
+		lblElVueltoDe_1.setFont(new Font("Arial", Font.BOLD, 22));
+		lblElVueltoDe_1.setBounds(441, 195, 139, 34);
+		getContentPane().add(lblElVueltoDe_1);
 
 		
 		menuBar = new JMenuBar();
@@ -473,6 +478,17 @@ public class Ventas2 extends JInternalFrame {
 		menuBar.add(mnCrearProducto);
 		
 		mnlistaDeProductos = new JMenu("|Lista de productos| ");
+		this.mnlistaDeProductos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnlistaDeProductos(arg0);
+			}
+		});
+		this.mnlistaDeProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedMnlistaDeProductos(arg0);
+			}
+		});
 		mnlistaDeProductos.setForeground(new Color(60, 179, 113));
 		mnlistaDeProductos.setFont(new Font("Arial", Font.BOLD, 22));
 		mnlistaDeProductos.setBackground(SystemColor.menu);
@@ -582,6 +598,8 @@ public class Ventas2 extends JInternalFrame {
 	public void AgregarProductoATabla() {
 		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
 			String nomProducto = txtBuscarProd.getText();
+			txtPago1.setText("0");
+			txtPago2.setText("0");
 			int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
 			rs = model.buscarProductoID(idProd);
 			int flag = 0;
@@ -845,6 +863,8 @@ public class Ventas2 extends JInternalFrame {
 				
 				if (flag == 1) {
 					int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
+					String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
+					String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
 					int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
 					String nota = txtInfoAdicional.getText();
 					
@@ -859,91 +879,77 @@ public class Ventas2 extends JInternalFrame {
 					float monto2 = 0;	if(txtPago2.getText().length()>0) monto2 = Float.parseFloat(txtPago2.getText());
 							
 					model.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
-					
-					/*
+									/*
+									 * SE REALIZO EL REGISTRO DE LA VENTA
+									 * 
+									 * A CONTINUACION SE REGISTRARAN LOS DETALLES DE ESTA
+									 * 
+									 * */
+									
+					// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
+					/*double totalSDescVenta = 0;
+					double preTotCompra = 0;
 					for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-						float cantidad = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-						int idproducto = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
-						double precioVeUni = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-							precioVeUni = redondearDecimales(precioVeUni, 2);
-						double descuentoUni = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-							descuentoUni = redondearDecimales(descuentoUni, 2);
-						double subTotModif = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
-							subTotModif = redondearDecimales(subTotModif, 2);
-						double precioCoUni = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
-							precioCoUni = redondearDecimales(precioCoUni, 2);
+						double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+						int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
+						double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+							precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+						double descuentoUniVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+							descuentoUniVenta = redondearDecimales(descuentoUniVenta, 2);
+						double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+							subTotVenta = redondearDecimales(subTotVenta, 2);
+						double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+							precioCoVenta = redondearDecimales(precioCoVenta, 2);
 						
+						
+						// CALCULO DE PRECIOS TOTALES
+						totalSDescVenta = totalSDescVenta + precioVeUniSDescVenta;
+							totalSDescVenta = redondearDecimales(totalSDescVenta, 2);
 							
-						// CALCULO DE PRECIOS
-						totalOriginalVenta = totalOriginalVenta + precioVeUni;
-							totalOriginalVenta = redondearDecimales(totalOriginalVenta, 2);
-							
-						pretotCompra = pretotCompra + precioCoUni;
-							pretotCompra = redondearDecimales(pretotCompra, 2);
+						preTotCompra = preTotCompra + precioCoVenta;
+							preTotCompra = redondearDecimales(preTotCompra, 2);
+					}*/
+
+					int ultCodVenta = 0;
 					
-					}
-*//*
-					
-					int codVenta = 0;
-					try {
-						int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
-						String cli = cbClientes.getSelectedItem().toString();
-						String nrodoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
+					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
 						
-						float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
-						double gananciaOriginal = pretotVenta - pretotCompra;
-						gananciaOriginal = redondearDecimales(gananciaOriginal, 2);
-						double gananciaFinal = preTotalVentaFinal - pretotCompra;
-						gananciaFinal = redondearDecimales(gananciaFinal, 2);
-						
-						String nota = txtInfoAdicional.getText();
-						int idusuario = Integer.parseInt(vp.lblIdusuario.getText()); // USUARIO
-						float descTotal = Float.parseFloat(lblDescuento.getText());
-						
-						int metpago1 = cbPago1.getSelectedIndex();
-						int metpago2 = cbPago2.getSelectedIndex();
-						float monto1 = Float.parseFloat(txtPago1.getText());
-						float monto2 = Float.parseFloat(txtPago2.getText());
-						
-						model.Vender(idcliente, idusuario, pretotCompra, preTotalVentaFinal, gananciaFinal, descTotal, nota, metpago1, monto1, metpago2, monto2);
+						/*double preTotalVentaFinal = Float.parseFloat(lblTotalVentaFinal.getText());
+						double gananciaFinal = preTotalVentaFinal - preTotCompra;
+							gananciaFinal = redondearDecimales(gananciaFinal, 2);
+						double descTotal = Float.parseFloat(lblDescuento.getText());*/
+												
 						rs = model.ObtenerUltimoCodigo();
 						try {
 							while (rs.next())
-								codVenta = rs.getInt("codventa");
+								ultCodVenta = rs.getInt("codventa");
 						} catch (Exception e3) {
-							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo codigo: " + e3);
+							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
 						}
 
 						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-							String codProducto = tbCarrito.getValueAt(i, 5).toString();
-							float cantventa = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+							double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
+							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+							double descuentoUniVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+								descuentoUniVenta = redondearDecimales(descuentoUniVenta, 2);
+							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+								subTotVenta = redondearDecimales(subTotVenta, 2);
+							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+								precioCoVenta = redondearDecimales(precioCoVenta, 2);
+							double gananciaProdVenta = subTotVenta - precioCoVenta;
+								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 
-							double preVeUnidadOriginal = 0;
-
-							for (int y = 0; y < listprod.size(); y++) {
-								if (listprod.get(y).getCodigo().equals(codProducto)) {
-									preVeUnidadOriginal = listprod.get(y).getPrecioVe();
-									y = listprod.size();
-								}
-							}
-							preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 2);
-
-							double preTotalUnidadOriginal = cantventa * preVeUnidadOriginal;
-							preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 2);
-
-							double preUnidadFinal = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-							preUnidadFinal = redondearDecimales(preUnidadFinal, 2);
-							double preTotalUnidadFinal = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
-							preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 2);
-
-							model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
-									preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal, 0);
-							model.RealizarDescuentoStock(codProducto, cantventa);
+							model.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
+									descuentoUniVenta, subTotVenta, gananciaProdVenta);
+							
+							//model.RealizarDescuentoStock(idProdVenta, cantProdVenta);
 						}
 
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "ERROR: " + e2);
-					}*/
+					}
 
 					// IMPRIMIR TICKET
 					int copias = Integer.parseInt(txtNroImpresiones.getText());
@@ -1099,11 +1105,11 @@ public class Ventas2 extends JInternalFrame {
 			double vuelto = redondearDecimales(sumaPagos - tot, 2);
 			
 			if (vuelto < 0){
-				lblElVueltoDe.setText("El vuelto de " + sumaPagos + " es: ");
+				lblElVueltoDe.setText("S/ " + sumaPagos + " es: ");
 				txtVuelto.setText("0.00");
 			}
 			else{
-				lblElVueltoDe.setText("El vuelto de " + sumaPagos + " es: ");
+				lblElVueltoDe.setText("S/ " + sumaPagos + " es: ");
 				txtVuelto.setText("" + vuelto + "0");
 			}
 		} catch (Exception e2) {
@@ -1135,5 +1141,39 @@ public class Ventas2 extends JInternalFrame {
 			txtPago2.setText("0");
 			calcularVuelto();
 		}
+	}
+	protected void actionPerformedBtnLimpiar(ActionEvent arg0) {
+		limpiarVentana();
+	}
+	
+	protected void actionPerformedMnlistaDeProductos(ActionEvent arg0) {
+		
+	}
+	
+	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
+		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			if (codigo.equals(tbCarrito.getValueAt(i, 6).toString())) {
+				JOptionPane.showMessageDialog(null, "entro");
+				float temp = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+				float temp2 = Float.parseFloat(cantidad);
+				
+				float suma = temp + temp2;
+				tbCarrito.setValueAt(suma, i, 0);
+				txtBuscarProd.requestFocus();
+				tbCarrito.setRowSelectionInterval(i, i);
+				return 0;
+			}
+		}
+		return 1; // 1 = NO ENCONTRÓ COINCIDENCIA
+	}
+	public void seleccionarRow() {
+		int cant = tbCarrito.getRowCount() - 1;
+		tbCarrito.setRowSelectionInterval(cant, cant);
+	}
+	protected void mouseClickedMnlistaDeProductos(MouseEvent arg0) {
+		ListaDeProductos lp = new ListaDeProductos(this);
+		lp.setLocationRelativeTo(null);
+		lp.setVisible(true);
+		this.setEnabled(false);
 	}
 }

@@ -28,12 +28,12 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 	private JButton btnAgregar;
 	private JTextField txtCantidad;
 	private JScrollPane scrollPane;
+	private JTextField txtListaCompletaDe;
 	
 	JTable tb;
 	ResultSet rs;
 	Login log = new Login();
-	Ventas v = null;
-	private JTextField txtListaCompletaDe;
+	Ventas2 ventas2 = null;
 	
 	public static void main(String[] args) {
 		try {
@@ -45,11 +45,13 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		}
 	}
 
-	public ListaDeProductos(Ventas temp2){
+	public ListaDeProductos(Ventas2 ventas2){
+		this.ventas2 = ventas2;
+		
 		setResizable(false);
 		setAlwaysOnTop(true);
 		addWindowListener(this);
-		v = temp2;
+		
 		setBounds(100, 100, 970, 645);
 		getContentPane().setLayout(null);
 		
@@ -94,6 +96,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		getContentPane().add(txtListaCompletaDe);
 		tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false) ;
+		
 		cargarDatos();
 	}
 	public void actionPerformed(ActionEvent arg0) {
@@ -111,17 +114,21 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 			else{
 				String cantidad = txtCantidad.getText();
 				String codigo = tbProductos.getValueAt(tbProductos.getSelectedRow(), 0).toString();
-				int rpt = v.AnadirProductosdeListaCompleta(codigo, cantidad);
+				int rpt = ventas2.AnadirProductosdeListaCompleta(codigo, cantidad);
 				if(rpt == 1){
-					v.dtm.addRow(new Object[]{cantidad, tbProductos.getValueAt(tbProductos.getSelectedRow(), 1), tbProductos.getValueAt(tbProductos.getSelectedRow(), 2), tbProductos.getValueAt(tbProductos.getSelectedRow(), 4), tbProductos.getValueAt(tbProductos.getSelectedRow(), 5), "", tbProductos.getValueAt(tbProductos.getSelectedRow(), 0),tbProductos.getValueAt(tbProductos.getSelectedRow(), 6)});
-					v.seleccionarRow();
+					consultas model = new consultas();
+					ResultSet rs = model.buscarProductoID(Integer.parseInt(codigo));
+					rs.next();
+					ventas2.dtm.addRow(new Object[]{cantidad, rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+							rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
+							rs.getFloat("precioCo") });	
+					ventas2.seleccionarRow();
 				}
-				v.sumarSubTotales();
-				v.sumarTotal();
+				ventas2.sumarSubTotales();
 			}
 		} catch (Exception e) {
 			this.setAlwaysOnTop(false);
-			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+			JOptionPane.showMessageDialog(null, "Seleccione un producto: " + e);
 			this.setAlwaysOnTop(true);
 		}
 	}
@@ -136,7 +143,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		rs = model.cargarProductos();
 		try {
 			while(rs.next())
-				dtm.addRow(new Object[]{rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("cantidad"), rs.getFloat("precioVe"), rs.getFloat("precioCo")});
+				dtm.addRow(new Object[]{rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color"), rs.getString("unimedida"), rs.getFloat("cantidad"), rs.getFloat("precioVe"), rs.getFloat("precioCo")});
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -180,8 +187,8 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		}
 	}
 	public void windowClosing(WindowEvent arg0) {
-		v.setEnabled(true);
-		v.setVisible(true);	
+		ventas2.setEnabled(true);
+		ventas2.setVisible(true);	
 	}
 	public void windowDeactivated(WindowEvent arg0) {
 	}
