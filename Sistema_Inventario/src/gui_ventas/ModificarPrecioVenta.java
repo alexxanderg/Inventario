@@ -506,7 +506,18 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		}
 	}
 	protected void keyReleasedTxtCantidad(KeyEvent arg0) {
-		calcular(0);
+		try {
+			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
+				descindiv = redondearDecimales(descindiv, 2);
+			double newcant = Double.parseDouble(txtCantidad.getText());
+				newcant = redondearDecimales(newcant, 2);
+			double desctot = newcant * descindiv;
+				
+			txtDescuentoTot.setText("" + desctot);
+			calcular(0);
+			
+		} catch (Exception e) {
+		}
 	}
 	
 	protected void keyReleasedTxtPUnidad(KeyEvent arg0) {
@@ -578,12 +589,13 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				if(cbPrecio.getSelectedIndex() == 2)
 					precioUniEnUso = Double.parseDouble(prePromo2);
 				
-				double newCant = 0; 	newCant = Double.parseDouble(txtCantidad.getText());
+				double newCant = 0; 		newCant = Double.parseDouble(txtCantidad.getText());
 				double newPreUniSDesc = 0;	newPreUniSDesc = Double.parseDouble(txtPUnidad.getText());
 				double newPreUniCDesc = 0;	newPreUniCDesc = Double.parseDouble(txtPreCDesc.getText());
-				double newDescIndiv = 0;newDescIndiv = Double.parseDouble(txtDescuentoIndiv.getText());
-				double newDescTot = 0; 	newDescTot = Double.parseDouble(txtDescuentoTot.getText());
-				double preTotal = 0; 	preTotal = Double.parseDouble(txtTotal.getText());
+				double newDescIndiv = 0;	newDescIndiv = Double.parseDouble(txtDescuentoIndiv.getText());
+				double newDescTot = 0; 		newDescTot = Double.parseDouble(txtDescuentoTot.getText());
+				double preTotal = 0; 		preTotal = Double.parseDouble(txtTotal.getText());
+				
 				
 				newPreUniCDesc = newPreUniSDesc - newDescIndiv;
 				preTotal = newPreUniCDesc * newCant;
