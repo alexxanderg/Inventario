@@ -159,6 +159,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			public void focusGained(FocusEvent e) {
 				focusGainedTxtCantidad(e);
 			}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				focusLostTxtCantidad(arg0);
+			}
 		});
 		txtCantidad.addKeyListener(this);
 		txtCantidad.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -181,6 +185,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(txtPUnidad);
 		
 		txtTotal = new JTextField();
+		txtTotal.setEditable(false);
 		txtTotal.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -227,6 +232,8 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(btnEliminarProducto);
 		
 		txtPreCompra = new JTextField();
+		txtPreCompra.setVisible(false);
+		txtPreCompra.setEnabled(false);
 		txtPreCompra.setEditable(false);
 		txtPreCompra.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPreCompra.setText("<dynamic>");
@@ -259,6 +266,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			@Override
 			public void focusGained(FocusEvent e) {
 				focusGainedTxtDescuentoIndiv(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtDescuentoIndiv(e);
 			}
 		});
 		txtDescuentoIndiv.setForeground(new Color(102, 205, 170));
@@ -305,6 +316,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			public void focusGained(FocusEvent e) {
 				focusGainedTxtPreCDesc(e);
 			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtPreCDesc(e);
+			}
 		});
 		txtPreCDesc.setText("0.0");
 		txtPreCDesc.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -325,6 +340,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			@Override
 			public void focusGained(FocusEvent e) {
 				focusGainedTxtDescuentoTot(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtDescuentoTot(e);
 			}
 		});
 		txtDescuentoTot.addKeyListener(new KeyAdapter() {
@@ -369,7 +388,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		label_3.setFont(new Font("Candara", Font.BOLD, 20));
 		label_3.setBounds(230, 196, 31, 31);
 		contentPane.add(label_3);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, cbPrecio, txtPUnidad, txtDescuentoIndiv, txtTotal, btnCambiar, btnCancelar, btnEliminarProducto, btnMenos1, btnMas1}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, cbPrecio, txtDescuentoIndiv, txtPreCDesc, txtDescuentoTot, txtTotal, btnCambiar, btnCancelar, btnEliminarProducto, btnMenos1, btnMas1}));
 		
 		cargar();
 	}
@@ -463,19 +482,21 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			double newCant = 0; 	newCant = Double.parseDouble(txtCantidad.getText());
 			String newUnimed = "0";	newUnimed = cbPrecio.getSelectedItem().toString();
 			double newPreuni = 0;	newPreuni = Double.parseDouble(txtPUnidad.getText());
-			double newDesc = 0; 	newDesc = Double.parseDouble(txtDescuentoIndiv.getText());
+			double newDescIndiv = 0; 	newDescIndiv = Double.parseDouble(txtDescuentoIndiv.getText());
+			double newDescTot = 0; 	newDescTot = Double.parseDouble(txtDescuentoTot.getText());
 			double newSTot = 0; 	newSTot = Double.parseDouble(txtTotal.getText());
-					
-			if(newCant<0 || newPreuni<0 || newDesc<0 || newSTot<0){
+			double preCompra = 0; 	preCompra = Double.parseDouble(txtPreCompra.getText());
+			
+			if(newCant<0 || newPreuni<0 || newDescIndiv<0 || newSTot<0 || newDescTot<0){
 				JOptionPane.showMessageDialog(null, "No está permitido valores negativos");
 			}
 			else{
 				if(cbPrecio.getSelectedIndex() == 0)
-					ventas.actualizartabla(newCant, newPreuni, preCompraVenta, newSTot, newDesc, newUnimed, uniMedVenta);
+					ventas.actualizartabla(newCant, newPreuni, (preCompraVenta*newCant), newSTot, newDescTot, newUnimed, uniMedVenta);
 				if(cbPrecio.getSelectedIndex() == 1)
-					ventas.actualizartabla(newCant, newPreuni, Double.parseDouble(prePromo1), newSTot, newDesc, newUnimed, uniMedVenta);
+					ventas.actualizartabla(newCant, newPreuni, (Double.parseDouble(prePromo1)*newCant), newSTot, newDescTot, newUnimed, uniMedVenta);
 				if(cbPrecio.getSelectedIndex() == 2)
-					ventas.actualizartabla(newCant, newPreuni, Double.parseDouble(prePromo2), newSTot, newDesc, newUnimed, uniMedVenta);
+					ventas.actualizartabla(newCant, newPreuni, (Double.parseDouble(prePromo2)*newCant), newSTot, newDescTot, newUnimed, uniMedVenta);
 				this.dispose();
 			}
 		} catch (Exception e) {
@@ -580,14 +601,14 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	public void calcular(int origen){
 		try {
 			if(origen != 1){
-				double precioUniEnUso = 0;
+				/*double precioUniEnUso = 0;
 				
 				if(cbPrecio.getSelectedIndex() == 0)
 					precioUniEnUso = preUniVenta;
 				if(cbPrecio.getSelectedIndex() == 1)
 					precioUniEnUso = Double.parseDouble(prePromo1);
 				if(cbPrecio.getSelectedIndex() == 2)
-					precioUniEnUso = Double.parseDouble(prePromo2);
+					precioUniEnUso = Double.parseDouble(prePromo2);*/
 				
 				double newCant = 0; 		newCant = Double.parseDouble(txtCantidad.getText());
 				double newPreUniSDesc = 0;	newPreUniSDesc = Double.parseDouble(txtPUnidad.getText());
@@ -597,11 +618,14 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				double preTotal = 0; 		preTotal = Double.parseDouble(txtTotal.getText());
 				
 				
+					newPreUniSDesc = redondearDecimales(newPreUniSDesc, 2);
 				newPreUniCDesc = newPreUniSDesc - newDescIndiv;
+					newPreUniCDesc = redondearDecimales(newPreUniCDesc, 2);
 				preTotal = newPreUniCDesc * newCant;
 					preTotal = redondearDecimales(preTotal, 1);
 				
 					
+				txtPUnidad.setText(""+newPreUniSDesc);
 				txtPreCDesc.setText(""+newPreUniCDesc);
 				txtTotal.setText("" + preTotal);
 			}
@@ -640,6 +664,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		} catch (Exception e) {
 			txtPUnidad.setText("0.00");
 		}
+		
 	}
 	protected void actionPerformedBtnMas1(ActionEvent arg0) {
 		try {
@@ -678,11 +703,11 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			txtPUnidad.setText(""+preUniVenta);
 		}
 		if(cbPrecio.getSelectedIndex() == 1){
-			//txtCantidad.setText("1");
+			txtCantidad.setText("1");
 			txtPUnidad.setText(prePromo1);
 		}
 		if(cbPrecio.getSelectedIndex() == 2){
-			//txtCantidad.setText("1");
+			txtCantidad.setText("1");
 			txtPUnidad.setText(prePromo2);
 		}
 		calcular(0);
@@ -728,5 +753,29 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	}
 	protected void focusGainedTxtDescuentoTot(FocusEvent e) {
 		seleccionarTexto(e);
+	}
+	protected void focusLostTxtCantidad(FocusEvent arg0) {
+		if(txtCantidad.getText().length()==0){
+			txtCantidad.setText("0");
+			calcular(0);
+		}
+	}
+	protected void focusLostTxtDescuentoIndiv(FocusEvent e) {
+		if(txtDescuentoIndiv.getText().length()==0){
+			txtDescuentoIndiv.setText("0");
+			calcular(0);
+		}
+	}
+	protected void focusLostTxtPreCDesc(FocusEvent e) {
+		if(txtPreCDesc.getText().length()==0){
+			txtPreCDesc.setText("0");
+			calcular(0);
+		}
+	}
+	protected void focusLostTxtDescuentoTot(FocusEvent e) {
+		if(txtDescuentoTot.getText().length()==0){
+			txtDescuentoTot.setText("0");
+			calcular(0);
+		}
 	}
 }
