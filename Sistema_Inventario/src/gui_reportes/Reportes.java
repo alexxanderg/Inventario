@@ -382,10 +382,7 @@ public class Reportes extends JFrame implements ActionListener, WindowListener, 
 
 		cbMetodoPago = new JComboBox();
 		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] { "Todos los metodos de pago", "Efectivo",
-				"Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP",
-				"Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA",
-				"Pago con tarjeta INTERBANK", "CR\u00C9DITO" }));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Todos los metodos de pago", "Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
 		cbMetodoPago.setBounds(339, 106, 260, 33);
 		contentPane.add(cbMetodoPago);
 

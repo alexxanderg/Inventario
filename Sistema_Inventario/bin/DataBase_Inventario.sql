@@ -121,12 +121,7 @@ foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
 
-create table tb_configuraciones(
-idconfig		int primary key auto_increment,
-atributosprod	varchar(200),
 
-ventasinstock 	tinyint -- 0NO 1SI
-);
   
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
@@ -172,6 +167,17 @@ select codproducto from tb_productos order by codproducto desc limit 1 ;
 -- PRUEBAS ------------------------------------------------------------------------
 
 -- ALTER TABLE tb_ventas_detalle MODIFY cantidad float;   SE ALTERA SI ES NECESARIO
+
+
+select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario, v.metpago, v.nota
+from tb_ventas v 
+Inner join tb_ventas_detalle vd 
+On v.codventa=vd.codventa
+Inner join tb_productos pr
+On pr.codproducto=vd.codproducto
+where v.fecha between'2019-10-14' and '2021-10-14'
+order by v.codventa;
+
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
