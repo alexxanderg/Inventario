@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+import javax.swing.JPasswordField;
 
 public class ModificarUsuario extends JDialog implements ActionListener, WindowListener, KeyListener {
 	private JLabel lblUsuario;
@@ -36,7 +37,6 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 	private JTextField txtNombre;
 	private JLabel lblTipo;
 	private JComboBox cbTipo;
-	private JTextField txtPass;
 	private JButton btnModificar;
 	private JTextField txtAgregarUsuario;
 	private JTextField txtModificarUsuarios;
@@ -48,6 +48,7 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 	int idusuario;
 	ResultSet rs;
 	consultas consulta = new consultas();
+	private JPasswordField txtPass;
 	
 	public static void main(String[] args) {
 		try {
@@ -124,16 +125,6 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 		cbTipo.setBounds(158, 290, 222, 36);
 		getContentPane().add(cbTipo);
 		
-		txtPass = new JTextField();
-		txtPass.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtPass.setHorizontalAlignment(SwingConstants.LEFT);
-		txtPass.setForeground(SystemColor.windowBorder);
-		txtPass.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtPass.setColumns(10);
-		txtPass.setBackground(Color.WHITE);
-		txtPass.setBounds(10, 233, 370, 34);
-		getContentPane().add(txtPass);
-		
 		btnModificarr = new JButton("MODIFICAR");
 		btnModificarr.addActionListener(this);
 		btnModificarr.setForeground(SystemColor.menu);
@@ -169,7 +160,12 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 		btnCancelar.setBackground(new Color(220, 20, 60));
 		btnCancelar.setBounds(10, 360, 175, 38);
 		getContentPane().add(btnCancelar);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtNombre, txtUsuario, txtPass, cbTipo}));
+		
+		txtPass = new JPasswordField();
+		txtPass.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtPass.setBounds(10, 233, 370, 34);
+		getContentPane().add(txtPass);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtNombre, txtUsuario, txtPass, cbTipo, btnModificarr, btnCancelar}));
 		
 		cargar();
 	}

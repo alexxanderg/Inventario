@@ -515,8 +515,6 @@ public class Ventas2 extends JInternalFrame {
 	}
 	
 	public void cargarBuscador() {
-		
-		
 		ac = new TextAutoCompleter(txtBuscarProd);
 		consultas model = new consultas();
 		ResultSet rs = model.cargarProductos();
@@ -882,39 +880,10 @@ public class Ventas2 extends JInternalFrame {
 									 * 
 									 * */
 									
-					// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
-					/*double totalSDescVenta = 0;
-					double preTotCompra = 0;
-					for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-						double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-						int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
-						double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-							precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-						double descuentoUniVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-							descuentoUniVenta = redondearDecimales(descuentoUniVenta, 2);
-						double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
-							subTotVenta = redondearDecimales(subTotVenta, 2);
-						double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
-							precioCoVenta = redondearDecimales(precioCoVenta, 2);
-						
-						
-						// CALCULO DE PRECIOS TOTALES
-						totalSDescVenta = totalSDescVenta + precioVeUniSDescVenta;
-							totalSDescVenta = redondearDecimales(totalSDescVenta, 2);
-							
-						preTotCompra = preTotCompra + precioCoVenta;
-							preTotCompra = redondearDecimales(preTotCompra, 2);
-					}*/
-
 					int ultCodVenta = 0;
 					
 					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
 						
-						/*double preTotalVentaFinal = Float.parseFloat(lblTotalVentaFinal.getText());
-						double gananciaFinal = preTotalVentaFinal - preTotCompra;
-							gananciaFinal = redondearDecimales(gananciaFinal, 2);
-						double descTotal = Float.parseFloat(lblDescuento.getText());*/
-												
 						rs = model.ObtenerUltimoCodigo();
 						try {
 							while (rs.next())
@@ -922,8 +891,15 @@ public class Ventas2 extends JInternalFrame {
 						} catch (Exception e3) {
 							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
 						}
-
+						
 						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+							
+
+							String productoCompleto = tbCarrito.getValueAt(i, 1).toString();
+							String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(")+1, productoCompleto.indexOf(")"));
+							double cantADisminuir = 0;
+							
+							
 							double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
 							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
@@ -938,15 +914,39 @@ public class Ventas2 extends JInternalFrame {
 								precioCoVenta = redondearDecimales(precioCoVenta, 2);
 							double gananciaProdVenta = subTotVenta - precioCoVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
-
+																
 							model.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
-									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta);
-							
-							//model.RealizarDescuentoStock(idProdVenta, cantProdVenta);
+									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+
+
+							/*
+							 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
+							 * 
+							 * */
+							try {
+								rs = model.buscarProductoID(idProdVenta);
+								rs.next();
+								JOptionPane.showMessageDialog(null, "" + idProdVenta + " " + rs.getString("promo1") + " " + uMedidaUsada + " " + rs.getString("promo2"));
+								if(rs.getString("promo1").equals(uMedidaUsada)){
+									cantADisminuir = cantProdVenta * rs.getFloat("cantp1");
+									cantADisminuir = redondearDecimales(cantADisminuir, 2);
+								}
+								else if (rs.getString("promo2").equals(uMedidaUsada)){
+									cantADisminuir = cantProdVenta * rs.getFloat("cantp2");
+									cantADisminuir = redondearDecimales(cantADisminuir, 2);
+								}
+								else{
+									cantADisminuir = cantProdVenta;
+								}
+								
+								model.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
+							}
 						}
 
 					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "ERROR: " + e2);
+						JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de venta: " + e2);
 					}
 
 					// IMPRIMIR TICKET

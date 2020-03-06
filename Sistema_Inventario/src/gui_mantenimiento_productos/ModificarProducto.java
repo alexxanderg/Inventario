@@ -884,7 +884,7 @@ public class ModificarProducto extends JFrame {
 			txtPrePromo2.setText(""+ rs.getFloat("prep2"));
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "No existe el producto");
+			JOptionPane.showMessageDialog(null, "No existe el producto " + e);
 		}
 		
 		// CARGAR ATRIBUTOS

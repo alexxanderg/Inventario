@@ -31,6 +31,8 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Configuraciones extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -56,6 +58,18 @@ public class Configuraciones extends JInternalFrame {
 	private JCheckBox chckbxPromocion1;
 	private JCheckBox chckbxPromocion2;
 	private JButton btnGuardarAtributos;
+	private JPanel panel;
+	private JLabel lblPermitirSeguirVendiendo;
+	private JButton btnVenderSinStock;
+	private JComboBox cbVenderSinStock;
+	private JPanel panel_1;
+	private JLabel lblreducirStockAl;
+	private JButton btnReducirAlVender;
+	private JComboBox cbReducirAlVender;
+	private JPanel panel_2;
+	private JLabel lblpermitirModificarFecha;
+	private JButton btnModifFecha;
+	private JComboBox cbModifFecha;
 
 	/**
 	 * Launch the application.
@@ -149,6 +163,72 @@ public class Configuraciones extends JInternalFrame {
 		btnGuardarAtributos.setBackground(new Color(220, 20, 60));
 		btnGuardarAtributos.setBounds(94, 200, 256, 36);
 		panelAtributos.add(btnGuardarAtributos);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBounds(563, 11, 540, 283);
+		getContentPane().add(panel);
+		
+		lblPermitirSeguirVendiendo = new JLabel("Permitir seguir vendiendo cuando no haya stock?");
+		lblPermitirSeguirVendiendo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPermitirSeguirVendiendo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPermitirSeguirVendiendo.setBounds(-32, 47, 519, 26);
+		panel.add(lblPermitirSeguirVendiendo);
+		
+		btnVenderSinStock = new JButton("Guardar");
+		btnVenderSinStock.setBackground(new Color(220, 20, 60));
+		btnVenderSinStock.setBounds(94, 200, 256, 36);
+		panel.add(btnVenderSinStock);
+		
+		cbVenderSinStock = new JComboBox();
+		cbVenderSinStock.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
+		cbVenderSinStock.setBounds(94, 107, 256, 26);
+		panel.add(cbVenderSinStock);
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBounds(0, 306, 551, 283);
+		getContentPane().add(panel_1);
+		
+		lblreducirStockAl = new JLabel("\u00BFReducir stock al vender?");
+		lblreducirStockAl.setHorizontalAlignment(SwingConstants.CENTER);
+		lblreducirStockAl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblreducirStockAl.setBounds(-32, 47, 519, 26);
+		panel_1.add(lblreducirStockAl);
+		
+		btnReducirAlVender = new JButton("Guardar");
+		btnReducirAlVender.setBackground(new Color(220, 20, 60));
+		btnReducirAlVender.setBounds(94, 200, 256, 36);
+		panel_1.add(btnReducirAlVender);
+		
+		cbReducirAlVender = new JComboBox();
+		cbReducirAlVender.setModel(new DefaultComboBoxModel(new String[] {"SI", "NO"}));
+		cbReducirAlVender.setBounds(94, 107, 256, 26);
+		panel_1.add(cbReducirAlVender);
+		
+		panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBackground(Color.LIGHT_GRAY);
+		panel_2.setBounds(563, 306, 540, 283);
+		getContentPane().add(panel_2);
+		
+		lblpermitirModificarFecha = new JLabel("\u00BFPermitir modificar fecha al vender?");
+		lblpermitirModificarFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblpermitirModificarFecha.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblpermitirModificarFecha.setBounds(-32, 47, 519, 26);
+		panel_2.add(lblpermitirModificarFecha);
+		
+		btnModifFecha = new JButton("Guardar");
+		btnModifFecha.setBackground(new Color(220, 20, 60));
+		btnModifFecha.setBounds(94, 200, 256, 36);
+		panel_2.add(btnModifFecha);
+		
+		cbModifFecha = new JComboBox();
+		cbModifFecha.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
+		cbModifFecha.setBounds(94, 107, 256, 26);
+		panel_2.add(cbModifFecha);
 
 		
 		menuBar = new JMenuBar();
@@ -243,5 +323,4 @@ public class Configuraciones extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "Error al modificar atributos de productos: " + e2);
 		}
 	}
-	
 }

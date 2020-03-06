@@ -39,6 +39,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -61,6 +63,7 @@ public class MantenimientoProd extends JInternalFrame {
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
+	ModificarProducto mp = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -102,6 +105,12 @@ public class MantenimientoProd extends JInternalFrame {
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtCodigo = new JTextField();
+		txtCodigo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCodigo(e);
+			}
+		});
 		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
 		this.txtCodigo.setFont(new Font("Swis721 LtEx BT", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
@@ -179,6 +188,7 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.add(mnIngresarStockA);
 		
 		mnOtrasOpciones = new JMenu("|Otras opciones|");
+		mnOtrasOpciones.setVisible(false);
 		mnOtrasOpciones.setForeground(new Color(255, 69, 0));
 		mnOtrasOpciones.setFont(new Font("Arial", Font.BOLD, 22));
 		mnOtrasOpciones.setBackground(SystemColor.menu);
@@ -315,7 +325,6 @@ public class MantenimientoProd extends JInternalFrame {
 		ajustarAnchoColumnas();
 	}
 	
-	
 	public void cargarBuscador() {
 		ac = new TextAutoCompleter(txtCodigo);
 		consultas model = new consultas();
@@ -323,8 +332,8 @@ public class MantenimientoProd extends JInternalFrame {
 		ac.setMode(0);
 		try {
 			while (rs.next()) {
-				// ac.addItem(rs.getString("codproducto"));
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
+				ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
+					"  -  (" + rs.getString("codproducto") + ")");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
@@ -390,23 +399,8 @@ public class MantenimientoProd extends JInternalFrame {
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
-		try {		
-			ModificarProducto mp = new ModificarProducto(codigoProducto,this);;
-			try { 
-				if (mp.isShowing()) {
-					//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-					mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-					mp.setVisible(true); 
-				} else {
-					mp.setLocationRelativeTo(null);
-					mp.setVisible(true);
-				}
-			} catch (Exception f) {
-				JOptionPane.showMessageDialog(null, "Error: " + f);
-			}
-		} catch(Exception e1){
-			JOptionPane.showMessageDialog(null, "Seleccione el producto a modificar " + e);
-		}		
+
+		abrirModificarProducto(Integer.parseInt(codigoProducto));
 	}
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
@@ -415,12 +409,17 @@ public class MantenimientoProd extends JInternalFrame {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
-			model.deshabilitarProducto(Integer.parseInt(codigoProducto));
-			cargar();
+			elminarProducto(codigoProducto);
 		}else{
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
 	}
+	
+	private void elminarProducto(String codigoProducto){
+		model.deshabilitarProducto(Integer.parseInt(codigoProducto));
+		cargar();
+	}
+	
 	protected void mouseClickedMnIngresarStockA(MouseEvent e) {
 		JOptionPane.showMessageDialog(null, "Ingresa stock con nuevos atributos creados en la DB");
 	}
@@ -429,5 +428,68 @@ public class MantenimientoProd extends JInternalFrame {
 	}
 	protected void mouseClickedMntmVerHistorial(MouseEvent e) {
 		JOptionPane.showMessageDialog(null, "Historial kardex");
+	}
+	protected void keyTypedTxtCodigo(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER){
+			String producto = txtCodigo.getText();
+
+			
+			String[] opciones = { "MODIFICAR", "ELIMINAR", "CANCELAR" };
+			int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+
+			if (seleccion == 0) {// MODIFICAR
+				try {
+					int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+					rs = model.buscarProductoID(idProd);
+					abrirModificarProducto(idProd);
+				} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+					try {
+						rs = model.buscarProductoBarras(producto);
+						rs.next();
+						int idProd = rs.getInt("codproducto");
+						abrirModificarProducto(idProd);
+					} catch (Exception e3) {
+						// TODO: handle exception
+					}				
+				}
+			}
+			if (seleccion == 1) {//  ELIMINAR
+				try {
+					int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+					elminarProducto(""+idProd);
+				} catch (Exception e2) {
+					try {
+						rs = model.buscarProductoBarras(producto);
+						rs.next();
+						int idProd = rs.getInt("codproducto");
+						elminarProducto(""+idProd);
+					} catch (Exception e3) {
+						// TODO: handle exception
+					}	
+				}
+				
+			}
+			txtCodigo.setText("");
+		}		
+	}
+	
+	private void abrirModificarProducto(int idProd){
+		
+		try { 
+			if (mp.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				mp.setVisible(true); 
+			} else {
+				mp.setLocationRelativeTo(null);
+				mp.setVisible(true);
+			}
+		} catch (Exception f) {
+			mp = new ModificarProducto(""+idProd,this);;
+			mp.setLocationRelativeTo(null);
+			mp.setVisible(true);
+		}
 	}
 }

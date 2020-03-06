@@ -321,8 +321,8 @@ public class VentanaPrincipal extends JFrame {
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
 			btnVentas.setEnabled(true);
-			btnDistribuidores.setEnabled(true);
-			btnCompras.setEnabled(true);
+			btnDistribuidores.setEnabled(false);
+			btnCompras.setEnabled(false);
 			break;
 		}
 	}
