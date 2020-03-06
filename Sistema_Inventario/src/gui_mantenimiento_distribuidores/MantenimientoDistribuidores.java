@@ -91,6 +91,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		getContentPane().add(btnX);
 		
 		this.scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
 		this.scrollPane.setBounds(10, 41, 1083, 568);
 		getContentPane().add(this.scrollPane);
@@ -118,9 +119,9 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearProducto.setForeground(new Color(65, 105, 225));
+		mnCrearProducto.setForeground(new Color(30, 144, 255));
 		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
 		mnModificarProducto = new JMenu("|Modificar distribuidor| ");
@@ -132,7 +133,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		});
 		mnModificarProducto.setForeground(new Color(60, 179, 113));
 		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
 		mnNewMenu_2 = new JMenu("|Eliminar distribuidor| ");
@@ -144,7 +145,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		});
 		mnNewMenu_2.setForeground(new Color(220, 20, 60));
 		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 22));
+		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnNewMenu_2);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
@@ -155,7 +156,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbDistribuidores;
-		tb.setRowHeight(25);
+		tb.setRowHeight(30);
 		tb.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIÓN", "PERSONA CONTACTO", "TELEFONO", "CORREO"});
 		consultas model = new consultas();

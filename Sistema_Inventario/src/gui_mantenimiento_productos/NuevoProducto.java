@@ -888,6 +888,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		cbCategoria = new JComboBox();
+		cbCategoria.setForeground(Color.DARK_GRAY);
 		cbCategoria.setEditable(true);
 		cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbCategoria.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -896,6 +897,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(cbCategoria);
 		
 		cbAlmacen = new JComboBox();
+		cbAlmacen.setForeground(Color.DARK_GRAY);
 		cbAlmacen.setEditable(true);
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -904,6 +906,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(cbAlmacen);
 		
 		cbUnidadMedida = new JComboBox();
+		cbUnidadMedida.setForeground(Color.DARK_GRAY);
 		cbUnidadMedida.setEditable(true);
 		cbUnidadMedida.setBackground(new Color(245, 245, 245));
 		cbUnidadMedida.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -946,6 +949,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(label_9);
 		
 		cbDistribuidor = new JComboBox();
+		cbDistribuidor.setForeground(Color.DARK_GRAY);
 		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbDistribuidor.setBackground(new Color(245, 245, 245));
@@ -1228,31 +1232,38 @@ public class NuevoProducto extends JFrame {
 			e.consume();
 	}
 	protected void keyTypedTxtCodbarras(KeyEvent e) {
-		if (txtCodbarras.getText().length() == 100)
+		char c = e.getKeyChar();
+		if (txtCodbarras.getText().length() == 100 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtNombreProducto(KeyEvent e) {
-		if (txtNombreProducto.getText().length() == 200)
+		char c = e.getKeyChar();
+		if (txtNombreProducto.getText().length() == 200 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtDescripcion(KeyEvent e) {
-		if (txtDescripcion.getText().length() == 200)
+		char c = e.getKeyChar();
+		if (txtDescripcion.getText().length() == 200 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtMarca(KeyEvent e) {
-		if (txtMarca.getText().length() == 30)
+		char c = e.getKeyChar();
+		if (txtMarca.getText().length() == 30 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtColor(KeyEvent e) {
-		if (txtColor.getText().length() == 30)
+		char c = e.getKeyChar();
+		if (txtColor.getText().length() == 30 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtLaboratorio(KeyEvent e) {
-		if (txtLaboratorio.getText().length() == 50)
+		char c = e.getKeyChar();
+		if (txtLaboratorio.getText().length() == 50 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtLote(KeyEvent e) {
-		if (txtLote.getText().length() == 50)
+		char c = e.getKeyChar();
+		if (txtLote.getText().length() == 50 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtNombrePromo1(KeyEvent e) {
@@ -1378,7 +1389,6 @@ public class NuevoProducto extends JFrame {
 					mantenimientoProductos.cargar();
 					mantenimientoProductos.selecionarProducto(""+id);
 					limpiar();
-					
 					/*if (inv != null) {
 						inv.cargarDatos();
 						inv.selecionarProducto(txtCodigo.getText());

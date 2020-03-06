@@ -43,9 +43,9 @@ marca		varchar(30),
 color		varchar(30),
 lote		varchar(50),
 laboratorio	varchar(50),
-unimedida	varchar(30),
+unimedida	varchar(50),
 fechaVenc	date,
-categoria	varchar(30),
+categoria	varchar(50),
 almacen		varchar(50),
 iddistrib	int,
 cantidad	float,
@@ -90,7 +90,7 @@ descIndiv	float,
 descTotal	float,
 subTotal	float,
 ganancia	float,
-uMedidaUsada varchar(30),
+uMedidaUsada varchar(50),
 foreign key (codventa) references tb_ventas(codventa),
 foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
@@ -126,14 +126,14 @@ foreign key(codproducto) references tb_productos(codproducto)
 create table tb_configuraciones(
 idconfig		int primary key auto_increment,
 atributosprod	varchar(200),
-ventasinstock 	tinyint, -- 0NO 1SI Si perminte vender con stock 0
-reducirstock	tinyint, -- 0NO 1SI Si disminuirá stock al vender
-fechaVauto		tinyint	 -- 0SI 1NO Para poder modificar la fecha de venta cada ves que se realiza
+ventasinstock 	tinyint, -- 0SI 1NO - Si perminte vender con stock 0
+reducirstock	tinyint, -- 0NO 1SI - Si disminuirá stock al vender
+fechaVauto		tinyint	 -- 0SI 1NO - Para poder modificar la fecha de venta cada ves que se realiza
 );
   
 -- Usuarios de prueba
-insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 1, 1);
+insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 0, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0, 1, 1);
 

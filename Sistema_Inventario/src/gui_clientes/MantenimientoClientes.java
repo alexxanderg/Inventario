@@ -117,9 +117,9 @@ public class MantenimientoClientes extends JInternalFrame {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearCliente.setForeground(new Color(65, 105, 225));
+		mnCrearCliente.setForeground(new Color(30, 144, 255));
 		mnCrearCliente.setBackground(SystemColor.control);
-		mnCrearCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		mnCrearCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearCliente);
 
 		mnModificarCliente = new JMenu("|Modificar cliente| ");
@@ -131,7 +131,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		});
 		mnModificarCliente.setForeground(new Color(60, 179, 113));
 		mnModificarCliente.setBackground(SystemColor.control);
-		mnModificarCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		mnModificarCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarCliente);
 
 		mnEliminarCliente = new JMenu("|Eliminar cliente| ");
@@ -143,7 +143,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		});
 		mnEliminarCliente.setForeground(new Color(220, 20, 60));
 		mnEliminarCliente.setBackground(SystemColor.control);
-		mnEliminarCliente.setFont(new Font("Arial", Font.BOLD, 22));
+		mnEliminarCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarCliente);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA
@@ -158,7 +158,7 @@ public class MantenimientoClientes extends JInternalFrame {
 	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbCliente;
-		tb.setRowHeight(25);
+		tb.setRowHeight(30);
 		tb.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[] { "ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIÓN",
 				"TELEFONO", "CORREO" });

@@ -75,7 +75,7 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 		txtUsuario = new JTextField();
 		txtUsuario.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtUsuario.setHorizontalAlignment(SwingConstants.LEFT);
-		txtUsuario.setForeground(SystemColor.windowBorder);
+		txtUsuario.setForeground(Color.DARK_GRAY);
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtUsuario.setColumns(10);
 		txtUsuario.setBackground(Color.WHITE);
@@ -99,7 +99,7 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 		txtNombre = new JTextField();
 		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombre.setForeground(SystemColor.windowBorder);
+		txtNombre.setForeground(Color.DARK_GRAY);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombre.setColumns(10);
 		txtNombre.setBackground(Color.WHITE);
@@ -114,6 +114,7 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 		getContentPane().add(lblTipo);
 		
 		cbTipo = new JComboBox();
+		cbTipo.setForeground(Color.DARK_GRAY);
 		cbTipo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbTipo.setBackground(Color.WHITE);
 		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -158,6 +159,8 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 		getContentPane().add(btnCancelar);
 		
 		txtPass = new JPasswordField();
+		txtPass.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtPass.setForeground(Color.DARK_GRAY);
 		txtPass.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPass.setBounds(10, 233, 370, 34);
 		getContentPane().add(txtPass);

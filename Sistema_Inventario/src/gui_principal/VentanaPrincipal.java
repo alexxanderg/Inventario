@@ -347,14 +347,14 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnVentas.setBackground(colorSelec);
 			} else {
-				abrirVentana();
+				abrirVentanaVentas();
 					
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}		
 	}
-	public void abrirVentana(){
+	public void abrirVentanaVentas(){
 		try {
 			ventas = new Ventas(this);
 			desktopPane.add(ventas);
@@ -374,17 +374,24 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnInventario.setBackground(colorSelec);
 			} else {
-					vProductos = new MantenimientoProd(this);
-					desktopPane.add(vProductos);
-					vProductos.show();
-					vProductos.setMaximum(true);
-					pintarBotones();
-					btnInventario.setBackground(colorSelec);
+				abrirVentanaInventario();
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}			
 	}
+	public void abrirVentanaInventario(){
+		try {
+			vProductos = new MantenimientoProd(this);
+			desktopPane.add(vProductos);
+			vProductos.show();
+			vProductos.setMaximum(true);
+			pintarBotones();
+			btnInventario.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+		}
+	}
+	
 	protected void actionPerformedBtnDistribuidores(ActionEvent arg0) {
 		try {
 			if (vdistribuidores.isShowing()) {

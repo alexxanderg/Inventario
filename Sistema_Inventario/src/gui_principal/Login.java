@@ -90,7 +90,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		setTitle("Login");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 601, 415);
+		setBounds(100, 100, 603, 415);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.menu);
@@ -102,24 +102,26 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setBackground(Color.DARK_GRAY);
 		btnIngresar.addActionListener(this);
-		btnIngresar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
+		btnIngresar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnIngresar.setBounds(118, 314, 378, 49);
 		contentPane.add(btnIngresar);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.addKeyListener(this);
 		txtUsuario.setBackground(SystemColor.menu);
-		txtUsuario.setFont(new Font("Berlin Sans FB Demi", Font.BOLD | Font.ITALIC, 22));
+		txtUsuario.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 25));
 		txtUsuario.setColumns(10);
 		txtUsuario.setBounds(118, 178, 378, 41);
 		contentPane.add(txtUsuario);
 		
 		txtPass = new JPasswordField();
+		txtPass.setHorizontalAlignment(SwingConstants.LEFT);
 		txtPass.setForeground(Color.BLACK);
 		txtPass.addKeyListener(this);
 		txtPass.setBackground(SystemColor.menu);
-		txtPass.setFont(new Font("USAngel", Font.ITALIC, 18));
+		txtPass.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 25));
 		txtPass.setBounds(118, 247, 378, 41);
 		contentPane.add(txtPass);
 		

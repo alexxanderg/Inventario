@@ -167,7 +167,7 @@ public class NuevoDistribuidor extends JFrame {
 			}
 		});
 		txtNroDoc.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNroDoc.setForeground(SystemColor.windowBorder);
+		txtNroDoc.setForeground(Color.DARK_GRAY);
 		txtNroDoc.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNroDoc.setColumns(10);
 		txtNroDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -184,7 +184,7 @@ public class NuevoDistribuidor extends JFrame {
 		
 		txtNombre = new JTextField();
 		txtNombre.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNombre.setForeground(SystemColor.windowBorder);
+		txtNombre.setForeground(Color.DARK_GRAY);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -213,7 +213,7 @@ public class NuevoDistribuidor extends JFrame {
 			}
 		});
 		txtDireccion.setHorizontalAlignment(SwingConstants.LEFT);
-		txtDireccion.setForeground(SystemColor.windowBorder);
+		txtDireccion.setForeground(Color.DARK_GRAY);
 		txtDireccion.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtDireccion.setColumns(10);
 		txtDireccion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -242,7 +242,7 @@ public class NuevoDistribuidor extends JFrame {
 			}
 		});
 		txtContacto.setHorizontalAlignment(SwingConstants.LEFT);
-		txtContacto.setForeground(SystemColor.windowBorder);
+		txtContacto.setForeground(Color.DARK_GRAY);
 		txtContacto.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtContacto.setColumns(10);
 		txtContacto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -265,7 +265,7 @@ public class NuevoDistribuidor extends JFrame {
 			}
 		});
 		txtTelefono.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTelefono.setForeground(SystemColor.windowBorder);
+		txtTelefono.setForeground(Color.DARK_GRAY);
 		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtTelefono.setColumns(10);
 		txtTelefono.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -281,7 +281,7 @@ public class NuevoDistribuidor extends JFrame {
 			}
 		});
 		txtCorreo.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCorreo.setForeground(SystemColor.windowBorder);
+		txtCorreo.setForeground(Color.DARK_GRAY);
 		txtCorreo.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCorreo.setColumns(10);
 		txtCorreo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));

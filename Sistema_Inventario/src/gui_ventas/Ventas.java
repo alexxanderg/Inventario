@@ -163,7 +163,7 @@ public class Ventas extends JInternalFrame {
 		});
 		tbCarrito.setAutoCreateRowSorter(true);
 		tbCarrito.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbCarrito.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
+		tbCarrito.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 20));
 		tbCarrito.setBackground(Color.WHITE);
 		tbCarrito.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbCarrito);
@@ -546,7 +546,7 @@ public class Ventas extends JInternalFrame {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearProducto.setForeground(new Color(65, 105, 225));
+		mnCrearProducto.setForeground(new Color(30, 144, 255));
 		mnCrearProducto.setBackground(SystemColor.control);
 		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
@@ -576,7 +576,7 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	public void cargar() {
-		tbCarrito.setRowHeight(30);
+		tbCarrito.setRowHeight(35);
 		
 		Cliente cliente = new Cliente();
 		cliente.cargarClientes(cbClientes);
@@ -1146,7 +1146,7 @@ public class Ventas extends JInternalFrame {
 					
 					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
 					//limpiarVentana();
-					vp.abrirVentana();
+					vp.abrirVentanaVentas();
 					this.dispose();
 					/*
 					 * lblPaga.setText("Paga con: "); lblVuelto.setText(

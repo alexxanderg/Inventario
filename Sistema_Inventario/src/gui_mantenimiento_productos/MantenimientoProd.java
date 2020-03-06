@@ -54,7 +54,6 @@ public class MantenimientoProd extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	public VentanaPrincipal vp;
 	private JMenu mnOtrasOpciones;
 	private JMenuItem mntmRealizarKardex;
 	private JMenuItem mntmVerHistorial;
@@ -64,6 +63,7 @@ public class MantenimientoProd extends JInternalFrame {
 	ResultSet rs;
 	consultas model = new consultas();
 	ModificarProducto mp = null;
+	public VentanaPrincipal vp;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -99,12 +99,14 @@ public class MantenimientoProd extends JInternalFrame {
 		getContentPane().add(btnX);
 		
 		this.lblCdigo = new JLabel("Buscar:");
+		lblCdigo.setForeground(Color.DARK_GRAY);
 		this.lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
-		this.lblCdigo.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		this.lblCdigo.setBounds(10, 41, 138, 38);
+		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 30));
+		this.lblCdigo.setBounds(10, 45, 138, 34);
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtCodigo = new JTextField();
+		txtCodigo.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -112,13 +114,14 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		});
 		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
-		this.txtCodigo.setFont(new Font("Swis721 LtEx BT", Font.BOLD | Font.ITALIC, 20));
+		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
-		this.txtCodigo.setBackground(SystemColor.controlHighlight);
+		this.txtCodigo.setBackground(new Color(245, 245, 245));
 		this.txtCodigo.setBounds(139, 45, 954, 34);
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
 		this.scrollPane.setBounds(10, 90, 1083, 519);
 		getContentPane().add(this.scrollPane);
@@ -146,9 +149,9 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnCrearProducto(arg0);
 			}
 		});
-		mnCrearProducto.setForeground(new Color(65, 105, 225));
+		mnCrearProducto.setForeground(new Color(30, 144, 255));
 		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
 		mnModificarProducto = new JMenu("|Modificar producto| ");
@@ -160,7 +163,7 @@ public class MantenimientoProd extends JInternalFrame {
 		});
 		mnModificarProducto.setForeground(new Color(60, 179, 113));
 		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Arial", Font.BOLD, 22));
+		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
 		mnNewMenu_2 = new JMenu("|Eliminar producto| ");
@@ -172,7 +175,7 @@ public class MantenimientoProd extends JInternalFrame {
 		});
 		mnNewMenu_2.setForeground(new Color(220, 20, 60));
 		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Arial", Font.BOLD, 22));
+		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnNewMenu_2);
 		
 		mnIngresarStockA = new JMenu("|Agregar stock| ");
@@ -184,13 +187,13 @@ public class MantenimientoProd extends JInternalFrame {
 		});
 		mnIngresarStockA.setForeground(new Color(75, 0, 130));
 		mnIngresarStockA.setBackground(SystemColor.control);
-		mnIngresarStockA.setFont(new Font("Arial", Font.BOLD, 22));
+		mnIngresarStockA.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnIngresarStockA);
 		
 		mnOtrasOpciones = new JMenu("|Otras opciones|");
 		mnOtrasOpciones.setVisible(false);
 		mnOtrasOpciones.setForeground(new Color(255, 69, 0));
-		mnOtrasOpciones.setFont(new Font("Arial", Font.BOLD, 22));
+		mnOtrasOpciones.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnOtrasOpciones.setBackground(SystemColor.menu);
 		menuBar.add(mnOtrasOpciones);
 		
@@ -225,7 +228,7 @@ public class MantenimientoProd extends JInternalFrame {
 	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbProductos;
-		tb.setRowHeight(25);
+		tb.setRowHeight(30);
 		tb.setModel(dtm);
 		
 		// CARGAR ATRIBUTOS EN TABLA
