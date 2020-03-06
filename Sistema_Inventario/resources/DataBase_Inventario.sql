@@ -128,7 +128,7 @@ idconfig		int primary key auto_increment,
 atributosprod	varchar(200),
 ventasinstock 	tinyint, -- 0NO 1SI Si perminte vender con stock 0
 reducirstock	tinyint, -- 0NO 1SI Si disminuirá stock al vender
-fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves que se realiza
+fechaVauto		tinyint	 -- 0SI 1NO Para poder modificar la fecha de venta cada ves que se realiza
 );
   
 -- Usuarios de prueba

@@ -29,7 +29,7 @@ import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import clases.Cliente;
-import gui_ventas.Ventas2;
+import gui_ventas.Ventas;
 import mysql.consultas;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -56,7 +56,7 @@ public class NuevoCliente extends JFrame {
 	ResultSet rs;
 	consultas model = new consultas();
 	MantenimientoClientes mantenimientoCliente = null;
-	Ventas2 ventas = null;
+	Ventas ventas = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -71,7 +71,7 @@ public class NuevoCliente extends JFrame {
 		});
 	}
 
-	public NuevoCliente(MantenimientoClientes mantenimientoCliente, Ventas2 ventas) {
+	public NuevoCliente(MantenimientoClientes mantenimientoCliente, Ventas ventas) {
 		this.mantenimientoCliente = mantenimientoCliente;
 		this.ventas = ventas; 
 		

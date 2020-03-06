@@ -1,127 +1,130 @@
 package gui_ventas;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JInternalFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import com.mxrck.autocompleter.TextAutoCompleter;
-import clases.AbstractJasperReports;
+
 import clases.Cliente;
 import clases.Productos;
-import gui_ventas.ListaDeProductos;
-import gui_principal.EleccionVentanas;
-import gui_principal.Login;
-import gui_reportes.Reportes;
-import gui_ventas.ModificarPrecioVenta;
-import mysql.consultas;
+import clases.UnidadMed;
+import gui_clientes.NuevoCliente;
+import gui_configuracion.Configuraciones;
+import gui_principal.VentanaPrincipal;
 import mysql.MySQLConexion;
+import mysql.consultas;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import javax.swing.JLabel;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import java.awt.ComponentOrientation;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Color;
-import javax.swing.JTable;
-import java.awt.SystemColor;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 import javax.swing.JScrollPane;
-import java.awt.event.MouseListener;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import com.toedter.calendar.JDateChooser;
+import java.awt.Cursor;
+import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.JCheckBox;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import com.toedter.calendar.JDateChooser;
 
-public class Ventas extends JFrame implements WindowListener, ActionListener, KeyListener, MouseListener {
-
-	private JPanel contentPane;
-	private JTextField txtProductos;
-	private JButton btnLista;
-	private JLabel lblBuscarProducto;
-	private JButton btnVender;
+public class Ventas extends JInternalFrame {
+	private JMenuBar menuBar;
+	private JMenu mnCrearProducto;
+	private JButton btnX;
+	private JLabel lblCdigo;
+	private JTextField txtBuscarProd;
 	private JScrollPane scrollPane;
-	private JTable tbCompras;
 	private TextAutoCompleter ac;
-	public DefaultTableModel dtm = new DefaultTableModel();
-	private JTextField txtVentaDeProductos;
-	private JButton btnVolver;
-	private JButton btnDevolucion;
-	private JButton btnLimpiarTabla;
-	private JButton btnNuevaVentana;
-	private JButton btnNuevoProducto;
-	private JLabel lblTotal;
-	private JLabel lblPaga;
-	private JLabel label_1;
-	private JTextField txtPaga;
-	private JLabel lblVuelto;
+	private JTable tbCarrito;
+	private JLabel lblCliente;
+	private JComboBox <Cliente> cbClientes;
+	private JButton btnNewCliente;
+	private JLabel lblNotaAdicionalDe;
+	private JTextField txtInfoAdicional;
+	private JLabel lblMtodoDePago;
+	private JComboBox cbPago1;
+	private JLabel lblTotalVentaFinal;
+	private JLabel lblTitTotal;
+	private JButton btnVender;
+	private JTextField txtNroImpresiones;
+	private JButton btnLimpiar;
 	private JTextField txtVuelto;
-	private JLabel label_3;
-	private JLabel lblNombreDeCliente;
-	private JTextField txtCopias;
-	private JLabel lblNImpresiones;
-	private JLabel lblTotalS;
-
-	EleccionVentanas el = null;
-	String usuario;
+	public DefaultTableModel dtm = new DefaultTableModel();
+	private JMenu mnlistaDeProductos;
+	
+	public VentanaPrincipal vp;
+	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
-	String cliente = null;
-	int nventana = 0;
-	private JLabel lblLogo;
-	private JButton btnReportes;
-	private JComboBox<Cliente> cbClientes;
-	private JButton btnAnadirCliente;
-	private JTextField txtInfoAdicional;
-	private JLabel lblInfomacinAdicional;
-	private JLabel lblMetodoDePago;
-	private JComboBox<Cliente> cbMetodoPago;
-	private JButton btnalterarInformacion;
+	NuevoCliente nc = new NuevoCliente(null, this);
+	private JLabel lblTitDescuento;
+	private JLabel lblDescuento;
+	private JTextField txtPago1;
+	private JLabel lblMtodoDePago_1;
+	private JComboBox cbPago2;
+	private JTextField txtPago2;
+	private JLabel lblS;
+	private JLabel label_1;
+	private JLabel lblElVueltoDe;
+	private JLabel lblIGV;
+	private JLabel lblTitIgv;
+	private JLabel lblTitTotOri;
+	private JLabel lblTotOriginal;
+	private JLabel lblTotalCompra;
+	private JLabel lblGananciaTotal;
+	private JLabel lblElVueltoDe_1;
+	private JDateChooser dchFechaVenta;
+	private JLabel lblFechaDeVenta;
+	private JTextField txtHora;
+	private JTextField txtMin;
+	private JLabel lblHora;
+	private JLabel lblMin;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventas frame = new Ventas(0, null, null);
+					Ventas frame = new Ventas(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -130,609 +133,630 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 		});
 	}
 
-	public Ventas(int temp, EleccionVentanas temp2, String temp3) {
-		nventana = temp;
-		el = temp2;
-		usuario = temp3;
-
-		addWindowListener(this);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1366, 768);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		txtProductos = new JTextField();
-		txtProductos.addKeyListener(this);
-
-		btnNuevaVentana = new JButton("+");
-		btnNuevaVentana.addActionListener(this);
-
-		lblTotal = new JLabel("");
-		lblTotal.setForeground(new Color(30, 144, 255));
-		lblTotal.setBackground(new Color(50, 205, 50));
-		lblTotal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTotal.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotal.setBounds(1123, 556, 202, 50);
-		contentPane.add(lblTotal);
-		btnNuevaVentana.setForeground(new Color(0, 255, 0));
-		btnNuevaVentana.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 39));
-		btnNuevaVentana.setBackground(Color.BLACK);
-		btnNuevaVentana.setBounds(1247, 0, 103, 58);
-		contentPane.add(btnNuevaVentana);
-		txtProductos.setHorizontalAlignment(SwingConstants.LEFT);
-		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		txtProductos.setBounds(334, 277, 606, 34);
-		contentPane.add(txtProductos);
-		txtProductos.setColumns(10);
-
-		btnLista = new JButton("<html><center>Lista<br>completa</center></html>");
-		btnLista.addActionListener(this);
-		btnLista.setBackground(new Color(30, 144, 255));
-		btnLista.setForeground(new Color(255, 255, 255));
-		btnLista.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnLista.setBounds(642, 166, 139, 86);
-		contentPane.add(btnLista);
-
-		lblBuscarProducto = new JLabel("BUSCAR PRODUCTO:");
-		lblBuscarProducto.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblBuscarProducto.setBounds(36, 277, 271, 34);
-		contentPane.add(lblBuscarProducto);
-
-		btnVender = new JButton("CULMINAR VENTA");
-		btnVender.addActionListener(this);
-		btnVender.setForeground(new Color(30, 144, 255));
-		btnVender.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
-		btnVender.setBackground(Color.BLACK);
-		btnVender.setBounds(979, 638, 346, 50);
-		contentPane.add(btnVender);
-
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 322, 904, 366);
-		contentPane.add(scrollPane);
-
-		tbCompras = new JTable();
-		tbCompras.addMouseListener(this);
-		tbCompras.addKeyListener(this);
-		tbCompras.setFont(new Font("Tw Cen MT", Font.BOLD | Font.ITALIC, 17));
-		scrollPane.setViewportView(tbCompras);
-		tbCompras.getTableHeader().setReorderingAllowed(false);
-		tbCompras.getTableHeader().setResizingAllowed(false);
-
-		btnVolver = new JButton("VOLVER");
-		btnVolver.addActionListener(this);
-		btnVolver.setForeground(new Color(0, 255, 0));
-		btnVolver.setFont(new Font("EngraversGothic BT", Font.BOLD | Font.ITALIC, 20));
-		btnVolver.setBackground(Color.BLACK);
-		btnVolver.setBounds(0, 0, 143, 58);
-		contentPane.add(btnVolver);
-
-		btnDevolucion = new JButton("<html><center>Eliminar / modificar<br>venta</center></html>");
-		btnDevolucion.addActionListener(this);
-		btnDevolucion.setForeground(Color.WHITE);
-		btnDevolucion.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnDevolucion.setBackground(new Color(30, 144, 255));
-		btnDevolucion.setBounds(334, 166, 298, 86);
-		contentPane.add(btnDevolucion);
-
-		txtVentaDeProductos = new JTextField();
-		txtVentaDeProductos.setText("VENTA DE PRODUCTOS");
-		txtVentaDeProductos.setRequestFocusEnabled(false);
-		txtVentaDeProductos.setIgnoreRepaint(true);
-		txtVentaDeProductos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtVentaDeProductos.setForeground(new Color(255, 255, 255));
-		txtVentaDeProductos.setFont(new Font("EngraversGothic BT", Font.BOLD, 40));
-		txtVentaDeProductos.setFocusable(false);
-		txtVentaDeProductos.setFocusTraversalKeysEnabled(false);
-		txtVentaDeProductos.setEditable(false);
-		txtVentaDeProductos.setColumns(10);
-		txtVentaDeProductos.setBackground(Color.DARK_GRAY);
-		txtVentaDeProductos.setBounds(144, 0, 1206, 58);
-		contentPane.add(txtVentaDeProductos);
-
-		btnLimpiarTabla = new JButton("<html>Limpiar<br>ventana</html>");
-		btnLimpiarTabla.addActionListener(this);
-		btnLimpiarTabla.setForeground(Color.WHITE);
-		btnLimpiarTabla.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnLimpiarTabla.setBackground(new Color(220, 20, 60));
-		btnLimpiarTabla.setBounds(791, 166, 149, 86);
-		contentPane.add(btnLimpiarTabla);
-
-		btnNuevoProducto = new JButton("<html><center>Nuevo<br>producto</center></html>");
-		btnNuevoProducto.addActionListener(this);
-		btnNuevoProducto.setForeground(Color.WHITE);
-		btnNuevoProducto.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnNuevoProducto.setBackground(new Color(30, 144, 255));
-		btnNuevoProducto.setBounds(642, 69, 139, 86);
-		contentPane.add(btnNuevoProducto);
-
-		lblPaga = new JLabel("Paga con:");
-		lblPaga.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPaga.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPaga.setForeground(Color.BLACK);
-		lblPaga.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblPaga.setBounds(979, 347, 346, 38);
-		contentPane.add(lblPaga);
-
-		label_1 = new JLabel("S/.");
-		label_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setForeground(Color.BLACK);
-		label_1.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_1.setBounds(979, 381, 76, 38);
-		contentPane.add(label_1);
-
-		txtPaga = new JTextField();
-		txtPaga.addKeyListener(this);
-		txtPaga.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPaga.setForeground(SystemColor.windowBorder);
-		txtPaga.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		txtPaga.setColumns(10);
-		txtPaga.setBackground(SystemColor.controlHighlight);
-		txtPaga.setBounds(1022, 389, 181, 34);
-		contentPane.add(txtPaga);
-
-		lblVuelto = new JLabel("Su vuelto es:");
-		lblVuelto.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblVuelto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblVuelto.setForeground(Color.BLACK);
-		lblVuelto.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblVuelto.setBounds(979, 440, 257, 38);
-		contentPane.add(lblVuelto);
-
-		txtVuelto = new JTextField();
-		txtVuelto.setHorizontalAlignment(SwingConstants.CENTER);
-		txtVuelto.setForeground(SystemColor.windowBorder);
-		txtVuelto.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		txtVuelto.setEditable(false);
-		txtVuelto.setColumns(10);
-		txtVuelto.setBackground(SystemColor.controlHighlight);
-		txtVuelto.setBounds(1022, 479, 181, 34);
-		contentPane.add(txtVuelto);
-
-		label_3 = new JLabel("S/.");
-		label_3.setVerticalAlignment(SwingConstants.BOTTOM);
-		label_3.setHorizontalAlignment(SwingConstants.LEFT);
-		label_3.setForeground(Color.BLACK);
-		label_3.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		label_3.setBounds(979, 475, 64, 38);
-		contentPane.add(label_3);
-
-		lblNombreDeCliente = new JLabel("Nombre de Cliente:");
-		lblNombreDeCliente.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblNombreDeCliente.setBounds(979, 69, 311, 34);
-		contentPane.add(lblNombreDeCliente);
-
-		txtCopias = new JTextField();
-		txtCopias.setEditable(false);
-		txtCopias.addKeyListener(this);
-		txtCopias.setText("0");
-		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtCopias.setForeground(Color.BLACK);
-		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		txtCopias.setColumns(10);
-		txtCopias.setBackground(Color.ORANGE);
-		txtCopias.setBounds(1288, 617, 35, 20);
-		contentPane.add(txtCopias);
-
-		lblNImpresiones = new JLabel("N\u00B0 impresiones:");
-		lblNImpresiones.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNImpresiones.setForeground(Color.BLACK);
-		lblNImpresiones.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblNImpresiones.setBounds(1127, 617, 149, 20);
-		contentPane.add(lblNImpresiones);
-
-		lblTotalS = new JLabel("Total: S/");
-		lblTotalS.setForeground(new Color(30, 144, 255));
-		lblTotalS.setBackground(new Color(50, 205, 50));
-		lblTotalS.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTotalS.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
-		lblTotalS.setBounds(982, 556, 143, 50);
-		contentPane.add(lblTotalS);
-
-		lblLogo = new JLabel("");
-		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setBounds(36, 80, 224, 182);
-		Image img = new ImageIcon(this.getClass().getResource("/imgalmacen.png")).getImage();
-		lblLogo.setIcon(new ImageIcon(img));
-		contentPane.add(lblLogo);
-
-		btnReportes = new JButton("Reportes");
-		btnReportes.addActionListener(new ActionListener() {
+	public Ventas(VentanaPrincipal vp) {
+		this.vp = vp;
+		
+		getContentPane().setBackground(Color.WHITE);
+		setTitle("Ventas");
+		setBounds(100, 100, 1134, 669);
+		getContentPane().setLayout(null);
+		
+		btnX = new JButton("X");
+		this.btnX.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnReportes(arg0);
+				actionPerformedBtnX(arg0);
 			}
 		});
-		btnReportes.setForeground(Color.WHITE);
-		btnReportes.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		btnReportes.setBackground(new Color(30, 144, 255));
-		btnReportes.setBounds(791, 69, 149, 86);
-		contentPane.add(btnReportes);
-
-		cbClientes = new JComboBox();
-		// cbClientes.setSelectedIndex(0);
-		cbClientes.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		cbClientes.setBounds(979, 103, 346, 38);
-		contentPane.add(cbClientes);
-
-		btnAnadirCliente = new JButton("+");
-		btnAnadirCliente.addActionListener(this);
-		btnAnadirCliente.setBackground(new Color(50, 205, 50));
-		btnAnadirCliente.setForeground(new Color(255, 255, 255));
-		btnAnadirCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnAnadirCliente.setBounds(1269, 141, 56, 38);
-		contentPane.add(btnAnadirCliente);
-
-		txtInfoAdicional = new JTextField();
-		txtInfoAdicional.addKeyListener(new KeyAdapter() {
+		
+		this.scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		scrollPane.setAutoscrolls(true);
+		this.scrollPane.setBounds(10, 272, 1098, 328);
+		getContentPane().add(this.scrollPane);
+		
+		tbCarrito = new JTable();
+		tbCarrito.addMouseListener(new MouseAdapter() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
-				keyTypedTxtInfoAdicional(arg0);
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedTbCarrito(arg0);
 			}
 		});
+		tbCarrito.setAutoCreateRowSorter(true);
+		tbCarrito.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbCarrito.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
+		tbCarrito.setBackground(Color.WHITE);
+		tbCarrito.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		scrollPane.setViewportView(tbCarrito);
+		// tbProductos.getTableHeader().setResizingAllowed(false);
+		tbCarrito.getTableHeader().setReorderingAllowed(false);
+		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+		btnX.setForeground(new Color(255, 255, 255));
+		btnX.setBackground(new Color(220, 20, 60));
+		btnX.setBounds(1045, 0, 63, 30);
+		getContentPane().add(btnX);
+		
+		this.lblCdigo = new JLabel("Buscar producto:");
+		lblCdigo.setForeground(Color.DARK_GRAY);
+		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 20));
+		this.lblCdigo.setBounds(10, 205, 195, 23);
+		getContentPane().add(this.lblCdigo);
+		
+		this.txtBuscarProd = new JTextField();
+		txtBuscarProd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtBuscarProd(e);
+			}
+		});
+		txtBuscarProd.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		this.txtBuscarProd.setHorizontalAlignment(SwingConstants.LEFT);
+		this.txtBuscarProd.setFont(new Font("Arial", Font.ITALIC, 20));
+		this.txtBuscarProd.setColumns(10);
+		this.txtBuscarProd.setBackground(new Color(245, 245, 245));
+		this.txtBuscarProd.setBounds(10, 227, 404, 34);
+		getContentPane().add(this.txtBuscarProd);
+		
+		lblCliente = new JLabel("Cliente:");
+		lblCliente.setForeground(Color.DARK_GRAY);
+		lblCliente.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCliente.setBounds(10, 34, 101, 23);
+		getContentPane().add(lblCliente);
+		
+		cbClientes = new JComboBox();
+		cbClientes.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbClientes.setBackground(new Color(245, 245, 245));
+		cbClientes.setFont(new Font("Arial", Font.ITALIC, 18));
+		cbClientes.setBounds(10, 58, 346, 35);
+		getContentPane().add(cbClientes);
+		
+		btnNewCliente = new JButton("+");
+		btnNewCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnNewCliente(arg0);
+			}
+		});
+		btnNewCliente.setForeground(Color.WHITE);
+		btnNewCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnNewCliente.setBackground(new Color(50, 205, 50));
+		btnNewCliente.setBounds(358, 58, 56, 35);
+		getContentPane().add(btnNewCliente);
+		
+		lblNotaAdicionalDe = new JLabel("Nota adicional de la venta:");
+		lblNotaAdicionalDe.setForeground(Color.DARK_GRAY);
+		lblNotaAdicionalDe.setFont(new Font("Candara", Font.BOLD, 20));
+		lblNotaAdicionalDe.setBounds(10, 115, 404, 23);
+		getContentPane().add(lblNotaAdicionalDe);
+		
+		txtInfoAdicional = new JTextField();
+		txtInfoAdicional.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtInfoAdicional.setHorizontalAlignment(SwingConstants.LEFT);
 		txtInfoAdicional.setForeground(SystemColor.windowBorder);
-		txtInfoAdicional.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtInfoAdicional.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtInfoAdicional.setColumns(10);
-		txtInfoAdicional.setBackground(SystemColor.controlHighlight);
-		txtInfoAdicional.setBounds(979, 213, 346, 34);
-		contentPane.add(txtInfoAdicional);
-
-		lblInfomacinAdicional = new JLabel("Informaci\u00F3n adicional:");
-		lblInfomacinAdicional.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblInfomacinAdicional.setBounds(979, 179, 311, 34);
-		contentPane.add(lblInfomacinAdicional);
-
-		lblMetodoDePago = new JLabel("Metodo de pago:");
-		lblMetodoDePago.setFont(new Font("EngraversGothic BT", Font.BOLD, 25));
-		lblMetodoDePago.setBounds(979, 263, 311, 34);
-		contentPane.add(lblMetodoDePago);
-
-		cbMetodoPago = new JComboBox();
-		cbMetodoPago.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				itemStateChangedCbMetodoPago(arg0);
-			}
-		});
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Dep\u00F3sito BCP", "Dep\u00F3sito BBVA", "Dep\u00F3sito INTERBANK", "Transferencia BCP", "Transferencia BBVA", "Transferencia INTERBANK", "Pago con tarjeta BCP", "Pago con tarjeta BBVA", "Pago con tarjeta INTERBANK", "CR\u00C9DITO"}));
-		cbMetodoPago.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 20));
-		cbMetodoPago.setBounds(979, 298, 346, 38);
-		contentPane.add(cbMetodoPago);
-
-		this.btnalterarInformacion = new JButton("<html><center>Modificar informaci\u00F3n<br>de venta realizada</center></html>");
-		this.btnalterarInformacion.addActionListener(new ActionListener() {
+		txtInfoAdicional.setBackground(new Color(245, 245, 245));
+		txtInfoAdicional.setBounds(10, 138, 404, 34);
+		getContentPane().add(txtInfoAdicional);
+		
+		lblMtodoDePago = new JLabel("Pago 1:");
+		lblMtodoDePago.setForeground(Color.DARK_GRAY);
+		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
+		lblMtodoDePago.setBounds(441, 34, 110, 23);
+		getContentPane().add(lblMtodoDePago);
+		
+		cbPago1 = new JComboBox();
+		cbPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbPago1.setBackground(new Color(245, 245, 245));
+		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
+		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
+		cbPago1.setBounds(441, 58, 139, 35);
+		getContentPane().add(cbPago1);
+		
+		lblTotalVentaFinal = new JLabel("0");
+		lblTotalVentaFinal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalVentaFinal.setForeground(new Color(30, 144, 255));
+		lblTotalVentaFinal.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblTotalVentaFinal.setBackground(new Color(50, 205, 50));
+		lblTotalVentaFinal.setBounds(911, 188, 197, 36);
+		getContentPane().add(lblTotalVentaFinal);
+		
+		lblTitTotal = new JLabel("TOTAL S/ ");
+		lblTitTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTitTotal.setForeground(new Color(30, 144, 255));
+		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 30));
+		lblTitTotal.setBackground(new Color(50, 205, 50));
+		lblTitTotal.setBounds(690, 188, 211, 36);
+		getContentPane().add(lblTitTotal);
+		
+		btnVender = new JButton("VENDER");
+		btnVender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actionPerformedBtnalterarInformacion(e);
+				actionPerformedBtnVender(e);
 			}
 		});
-		this.btnalterarInformacion.setForeground(Color.WHITE);
-		this.btnalterarInformacion.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		this.btnalterarInformacion.setBackground(new Color(30, 144, 255));
-		this.btnalterarInformacion.setBounds(334, 69, 298, 86);
-		this.contentPane.add(this.btnalterarInformacion);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtProductos, txtPaga, txtCopias, btnVender,
-				btnLista, btnNuevoProducto, btnDevolucion, btnReportes, btnLimpiarTabla, btnVolver, btnNuevaVentana }));
+		btnVender.setForeground(Color.WHITE);
+		btnVender.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnVender.setBackground(new Color(0, 250, 154));
+		btnVender.setBounds(908, 227, 200, 34);
+		getContentPane().add(btnVender);
+		
+		txtNroImpresiones = new JTextField();
+		txtNroImpresiones.setText("0");
+		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNroImpresiones.setForeground(Color.BLACK);
+		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
+		txtNroImpresiones.setColumns(10);
+		txtNroImpresiones.setBackground(Color.LIGHT_GRAY);
+		txtNroImpresiones.setBounds(890, 243, 19, 18);
+		getContentPane().add(txtNroImpresiones);
+		
+		btnLimpiar = new JButton("Limpiar");
+		this.btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnLimpiar(arg0);
+			}
+		});
+		btnLimpiar.setForeground(Color.WHITE);
+		btnLimpiar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnLimpiar.setBackground(new Color(220, 20, 60));
+		btnLimpiar.setBounds(690, 227, 200, 34);
+		getContentPane().add(btnLimpiar);
+		
+		txtVuelto = new JTextField();
+		txtVuelto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtVuelto.setHorizontalAlignment(SwingConstants.CENTER);
+		txtVuelto.setForeground(new Color(30, 144, 255));
+		txtVuelto.setFont(new Font("Arial", Font.ITALIC, 20));
+		txtVuelto.setEditable(false);
+		txtVuelto.setColumns(10);
+		txtVuelto.setBackground(new Color(245, 245, 245));
+		txtVuelto.setBounds(583, 227, 82, 34);
+		getContentPane().add(txtVuelto);
+		
+		lblTitDescuento = new JLabel("Descuento S/");
+		lblTitDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTitDescuento.setForeground(new Color(102, 205, 170));
+		lblTitDescuento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTitDescuento.setBackground(new Color(50, 205, 50));
+		lblTitDescuento.setBounds(690, 142, 200, 30);
+		getContentPane().add(lblTitDescuento);
+		
+		lblDescuento = new JLabel("0");
+		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDescuento.setForeground(new Color(102, 205, 170));
+		lblDescuento.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblDescuento.setBackground(new Color(50, 205, 50));
+		lblDescuento.setBounds(911, 142, 197, 30);
+		getContentPane().add(lblDescuento);
+		
+		txtPago1 = new JTextField();
+		txtPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtPago1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPago1(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtPago1(e);
+			}
+		});
+		txtPago1.setText("0");
+		txtPago1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtPago1(arg0);
+			}
+		});
+		txtPago1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPago1.setForeground(SystemColor.windowBorder);
+		txtPago1.setFont(new Font("Arial", Font.ITALIC, 18));
+		txtPago1.setColumns(10);
+		txtPago1.setBackground(new Color(245, 245, 245));
+		txtPago1.setBounds(583, 58, 85, 34);
+		getContentPane().add(txtPago1);
+		
+		lblMtodoDePago_1 = new JLabel("Pago 2:");
+		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
+		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblMtodoDePago_1.setBounds(441, 115, 110, 23);
+		getContentPane().add(lblMtodoDePago_1);
+		
+		cbPago2 = new JComboBox();
+		cbPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
+		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
+		cbPago2.setBackground(new Color(245, 245, 245));
+		cbPago2.setBounds(441, 138, 139, 35);
+		getContentPane().add(cbPago2);
+		
+		txtPago2 = new JTextField();
+		txtPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtPago2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPago2(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtPago2(e);
+			}
+		});
+		txtPago2.setText("0");
+		txtPago2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtPago2(arg0);
+			}
+		});
+		txtPago2.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPago2.setForeground(SystemColor.windowBorder);
+		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
+		txtPago2.setColumns(10);
+		txtPago2.setBackground(new Color(245, 245, 245));
+		txtPago2.setBounds(583, 138, 85, 34);
+		getContentPane().add(txtPago2);
+		
+		lblS = new JLabel("S/");
+		lblS.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS.setForeground(Color.DARK_GRAY);
+		lblS.setFont(new Font("Candara", Font.BOLD, 20));
+		lblS.setBounds(601, 24, 32, 34);
+		getContentPane().add(lblS);
+		
+		label_1 = new JLabel("S/");
+		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_1.setForeground(Color.DARK_GRAY);
+		label_1.setFont(new Font("Candara", Font.BOLD, 20));
+		label_1.setBounds(605, 108, 32, 34);
+		getContentPane().add(label_1);
+		
+		lblElVueltoDe = new JLabel("S/ 0 es:");
+		lblElVueltoDe.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblElVueltoDe.setForeground(new Color(30, 144, 255));
+		lblElVueltoDe.setFont(new Font("Candara", Font.BOLD, 20));
+		lblElVueltoDe.setBounds(441, 233, 130, 23);
+		getContentPane().add(lblElVueltoDe);
+		
+		lblTitTotOri = new JLabel("Total original S/ ");
+		lblTitTotOri.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTitTotOri.setForeground(new Color(102, 205, 170));
+		lblTitTotOri.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTitTotOri.setBackground(new Color(50, 205, 50));
+		lblTitTotOri.setBounds(705, 100, 185, 34);
+		getContentPane().add(lblTitTotOri);
+		
+		lblTotOriginal = new JLabel("0");
+		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotOriginal.setForeground(new Color(102, 205, 170));
+		lblTotOriginal.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTotOriginal.setBackground(new Color(50, 205, 50));
+		lblTotOriginal.setBounds(911, 100, 197, 34);
+		getContentPane().add(lblTotOriginal);
+		
+		lblTotalCompra = new JLabel("0");
+		lblTotalCompra.setVisible(false);
+		lblTotalCompra.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalCompra.setForeground(new Color(30, 144, 255));
+		lblTotalCompra.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTotalCompra.setBackground(new Color(50, 205, 50));
+		lblTotalCompra.setBounds(768, 5, 68, 17);
+		getContentPane().add(lblTotalCompra);
+		
+		lblGananciaTotal = new JLabel("0");
+		lblGananciaTotal.setVisible(false);
+		lblGananciaTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblGananciaTotal.setForeground(new Color(30, 144, 255));
+		lblGananciaTotal.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblGananciaTotal.setBackground(new Color(50, 205, 50));
+		lblGananciaTotal.setBounds(846, 5, 68, 17);
+		getContentPane().add(lblGananciaTotal);
+		
+		lblTitIgv = new JLabel("IGV S/");
+		lblTitIgv.setVisible(false);
+		lblTitIgv.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTitIgv.setForeground(new Color(102, 205, 170));
+		lblTitIgv.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTitIgv.setBackground(new Color(50, 205, 50));
+		lblTitIgv.setBounds(690, 34, 200, 30);
+		getContentPane().add(lblTitIgv);
+		
+		lblIGV = new JLabel("0");
+		lblIGV.setVisible(false);
+		lblIGV.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIGV.setForeground(new Color(102, 205, 170));
+		lblIGV.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblIGV.setBackground(new Color(50, 205, 50));
+		lblIGV.setBounds(911, 33, 197, 18);
+		getContentPane().add(lblIGV);
+		
+		lblElVueltoDe_1 = new JLabel("El vuelto de ");
+		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
+		lblElVueltoDe_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblElVueltoDe_1.setBounds(441, 205, 130, 23);
+		getContentPane().add(lblElVueltoDe_1);
+		
+		dchFechaVenta = new JDateChooser();
+		dchFechaVenta.setBounds(911, 70, 94, 23);
+		getContentPane().add(dchFechaVenta);
+		
+		lblFechaDeVenta = new JLabel("Fecha de venta: ");
+		lblFechaDeVenta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFechaDeVenta.setForeground(new Color(102, 205, 170));
+		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
+		lblFechaDeVenta.setBackground(new Color(50, 205, 50));
+		lblFechaDeVenta.setBounds(705, 69, 185, 23);
+		getContentPane().add(lblFechaDeVenta);
+		
+		txtHora = new JTextField();
+		txtHora.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				focusGainedTxtHora(arg0);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtHora(e);
+			}
+		});
+		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
+		txtHora.setText("00");
+		txtHora.setBounds(1010, 75, 47, 18);
+		getContentPane().add(txtHora);
+		txtHora.setColumns(10);
+		
+		txtMin = new JTextField();
+		txtMin.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtMin(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtMin(e);
+			}
+		});
+		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMin.setText("00");
+		txtMin.setColumns(10);
+		txtMin.setBounds(1062, 75, 47, 18);
+		getContentPane().add(txtMin);
+		
+		lblHora = new JLabel("hora");
+		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHora.setBounds(1010, 62, 46, 14);
+		getContentPane().add(lblHora);
+		
+		lblMin = new JLabel("min");
+		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMin.setBounds(1062, 62, 46, 14);
+		getContentPane().add(lblMin);
+
+		
+		menuBar = new JMenuBar();
+		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		menuBar.setBackground(new Color(211, 211, 211));
+		setJMenuBar(menuBar);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProd, cbClientes, btnNewCliente, txtInfoAdicional, cbPago1, txtPago1, cbPago2, txtPago2, btnVender, btnLimpiar, btnX, dchFechaVenta, txtHora, txtMin}));
+		
+		mnCrearProducto = new JMenu("|Ver / modificar / eliminar / ventas realizadas| ");
+		mnCrearProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnCrearProducto(arg0);
+			}
+		});
+		mnCrearProducto.setForeground(new Color(65, 105, 225));
+		mnCrearProducto.setBackground(SystemColor.control);
+		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnCrearProducto);
+		
+		mnlistaDeProductos = new JMenu("|Lista de productos| ");
+		this.mnlistaDeProductos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnlistaDeProductos(arg0);
+			}
+		});
+		this.mnlistaDeProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedMnlistaDeProductos(arg0);
+			}
+		});
+		mnlistaDeProductos.setForeground(new Color(60, 179, 113));
+		mnlistaDeProductos.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnlistaDeProductos.setBackground(SystemColor.menu);
+		menuBar.add(mnlistaDeProductos);
+		
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+		
 		cargar();
-		// cargarBuscadorCliente();
-	}
-
-	public void windowActivated(WindowEvent arg0) {
-	}
-
-	public void windowClosed(WindowEvent arg0) {
-		if (arg0.getSource() == this) {
-			windowClosedThis(arg0);
-		}
-	}
-
-	public void windowClosing(WindowEvent arg0) {
-		if (nventana != 1)
-			this.dispose();
-		else {
-			int opc = JOptionPane.showConfirmDialog(null, "¿Cerrar Sistema?", "Confirmación", JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE);
-			if (opc == 0) {
-				try {
-					DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
-					Date today = Calendar.getInstance().getTime();
-					String reportDate = df.format(today);
-					File directorio = new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA");
-					directorio.mkdirs();
-					Process p;
-					p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
-					InputStream is = p.getInputStream();
-					FileOutputStream fos = new FileOutputStream(
-							"D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  " + reportDate + ".sql");
-					byte[] buffer = new byte[1000];
-					int leido = is.read(buffer);
-					while (leido > 0) {
-						fos.write(buffer, 0, leido);
-						leido = is.read(buffer);
-					}
-					// JOptionPane.showMessageDialog(null, "Copia de segudidad
-					// creada en: \n D:/ INFORMACION DEL SISTEMA /
-					// BACKUP_SISTEMA / ");
-					// JOptionPane.showMessageDialog(null, "Copia de segudidad
-					// realizada correctamente");
-					fos.close();
-				} catch (IOException e1) {
-					// JOptionPane.showMessageDialog(null, e1);
-				}
-				System.exit(0);
-			} else
-				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		}
-	}
-
-	public void windowDeactivated(WindowEvent arg0) {
-	}
-
-	public void windowDeiconified(WindowEvent arg0) {
-	}
-
-	public void windowIconified(WindowEvent arg0) {
-	}
-
-	public void windowOpened(WindowEvent arg0) {
-	}
-
-	protected void windowClosedThis(WindowEvent arg0) {
-	}
-
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnAnadirCliente) {
-			actionPerformedBtnAnadirCliente(arg0);
-		}
-		if (arg0.getSource() == btnNuevoProducto) {
-			actionPerformedBtnNuevoProducto(arg0);
-		}
-		if (arg0.getSource() == btnNuevaVentana) {
-			actionPerformedBtnNuevaVentana(arg0);
-		}
-		if (arg0.getSource() == btnLimpiarTabla) {
-			actionPerformedBtnLimpiarTabla(arg0);
-		}
-		if (arg0.getSource() == btnDevolucion) {
-			actionPerformedBtnDevolucion(arg0);
-		}
-		if (arg0.getSource() == btnVolver) {
-			btnVolverActionPerformed(arg0);
-		}
-		if (arg0.getSource() == btnVender) {
-			actionPerformedBtnVender(arg0);
-		}
-		if (arg0.getSource() == btnLista) {
-			actionPerformedBtnLista(arg0);
-		}
-	}
-
-	public void keyPressed(KeyEvent e) {
-		// De alguna manera el txtproductos y txtpaga comparten este
-		// keypressed(Arreglar)
-		if (e.getSource() == tbCompras) {
-			keyPressedTbCompras(e);
-		}
-	}
-
-	public void keyReleased(KeyEvent e) {
-		if (e.getSource() == txtPaga) {
-			keyReleasedTxtPaga(e);
-		}
-	}
-
-	public void keyTyped(KeyEvent e) {
-		char c = e.getKeyChar();
-		/*
-		 * if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c !=
-		 * (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) &&
-		 * (c != '.')) { e.consume(); }
-		 */
-		if (txtPaga.getText().length() == 10) {
-			e.consume();
-		}
-		if (c == '.' && txtPaga.getText().contains(".")) {
-			e.consume();
-		}
-
-		if (e.getSource() == txtCopias) {
-			keyTypedTxtCopias(e);
-		}
-		if (e.getSource() == txtProductos) {
-			keyTypedTxtProductos(e);
-		}
-	}
-
-	public void sumarSubTotales() {
-		for (int i = 0; i < tbCompras.getRowCount(); i++) {
-			try {
-				float cant = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-				float preU = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
-				double subT = cant * preU;
-				subT = redondearDecimales(subT, 2);
-				tbCompras.setValueAt(subT, i, 5);
-			} catch (Exception e) {
-				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
-			}
-		}
-	}
-
-	public void sumarTotal() {
-		double Total = 0;
-		if (tbCompras.getRowCount() < 1)
-			lblTotal.setText("");
-		else {
-			for (int i = 0; i < tbCompras.getRowCount(); i++) {
-				try {
-					Total = Total + Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-					Total = redondearDecimales(Total, 2);
-					lblTotal.setText("" + Total + "0");
-					txtPaga.setText(null);
-					txtVuelto.setText(null);
-				} catch (Exception e) {
-					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
-				}
-			}
-		}
-	}
-
-	public double redondearDecimales(double valorInicial, int numeroDecimales) {
-		double parteEntera, resultado;
-		resultado = valorInicial;
-		parteEntera = Math.floor(resultado);
-		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
-		resultado = Math.round(resultado);
-		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
-		return resultado;
-	}
-
-	public void cargar() {
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setLocationRelativeTo(null);
-
-		Cliente cliente = new Cliente();
-		cliente.cargarClientes(cbClientes);
-
-		if (nventana == 1)
-			txtVentaDeProductos.setText("VENTA DE PRODUCTOS");
-		else
-			txtVentaDeProductos.setText("VENTA DE PRODUCTOS (Ventana " + nventana + ")");
-		ac = new TextAutoCompleter(txtProductos);
-		consultas model = new consultas();
-		tbCompras.setRowHeight(30);
-		ResultSet rs = model.cargarProductos();
-		try {
-			while (rs.next()) {
-				// ac.addItem(rs.getString("codproducto")); //codigo de barras
-				// ac.addItem(rs.getString("producto") + "("+
-				// rs.getString("cantidad") + ")");
-				ac.addItem(rs.getString("producto") + "_" + rs.getString("detalles"));
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}
-
-		ac.setMode(0);
-		tbCompras.setModel(dtm);
-		dtm.setColumnIdentifiers(
-				new Object[] { "Cant.", "Producto", "Detalle", "Stock", "Precio Uni", "SubTotal", "Cod.", "PC" });
+		cargarBuscador();
 		ajustarAnchoColumnas();
 	}
-
-	public void cargarBuscadorCliente() {
+	
+	public void cargar() {
+		tbCarrito.setRowHeight(30);
+		
+		Cliente cliente = new Cliente();
+		cliente.cargarClientes(cbClientes);
+		
+		tbCarrito.setModel(dtm);
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Precio C/desc", "Descuento Tot", "SubTotal", "IDPROD", "PC" });
+		ajustarAnchoColumnas();
+		
+		try {
+			rs = model.cargarConfiguraciones();
+			rs.next();
+			int fechaVauto = rs.getInt("fechaVauto");
+			if(fechaVauto == 0){
+				lblFechaDeVenta.setVisible(false);
+				dchFechaVenta.setVisible(false);
+				txtHora.setVisible(false);
+				txtMin.setVisible(false);
+				lblHora.setVisible(false);
+				lblMin.setVisible(false);
+			}
+			else if (fechaVauto == 1){
+				lblFechaDeVenta.setVisible(true);
+				dchFechaVenta.setVisible(true);
+				txtHora.setVisible(true);
+				txtMin.setVisible(true);
+				lblHora.setVisible(true);
+				lblMin.setVisible(true);
+				
+				java.util.Date date = new Date();
+				date.getTime();
+				dchFechaVenta.setDate(date);
+			}
+				
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
+		}
+		
+	}
+	
+	public void cargarBuscador() {
+		ac = new TextAutoCompleter(txtBuscarProd);
+		
 		consultas model = new consultas();
-		ResultSet rs = model.cargarClientes();
+		ResultSet rs = model.cargarProductos();
 		ac.setMode(0);
 		try {
 			while (rs.next()) {
-				// ac.addItem(rs.getString("codproducto"));
-				ac.addItem(rs.getString("id") + "_" + rs.getString("nombre"));
+				ac.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
+						" = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 	}
-
+	
 	private int anchoColumna(int porcentaje) {
 		return porcentaje * scrollPane.getWidth() / 100;
 	}
 
-	private void ajustarAnchoColumnas() {
-		TableColumnModel tcm = tbCompras.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(4)); // Cantidad
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(37)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Stock
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Precio
+	public void ajustarAnchoColumnas() {
+		TableColumnModel tcm = tbCarrito.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(7)); // Cantidad
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Stock
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Precio
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Descuento
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // SubTotal
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(1));
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(1));// Cod
-
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(1)); //ID
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(1));//Preco
+		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		tbCompras.getColumnModel().getColumn(4).setCellRenderer(tcr);
-
-		DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
-		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
-		tbCompras.getColumnModel().getColumn(5).setCellRenderer(tcr2);
-
+		
+		tbCarrito.getColumnModel().getColumn(0).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
+		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);	
+		tbCarrito.getColumnModel().getColumn(5).setCellRenderer(tcr);	
 	}
 
-	protected void keyTypedTxtProductos(KeyEvent e) {
-		char c = e.getKeyChar();
-		if (c == (char) KeyEvent.VK_ENTER)
-			cargarTabla();
+	protected void actionPerformedBtnX(ActionEvent arg0) {
+		try {
+			this.setClosed(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
 	}
-
-	public void cargarTabla() {
+	
+	public void agregarCliente(int iddistrib){
+		try {
+			cbClientes.removeAllItems();
+			Cliente cliente = new Cliente();
+			cliente.cargarClientes(cbClientes);
+			
+			for(int i = 0; i<cbClientes.getItemCount(); i++){
+				JOptionPane.showMessageDialog(null, "" + cbClientes.getItemAt(i).getId() + " - "  + iddistrib);
+				if(cbClientes.getItemAt(i).getId() == iddistrib)
+					cbClientes.setSelectedIndex(i);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al recargar combo");
+		}
+		
+	}
+	
+	public void seleccionarProducto(String id) {
+		/*int cantProductos = tbCarrito.getRowCount();
+		for (int i = 0; i < cantProductos; i++) {
+			if (id.equals(tbCarrito.getValueAt(i, 0))) {
+				tbCarrito.setRowSelectionInterval(i, i);
+				break;
+			}
+		}*/
+	}
+	
+	public void AgregarProductoATabla() {
 		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
-			String pcompleto = txtProductos.getText();
-			String[] parts = pcompleto.split("_");
-			String prd = parts[0]; // 123
-			String dtll = parts[1]; // 654321
-			rs = model.buscarProductoDetalle(prd, dtll);
-
+			String nomProducto = txtBuscarProd.getText();
+			txtPago1.setText("0");
+			txtPago2.setText("0");
+			int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
+			rs = model.buscarProductoID(idProd);
 			int flag = 0;
 			float cantidad = 0;
-			for (int i = 0; i < tbCompras.getRowCount(); i++) { // AQUÍ ENTRA SI
-																// YA EXISTE EL
-																// PRODUCTO EN
-																// LA TABLA
+			for (int i = 0; i < tbCarrito.getRowCount(); i++) { 
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
-						if (rs.getString("codproducto").equals(tbCompras.getValueAt(i, 6))) {
-							cantidad = (Float.parseFloat(tbCompras.getValueAt(i, 0).toString()) + 1);
-							tbCompras.setValueAt(cantidad, i, 0);
+						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 6).toString())) {// AQUÍ ENTRA SI
+																										// YA EXISTE EL
+																										// PRODUCTO EN
+																										// LA TABLA
+							cantidad = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) + 1;
+							tbCarrito.setValueAt(cantidad, i, 0);
 							flag = 1;
-							txtProductos.setText(null);
-							txtProductos.requestFocus();
-							tbCompras.setRowSelectionInterval(i, i);
+							txtBuscarProd.setText(null);
+							txtBuscarProd.requestFocus();
+							tbCarrito.setRowSelectionInterval(i, i);
 						}
 					}
 				} catch (SQLException e) {
-					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+					//JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 			}
 
-			if (flag == 0) { // AQUÍ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
+			if (flag == 0) { // AQUÍ ENTRA SI EL 
+							//	PRODUCTO AGREGADO ES NUEVO
 				try {
-					rs.beforeFirst();
+					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 					while (rs.next()) {
-						dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
-								rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
+						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+								rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
 								rs.getFloat("precioCo") });
-						tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
+						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "ERROR: " + e);
+					//JOptionPane.showMessageDialog(null, "ERROR al agregar producto al carrito: " + e);
 				}
-				txtProductos.setText(null);
-				txtProductos.requestFocus();
 			}
+			txtBuscarProd.setText(null);
 			sumarSubTotales();
-			sumarTotal();
+			sumarTotalGenerales();
 
-		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO
+		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 			try {
-				String pcompleto = txtProductos.getText();
-				rs = model.buscarProductoBarras(pcompleto);
+				String codbarra = txtBuscarProd.getText();
+				rs = model.buscarProductoBarras(codbarra);
 				int flag = 0;
 				float cantidad = 0;
-				for (int i = 0; i < tbCompras.getRowCount(); i++) {
+				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
 						rs.beforeFirst();
 						while (rs.next()) {
-							if (rs.getString("codproducto").equals(tbCompras.getValueAt(i, 6))) {
-								cantidad = (Float.parseFloat(tbCompras.getValueAt(i, 0).toString()) + 1);
-								tbCompras.setValueAt(cantidad, i, 0);
+							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 6).toString())) {
+								cantidad = (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) + 1);
+								tbCarrito.setValueAt(cantidad, i, 0);
 								flag = 1;
-								txtProductos.setText(null);
-								txtProductos.requestFocus();
-								tbCompras.setRowSelectionInterval(i, i);
+								txtBuscarProd.setText(null);
+								txtBuscarProd.requestFocus();
+								tbCarrito.setRowSelectionInterval(i, i);
 							}
 						}
 					} catch (SQLException ex) {
@@ -745,596 +769,562 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 							dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
 									rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
 									rs.getFloat("precioCo") });
-							tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
+							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
 					}
-					txtProductos.setText(null);
-					txtProductos.requestFocus();
 				}
+				limpiarVentana();
 				sumarSubTotales();
-				sumarTotal();
-
+				sumarTotalGenerales();
 			} catch (Exception e2) {
-				txtProductos.setText(null);
+				txtBuscarProd.setText(null);
 			}
 		}
-
 	}
-
-	protected void actionPerformedBtnLista(ActionEvent arg0) {
-		/*ListaDeProductos lp = new ListaDeProductos(this);
-		lp.setLocationRelativeTo(null);
-		lp.setVisible(true);
-		this.setEnabled(false);*/
-	}
-
-	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
-		for (int i = 0; i < tbCompras.getRowCount(); i++) {
-			if (codigo.equals(tbCompras.getValueAt(i, 6))) {
-				float temp = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-				float temp2 = Float.parseFloat(cantidad);
-				float suma = temp + temp2;
-				tbCompras.setValueAt(suma, i, 0);
-				txtProductos.requestFocus();
-				tbCompras.setRowSelectionInterval(i, i);
-				return 0;
-			}
-		}
-		return 1; // 1 = NO ENCONTRÓ COINCIDENCIA
-	}
-
-	public void eliminarFila() {
+	
+	private void limpiarVentana(){
 		try {
-			dtm.removeRow(tbCompras.getSelectedRow());
-			sumarSubTotales();
-			sumarTotal();
+			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+				dtm.removeRow(i);
+				i -= 1;
+			}
+			txtBuscarProd.requestFocus();
+			txtBuscarProd.setText(null);
+			cbClientes.setSelectedIndex(0);
+			txtInfoAdicional.setText(null);
+			cbPago1.setSelectedIndex(0);
+			txtPago1.setText(null);
+			cbPago2.setSelectedIndex(0);
+			txtPago2.setText(null);
+			
+			lblDescuento.setText(null);
+			lblGananciaTotal.setText(null);
+			lblIGV.setText(null);
+			lblTotalCompra.setText(null);
+			lblTotOriginal.setText(null);
+			lblTotalVentaFinal.setText(null);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Seleccione producto a eliminar");
 		}
+		
 	}
-
-	protected void actionPerformedBtnLimpiarTabla(ActionEvent arg0) {
-		limpiar();
-	}
-
-	protected void actionPerformedBtnVender(ActionEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0) {
-			// int rpt = verificarTabla();
-			int rpt = 1;
-			String cli = null;
-			String nrodoc = null;
-			if (rpt == 1) {
-				double pretotC = 0;
-				double pretotV = 0;
-				ArrayList<Productos> listprod = new ArrayList<>();
-				double totalOriginalV = 0;
-				if (tbCompras.getRowCount() < 1) {
-					JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
-				} else {
-					int flag = verificarStock();
-					if (flag == 0) {
-						Productos p = null;
-						for (int i = 0; i < tbCompras.getRowCount(); i++) {
-							String cod = tbCompras.getValueAt(i, 6).toString();
-							rs = model.buscarProductoBarras(cod);
-							try {
-								while (rs.next()) {
-									String prod = rs.getString("producto");
-									String det = rs.getString("detalles");
-									String cat = rs.getString("categoria");
-									String lab = rs.getString("laboratorio");
-									Date fecVen = rs.getDate("fechaVenc");
-									float nrolote = rs.getFloat("lote");
-									String umed = rs.getString("unimedida");
-									float cant = rs.getFloat("cantidad");
-									float cantventa = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-									float pCo = rs.getFloat("precioCo");
-									float pVe = rs.getFloat("precioVe");
-									String marca = rs.getString("marca");
-									String color = rs.getString("color");
-									p = new Productos(cod, prod, det, cat, lab, fecVen, nrolote, umed, cant, cantventa,
-											pCo, pVe, marca, color);
-								}
-							} catch (Exception e) {
-								JOptionPane.showMessageDialog(null, "ERROR: " + e);
-							}
-							listprod.add(p);
-						}
-
-						// CALCULO DE PRECIOS
-						for (int i = 0; i < listprod.size(); i++) {
-							pretotV = pretotV + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioVe());
-							pretotV = redondearDecimales(pretotV, 2);
-							pretotC = pretotC + (listprod.get(i).getCantventa() * listprod.get(i).getPrecioCo());
-							pretotC = redondearDecimales(pretotC, 2);
-							totalOriginalV = totalOriginalV + redondearDecimales(listprod.get(i).getPrecioVe(), 2);
-						}
-
-						int codVenta = 0;
-						try {
-							cli = cbClientes.getSelectedItem().toString();
-							int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
-							nrodoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
-
-							float preTotalVentaFinal = Float.parseFloat(lblTotal.getText());
-							double gananciaOriginal = pretotV - pretotC;
-							gananciaOriginal = redondearDecimales(gananciaOriginal, 2);
-							double gananciaFinal = preTotalVentaFinal - pretotC;
-							gananciaFinal = redondearDecimales(gananciaFinal, 2);
-							String nota = txtInfoAdicional.getText();
-							int metpago = cbMetodoPago.getSelectedIndex();
-
-						//	model.Vender(cli, usuario, pretotC, preTotalVentaFinal, gananciaFinal, idcliente, nota,
-							//		metpago);
-							rs = model.ObtenerUltimoCodigo();
-							try {
-								while (rs.next())
-									codVenta = rs.getInt("codventa");
-							} catch (Exception e) {
-								setAlwaysOnTop(false);
-								JOptionPane.showMessageDialog(null, "ERROR: " + e);
-								setAlwaysOnTop(true);
-							}
-
-							for (int i = 0; i < tbCompras.getRowCount(); i++) {
-								String codProducto = tbCompras.getValueAt(i, 6).toString();
-								float cantventa = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-
-								double preVeUnidadOriginal = 0;
-
-								for (int y = 0; y < listprod.size(); y++) {
-									if (listprod.get(y).getCodigo().equals(codProducto)) {
-										preVeUnidadOriginal = listprod.get(y).getPrecioVe();
-										y = listprod.size();
-									}
-								}
-								preVeUnidadOriginal = redondearDecimales(preVeUnidadOriginal, 2);
-
-								double preTotalUnidadOriginal = cantventa * preVeUnidadOriginal;
-								preTotalUnidadOriginal = redondearDecimales(preTotalUnidadOriginal, 2);
-
-								double preUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
-								preUnidadFinal = redondearDecimales(preUnidadFinal, 2);
-								double preTotalUnidadFinal = Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-								preTotalUnidadFinal = redondearDecimales(preTotalUnidadFinal, 2);
-
-								//model.RegistarDetalleVenta(codVenta, codProducto, cantventa, preVeUnidadOriginal,
-									//	preTotalUnidadOriginal, preUnidadFinal, preTotalUnidadFinal);
-								//model.RealizarDescuentoStock(codProducto, cantventa);
-							}
-
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(null, "ERROR: " + e);
-						}
-
-						// IMPRIMIR TICKET
-						int copias = Integer.parseInt(txtCopias.getText());
-						String nota = txtInfoAdicional.getText();
-						Connection con = null;
-
-						for (int i = 0; i < copias; i++) {
-							try {
-								Map<String, Object> parameters = new HashMap();
-								parameters.put("prtNVenta", codVenta);
-								parameters.put("prtCliente", cli);
-								parameters.put("prtNroDoc", nrodoc);
-								parameters.put("prtVendedor", usuario);
-								parameters.put("prtNota", nota);
-								/*
-								 * new AbstractJasperReports().createReport(
-								 * con.getConn(), "rPrueba.jasper", null);
-								 * AbstractJasperReports.showViewer();
-								 */
-								try {
-									con = MySQLConexion.getConection();
-									/*
-									 * JasperReport reporte = (JasperReport)
-									 * JRLoader.loadObjectFromFile(
-									 * "bin/rComprobante.jasper"); JasperPrint
-									 * jasperPrint =
-									 * JasperFillManager.fillReport(reporte,
-									 * parameters, con);
-									 * AbstractJasperReports.showViewer();
-									 * JasperPrintManager.printReport(
-									 * jasperPrint, false);
-									 * 
-									 */
-									JasperPrint impressao = JasperFillManager.fillReport(
-											getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
-											parameters, con);
-
-									// AbstractJasperReports.showViewer();
-									JasperPrintManager.printReport(impressao, false);
-									/*
-									 * this.setAlwaysOnTop(false);
-									 * //JOptionPane.showMessageDialog(null,
-									 * "VENTA CORRECTA");
-									 * this.setAlwaysOnTop(true);
-									 */
-
-								} catch (JRException ex) {
-									// JOptionPane.showMessageDialog(null,
-									// "ERROR " + ex.getMessage());
-									// System.err.println("Error iReport: " +
-									// ex.getMessage());
-								}
-
-							} catch (Exception e) {
-								JOptionPane.showMessageDialog(null, "ERROR " + e);
-							}
-						}
-						JOptionPane.showMessageDialog(null, "VENTA CORRECTA :)");
-						limpiar();
-
-						/*
-						 * lblPaga.setText("Paga con: "); lblVuelto.setText(
-						 * "Su vuelto es: ");
-						 */
-					}
-				}
+	
+	
+	public void sumarSubTotales() { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			try {
+				double cant = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+				double preCDesc = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+				double desc = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+				
+				subt = (cant * preCDesc);
+				subt = redondearDecimales(subt, 2);
+				
+				tbCarrito.setValueAt(subt, i, 5);
+			} catch (Exception e) {
+				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
 			}
 		}
 	}
 
-	/*
-	 * try { con = MySQLConexion.getConection(); String nventa =
-	 * txtNVenta.getText(); Map<String, Object> parameters = new HashMap();
-	 * parameters.put("prtCodVen", Integer.parseInt(nventa)); new
-	 * AbstractJasperReports().createReport(con, "rVentaDetalle.jasper",
-	 * parameters); AbstractJasperReports.showViewer(); con.close();
-	 * txtNVenta.setText(null); } catch (Exception e) {
-	 * JOptionPane.showMessageDialog(null, "No se encontó la venta " + e); } } }
-	 */
+	public void sumarTotalGenerales() {
+		double totalCompra = 0;
+		double descuento = 0;
+		double ganancia = 0;
+		double igv = 0;
+		double totalVentaOriginal = 0;
+		double totalVentaFinal = 0;
+		
+		if (tbCarrito.getRowCount() < 1){
+			lblDescuento.setText("");
+			lblGananciaTotal.setText("");
+			lblIGV.setText("");
+			lblTotalCompra.setText("");
+			lblTotOriginal.setText("");
+			lblTotalVentaFinal.setText("");
+		}
+		else {
+			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+				try {
+					totalCompra = totalCompra + Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+					totalCompra = redondearDecimales(totalCompra, 2);
+					
+					descuento = descuento + Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+					descuento = redondearDecimales(descuento, 2);
+					
+					totalVentaOriginal = totalVentaOriginal + (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) * Float.parseFloat(tbCarrito.getValueAt(i, 3).toString()));
+					totalVentaOriginal = redondearDecimales(totalVentaOriginal, 1);
+					
+					totalVentaFinal = totalVentaFinal + Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+					totalVentaFinal = redondearDecimales(totalVentaFinal, 1);
 
+					ganancia = totalVentaFinal - totalCompra;
+					ganancia = redondearDecimales(ganancia, 2);
+					
+					igv = (totalVentaFinal*1.18) - totalVentaFinal;
+					igv = redondearDecimales(igv, 2);
+					
+					
+					lblDescuento.setText("" + descuento);
+					lblGananciaTotal.setText("" + ganancia);
+					lblIGV.setText("" + igv);
+					lblTotalCompra.setText("" + totalCompra);
+					lblTotOriginal.setText("" + totalVentaOriginal);
+					lblTotalVentaFinal.setText("" + totalVentaFinal + "0");
+					
+					
+					
+				} catch (Exception e) {
+					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
+				}
+			}
+		}
+	}
+	
+	public double redondearDecimales(double valorInicial, int numeroDecimales) {
+		double parteEntera, resultado;
+		resultado = valorInicial;
+		parteEntera = Math.floor(resultado);
+		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
+		resultado = Math.round(resultado);
+		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
+		return resultado;
+	}
+	
+	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
+		try {
+			/*if (np.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				np.setVisible(true); 
+			} else {
+				np = new NuevoProducto2(this);
+				np.setLocationRelativeTo(null);
+				np.setVisible(true);
+			}*/
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
+	}
+	
 	public int verificarStock() {
-		for (int i = 0; i < tbCompras.getRowCount(); i++) {
-			String cod = tbCompras.getValueAt(i, 6).toString();
-			float cantV = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
+		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
+			float cantV = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 			float stock = 0;
-			rs = model.buscarProductoBarras(cod);
+			rs = model.buscarProductoID(idProd);
 			try {
 				rs.next();
 				stock = rs.getFloat("cantidad");
 				String producto = rs.getString("producto");
 				String detalle = rs.getString("detalles");
+				String marca = rs.getString("marca");
+				String color = rs.getString("color");
 				if (cantV > stock) {
-					tbCompras.setRowSelectionInterval(i, i);
+					tbCarrito.setRowSelectionInterval(i, i);
 					JOptionPane.showMessageDialog(null,
-							"Stock insuficiente de: " + producto + " " + detalle + ". \nMaximo: " + stock);
-					return 1;
+							"Stock insuficiente de: " + producto + " " + detalle + " " + marca + " " + color);
+					return 0; //NO HAY STOCK
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "ERROR: " + e);
+				JOptionPane.showMessageDialog(null, "ERROR al verificar stock para venta: " + e);
 			}
 		}
-		return 0;
+		return 1; //SI HAY STOCK
 	}
+	
+	protected void actionPerformedBtnVender(ActionEvent e) {
+		int opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (opc == 0) {
+			
+			int ventasinstock = 0; // 0NO 1SI
+			int flag = 0; //permite pasar a vender segun stock 0NO 1SI
+			
+			if (tbCarrito.getRowCount() < 1) {
+				JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
+			} else {
+				try {
+					ResultSet rsvss; //Verificar si está permitido vender sin stock
+					rsvss = model.verificarVentaSinStock();
+					rsvss.next();
+					ventasinstock = rsvss.getInt("ventasinstock");
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Error al consultar permisos de venta sin stock " + e2);
+				}
+				if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
+					flag = verificarStock();
+				else
+					flag = 1;
+				
+				if (flag == 1) {
+					int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
+					String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
+					String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
+					int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
+					String nota = txtInfoAdicional.getText();
+					
+					float totCompra = Float.parseFloat(lblTotalCompra.getText());
+					float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());	
+					float gananciaTot = Float.parseFloat(lblGananciaTotal.getText());
+					float descuentoTot = Float.parseFloat(lblDescuento.getText());
+					
+					int metpago1 = 0;	metpago1 = cbPago1.getSelectedIndex();
+					int metpago2 = 0;	metpago2 = cbPago2.getSelectedIndex();
+					float monto1 = 0;	if(txtPago1.getText().length()>0) monto1 = Float.parseFloat(txtPago1.getText());
+					float monto2 = 0;	if(txtPago2.getText().length()>0) monto2 = Float.parseFloat(txtPago2.getText());
+					
+					try {
+						rs = model.cargarConfiguraciones();
+						rs.next();
+						int fechaVauto = rs.getInt("fechaVauto");
+						if(fechaVauto == 0)
+							model.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+						else if (fechaVauto == 1){
+							
+							int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
+							int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
+							int diai = dchFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
+							String hora = txtHora.getText();
+							String min = txtMin.getText();
+							String fechaActualString = añoi + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
 
-	public int verificarTabla() {
-		double cantidad = 0;
-		double preUnidad = 0;
-		double preSubTotal = 0;
-		double temp = 0;
-		for (int i = 0; i < tbCompras.getRowCount(); i++) {
-			cantidad = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-			preUnidad = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
-			preSubTotal = Float.parseFloat(tbCompras.getValueAt(i, 5).toString());
-			temp = cantidad * preUnidad;
-			/*
-			 * cantidad = redondearDecimales(cantidad, 2); preUnidad =
-			 * redondearDecimales(preUnidad, 2); preSubTotal =
-			 * redondearDecimales(preSubTotal, 2);
-			 */
-			temp = redondearDecimales(temp, 2);
-			// JOptionPane.showMessageDialog(null, cantidad + " - " + preUnidad
-			// + " - " + preSubTotal + " - " + temp);
+							DateFormat formatter;
+							formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+							Date date = (Date) formatter.parse(fechaActualString);
+							Object fechaElegida = new java.sql.Timestamp(date.getTime());
+							
+							
+							model.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+						}
+					}catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
+					}
+					
+									/*
+									 * SE REALIZO EL REGISTRO DE LA VENTA
+									 * 
+									 * A CONTINUACION SE REGISTRARAN LOS DETALLES DE ESTA
+									 * 
+									 * */
+									
+					int ultCodVenta = 0;
+					
+					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
+						
+						rs = model.ObtenerUltimoCodigo();
+						try {
+							while (rs.next())
+								ultCodVenta = rs.getInt("codventa");
+						} catch (Exception e3) {
+							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+						}
+						
+						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+							
 
-			if (temp != preSubTotal) {
-				JOptionPane.showMessageDialog(null, "Error de precios en el producto: " + tbCompras.getValueAt(i, 1));
-				return 0;
+							String productoCompleto = tbCarrito.getValueAt(i, 1).toString();
+							String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(")+1, productoCompleto.indexOf(")"));
+							double cantADisminuir = 0;
+							
+							
+							double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
+							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+							double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+								descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
+							double descuentoIndivProdVenta = descuentoTotProdVenta/cantProdVenta;
+								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
+							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+								subTotVenta = redondearDecimales(subTotVenta, 2);
+							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+								precioCoVenta = redondearDecimales(precioCoVenta, 2);
+							double gananciaProdVenta = subTotVenta - precioCoVenta;
+								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
+																
+							model.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
+									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+
+
+							/*
+							 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
+							 * 
+							 * */
+							try {
+								rs = model.cargarConfiguraciones();
+								rs.next();
+								int reducirstock = rs.getInt("reducirstock");
+								
+								if(reducirstock == 1){
+									try {
+										rs = model.buscarProductoID(idProdVenta);
+										rs.next();
+										if(rs.getString("promo1").equals(uMedidaUsada)){
+											cantADisminuir = cantProdVenta * rs.getFloat("cantp1");
+											cantADisminuir = redondearDecimales(cantADisminuir, 2);
+										}
+										else if (rs.getString("promo2").equals(uMedidaUsada)){
+											cantADisminuir = cantProdVenta * rs.getFloat("cantp2");
+											cantADisminuir = redondearDecimales(cantADisminuir, 2);
+										}
+										else{
+											cantADisminuir = cantProdVenta;
+										}
+										
+										model.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+									} catch (Exception e2) {
+										JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
+									}
+								}
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(null, "2do Error al verificar permiso para vender sin reducir stock " + e2);
+							}
+						}
+
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de venta: " + e2);
+					}
+
+					// IMPRIMIR TICKET
+					int copias = Integer.parseInt(txtNroImpresiones.getText());
+					Connection con = null;
+//
+//					for (int i = 0; i < copias; i++) {
+//						try {
+//							Map<String, Object> parameters = new HashMap();
+//							parameters.put("prtNVenta", codVenta);
+//							parameters.put("prtCliente", cli);
+//							parameters.put("prtNroDoc", nrodoc);
+//							parameters.put("prtVendedor", usuario);
+//							parameters.put("prtNota", nota);
+//							/*
+//							 * new AbstractJasperReports().createReport(
+//							 * con.getConn(), "rPrueba.jasper", null);
+//							 * AbstractJasperReports.showViewer();
+//							 */
+//							try {
+//								con = MySQLConexion.getConection();
+//								/*
+//								 * JasperReport reporte = (JasperReport)
+//								 * JRLoader.loadObjectFromFile(
+//								 * "bin/rComprobante.jasper"); JasperPrint
+//								 * jasperPrint =
+//								 * JasperFillManager.fillReport(reporte,
+//								 * parameters, con);
+//								 * AbstractJasperReports.showViewer();
+//								 * JasperPrintManager.printReport(
+//								 * jasperPrint, false);
+//								 * 
+//								 */
+//								JasperPrint impressao = JasperFillManager.fillReport(
+//										getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+//										parameters, con);
+//
+//								// AbstractJasperReports.showViewer();
+//								JasperPrintManager.printReport(impressao, false);
+//								/*
+//								 * this.setAlwaysOnTop(false);
+//								 * //JOptionPane.showMessageDialog(null,
+//								 * "VENTA CORRECTA");
+//								 * this.setAlwaysOnTop(true);
+//								 */
+//
+//							} catch (JRException ex) {
+//								// JOptionPane.showMessageDialog(null,
+//								// "ERROR " + ex.getMessage());
+//								// System.err.println("Error iReport: " +
+//								// ex.getMessage());
+//							}
+//
+//						} catch (Exception e) {
+//							JOptionPane.showMessageDialog(null, "ERROR " + e);
+//						}
+//					}
+					
+					
+					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
+					//limpiarVentana();
+					vp.abrirVentana();
+					this.dispose();
+					/*
+					 * lblPaga.setText("Paga con: "); lblVuelto.setText(
+					 * "Su vuelto es: ");
+					 */
+				}
 			}
+			
 		}
-		return 1;
 	}
-
-	public void limpiar() {
+	
+	protected void keyTypedTxtBuscarProd(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER)
+			AgregarProductoATabla();
+	}
+	
+	protected void actionPerformedBtnNewCliente(ActionEvent arg0) {
 		try {
-			for (int i = 0; i < tbCompras.getRowCount(); i++) {
-				dtm.removeRow(i);
-				i -= 1;
+			if (nc.isShowing()) {
+				// JOptionPane.showMessageDialog(null, "Ya tiene abierta la
+				// ventana");
+				nc.setExtendedState(0); // MOSTRAR VENTANA ABIERTA
+				nc.setVisible(true);
+			} else {
+				nc = new NuevoCliente(null, this);
+				nc.setLocationRelativeTo(null);
+				nc.setVisible(true);
 			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
+	}
+	
+	protected void mouseClickedTbCarrito(MouseEvent arg0) {
+		// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+		
+		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
+		double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
+		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
+		double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
+		double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
+		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
+		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
+		
+		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
+		
+		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
+		cp.setVisible(true);
+		
+		this.setEnabled(false);
+		int fila = tbCarrito.getSelectedRow();
+		tbCarrito.setRowSelectionInterval(fila, fila);
+	}
+	
+	public void actualizartabla(double cant, double preCDesc, double preo, double pret, double desc, String newUniMed, String oldUniMed) {
+		String nomProd = null;
+		nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
+		String newNomProd = nomProd.replaceAll(oldUniMed, newUniMed);
+		
+		tbCarrito.setValueAt(redondearDecimales(cant, 2), 		tbCarrito.getSelectedRow(), 0);
+		tbCarrito.setValueAt(newNomProd,						tbCarrito.getSelectedRow(), 1);
+		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 3);
+		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 7);
+		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 4);
+		sumarSubTotales();
+		sumarTotalGenerales();
+	}
+	
+	public void eliminarFila() {
+		try {
+			dtm.removeRow(tbCarrito.getSelectedRow());
 			sumarSubTotales();
-			sumarTotal();
-			txtProductos.requestFocus();
-			txtPaga.setText(null);
-			txtVuelto.setText(null);
-			txtInfoAdicional.setText(null);
-			cbClientes.setSelectedIndex(0);
-			cbMetodoPago.setSelectedIndex(0);
-
+			sumarTotalGenerales();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Seleccione producto a eliminar");
 		}
 	}
-
-	public void seleccionarRow() {
-		int cant = tbCompras.getRowCount() - 1;
-		tbCompras.setRowSelectionInterval(cant, cant);
+	protected void keyReleasedTxtPago1(KeyEvent arg0) {
+		calcularVuelto();
 	}
-
-	protected void btnVolverActionPerformed(ActionEvent arg0) {
-		if (el == null) {
-			int opc = JOptionPane.showConfirmDialog(null, "¿Ud. está cerrando sesión. ¿Continuar?", "Confirmación",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if (opc == 0) {
-				Login log = new Login();
-				log.setVisible(true);
-				dispose();
-			}
-		} else {
-			el.setVisible(true);
-			dispose();
-
-		}
+	protected void keyReleasedTxtPago2(KeyEvent arg0) {
+		calcularVuelto();
 	}
-
-	protected void actionPerformedBtnalterarInformacion(ActionEvent e) {
+	private void calcularVuelto(){
 		try {
-			int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
-					"Ingrese el número de la venta que desea modificar su información"));
-			alterarInformacion(numVenta);	
-		} catch (Exception e2) {
-			// TODO: handle exception
-		}
-	}
-	public void alterarInformacion(int numVenta) {
-		rs = model.VerificarVenta(numVenta);
-		String codventa = null;
-		String nota = null;
-		String vendedor = null;
-		String fecha = null;
-		try {
-			rs.next();
-			codventa = rs.getString("codventa");
-			nota = rs.getString("nota");
-			vendedor = rs.getString("usuario");
-			fecha = rs.getDate("fecha").toString();
-			/*SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-	        Date dateStr = formatter.parse(fecha);
-	        fecha = formatter.format(dateStr);*/
+			double pagacon1 = Float.parseFloat(txtPago1.getText());
+			double pagacon2 = Float.parseFloat(txtPago2.getText());
+			double sumaPagos = pagacon1 + pagacon2;
+				sumaPagos = redondearDecimales(sumaPagos, 2);
+			double tot = Float.parseFloat(lblTotalVentaFinal.getText());
+			double vuelto = redondearDecimales(sumaPagos - tot, 2);
 			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}
-		if (codventa != null) {
-			String info = JOptionPane.showInputDialog(
-					"N° de Venta: " + codventa + 
-					"\nVendedor: " + vendedor + 
-					"\nFecha: " + fecha + 
-					"\nInformación registrada actualmente:\n"+nota);
-			if ((info != null) && (info .length() > 0)) {
-				rs = model.modificarInformacion(info, numVenta);
+			if (vuelto < 0){
+				lblElVueltoDe.setText("S/ " + sumaPagos + " es: ");
+				txtVuelto.setText("0.00");
 			}
 			else{
-				JOptionPane.showMessageDialog(null, "Cancelo la petición");
-			}
-		} else
-			JOptionPane.showMessageDialog(null, "NO EXISTE LA VENTA");
-	}
-
-	protected void actionPerformedBtnDevolucion(ActionEvent arg0) {
-		String[] opciones = { "ELIMINAR", "MODIFICAR", "CANCELAR" };
-		int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-
-		if (seleccion == 0) {// ELIMINAR
-			int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
-					"Alerta!\nEsta operación eliminará la venta y devolverá los productos a stock\nSi está seguro de seguir ingrese el número de venta."));
-			limpiar();
-			eliminarVenta(numVenta, seleccion);
-		}
-		if (seleccion == 1) {// MODIFICAR
-			int numVenta = Integer.parseInt(JOptionPane.showInputDialog(
-					"ALERTA!\nEsta operación devolverá los productos a stock y luego podrá modificar la venta.\nSi está seguro de seguir ingrese el número de venta."));
-			limpiar();
-			eliminarVenta(numVenta, seleccion);
-		}
-	}
-
-	
-
-	public void eliminarVenta(int numVenta, int seleccion) {
-		rs = model.VerificarVenta(numVenta);
-		String codventa = null;
-		try {
-			rs.next();
-			codventa = rs.getString("codventa");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}
-		if (codventa != null) {
-			rs = model.ProductosVendidos(numVenta);
-			try {
-				rs.beforeFirst();
-				while (rs.next()) {
-					// new Object[] { "Cant.", "Producto", "Detalle", "Stock",
-					// "Precio Uni", "SubTotal", "Cod.", "PC" });
-					ResultSet rs2 = model.buscarProductoBarras(rs.getString("codproducto"));
-					rs2.next();
-					dtm.addRow(new Object[] { rs.getString("cantidad"), //
-							rs2.getString("producto"), rs2.getString("detalles"),
-							Float.parseFloat(rs2.getString("cantidad")) + Float.parseFloat(rs.getString("cantidad")), // Stock
-																														// de
-																														// la
-																														// tabla
-							rs.getFloat("prevenFin"), // Precio al que se ha
-														// vendido si hay
-														// modificacion
-							"0", // Sub total temporal
-							rs.getString("codproducto"), rs2.getFloat("precioCo") }); // Codigo
-				}
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "ERROR: " + e);
-			}
-			model.eliminarVenta("" + numVenta);
-			for (int i = 0; i < tbCompras.getRowCount(); i++) {
-				model.eliminarVentaDetalle(tbCompras.getValueAt(i, 6).toString(), "" + numVenta);
-				model.reingresarProductos(tbCompras.getValueAt(i, 6).toString(),
-						Float.parseFloat(tbCompras.getValueAt(i, 0).toString()));
-			}
-			if (seleccion == 0) {
-				JOptionPane.showMessageDialog(null, "SE eliminará");
-				limpiar();
-				JOptionPane.showMessageDialog(null, "OPERACIÓN REALIZADA CORRECTAMENTE");
-			}
-			sumarSubTotales();
-			sumarTotal();
-		} else
-			JOptionPane.showMessageDialog(null, "NO EXISTE LA VENTA");
-	}
-
-	protected void actionPerformedBtnNuevaVentana(ActionEvent arg0) {
-		txtProductos.requestFocus();
-		Ventas v2 = new Ventas((nventana + 1), el, usuario);
-		v2.setVisible(true);
-	}
-
-	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
-		/*NuevoProducto np = new NuevoProducto(null, this, null);
-		np.setVisible(true);
-		np.setLocationRelativeTo(null);
-		this.setEnabled(false);*/
-	}
-
-	protected void keyPressedTbCompras(KeyEvent e) {
-		String producto = tbCompras.getValueAt(tbCompras.getSelectedRow(), 1).toString() + " "
-				+ tbCompras.getValueAt(tbCompras.getSelectedRow(), 2).toString();
-		;
-		String cantidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString();
-		String preUnidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 4).toString();
-		String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
-		String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
-		String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-	/*	ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal, preOrigen,
-				cod);
-		char c = e.getKeyChar();
-		if (c == (char) KeyEvent.VK_ENTER) {
-			cp.setVisible(true);
-			this.setEnabled(false);
-			int fila = tbCompras.getSelectedRow() - 1;
-			tbCompras.setRowSelectionInterval(fila, fila);
-		}*/
-	}
-
-	public void actualizartabla(float cant, float preu, float preo, float pret) {
-		tbCompras.setValueAt(redondearDecimales(cant, 2), tbCompras.getSelectedRow(), 0);
-		tbCompras.setValueAt(redondearDecimales(preu, 2), tbCompras.getSelectedRow(), 4);
-		tbCompras.setValueAt(redondearDecimales(preo, 2), tbCompras.getSelectedRow(), 7);
-		tbCompras.setValueAt(redondearDecimales(pret, 2), tbCompras.getSelectedRow(), 5);
-		// sumarSubTotales();
-		sumarTotal();
-	}
-
-	protected void keyReleasedTxtPaga(KeyEvent e) {
-		try {
-			double pagacon = Float.parseFloat(txtPaga.getText());
-			double tot = Float.parseFloat(lblTotal.getText());
-			double vuelto = redondearDecimales(pagacon - tot, 2);
-			if (vuelto < 0)
-				txtVuelto.setText("0.00");
-			else
+				lblElVueltoDe.setText("S/ " + sumaPagos + " es: ");
 				txtVuelto.setText("" + vuelto + "0");
+			}
 		} catch (Exception e2) {
 			txtVuelto.setText("0.00");
 		}
 	}
-
-	public void mouseClicked(MouseEvent arg0) {
-		if (arg0.getSource() == tbCompras) {
-			mouseClickedTbCompras(arg0);
+	private void seleccionarTexto(FocusEvent e){
+		Object o = e.getSource();
+        if(o instanceof javax.swing.JTextField){
+            javax.swing.JTextField txt = (javax.swing.JTextField) o;
+            txt.setSelectionStart(0);
+            txt.setSelectionEnd(txt.getText().length());
+        }
+	}
+	protected void focusGainedTxtPago1(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtPago2(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusLostTxtPago1(FocusEvent e) {
+		if(txtPago1.getText().length()==0){
+			txtPago1.setText("0");
+			calcularVuelto();
 		}
 	}
-
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	public void mouseExited(MouseEvent arg0) {
-	}
-
-	public void mousePressed(MouseEvent arg0) {
-	}
-
-	public void mouseReleased(MouseEvent arg0) {
-	}
-
-	protected void mouseClickedTbCompras(MouseEvent arg0) {
-		try {
-			String producto = tbCompras.getValueAt(tbCompras.getSelectedRow(), 1).toString() + " "
-					+ tbCompras.getValueAt(tbCompras.getSelectedRow(), 2).toString();
-			;
-			String cantidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString();
-			String preUnidad = tbCompras.getValueAt(tbCompras.getSelectedRow(), 4).toString();
-			String preSubTotal = tbCompras.getValueAt(tbCompras.getSelectedRow(), 5).toString();
-			String preOrigen = tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString();
-			String cod = tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString();
-		/*	ModificarPrecioVenta cp = new ModificarPrecioVenta(this, producto, cantidad, preUnidad, preSubTotal,
-					preOrigen, cod);
-
-			cp.setVisible(true);
-			this.setEnabled(false);
-			int fila = tbCompras.getSelectedRow();
-			tbCompras.setRowSelectionInterval(fila, fila);*/
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-		}
-
-	}
-
-	protected void keyTypedTxtCopias(KeyEvent arg0) {
-		char c = arg0.getKeyChar();
-		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE)
-				&& (c != (char) KeyEvent.VK_ENTER)) {
-			arg0.consume();
-		}
-		if (txtCopias.getText().length() == 2) {
-			arg0.consume();
+	protected void focusLostTxtPago2(FocusEvent e) {
+		if(txtPago2.getText().length()==0){
+			txtPago2.setText("0");
+			calcularVuelto();
 		}
 	}
-
-	protected void actionPerformedBtnReportes(ActionEvent arg0) {
-		Reportes r = new Reportes(usuario, this);
-		r.setVisible(true);
-		dispose();
+	protected void actionPerformedBtnLimpiar(ActionEvent arg0) {
+		limpiarVentana();
 	}
-
-	protected void actionPerformedBtnAnadirCliente(ActionEvent arg0) {
-		/*NuevoCliente nc = new NuevoCliente(null, this, usuario);
-		nc.setVisible(true);
-		nc.setLocationRelativeTo(null);
-		this.setEnabled(false);*/
+	
+	protected void actionPerformedMnlistaDeProductos(ActionEvent arg0) {
+		
 	}
-
-	public void anadirClienteCombpo(Cliente c) {
-		cbClientes.addItem(c);
-	}
-
-	protected void itemStateChangedCbMetodoPago(ItemEvent arg0) {
-		/*
-		 * if(cbMetodoPago.getSelectedItem().equals("CRÉDITO")){
-		 * lblPaga.setText("Deja a cuenta: "); lblVuelto.setText("Debe: "); }
-		 * 
-		 * else{ lblPaga.setText("Paga con: "); lblVuelto.setText(
-		 * "Su vuelto es: "); }
-		 */
-	}
-
-	protected void keyTypedTxtInfoAdicional(KeyEvent arg0) {
-		char c = arg0.getKeyChar();
-		if (txtInfoAdicional.getText().length() == 199) {
-			arg0.consume();
+	
+	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
+		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			if (codigo.equals(tbCarrito.getValueAt(i, 6).toString())) {
+				JOptionPane.showMessageDialog(null, "entro");
+				float temp = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+				float temp2 = Float.parseFloat(cantidad);
+				
+				float suma = temp + temp2;
+				tbCarrito.setValueAt(suma, i, 0);
+				txtBuscarProd.requestFocus();
+				tbCarrito.setRowSelectionInterval(i, i);
+				return 0;
+			}
 		}
+		return 1; // 1 = NO ENCONTRÓ COINCIDENCIA
+	}
+	public void seleccionarRow() {
+		int cant = tbCarrito.getRowCount() - 1;
+		tbCarrito.setRowSelectionInterval(cant, cant);
+	}
+	protected void mouseClickedMnlistaDeProductos(MouseEvent arg0) {
+		ListaDeProductos lp = new ListaDeProductos(this);
+		lp.setLocationRelativeTo(null);
+		lp.setVisible(true);
+		this.setEnabled(false);
+	}
+	protected void focusGainedTxtHora(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtMin(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusLostTxtHora(FocusEvent e) {
+		if(txtHora.getText().length()==0)
+			txtHora.setText("00");
+	}
+	protected void focusLostTxtMin(FocusEvent e) {
+		if(txtMin.getText().length()==0)
+			txtMin.setText("00");
 	}
 }

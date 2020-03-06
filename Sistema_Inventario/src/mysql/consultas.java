@@ -749,6 +749,37 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet Vender2(int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2, Object fechaElegida) {
+		Connection con = MySQLConexion.getConection();
+		
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_ventas (codventa, idcliente, fecha, idusuario, totcompra, totventa, ganancia, descuento, nota, metpago1, montpago1, metpago2, montpago2, estado)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setInt(2, idcliente);
+			prepareStmt.setObject(3, fechaElegida);
+			prepareStmt.setInt(4, idusuario);
+			prepareStmt.setDouble(5, pretotC);
+			prepareStmt.setDouble(6, preTotalVentaFinal);
+			prepareStmt.setDouble(7, gananciaFinal);
+			prepareStmt.setDouble(8, descTotal);
+			prepareStmt.setString(9, nota);
+			prepareStmt.setInt(10, metpago1);
+			prepareStmt.setDouble(11, monto1);
+			prepareStmt.setInt(12, metpago2);
+			prepareStmt.setDouble(13, monto2);
+			prepareStmt.setInt(14, 1);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al registrar venta: " + e);
+		}
+		return rs;
+	}
+	
 
 	public ResultSet ObtenerUltimoCodigo() {
 		Connection con = MySQLConexion.getConection();
@@ -924,7 +955,7 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet cargarAtributosProd() {
+	public ResultSet cargarConfiguraciones() {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
@@ -936,7 +967,7 @@ public class consultas {
 		return rs;
 	}
 	
-	public ResultSet modificarAtributosProductos(String atributos) {
+	public void modificarAtributosProductos(String atributos) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
@@ -950,7 +981,60 @@ public class consultas {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
 		}
-		return rs;
+	}
+	public void modificarVentaSinStock(int eleccion) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_configuraciones set ventasinstock = ? where idconfig = 1";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, eleccion);
+			prepareStmt.execute();
+			if(eleccion == 1)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin restricción del stock");
+			if(eleccion == 0)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora no puede vender stock menor a 0");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar ventasinstock: " + e);
+		}
+	}
+	public void modificarReducirAlVender(int eleccion) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_configuraciones set reducirstock = ? where idconfig = 1";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, eleccion);
+			prepareStmt.execute();
+			if(eleccion == 1)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, si se descontará de su stock");
+			if(eleccion == 0)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin que su stock se vea afectado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
+		}
+	}
+	public void modificarFechaAlVender(int eleccion) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_configuraciones set fechaVauto = ? where idconfig = 1";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, eleccion);
+			prepareStmt.execute();
+			if(eleccion == 1)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, podrá escoger con que fecha registrarla");
+			if(eleccion == 0)
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, se registrará con la fecha actual");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
+		}
 	}
 	
 	public ResultSet cargarID() {

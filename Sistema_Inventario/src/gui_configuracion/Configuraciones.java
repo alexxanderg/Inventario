@@ -177,6 +177,11 @@ public class Configuraciones extends JInternalFrame {
 		panel.add(lblPermitirSeguirVendiendo);
 		
 		btnVenderSinStock = new JButton("Guardar");
+		btnVenderSinStock.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnVenderSinStock(arg0);
+			}
+		});
 		btnVenderSinStock.setBackground(new Color(220, 20, 60));
 		btnVenderSinStock.setBounds(94, 200, 256, 36);
 		panel.add(btnVenderSinStock);
@@ -199,12 +204,17 @@ public class Configuraciones extends JInternalFrame {
 		panel_1.add(lblreducirStockAl);
 		
 		btnReducirAlVender = new JButton("Guardar");
+		btnReducirAlVender.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnReducirAlVender(e);
+			}
+		});
 		btnReducirAlVender.setBackground(new Color(220, 20, 60));
 		btnReducirAlVender.setBounds(94, 200, 256, 36);
 		panel_1.add(btnReducirAlVender);
 		
 		cbReducirAlVender = new JComboBox();
-		cbReducirAlVender.setModel(new DefaultComboBoxModel(new String[] {"SI", "NO"}));
+		cbReducirAlVender.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
 		cbReducirAlVender.setBounds(94, 107, 256, 26);
 		panel_1.add(cbReducirAlVender);
 		
@@ -221,6 +231,11 @@ public class Configuraciones extends JInternalFrame {
 		panel_2.add(lblpermitirModificarFecha);
 		
 		btnModifFecha = new JButton("Guardar");
+		btnModifFecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnModifFecha(e);
+			}
+		});
 		btnModifFecha.setBackground(new Color(220, 20, 60));
 		btnModifFecha.setBounds(94, 200, 256, 36);
 		panel_2.add(btnModifFecha);
@@ -265,10 +280,17 @@ public class Configuraciones extends JInternalFrame {
 	
 	private void cargar(){
 		String atribTodos = "";
+		int ventasinstock = 0;
+		int reducirstock = 0;
+		int fechaVauto = 0;
 		try {
-			rs = model.cargarAtributosProd();
+			rs = model.cargarConfiguraciones();
 			rs.next();
 			atribTodos = rs.getString("atributosprod");
+			ventasinstock = rs.getInt("ventasinstock");
+			reducirstock = rs.getInt("reducirstock");
+			fechaVauto = rs.getInt("fechaVauto");
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al cargar atributos: " + e);
 		}
@@ -290,6 +312,9 @@ public class Configuraciones extends JInternalFrame {
 			if(parts[x].equals("promo2"))
 				chckbxPromocion2.setSelected(true);
 		}
+		cbVenderSinStock.setSelectedIndex(ventasinstock);
+		cbReducirAlVender.setSelectedIndex(reducirstock);
+		cbModifFecha.setSelectedIndex(fechaVauto);
 	}
 	
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -322,5 +347,29 @@ public class Configuraciones extends JInternalFrame {
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al modificar atributos de productos: " + e2);
 		}
+	}
+	protected void actionPerformedBtnVenderSinStock(ActionEvent arg0) {
+		int eleccion = cbVenderSinStock.getSelectedIndex();
+		try {
+			model.modificarVentaSinStock(eleccion);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al modificar venta sin stock: " + e2);
+		}	
+	}
+	protected void actionPerformedBtnReducirAlVender(ActionEvent e) {
+		int eleccion = cbReducirAlVender.getSelectedIndex();
+		try {
+			model.modificarReducirAlVender(eleccion);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al modificar Reduccion al vender: " + e2);
+		}	
+	}
+	protected void actionPerformedBtnModifFecha(ActionEvent e) {
+		int eleccion = cbModifFecha.getSelectedIndex();
+		try {
+			model.modificarFechaAlVender(eleccion);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al modificar Modificar fecha al vender: " + e2);
+		}	
 	}
 }

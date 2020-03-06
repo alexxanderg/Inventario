@@ -17,8 +17,8 @@ import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.MantenimientoProd;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
-import gui_reportes.Reportes2;
-import gui_ventas.Ventas2;
+import gui_reportes.Reportes;
+import gui_ventas.Ventas;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -64,12 +64,12 @@ public class VentanaPrincipal extends JFrame {
     private JTextField txtPrueba;
     public JLabel lblIdusuario;
 
-    Ventas2 ventas = new Ventas2(null);
+    Ventas ventas = new Ventas(null);
 	MantenimientoProd vProductos = new MantenimientoProd(null);
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
 	MantenimientoClientes vCliente = new MantenimientoClientes(null);
-	Reportes2 vReportes = new Reportes2(null);
+	Reportes vReportes = new Reportes(null);
 	Configuraciones config = new Configuraciones();
 
     //Color colorSelec = new Color(242, 136, 113);
@@ -347,17 +347,25 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnVentas.setBackground(colorSelec);
 			} else {
-					ventas = new Ventas2(this);
-					desktopPane.add(ventas);
-					ventas.show();
-					ventas.setMaximum(true);
-					pintarBotones();
-					btnVentas.setBackground(colorSelec);
+				abrirVentana();
+					
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}		
 	}
+	public void abrirVentana(){
+		try {
+			ventas = new Ventas(this);
+			desktopPane.add(ventas);
+			ventas.show();
+			ventas.setMaximum(true);
+			pintarBotones();
+			btnVentas.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+		}
+	}
+	
 	protected void actionPerformedBtnInventario(ActionEvent arg0) {
 		try {
 			if (vProductos.isShowing()) {
@@ -443,7 +451,7 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnReportes.setBackground(colorSelec);
 			} else {
-				vReportes = new Reportes2(this);
+				vReportes = new Reportes(this);
 				desktopPane.add(vReportes);
 				vReportes.show();
 				vReportes.setMaximum(true);

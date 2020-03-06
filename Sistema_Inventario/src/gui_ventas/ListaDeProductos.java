@@ -6,7 +6,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import gui_principal.Login;
-import gui_ventas.Ventas;
 import mysql.consultas;
 import javax.swing.JTable;
 import javax.swing.JOptionPane;
@@ -33,7 +32,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 	JTable tb;
 	ResultSet rs;
 	Login log = new Login();
-	Ventas2 ventas2 = null;
+	Ventas ventas2 = null;
 	
 	public static void main(String[] args) {
 		try {
@@ -45,7 +44,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		}
 	}
 
-	public ListaDeProductos(Ventas2 ventas2){
+	public ListaDeProductos(Ventas ventas2){
 		this.ventas2 = ventas2;
 		
 		setResizable(false);

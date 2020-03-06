@@ -41,7 +41,6 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.ColorearFilas;
 import gui_mantenimiento_productos.AgregarStock;
-import gui_principal.EleccionVentanas;
 import java.awt.Component;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -416,9 +415,9 @@ public class Kardex extends JFrame implements ActionListener, WindowListener, Ke
 	}
 
 	protected void actionPerformedBtnVolver(ActionEvent arg0) {
-		EleccionVentanas el = new EleccionVentanas(usuario);
+		/*EleccionVentanas el = new EleccionVentanas(usuario);
 		el.setVisible(true);
-		dispose();
+		dispose();*/
 	}
 
 	protected void actionPerformedButton(ActionEvent arg0) {
@@ -473,8 +472,8 @@ public class Kardex extends JFrame implements ActionListener, WindowListener, Ke
 			JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
 		}
 		
-		EleccionVentanas el = new EleccionVentanas(usuario);
+		/*EleccionVentanas el = new EleccionVentanas(usuario);
 		el.setVisible(true);
-		dispose();
+		dispose();*/
 	}
 }

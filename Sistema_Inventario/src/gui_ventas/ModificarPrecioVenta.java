@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import gui_ventas.Ventas;
 import mysql.consultas;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -74,7 +72,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	String uniMedOriginal;
 	double preUniOriginal;
 	
-	Ventas2 ventas;
+	Ventas ventas;
 	String nomProdVenta;
 	double cantVenta; 
 	double preCDesc;
@@ -102,7 +100,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		});
 	}
 
-	public ModificarPrecioVenta(Ventas2 ventas, int idProd, String nomProdVenta, String uniMedVenta, double cantVenta, double preCDesC, double subTotVenta, double preCompraVenta, double descTVenta) {
+	public ModificarPrecioVenta(Ventas ventas, int idProd, String nomProdVenta, String uniMedVenta, double cantVenta, double preCDesC, double subTotVenta, double preCompraVenta, double descTVenta) {
 		setTitle("Modificar precio de venta");
 		this.ventas = ventas;
 		this.nomProdVenta = nomProdVenta;

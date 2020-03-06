@@ -161,6 +161,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblCdigoIntbarras);
 		
 		txtCodbarras = new JTextField();
+		txtCodbarras.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtCodbarras(e);
+			}
+		});
 		txtCodbarras.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtCodbarras.addKeyListener(new KeyAdapter() {
 			@Override
@@ -184,6 +190,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblNombre);
 		
 		txtNombreProducto = new JTextField();
+		txtNombreProducto.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtNombreProducto(e);
+			}
+		});
 		txtNombreProducto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNombreProducto.addKeyListener(new KeyAdapter() {
 			@Override
@@ -207,6 +219,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblDescripcin);
 		
 		txtDescripcion = new JTextField();
+		txtDescripcion.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtDescripcion(e);
+			}
+		});
 		txtDescripcion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
@@ -238,6 +256,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblMarca);
 		
 		txtMarca = new JTextField();
+		txtMarca.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtMarca(e);
+			}
+		});
 		txtMarca.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtMarca.addKeyListener(new KeyAdapter() {
 			@Override
@@ -263,6 +287,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblColor);
 		
 		txtColor = new JTextField();
+		txtColor.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtColor(e);
+			}
+		});
 		txtColor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtColor.addKeyListener(new KeyAdapter() {
 			@Override
@@ -412,6 +442,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblNombrePromo1);
 		
 		txtNombrePromo1 = new JTextField();
+		txtNombrePromo1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtNombrePromo1(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtNombrePromo1(e);
+			}
+		});
 		txtNombrePromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
 		txtNombrePromo1.addKeyListener(new KeyAdapter() {
 			@Override
@@ -438,6 +478,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblCantidadPromo1);
 		
 		txtCantPromo1 = new JTextField();
+		txtCantPromo1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtCantPromo1(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtCantPromo1(e);
+			}
+		});
 		txtCantPromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
 		txtCantPromo1.addKeyListener(new KeyAdapter() {
 			@Override
@@ -464,6 +514,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblPrePromo1);
 		
 		txtPrePromo1 = new JTextField();
+		txtPrePromo1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPrePromo1(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtPrePromo1(e);
+			}
+		});
 		txtPrePromo1.setBorder(new LineBorder(new Color(32, 178, 170), 1, true));
 		txtPrePromo1.addKeyListener(new KeyAdapter() {
 			@Override
@@ -490,6 +550,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblNombrePromo2);
 		
 		txtNombrePromo2 = new JTextField();
+		txtNombrePromo2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtNombrePromo2(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtNombrePromo2(e);
+			}
+		});
 		txtNombrePromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
 		txtNombrePromo2.addKeyListener(new KeyAdapter() {
 			@Override
@@ -516,6 +586,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblCantidadPromo2);
 		
 		txtCantPromo2 = new JTextField();
+		txtCantPromo2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtCantPromo2(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtCantPromo2(e);
+			}
+		});
 		txtCantPromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
 		txtCantPromo2.addKeyListener(new KeyAdapter() {
 			@Override
@@ -542,6 +622,16 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblPrePromo2);
 		
 		txtPrePromo2 = new JTextField();
+		txtPrePromo2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtPrePromo2(e);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtPrePromo2(e);
+			}
+		});
 		txtPrePromo2.setBorder(new LineBorder(new Color(147, 112, 219), 1, true));
 		txtPrePromo2.addKeyListener(new KeyAdapter() {
 			@Override
@@ -581,6 +671,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblLote);
 		
 		txtLote = new JTextField();
+		txtLote.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtLote(e);
+			}
+		});
 		txtLote.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtLote.addKeyListener(new KeyAdapter() {
 			@Override
@@ -606,6 +702,12 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblLaboratorio);
 		
 		txtLaboratorio = new JTextField();
+		txtLaboratorio.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusGainedTxtLaboratorio(e);
+			}
+		});
 		txtLaboratorio.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtLaboratorio.addKeyListener(new KeyAdapter() {
 			@Override
@@ -882,7 +984,7 @@ public class NuevoProducto extends JFrame {
 		// CARGAR ATRIBUTOS
 		String atribTodos = "";
 		try {
-			ResultSet rs = model.cargarAtributosProd();
+			ResultSet rs = model.cargarConfiguraciones();
 			rs.next();
 			atribTodos = rs.getString("atributosprod");
 		} catch (Exception e) {
@@ -1338,7 +1440,16 @@ public class NuevoProducto extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
-	protected void focusGainedTxtStockInicial(FocusEvent arg0) {
+	private void seleccionarTexto(FocusEvent e){
+		Object o = e.getSource();
+        if(o instanceof javax.swing.JTextField){
+            javax.swing.JTextField txt = (javax.swing.JTextField) o;
+            txt.setSelectionStart(0);
+            txt.setSelectionEnd(txt.getText().length());
+        }
+	}
+	protected void focusGainedTxtStockInicial(FocusEvent e) {
+		seleccionarTexto(e);
 		if(txtStockInicial.getText().equals("0"))
 			txtStockInicial.setText("");
 	}
@@ -1348,6 +1459,7 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	protected void focusGainedTxtStockMinimo(FocusEvent e) {
+		seleccionarTexto(e);
 		if(txtStockMinimo.getText().equals("0"))
 			txtStockMinimo.setText("");
 	}
@@ -1357,15 +1469,81 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	protected void focusGainedTxtPrecioCompra(FocusEvent e) {
+		seleccionarTexto(e);
 		if(txtPrecioCompra.getText().equals("0"))
 			txtPrecioCompra.setText("");
 	}
 	protected void focusGainedTxtPtjGanancia(FocusEvent e) {
+		seleccionarTexto(e);
 		if(txtPtjGanancia.getText().equals("0"))
 			txtPtjGanancia.setText("");
 	}
 	protected void focusGainedTxtPrecioVenta(FocusEvent e) {
+		seleccionarTexto(e);
 		if(txtPrecioVenta.getText().equals("0"))
 			txtPrecioVenta.setText("");
+	}
+	protected void focusGainedTxtCodbarras(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtNombreProducto(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtDescripcion(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtMarca(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtColor(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtLaboratorio(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtLote(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtNombrePromo1(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtCantPromo1(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtPrePromo1(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtNombrePromo2(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtCantPromo2(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusGainedTxtPrePromo2(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	protected void focusLostTxtNombrePromo1(FocusEvent e) {
+		if(txtNombrePromo1.getText().length()==0)
+			txtNombrePromo1.setText("0");
+	}
+	protected void focusLostTxtCantPromo1(FocusEvent e) {
+		if(txtCantPromo1.getText().length()==0)
+			txtCantPromo1.setText("0");
+	}
+	protected void focusLostTxtPrePromo1(FocusEvent e) {
+		if(txtPrePromo1.getText().length()==0)
+			txtPrePromo1.setText("0");
+	}
+	protected void focusLostTxtNombrePromo2(FocusEvent e) {
+		if(txtNombrePromo2.getText().length()==0)
+			txtNombrePromo2.setText("0");
+	}
+	protected void focusLostTxtCantPromo2(FocusEvent e) {
+		if(txtCantPromo2.getText().length()==0)
+			txtCantPromo2.setText("0");
+	}
+	protected void focusLostTxtPrePromo2(FocusEvent e) {
+		if(txtPrePromo2.getText().length()==0)
+			txtPrePromo2.setText("0");
 	}
 }

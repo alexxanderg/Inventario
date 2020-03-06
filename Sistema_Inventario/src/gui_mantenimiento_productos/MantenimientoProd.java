@@ -231,7 +231,7 @@ public class MantenimientoProd extends JInternalFrame {
 		// CARGAR ATRIBUTOS EN TABLA
 		String atribTodos = "";
 		try {
-			rs = model.cargarAtributosProd();
+			rs = model.cargarConfiguraciones();
 			rs.next();
 			atribTodos = rs.getString("atributosprod");
 		} catch (Exception e) {

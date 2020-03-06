@@ -22,7 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Usuarios;
 import gui_principal.Creditos;
-import gui_ventas.Ventas;
 import mysql.consultas;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
