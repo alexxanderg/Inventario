@@ -87,7 +87,6 @@ public class Ventas2 extends JInternalFrame {
 	private JTextField txtVuelto;
 	public DefaultTableModel dtm = new DefaultTableModel();
 	private JMenu mnlistaDeProductos;
-	private JMenu mncrearProductoNuevo;
 	
 	public VentanaPrincipal vp;
 	JTable tb;
@@ -301,7 +300,7 @@ public class Ventas2 extends JInternalFrame {
 		
 		lblTitDescuento = new JLabel("Descuento S/");
 		lblTitDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTitDescuento.setForeground(new Color(30, 144, 255));
+		lblTitDescuento.setForeground(new Color(102, 205, 170));
 		lblTitDescuento.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblTitDescuento.setBackground(new Color(50, 205, 50));
 		lblTitDescuento.setBounds(690, 142, 200, 30);
@@ -309,7 +308,7 @@ public class Ventas2 extends JInternalFrame {
 		
 		lblDescuento = new JLabel("0");
 		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDescuento.setForeground(new Color(30, 144, 255));
+		lblDescuento.setForeground(new Color(102, 205, 170));
 		lblDescuento.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblDescuento.setBackground(new Color(50, 205, 50));
 		lblDescuento.setBounds(911, 142, 197, 30);
@@ -403,7 +402,7 @@ public class Ventas2 extends JInternalFrame {
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
 		lblTitTotOri.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTitTotOri.setForeground(new Color(30, 144, 255));
+		lblTitTotOri.setForeground(new Color(102, 205, 170));
 		lblTitTotOri.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblTitTotOri.setBackground(new Color(50, 205, 50));
 		lblTitTotOri.setBounds(705, 100, 185, 34);
@@ -411,13 +410,14 @@ public class Ventas2 extends JInternalFrame {
 		
 		lblTotOriginal = new JLabel("0");
 		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTotOriginal.setForeground(new Color(30, 144, 255));
+		lblTotOriginal.setForeground(new Color(102, 205, 170));
 		lblTotOriginal.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblTotOriginal.setBackground(new Color(50, 205, 50));
 		lblTotOriginal.setBounds(911, 100, 197, 34);
 		getContentPane().add(lblTotOriginal);
 		
 		lblTotalCompra = new JLabel("0");
+		lblTotalCompra.setVisible(false);
 		lblTotalCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalCompra.setForeground(new Color(30, 144, 255));
 		lblTotalCompra.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -426,6 +426,7 @@ public class Ventas2 extends JInternalFrame {
 		getContentPane().add(lblTotalCompra);
 		
 		lblGananciaTotal = new JLabel("0");
+		lblGananciaTotal.setVisible(false);
 		lblGananciaTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGananciaTotal.setForeground(new Color(30, 144, 255));
 		lblGananciaTotal.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -436,7 +437,7 @@ public class Ventas2 extends JInternalFrame {
 		lblTitIgv = new JLabel("IGV S/");
 		lblTitIgv.setVisible(false);
 		lblTitIgv.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTitIgv.setForeground(new Color(30, 144, 255));
+		lblTitIgv.setForeground(new Color(102, 205, 170));
 		lblTitIgv.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblTitIgv.setBackground(new Color(50, 205, 50));
 		lblTitIgv.setBounds(690, 59, 200, 30);
@@ -445,13 +446,13 @@ public class Ventas2 extends JInternalFrame {
 		lblIGV = new JLabel("0");
 		lblIGV.setVisible(false);
 		lblIGV.setHorizontalAlignment(SwingConstants.LEFT);
-		lblIGV.setForeground(new Color(30, 144, 255));
+		lblIGV.setForeground(new Color(102, 205, 170));
 		lblIGV.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblIGV.setBackground(new Color(50, 205, 50));
 		lblIGV.setBounds(911, 58, 197, 30);
 		getContentPane().add(lblIGV);
 		
-		lblElVueltoDe_1 = new JLabel("El vuelto de");
+		lblElVueltoDe_1 = new JLabel("El vuelto de ");
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
 		lblElVueltoDe_1.setFont(new Font("Arial", Font.BOLD, 22));
@@ -494,12 +495,6 @@ public class Ventas2 extends JInternalFrame {
 		mnlistaDeProductos.setBackground(SystemColor.menu);
 		menuBar.add(mnlistaDeProductos);
 		
-		mncrearProductoNuevo = new JMenu("|Crear producto nuevo| ");
-		mncrearProductoNuevo.setForeground(new Color(220, 20, 60));
-		mncrearProductoNuevo.setFont(new Font("Arial", Font.BOLD, 22));
-		mncrearProductoNuevo.setBackground(SystemColor.menu);
-		menuBar.add(mncrearProductoNuevo);
-		
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
 		cargar();
@@ -514,7 +509,7 @@ public class Ventas2 extends JInternalFrame {
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "IDPROD", "PC" });
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Precio C/desc", "Descuento Tot", "SubTotal", "IDPROD", "PC" });
 		ajustarAnchoColumnas();
 		
 	}
@@ -557,7 +552,8 @@ public class Ventas2 extends JInternalFrame {
 		tbCarrito.getColumnModel().getColumn(0).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
-		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);		
+		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);	
+		tbCarrito.getColumnModel().getColumn(5).setCellRenderer(tcr);	
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -718,11 +714,11 @@ public class Ventas2 extends JInternalFrame {
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 			try {
 				double cant = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-				double preU = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+				double preCDesc = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
 				double desc = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
 				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
 				
-				subt = (cant * preU) - desc;
+				subt = (cant * preCDesc);
 				subt = redondearDecimales(subt, 2);
 				
 				tbCarrito.setValueAt(subt, i, 5);
@@ -932,8 +928,10 @@ public class Ventas2 extends JInternalFrame {
 							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
 							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
 								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-							double descuentoUniVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-								descuentoUniVenta = redondearDecimales(descuentoUniVenta, 2);
+							double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+								descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
+							double descuentoIndivProdVenta = descuentoTotProdVenta/cantProdVenta;
+								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
 							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
 								subTotVenta = redondearDecimales(subTotVenta, 2);
 							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
@@ -942,7 +940,7 @@ public class Ventas2 extends JInternalFrame {
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 
 							model.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
-									descuentoUniVenta, subTotVenta, gananciaProdVenta);
+									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta);
 							
 							//model.RealizarDescuentoStock(idProdVenta, cantProdVenta);
 						}
@@ -1008,7 +1006,7 @@ public class Ventas2 extends JInternalFrame {
 //					}
 					
 					
-					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
 					limpiarVentana();
 
 					/*
@@ -1050,14 +1048,14 @@ public class Ventas2 extends JInternalFrame {
 		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
 		double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
 		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
-		double preU = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
-		double desc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
+		double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
+		double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
 		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
 		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
 		
 		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
 		
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preU, subT, preC, desc);
+		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
 		cp.setVisible(true);
 		
 		this.setEnabled(false);
@@ -1065,17 +1063,17 @@ public class Ventas2 extends JInternalFrame {
 		tbCarrito.setRowSelectionInterval(fila, fila);
 	}
 	
-	public void actualizartabla(double cant, double preu, double preo, double pret, double desc, String newUniMed, String oldUniMed) {
+	public void actualizartabla(double cant, double preCDesc, double preo, double pret, double desc, String newUniMed, String oldUniMed) {
 		String nomProd = null;
 		nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
 		String newNomProd = nomProd.replaceAll(oldUniMed, newUniMed);
 		
-		tbCarrito.setValueAt(redondearDecimales(cant, 2), tbCarrito.getSelectedRow(), 0);
-		tbCarrito.setValueAt(newNomProd,					  tbCarrito.getSelectedRow(), 1);
-		tbCarrito.setValueAt(redondearDecimales(preu, 2), tbCarrito.getSelectedRow(), 3);
-		tbCarrito.setValueAt(redondearDecimales(preo, 2), tbCarrito.getSelectedRow(), 7);
-		tbCarrito.setValueAt(redondearDecimales(pret, 2), tbCarrito.getSelectedRow(), 5);
-		tbCarrito.setValueAt(redondearDecimales(desc, 2), tbCarrito.getSelectedRow(), 4);
+		tbCarrito.setValueAt(redondearDecimales(cant, 2), 		tbCarrito.getSelectedRow(), 0);
+		tbCarrito.setValueAt(newNomProd,						tbCarrito.getSelectedRow(), 1);
+		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 3);
+		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 7);
+		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 4);
 		sumarSubTotales();
 		sumarTotalGenerales();
 	}

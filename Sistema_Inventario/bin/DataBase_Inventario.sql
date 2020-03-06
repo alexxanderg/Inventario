@@ -86,6 +86,7 @@ codproducto	int,
 cantidad	float,
 preVeSDInd	float,
 preVeSDTot	float,
+descIndiv	float,
 descTotal	float,
 subTotal	float,
 ganancia	float,
@@ -121,11 +122,16 @@ foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
 
+create table tb_configuraciones(
+idconfig		int primary key auto_increment,
+atributosprod	varchar(200),
 
+ventasinstock 	tinyint -- 0NO 1SI
+);
   
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 1, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0);
 
@@ -168,13 +174,16 @@ select codproducto from tb_productos order by codproducto desc limit 1 ;
 
 -- ALTER TABLE tb_ventas_detalle MODIFY cantidad float;   SE ALTERA SI ES NECESARIO
 
-
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario, v.metpago, v.nota
+select vd.codventa, vd.cantidad, pr.producto, pr.detalles, pr.marca, pr.color, pr.lote, pr.laboratorio, vd.descIndiv, vd.descTotal, vd.subTotal, v.fecha, c.nombre, v.totventa, u.usuario, v.metpago1, v.nota
 from tb_ventas v 
-Inner join tb_ventas_detalle vd 
-On v.codventa=vd.codventa
-Inner join tb_productos pr
-On pr.codproducto=vd.codproducto
+inner join tb_ventas_detalle vd 
+on v.codventa=vd.codventa
+inner join tb_productos pr
+on pr.codproducto=vd.codproducto
+inner join tb_clientes c
+on v.idcliente = c.idcliente
+inner join tb_usuarios u
+on v.idusuario = u.idusuario
 where v.fecha between'2019-10-14' and '2021-10-14'
 order by v.codventa;
 

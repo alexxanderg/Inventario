@@ -38,7 +38,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
 public class Reportes2 extends JInternalFrame {
-	private JComboBox cbUsuarios;
+	private JComboBox <Usuarios> cbUsuarios;
 	private JComboBox cbMetodoPago;
 	private JLabel label_1;
 	private JDateChooser calendar;
@@ -499,8 +499,8 @@ public class Reportes2 extends JInternalFrame {
 			categoria.cargarCategorias(cbCategoria);
 
 			Usuarios usu = new Usuarios();
-			//Usuarios todos = new Usuarios("TODOS", "TODOS", "TODOS", 0);
-			//cbUsuarios.addItem(todos);
+			Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
+			cbUsuarios.addItem(todos);
 			usu.cargarUsuarios(cbUsuarios);
 			java.util.Date date = new Date();
 			date.getTime();
@@ -540,7 +540,7 @@ public class Reportes2 extends JInternalFrame {
 			 * parameters); AbstractJasperReports.showViewer();
 			 */
 
-			if (usu.equals("TODOS")) {
+			if (usu.equals("Todos")) {
 				if (metpago == -1) {
 					new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
 					AbstractJasperReports.showViewer();
@@ -568,8 +568,8 @@ public class Reportes2 extends JInternalFrame {
 		Connection con = null;
 		try {
 			con = MySQLConexion.getConection();
-			String usu = cbUsuarios.getSelectedItem().toString();
-			int metpago = cbMetodoPago.getSelectedIndex() - 1;
+			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
+			int metpago = cbMetodoPago.getSelectedIndex();
 
 			int añoi = calendar.getCalendar().get(Calendar.YEAR);
 			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
@@ -594,10 +594,9 @@ public class Reportes2 extends JInternalFrame {
 			parameters.put("prtFechaI", timeStampDateI);
 			parameters.put("prtFechaF", timeStampDateF);
 			parameters.put("metpago", metpago);
-			parameters.put("usu", usu);
 
 			if (usu.equals("TODOS")) {
-				if (metpago == -1) {
+				if (metpago == 0) {
 					new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
 					AbstractJasperReports.showViewer();
 				} else {
@@ -607,12 +606,13 @@ public class Reportes2 extends JInternalFrame {
 				}
 			} else {
 				parameters.put("prmtVendedor", usu);
-				if (metpago == -1) {
+				if (metpago == 0) {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					
+				} else {
 					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedorTodoMetodoxUsuario.jasper",
 							parameters);
-					AbstractJasperReports.showViewer();
-				} else {
-					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
 					AbstractJasperReports.showViewer();
 				}
 			}

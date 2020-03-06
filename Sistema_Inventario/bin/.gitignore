@@ -1,6 +1,15 @@
 /DataBase_Inventario.sql
 /Librerias/
 /cherry.jpg
+/clases/
+/gui_clientes/
+/gui_configuracion/
+/gui_mantenimiento_distribuidores/
+/gui_mantenimiento_productos/
+/gui_mantenimiento_usuarios/
+/gui_principal/
+/gui_reportes/
+/gui_ventas/
 /imgBXB.png
 /imgMenuclientes.png
 /imgMenucompras.png
@@ -13,15 +22,6 @@
 /imgalmacen.png
 /imgbanner.png
 /imgbtnanadir.png
-/clases/
-/gui_clientes/
-/gui_configuracion/
-/gui_mantenimiento_distribuidores/
-/gui_mantenimiento_productos/
-/gui_mantenimiento_usuarios/
-/gui_principal/
-/gui_reportes/
-/gui_ventas/
 /imgbtneliminar.png
 /imgbtnmodificar.png
 /imgbtnpass.jpg
@@ -57,4 +57,3 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
-/rCardexMayoresCategoria2.jasper

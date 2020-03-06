@@ -39,6 +39,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Cursor;
 import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -76,6 +78,7 @@ public class VentanaPrincipal extends JFrame {
     Color colorDeselec = new Color(74, 192, 244);
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
+    private JLabel lblCerrarSesion;
 	
 	
 	public static void main(String[] args) {
@@ -254,9 +257,23 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(lblTipo);
 		
 		lblIdusuario = new JLabel("");
+		lblIdusuario.setVisible(false);
 		lblIdusuario.setForeground(Color.WHITE);
 		lblIdusuario.setBounds(0, 96, 67, 14);
 		panel.add(lblIdusuario);
+		
+		lblCerrarSesion = new JLabel("Cerrar sesi\u00F3n");
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedLblCerrarSesion(arg0);
+			}
+		});
+		lblCerrarSesion.setForeground(new Color(240, 128, 128));
+		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrarSesion.setBounds(0, 665, 230, 20);
+		panel.add(lblCerrarSesion);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(230, 50, 1134, 679);
@@ -456,5 +473,10 @@ public class VentanaPrincipal extends JFrame {
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}	
+	}
+	protected void mouseClickedLblCerrarSesion(MouseEvent arg0) {
+		Login log = new Login();
+		log.setVisible(true);
+		this.dispose();
 	}
 }
