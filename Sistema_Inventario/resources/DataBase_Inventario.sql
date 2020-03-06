@@ -169,7 +169,7 @@ select codproducto from tb_productos order by codproducto desc limit 1 ;
 -- ALTER TABLE tb_ventas_detalle MODIFY cantidad float;   SE ALTERA SI ES NECESARIO
 
 
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario, v.metpago, v.nota
+select vd.codventa, vd.cantidad, pr.producto, pr.detalles, pr.marca, pr.color, pr.lote, pr.laboratorio, vd.descTotal, vd.subTotal, v.fecha, v.idcliente, v.totventa, v.idusuario, v.metpago1, v.nota
 from tb_ventas v 
 Inner join tb_ventas_detalle vd 
 On v.codventa=vd.codventa
@@ -177,6 +177,7 @@ Inner join tb_productos pr
 On pr.codproducto=vd.codproducto
 where v.fecha between'2019-10-14' and '2021-10-14'
 order by v.codventa;
+select * from tb_productos;
 
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
