@@ -13,6 +13,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import clases.Cliente;
 import gui_clientes.MantenimientoClientes;
+import gui_compras.MantenimientoCompras;
 import gui_configuracion.Configuraciones;
 import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.MantenimientoProd;
@@ -71,6 +72,7 @@ public class VentanaPrincipal extends JFrame {
 	MantenimientoClientes vCliente = new MantenimientoClientes(null);
 	Reportes vReportes = new Reportes(null);
 	Configuraciones config = new Configuraciones();
+	MantenimientoCompras vCompras = new MantenimientoCompras(null);
 
     //Color colorSelec = new Color(242, 136, 113);
     //Color colorDeselec = new Color(220, 20, 60);
@@ -223,6 +225,11 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
+		btnCompras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnCompras(e);
+			}
+		});
 		btnCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgCompras = new ImageIcon(this.getClass().getResource("/imgMenucompras.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnCompras.setIcon(new ImageIcon(imgCompras));
@@ -276,7 +283,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(lblCerrarSesion);
 
 		desktopPane = new JDesktopPane();
-		desktopPane.setBounds(230, 50, 1134, 679);
+		desktopPane.setBounds(230, 50, 1134, 646);
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
@@ -493,5 +500,24 @@ public class VentanaPrincipal extends JFrame {
 		Login log = new Login();
 		log.setVisible(true);
 		this.dispose();
+	}
+	protected void actionPerformedBtnCompras(ActionEvent e) {
+		try {
+			if (vCompras.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				vCompras.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				btnCompras.setBackground(colorSelec);
+			} else {
+				vCompras = new MantenimientoCompras(null);
+					desktopPane.add(vCompras);
+					vCompras.show();
+					vCompras.setMaximum(true);
+					pintarBotones();
+					btnCompras.setBackground(colorSelec);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}			
 	}
 }
