@@ -178,7 +178,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar usuarios: " + e.getMessage());
 		}
-		ajustarAnchoColumnas();
 	}
 		
 	private int anchoColumna(int porcentaje) {

@@ -248,7 +248,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgBXB.png")).getImage();
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/cherry.jpg")).getImage().getScaledInstance(90, 140, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -313,7 +313,7 @@ public class VentanaPrincipal extends JFrame {
 	private void cargar(){
 		this.setLocationRelativeTo(null);
 
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){

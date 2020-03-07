@@ -50,6 +50,7 @@ public class consultas {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_productos  where estado = 1 order by producto");
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
 		return rs;
 	}
@@ -240,8 +241,6 @@ public class consultas {
 		}
 		return rs;
 	}
-	
-	
 
 	public ResultSet modificarPC_PV(String cod, float prec, float prev) {
 		Connection con = MySQLConexion.getConection();
@@ -306,6 +305,57 @@ public class consultas {
 		return 0;
 	}
 
+	public int registrarCompra(int tipComprobante, String serie, String nroSerie, int idDistrib, String moneda, String tc, String nota, String metPago, Object fechaEmision, Object fechaVencimiento) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_compras (idcompra, tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setInt(2, tipComprobante);
+			prepareStmt.setString(3, serie);
+			prepareStmt.setString(4, nroSerie);
+			prepareStmt.setInt(5, idDistrib);
+			prepareStmt.setString(6, moneda);
+			prepareStmt.setString(7, tc);
+			prepareStmt.setString(8, nota);
+			prepareStmt.setString(9, metPago);
+			prepareStmt.setObject(10, fechaEmision);
+			prepareStmt.setObject(11, fechaVencimiento);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al registrar compra: " + e);
+		}
+		return 0;
+	}
+	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT)"
+					+ " values (?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, idCompra);
+			prepareStmt.setInt(2, idProd);
+			prepareStmt.setDouble(3, cantProd);
+			prepareStmt.setDouble(4, preIndivProd);
+			prepareStmt.setDouble(5, preSubTotProd);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al registrar compra detalles: " + e);
+		}
+		return 0;
+	}
+	
 	public ResultSet eliminarProducto(String cod, String nom) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
@@ -788,6 +838,18 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select codventa from tb_ventas order by codventa desc limit 1");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet ObtenerUltimoCodigoCompra() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select idcompra from tb_compras order by idcompra desc limit 1");
 		} catch (Exception e) {
 		}
 		return rs;

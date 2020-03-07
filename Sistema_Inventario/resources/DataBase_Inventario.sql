@@ -123,6 +123,32 @@ foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
 
+create table tb_compras(
+idcompra		int primary key auto_increment,
+tipComprobante	varchar(50),
+serie			varchar(15),
+nroSerie		varchar(20),
+idDistrib		int,
+moneda			varchar(20),
+tc				varchar(20),
+nota			varchar(200),
+metPago			varchar(50),
+fechaEmision	date,
+fechaVencimiento date,
+idusuario		int,
+tot				float
+);
+
+create table tb_compras_detalles(
+idcompra		int,
+idprod			int,
+cantidad		float,
+preUni			float,
+preSubT			float,
+foreign key (idcompra) references tb_compras(idcompra)
+);
+
+
 create table tb_configuraciones(
 idconfig		int primary key auto_increment,
 atributosprod	varchar(200),
@@ -161,6 +187,11 @@ select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
 select * from tb_clientes;
 select * from tb_kardex_detalles;
+select * from tb_compras;
+select * from tb_compras_detalles;
+
+
+
 select * from tb_configuraciones;
 
 select codproducto from tb_productos order by codproducto desc limit 1 ;

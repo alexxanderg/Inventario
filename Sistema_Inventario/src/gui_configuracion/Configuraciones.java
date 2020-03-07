@@ -36,10 +36,6 @@ import javax.swing.DefaultComboBoxModel;
 
 public class Configuraciones extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnNewMenu;
-	private JMenu mnNewMenu_1;
-	private JMenu mnNewMenu_2;
-	private JMenu mnIngresarStockA;
 	private JButton btnX;
 	private TextAutoCompleter ac;
 	
@@ -92,7 +88,7 @@ public class Configuraciones extends JInternalFrame {
 	 */
 	public Configuraciones() {
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("ALMAC\u00C9N");
+		setTitle("CONFIGURACION");
 		setBounds(100, 100, 1119, 679);
 		getContentPane().setLayout(null);
 		
@@ -155,6 +151,7 @@ public class Configuraciones extends JInternalFrame {
 		panelAtributos.add(chckbxPromocion2);
 		
 		btnGuardarAtributos = new JButton("Guardar");
+		btnGuardarAtributos.setForeground(Color.WHITE);
 		btnGuardarAtributos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnGuardarAtributos(e);
@@ -177,6 +174,7 @@ public class Configuraciones extends JInternalFrame {
 		panel.add(lblPermitirSeguirVendiendo);
 		
 		btnVenderSinStock = new JButton("Guardar");
+		btnVenderSinStock.setForeground(Color.WHITE);
 		btnVenderSinStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnVenderSinStock(arg0);
@@ -204,6 +202,7 @@ public class Configuraciones extends JInternalFrame {
 		panel_1.add(lblreducirStockAl);
 		
 		btnReducirAlVender = new JButton("Guardar");
+		btnReducirAlVender.setForeground(Color.WHITE);
 		btnReducirAlVender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnReducirAlVender(e);
@@ -231,6 +230,7 @@ public class Configuraciones extends JInternalFrame {
 		panel_2.add(lblpermitirModificarFecha);
 		
 		btnModifFecha = new JButton("Guardar");
+		btnModifFecha.setForeground(Color.WHITE);
 		btnModifFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnModifFecha(e);
@@ -249,30 +249,6 @@ public class Configuraciones extends JInternalFrame {
 		menuBar = new JMenuBar();
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
-		
-		mnNewMenu = new JMenu("Crear nuevo producto");
-		mnNewMenu.setForeground(new Color(30, 144, 255));
-		mnNewMenu.setBackground(SystemColor.control);
-		mnNewMenu.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu);
-		
-		mnNewMenu_1 = new JMenu("Modificar producto");
-		mnNewMenu_1.setForeground(new Color(60, 179, 113));
-		mnNewMenu_1.setBackground(SystemColor.control);
-		mnNewMenu_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu_1);
-		
-		mnNewMenu_2 = new JMenu("Eliminar producto");
-		mnNewMenu_2.setForeground(new Color(220, 20, 60));
-		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnNewMenu_2);
-		
-		mnIngresarStockA = new JMenu("Ingresar stock a producto");
-		mnIngresarStockA.setForeground(new Color(255, 140, 0));
-		mnIngresarStockA.setBackground(SystemColor.control);
-		mnIngresarStockA.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		menuBar.add(mnIngresarStockA);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		cargar();

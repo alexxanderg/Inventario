@@ -339,7 +339,7 @@ public class MantenimientoProd extends JInternalFrame {
 					"  -  (" + rs.getString("codproducto") + ")");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
 		}
 	}
 	
