@@ -136,7 +136,9 @@ metPago			varchar(50),
 fechaEmision	date,
 fechaVencimiento date,
 idusuario		int,
-tot				float
+tot				float,
+pagado			float,
+saldo			float
 );
 
 create table tb_compras_detalles(
@@ -223,7 +225,7 @@ order by v.codventa;
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
-update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
+update tb_productos SET cantidad=cantidad-1 where codproducto =11;
 
 update tb_ventas set usuario='admin' where usuario='Alexander Gamarra';
 
@@ -232,13 +234,11 @@ SET SQL_SAFE_UPDATES = 0;
 select vd.codventa,pr.producto,vd.cantidad,vd.prevenOri,vd.totvenOri,vd.prevenFin,vd.totvenFin from db_inventario.tb_ventas_detalle vd 
 inner join tb_productos pr on vd.codproducto=pr.codproducto where vd.codventa = 6;
 
-select v.codventa, v.cliente, v.fecha, v.usuario, v.totcompra, v.totventa, v.ganancia,
-vd.codproducto, vd.cantidad, vd.prevenOri, vd.totvenOri, vd.prevenFin, vd.totvenFin 
-from  db_inventario.tb_ventas v
-inner join tb_ventas_detalle vd
-on v.codventa = vd.codventa
-where fecha between '2019-01-01 00:00:00' and '2019-09-07 23:59:59'
-group by v.codventa;
+select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo
+from  tb_compras cp
+inner join tb_distribuidores d
+on cp.idDistrib = d.iddistrib
+group by cp.idcompra;
 
 
 select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario
