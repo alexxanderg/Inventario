@@ -269,22 +269,10 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblVerStockDe = new JLabel("VER STOCK DE PRODUCTOS");
-		this.lblVerStockDe.setBounds(56, 5, 432, 32);
+		this.lblVerStockDe.setBounds(10, 5, 537, 32);
 		this.panel_1.add(this.lblVerStockDe);
 		this.lblVerStockDe.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVerStockDe.setFont(new Font("Candara", Font.BOLD, 23));
-		
-		btnX = new JButton("X");
-		btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setForeground(Color.WHITE);
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(494, 0, 63, 30);
-		panel_1.add(btnX);
 		
 		this.panel_2 = new JPanel();
 		this.panel_2.setBackground(new Color(102, 205, 170));
@@ -543,9 +531,19 @@ public class Reportes extends JInternalFrame {
 			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechai);
+			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter2.parse(fechaf);
+			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+
 			Map parameters = new HashMap();
-			parameters.put("prtFechaI", fechai);
-			parameters.put("prtFechaF", fechaf);
+			parameters.put("prtFechaI", timeStampDateI);
+			parameters.put("prtFechaF", timeStampDateF);
 			parameters.put("metpago", metpago);
 
 			/*
@@ -553,7 +551,7 @@ public class Reportes extends JInternalFrame {
 			 * parameters); AbstractJasperReports.showViewer();
 			 */
 
-			if (usu.equals("Todos")) {
+			if (usu.equals("TODOS")) {
 				if (metpago == -1) {
 					new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
 					AbstractJasperReports.showViewer();
@@ -823,9 +821,5 @@ public class Reportes extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
-	}
-	
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		this.dispose();
 	}
 }

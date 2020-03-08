@@ -43,9 +43,9 @@ marca		varchar(30),
 color		varchar(30),
 lote		varchar(50),
 laboratorio	varchar(50),
-unimedida	varchar(50),
+unimedida	varchar(30),
 fechaVenc	date,
-categoria	varchar(50),
+categoria	varchar(30),
 almacen		varchar(50),
 iddistrib	int,
 cantidad	float,
@@ -90,7 +90,7 @@ descIndiv	float,
 descTotal	float,
 subTotal	float,
 ganancia	float,
-uMedidaUsada varchar(50),
+uMedidaUsada varchar(30),
 foreign key (codventa) references tb_ventas(codventa),
 foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
@@ -123,45 +123,17 @@ foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
 
-create table tb_compras(
-idcompra		int primary key auto_increment,
-tipComprobante	varchar(50),
-serie			varchar(15),
-nroSerie		varchar(20),
-idDistrib		int,
-moneda			varchar(20),
-tc				varchar(20),
-nota			varchar(200),
-metPago			varchar(50),
-fechaEmision	date,
-fechaVencimiento date,
-idusuario		int,
-tot				float,
-pagado			float,
-saldo			float
-);
-
-create table tb_compras_detalles(
-idcompra		int,
-idprod			int,
-cantidad		float,
-preUni			float,
-preSubT			float,
-foreign key (idcompra) references tb_compras(idcompra)
-);
-
-
 create table tb_configuraciones(
 idconfig		int primary key auto_increment,
 atributosprod	varchar(200),
-ventasinstock 	tinyint, -- 0SI 1NO - Si perminte vender con stock 0
-reducirstock	tinyint, -- 0NO 1SI - Si disminuirá stock al vender
-fechaVauto		tinyint	 -- 0SI 1NO - Para poder modificar la fecha de venta cada ves que se realiza
+ventasinstock 	tinyint, -- 0NO 1SI Si perminte vender con stock 0
+reducirstock	tinyint, -- 0NO 1SI Si disminuirá stock al vender
+fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves que se realiza
 );
   
 -- Usuarios de prueba
-insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 0, 1);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
+insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 1, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0, 1, 1);
 
@@ -189,11 +161,6 @@ select * from tb_ventas_detalle;
 select * from tb_ingreso_productos;
 select * from tb_clientes;
 select * from tb_kardex_detalles;
-select * from tb_compras;
-select * from tb_compras_detalles;
-
-
-
 select * from tb_configuraciones;
 
 select codproducto from tb_productos order by codproducto desc limit 1 ;
@@ -225,7 +192,7 @@ order by v.codventa;
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
-update tb_productos SET cantidad=cantidad-1 where codproducto =11;
+update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
 
 update tb_ventas set usuario='admin' where usuario='Alexander Gamarra';
 
@@ -234,11 +201,13 @@ SET SQL_SAFE_UPDATES = 0;
 select vd.codventa,pr.producto,vd.cantidad,vd.prevenOri,vd.totvenOri,vd.prevenFin,vd.totvenFin from db_inventario.tb_ventas_detalle vd 
 inner join tb_productos pr on vd.codproducto=pr.codproducto where vd.codventa = 6;
 
-select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo
-from  tb_compras cp
-inner join tb_distribuidores d
-on cp.idDistrib = d.iddistrib
-group by cp.idcompra;
+select v.codventa, v.cliente, v.fecha, v.usuario, v.totcompra, v.totventa, v.ganancia,
+vd.codproducto, vd.cantidad, vd.prevenOri, vd.totvenOri, vd.prevenFin, vd.totvenFin 
+from  db_inventario.tb_ventas v
+inner join tb_ventas_detalle vd
+on v.codventa = vd.codventa
+where fecha between '2019-01-01 00:00:00' and '2019-09-07 23:59:59'
+group by v.codventa;
 
 
 select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario
