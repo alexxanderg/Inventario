@@ -1,3 +1,4 @@
+/DataBase_Inventario.sql
 /Librerias/
 /cherry.jpg
 /clases/
@@ -26,6 +27,7 @@
 /imgbtnmodificar.png
 /imgbtnpass.jpg
 /imgbtnuser.jpg
+/imgbuscar.png
 /imgclientes.png
 /imgcopiaseguridad.png
 /imgencabezado.jpg
@@ -57,4 +59,3 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
-/imgbuscar.png
