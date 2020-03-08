@@ -251,7 +251,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/cherry.jpg")).getImage().getScaledInstance(90, 140, Image.SCALE_AREA_AVERAGING);
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgMitnao.png")).getImage().getScaledInstance(90, 90, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
