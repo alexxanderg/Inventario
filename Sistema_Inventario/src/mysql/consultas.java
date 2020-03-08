@@ -304,16 +304,30 @@ public class consultas {
 		}
 		return 0;
 	}
+	
+	public ResultSet cargarCompras() {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib order by cp.idcompra desc");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras: " + e);
+		}
+		return rs;
+	}
 
-	public int registrarCompra(int tipComprobante, String serie, String nroSerie, int idDistrib, String moneda, String tc, String nota, String metPago, Object fechaEmision, Object fechaVencimiento) {
+	public int registrarCompra(int tipComprobante, String serie, String nroSerie, int idDistrib, String moneda, String tc, String nota, String metPago, Object fechaEmision, Object fechaVencimiento, int idusuario,
+			double total, double pagado, double saldo) {
 		Connection con = MySQLConexion.getConection();
 		java.sql.Statement st;
 		ResultSet rs = null;
 		
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_compras (idcompra, tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_compras (idcompra, tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idusuario, tot, pagado, 	saldo)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setInt(2, tipComprobante);
@@ -326,6 +340,10 @@ public class consultas {
 			prepareStmt.setString(9, metPago);
 			prepareStmt.setObject(10, fechaEmision);
 			prepareStmt.setObject(11, fechaVencimiento);
+			prepareStmt.setInt(12, idusuario);
+			prepareStmt.setDouble(13, total);
+			prepareStmt.setDouble(14, pagado);
+			prepareStmt.setDouble(15, saldo);
 			prepareStmt.execute();
 			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
 		} catch (Exception e) {
@@ -354,6 +372,23 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR al registrar compra detalles: " + e);
 		}
 		return 0;
+	}
+	public ResultSet anadirStockProducto(int idProd, double cantProd) {
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos SET cantidad = cantidad+? where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setDouble(1, cantProd);
+			prepareStmt.setInt(2, idProd);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "Sumado correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
 	}
 	
 	public ResultSet eliminarProducto(String cod, String nom) {

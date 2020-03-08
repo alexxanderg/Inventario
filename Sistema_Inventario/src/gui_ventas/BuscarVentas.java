@@ -1,4 +1,4 @@
-package gui_compras;
+package gui_ventas;
 
 import java.awt.EventQueue;
 
@@ -14,7 +14,6 @@ import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
 
 import gui_configuracion.Configuraciones;
-import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.VentanaPrincipal;
 import mysql.consultas;
 
@@ -42,28 +41,27 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 
-public class MantenimientoCompras extends JInternalFrame {
+public class BuscarVentas extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
+	private JMenu mnModificarProducto;
 	private JMenu mnNewMenu_2;
 	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
-	public JTable tbCompras;
+	private JTable tbUsuarios;
 	
 	public VentanaPrincipal vp;
 	
-
-	NuevaCompra nc = new NuevaCompra(0, null);
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
-	int idusuario = 0;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MantenimientoCompras frame = new MantenimientoCompras(null);
+					BuscarVentas frame = new BuscarVentas(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,7 +70,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		});
 	}
 
-	public MantenimientoCompras(VentanaPrincipal vp) {
+	public BuscarVentas(VentanaPrincipal vp) {
 		this.vp = vp;
 		
 		getContentPane().setBackground(Color.WHITE);
@@ -98,15 +96,15 @@ public class MantenimientoCompras extends JInternalFrame {
 		this.scrollPane.setBounds(10, 41, 1083, 568);
 		getContentPane().add(this.scrollPane);
 		
-		tbCompras = new JTable();
-		tbCompras.setAutoCreateRowSorter(true);
-		tbCompras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbCompras.setFont(new Font("Arial", Font.ITALIC, 14));
-		tbCompras.setBackground(Color.WHITE);
-		tbCompras.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		scrollPane.setViewportView(tbCompras);
+		tbUsuarios = new JTable();
+		tbUsuarios.setAutoCreateRowSorter(true);
+		tbUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbUsuarios.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbUsuarios.setBackground(Color.WHITE);
+		tbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		scrollPane.setViewportView(tbUsuarios);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
-		tbCompras.getTableHeader().setReorderingAllowed(false);
+		tbUsuarios.getTableHeader().setReorderingAllowed(false);
 
 		
 		menuBar = new JMenuBar();
@@ -114,7 +112,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Registrar nueva compra| ");
+		mnCrearProducto = new JMenu("|Crear nuevo usuario| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -126,7 +124,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
-		JMenu mnModificarProducto = new JMenu("|Ver detalles de compra| ");
+		mnModificarProducto = new JMenu("|Modificar usuario| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -138,7 +136,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Agregar pago| ");
+		mnNewMenu_2 = new JMenu("|Eliminar usuario| ");
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -157,20 +155,27 @@ public class MantenimientoCompras extends JInternalFrame {
 	
 	public void cargar() {
 		DefaultTableModel dtm = new DefaultTableModel();
-		tb = this.tbCompras;
+		tb = this.tbUsuarios;
 		tb.setRowHeight(30);
 		tb.setModel(dtm);
-
-		dtm.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"});
+		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
 		consultas model = new consultas();
-		rs = model.cargarCompras();
+		rs = model.cargarUsuarios();
 		try {
 			while(rs.next()){
-				dtm.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+				String u = rs.getString("usuario");
+				if(!u.equals("bxb")){
+					int t = rs.getInt("tipo");
+					if(t == 0)
+						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
+					if(t == 1)
+						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
+				}
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al cargar compras: " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERROR al cargar usuarios: " + e.getMessage());
 		}
+		ajustarAnchoColumnas();
 	}
 		
 	private int anchoColumna(int porcentaje) {
@@ -178,12 +183,12 @@ public class MantenimientoCompras extends JInternalFrame {
 	}
 
 	public void ajustarAnchoColumnas() {
-		TableColumnModel tcm = tbCompras.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // 
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(3));  // 
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(70));  // 
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(11));  // 
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(11));  // 
+		TableColumnModel tcm = tbUsuarios.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // ID
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(40));  // Nombre
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Usuario
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseña
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(20));  // Tipo
 		
 		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -191,43 +196,24 @@ public class MantenimientoCompras extends JInternalFrame {
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
-		this.dispose();
-	}
-	
-	public void selecionarUsuario(String id) {
-		
-	}
-		
-	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
 		try {
-			idusuario = Integer.parseInt(vp.lblIdusuario.getText());
-			if (nc.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				nc.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				nc.setVisible(true); 
-			} else {
-				nc = new NuevaCompra(idusuario, this);
-				nc.setLocationRelativeTo(null);
-				nc.setVisible(true);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			this.setClosed(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
 		}
 	}
 	
+	public void selecionarUsuario(String id) {
+	}
+	
+	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
+		
+	}
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
-		DefaultTableModel tm = (DefaultTableModel) tbCompras.getModel();
-		int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbCompras.getSelectedRow(), 0)));
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este usuario?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0) {
-			model.deshabilitarUsuario(idusuario);
-			cargar();
-		}else{
-			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		}
+		
 	}
 }

@@ -100,12 +100,19 @@ public class NuevaCompra extends JFrame {
 	private TextAutoCompleter ac;
 	ResultSet rs;
 	consultas model = new consultas();
+	private JLabel lblPagado;
+	private JTextField txtPagado;
+	private JLabel lblSaldo;
+	private JTextField txtSaldo;
+	
+	int idUsuario = 0;
+	MantenimientoCompras mantCompras = null;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevaCompra frame = new NuevaCompra();
+					NuevaCompra frame = new NuevaCompra(0, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -117,8 +124,9 @@ public class NuevaCompra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevaCompra() {
-		
+	public NuevaCompra(int idUsuario, MantenimientoCompras mantCompras) {
+		this.idUsuario = idUsuario;
+		this.mantCompras = mantCompras; 
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -129,7 +137,7 @@ public class NuevaCompra extends JFrame {
 		setTitle("Crear producto");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1057, 618);
+		setBounds(100, 100, 1057, 638);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -230,11 +238,12 @@ public class NuevaCompra extends JFrame {
 		dchFeVencimiento.setBounds(759, 143, 282, 25);
 		contentPane.add(dchFeVencimiento);
 		
-		lblPrecioDeVenta = new JLabel("TOTAL DE COMPRA:");
-		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
+		lblPrecioDeVenta = new JLabel("TOTAL:");
+		lblPrecioDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrecioDeVenta.setForeground(new Color(30, 144, 255));
 		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
-		lblPrecioDeVenta.setBounds(22, 516, 240, 49);
+		lblPrecioDeVenta.setBounds(12, 516, 135, 32);
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtTotal = new JTextField();
@@ -246,7 +255,7 @@ public class NuevaCompra extends JFrame {
 			}
 		});
 		txtTotal.setText("0");
-		txtTotal.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtTotal.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtTotal.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -257,12 +266,12 @@ public class NuevaCompra extends JFrame {
 				keyTypedTxtPrecioVenta(e);
 			}
 		});
-		txtTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		txtTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTotal.setForeground(Color.DARK_GRAY);
 		txtTotal.setFont(new Font("Arial", Font.PLAIN, 25));
 		txtTotal.setColumns(10);
 		txtTotal.setBackground(new Color(245, 245, 245));
-		txtTotal.setBounds(267, 516, 240, 49);
+		txtTotal.setBounds(12, 549, 135, 34);
 		contentPane.add(txtTotal);
 		
 		btnRegistrarCompra = new JButton("CREAR");
@@ -274,7 +283,7 @@ public class NuevaCompra extends JFrame {
 		btnRegistrarCompra.setForeground(SystemColor.menu);
 		btnRegistrarCompra.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnRegistrarCompra.setBackground(new Color(30, 144, 255));
-		btnRegistrarCompra.setBounds(801, 517, 240, 61);
+		btnRegistrarCompra.setBounds(801, 522, 240, 61);
 		contentPane.add(btnRegistrarCompra);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -286,7 +295,7 @@ public class NuevaCompra extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(536, 517, 240, 61);
+		btnCancelar.setBounds(551, 522, 240, 61);
 		contentPane.add(btnCancelar);
 		
 		txtCrearProducto = new JTextField();
@@ -521,6 +530,44 @@ public class NuevaCompra extends JFrame {
 		txtPrecioUni.setBackground(new Color(245, 245, 245));
 		txtPrecioUni.setBounds(656, 270, 120, 34);
 		contentPane.add(txtPrecioUni);
+		
+		lblPagado = new JLabel("PAGADO:");
+		lblPagado.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPagado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPagado.setForeground(new Color(60, 179, 113));
+		lblPagado.setFont(new Font("Candara", Font.BOLD, 25));
+		lblPagado.setBounds(212, 516, 135, 32);
+		contentPane.add(lblPagado);
+		
+		txtPagado = new JTextField();
+		txtPagado.setText("0");
+		txtPagado.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPagado.setForeground(Color.DARK_GRAY);
+		txtPagado.setFont(new Font("Arial", Font.PLAIN, 25));
+		txtPagado.setColumns(10);
+		txtPagado.setBorder(new LineBorder(new Color(60, 179, 113), 2, true));
+		txtPagado.setBackground(new Color(245, 245, 245));
+		txtPagado.setBounds(212, 549, 135, 34);
+		contentPane.add(txtPagado);
+		
+		lblSaldo = new JLabel("SALDO:");
+		lblSaldo.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblSaldo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSaldo.setForeground(new Color(220, 20, 60));
+		lblSaldo.setFont(new Font("Candara", Font.BOLD, 25));
+		lblSaldo.setBounds(370, 516, 135, 32);
+		contentPane.add(lblSaldo);
+		
+		txtSaldo = new JTextField();
+		txtSaldo.setText("0");
+		txtSaldo.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSaldo.setForeground(Color.DARK_GRAY);
+		txtSaldo.setFont(new Font("Arial", Font.PLAIN, 25));
+		txtSaldo.setColumns(10);
+		txtSaldo.setBorder(new LineBorder(new Color(220, 20, 60), 2, true));
+		txtSaldo.setBackground(new Color(245, 245, 245));
+		txtSaldo.setBounds(370, 549, 135, 34);
+		contentPane.add(txtSaldo);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, txtCantidad, txtPrecioUni, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
@@ -639,8 +686,15 @@ public class NuevaCompra extends JFrame {
 		String tc = "";				tc = txtTipoCambio.getText();
 		Object fechaEmision = null;
 		Object fechaVencimiento = null;
+		
 		String nota = "";			nota = txtNota.getText();
 		String metPago = "";		cbMetPago.getSelectedItem().toString();
+		double total = 0; 			total = Double.parseDouble(txtTotal.getText());
+			total = redondearDecimales(total, 2);
+		double pagado = 0; 			pagado = Double.parseDouble(txtPagado.getText());
+			pagado = redondearDecimales(pagado, 2);
+		double saldo = 0; 			saldo = Double.parseDouble(txtSaldo.getText());
+			saldo = redondearDecimales(saldo, 2);
 		
 		try {
 			int añoe = dchFeEmision.getCalendar().get(Calendar.YEAR);
@@ -668,7 +722,7 @@ public class NuevaCompra extends JFrame {
 		} catch (Exception e) {
 		}
 		
-		model.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento);
+		model.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idUsuario, total, pagado, saldo);
 
 		int idCompra = 0;
 		rs = model.ObtenerUltimoCodigoCompra();
@@ -676,7 +730,7 @@ public class NuevaCompra extends JFrame {
 			while (rs.next())
 				idCompra = rs.getInt("idcompra");
 		} catch (Exception e3) {
-			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código de compra: " + e3);
 		}
 		
 		
@@ -691,9 +745,12 @@ public class NuevaCompra extends JFrame {
 				preSubTotProd = redondearDecimales(preSubTotProd, 2);
 			
 			model.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
+			model.anadirStockProducto(idProd, cantProd);
 				
 		}
-		JOptionPane.showMessageDialog(null, "Registrado correctamente");
+		JOptionPane.showMessageDialog(null, "Compra registrada correctamente");
+		mantCompras.cargar();
+		mantCompras.tbCompras.setRowSelectionInterval(0, 0);
 		this.dispose();
 		
 	}

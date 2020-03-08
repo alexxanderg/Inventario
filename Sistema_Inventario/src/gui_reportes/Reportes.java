@@ -96,6 +96,7 @@ public class Reportes extends JInternalFrame {
 
 
 	VentanaPrincipal vp;
+	private JButton btnX;
 	/**
 	 * Launch the application.
 	 */
@@ -268,10 +269,22 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblVerStockDe = new JLabel("VER STOCK DE PRODUCTOS");
-		this.lblVerStockDe.setBounds(10, 5, 537, 32);
+		this.lblVerStockDe.setBounds(56, 5, 432, 32);
 		this.panel_1.add(this.lblVerStockDe);
 		this.lblVerStockDe.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVerStockDe.setFont(new Font("Candara", Font.BOLD, 23));
+		
+		btnX = new JButton("X");
+		btnX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnX(arg0);
+			}
+		});
+		btnX.setForeground(Color.WHITE);
+		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+		btnX.setBackground(new Color(220, 20, 60));
+		btnX.setBounds(494, 0, 63, 30);
+		panel_1.add(btnX);
 		
 		this.panel_2 = new JPanel();
 		this.panel_2.setBackground(new Color(102, 205, 170));
@@ -810,5 +823,9 @@ public class Reportes extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
+	}
+	
+	protected void actionPerformedBtnX(ActionEvent arg0) {
+		this.dispose();
 	}
 }

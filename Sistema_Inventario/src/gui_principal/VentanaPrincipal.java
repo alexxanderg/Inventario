@@ -19,6 +19,7 @@ import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
 import gui_mantenimiento_productos.MantenimientoProd;
 import gui_mantenimiento_usuarios.MantenimientoUsuarios;
 import gui_reportes.Reportes;
+import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
 
 import javax.swing.ImageIcon;
@@ -66,6 +67,7 @@ public class VentanaPrincipal extends JFrame {
     public JLabel lblIdusuario;
 
     Ventas ventas = new Ventas(null);
+    BuscarVentas buscarV = new BuscarVentas(null);
 	MantenimientoProd vProductos = new MantenimientoProd(null);
 	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
 	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
@@ -81,6 +83,7 @@ public class VentanaPrincipal extends JFrame {
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
     private JLabel lblCerrarSesion;
+    private JButton btnBuscarVentas;
 	
 	
 	public static void main(String[] args) {
@@ -112,7 +115,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
-		btnVentas = new JButton("Ventas ");
+		btnVentas = new JButton("Vender");
 		btnVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
@@ -120,7 +123,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnVentas.setForeground(Color.WHITE);
 		btnVentas.setBackground(colorDeselec);
-		btnVentas.setBounds(0, 170, 230, 50);
+		btnVentas.setBounds(0, 170, 177, 50);
 		btnVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnVentas(arg0);
@@ -281,6 +284,20 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrarSesion.setBounds(0, 665, 230, 20);
 		panel.add(lblCerrarSesion);
+		
+		btnBuscarVentas = new JButton("");
+		btnBuscarVentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnBuscarVentas(arg0);
+			}
+		});
+		Image imgBuscar = new ImageIcon(this.getClass().getResource("/imgbuscar.png")).getImage().getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING);
+		btnBuscarVentas.setIcon(new ImageIcon(imgBuscar));
+		btnBuscarVentas.setForeground(Color.WHITE);
+		btnBuscarVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnBuscarVentas.setBackground(new Color(74, 192, 244));
+		btnBuscarVentas.setBounds(179, 170, 51, 50);
+		panel.add(btnBuscarVentas);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(230, 50, 1134, 646);
@@ -341,6 +358,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setBackground(colorDeselec);
 		btnConfiguraciones.setBackground(colorDeselec);
 		btnVentas.setBackground(colorDeselec);
+		btnBuscarVentas.setBackground(colorDeselec);
 		btnDistribuidores.setBackground(colorDeselec);
 		btnCompras.setBackground(colorDeselec);
 		btnClientes.setBackground(colorDeselec);
@@ -360,6 +378,28 @@ public class VentanaPrincipal extends JFrame {
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}		
+	}
+	protected void actionPerformedBtnBuscarVentas(ActionEvent arg0) {
+		try {
+			if (buscarV.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya está abierto");
+				buscarV.setSelected(true); // PONER JINTERNALFRAME DELANTE
+				pintarBotones();
+				buscarV.setBackground(colorSelec);
+			} else {
+				try {
+					buscarV = new BuscarVentas(this);
+					desktopPane.add(buscarV);
+					buscarV.show();
+					buscarV.setMaximum(true);
+					pintarBotones();
+					btnBuscarVentas.setBackground(colorSelec);
+				} catch (PropertyVetoException e) {
+				}
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}	
 	}
 	public void abrirVentanaVentas(){
 		try {
@@ -509,12 +549,12 @@ public class VentanaPrincipal extends JFrame {
 				pintarBotones();
 				btnCompras.setBackground(colorSelec);
 			} else {
-				vCompras = new MantenimientoCompras(null);
-					desktopPane.add(vCompras);
-					vCompras.show();
-					vCompras.setMaximum(true);
-					pintarBotones();
-					btnCompras.setBackground(colorSelec);
+				vCompras = new MantenimientoCompras(this);
+				desktopPane.add(vCompras);
+				vCompras.show();
+				vCompras.setMaximum(true);
+				pintarBotones();
+				btnCompras.setBackground(colorSelec);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
