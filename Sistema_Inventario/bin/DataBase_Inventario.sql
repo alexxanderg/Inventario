@@ -72,6 +72,7 @@ totcompra 	float,
 totventa	float,
 ganancia	float,
 descuento	float,
+saldo		float,
 nota		varchar(200),
 metpago1	tinyint, -- 0Efectivo 3Pago con tarjeta crédito/débito 2Depósito 3Transferencia  4CRÉDITO
 montpago1	float,
@@ -257,5 +258,5 @@ inner join tb_productos p on p.codproducto = kd.codproducto
 where kd.idkardex = 4;
 
 
-alter table tb_ventas_detalle
-  add uMedidaUsada		varchar(30);
+alter table tb_ventas
+  add saldo		float after descuento;

@@ -72,6 +72,7 @@ totcompra 	float,
 totventa	float,
 ganancia	float,
 descuento	float,
+saldo		float,
 nota		varchar(200),
 metpago1	tinyint, -- 0Efectivo 3Pago con tarjeta crédito/débito 2Depósito 3Transferencia  4CRÉDITO
 montpago1	float,
@@ -218,7 +219,17 @@ Inner join tb_productos pr
 On pr.codproducto=vd.codproducto
 where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 and v.usuario = 'alex';
+DATE_FORMAT(fecha,'%d - %b - %Y')
+select * from tb_ventas where estado = 1 order by fecha desc;
 
+select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m'), v.descuento, v.saldo, v.totventa
+from tb_ventas v
+inner join tb_clientes c
+on c.idcliente = v.idcliente
+inner join tb_usuarios u
+on u.idusuario = v.idusuario
+where v.estado = 1 
+order by v.fecha desc;
 
 select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = '';
  
@@ -257,5 +268,5 @@ inner join tb_productos p on p.codproducto = kd.codproducto
 where kd.idkardex = 4;
 
 
-alter table tb_ventas_detalle
-  add uMedidaUsada		varchar(30);
+alter table tb_ventas
+  add saldo		float after descuento;

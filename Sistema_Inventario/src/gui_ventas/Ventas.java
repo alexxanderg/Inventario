@@ -658,11 +658,8 @@ public class Ventas extends JInternalFrame {
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
+		vp.ventas = null;
+		this.dispose();
 	}
 	
 	public void agregarCliente(int iddistrib){
@@ -1146,7 +1143,7 @@ public class Ventas extends JInternalFrame {
 					
 					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
 					//limpiarVentana();
-					vp.abrirVentanaVentas();
+					//vp.abrirVentanaVentas();
 					this.dispose();
 					/*
 					 * lblPaga.setText("Paga con: "); lblVuelto.setText(

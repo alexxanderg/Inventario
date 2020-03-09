@@ -30,6 +30,7 @@ import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -40,6 +41,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
+import javax.swing.JComboBox;
+import com.toedter.calendar.JDateChooser;
+
+import clases.Cliente;
+import clases.Usuarios;
 
 public class BuscarVentas extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -48,14 +54,20 @@ public class BuscarVentas extends JInternalFrame {
 	private JMenu mnNewMenu_2;
 	private JButton btnX;
 	private JScrollPane scrollPane;
-	private TextAutoCompleter ac;
-	private JTable tbUsuarios;
+	private JTable tbVentas;
+	private JButton btnVerVentas;
+	private JComboBox <Usuarios>cbUsuarios;
+	private JLabel lblVendedor;
+	private JLabel lblDesde;
+	private JDateChooser dchDesde;
+	private JLabel lblHasta;
+	private JDateChooser dchHasta;
 	
-	public VentanaPrincipal vp;
-	
+	public VentanaPrincipal vp;	
 	JTable tb;
 	ResultSet rs;
 	consultas model = new consultas();
+	DefaultTableModel dtm = new DefaultTableModel();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,7 +86,7 @@ public class BuscarVentas extends JInternalFrame {
 		this.vp = vp;
 		
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("USUARIOS");
+		setTitle("HISTORIAL DE VENTAS");
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
@@ -93,18 +105,67 @@ public class BuscarVentas extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 41, 1083, 568);
+		this.scrollPane.setBounds(10, 72, 1083, 537);
 		getContentPane().add(this.scrollPane);
 		
-		tbUsuarios = new JTable();
-		tbUsuarios.setAutoCreateRowSorter(true);
-		tbUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbUsuarios.setFont(new Font("Arial", Font.ITALIC, 14));
-		tbUsuarios.setBackground(Color.WHITE);
-		tbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		scrollPane.setViewportView(tbUsuarios);
+		tbVentas = new JTable();
+		tbVentas.setAutoCreateRowSorter(true);
+		tbVentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbVentas.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbVentas.setBackground(Color.WHITE);
+		tbVentas.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		scrollPane.setViewportView(tbVentas);
+		
+		btnVerVentas = new JButton("Filtrar");
+		btnVerVentas.setBackground(new Color(30, 144, 255));
+		btnVerVentas.setForeground(Color.WHITE);
+		btnVerVentas.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnVerVentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnVerVentas(arg0);
+			}
+		});
+		btnVerVentas.setBounds(814, 31, 110, 30);
+		getContentPane().add(btnVerVentas);
+		
+		cbUsuarios = new JComboBox();
+		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
+		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbUsuarios.setBackground(new Color(245, 245, 245));
+		cbUsuarios.setBounds(110, 31, 227, 30);
+		getContentPane().add(cbUsuarios);
+		
+		lblVendedor = new JLabel("Vendedor:");
+		lblVendedor.setForeground(Color.DARK_GRAY);
+		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
+		lblVendedor.setBounds(10, 31, 110, 30);
+		getContentPane().add(lblVendedor);
+		
+		lblDesde = new JLabel("Desde:");
+		lblDesde.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDesde.setForeground(new Color(102, 205, 170));
+		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
+		lblDesde.setBackground(new Color(50, 205, 50));
+		lblDesde.setBounds(351, 31, 71, 30);
+		getContentPane().add(lblDesde);
+		
+		dchDesde = new JDateChooser();
+		dchDesde.setBounds(432, 31, 130, 30);
+		getContentPane().add(dchDesde);
+		
+		lblHasta = new JLabel("Hasta:");
+		lblHasta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblHasta.setForeground(new Color(102, 205, 170));
+		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
+		lblHasta.setBackground(new Color(50, 205, 50));
+		lblHasta.setBounds(572, 31, 71, 30);
+		getContentPane().add(lblHasta);
+		
+		dchHasta = new JDateChooser();
+		dchHasta.setBounds(648, 31, 130, 30);
+		getContentPane().add(dchHasta);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
-		tbUsuarios.getTableHeader().setReorderingAllowed(false);
+		tbVentas.getTableHeader().setReorderingAllowed(false);
 
 		
 		menuBar = new JMenuBar();
@@ -154,28 +215,26 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	
 	public void cargar() {
-		DefaultTableModel dtm = new DefaultTableModel();
-		tb = this.tbUsuarios;
+		tb = this.tbVentas;
 		tb.setRowHeight(30);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
-		consultas model = new consultas();
-		rs = model.cargarUsuarios();
-		try {
-			while(rs.next()){
-				String u = rs.getString("usuario");
-				if(!u.equals("bxb")){
-					int t = rs.getInt("tipo");
-					if(t == 0)
-						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
-					if(t == 1)
-						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
-				}
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al cargar usuarios: " + e.getMessage());
-		}
-		ajustarAnchoColumnas();
+		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+		
+		Usuarios vendedores = new Usuarios();
+		vendedores.cargarUsuarios(cbUsuarios);
+
+		//JOptionPane.showMessageDialog(null, vp.lblIdusuario.getText());
+		int idUsuario = Integer.parseInt(vp.lblIdusuario.getText());
+		
+		for(int i = 0; i<cbUsuarios.getItemCount(); i++)
+			if(cbUsuarios.getItemAt(i).getIdusuario() == idUsuario)
+				cbUsuarios.setSelectedIndex(i);
+		
+		java.util.Date date = new Date();
+		date.getTime();
+		dchDesde.setDate(date);
+		dchHasta.setDate(date);
+		
 	}
 		
 	private int anchoColumna(int porcentaje) {
@@ -183,16 +242,23 @@ public class BuscarVentas extends JInternalFrame {
 	}
 
 	public void ajustarAnchoColumnas() {
-		TableColumnModel tcm = tbUsuarios.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // ID
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(40));  // Nombre
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Usuario
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseña
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(20));  // Tipo
+		TableColumnModel tcm = tbVentas.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(7));  // 
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(20));  // 
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(17));  // 
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(18));  // 
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(6));
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(6));
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(6));
 		
-		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
+		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
-		tbUsuarios.getColumnModel().getColumn(3).setCellRenderer(tcr0);*/
+		tbVentas.getColumnModel().getColumn(0).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(4).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(7).setCellRenderer(tcr0);
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -215,5 +281,17 @@ public class BuscarVentas extends JInternalFrame {
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		
+	}
+	protected void actionPerformedBtnVerVentas(ActionEvent arg0) {
+		consultas model = new consultas();
+		rs = model.cargarVentasUsuario();
+		try {
+			while(rs.next()){
+				dtm.addRow(new Object[]{rs.getInt("codventa"), rs.getString("ncliente"), rs.getString("nusuario"), rs.getString("nota"), rs.getString("fecha"), rs.getFloat("descuento"), rs.getFloat("saldo"), rs.getFloat("totventa")});	
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al cargar ventas: " + e.getMessage());
+		}
+		ajustarAnchoColumnas();
 	}
 }

@@ -58,33 +58,30 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnClientes;
 	private JButton btnReportes;
 	private JButton btnConfiguraciones;
-	public JLabel lblUsuario;
     public JLabel lblTipo;
     private JLabel lblLogo;
     private JButton btnDistribuidores;
     private JButton btnCompras;
     private JTextField txtPrueba;
     public JLabel lblIdusuario;
+    private JLabel lblCerrarSesion;
+    private JButton btnBuscarVentas;
+	public JLabel lblUsuario;
 
-    Ventas ventas = new Ventas(null);
-    BuscarVentas buscarV = new BuscarVentas(null);
-	MantenimientoProd vProductos = new MantenimientoProd(null);
-	MantenimientoDistribuidores vdistribuidores = new MantenimientoDistribuidores(null);
-	MantenimientoUsuarios vUsuarios = new MantenimientoUsuarios(null);
-	MantenimientoClientes vCliente = new MantenimientoClientes(null);
-	Reportes vReportes = new Reportes(null);
-	Configuraciones config = new Configuraciones();
-	MantenimientoCompras vCompras = new MantenimientoCompras(null);
+	public Ventas ventas = null;
+	public BuscarVentas buscarV = null;
+	public MantenimientoCompras vCompras = null;
+	public MantenimientoProd vProductos = null;
+	public MantenimientoDistribuidores vdistribuidores = null;
+	public MantenimientoUsuarios vUsuarios = null;
+	public MantenimientoClientes vCliente = null;
+	public Reportes vReportes = null;
+	public Configuraciones config = null;
 
-    //Color colorSelec = new Color(242, 136, 113);
-    //Color colorDeselec = new Color(220, 20, 60);
-	Color colorSelec = new Color(82, 229, 151 );
+	Color colorSelec = new Color(82, 229, 151);
     Color colorDeselec = new Color(74, 192, 244);
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
-    private JLabel lblCerrarSesion;
-    private JButton btnBuscarVentas;
-	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -99,9 +96,6 @@ public class VentanaPrincipal extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1380, 735);
@@ -266,7 +260,7 @@ public class VentanaPrincipal extends JFrame {
 		lblTipo.setBounds(0, 144, 230, 29);
 		panel.add(lblTipo);
 		
-		lblIdusuario = new JLabel("");
+		lblIdusuario = new JLabel("1");
 		lblIdusuario.setVisible(false);
 		lblIdusuario.setForeground(Color.WHITE);
 		lblIdusuario.setBounds(0, 96, 67, 14);
@@ -329,14 +323,12 @@ public class VentanaPrincipal extends JFrame {
 	
 	private void cargar(){
 		this.setLocationRelativeTo(null);
-
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){
 		switch (tipo) {
 		case 0:
-			
 			break;
 		case 1:
 			btnClientes.setEnabled(false);
@@ -345,6 +337,7 @@ public class VentanaPrincipal extends JFrame {
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
 			btnVentas.setEnabled(true);
+			btnBuscarVentas.setEnabled(true);
 			btnDistribuidores.setEnabled(false);
 			btnCompras.setEnabled(false);
 			break;
@@ -366,69 +359,54 @@ public class VentanaPrincipal extends JFrame {
 
 	protected void actionPerformedBtnVentas(ActionEvent arg0) {
 		try {
-			if (ventas.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				ventas.setSelected(true); // PONER JINTERNALFRAME DELANTE
+			if (ventas.isShowing()) { // VERIFICA SI LA VENTANA YA ESTÁ ABIERTA
+				ventas.setSelected(true); // PONER JINTERNALFRAME DELANTE DE LOS OTROS
 				pintarBotones();
 				btnVentas.setBackground(colorSelec);
-			} else {
-				abrirVentanaVentas();
-					
 			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+		} catch (Exception f) { // Aqui entrará si no se ha inicializado la ventana
+			try {
+				cerrarVentanas();
+				ventas = new Ventas(this);
+				desktopPane.add(ventas);
+				ventas.show();
+				ventas.setMaximum(true);
+				pintarBotones();
+				btnVentas.setBackground(colorSelec);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
+			}
 		}		
 	}
 	protected void actionPerformedBtnBuscarVentas(ActionEvent arg0) {
 		try {
-			if (buscarV.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				buscarV.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				buscarV.setBackground(colorSelec);
-			} else {
-				try {
-					buscarV = new BuscarVentas(this);
-					desktopPane.add(buscarV);
-					buscarV.show();
-					buscarV.setMaximum(true);
-					pintarBotones();
-					btnBuscarVentas.setBackground(colorSelec);
-				} catch (PropertyVetoException e) {
-				}
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}	
-	}
-	public void abrirVentanaVentas(){
-		try {
-			ventas = new Ventas(this);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
+			cerrarVentanas();
+			buscarV = new BuscarVentas(this);
+			desktopPane.add(buscarV);
+			buscarV.show();
+			buscarV.setMaximum(true);
 			pintarBotones();
-			btnVentas.setBackground(colorSelec);
+			btnBuscarVentas.setBackground(colorSelec);
 		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Buscar Ventas: " + e);
 		}
 	}
-	
+	protected void actionPerformedBtnCompras(ActionEvent e) {
+		try {
+			cerrarVentanas();
+			vCompras = new MantenimientoCompras(this);
+			desktopPane.add(vCompras);
+			vCompras.show();
+			vCompras.setMaximum(true);
+			pintarBotones();
+			btnCompras.setBackground(colorSelec);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Compras: " + e2);
+		}
+	}
 	protected void actionPerformedBtnInventario(ActionEvent arg0) {
 		try {
-			if (vProductos.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vProductos.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnInventario.setBackground(colorSelec);
-			} else {
-				abrirVentanaInventario();
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}			
-	}
-	public void abrirVentanaInventario(){
-		try {
+			cerrarVentanas();
 			vProductos = new MantenimientoProd(this);
 			desktopPane.add(vProductos);
 			vProductos.show();
@@ -436,128 +414,110 @@ public class VentanaPrincipal extends JFrame {
 			pintarBotones();
 			btnInventario.setBackground(colorSelec);
 		} catch (PropertyVetoException e) {
-		}
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+		}	
 	}
 	
 	protected void actionPerformedBtnDistribuidores(ActionEvent arg0) {
 		try {
-			if (vdistribuidores.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vdistribuidores.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnDistribuidores.setBackground(colorSelec);
-			} else {
-					vdistribuidores = new MantenimientoDistribuidores(this);
-					desktopPane.add(vdistribuidores);
-					vdistribuidores.show();
-					vdistribuidores.setMaximum(true);
-					pintarBotones();
-					btnDistribuidores.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}	
+			cerrarVentanas();
+			vdistribuidores = new MantenimientoDistribuidores(this);
+			desktopPane.add(vdistribuidores);
+			vdistribuidores.show();
+			vdistribuidores.setMaximum(true);
+			pintarBotones();
+			btnDistribuidores.setBackground(colorSelec);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Distribuidores: " + e);
+		}
 	}
 	protected void actionPerformedBtnClientes(ActionEvent arg0) {
 		try {
-			if (vCliente.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vCliente.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnClientes.setBackground(colorSelec);
-			} else {
-				vCliente = new MantenimientoClientes(this);
-					desktopPane.add(vCliente);
-					vCliente.show();
-					vCliente.setMaximum(true);
-					pintarBotones();
-					btnClientes.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}	
+			cerrarVentanas();
+			vCliente = new MantenimientoClientes(this);
+			desktopPane.add(vCliente);
+			vCliente.show();
+			vCliente.setMaximum(true);
+			pintarBotones();
+			btnClientes.setBackground(colorSelec);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Clientes: " + e);
+		}
 	}
 	protected void actionPerformedBtnUsuario(ActionEvent e) {
 		try {
-			if (vUsuarios.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vUsuarios.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnUsuario.setBackground(colorSelec);
-			} else {
-				vUsuarios = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
-					desktopPane.add(vUsuarios);
-					vUsuarios.show();
-					vUsuarios.setMaximum(true);
-					pintarBotones();
-					btnUsuario.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			cerrarVentanas();
+			vUsuarios = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
+			desktopPane.add(vUsuarios);
+			vUsuarios.show();
+			vUsuarios.setMaximum(true);
+			pintarBotones();
+			btnUsuario.setBackground(colorSelec);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Usuarios: " + e2);
 		}
 	}
 	
 	protected void actionPerformedBtnReportes(ActionEvent e) {
 		try {
-			if (vReportes.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vReportes.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnReportes.setBackground(colorSelec);
-			} else {
-				vReportes = new Reportes(this);
-				desktopPane.add(vReportes);
-				vReportes.show();
-				vReportes.setMaximum(true);
-				pintarBotones();
-				btnReportes.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			cerrarVentanas();
+			vReportes = new Reportes(this);
+			desktopPane.add(vReportes);
+			vReportes.show();
+			vReportes.setMaximum(true);
+			pintarBotones();
+			btnReportes.setBackground(colorSelec);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Reportes: " + e2);
 		}
 	}
 	
 	protected void actionPerformedBtnConfiguraciones(ActionEvent arg0) {
 		try {
-			if (config.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				config.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnConfiguraciones.setBackground(colorSelec);
-			} else {
-				config = new Configuraciones();
-					desktopPane.add(config);
-					config.show();
-					config.setMaximum(true);
-					pintarBotones();
-					btnConfiguraciones.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}	
+			cerrarVentanas();
+			config = new Configuraciones();
+			desktopPane.add(config);
+			config.show();
+			config.setMaximum(true);
+			pintarBotones();
+			btnConfiguraciones.setBackground(colorSelec);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Configuraciones: " + e);
+		}
 	}
+	
+	public void cerrarVentanas(){
+		//ventas 			= null;
+		//	ventas.dispose();
+		buscarV = null;
+			if(buscarV != null) 
+				buscarV.dispose();
+		vCompras = null;
+			if(vCompras != null) 
+				vCompras.dispose();
+		vProductos = null;
+			if(vProductos != null) 
+				vProductos.dispose();
+		vdistribuidores = null;
+			if(vdistribuidores != null) 
+				vdistribuidores.dispose();
+		vUsuarios = null;
+			if(vUsuarios != null) 
+				vUsuarios.dispose();
+		vCliente = null;
+			if(vCliente != null) 
+				vCliente.dispose();
+		vReportes = null;
+			if(vReportes != null) 
+				vReportes.dispose();
+		config = null;
+			if(config != null) 
+				config.dispose();
+	}
+	
 	protected void mouseClickedLblCerrarSesion(MouseEvent arg0) {
 		Login log = new Login();
 		log.setVisible(true);
 		this.dispose();
-	}
-	protected void actionPerformedBtnCompras(ActionEvent e) {
-		try {
-			if (vCompras.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya está abierto");
-				vCompras.setSelected(true); // PONER JINTERNALFRAME DELANTE
-				pintarBotones();
-				btnCompras.setBackground(colorSelec);
-			} else {
-				vCompras = new MantenimientoCompras(this);
-				desktopPane.add(vCompras);
-				vCompras.show();
-				vCompras.setMaximum(true);
-				pintarBotones();
-				btnCompras.setBackground(colorSelec);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}			
 	}
 }

@@ -199,7 +199,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 				vp.setVisible(true);
 				this.dispose();
 			}
-			else{
+			if(usu.getTipo() == 1){
 				VentanaPrincipal vp = new VentanaPrincipal();
 				vp.lblUsuario.setText(nombreUsuario);
 				vp.lblTipo.setText("VENDEDOR");
