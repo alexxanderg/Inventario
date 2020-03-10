@@ -740,11 +740,12 @@ public class Ventas extends JInternalFrame {
 		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 			try {
 				String codbarra = txtBuscarProd.getText();
+				consulta.iniciar();
 				rs = consulta.buscarProductoBarras(codbarra);
 				int flag = 0;
 				float cantidad = 0;
 				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
+					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA 
 						rs.beforeFirst();
 						while (rs.next()) {
 							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 6).toString())) {
@@ -763,19 +764,32 @@ public class Ventas extends JInternalFrame {
 					try {
 						rs.beforeFirst();
 						while (rs.next()) {
-							dtm.addRow(new Object[] { "1", rs.getString("producto"), rs.getString("detalles"),
-									rs.getString("cantidad"), rs.getFloat("precioVe"), "", rs.getString("codproducto"),
+							dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+									rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
 									rs.getFloat("precioCo") });
 							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
 					}
 				}
-				limpiarVentana();
+				
+
+				consulta.reset();
+				//limpiarVentana();
+				txtBuscarProd.setText(null);
 				sumarSubTotales();
 				sumarTotalGenerales();
 			} catch (Exception e2) {
 				txtBuscarProd.setText(null);
+			}finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
 			}
 		}
 		finally {
@@ -1208,7 +1222,7 @@ public class Ventas extends JInternalFrame {
 					
 					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
 					//limpiarVentana();
-					//vp.abrirVentanaVentas();
+					vp.abrirVentanaVentas();
 					this.dispose();
 					/*
 					 * lblPaga.setText("Paga con: "); lblVuelto.setText(
@@ -1222,8 +1236,12 @@ public class Ventas extends JInternalFrame {
 	
 	protected void keyTypedTxtBuscarProd(KeyEvent e) {
 		char c = e.getKeyChar();
+		
 		if (c == (char) KeyEvent.VK_ENTER)
-			AgregarProductoATabla();
+			if(txtBuscarProd.getText().length()==0)
+				JOptionPane.showMessageDialog(null, "Escriba el producto que desee vender");
+			else
+				AgregarProductoATabla();
 	}
 	
 	protected void actionPerformedBtnNewCliente(ActionEvent arg0) {

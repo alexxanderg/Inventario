@@ -66,8 +66,11 @@ public class VentanaPrincipal extends JFrame {
 	public Reportes vReportes = null;
 	public Configuraciones config = null;
 
-	Color colorSelec = new Color(240, 67, 85);
-    Color colorDeselec = new Color(74, 192, 244);
+	/*Color colorSelec = new Color(240, 67, 85);
+    Color colorDeselec = new Color(74, 192, 244);*/
+   
+    Color colorSelec = new Color(255, 177, 70 );
+    Color colorDeselec = new Color(243, 112, 112);
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
     private JLabel lblBxB;
@@ -95,7 +98,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(new Color(0, 0, 0));
+		panel.setBackground(Color.DARK_GRAY);
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
@@ -235,7 +238,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgLogoCuadrado.png")).getImage().getScaledInstance(90, 90, Image.SCALE_AREA_AVERAGING);
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/cherry.jpg")).getImage().getScaledInstance(70, 90, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -279,7 +282,7 @@ public class VentanaPrincipal extends JFrame {
 		btnBuscarVentas.setIcon(new ImageIcon(imgBuscar));
 		btnBuscarVentas.setForeground(Color.WHITE);
 		btnBuscarVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnBuscarVentas.setBackground(new Color(74, 192, 244));
+		btnBuscarVentas.setBackground(colorDeselec);
 		btnBuscarVentas.setBounds(179, 170, 51, 50);
 		panel.add(btnBuscarVentas);
 
@@ -294,7 +297,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - LA DOLORES");
+		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - MINIMARKET BECORAT");
 		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -324,7 +327,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	private void cargar(){
 		this.setLocationRelativeTo(null);
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){
@@ -367,17 +370,22 @@ public class VentanaPrincipal extends JFrame {
 			}
 		} catch (Exception f) { // Aqui entrará si no se ha inicializado la ventana
 			try {
-				cerrarVentanas();
-				ventas = new Ventas(this);
-				desktopPane.add(ventas);
-				ventas.show();
-				ventas.setMaximum(true);
-				pintarBotones();
-				btnVentas.setBackground(colorSelec);
+				abrirVentanaVentas();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
 			}
 		}		
+	}
+	public void abrirVentanaVentas(){
+		try {
+			ventas = new Ventas(this);
+			desktopPane.add(ventas);
+			ventas.show();
+			ventas.setMaximum(true);
+			pintarBotones();
+			btnVentas.setBackground(colorSelec);
+		} catch (Exception e) {
+		}cerrarVentanas();
 	}
 	protected void actionPerformedBtnBuscarVentas(ActionEvent arg0) {
 		try {
@@ -490,30 +498,38 @@ public class VentanaPrincipal extends JFrame {
 	public void cerrarVentanas(){
 		//ventas 			= null;
 		//	ventas.dispose();
+	
+		if(buscarV != null) 
+			buscarV.dispose();
 		buscarV = null;
-			if(buscarV != null) 
-				buscarV.dispose();
+
+		if(vCompras != null) 
+			vCompras.dispose();
 		vCompras = null;
-			if(vCompras != null) 
-				vCompras.dispose();
+		
+		if(vProductos != null) 
+			vProductos.dispose();
 		vProductos = null;
-			if(vProductos != null) 
-				vProductos.dispose();
+		
+		if(vdistribuidores != null) 
+			vdistribuidores.dispose();
 		vdistribuidores = null;
-			if(vdistribuidores != null) 
-				vdistribuidores.dispose();
+		
+		if(vUsuarios != null) 
+			vUsuarios.dispose();
 		vUsuarios = null;
-			if(vUsuarios != null) 
-				vUsuarios.dispose();
+		
+		if(vCliente != null) 
+			vCliente.dispose();
 		vCliente = null;
-			if(vCliente != null) 
-				vCliente.dispose();
+		
+		if(vReportes != null) 
+			vReportes.dispose();
 		vReportes = null;
-			if(vReportes != null) 
-				vReportes.dispose();
+		
+		if(config != null) 
+			config.dispose();
 		config = null;
-			if(config != null) 
-				config.dispose();
 	}
 	
 	protected void mouseClickedLblCerrarSesion(MouseEvent arg0) {
