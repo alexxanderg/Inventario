@@ -1,38 +1,24 @@
 package gui_clientes;
 
 import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
 import com.mxrck.autocompleter.TextAutoCompleter;
-
-import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
 import mysql.consultas;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -54,7 +40,7 @@ public class MantenimientoClientes extends JInternalFrame {
 	public VentanaPrincipal vp;
 	JTable tb;
 	ResultSet rs;
-	consultas model = new consultas();
+	consultas consulta = new consultas();
 	NuevoCliente nc = new NuevoCliente(this, null);
 
 	public static void main(String[] args) {
@@ -162,8 +148,8 @@ public class MantenimientoClientes extends JInternalFrame {
 		tb.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[] { "ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIÓN",
 				"TELEFONO", "CORREO" });
-		consultas model = new consultas();
-		rs = model.cargarClientes();
+		consulta.iniciar();
+		rs = consulta.cargarClientes();
 		try {
 			while (rs.next()) {
 				dtm.addRow(new Object[] { rs.getInt("idcliente"), rs.getString("nombre"), rs.getString("tipodoc"),
@@ -253,7 +239,9 @@ public class MantenimientoClientes extends JInternalFrame {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este cliente?", "Confirmación",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
-			model.deshabilitarCliente(idCliente);
+			consulta.iniciar();
+			consulta.deshabilitarCliente(idCliente);
+			consulta.reset();
 			cargar();
 		} else {
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

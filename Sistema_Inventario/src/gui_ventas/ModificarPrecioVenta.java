@@ -61,6 +61,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	private JTextField txtPreCDesc;
 	private JLabel lblDescuentoTotal;
 	private JTextField txtDescuentoTot;
+	private JLabel lblS;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
 	
 	
 	String nomPromo1;
@@ -81,10 +85,8 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	double descTVenta;
 	int idProd;
 	String uniMedVenta;
-	private JLabel lblS;
-	private JLabel label_1;
-	private JLabel label_2;
-	private JLabel label_3;
+	
+	consultas consulta = new consultas();
 	
 	
 	public static void main(String[] args) {
@@ -433,9 +435,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 	
 	public void cargar(){
 		this.setLocationRelativeTo(null);
-				
-		consultas model = new consultas();
-		ResultSet rs = model.buscarProductoID(idProd);
+
+		consulta.iniciar();		
+		ResultSet rs = consulta.buscarProductoID(idProd);
 		try {
 			while (rs.next()) {
 				nomPromo1 	= rs.getString("promo1");
@@ -450,6 +452,15 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al llamar datos originales " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 		
 		if( !(uniMedVenta.equals(uniMedOriginal)) )

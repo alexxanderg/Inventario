@@ -24,6 +24,7 @@ public class Productos {
 	float nrolote;
 	String categoria;
 	ResultSet rs;
+	consultas consulta = new consultas();
 
 	public Productos(String codigo, String producto, String detalles,String categoria,String laboratorio, Date fechavenci, float nrolote , String unimedida, float cantidad, float cantventa,
 			float precioCo, float precioVe, String marca, String color) {
@@ -49,8 +50,8 @@ public class Productos {
 	}
 	
 	public void cargarProductos(JComboBox<Productos> cbProductos){
-		consultas consult = new consultas();
-		rs = consult.cargarProductos();
+		consulta.iniciar();
+		rs = consulta.cargarProductos();
 		try {
 			while(rs.next())
 				cbProductos.addItem(
@@ -60,7 +61,16 @@ public class Productos {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 
 	@Override

@@ -1,27 +1,20 @@
 package gui_principal;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.apache.poi.ss.usermodel.Picture;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import clases.Cliente;
 import gui_clientes.MantenimientoClientes;
 import gui_compras.MantenimientoCompras;
 import gui_configuracion.Configuraciones;
-import gui_mantenimiento_distribuidores.MantenimientoDistribuidores;
-import gui_mantenimiento_productos.MantenimientoProd;
-import gui_mantenimiento_usuarios.MantenimientoUsuarios;
+import gui_distribuidores.MantenimientoDistribuidores;
+import gui_productos.MantenimientoProd;
 import gui_reportes.Reportes;
+import gui_usuarios.MantenimientoUsuarios;
 import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -30,22 +23,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Cursor;
-import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.LineBorder;
 
 public class VentanaPrincipal extends JFrame {
-
 
 	private JPanel contentPane;
 	private JButton btnInventario;
@@ -78,10 +66,11 @@ public class VentanaPrincipal extends JFrame {
 	public Reportes vReportes = null;
 	public Configuraciones config = null;
 
-	Color colorSelec = new Color(82, 229, 151);
+	Color colorSelec = new Color(240, 67, 85);
     Color colorDeselec = new Color(74, 192, 244);
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
+    private JLabel lblBxB;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -97,6 +86,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public VentanaPrincipal() {
+		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1380, 735);
 		contentPane = new JPanel();
@@ -105,7 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
+		panel.setBackground(new Color(0, 0, 0));
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
@@ -114,7 +104,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnVentas.setIcon(new ImageIcon(imgVentas));
-		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnVentas.setForeground(Color.WHITE);
 		btnVentas.setBackground(colorDeselec);
 		btnVentas.setBounds(0, 170, 177, 50);
@@ -131,7 +121,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgInventario = new ImageIcon(this.getClass().getResource("/imgMenuinventario.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnInventario.setIcon(new ImageIcon(imgInventario));
-		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(colorDeselec);
 		btnInventario.setBounds(0, 292, 230, 50);
@@ -153,7 +143,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgUsuarios = new ImageIcon(this.getClass().getResource("/imgMenuusuarios.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnUsuario.setIcon(new ImageIcon(imgUsuarios));
 		btnUsuario.setForeground(Color.WHITE);
-		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUsuario.setBackground(colorDeselec);
 		btnUsuario.setBounds(0, 475, 230, 50);
 		panel.add(btnUsuario);
@@ -169,7 +159,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgClientes = new ImageIcon(this.getClass().getResource("/imgMenuclientes.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnClientes.setIcon(new ImageIcon(imgClientes));
 		btnClientes.setForeground(Color.WHITE);
-		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnClientes.setBackground(colorDeselec);
 		btnClientes.setBounds(0, 414, 230, 50);
 		panel.add(btnClientes);
@@ -185,7 +175,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgReportes = new ImageIcon(this.getClass().getResource("/imgMenureportes.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnReportes.setIcon(new ImageIcon(imgReportes));
 		btnReportes.setForeground(Color.WHITE);
-		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnReportes.setBackground(colorDeselec);
 		btnReportes.setBounds(0, 536, 230, 50);
 		panel.add(btnReportes);
@@ -201,7 +191,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgConfig = new ImageIcon(this.getClass().getResource("/imgMenuconfiguraciones.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnConfiguraciones.setIcon(new ImageIcon(imgConfig));
 		btnConfiguraciones.setForeground(Color.WHITE);
-		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnConfiguraciones.setBackground(colorDeselec);
 		btnConfiguraciones.setBounds(0, 597, 230, 50);
 		panel.add(btnConfiguraciones);
@@ -216,7 +206,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgDist = new ImageIcon(this.getClass().getResource("/imgMenudistribuidor.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnDistribuidores.setIcon(new ImageIcon(imgDist));
 		btnDistribuidores.setForeground(Color.WHITE);
-		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDistribuidores.setBackground(colorDeselec);
 		btnDistribuidores.setBounds(0, 353, 230, 50);
 		panel.add(btnDistribuidores);
@@ -231,7 +221,7 @@ public class VentanaPrincipal extends JFrame {
 		Image imgCompras = new ImageIcon(this.getClass().getResource("/imgMenucompras.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnCompras.setIcon(new ImageIcon(imgCompras));
 		btnCompras.setForeground(Color.WHITE);
-		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCompras.setBackground(colorDeselec);
 		btnCompras.setBounds(0, 231, 230, 50);
 		panel.add(btnCompras);
@@ -245,7 +235,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgMitnao.png")).getImage().getScaledInstance(90, 90, Image.SCALE_AREA_AVERAGING);
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgLogoCuadrado.png")).getImage().getScaledInstance(90, 90, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -298,14 +288,14 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(Color.GRAY);
+		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setForeground(Color.GRAY);
 		panel_1.setBounds(230, 0, 1134, 50);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO");
-		lblNewLabel.setBounds(10, 0, 1124, 50);
+		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - LA DOLORES");
+		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -316,6 +306,17 @@ public class VentanaPrincipal extends JFrame {
 		txtPrueba.setBounds(0, 0, 33, 20);
 		panel_1.add(txtPrueba);
 		txtPrueba.setColumns(10);
+		
+		lblBxB = new JLabel("");
+		lblBxB.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		lblBxB.setBounds(1023, 0, 111, 50);
+		panel_1.add(lblBxB);
+		lblBxB.setHorizontalAlignment(SwingConstants.CENTER);
+		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgBxBhrztl.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
+		lblBxB.setIcon(new ImageIcon(imgLogoBxB));
+		lblBxB.setForeground(Color.WHITE);
+		lblBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
 		
 		cargar();
@@ -323,7 +324,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	private void cargar(){
 		this.setLocationRelativeTo(null);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){
@@ -447,7 +448,7 @@ public class VentanaPrincipal extends JFrame {
 	protected void actionPerformedBtnUsuario(ActionEvent e) {
 		try {
 			cerrarVentanas();
-			vUsuarios = new gui_mantenimiento_usuarios.MantenimientoUsuarios(this);
+			vUsuarios = new gui_usuarios.MantenimientoUsuarios(this);
 			desktopPane.add(vUsuarios);
 			vUsuarios.show();
 			vUsuarios.setMaximum(true);

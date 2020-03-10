@@ -23,6 +23,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 public class ListaDeProductos extends JDialog implements ActionListener, WindowListener, KeyListener {
+	
 	private JTable tbProductos;
 	private JButton btnAgregar;
 	private JTextField txtCantidad;
@@ -33,6 +34,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 	ResultSet rs;
 	Login log = new Login();
 	Ventas ventas2 = null;
+	consultas consulta = new consultas();
 	
 	public static void main(String[] args) {
 		try {
@@ -115,8 +117,9 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 				String codigo = tbProductos.getValueAt(tbProductos.getSelectedRow(), 0).toString();
 				int rpt = ventas2.AnadirProductosdeListaCompleta(codigo, cantidad);
 				if(rpt == 1){
-					consultas model = new consultas();
-					ResultSet rs = model.buscarProductoID(Integer.parseInt(codigo));
+
+					consulta.iniciar();
+					rs = consulta.buscarProductoID(Integer.parseInt(codigo));
 					rs.next();
 					ventas2.dtm.addRow(new Object[]{cantidad, rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
 							rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
@@ -129,8 +132,18 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 			this.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null, "Seleccione un producto: " + e);
 			this.setAlwaysOnTop(true);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
+	
 	private void cargarDatos(){
 		this.setLocationRelativeTo(null);
 		DefaultTableModel dtm = new DefaultTableModel();
@@ -138,14 +151,24 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		tb.setModel(dtm);
 		tbProductos.setRowHeight(30);
 		dtm.setColumnIdentifiers(new Object[]{"Codigo", "Producto", "Detalle", "Uni. Medida", "Cantidad","PrecioVenta","PrecioComp"});
-		consultas model = new consultas();
-		rs = model.cargarProductos();
 		try {
+			consulta.iniciar();
+			rs = consulta.cargarProductos();
 			while(rs.next())
 				dtm.addRow(new Object[]{rs.getString("codproducto"), rs.getString("producto"), rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color"), rs.getString("unimedida"), rs.getFloat("cantidad"), rs.getFloat("precioVe"), rs.getFloat("precioCo")});
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
+
 		ajustarAnchoColumnas();
 	}
 	private int anchoColumna(int porcentaje) {

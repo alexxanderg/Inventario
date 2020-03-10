@@ -90,7 +90,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		setTitle("Login");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 603, 415);
+		setBounds(100, 100, 605, 415);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.menu);
@@ -127,9 +127,9 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		Image img = new ImageIcon(this.getClass().getResource("/imgbanner.png")).getImage();
+		Image img = new ImageIcon(this.getClass().getResource("/imgbanner.jpg")).getImage().getScaledInstance(600, 160, Image.SCALE_AREA_AVERAGING);
 		lblNewLabel.setIcon(new ImageIcon(img));
-		lblNewLabel.setBounds(0, 0, 597, 160);
+		lblNewLabel.setBounds(0, 0, 600, 160);
 		contentPane.add(lblNewLabel);
 		
 		

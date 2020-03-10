@@ -20,7 +20,9 @@ public class Distribuidores {
 	String telefono;
 	String correo;
 	
-	public Distribuidores(){}           
+	public Distribuidores(){}   
+	consultas consulta = new consultas();
+	
 	public Distribuidores(int iddistrib, String tipodoc, String nrodoc, String nombre, String direccion, String contacto,String telefono, String correo){
 		this.iddistrib = iddistrib;
 		this.tipodoc = tipodoc;
@@ -33,8 +35,8 @@ public class Distribuidores {
 	}
 	
 	public void cargarDistribuidores(JComboBox<Distribuidores> cbDistribuidor){
-		consultas consult = new consultas();
-		rs = consult.cargarDistribuidores();
+		consulta.iniciar();
+		rs = consulta.cargarDistribuidores();
 		try {
 			while(rs.next())
 				cbDistribuidor.addItem(
@@ -51,7 +53,16 @@ public class Distribuidores {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 	@Override
 	public String toString(){

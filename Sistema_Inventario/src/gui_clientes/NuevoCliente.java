@@ -1,6 +1,5 @@
 package gui_clientes;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -20,11 +19,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
@@ -54,7 +51,7 @@ public class NuevoCliente extends JFrame {
 	private JLabel label_1;
 	
 	ResultSet rs;
-	consultas model = new consultas();
+	consultas consulta = new consultas();
 	MantenimientoClientes mantenimientoCliente = null;
 	Ventas ventas = null;
 
@@ -295,6 +292,7 @@ public class NuevoCliente extends JFrame {
 	}
 	protected void actionPerformedBtnCrear(ActionEvent arg0) {
 		try {
+			consulta.iniciar();
 			if(txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0){
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
 			}
@@ -305,17 +303,14 @@ public class NuevoCliente extends JFrame {
 				String direccion = "";	direccion = txtDireccion.getText();
 				String telefono = "";	telefono = txtTelefono.getText();
 				String correo = "";	correo = txtCorreo.getText();
-				
-				rs = model.crearCliente(nombre, tipodoc, nrodoc, direccion, correo, telefono);
-
+				rs = consulta.crearCliente(nombre, tipodoc, nrodoc, direccion, correo, telefono);
 				int idcli = -1;
 				try {
-					ResultSet rs = model.cargarUltimoCliente();
+					ResultSet rs = consulta.cargarUltimoCliente();
 					rs.next();
 					idcli = rs.getInt("idcliente");
 				} catch (SQLException e) {
 				}
-				
 				//VERIFICAR QUIEN INVOCO A LA VENTANA
 				if(mantenimientoCliente!=null){
 					mantenimientoCliente.cargar();
@@ -324,11 +319,22 @@ public class NuevoCliente extends JFrame {
 				else{					
 					ventas.agregarCliente(idcli);
 				}
-				
+
+
+				consulta.reset();
 				dispose();
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al crear cliente: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	public void windowActivated(WindowEvent arg0) {

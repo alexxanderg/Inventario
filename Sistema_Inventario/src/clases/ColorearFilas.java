@@ -25,6 +25,4 @@ public class ColorearFilas extends DefaultTableCellRenderer{
 		
 		return this;
 	}
-	
-
 }

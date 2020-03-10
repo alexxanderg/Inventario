@@ -1,39 +1,22 @@
 package gui_compras;
 
 import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
 import com.mxrck.autocompleter.TextAutoCompleter;
-
-import gui_configuracion.Configuraciones;
-import gui_mantenimiento_productos.NuevoProducto;
 import gui_principal.VentanaPrincipal;
 import mysql.consultas;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -44,21 +27,21 @@ import javax.swing.ListSelectionModel;
 
 public class MantenimientoCompras extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnCrearProducto;
+	private JMenu mnCrearCompra;
 	private JMenu mnNewMenu_2;
 	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	public JTable tbCompras;
-	
 	public VentanaPrincipal vp;
 	
 
 	NuevaCompra nc = new NuevaCompra(0, null);
 	JTable tb;
 	ResultSet rs;
-	consultas model = new consultas();
+	consultas consulta = new consultas();
 	int idusuario = 0;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -114,37 +97,25 @@ public class MantenimientoCompras extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Registrar nueva compra| ");
-		mnCrearProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnCrearProducto(arg0);
-			}
-		});
-		mnCrearProducto.setForeground(new Color(30, 144, 255));
-		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnCrearProducto);
-		
-		JMenu mnModificarProducto = new JMenu("|Ver detalles de compra| ");
-		mnModificarProducto.addMouseListener(new MouseAdapter() {
+		mnCrearCompra = new JMenu("|Registrar nueva compra| ");
+		mnCrearCompra.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnModificarProducto(e);
+				mouseClickedMnCrearCompra(e);
 			}
 		});
+		mnCrearCompra.setForeground(new Color(30, 144, 255));
+		mnCrearCompra.setBackground(SystemColor.control);
+		mnCrearCompra.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnCrearCompra);
+		
+		JMenu mnModificarProducto = new JMenu("|Ver detalles de compra| ");
 		mnModificarProducto.setForeground(new Color(60, 179, 113));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
 		mnNewMenu_2 = new JMenu("|Agregar pago| ");
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnNewMenu_2(e);
-			}
-		});
 		mnNewMenu_2.setForeground(new Color(220, 20, 60));
 		mnNewMenu_2.setBackground(SystemColor.control);
 		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -162,14 +133,24 @@ public class MantenimientoCompras extends JInternalFrame {
 		tb.setModel(dtm);
 
 		dtm.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"});
-		consultas model = new consultas();
-		rs = model.cargarCompras();
+		
 		try {
+			consulta.iniciar();
+			rs = consulta.cargarCompras();
 			while(rs.next()){
 				dtm.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar compras: " + e.getMessage());
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 		
@@ -193,16 +174,10 @@ public class MantenimientoCompras extends JInternalFrame {
 	protected void actionPerformedBtnX(ActionEvent arg0) {
 		this.dispose();
 	}
-	
-	public void selecionarUsuario(String id) {
-		
-	}
-		
-	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
+	protected void mouseClickedMnCrearCompra(MouseEvent e) {
 		try {
 			idusuario = Integer.parseInt(vp.lblIdusuario.getText());
-			if (nc.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+			if (nc.isShowing()) { //JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				nc.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nc.setVisible(true); 
 			} else {
@@ -212,22 +187,6 @@ public class MantenimientoCompras extends JInternalFrame {
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}
-	}
-	
-	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		
-	}
-	
-	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
-		DefaultTableModel tm = (DefaultTableModel) tbCompras.getModel();
-		int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbCompras.getSelectedRow(), 0)));
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este usuario?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if (opc == 0) {
-			model.deshabilitarUsuario(idusuario);
-			cargar();
-		}else{
-			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
 	}
 }

@@ -1,30 +1,87 @@
 package mysql;
 
-import java.awt.HeadlessException;
-import java.sql.CallableStatement;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
-import com.mysql.jdbc.Statement;
-import clases.RegistroVentas;
 import clases.Usuarios;
 import mysql.MySQLConexion;
 
 public class consultas {
+	
+	Connection con = null;
+	Statement st = null;
+	ResultSet rs = null;
+	PreparedStatement pst = null;
+	consultas consultas = null;
+	
+	public void iniciar(){
+		try {
+			con = MySQLConexion.getConection();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Error al iniciar conexion");
+		}
+	}
+	
+	public void reset(){
+		try {
+			if(con!=null)con.close();
+			if(st!=null)st.close();
+			if(rs!=null)rs.close();
+			if(pst!=null)pst.close();
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, "Error al resetear conexion");
+		}
+	}
+	
+	public static String ObtenerFechaHora(){
+		Date date = new Date();
+		DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String fechahora = hourdateFormat.format(date);
+		return fechahora;
+	}
+	
+	public static void RegistrarError(String errorMsj) {
+		File directorio=new File("C:\\LogErrores_SistemaInventario"); 
+		directorio.mkdirs(); 
+		String nombreArchivo= "C:\\LogErrores_SistemaInventario\\log.txt";
+		
+		BufferedWriter bw = null;
+	    FileWriter fw = null;
+        File file = new File(nombreArchivo);
+        try {
+	        if (!file.exists())
+				file.createNewFile();
+	        fw = new FileWriter(file.getAbsoluteFile(), true);
+	        bw = new BufferedWriter(fw);
+	        bw.write(errorMsj);
+        } catch (IOException e) {
+			//JOptionPane.showMessageDialog(null, "Error al registrar error1: " + ObtenerFechaHora() + " " + e.getMessage());
+		}
+        finally {
+            try {
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException ex) {
+            	//JOptionPane.showMessageDialog(null, "Error al registrar error2: " + ObtenerFechaHora() + " " + ex.getMessage());
+            }
+        }
+	}	
+	
 	public Usuarios obtenerUsuario(Usuarios u) {
 		Usuarios usuario = null;
 		Connection con = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-
 		try {
 			con = null;
 			con = MySQLConexion.getConection();
@@ -37,15 +94,12 @@ public class consultas {
 				usuario = new Usuarios(rs.getInt("idusuario"), rs.getString("usuario"), rs.getString("pass"), rs.getString("nombre"), rs.getInt("tipo"));
 			}
 		} catch (Exception e) {
-			System.out.println("Error en obtener usuario " + e);
+			RegistrarError("\n Error en obtener usuario: " + ObtenerFechaHora() + " " + e);
 		}
 		return usuario;
 	}
 
 	public ResultSet cargarProductos() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_productos  where estado = 1 order by producto");
@@ -54,23 +108,18 @@ public class consultas {
 		}
 		return rs;
 	}
-	public ResultSet cargarVentasUsuario() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
+	
+	public ResultSet cargarVentasUsuario(int idusuario, Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where v.estado = 1 order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where v.estado = 1 and u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
 		return rs;
 	}
-	//
+	
 	public ResultSet cargarCategoria() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select distinct categoria from tb_productos order by categoria");
@@ -78,10 +127,8 @@ public class consultas {
 		}
 		return rs;
 	}
+	
 	public ResultSet cargarAlmacen() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select distinct almacen from tb_productos order by almacen");
@@ -89,10 +136,8 @@ public class consultas {
 		}
 		return rs;
 	}
+	
 	public ResultSet cargarUnidadesMed() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select distinct unimedida from tb_productos order by unimedida");
@@ -101,11 +146,7 @@ public class consultas {
 		return rs;
 	}
 	
-
 	public ResultSet cargarProductosSinStock() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from db_inventario.tb_productos where cantidad > 0 order by producto");
@@ -115,23 +156,15 @@ public class consultas {
 	}
 
 	public ResultSet buscarProductoBarras(String codbarra) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery(
-					"select * from tb_productos where codbarra = '" + codbarra + "'");
+			rs = st.executeQuery("select * from tb_productos where codbarra = '" + codbarra + "'");
 		} catch (Exception e) {
 		}
 		return rs;
 	}
+	
 	public ResultSet buscarDistribuidor(int iddistrib) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
@@ -142,9 +175,6 @@ public class consultas {
 	}
 
 	public ResultSet buscarProductoDetalle(String prod, String det) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from db_inventario.tb_productos where producto like '" + prod
@@ -155,9 +185,6 @@ public class consultas {
 	}
 	
 	public ResultSet buscarProductoID(int idprod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
@@ -169,9 +196,6 @@ public class consultas {
 	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, int primeravez) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
@@ -214,9 +238,6 @@ public class consultas {
 	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2,int cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
@@ -255,9 +276,6 @@ public class consultas {
 	}
 
 	public ResultSet modificarPC_PV(String cod, float prec, float prev) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set precioCo=?, precioVe=? where codproducto=?";
@@ -273,9 +291,6 @@ public class consultas {
 	}
 
 	public ResultSet ingresarStock(String cod, float cant) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad = ? where codproducto=?";
@@ -290,11 +305,7 @@ public class consultas {
 		return rs;
 	}
 
-	public int registrarIngreso(int id, double stockini, double precioCoOld, double precioVeOld, double precioCoNew, double precioVeNew, String nombreusu, Object fActual) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-		
+	public int registrarIngreso(int id, double stockini, double precioCoOld, double precioVeOld, double precioCoNew, double precioVeNew, String nombreusu, Object fActual) {		
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_ingreso_productos (coding, codproducto, cantidad, precioCoOld, precioVeOld, precioCoNew, precioVeNew, nombreusu, fechaingreso)"
@@ -318,9 +329,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarCompras() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib order by cp.idcompra desc");
@@ -331,11 +339,7 @@ public class consultas {
 	}
 
 	public int registrarCompra(int tipComprobante, String serie, String nroSerie, int idDistrib, String moneda, String tc, String nota, String metPago, Object fechaEmision, Object fechaVencimiento, int idusuario,
-			double total, double pagado, double saldo) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-		
+			double total, double pagado, double saldo) {		
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_compras (idcompra, tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idusuario, tot, pagado, 	saldo)"
@@ -363,10 +367,8 @@ public class consultas {
 		}
 		return 0;
 	}
+	
 	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		
 		try {
 			st = con.createStatement();
@@ -385,10 +387,8 @@ public class consultas {
 		}
 		return 0;
 	}
+	
 	public ResultSet anadirStockProducto(int idProd, double cantProd) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos SET cantidad = cantidad+? where codproducto = ?";
@@ -404,9 +404,6 @@ public class consultas {
 	}
 	
 	public ResultSet eliminarProducto(String cod, String nom) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_productos where codproducto = ?";
@@ -420,9 +417,6 @@ public class consultas {
 	}
 
 	public ResultSet eliminarProductoDetalle(String cod, String nom) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_ventas_detalle where codproducto = ?";
@@ -436,9 +430,6 @@ public class consultas {
 	}
 
 	public ResultSet eliminarProductoIngreso(String cod, String nom) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_ingreso_productos where codproducto = ?";
@@ -452,9 +443,6 @@ public class consultas {
 	}
 
 	public ResultSet cargarHistorialKardex() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_kardex order by idkardex desc");
@@ -464,9 +452,6 @@ public class consultas {
 	}
 
 	public ResultSet cargarUsuarios() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_usuarios where estado=1 order by nombre");
@@ -476,9 +461,6 @@ public class consultas {
 	}
 
 	public ResultSet crearUsuario(String usu, String pass, String nom, int tipo) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_usuarios (idusuario, usuario, pass, nombre, tipo, estado)" + " values (?, ?, ?, ?, ?, ?)";
@@ -498,9 +480,6 @@ public class consultas {
 	}
 
 	public ResultSet modificarUsuario(int idusuario, String newusu, String pass, String nom, int tip) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_usuarios set usuario=?, pass=?, nombre=?, tipo=? where idusuario=?";
@@ -519,9 +498,6 @@ public class consultas {
 	}
 
 	public ResultSet eliminarUsuario(String usu) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_usuarios where usuario = ?";
@@ -535,9 +511,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarDistribuidores() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_distribuidores where estado=1 order by nombre");
@@ -547,9 +520,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarDistribuidoresId(int id) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
@@ -560,9 +530,6 @@ public class consultas {
 	}
 	
 	public ResultSet crearDistribuidor(String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String contacto, String correo) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_distribuidores (iddistrib, tipodoc, nrodoc, nombre, direccion, perscontact, telefono, correo, estado)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -585,9 +552,6 @@ public class consultas {
 	}
 	
 	public ResultSet modificarDistribuidor(int iddistribuidor, String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String contacto, String correo) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_distribuidores set tipodoc=?, nrodoc=?, nombre=?, direccion=?, perscontact=?, telefono=?, correo=? where iddistrib=?";
@@ -609,10 +573,6 @@ public class consultas {
 	}
 
 	public ResultSet buscarCliente(String id) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
-
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_clientes where idCLIENTE = '" + id + "'");
@@ -622,9 +582,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarClienteId(int id) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
@@ -635,9 +592,6 @@ public class consultas {
 	}
 
 	public ResultSet cargarClientes() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_clientes where estado = 1 order by nombre");
@@ -647,9 +601,6 @@ public class consultas {
 	}
 
 	public ResultSet cargarUltimoCliente() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_clientes order by idcliente desc limit 1");
@@ -659,9 +610,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarUltimoDistribuidor() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_distribuidores order by iddistrib desc limit 1");
@@ -670,11 +618,7 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet crearCliente(String nombre, String documento, String nroDocumento, String direccion, String correo,
-			String telefono) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
+	public ResultSet crearCliente(String nombre, String documento, String nroDocumento, String direccion, String correo, String telefono) {
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_clientes (idcliente, tipodoc, nrodoc, nombre, direccion, telefono, correo, estado)"
@@ -695,11 +639,7 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet modificarCliente(int id, String nombre, String documento, String nroDocumento, String direccion,
-			String correo, String telefono) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
+	public ResultSet modificarCliente(int id, String nombre, String documento, String nroDocumento, String direccion, String correo, String telefono) {
 		try {
 			st = con.createStatement();
 			String sql = "update tb_clientes set tipodoc=?, nrodoc=?, nombre=?, direccion=?, telefono=?, correo=? where idcliente=?";
@@ -721,8 +661,6 @@ public class consultas {
 	}
 	
 	public ResultSet deshabilitarCliente(int idcliente) {
-		Connection con = MySQLConexion.getConection();
-		ResultSet rs = null;
 		try {
 			String sql = "update tb_clientes set estado = 0 where idcliente='"+idcliente+"'";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
@@ -735,9 +673,6 @@ public class consultas {
 	}
 	
 	public ResultSet eliminarCliente(String usu) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "delete from tb_usuarios where usuario = ?";
@@ -751,9 +686,6 @@ public class consultas {
 	}
 
 	public void registrarKardex(Object date2, String nota) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_kardex (idkardex, fecha, nota)" + " values (?, ?, ?)";
@@ -769,9 +701,6 @@ public class consultas {
 	}
 
 	public ResultSet ObtenerUltimoKardex() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select idkardex from tb_kardex order by idkardex desc limit 1");
@@ -781,9 +710,6 @@ public class consultas {
 	}
 
 	public ResultSet ObtenerNombreProducto(String cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select producto from tb_productos where codproducto like '" + cod + "%' limit 1");
@@ -793,9 +719,6 @@ public class consultas {
 	}
 
 	public void registrarDetallesKardex(int idkardex, String codigoProducto, int registros) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_kardex_detalles (idkardex, codproducto, registros)" + " values (?, ?, ?)";
@@ -814,13 +737,10 @@ public class consultas {
 	public ResultSet Vender(int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2) {
 		Connection con = MySQLConexion.getConection();
 		
-		java.sql.Statement st;
 		java.util.Date d = new java.util.Date();
 		// java.sql.Date date2 = new java.sql.Date(d.getTime());
 		java.util.Date date = new Date();
 		Object date2 = new java.sql.Timestamp(date.getTime());
-
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_ventas (codventa, idcliente, fecha, idusuario, totcompra, totventa, ganancia, descuento, nota, metpago1, montpago1, metpago2, montpago2, estado)"
@@ -848,9 +768,6 @@ public class consultas {
 	}
 	public ResultSet Vender2(int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2, Object fechaElegida) {
 		Connection con = MySQLConexion.getConection();
-		
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_ventas (codventa, idcliente, fecha, idusuario, totcompra, totventa, ganancia, descuento, nota, metpago1, montpago1, metpago2, montpago2, estado)"
@@ -879,9 +796,6 @@ public class consultas {
 	
 
 	public ResultSet ObtenerUltimoCodigo() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select codventa from tb_ventas order by codventa desc limit 1");
@@ -891,9 +805,6 @@ public class consultas {
 	}
 	
 	public ResultSet ObtenerUltimoCodigoCompra() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select idcompra from tb_compras order by idcompra desc limit 1");
@@ -904,10 +815,6 @@ public class consultas {
 
 	public ResultSet RegistarDetalleVenta(int codventa, int codproducto, double cantidad, double preVeSDInd,
 			double preVeSDTot, double descIndiv, double descTotal, double subTotal, double ganancia, String uMedidaUsada) {
-		
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada)"
@@ -933,9 +840,6 @@ public class consultas {
 	}
 
 	public ResultSet RealizarDescuentoStock(int codProducto, double cantVenta) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad=cantidad-? where codProducto=?";
@@ -951,9 +855,6 @@ public class consultas {
 	}
 
 	public ResultSet VerificarVenta(int numVenta) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_ventas where codventa = '" + numVenta + "'");
@@ -964,9 +865,6 @@ public class consultas {
 	}
 	
 	public ResultSet verificarVentaSinStock() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select ventasinstock from tb_configuraciones");
@@ -975,10 +873,8 @@ public class consultas {
 		}
 		return rs;
 	}
+	
 	public ResultSet modificarInformacion(String info, int id){
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_ventas set nota=? where codventa=?";
@@ -995,9 +891,6 @@ public class consultas {
 	}
 
 	public ResultSet ProductosVendidos(int numVenta) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_ventas_detalle where codventa = '" + numVenta + "'");
@@ -1008,8 +901,6 @@ public class consultas {
 	}
 
 	public void eliminarVentaDetalle(String cod_prod, String cod_vd) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_ventas_detalle set cantidad=0, prevenOri=0, totvenOri=0, prevenFin=0, totvenFin=0 where codproducto = ? and codventa = ?";
@@ -1023,8 +914,6 @@ public class consultas {
 	}
 
 	public void eliminarVenta(String cod_vd) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_ventas set totcompra=0, totventa=0, ganancia=0 where codventa = ?";
@@ -1037,8 +926,6 @@ public class consultas {
 	}
 
 	public void reingresarProductos(String codProducto, float cantidad) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad=cantidad + ? where codproducto=?";
@@ -1052,9 +939,6 @@ public class consultas {
 	}
 
 	public ResultSet ultimoProducto() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_productos");
@@ -1065,9 +949,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarConfiguraciones() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from tb_configuraciones");
@@ -1077,9 +958,6 @@ public class consultas {
 	}
 	
 	public void modificarAtributosProductos(String atributos) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_configuraciones set atributosprod = ? where idconfig = 1";
@@ -1092,9 +970,6 @@ public class consultas {
 		}
 	}
 	public void modificarVentaSinStock(int eleccion) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_configuraciones set ventasinstock = ? where idconfig = 1";
@@ -1109,10 +984,8 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar ventasinstock: " + e);
 		}
 	}
+	
 	public void modificarReducirAlVender(int eleccion) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_configuraciones set reducirstock = ? where idconfig = 1";
@@ -1127,10 +1000,8 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
 		}
 	}
+	
 	public void modificarFechaAlVender(int eleccion) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			String sql = "update tb_configuraciones set fechaVauto = ? where idconfig = 1";
@@ -1147,9 +1018,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarID() {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select codproducto from tb_productos order by codproducto desc limit 1");
@@ -1158,9 +1026,6 @@ public class consultas {
 		return rs;
 	}
 	public ResultSet cargarProdId(String Prod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
@@ -1171,9 +1036,6 @@ public class consultas {
 	}
 	
 	public ResultSet deshabilitarProducto(int cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
@@ -1190,9 +1052,6 @@ public class consultas {
 	}
 	
 	public ResultSet habilitarProducto(int cod) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
@@ -1209,9 +1068,6 @@ public class consultas {
 	}
 	
 	public ResultSet cargarUsu(int idusu) {
-		Connection con = MySQLConexion.getConection();
-		java.sql.Statement st;
-		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(
@@ -1222,8 +1078,6 @@ public class consultas {
 	}
 	
 	public ResultSet deshabilitarUsuario(int usu) {
-		Connection con = MySQLConexion.getConection();
-		ResultSet rs = null;
 		try {
 			String sql = "update tb_usuarios set estado = 0 where idusuario='"+usu+"'";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
@@ -1235,8 +1089,6 @@ public class consultas {
 		return rs;
 	}
 	public ResultSet deshabilitarDistrib(int distrib) {
-		Connection con = MySQLConexion.getConection();
-		ResultSet rs = null;
 		try {
 			String sql = "update tb_distribuidores set estado = 0 where iddistrib='"+distrib+"'";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);

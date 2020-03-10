@@ -1,6 +1,5 @@
 package gui_clientes;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -20,15 +19,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
 import mysql.consultas;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -276,7 +271,8 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 
 	public void cargar() {
 		try {
-			ResultSet rs = consulta.cargarClienteId(idcliente);
+			consulta.iniciar();
+			rs = consulta.cargarClienteId(idcliente);
 			rs.next();
 			cbTipoDoc.setSelectedItem(rs.getString("tipodoc"));
 			txtNroDoc.setText(rs.getString("nrodoc"));
@@ -286,6 +282,15 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 			txtCorreo.setText(rs.getString("correo"));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al cargar distribuidores: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 
@@ -317,9 +322,11 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 					String correo = "";
 					correo = txtCorreo.getText();
 
+					consulta.iniciar();
 					consulta.modificarCliente(idcliente, nombre, tipodoc, nrodoc, direccion, correo, telefono);
 					mantenimientoCliente.cargar();
 					mantenimientoCliente.selecionarCliente("" + idcliente);
+					consulta.reset();
 					dispose();
 				}
 			}

@@ -1,34 +1,21 @@
 package gui_configuracion;
 
 import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
 import com.mxrck.autocompleter.TextAutoCompleter;
-
 import mysql.consultas;
-
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -37,13 +24,6 @@ import javax.swing.DefaultComboBoxModel;
 public class Configuraciones extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JButton btnX;
-	private TextAutoCompleter ac;
-	
-	
-	JTable tb;
-	ResultSet rs;
-	String usuario;
-	consultas model = new consultas();
 	private JLabel lblNewLabel;
 	private JPanel panelAtributos;
 	private JCheckBox chckbxMarca;
@@ -67,9 +47,15 @@ public class Configuraciones extends JInternalFrame {
 	private JButton btnModifFecha;
 	private JComboBox cbModifFecha;
 
-	/**
-	 * Launch the application.
-	 */
+	
+	private TextAutoCompleter ac;
+	JTable tb;
+	ResultSet rs;
+	String usuario;
+	consultas consulta = new consultas();
+
+
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -83,9 +69,7 @@ public class Configuraciones extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public Configuraciones() {
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("CONFIGURACION");
@@ -105,52 +89,68 @@ public class Configuraciones extends JInternalFrame {
 		getContentPane().add(btnX);
 		
 		panelAtributos = new JPanel();
-		panelAtributos.setBackground(Color.LIGHT_GRAY);
+		panelAtributos.setBackground(new Color(72, 209, 204));
 		panelAtributos.setBounds(0, 11, 551, 283);
 		getContentPane().add(panelAtributos);
 		panelAtributos.setLayout(null);
 		
-		lblNewLabel = new JLabel("Seleccione los atributos que desee controlar de sus productos:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel = new JLabel("Seleccione los atributos que desee manejar");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Candara", Font.BOLD, 20));
 		lblNewLabel.setBounds(10, 11, 519, 26);
 		panelAtributos.add(lblNewLabel);
 		
 		chckbxMarca = new JCheckBox("Marca");
-		chckbxMarca.setBackground(Color.LIGHT_GRAY);
-		chckbxMarca.setBounds(10, 44, 97, 23);
+		chckbxMarca.setForeground(new Color(255, 255, 255));
+		chckbxMarca.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxMarca.setBackground(new Color(0, 206, 209));
+		chckbxMarca.setBounds(67, 68, 135, 23);
 		panelAtributos.add(chckbxMarca);
 		
 		chckbxColor = new JCheckBox("Color");
-		chckbxColor.setBackground(Color.LIGHT_GRAY);
-		chckbxColor.setBounds(136, 44, 97, 23);
+		chckbxColor.setForeground(new Color(255, 255, 255));
+		chckbxColor.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxColor.setBackground(new Color(0, 206, 209));
+		chckbxColor.setBounds(213, 68, 97, 23);
 		panelAtributos.add(chckbxColor);
 		
 		chckbxLote = new JCheckBox("Lote");
-		chckbxLote.setBackground(Color.LIGHT_GRAY);
-		chckbxLote.setBounds(308, 44, 97, 23);
+		chckbxLote.setForeground(new Color(255, 255, 255));
+		chckbxLote.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxLote.setBackground(new Color(0, 206, 209));
+		chckbxLote.setBounds(385, 68, 97, 23);
 		panelAtributos.add(chckbxLote);
 		
 		chckbxLaboratorio = new JCheckBox("Laboratorio");
-		chckbxLaboratorio.setBackground(Color.LIGHT_GRAY);
-		chckbxLaboratorio.setBounds(10, 82, 97, 23);
+		chckbxLaboratorio.setForeground(new Color(255, 255, 255));
+		chckbxLaboratorio.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxLaboratorio.setBackground(new Color(0, 206, 209));
+		chckbxLaboratorio.setBounds(67, 106, 135, 23);
 		panelAtributos.add(chckbxLaboratorio);
 		
 		chckbxFechaVencimiento = new JCheckBox("Fecha Vencimiento");
-		chckbxFechaVencimiento.setBackground(Color.LIGHT_GRAY);
-		chckbxFechaVencimiento.setBounds(136, 82, 171, 23);
+		chckbxFechaVencimiento.setForeground(new Color(255, 255, 255));
+		chckbxFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxFechaVencimiento.setBackground(new Color(0, 206, 209));
+		chckbxFechaVencimiento.setBounds(213, 106, 171, 23);
 		panelAtributos.add(chckbxFechaVencimiento);
 		
 		chckbxPromocion1 = new JCheckBox("Promoci\u00F3n 1");
-		chckbxPromocion1.setBackground(Color.LIGHT_GRAY);
-		chckbxPromocion1.setBounds(10, 126, 97, 23);
+		chckbxPromocion1.setForeground(new Color(255, 255, 255));
+		chckbxPromocion1.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxPromocion1.setBackground(new Color(0, 206, 209));
+		chckbxPromocion1.setBounds(67, 150, 135, 23);
 		panelAtributos.add(chckbxPromocion1);
 		
 		chckbxPromocion2 = new JCheckBox("Promoci\u00F3n 2");
-		chckbxPromocion2.setBackground(Color.LIGHT_GRAY);
-		chckbxPromocion2.setBounds(136, 126, 97, 23);
+		chckbxPromocion2.setForeground(new Color(255, 255, 255));
+		chckbxPromocion2.setFont(new Font("Candara", Font.BOLD, 18));
+		chckbxPromocion2.setBackground(new Color(0, 206, 209));
+		chckbxPromocion2.setBounds(213, 150, 171, 23);
 		panelAtributos.add(chckbxPromocion2);
 		
 		btnGuardarAtributos = new JButton("Guardar");
+		btnGuardarAtributos.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnGuardarAtributos.setForeground(Color.WHITE);
 		btnGuardarAtributos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,22 +158,23 @@ public class Configuraciones extends JInternalFrame {
 			}
 		});
 		btnGuardarAtributos.setBackground(new Color(220, 20, 60));
-		btnGuardarAtributos.setBounds(94, 200, 256, 36);
+		btnGuardarAtributos.setBounds(127, 204, 256, 36);
 		panelAtributos.add(btnGuardarAtributos);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBackground(new Color(100, 149, 237));
 		panel.setBounds(563, 11, 540, 283);
 		getContentPane().add(panel);
 		
 		lblPermitirSeguirVendiendo = new JLabel("Permitir seguir vendiendo cuando no haya stock?");
 		lblPermitirSeguirVendiendo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPermitirSeguirVendiendo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPermitirSeguirVendiendo.setBounds(-32, 47, 519, 26);
+		lblPermitirSeguirVendiendo.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPermitirSeguirVendiendo.setBounds(10, 50, 519, 26);
 		panel.add(lblPermitirSeguirVendiendo);
 		
 		btnVenderSinStock = new JButton("Guardar");
+		btnVenderSinStock.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVenderSinStock.setForeground(Color.WHITE);
 		btnVenderSinStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -181,27 +182,29 @@ public class Configuraciones extends JInternalFrame {
 			}
 		});
 		btnVenderSinStock.setBackground(new Color(220, 20, 60));
-		btnVenderSinStock.setBounds(94, 200, 256, 36);
+		btnVenderSinStock.setBounds(143, 147, 256, 36);
 		panel.add(btnVenderSinStock);
 		
 		cbVenderSinStock = new JComboBox();
+		cbVenderSinStock.setFont(new Font("Candara", Font.PLAIN, 18));
 		cbVenderSinStock.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
-		cbVenderSinStock.setBounds(94, 107, 256, 26);
+		cbVenderSinStock.setBounds(143, 98, 256, 26);
 		panel.add(cbVenderSinStock);
 		
 		panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBackground(new Color(100, 149, 237));
 		panel_1.setBounds(0, 306, 551, 283);
 		getContentPane().add(panel_1);
 		
 		lblreducirStockAl = new JLabel("\u00BFReducir stock al vender?");
 		lblreducirStockAl.setHorizontalAlignment(SwingConstants.CENTER);
-		lblreducirStockAl.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblreducirStockAl.setBounds(-32, 47, 519, 26);
+		lblreducirStockAl.setFont(new Font("Candara", Font.BOLD, 20));
+		lblreducirStockAl.setBounds(87, 27, 359, 26);
 		panel_1.add(lblreducirStockAl);
 		
 		btnReducirAlVender = new JButton("Guardar");
+		btnReducirAlVender.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnReducirAlVender.setForeground(Color.WHITE);
 		btnReducirAlVender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -209,27 +212,28 @@ public class Configuraciones extends JInternalFrame {
 			}
 		});
 		btnReducirAlVender.setBackground(new Color(220, 20, 60));
-		btnReducirAlVender.setBounds(94, 200, 256, 36);
+		btnReducirAlVender.setBounds(170, 102, 191, 36);
 		panel_1.add(btnReducirAlVender);
 		
 		cbReducirAlVender = new JComboBox();
 		cbReducirAlVender.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
-		cbReducirAlVender.setBounds(94, 107, 256, 26);
+		cbReducirAlVender.setBounds(170, 64, 191, 26);
 		panel_1.add(cbReducirAlVender);
 		
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
-		panel_2.setBackground(Color.LIGHT_GRAY);
+		panel_2.setBackground(new Color(72, 209, 204));
 		panel_2.setBounds(563, 306, 540, 283);
 		getContentPane().add(panel_2);
 		
 		lblpermitirModificarFecha = new JLabel("\u00BFPermitir modificar fecha al vender?");
 		lblpermitirModificarFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblpermitirModificarFecha.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblpermitirModificarFecha.setBounds(-32, 47, 519, 26);
+		lblpermitirModificarFecha.setFont(new Font("Candara", Font.BOLD, 20));
+		lblpermitirModificarFecha.setBounds(46, 39, 454, 26);
 		panel_2.add(lblpermitirModificarFecha);
 		
 		btnModifFecha = new JButton("Guardar");
+		btnModifFecha.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnModifFecha.setForeground(Color.WHITE);
 		btnModifFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -237,12 +241,13 @@ public class Configuraciones extends JInternalFrame {
 			}
 		});
 		btnModifFecha.setBackground(new Color(220, 20, 60));
-		btnModifFecha.setBounds(94, 200, 256, 36);
+		btnModifFecha.setBounds(147, 138, 256, 36);
 		panel_2.add(btnModifFecha);
 		
 		cbModifFecha = new JComboBox();
+		cbModifFecha.setFont(new Font("Candara", Font.PLAIN, 18));
 		cbModifFecha.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
-		cbModifFecha.setBounds(94, 107, 256, 26);
+		cbModifFecha.setBounds(147, 84, 256, 26);
 		panel_2.add(cbModifFecha);
 
 		
@@ -260,7 +265,8 @@ public class Configuraciones extends JInternalFrame {
 		int reducirstock = 0;
 		int fechaVauto = 0;
 		try {
-			rs = model.cargarConfiguraciones();
+			consulta.iniciar();
+			rs = consulta.cargarConfiguraciones();
 			rs.next();
 			atribTodos = rs.getString("atributosprod");
 			ventasinstock = rs.getInt("ventasinstock");
@@ -269,6 +275,15 @@ public class Configuraciones extends JInternalFrame {
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al cargar atributos: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 
 		String[] parts = atribTodos.split(",");
@@ -319,33 +334,73 @@ public class Configuraciones extends JInternalFrame {
 			atributos = atributos + "promo2,";
 		
 		try {
-			model.modificarAtributosProductos(atributos);
+			consulta.iniciar();
+			consulta.modificarAtributosProductos(atributos);
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al modificar atributos de productos: " + e2);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	protected void actionPerformedBtnVenderSinStock(ActionEvent arg0) {
 		int eleccion = cbVenderSinStock.getSelectedIndex();
 		try {
-			model.modificarVentaSinStock(eleccion);
+			consulta.iniciar();
+			consulta.modificarVentaSinStock(eleccion);
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al modificar venta sin stock: " + e2);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}	
 	}
 	protected void actionPerformedBtnReducirAlVender(ActionEvent e) {
 		int eleccion = cbReducirAlVender.getSelectedIndex();
 		try {
-			model.modificarReducirAlVender(eleccion);
+			consulta.iniciar();
+			consulta.modificarReducirAlVender(eleccion);
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al modificar Reduccion al vender: " + e2);
-		}	
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}		
 	}
 	protected void actionPerformedBtnModifFecha(ActionEvent e) {
 		int eleccion = cbModifFecha.getSelectedIndex();
 		try {
-			model.modificarFechaAlVender(eleccion);
+			consulta.iniciar();
+			consulta.modificarFechaAlVender(eleccion);
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al modificar Modificar fecha al vender: " + e2);
-		}	
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 }

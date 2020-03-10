@@ -97,6 +97,7 @@ public class Reportes extends JInternalFrame {
 
 	VentanaPrincipal vp;
 	private JButton btnX;
+	private JButton btnXX;
 	/**
 	 * Launch the application.
 	 */
@@ -117,14 +118,14 @@ public class Reportes extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public Reportes(VentanaPrincipal vp) {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(Color.DARK_GRAY);
 		this.vp = vp;
 		
 		setBounds(100, 100, 1134, 669);
 		getContentPane().setLayout(null);
 		
 		this.panel = new JPanel();
-		this.panel.setBackground(new Color(245, 245, 245));
+		this.panel.setBackground(new Color(176, 224, 230));
 		this.panel.setBounds(0, 0, 557, 212);
 		getContentPane().add(this.panel);
 		this.panel.setLayout(null);
@@ -203,8 +204,8 @@ public class Reportes extends JInternalFrame {
 		this.label_19.setFont(new Font("Candara", Font.BOLD, 23));
 		
 		this.panel_1 = new JPanel();
-		this.panel_1.setBackground(new Color(240, 128, 128));
-		this.panel_1.setBounds(561, 0, 557, 212);
+		this.panel_1.setBackground(new Color(192, 192, 192));
+		this.panel_1.setBounds(561, 0, 568, 212);
 		getContentPane().add(this.panel_1);
 		this.panel_1.setLayout(null);
 		
@@ -269,13 +270,25 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblVerStockDe = new JLabel("VER STOCK DE PRODUCTOS");
-		this.lblVerStockDe.setBounds(10, 5, 537, 32);
+		this.lblVerStockDe.setBounds(52, 5, 440, 32);
 		this.panel_1.add(this.lblVerStockDe);
 		this.lblVerStockDe.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVerStockDe.setFont(new Font("Candara", Font.BOLD, 23));
 		
+		btnXX = new JButton("X");
+		btnXX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnXX(arg0);
+			}
+		});
+		btnXX.setForeground(Color.WHITE);
+		btnXX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+		btnXX.setBackground(new Color(220, 20, 60));
+		btnXX.setBounds(494, 0, 63, 30);
+		panel_1.add(btnXX);
+		
 		this.panel_2 = new JPanel();
-		this.panel_2.setBackground(new Color(102, 205, 170));
+		this.panel_2.setBackground(new Color(192, 192, 192));
 		this.panel_2.setBounds(0, 216, 557, 96);
 		getContentPane().add(this.panel_2);
 		this.panel_2.setLayout(null);
@@ -312,7 +325,7 @@ public class Reportes extends JInternalFrame {
 		this.panel_2.add(this.lblVerDetalleDe);
 		
 		this.panel_3 = new JPanel();
-		this.panel_3.setBackground(new Color(119, 136, 153));
+		this.panel_3.setBackground(new Color(176, 224, 230));
 		this.panel_3.setBounds(561, 216, 568, 146);
 		getContentPane().add(this.panel_3);
 		this.panel_3.setLayout(null);
@@ -356,7 +369,7 @@ public class Reportes extends JInternalFrame {
 		this.panel_3.add(this.label_3);
 		
 		this.panel_4 = new JPanel();
-		this.panel_4.setBackground(new Color(100, 149, 237));
+		this.panel_4.setBackground(new Color(176, 224, 230));
 		this.panel_4.setLayout(null);
 		this.panel_4.setBounds(0, 316, 557, 194);
 		getContentPane().add(this.panel_4);
@@ -413,7 +426,7 @@ public class Reportes extends JInternalFrame {
 		this.label_5.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.panel_5 = new JPanel();
-		this.panel_5.setBackground(new Color(173, 216, 230));
+		this.panel_5.setBackground(new Color(192, 192, 192));
 		this.panel_5.setLayout(null);
 		this.panel_5.setBounds(0, 515, 557, 124);
 		getContentPane().add(this.panel_5);
@@ -442,9 +455,9 @@ public class Reportes extends JInternalFrame {
 		this.btnVerComprasCliente.setBackground(new Color(30, 144, 255));
 		
 		this.panel_6 = new JPanel();
-		this.panel_6.setBackground(new Color(95, 158, 160));
+		this.panel_6.setBackground(new Color(192, 192, 192));
 		this.panel_6.setLayout(null);
-		this.panel_6.setBounds(561, 366, 557, 273);
+		this.panel_6.setBounds(561, 366, 568, 273);
 		getContentPane().add(this.panel_6);
 		
 		this.label_15 = new JLabel("PRODUCTOS POR VENCER");
@@ -821,5 +834,9 @@ public class Reportes extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
+	}
+	
+	protected void actionPerformedBtnXX(ActionEvent arg0) {
+		this.dispose();
 	}
 }

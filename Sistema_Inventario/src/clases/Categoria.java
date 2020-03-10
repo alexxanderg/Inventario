@@ -8,15 +8,17 @@ import mysql.consultas;
 public class Categoria {
 	String categoria;
 	ResultSet rs;
-
+	consultas consulta = new consultas();
+	
 	public Categoria(){}
+	
 	public Categoria(String categoria){
 		this.categoria = categoria;
 	}
 	
 	public void cargarCategorias(JComboBox<Categoria> cbCategoria){
-		consultas consult = new consultas();
-		rs = consult.cargarCategoria();
+		consulta.iniciar();
+		rs = consulta.cargarCategoria();
 		try {
 			while(rs.next())
 				cbCategoria.addItem(
@@ -26,7 +28,16 @@ public class Categoria {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 	
 	@Override

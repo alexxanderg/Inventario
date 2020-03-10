@@ -8,47 +8,27 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-
 import com.mxrck.autocompleter.TextAutoCompleter;
-
 import clases.Cliente;
-import clases.Productos;
-import clases.UnidadMed;
 import gui_clientes.NuevoCliente;
-import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
-import mysql.MySQLConexion;
 import mysql.consultas;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -60,7 +40,6 @@ import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
@@ -91,12 +70,6 @@ public class Ventas extends JInternalFrame {
 	private JTextField txtVuelto;
 	public DefaultTableModel dtm = new DefaultTableModel();
 	private JMenu mnlistaDeProductos;
-	
-	public VentanaPrincipal vp;
-	JTable tb;
-	ResultSet rs;
-	consultas model = new consultas();
-	NuevoCliente nc = new NuevoCliente(null, this);
 	private JLabel lblTitDescuento;
 	private JLabel lblDescuento;
 	private JTextField txtPago1;
@@ -119,6 +92,13 @@ public class Ventas extends JInternalFrame {
 	private JTextField txtMin;
 	private JLabel lblHora;
 	private JLabel lblMin;
+	
+
+	public VentanaPrincipal vp;
+	JTable tb;
+	ResultSet rs = null;
+	consultas consulta = new consultas();
+	NuevoCliente nc = new NuevoCliente(null, this);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -280,6 +260,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
+		txtNroImpresiones.setVisible(false);
 		txtNroImpresiones.setText("0");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
@@ -586,7 +567,8 @@ public class Ventas extends JInternalFrame {
 		ajustarAnchoColumnas();
 		
 		try {
-			rs = model.cargarConfiguraciones();
+			consulta.iniciar();
+			rs = consulta.cargarConfiguraciones();
 			rs.next();
 			int fechaVauto = rs.getInt("fechaVauto");
 			if(fechaVauto == 0){
@@ -609,18 +591,26 @@ public class Ventas extends JInternalFrame {
 				date.getTime();
 				dchFechaVenta.setDate(date);
 			}
-				
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 		
 	}
 	
 	public void cargarBuscador() {
 		ac = new TextAutoCompleter(txtBuscarProd);
-		
-		consultas model = new consultas();
-		ResultSet rs = model.cargarProductos();
+		consulta.iniciar();
+		rs = consulta.cargarProductos();
 		ac.setMode(0);
 		try {
 			while (rs.next()) {
@@ -628,7 +618,17 @@ public class Ventas extends JInternalFrame {
 						" = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	
@@ -669,7 +669,6 @@ public class Ventas extends JInternalFrame {
 			cliente.cargarClientes(cbClientes);
 			
 			for(int i = 0; i<cbClientes.getItemCount(); i++){
-				JOptionPane.showMessageDialog(null, "" + cbClientes.getItemAt(i).getId() + " - "  + iddistrib);
 				if(cbClientes.getItemAt(i).getId() == iddistrib)
 					cbClientes.setSelectedIndex(i);
 			}
@@ -695,7 +694,8 @@ public class Ventas extends JInternalFrame {
 			txtPago1.setText("0");
 			txtPago2.setText("0");
 			int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
-			rs = model.buscarProductoID(idProd);
+			consulta.iniciar();
+			rs = consulta.buscarProductoID(idProd);
 			int flag = 0;
 			float cantidad = 0;
 			for (int i = 0; i < tbCarrito.getRowCount(); i++) { 
@@ -740,7 +740,7 @@ public class Ventas extends JInternalFrame {
 		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 			try {
 				String codbarra = txtBuscarProd.getText();
-				rs = model.buscarProductoBarras(codbarra);
+				rs = consulta.buscarProductoBarras(codbarra);
 				int flag = 0;
 				float cantidad = 0;
 				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
@@ -777,6 +777,16 @@ public class Ventas extends JInternalFrame {
 			} catch (Exception e2) {
 				txtBuscarProd.setText(null);
 			}
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	
@@ -902,17 +912,18 @@ public class Ventas extends JInternalFrame {
 				np.setVisible(true);
 			}*/
 		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			JOptionPane.showMessageDialog(null, "ErrorP: " + f);
 		}
 	}
 	
-	public int verificarStock() {
+	public int verificarStock() { 
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
 			float cantV = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 			float stock = 0;
-			rs = model.buscarProductoID(idProd);
 			try {
+				consulta.iniciar();
+				rs = consulta.buscarProductoID(idProd);
 				rs.next();
 				stock = rs.getFloat("cantidad");
 				String producto = rs.getString("producto");
@@ -927,6 +938,16 @@ public class Ventas extends JInternalFrame {
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERROR al verificar stock para venta: " + e);
+			}
+			finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
 			}
 		}
 		return 1; //SI HAY STOCK
@@ -943,13 +964,23 @@ public class Ventas extends JInternalFrame {
 				JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
 			} else {
 				try {
-					ResultSet rsvss; //Verificar si está permitido vender sin stock
-					rsvss = model.verificarVentaSinStock();
-					rsvss.next();
-					ventasinstock = rsvss.getInt("ventasinstock");
+					consulta.iniciar();
+					rs = consulta.verificarVentaSinStock();
+					rs.next();
+					ventasinstock = rs.getInt("ventasinstock");
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Error al consultar permisos de venta sin stock " + e2);
+				}finally {
+					try {
+						if (rs != null)
+							rs.close();
+						if (consulta != null)
+							consulta.reset();
+		            } catch (Exception ex) {
+		            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+		            }
 				}
+				
 				if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
 					flag = verificarStock();
 				else
@@ -973,11 +1004,12 @@ public class Ventas extends JInternalFrame {
 					float monto2 = 0;	if(txtPago2.getText().length()>0) monto2 = Float.parseFloat(txtPago2.getText());
 					
 					try {
-						rs = model.cargarConfiguraciones();
+						consulta.iniciar();
+						rs = consulta.cargarConfiguraciones();
 						rs.next();
 						int fechaVauto = rs.getInt("fechaVauto");
 						if(fechaVauto == 0)
-							model.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+							consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
 						else if (fechaVauto == 1){
 							
 							int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
@@ -993,10 +1025,20 @@ public class Ventas extends JInternalFrame {
 							Object fechaElegida = new java.sql.Timestamp(date.getTime());
 							
 							
-							model.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+							consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
 						}
 					}catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
+					}
+					finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (consulta != null)
+								consulta.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
 					}
 					
 									/*
@@ -1009,13 +1051,23 @@ public class Ventas extends JInternalFrame {
 					int ultCodVenta = 0;
 					
 					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
-						
-						rs = model.ObtenerUltimoCodigo();
+					
+						consulta.iniciar();
+						rs = consulta.ObtenerUltimoCodigo();
 						try {
 							while (rs.next())
 								ultCodVenta = rs.getInt("codventa");
 						} catch (Exception e3) {
 							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+						}finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (consulta != null)
+									consulta.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }
 						}
 						
 						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
@@ -1040,23 +1092,26 @@ public class Ventas extends JInternalFrame {
 								precioCoVenta = redondearDecimales(precioCoVenta, 2);
 							double gananciaProdVenta = subTotVenta - precioCoVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
-																
-							model.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
-									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+								
 
+							consulta.iniciar();	
+							consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
+									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+							consulta.reset();
 
 							/*
 							 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
 							 * 
 							 * */
 							try {
-								rs = model.cargarConfiguraciones();
+								consulta.iniciar();
+								rs = consulta.cargarConfiguraciones();
 								rs.next();
 								int reducirstock = rs.getInt("reducirstock");
 								
 								if(reducirstock == 1){
 									try {
-										rs = model.buscarProductoID(idProdVenta);
+										rs = consulta.buscarProductoID(idProdVenta);
 										rs.next();
 										if(rs.getString("promo1").equals(uMedidaUsada)){
 											cantADisminuir = cantProdVenta * rs.getFloat("cantp1");
@@ -1070,13 +1125,23 @@ public class Ventas extends JInternalFrame {
 											cantADisminuir = cantProdVenta;
 										}
 										
-										model.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+										consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir);
 									} catch (Exception e2) {
 										JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
 									}
 								}
 							} catch (Exception e2) {
 								JOptionPane.showMessageDialog(null, "2do Error al verificar permiso para vender sin reducir stock " + e2);
+							}
+							finally {
+								try {
+									if (rs != null)
+										rs.close();
+									if (consulta != null)
+										consulta.reset();
+					            } catch (Exception ex) {
+					            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+					            }
 							}
 						}
 
@@ -1174,7 +1239,7 @@ public class Ventas extends JInternalFrame {
 				nc.setVisible(true);
 			}
 		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			JOptionPane.showMessageDialog(null, "ErrorC: " + f);
 		}
 	}
 	

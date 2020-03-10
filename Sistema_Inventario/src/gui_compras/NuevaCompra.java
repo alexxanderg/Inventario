@@ -1,6 +1,5 @@
 package gui_compras;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,27 +13,18 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
-
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
-
-import clases.Almacen;
-import clases.Categoria;
 import clases.Distribuidores;
-import clases.UnidadMed;
-import gui_mantenimiento_distribuidores.NuevoDistribuidor;
 import mysql.consultas;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,15 +33,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.UIManager;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JScrollPane;
@@ -93,17 +79,17 @@ public class NuevaCompra extends JFrame {
 	private JComboBox cbMetPago;
 	private JLabel lblPrecioUni;
 	private JTextField txtPrecioUni;
+	private JLabel lblPagado;
+	private JTextField txtPagado;
+	private JLabel lblSaldo;
+	private JTextField txtSaldo;
 	public JComboBox <Distribuidores> cbDistribuidor;
 	
 
 	public DefaultTableModel dtm = new DefaultTableModel();
 	private TextAutoCompleter ac;
 	ResultSet rs;
-	consultas model = new consultas();
-	private JLabel lblPagado;
-	private JTextField txtPagado;
-	private JLabel lblSaldo;
-	private JTextField txtSaldo;
+	consultas consulta = new consultas();
 	
 	int idUsuario = 0;
 	MantenimientoCompras mantCompras = null;
@@ -498,7 +484,7 @@ public class NuevaCompra extends JFrame {
 		cbMetPago.setBounds(759, 177, 282, 25);
 		contentPane.add(cbMetPago);
 		
-		lblPrecioUni = new JLabel("Precio Uni.");
+		lblPrecioUni = new JLabel("Precio Indiv.");
 		lblPrecioUni.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrecioUni.setForeground(Color.DARK_GRAY);
 		lblPrecioUni.setFont(new Font("Candara", Font.BOLD, 20));
@@ -568,7 +554,7 @@ public class NuevaCompra extends JFrame {
 		txtSaldo.setBackground(new Color(245, 245, 245));
 		txtSaldo.setBounds(370, 549, 135, 34);
 		contentPane.add(txtSaldo);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, txtCantidad, txtPrecioUni, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, btnRegistrarCompra, btnCancelar}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, txtCantidad, txtPrecioUni, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
 		cargarBuscador();
@@ -605,15 +591,24 @@ public class NuevaCompra extends JFrame {
 	
 	public void cargarBuscador() {
 		ac = new TextAutoCompleter(txtBuscarProducto);
-		consultas model = new consultas();
-		ResultSet rs = model.cargarProductos();
 		ac.setMode(0);
 		try {
+			consulta.iniciar();
+			rs = consulta.cargarProductos();
 			while (rs.next()) 
 				ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " * " + rs.getString("unimedida") + 
 						" - " + rs.getString("almacen") + "  -  (" + rs.getString("codproducto") + ")");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	
@@ -677,7 +672,6 @@ public class NuevaCompra extends JFrame {
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
-		
 		int tipComprobante =0;		tipComprobante = cbTipoComprobante.getSelectedIndex();
 		String serie = "";			serie = txtSerie.getText();
 		String nroSerie = "";		nroSerie = txtNroSerie.getText();
@@ -721,18 +715,30 @@ public class NuevaCompra extends JFrame {
 			fechaVencimiento = new java.sql.Timestamp(date.getTime());
 		} catch (Exception e) {
 		}
-		
-		model.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idUsuario, total, pagado, saldo);
 
+		consulta.iniciar();
+		consulta.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idUsuario, total, pagado, saldo);
+		consulta.reset();
+		
 		int idCompra = 0;
-		rs = model.ObtenerUltimoCodigoCompra();
 		try {
+			consulta.iniciar();
+			rs = consulta.ObtenerUltimoCodigoCompra();
 			while (rs.next())
 				idCompra = rs.getInt("idcompra");
+			consulta.reset();
 		} catch (Exception e3) {
 			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código de compra: " + e3);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
-		
 		
 		for (int i = 0; i < tbCompras.getRowCount(); i++) {
 			String prod = tbCompras.getValueAt(i, 1).toString();
@@ -744,9 +750,10 @@ public class NuevaCompra extends JFrame {
 			double preSubTotProd = Float.parseFloat(tbCompras.getValueAt(i, 3).toString());
 				preSubTotProd = redondearDecimales(preSubTotProd, 2);
 			
-			model.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
-			model.anadirStockProducto(idProd, cantProd);
-				
+			consulta.iniciar();
+			consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
+			consulta.anadirStockProducto(idProd, cantProd);
+			consulta.reset();
 		}
 		JOptionPane.showMessageDialog(null, "Compra registrada correctamente");
 		mantCompras.cargar();

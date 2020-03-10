@@ -12,6 +12,7 @@ public class Usuarios {
 	String nombre;
 	int tipo;
 	ResultSet rs;
+	consultas consulta = new consultas();
 
 	public Usuarios(){}
 	public Usuarios(int idusuario, String usuario, String password, String nombre, int tipo){
@@ -23,8 +24,8 @@ public class Usuarios {
 	}
 	
 	public void cargarUsuarios(JComboBox<Usuarios> cbUsuarios){
-		consultas consult = new consultas();
-		rs = consult.cargarUsuarios();
+		consulta.iniciar();
+		rs = consulta.cargarUsuarios();
 		try {
 			while(rs.next())
 				cbUsuarios.addItem(
@@ -38,7 +39,16 @@ public class Usuarios {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 	
 	@Override

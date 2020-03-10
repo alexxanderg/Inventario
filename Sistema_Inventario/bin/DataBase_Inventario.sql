@@ -134,7 +134,8 @@ fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves 
   
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 1, 1);
+insert into tb_usuarios values(null,'bxb', 'bxb01', 'Byte x Byte', 0, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0, 1, 1);
 
@@ -219,7 +220,17 @@ Inner join tb_productos pr
 On pr.codproducto=vd.codproducto
 where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 and v.usuario = 'alex';
+DATE_FORMAT(fecha,'%d - %b - %Y')
+select * from tb_ventas where estado = 1 order by fecha desc;
 
+select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m'), v.descuento, v.saldo, v.totventa
+from tb_ventas v
+inner join tb_clientes c
+on c.idcliente = v.idcliente
+inner join tb_usuarios u
+on u.idusuario = v.idusuario
+where v.estado = 1 
+order by v.fecha desc;
 
 select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = '';
  

@@ -134,7 +134,8 @@ fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves 
   
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
-insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 1, 1);
+insert into tb_usuarios values(null,'bxb', 'bxb01', 'Byte x Byte', 0, 1);
+insert into tb_usuarios values(null,'admin', 'admin', 'ADMINISTRADOR', 0, 1);
 
 insert into tb_configuraciones values(null,'marca,color,lote,laboratorio,fvencimiento,promo1,promo2,', 0, 1, 1);
 

@@ -8,6 +8,7 @@ import mysql.consultas;
 public class Almacen {
 	String almacen;
 	ResultSet rs;
+	consultas consulta = new consultas();
 
 	public Almacen(){}
 	public Almacen(String almacen){
@@ -15,8 +16,8 @@ public class Almacen {
 	}
 	
 	public void cargarAlmacenes(JComboBox<Almacen> cbAlmacen){
-		consultas consult = new consultas();
-		rs = consult.cargarAlmacen();
+		consulta.iniciar();
+		rs = consulta.cargarAlmacen();
 		try {
 			while(rs.next())
 				cbAlmacen.addItem(
@@ -26,7 +27,17 @@ public class Almacen {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 	
 	@Override

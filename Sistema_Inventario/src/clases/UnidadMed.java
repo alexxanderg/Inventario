@@ -8,6 +8,7 @@ import mysql.consultas;
 public class UnidadMed {
 	String unimed;
 	ResultSet rs;
+	consultas consulta = new consultas();
 
 	public UnidadMed(){}
 	public UnidadMed(String unimed){
@@ -15,8 +16,8 @@ public class UnidadMed {
 	}
 	
 	public void cargarUnidadesMed(JComboBox<UnidadMed> cbUnidadMedida){
-		consultas consult = new consultas();
-		rs = consult.cargarUnidadesMed();
+		consulta.iniciar();
+		rs = consulta.cargarUnidadesMed();
 		try {
 			while(rs.next())
 				cbUnidadMedida.addItem(
@@ -26,7 +27,16 @@ public class UnidadMed {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
+		}	finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 	
 	@Override

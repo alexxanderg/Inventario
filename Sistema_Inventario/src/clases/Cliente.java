@@ -15,6 +15,7 @@ public class Cliente {
 	String telefono;
 	String correo;
 	ResultSet rs;
+	consultas consulta = new consultas();
 	
 	public Cliente(){}           
 	public Cliente(int id, String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String correo){
@@ -28,8 +29,8 @@ public class Cliente {
 	}
 	
 	public void cargarClientes(JComboBox<Cliente> cbClientes){
-		consultas consult = new consultas();
-		rs = consult.cargarClientes();
+		consulta.iniciar();
+		rs = consulta.cargarClientes();
 		try {
 			while(rs.next())
 				cbClientes.addItem(
@@ -45,11 +46,16 @@ public class Cliente {
 				);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
-		}		
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	

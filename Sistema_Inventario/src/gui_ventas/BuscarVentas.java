@@ -28,8 +28,11 @@ import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -66,8 +69,9 @@ public class BuscarVentas extends JInternalFrame {
 	public VentanaPrincipal vp;	
 	JTable tb;
 	ResultSet rs;
-	consultas model = new consultas();
+	consultas consulta = new consultas();
 	DefaultTableModel dtm = new DefaultTableModel();
+	private JMenu mnhistorialDeAcciones;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -173,7 +177,7 @@ public class BuscarVentas extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Crear nuevo usuario| ");
+		mnCrearProducto = new JMenu("|Ver detalles de venta| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -185,7 +189,7 @@ public class BuscarVentas extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
-		mnModificarProducto = new JMenu("|Modificar usuario| ");
+		mnModificarProducto = new JMenu("|Modificar Venta| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -197,7 +201,7 @@ public class BuscarVentas extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Eliminar usuario| ");
+		mnNewMenu_2 = new JMenu("|Eliminar venta| ");
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -208,6 +212,12 @@ public class BuscarVentas extends JInternalFrame {
 		mnNewMenu_2.setBackground(SystemColor.control);
 		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnNewMenu_2);
+		
+		mnhistorialDeAcciones = new JMenu("|Historial de acciones realizadas| ");
+		mnhistorialDeAcciones.setForeground(new Color(186, 85, 211));
+		mnhistorialDeAcciones.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnhistorialDeAcciones.setBackground(SystemColor.menu);
+		menuBar.add(mnhistorialDeAcciones);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -283,14 +293,52 @@ public class BuscarVentas extends JInternalFrame {
 		
 	}
 	protected void actionPerformedBtnVerVentas(ActionEvent arg0) {
-		consultas model = new consultas();
-		rs = model.cargarVentasUsuario();
 		try {
+			
+			for (int i = 0; i < tbVentas.getRowCount(); i++) {
+				dtm.removeRow(i);
+				i -= 1;
+			}
+			
+			
+			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
+						
+			int añoi = dchDesde.getCalendar().get(Calendar.YEAR);
+			int mesi = dchDesde.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = dchDesde.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaInicial = añoi + "-" + mesi + "-" + diai + " " + "00:00:00";
+
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechaInicial);
+			Object fechai = new java.sql.Timestamp(date.getTime());
+			
+			int añof = dchHasta.getCalendar().get(Calendar.YEAR);
+			int mesf = dchHasta.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = dchHasta.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaFinal = añof + "-" + mesf + "-" + diaf + " " + "23:59:59";
+
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter.parse(fechaFinal);
+			Object fechaf = new java.sql.Timestamp(date2.getTime());
+			
+			consulta.iniciar();
+			rs = consulta.cargarVentasUsuario(idusuario, fechai, fechaf);
 			while(rs.next()){
 				dtm.addRow(new Object[]{rs.getInt("codventa"), rs.getString("ncliente"), rs.getString("nusuario"), rs.getString("nota"), rs.getString("fecha"), rs.getFloat("descuento"), rs.getFloat("saldo"), rs.getFloat("totventa")});	
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar ventas: " + e.getMessage());
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 		ajustarAnchoColumnas();
 	}
