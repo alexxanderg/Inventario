@@ -345,6 +345,7 @@ public class Reportes extends JInternalFrame {
 		this.panel_3.add(this.calendar_3);
 		
 		this.btnVerProductosIngresados = new JButton("Ver ingresos");
+		btnVerProductosIngresados.setEnabled(false);
 		btnVerProductosIngresados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnVerProductosIngresados(e);
@@ -528,11 +529,16 @@ public class Reportes extends JInternalFrame {
 			calendar_7.setDate(date);
 	}
 		
+	protected void actionPerformedBtnXX(ActionEvent arg0){
+		this.dispose();
+	}
+	
+	
 	protected void actionPerformedBtnGenerarRVD(ActionEvent arg0) {
 		Connection con = null;
 		try {
 			con = MySQLConexion.getConection();
-			String usu = cbUsuarios.getSelectedItem().toString();
+			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
 			int metpago = cbMetodoPago.getSelectedIndex() - 1;
 
 			int añoi = calendar.getCalendar().get(Calendar.YEAR);
@@ -593,7 +599,7 @@ public class Reportes extends JInternalFrame {
 		try {
 			con = MySQLConexion.getConection();
 			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
-			int metpago = cbMetodoPago.getSelectedIndex();
+			int metpago = cbMetodoPago.getSelectedIndex()- 1;
 
 			int añoi = calendar.getCalendar().get(Calendar.YEAR);
 			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
@@ -620,7 +626,7 @@ public class Reportes extends JInternalFrame {
 			parameters.put("metpago", metpago);
 
 			if (usu.equals("TODOS")) {
-				if (metpago == 0) {
+				if (metpago == - 1) {
 					new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
 					AbstractJasperReports.showViewer();
 				} else {
@@ -630,7 +636,7 @@ public class Reportes extends JInternalFrame {
 				}
 			} else {
 				parameters.put("prmtVendedor", usu);
-				if (metpago == 0) {
+				if (metpago == - 1) {
 					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
 					AbstractJasperReports.showViewer();
 					
@@ -660,7 +666,7 @@ public class Reportes extends JInternalFrame {
 				con.close();
 				txtNVenta.setText(null);
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "No se encontó la venta " + ex);
+				JOptionPane.showMessageDialog(null, "No se encontÃ³ la venta " + ex);
 			}
 		}
 	}
@@ -709,7 +715,7 @@ public class Reportes extends JInternalFrame {
 			AbstractJasperReports.showViewer();
 			con.close();
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontó la venta " + ex);
+			JOptionPane.showMessageDialog(null, "No se encontÃ³ la venta " + ex);
 		}
 	}
 	protected void actionPerformedBtnGenerarMenores(ActionEvent e) {
@@ -834,9 +840,5 @@ public class Reportes extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
-	}
-	
-	protected void actionPerformedBtnXX(ActionEvent arg0) {
-		this.dispose();
 	}
 }

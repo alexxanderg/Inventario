@@ -178,6 +178,9 @@ select codproducto from tb_productos order by codproducto desc limit 1 ;
 
 -- ALTER TABLE tb_ventas_detalle MODIFY cantidad float;   SE ALTERA SI ES NECESARIO
 
+show processlist;
+show status like 'Threads%';
+
 select vd.codventa, vd.cantidad, pr.producto, pr.detalles, pr.marca, pr.color, pr.lote, pr.laboratorio, vd.descIndiv, vd.descTotal, vd.subTotal, v.fecha, c.nombre, v.totventa, u.usuario, v.metpago1, v.nota
 from tb_ventas v 
 inner join tb_ventas_detalle vd 
@@ -220,16 +223,19 @@ Inner join tb_productos pr
 On pr.codproducto=vd.codproducto
 where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 and v.usuario = 'alex';
-DATE_FORMAT(fecha,'%d - %b - %Y')
+
 select * from tb_ventas where estado = 1 order by fecha desc;
 
-select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m'), v.descuento, v.saldo, v.totventa
+
+select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa
 from tb_ventas v
 inner join tb_clientes c
 on c.idcliente = v.idcliente
 inner join tb_usuarios u
 on u.idusuario = v.idusuario
 where v.estado = 1 
+and u.idusuario = 1
+and v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
 order by v.fecha desc;
 
 select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = '';
