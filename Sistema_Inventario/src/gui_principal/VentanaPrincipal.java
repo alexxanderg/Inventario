@@ -66,11 +66,11 @@ public class VentanaPrincipal extends JFrame {
 	public Reportes vReportes = null;
 	public Configuraciones config = null;
 
-	/*Color colorSelec = new Color(240, 67, 85);
-    Color colorDeselec = new Color(74, 192, 244);*/
+	Color colorSelec = new Color(240, 67, 85);
+    Color colorDeselec = new Color(74, 192, 244);
    
-    Color colorSelec = new Color(255, 177, 70 );
-    Color colorDeselec = new Color(243, 112, 112);
+    /*Color colorSelec = new Color(255, 177, 70 );
+    Color colorDeselec = new Color(243, 112, 112);*/
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
     private JLabel lblBxB;
@@ -98,7 +98,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
+		panel.setBackground(Color.BLACK);
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
@@ -238,7 +238,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/cherry.jpg")).getImage().getScaledInstance(70, 90, Image.SCALE_AREA_AVERAGING);
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgLogoCuadrado.png")).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -297,7 +297,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - MINIMARKET BECORAT");
+		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - LA DOLORES");
 		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -361,8 +361,19 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setBackground(colorDeselec);
 	}
 
-	protected void actionPerformedBtnVentas(ActionEvent arg0) {
+	public void actionPerformedBtnVentas(ActionEvent arg0) {
 		try {
+			cerrarVentanas();
+			ventas = new Ventas(this);
+			desktopPane.add(ventas);
+			ventas.show();
+			ventas.setMaximum(true);
+			pintarBotones();
+			btnVentas.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
+		}
+		/*try {
 			if (ventas.isShowing()) { // VERIFICA SI LA VENTANA YA ESTÁ ABIERTA
 				ventas.setSelected(true); // PONER JINTERNALFRAME DELANTE DE LOS OTROS
 				pintarBotones();
@@ -374,7 +385,7 @@ public class VentanaPrincipal extends JFrame {
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
 			}
-		}		
+		}*/		
 	}
 	public void abrirVentanaVentas(){
 		try {
@@ -496,8 +507,9 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	public void cerrarVentanas(){
-		//ventas 			= null;
-		//	ventas.dispose();
+		if(ventas != null)
+			ventas.dispose();
+		ventas = null;
 	
 		if(buscarV != null) 
 			buscarV.dispose();

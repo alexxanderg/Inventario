@@ -127,7 +127,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		Image img = new ImageIcon(this.getClass().getResource("/imgbanner.png")).getImage().getScaledInstance(600, 160, Image.SCALE_AREA_AVERAGING);
+		Image img = new ImageIcon(this.getClass().getResource("/imgbanner.jpg")).getImage().getScaledInstance(600, 160, Image.SCALE_AREA_AVERAGING);
 		lblNewLabel.setIcon(new ImageIcon(img));
 		lblNewLabel.setBounds(0, 0, 600, 160);
 		contentPane.add(lblNewLabel);

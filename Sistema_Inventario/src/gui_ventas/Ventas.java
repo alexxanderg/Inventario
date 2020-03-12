@@ -1222,7 +1222,8 @@ public class Ventas extends JInternalFrame {
 					
 					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
 					//limpiarVentana();
-					vp.abrirVentanaVentas();
+					//vp.abrirVentanaVentas();
+					vp.actionPerformedBtnVentas(null);
 					this.dispose();
 					/*
 					 * lblPaga.setText("Paga con: "); lblVuelto.setText(
