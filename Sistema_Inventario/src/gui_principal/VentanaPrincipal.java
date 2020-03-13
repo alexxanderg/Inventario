@@ -15,10 +15,16 @@ import gui_reportes.Reportes;
 import gui_usuarios.MantenimientoUsuarios;
 import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
+import mysql.consultas;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
@@ -66,6 +72,9 @@ public class VentanaPrincipal extends JFrame {
 	public Reportes vReportes = null;
 	public Configuraciones config = null;
 
+	ResultSet rs;
+	consultas consulta = new consultas();
+	
 	Color colorSelec = new Color(240, 67, 85);
     Color colorDeselec = new Color(74, 192, 244);
    
@@ -74,6 +83,7 @@ public class VentanaPrincipal extends JFrame {
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
     private JLabel lblBxB;
+    private JButton btnNotificaciones;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -98,7 +108,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
+		panel.setBackground(Color.BLACK);
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
@@ -297,7 +307,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("BOTICA MITNAO");
+		lblNewLabel = new JLabel("MINIMARKET LA DOLORES");
 		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -306,7 +316,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		txtPrueba = new JTextField();
 		txtPrueba.setVisible(false);
-		txtPrueba.setBounds(0, 0, 33, 20);
+		txtPrueba.setBounds(980, 0, 33, 20);
 		panel_1.add(txtPrueba);
 		txtPrueba.setColumns(10);
 		
@@ -320,14 +330,56 @@ public class VentanaPrincipal extends JFrame {
 		lblBxB.setForeground(Color.WHITE);
 		lblBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
+		btnNotificaciones = new JButton("<html><center>Tiene <br>notificaciones<center></html>");
+		btnNotificaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnNotificaciones(arg0);
+			}
+		});
+		btnNotificaciones.setVisible(false);
+		btnNotificaciones.setForeground(Color.WHITE);
+		btnNotificaciones.setBackground(new Color(220, 20, 60));
+		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNotificaciones.setBounds(0, 0, 130, 50);
+		panel_1.add(btnNotificaciones);
+		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
 		
 		cargar();
 	}
 	
 	private void cargar(){
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
+		
+		verificarNotificaciones();
+	}
+	
+	public void verificarNotificaciones(){
+		try {
+			consulta.iniciar();
+			rs = consulta.cargarProductos();
+			rs.next();
+			String producto = rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color");
+			Float cantmin = rs.getFloat("cantmin");
+			Float cant = rs.getFloat("cantidad");
+			
+			if(cant <= cantmin)
+				btnNotificaciones.setVisible(true);
+			
+	        
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR NOTIFCACIONES: " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 	
 	public void activarOpciones(int tipo){
@@ -548,5 +600,8 @@ public class VentanaPrincipal extends JFrame {
 		Login log = new Login();
 		log.setVisible(true);
 		this.dispose();
+	}
+	protected void actionPerformedBtnNotificaciones(ActionEvent arg0) {
+		JOptionPane.showMessageDialog(null, "Área en construcción");
 	}
 }

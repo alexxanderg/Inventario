@@ -1342,7 +1342,6 @@ public class Ventas extends JInternalFrame {
 	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 			if (codigo.equals(tbCarrito.getValueAt(i, 6).toString())) {
-				JOptionPane.showMessageDialog(null, "entro");
 				float temp = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 				float temp2 = Float.parseFloat(cantidad);
 				

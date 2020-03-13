@@ -41,7 +41,7 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
-	private JMenu mnNewMenu_2;
+	private JMenu mnEliminarProducto;
 	private JMenu mnIngresarStockA;
 	private JButton btnX;
 	private JLabel lblCdigo;
@@ -53,7 +53,7 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenuItem mntmRealizarKardex;
 	private JMenuItem mntmVerHistorial;
 	
-	NuevoProducto np = new NuevoProducto(this);
+	NuevoProducto np = new NuevoProducto(this, null);
 	JTable tb;
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -161,17 +161,17 @@ public class MantenimientoProd extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Eliminar producto| ");
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+		mnEliminarProducto = new JMenu("|Eliminar producto| ");
+		mnEliminarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnNewMenu_2.setForeground(new Color(220, 20, 60));
-		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnNewMenu_2);
+		mnEliminarProducto.setForeground(new Color(220, 20, 60));
+		mnEliminarProducto.setBackground(SystemColor.control);
+		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnEliminarProducto);
 		
 		mnIngresarStockA = new JMenu("|Agregar stock| ");
 		mnIngresarStockA.setVisible(false);
@@ -413,7 +413,7 @@ public class MantenimientoProd extends JInternalFrame {
 				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				np.setVisible(true); 
 			} else {
-				np = new NuevoProducto(this);
+				np = new NuevoProducto(this, null);
 				np.setLocationRelativeTo(null);
 				np.setVisible(true);
 			}
@@ -428,8 +428,38 @@ public class MantenimientoProd extends JInternalFrame {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
 
-		abrirModificarProducto(Integer.parseInt(codigoProducto));
+		abrirModificarProducto(codigoProducto);
 	}
+	private void abrirModificarProducto(String idProd){
+		/*try {
+			cerrarVentanas();
+			mp = new mp(this);
+			desktopPane.add(ventas);
+			ventas.show();
+			ventas.setMaximum(true);
+			pintarBotones();
+			btnVentas.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
+		}*/
+		
+		try { 
+			if (mp.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				mp.setVisible(true); 
+			} else {
+				mp = new ModificarProducto(idProd, this);
+				mp.setLocationRelativeTo(null);
+				mp.setVisible(true);
+			}
+		} catch (Exception f) {
+			mp = new ModificarProducto(""+idProd,this);;
+			mp.setLocationRelativeTo(null);
+			mp.setVisible(true);
+		}
+	}
+	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
 		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
@@ -472,15 +502,15 @@ public class MantenimientoProd extends JInternalFrame {
 			if (seleccion == 0) {// MODIFICAR
 				try {
 					consulta.iniciar();
-					int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-					rs = consulta.buscarProductoID(idProd);
+					String idProd = producto.substring(producto.indexOf("(")+1, producto.indexOf(")"));
+					rs = consulta.buscarProductoID(Integer.parseInt(idProd));
 					abrirModificarProducto(idProd);
 				} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 					try {
 						rs = consulta.buscarProductoBarras(producto);
 						rs.next();
 						int idProd = rs.getInt("codproducto");
-						abrirModificarProducto(idProd);
+						abrirModificarProducto(""+idProd);
 					} catch (Exception e3) {
 						// TODO: handle exception
 					}				
@@ -532,38 +562,5 @@ public class MantenimientoProd extends JInternalFrame {
 		mp = null;
 	}
 	
-	private void abrirModificarProducto(int idProd){
-		/*try {
-			cerrarVentanas();
-			mp = new mp(this);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
-			pintarBotones();
-			btnVentas.setBackground(colorSelec);
-		} catch (PropertyVetoException e) {
-			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
-		}*/
-		
-		
-		
-		
-		
-		
-		
-		try { 
-			if (mp.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				mp.setVisible(true); 
-			} else {
-				mp.setLocationRelativeTo(null);
-				mp.setVisible(true);
-			}
-		} catch (Exception f) {
-			mp = new ModificarProducto(""+idProd,this);;
-			mp.setLocationRelativeTo(null);
-			mp.setVisible(true);
-		}
-	}
+	
 }

@@ -16,6 +16,8 @@ import java.awt.SystemColor;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
 import clases.Distribuidores;
+import gui_distribuidores.NuevoDistribuidor;
+import gui_productos.NuevoProducto;
 import mysql.consultas;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -93,6 +95,8 @@ public class NuevaCompra extends JFrame {
 	
 	int idUsuario = 0;
 	MantenimientoCompras mantCompras = null;
+	private JButton btnNuevoProducto;
+	NuevoProducto np = new NuevoProducto(null, this);
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -366,12 +370,6 @@ public class NuevaCompra extends JFrame {
 		scrollPane.setViewportView(tbCompras);
 		
 		txtBuscarProducto = new JTextField();
-		txtBuscarProducto.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtBuscarProducto(e);
-			}
-		});
 		txtBuscarProducto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -390,7 +388,7 @@ public class NuevaCompra extends JFrame {
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
-		label.setBounds(12, 244, 495, 23);
+		label.setBounds(12, 244, 190, 23);
 		contentPane.add(label);
 		
 		btnAnadirDistri = new JButton("+");
@@ -554,6 +552,19 @@ public class NuevaCompra extends JFrame {
 		txtSaldo.setBackground(new Color(245, 245, 245));
 		txtSaldo.setBounds(370, 549, 135, 34);
 		contentPane.add(txtSaldo);
+		
+		btnNuevoProducto = new JButton("+");
+		btnNuevoProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnNuevoProducto(arg0);
+			}
+		});
+		btnNuevoProducto.setForeground(Color.WHITE);
+		btnNuevoProducto.setFont(new Font("Arial", Font.BOLD, 20));
+		btnNuevoProducto.setBorder(new LineBorder(Color.WHITE, 1, true));
+		btnNuevoProducto.setBackground(new Color(30, 144, 255));
+		btnNuevoProducto.setBounds(198, 241, 54, 25);
+		contentPane.add(btnNuevoProducto);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, txtCantidad, txtPrecioUni, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
@@ -785,20 +796,20 @@ public class NuevaCompra extends JFrame {
 		seleccionarTexto(e);
 	}
 	protected void actionPerformedBtnAnadirDistri(ActionEvent e) {
-		/*NuevoDistribuidor nd = new NuevoDistribuidor(null, this, null);
+		NuevoDistribuidor nd = new NuevoDistribuidor(null, null, null, this);
 		try {
 			if (nd.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true); 
 			} else {
-				nd = new NuevoDistribuidor(null, this, null);
+				nd = new NuevoDistribuidor(null, null, null, this);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}*/
+		}
 	}
 	
 	protected void actionPerformedBtnIngresar(ActionEvent e) {
@@ -865,9 +876,6 @@ public class NuevaCompra extends JFrame {
 	protected void focusGainedTxtPrecioUni(FocusEvent e) {
 		seleccionarTexto(e);
 	}
-	protected void focusGainedTxtBuscarProducto(FocusEvent e) {
-		seleccionarTexto(e);
-	}
 	protected void focusLostTxtCantidad(FocusEvent e) {
 		if(txtCantidad.getText().length()==0)
 			txtCantidad.setText("0");
@@ -875,5 +883,25 @@ public class NuevaCompra extends JFrame {
 	protected void focusLostTxtPrecioUni(FocusEvent e) {
 		if(txtPrecioUni.getText().length()==0)
 			txtPrecioUni.setText("0");
+	}
+	
+	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
+		try {
+			if (np.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				np.setVisible(true); 
+			} else {
+				np = new NuevoProducto(null, this);
+				np.setLocationRelativeTo(null);
+				np.setVisible(true);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
+	}
+	
+	public void cargarProducto (String prod){
+		txtBuscarProducto.setText(prod);
 	}
 }

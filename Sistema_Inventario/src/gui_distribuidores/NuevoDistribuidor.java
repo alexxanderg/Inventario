@@ -24,6 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import gui_compras.NuevaCompra;
 import gui_productos.ModificarProducto;
 import gui_productos.NuevoProducto;
 import mysql.consultas;
@@ -56,13 +58,14 @@ public class NuevoDistribuidor extends JFrame {
 	MantenimientoDistribuidores mantenimientoDistribuidores;
 	NuevoProducto np = null;
 	ModificarProducto mp = null;
+	NuevaCompra nc = null;
 	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoDistribuidor frame = new NuevoDistribuidor(null, null, null);
+					NuevoDistribuidor frame = new NuevoDistribuidor(null, null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,11 +74,12 @@ public class NuevoDistribuidor extends JFrame {
 		});
 	}
 
-	public NuevoDistribuidor(MantenimientoDistribuidores mantenimientoDistribuidores, NuevoProducto np, ModificarProducto mp) {
+	public NuevoDistribuidor(MantenimientoDistribuidores mantenimientoDistribuidores, NuevoProducto np, ModificarProducto mp, NuevaCompra nc) {
 		this.mantenimientoDistribuidores = mantenimientoDistribuidores;
 		this.np = np;
 		this.mp = mp;
-
+		this.nc = nc;
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -362,6 +366,10 @@ public class NuevoDistribuidor extends JFrame {
 				}
 				if(mp != null){
 					mp.recargarCombosDist(iddist);
+					this.dispose();
+				}
+				if(nc != null){
+					nc.recargarCombosDist(iddist);
 					this.dispose();
 				}
 			}

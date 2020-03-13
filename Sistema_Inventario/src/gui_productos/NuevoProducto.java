@@ -20,6 +20,7 @@ import clases.Almacen;
 import clases.Categoria;
 import clases.Distribuidores;
 import clases.UnidadMed;
+import gui_compras.NuevaCompra;
 import gui_distribuidores.NuevoDistribuidor;
 import mysql.consultas;
 import javax.swing.JComboBox;
@@ -114,6 +115,7 @@ public class NuevoProducto extends JFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	MantenimientoProd mantenimientoProductos;
+	NuevaCompra nc = null;
 	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
 	private JButton btnAnadirDistri;
 	
@@ -121,7 +123,7 @@ public class NuevoProducto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoProducto frame = new NuevoProducto(null);
+					NuevoProducto frame = new NuevoProducto(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -133,9 +135,9 @@ public class NuevoProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto(MantenimientoProd mantenimientoProductos) {
+	public NuevoProducto(MantenimientoProd mantenimientoProductos, NuevaCompra nc) {
 		this.mantenimientoProductos = mantenimientoProductos;
-		
+		this.nc = nc;
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -326,9 +328,9 @@ public class NuevoProducto extends JFrame {
 		
 		lblCantidadActual = new JLabel("Stock inicial:");
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadActual.setForeground(Color.DARK_GRAY);
+		lblCantidadActual.setForeground(new Color(220, 20, 60));
 		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadActual.setBounds(9, 383, 190, 25);
+		lblCantidadActual.setBounds(9, 385, 190, 25);
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
@@ -369,7 +371,7 @@ public class NuevoProducto extends JFrame {
 		lblPrecioDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeCompra.setForeground(Color.DARK_GRAY);
 		lblPrecioDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecioDeCompra.setBounds(10, 455, 190, 25);
+		lblPrecioDeCompra.setBounds(10, 457, 190, 25);
 		contentPane.add(lblPrecioDeCompra);
 		
 		txtPrecioCompra = new JTextField();
@@ -403,7 +405,7 @@ public class NuevoProducto extends JFrame {
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
 		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecioDeVenta.setBounds(10, 493, 190, 25);
+		lblPrecioDeVenta.setBounds(10, 495, 190, 25);
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtPrecioVenta = new JTextField();
@@ -754,7 +756,7 @@ public class NuevoProducto extends JFrame {
 		lblCantidadMnima.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadMnima.setForeground(Color.DARK_GRAY);
 		lblCantidadMnima.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadMnima.setBounds(9, 419, 190, 25);
+		lblCantidadMnima.setBounds(9, 421, 190, 25);
 		contentPane.add(lblCantidadMnima);
 		
 		txtStockMinimo = new JTextField();
@@ -1076,6 +1078,14 @@ public class NuevoProducto extends JFrame {
 		
 		cbUnidadMedida.setSelectedItem("Unidad");
 		primeravez = 0;
+		
+
+		if(nc!=null){
+			txtStockInicial.setEnabled(false);
+			txtPrecioCompra.setEnabled(false);
+			txtPrecioVenta.setEnabled(false);
+			txtPtjGanancia.setEditable(false);
+		}
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
@@ -1116,6 +1126,8 @@ public class NuevoProducto extends JFrame {
 		cbUnidadMedida.setSelectedItem("Unidad");
 		cbCategoria.setSelectedItem(".General");
 		cbAlmacen.setSelectedItem(".Principal");
+		
+		
 	}
 	
 	public void recargarCombos(){
@@ -1335,9 +1347,6 @@ public class NuevoProducto extends JFrame {
 		this.dispose();
 	}
 	
-
-	
-	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		int rs = 0;
 		try {
@@ -1398,7 +1407,7 @@ public class NuevoProducto extends JFrame {
 				java.util.Date date = new Date(); // FECHA ACTUAL
 				Object fechaActual = new java.sql.Timestamp(date.getTime());
 				
-				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
+				
 
 				consulta.iniciar();
 				rs = consulta.ingresarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
@@ -1406,35 +1415,24 @@ public class NuevoProducto extends JFrame {
 						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
 				
 				if (rs == 0) {
-					consulta.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
-					mantenimientoProductos.cargar();
-					mantenimientoProductos.selecionarProducto(""+id);
-					limpiar();
-					/*if (inv != null) {
-						inv.cargarDatos();
-						inv.selecionarProducto(txtCodigo.getText());
-						cargar();
-						this.setAlwaysOnTop(true);
-						inv.ajustarAnchoColumnas();
-						limpiar();
-						txtCodigo.requestFocus();
-					}
-					if (v != null) {
-						v.setVisible(true);
-						v.setEnabled(true);
+					//consulta.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
+					
+					if (nc != null) {
+						String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + id + ")"; 
+						nc.cargarProducto(prod);
 						this.dispose();
-						v.dtm.addRow(new Object[] { 1, txtProducto.getText(), txtDeta.getText(), txtCantidad.getText(),
-								txtPrecioVenInd.getText(), txtPrecioVenInd.getText(), txtCodigo.getText(),
-								txtPreComInd.getText() });
-						v.seleccionarRow();
-						// v.sumarSubTotales();
-						v.sumarTotal();
-					}*/
+					}
+					else{
+						String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
+						mantenimientoProductos.cargar();
+						mantenimientoProductos.selecionarProducto(""+id);
+						limpiar();
+					}
 				} else
 						JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");
 			}
 		} catch (Exception e) {
-				//JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
+				JOptionPane.showMessageDialog(null, "Error al registrar producto: " + e);
 		}finally {
 			try {
 				if (consulta != null)
@@ -1463,14 +1461,14 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	protected void actionPerformedBtnAnadirDistri(ActionEvent arg0) {
-		NuevoDistribuidor nd = new NuevoDistribuidor(null, this, null);
+		NuevoDistribuidor nd = new NuevoDistribuidor(null, this, null, null);
 		try {
 			if (nd.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true); 
 			} else {
-				nd = new NuevoDistribuidor(null, this, null);
+				nd = new NuevoDistribuidor(null, this, null, null);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}

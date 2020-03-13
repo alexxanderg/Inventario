@@ -76,6 +76,7 @@ public class BuscarVentas extends JInternalFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	DefaultTableModel dtm = new DefaultTableModel();
+	private JButton btnGenerarReporte;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -113,7 +114,7 @@ public class BuscarVentas extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 72, 1083, 461);
+		this.scrollPane.setBounds(10, 99, 1083, 434);
 		getContentPane().add(this.scrollPane);
 		
 		tbVentas = new JTable();
@@ -124,7 +125,7 @@ public class BuscarVentas extends JInternalFrame {
 		tbVentas.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbVentas);
 		
-		btnVerVentas = new JButton("Filtrar");
+		btnVerVentas = new JButton("Buscar");
 		btnVerVentas.setBackground(new Color(30, 144, 255));
 		btnVerVentas.setForeground(Color.WHITE);
 		btnVerVentas.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -133,20 +134,20 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(814, 31, 110, 30);
+		btnVerVentas.setBounds(787, 31, 110, 57);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(110, 31, 227, 30);
+		cbUsuarios.setBounds(110, 46, 227, 30);
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendedor:");
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(10, 31, 110, 30);
+		lblVendedor.setBounds(10, 46, 110, 30);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
@@ -154,11 +155,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblDesde.setForeground(new Color(102, 205, 170));
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(351, 31, 71, 30);
+		lblDesde.setBounds(339, 46, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(432, 31, 130, 30);
+		dchDesde.setBounds(420, 46, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
@@ -166,11 +167,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblHasta.setForeground(new Color(102, 205, 170));
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(572, 31, 71, 30);
+		lblHasta.setBounds(553, 46, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(648, 31, 130, 30);
+		dchHasta.setBounds(629, 46, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
@@ -204,6 +205,13 @@ public class BuscarVentas extends JInternalFrame {
 		lblTD.setBackground(new Color(50, 205, 50));
 		lblTD.setBounds(170, 560, 344, 36);
 		getContentPane().add(lblTD);
+		
+		btnGenerarReporte = new JButton("<html>Generar<br>reporte</html>");
+		btnGenerarReporte.setForeground(Color.WHITE);
+		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnGenerarReporte.setBackground(new Color(102, 205, 170));
+		btnGenerarReporte.setBounds(907, 31, 110, 57);
+		getContentPane().add(btnGenerarReporte);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbVentas.getTableHeader().setReorderingAllowed(false);
 
@@ -250,6 +258,7 @@ public class BuscarVentas extends JInternalFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		mnhistorialDeAcciones = new JMenu("|Historial de acciones realizadas| ");
+		mnhistorialDeAcciones.setVisible(false);
 		mnhistorialDeAcciones.setForeground(new Color(186, 85, 211));
 		mnhistorialDeAcciones.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnhistorialDeAcciones.setBackground(SystemColor.menu);
@@ -410,5 +419,4 @@ public class BuscarVentas extends JInternalFrame {
 		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
 		return resultado;
 	}
-	
 }

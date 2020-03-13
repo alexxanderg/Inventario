@@ -325,9 +325,9 @@ public class ModificarProducto extends JFrame {
 		dateFechaVenc.setBounds(737, 61, 300, 25);
 		contentPane.add(dateFechaVenc);
 		
-		lblCantidadActual = new JLabel("Stock inicial:");
+		lblCantidadActual = new JLabel("Stock actual:");
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadActual.setForeground(Color.DARK_GRAY);
+		lblCantidadActual.setForeground(new Color(220, 20, 60));
 		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
 		lblCantidadActual.setBounds(9, 383, 190, 25);
 		contentPane.add(lblCantidadActual);
@@ -968,7 +968,7 @@ public class ModificarProducto extends JFrame {
 	
 	private void cargar(){
 		
-		JOptionPane.showMessageDialog(null, ""+idPro);
+		//JOptionPane.showMessageDialog(null, ""+idPro);
 		
 		
 		// COMBO UNIDADES DE MEDIDA
@@ -1411,8 +1411,18 @@ public class ModificarProducto extends JFrame {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
-		}
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}		
 	}
+	
 	
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
@@ -1429,14 +1439,14 @@ public class ModificarProducto extends JFrame {
 		}
 	}
 	protected void actionPerformedBtnAnadirDistri(ActionEvent arg0) {
-		NuevoDistribuidor nd = new NuevoDistribuidor(null, null, this);
+		NuevoDistribuidor nd = new NuevoDistribuidor(null, null, this, null);
 		try {
 			if (nd.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				nd.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				nd.setVisible(true); 
 			} else {
-				nd = new NuevoDistribuidor(null, null, this);
+				nd = new NuevoDistribuidor(null, null, this, null);
 				nd.setLocationRelativeTo(null);
 				nd.setVisible(true);
 			}
