@@ -109,6 +109,15 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarVentasUsuarioTodos(Object fechai, Object fechaf) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where v.estado = 1 and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
 	public ResultSet cargarVentasUsuario(int idusuario, Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();

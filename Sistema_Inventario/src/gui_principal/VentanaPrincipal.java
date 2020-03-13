@@ -98,7 +98,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(Color.BLACK);
+		panel.setBackground(Color.DARK_GRAY);
 		panel.setBounds(0, 0, 230, 729);
 		contentPane.add(panel);
 		
@@ -238,7 +238,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgLogoCuadrado.png")).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
+		Image imgLogo = new ImageIcon(this.getClass().getResource("/imgLogo.png")).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -297,7 +297,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA DE INVENTARIO - LA DOLORES");
+		lblNewLabel = new JLabel("BOTICA MITNAO");
 		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -326,8 +326,8 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public void activarOpciones(int tipo){

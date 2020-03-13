@@ -1,7 +1,7 @@
 /DataBase_Inventario.sql
 /Librerias/
 /cherry.jpg
-/cherryb.jpg
+/cherryB.jpg
 /clases/
 /gui_clientes/
 /gui_compras/
@@ -27,7 +27,7 @@
 /imgMitnao.png
 /imgalmacen.png
 /imgbanner.jpg
-/imgbanner2.png
+/imgbannerB.png
 /imgbtnanadir.png
 /imgbtneliminar.png
 /imgbtnmodificar.png
@@ -66,7 +66,9 @@
 /rVentasVendedorTodosXMpago.jasper
 /utils/
 /cherryLD.jpg
+/imgLogo.png
 /imgbanner.png
 /imgbannerLD.jpg
-/cherryB.jpg
-/imgbannerB.png
+/cherryBM.jpg
+/imgLogoBM.png
+/imgbannerBM.png

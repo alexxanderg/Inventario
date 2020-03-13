@@ -967,6 +967,10 @@ public class ModificarProducto extends JFrame {
 	}
 	
 	private void cargar(){
+		
+		JOptionPane.showMessageDialog(null, ""+idPro);
+		
+		
 		// COMBO UNIDADES DE MEDIDA
 		UnidadMed unidades = new UnidadMed();
 		unidades.cargarUnidadesMed(cbUnidadMedida);
@@ -1394,7 +1398,7 @@ public class ModificarProducto extends JFrame {
 				consulta.reset();
 				mantenimientoProductos.cargar();
 				mantenimientoProductos.selecionarProducto(""+id);
-				dispose();
+				this.dispose();
 
 				/*if (rs == 0) {
 					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);

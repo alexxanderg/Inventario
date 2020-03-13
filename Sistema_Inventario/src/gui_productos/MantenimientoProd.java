@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import gui_principal.VentanaPrincipal;
+import gui_ventas.Ventas;
 import mysql.consultas;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -525,7 +526,30 @@ public class MantenimientoProd extends JInternalFrame {
 		}		
 	}
 	
+	public void cerrarVentanas(){
+		if(mp != null)
+			mp.dispose();
+		mp = null;
+	}
+	
 	private void abrirModificarProducto(int idProd){
+		/*try {
+			cerrarVentanas();
+			mp = new mp(this);
+			desktopPane.add(ventas);
+			ventas.show();
+			ventas.setMaximum(true);
+			pintarBotones();
+			btnVentas.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
+		}*/
+		
+		
+		
+		
+		
+		
 		
 		try { 
 			if (mp.isShowing()) {

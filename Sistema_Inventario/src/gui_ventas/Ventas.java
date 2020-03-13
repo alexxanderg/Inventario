@@ -48,7 +48,6 @@ import com.toedter.calendar.JDateChooser;
 
 public class Ventas extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnCrearProducto;
 	private JButton btnX;
 	private JLabel lblCdigo;
 	private JTextField txtBuscarProd;
@@ -520,19 +519,7 @@ public class Ventas extends JInternalFrame {
 		setJMenuBar(menuBar);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProd, cbClientes, btnNewCliente, txtInfoAdicional, cbPago1, txtPago1, cbPago2, txtPago2, btnVender, btnLimpiar, btnX, dchFechaVenta, txtHora, txtMin}));
 		
-		mnCrearProducto = new JMenu("|Ver / modificar / eliminar / ventas realizadas| ");
-		mnCrearProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnCrearProducto(arg0);
-			}
-		});
-		mnCrearProducto.setForeground(new Color(30, 144, 255));
-		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnCrearProducto);
-		
-		mnlistaDeProductos = new JMenu("|Lista de productos| ");
+		mnlistaDeProductos = new JMenu("|Ver lista completa de productos| ");
 		this.mnlistaDeProductos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -912,22 +899,6 @@ public class Ventas extends JInternalFrame {
 		resultado = Math.round(resultado);
 		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
 		return resultado;
-	}
-	
-	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
-		try {
-			/*if (np.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				np.setVisible(true); 
-			} else {
-				np = new NuevoProducto2(this);
-				np.setLocationRelativeTo(null);
-				np.setVisible(true);
-			}*/
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "ErrorP: " + f);
-		}
 	}
 	
 	public int verificarStock() { 
