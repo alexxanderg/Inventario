@@ -109,10 +109,38 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarVenta(int codVenta){
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_ventas where codventa = " + codVenta);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar venta: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarVentaDetalles(int codVenta){
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_ventas_detalle where codventa = " + codVenta);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar venta detalles: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarVentaDetallesProducto(int codVenta){
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select vd.cantidad, p.producto, p.detalles, p.marca, p.color, vd.preVeSDInd, vd.preVeSDTot, vd.descIndiv, vd.descTotal, vd.subTotal, vd.subTotal, vd.ganancia, vd.uMedidaUsada from tb_ventas_detalle vd inner join tb_productos p on p.codproducto = vd.codproducto where codventa = " + codVenta);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar venta detalles: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarVentasUsuarioTodos(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where v.estado = 1 and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -121,7 +149,7 @@ public class consultas {
 	public ResultSet cargarVentasUsuario(int idusuario, Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where v.estado = 1 and u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -337,12 +365,21 @@ public class consultas {
 		return 0;
 	}
 	
-	public ResultSet cargarCompras() {
+	public ResultSet cargarCompras(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib order by cp.idcompra desc");
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.fechaEmision between '" + fechai + "' and '" + fechaf + "' order by cp.idcompra desc");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet buscarCompraDetalle(int nroCompra) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select cd.cantidad, p.producto, p.detalles, p.marca, p.color, cd.preUni, cd.preSubT from tb_compras_detalles  cd inner join tb_productos p on p.codproducto = cd.idprod where idcompra = " + nroCompra);
+		} catch (Exception e) {
 		}
 		return rs;
 	}
@@ -922,13 +959,26 @@ public class consultas {
 		}
 	}
 
-	public void eliminarVenta(String cod_vd) {
+	public void modificarVenta(int nroVenta) {
 		try {
 			st = con.createStatement();
-			String sql = "update tb_ventas set totcompra=0, totventa=0, ganancia=0 where codventa = ?";
+			String sql = "update tb_ventas set totcompra=0, totventa=0, ganancia=0, descuento=0, saldo=0, nota='', metpago1=0, montpago1=0, metpago2=0, montpago2=0, estado=2  where codventa = ?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setString(1, cod_vd);
+			prepareStmt.setInt(1, nroVenta);
 			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}
+	public void ModificarDetalleVenta(int nroVenta) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_ventas_detalle set cantidad=0, preVeSDInd=0, preVeSDTot=0, descIndiv=0, descTotal=0, subTotal=0, ganancia=0 where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, nroVenta);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -1007,6 +1057,20 @@ public class consultas {
 				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin que su stock se vea afectado");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
+		}
+	}
+	
+	public void actualizarStock(double cantTotal, int codproducto) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set cantidad = ? where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setDouble(1, cantTotal);
+			prepareStmt.setInt(2, codproducto);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "Stock actualizado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
 		}
 	}
 	

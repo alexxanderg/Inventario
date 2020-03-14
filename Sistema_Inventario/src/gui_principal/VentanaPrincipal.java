@@ -109,7 +109,7 @@ public class VentanaPrincipal extends JFrame {
 
 		panel = new JPanel();
 		panel.setBackground(Color.BLACK);
-		panel.setBounds(0, 0, 230, 729);
+		panel.setBounds(0, 0, 230, 707);
 		contentPane.add(panel);
 		
 		btnVentas = new JButton("Vender");
@@ -297,7 +297,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnBuscarVentas);
 
 		desktopPane = new JDesktopPane();
-		desktopPane.setBounds(230, 50, 1134, 646);
+		desktopPane.setBounds(230, 50, 1134, 657);
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
@@ -416,7 +416,7 @@ public class VentanaPrincipal extends JFrame {
 	public void actionPerformedBtnVentas(ActionEvent arg0) {
 		try {
 			cerrarVentanas();
-			ventas = new Ventas(this);
+			ventas = new Ventas(this, -1);
 			desktopPane.add(ventas);
 			ventas.show();
 			ventas.setMaximum(true);
@@ -439,17 +439,22 @@ public class VentanaPrincipal extends JFrame {
 			}
 		}*/		
 	}
-	public void abrirVentanaVentas(){
+	
+	public void cargarVentas(int nroCompra){
 		try {
-			ventas = new Ventas(this);
+			cerrarVentanas();
+			ventas = new Ventas(this, nroCompra);
 			desktopPane.add(ventas);
 			ventas.show();
 			ventas.setMaximum(true);
 			pintarBotones();
 			btnVentas.setBackground(colorSelec);
-		} catch (Exception e) {
-		}cerrarVentanas();
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
+		}
 	}
+	
+	
 	protected void actionPerformedBtnBuscarVentas(ActionEvent arg0) {
 		try {
 			cerrarVentanas();

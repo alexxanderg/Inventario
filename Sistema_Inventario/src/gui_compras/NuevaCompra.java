@@ -581,6 +581,11 @@ public class NuevaCompra extends JFrame {
 		// COMBO DISTRIBUIDOR
 		Distribuidores distribuidor = new Distribuidores();
 		distribuidor.cargarDistribuidores(cbDistribuidor);
+		
+		java.util.Date date = new Date();
+		date.getTime();
+		dchFeEmision.setDate(date);
+		//dchFeVencimiento.setDate(date);
 	}
 	private int anchoColumna(int porcentaje) {
 		return porcentaje * scrollPane.getWidth() / 100;

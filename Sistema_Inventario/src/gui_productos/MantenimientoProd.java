@@ -425,9 +425,7 @@ public class MantenimientoProd extends JInternalFrame {
 	// De manera global
 	
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
-		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
-
+		String codigoProducto = tbProductos.getValueAt(tb.getSelectedRow(), 0).toString();
 		abrirModificarProducto(codigoProducto);
 	}
 	private void abrirModificarProducto(String idProd){
@@ -461,10 +459,13 @@ public class MantenimientoProd extends JInternalFrame {
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
-		DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
-		String codigoProducto = String.valueOf(tm.getValueAt(tbProductos.getSelectedRow(), 0));
+		String codigoProducto = tbProductos.getValueAt(tb.getSelectedRow(), 0).toString();
+		String producto = tbProductos.getValueAt(tb.getSelectedRow(), 2).toString();
+		String descripcion = tbProductos.getValueAt(tb.getSelectedRow(), 3).toString();
+		String marca = tbProductos.getValueAt(tb.getSelectedRow(), 4).toString();
+		String color = tbProductos.getValueAt(tb.getSelectedRow(), 5).toString();
 		
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR ESTE PRODUCTO?", "Confirmación", JOptionPane.YES_NO_OPTION,
+		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR el producto:\n" + producto + " " + descripcion + " " + marca + " " + color + " ?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			elminarProducto(codigoProducto);

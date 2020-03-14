@@ -15,6 +15,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 
 import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
+import mysql.MySQLConexion;
 import mysql.consultas;
 
 import javax.swing.JMenuBar;
@@ -27,6 +28,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -34,7 +36,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -47,6 +51,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
+import clases.AbstractJasperReports;
 import clases.Cliente;
 import clases.Usuarios;
 
@@ -76,7 +81,12 @@ public class BuscarVentas extends JInternalFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	DefaultTableModel dtm = new DefaultTableModel();
+	DefaultTableModel dtmVD = new DefaultTableModel();
 	private JButton btnGenerarReporte;
+	private JLabel lblBuscarVentas;
+	private JScrollPane scrollPane_1;
+	private JLabel lblDetallesDeVenta;
+	private JTable tbDetalleVenta;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -114,10 +124,16 @@ public class BuscarVentas extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 99, 1083, 434);
+		this.scrollPane.setBounds(10, 78, 1083, 210);
 		getContentPane().add(this.scrollPane);
 		
 		tbVentas = new JTable();
+		tbVentas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedTbVentas(arg0);
+			}
+		});
 		tbVentas.setAutoCreateRowSorter(true);
 		tbVentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbVentas.setFont(new Font("Arial", Font.ITALIC, 14));
@@ -134,44 +150,44 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(787, 31, 110, 57);
+		btnVerVentas.setBounds(734, 10, 110, 57);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(110, 46, 227, 30);
+		cbUsuarios.setBounds(217, 37, 227, 30);
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendedor:");
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(10, 46, 110, 30);
+		lblVendedor.setBounds(217, 12, 110, 30);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
-		lblDesde.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDesde.setForeground(new Color(102, 205, 170));
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(339, 46, 71, 30);
+		lblDesde.setBounds(454, 10, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(420, 46, 130, 30);
+		dchDesde.setBounds(454, 37, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
-		lblHasta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHasta.setForeground(new Color(102, 205, 170));
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(553, 46, 71, 30);
+		lblHasta.setBounds(594, 10, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(629, 46, 130, 30);
+		dchHasta.setBounds(594, 37, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
@@ -179,7 +195,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTV.setForeground(new Color(30, 144, 255));
 		lblTV.setFont(new Font("Candara", Font.BOLD, 30));
 		lblTV.setBackground(new Color(50, 205, 50));
-		lblTV.setBounds(687, 560, 255, 36);
+		lblTV.setBounds(687, 291, 255, 36);
 		getContentPane().add(lblTV);
 		
 		lblTotVentas = new JLabel("0");
@@ -187,7 +203,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotVentas.setForeground(new Color(30, 144, 255));
 		lblTotVentas.setFont(new Font("Calibri", Font.BOLD, 30));
 		lblTotVentas.setBackground(new Color(50, 205, 50));
-		lblTotVentas.setBounds(952, 559, 141, 36);
+		lblTotVentas.setBounds(952, 290, 141, 36);
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
@@ -195,7 +211,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 30));
 		lblTotDescuentos.setBackground(new Color(50, 205, 50));
-		lblTotDescuentos.setBounds(524, 559, 141, 36);
+		lblTotDescuentos.setBounds(524, 290, 141, 36);
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DESCUENTOS S/ ");
@@ -203,15 +219,45 @@ public class BuscarVentas extends JInternalFrame {
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 30));
 		lblTD.setBackground(new Color(50, 205, 50));
-		lblTD.setBounds(170, 560, 344, 36);
+		lblTD.setBounds(170, 291, 344, 36);
 		getContentPane().add(lblTD);
 		
-		btnGenerarReporte = new JButton("<html>Generar<br>reporte</html>");
+		btnGenerarReporte = new JButton("<html><center>Ver reporte<br>detallado</center></html>");
+		btnGenerarReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnGenerarReporte(arg0);
+			}
+		});
 		btnGenerarReporte.setForeground(Color.WHITE);
-		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnGenerarReporte.setBackground(new Color(102, 205, 170));
-		btnGenerarReporte.setBounds(907, 31, 110, 57);
+		btnGenerarReporte.setBounds(854, 10, 135, 57);
 		getContentPane().add(btnGenerarReporte);
+		
+		lblBuscarVentas = new JLabel("Buscar ventas:");
+		lblBuscarVentas.setVerticalAlignment(SwingConstants.TOP);
+		lblBuscarVentas.setForeground(Color.DARK_GRAY);
+		lblBuscarVentas.setFont(new Font("Candara", Font.BOLD, 30));
+		lblBuscarVentas.setBounds(10, 33, 219, 34);
+		getContentPane().add(lblBuscarVentas);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		scrollPane_1.setAutoscrolls(true);
+		scrollPane_1.setBounds(10, 401, 1083, 210);
+		getContentPane().add(scrollPane_1);
+		
+		tbDetalleVenta = new JTable();
+		tbDetalleVenta.setAutoCreateRowSorter(true);
+		tbDetalleVenta.setFont(new Font("Arial", Font.ITALIC, 14));
+		scrollPane_1.setViewportView(tbDetalleVenta);
+		
+		lblDetallesDeVenta = new JLabel("Detalles de venta:");
+		lblDetallesDeVenta.setVerticalAlignment(SwingConstants.TOP);
+		lblDetallesDeVenta.setForeground(Color.DARK_GRAY);
+		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 30));
+		lblDetallesDeVenta.setBounds(10, 356, 396, 34);
+		getContentPane().add(lblDetallesDeVenta);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbVentas.getTableHeader().setReorderingAllowed(false);
 
@@ -267,6 +313,7 @@ public class BuscarVentas extends JInternalFrame {
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
 		cargar();
+		ajustarAnchoColumnas();
 	}
 	
 	public void cargar() {
@@ -275,13 +322,18 @@ public class BuscarVentas extends JInternalFrame {
 		tb.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
 		
+		JTable tbCD = this.tbDetalleVenta;
+		tbCD.setRowHeight(30);
+		tbCD.setModel(dtmVD);
+		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRECIO UNI", "DESCUENTO", "SUB TOTAL"});
+		
+		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
 		cbUsuarios.addItem(todos);
 		
 		Usuarios vendedores = new Usuarios();
 		vendedores.cargarUsuarios(cbUsuarios);
 
-		//JOptionPane.showMessageDialog(null, vp.lblIdusuario.getText());
 		int idUsuario = Integer.parseInt(vp.lblIdusuario.getText());
 		
 		for(int i = 0; i<cbUsuarios.getItemCount(); i++)
@@ -292,6 +344,10 @@ public class BuscarVentas extends JInternalFrame {
 		date.getTime();
 		dchDesde.setDate(date);
 		dchHasta.setDate(date);
+	}
+	
+	private void recargar(){
+		actionPerformedBtnVerVentas(null);
 		
 	}
 		
@@ -301,7 +357,7 @@ public class BuscarVentas extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbVentas.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(7));  // 
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(7));   // 
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(20));  // 
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(17));  // 
@@ -317,6 +373,18 @@ public class BuscarVentas extends JInternalFrame {
 		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(7).setCellRenderer(tcr0);
+	
+		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
+		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
+		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(40));  // 
+		tcmVD.getColumn(2).setPreferredWidth(anchoColumna(15));  //
+		tcmVD.getColumn(3).setPreferredWidth(anchoColumna(15));  //
+		tcmVD.getColumn(4).setPreferredWidth(anchoColumna(15));  //
+		
+		tbDetalleVenta.getColumnModel().getColumn(0).setCellRenderer(tcr0);
+		tbDetalleVenta.getColumnModel().getColumn(2).setCellRenderer(tcr0);
+		tbDetalleVenta.getColumnModel().getColumn(3).setCellRenderer(tcr0);
+		tbDetalleVenta.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 	}
 
 	protected void actionPerformedBtnX(ActionEvent arg0) {
@@ -334,7 +402,29 @@ public class BuscarVentas extends JInternalFrame {
 		
 	}
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		
+		try {
+			int nroCompra = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+			
+			String[] options = {"Modificar información de venta", "Modificar venta entera"};
+			int seleccion = JOptionPane.showOptionDialog(null, "¿Que desea modificar?", "Modificar venta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
+			
+			if(seleccion == 0){
+				String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificación de nota de venta", JOptionPane.INFORMATION_MESSAGE);
+				
+				consulta.iniciar();
+				consulta.modificarInformacion(nuevaNota, nroCompra);
+				recargar();
+				
+			}
+			else if(seleccion == 1){
+				vp.cargarVentas(nroCompra);
+				JOptionPane.showMessageDialog(null, "A continuación se cargará toda la venta realizada. \nEl stock mostrado, es la suma de lo que tiene en su poder + lo de la compra del cliente.\nNo se efectuará ningun cambio, hasta que haga click en Vender.");
+				
+			}
+				
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Seleccione una venta");
+		}
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
@@ -347,7 +437,6 @@ public class BuscarVentas extends JInternalFrame {
 				dtm.removeRow(i);
 				i -= 1;
 			}
-			
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
 						
@@ -392,7 +481,6 @@ public class BuscarVentas extends JInternalFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
-		ajustarAnchoColumnas();
 		
 		// CALCULAR TOTALES
 		
@@ -418,5 +506,84 @@ public class BuscarVentas extends JInternalFrame {
 		resultado = Math.round(resultado);
 		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
 		return resultado;
+	}
+	
+	protected void actionPerformedBtnGenerarReporte(ActionEvent arg0) {
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
+			int metpago = -1;
+			
+			int añoi = dchDesde.getCalendar().get(Calendar.YEAR);
+			int mesi = dchDesde.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = dchDesde.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+			int añof = dchHasta.getCalendar().get(Calendar.YEAR);
+			int mesf = dchHasta.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = dchHasta.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechai);
+			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter2.parse(fechaf);
+			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+
+			Map parameters = new HashMap();
+			parameters.put("prtFechaI", timeStampDateI);
+			parameters.put("prtFechaF", timeStampDateF);
+			parameters.put("metpago", metpago);
+
+			if (usu.equals("TODOS")) {
+				if (metpago == - 1) {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+			} else {
+				parameters.put("prmtVendedor", usu);
+				if (metpago == - 1) {
+					new AbstractJasperReports().createReport(con, "rVentasDetalladasVendedor.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				} 
+			}
+			con.close();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		}
+	}
+	
+	protected void mouseClickedTbVentas(MouseEvent arg0) {
+		int nroVenta = -1;
+		nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString());
+		
+		for (int i = 0; i < tbDetalleVenta.getRowCount(); i++) {
+			dtmVD.removeRow(i);
+			i -= 1;
+		}
+		
+		try {
+			consulta.iniciar();
+			rs = consulta.cargarVentaDetallesProducto(nroVenta);
+			while (rs.next()){
+				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detalles")+" "+rs.getString("marca")+" "+ rs.getString("color") + " (" + rs.getString("uMedidaUsada")+")", rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
+			}
+			consulta.reset();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar compra detalle " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 }

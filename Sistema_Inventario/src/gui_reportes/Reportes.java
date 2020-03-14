@@ -49,11 +49,7 @@ public class Reportes extends JInternalFrame {
 	private JLabel lblIngreseNroDe;
 	private JTextField txtNVenta;
 	private JButton btnGenerarRVDetallada;
-	private JLabel label_4;
 	private JLabel label_5;
-	private JDateChooser calendar_2;
-	private JDateChooser calendar_3;
-	private JButton btnVerProductosIngresados;
 	private JLabel label_7;
 	private JComboBox cbxRanking;
 	private JLabel label_8;
@@ -88,8 +84,6 @@ public class Reportes extends JInternalFrame {
 	private JPanel panel_4;
 	private JPanel panel_5;
 	private JPanel panel_6;
-	private JLabel label;
-	private JLabel label_3;
 	private JComboBox<Categoria> cbCategoria;
 	private JComboBox<Cliente> cbCliente;
 	
@@ -330,45 +324,6 @@ public class Reportes extends JInternalFrame {
 		getContentPane().add(this.panel_3);
 		this.panel_3.setLayout(null);
 		
-		this.label_4 = new JLabel("INGRESO DE PRODUCTOS");
-		this.label_4.setBounds(12, 11, 548, 32);
-		this.panel_3.add(this.label_4);
-		this.label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		this.label_4.setFont(new Font("Candara", Font.BOLD, 23));
-		
-		this.calendar_2 = new JDateChooser();
-		this.calendar_2.setBounds(83, 54, 141, 23);
-		this.panel_3.add(this.calendar_2);
-		
-		this.calendar_3 = new JDateChooser();
-		this.calendar_3.setBounds(347, 54, 141, 23);
-		this.panel_3.add(this.calendar_3);
-		
-		this.btnVerProductosIngresados = new JButton("Ver ingresos");
-		btnVerProductosIngresados.setEnabled(false);
-		btnVerProductosIngresados.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedBtnVerProductosIngresados(e);
-			}
-		});
-		this.btnVerProductosIngresados.setBounds(171, 92, 234, 40);
-		this.panel_3.add(this.btnVerProductosIngresados);
-		this.btnVerProductosIngresados.setForeground(Color.WHITE);
-		this.btnVerProductosIngresados.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.btnVerProductosIngresados.setBackground(new Color(30, 144, 255));
-		
-		this.label = new JLabel("del:");
-		this.label.setHorizontalAlignment(SwingConstants.LEFT);
-		this.label.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label.setBounds(22, 54, 55, 23);
-		this.panel_3.add(this.label);
-		
-		this.label_3 = new JLabel("al:");
-		this.label_3.setHorizontalAlignment(SwingConstants.LEFT);
-		this.label_3.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label_3.setBounds(300, 54, 55, 23);
-		this.panel_3.add(this.label_3);
-		
 		this.panel_4 = new JPanel();
 		this.panel_4.setBackground(new Color(176, 224, 230));
 		this.panel_4.setLayout(null);
@@ -521,8 +476,6 @@ public class Reportes extends JInternalFrame {
 			date.getTime();
 			calendar.setDate(date);
 			calendar_1.setDate(date);
-			calendar_2.setDate(date);
-			calendar_3.setDate(date);
 			calendar_4.setDate(date);
 			calendar_5.setDate(date);
 			calendar_6.setDate(date);
@@ -782,37 +735,6 @@ public class Reportes extends JInternalFrame {
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "No se encontraron productos " + ex);
 			}
-		}
-	}
-	protected void actionPerformedBtnVerProductosIngresados(ActionEvent e) {
-		Connection con = null;
-		try {
-			con = MySQLConexion.getConection();
-			String usu = cbUsuarios.getSelectedItem().toString();
-
-			int añoi = calendar_2.getCalendar().get(Calendar.YEAR);
-			int mesi = calendar_2.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = calendar_2.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
-
-			int añof = calendar_3.getCalendar().get(Calendar.YEAR);
-			int mesf = calendar_3.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = calendar_3.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
-			Map parameters = new HashMap();
-			parameters.put("prtFechaI", fechai);
-			parameters.put("prmtFechaF", fechaf);
-
-			/*
-			 * new AbstractJasperReports().createReport(con, "rVentas.jasper",
-			 * parameters); AbstractJasperReports.showViewer();
-			 */
-			new AbstractJasperReports().createReport(con, "rFechaIngreso.jasper", parameters);
-			AbstractJasperReports.showViewer();
-			con.close();
-
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
 	}
 	protected void actionPerformedBtnVerProductosQue(ActionEvent e) {

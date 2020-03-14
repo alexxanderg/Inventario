@@ -98,12 +98,14 @@ public class Ventas extends JInternalFrame {
 	ResultSet rs = null;
 	consultas consulta = new consultas();
 	NuevoCliente nc = new NuevoCliente(null, this);
+	int nroVentaModificar = -1;
+	private JLabel lblNroCompramodificar;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventas frame = new Ventas(null);
+					Ventas frame = new Ventas(null, -1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -112,8 +114,9 @@ public class Ventas extends JInternalFrame {
 		});
 	}
 
-	public Ventas(VentanaPrincipal vp) {
+	public Ventas(VentanaPrincipal vp, int nroVentaModificar) {
 		this.vp = vp;
+		this.nroVentaModificar = nroVentaModificar;
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Ventas");
@@ -419,7 +422,7 @@ public class Ventas extends JInternalFrame {
 		lblTotalCompra.setForeground(new Color(30, 144, 255));
 		lblTotalCompra.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotalCompra.setBackground(new Color(50, 205, 50));
-		lblTotalCompra.setBounds(768, 5, 68, 17);
+		lblTotalCompra.setBounds(889, 0, 68, 17);
 		getContentPane().add(lblTotalCompra);
 		
 		lblGananciaTotal = new JLabel("0");
@@ -428,7 +431,7 @@ public class Ventas extends JInternalFrame {
 		lblGananciaTotal.setForeground(new Color(30, 144, 255));
 		lblGananciaTotal.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblGananciaTotal.setBackground(new Color(50, 205, 50));
-		lblGananciaTotal.setBounds(846, 5, 68, 17);
+		lblGananciaTotal.setBounds(967, 0, 68, 17);
 		getContentPane().add(lblGananciaTotal);
 		
 		lblTitIgv = new JLabel("IGV S/");
@@ -511,6 +514,15 @@ public class Ventas extends JInternalFrame {
 		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMin.setBounds(1062, 62, 46, 14);
 		getContentPane().add(lblMin);
+		
+		lblNroCompramodificar = new JLabel("0");
+		lblNroCompramodificar.setVisible(false);
+		lblNroCompramodificar.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNroCompramodificar.setForeground(new Color(102, 205, 170));
+		lblNroCompramodificar.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblNroCompramodificar.setBackground(new Color(50, 205, 50));
+		lblNroCompramodificar.setBounds(795, 0, 63, 18);
+		getContentPane().add(lblNroCompramodificar);
 
 		
 		menuBar = new JMenuBar();
@@ -545,51 +557,161 @@ public class Ventas extends JInternalFrame {
 	
 	public void cargar() {
 		tbCarrito.setRowHeight(35);
+		lblNroCompramodificar.setText(""+nroVentaModificar);
 		
 		Cliente cliente = new Cliente();
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Precio C/desc", "Descuento Tot", "SubTotal", "IDPROD", "PC" });
-		ajustarAnchoColumnas();
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Pre Indiv", "Descuento Tot", "SubTotal", "SubTotal", "IDPROD", "PC" });
 		
-		try {
-			consulta.iniciar();
-			rs = consulta.cargarConfiguraciones();
-			rs.next();
-			int fechaVauto = rs.getInt("fechaVauto");
-			if(fechaVauto == 0){
-				lblFechaDeVenta.setVisible(false);
-				dchFechaVenta.setVisible(false);
-				txtHora.setVisible(false);
-				txtMin.setVisible(false);
-				lblHora.setVisible(false);
-				lblMin.setVisible(false);
-			}
-			else if (fechaVauto == 1){
-				lblFechaDeVenta.setVisible(true);
-				dchFechaVenta.setVisible(true);
-				txtHora.setVisible(true);
-				txtMin.setVisible(true);
-				lblHora.setVisible(true);
-				lblMin.setVisible(true);
-				
-				java.util.Date date = new Date();
-				date.getTime();
-				dchFechaVenta.setDate(date);
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
-		}
-		finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (consulta != null)
-					consulta.reset();
-            } catch (Exception ex) {
-            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-            }
+				consulta.iniciar();
+				rs = consulta.cargarConfiguraciones();
+				rs.next();
+				int fechaVauto = rs.getInt("fechaVauto");
+				if(fechaVauto == 0){
+					lblFechaDeVenta.setVisible(false);
+					dchFechaVenta.setVisible(false);
+					txtHora.setVisible(false);
+					txtMin.setVisible(false);
+					lblHora.setVisible(false);
+					lblMin.setVisible(false);
+				}
+				else if (fechaVauto == 1){
+					lblFechaDeVenta.setVisible(true);
+					dchFechaVenta.setVisible(true);
+					txtHora.setVisible(true);
+					txtMin.setVisible(true);
+					lblHora.setVisible(true);
+					lblMin.setVisible(true);
+					
+					java.util.Date date = new Date();
+					date.getTime();
+					dchFechaVenta.setDate(date);
+				}
+					
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
+			}
+			finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}
+		
+		
+			if(nroVentaModificar != -1){
+			consulta.iniciar();
+			ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
+			try {
+				int cont = -1;
+				while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+					cont++;
+					int codproducto = rsVD.getInt("codproducto");
+					txtBuscarProd.setText("(" + codproducto+")");
+					AgregarProductoATabla();
+					float cantidad = rsVD.getFloat("cantidad");
+						tbCarrito.setValueAt(cantidad, cont, 0);
+					float preVeSDInd = rsVD.getFloat("preVeSDInd");
+						tbCarrito.setValueAt(preVeSDInd, cont, 3);
+					float descTotal = rsVD.getFloat("descTotal");
+						tbCarrito.setValueAt(descTotal, cont, 4);	
+					float subTotal = rsVD.getFloat("subTotal");
+						tbCarrito.setValueAt(subTotal, cont, 5);
+					
+					String newUniMed = rsVD.getString("uMedidaUsada");
+					String prodCompletoLista = dtm.getValueAt(cont, 1).toString();					
+					String oldUniMed = prodCompletoLista.substring(prodCompletoLista.indexOf("(")+1, prodCompletoLista.indexOf(")"));
+					String newNomProd = prodCompletoLista.replaceAll(oldUniMed, newUniMed);
+					tbCarrito.setValueAt(newNomProd, cont, 1);
+					
+					if(!newUniMed.equals(oldUniMed)){
+						consulta.iniciar();
+						ResultSet rsBP = consulta.buscarProductoID(codproducto);
+						try {
+							rsBP.next();
+							String nomPromo1 = rsBP.getString("promo1");
+							double cantPromo1 = rsBP.getDouble("cantp1");
+							String nomPromo2 = rsBP.getString("promo2");
+							double cantPromo2 = rsBP.getDouble("cantp2");
+							if(newUniMed.equals(nomPromo1)){
+								double stock = 0;
+								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+								stock = stock + cantPromo1;
+								tbCarrito.setValueAt(stock, cont, 2);
+							}
+							else if (newUniMed.equals(nomPromo2)){
+								double stock = 0;
+								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+								stock = stock + cantPromo2;
+								tbCarrito.setValueAt(stock, cont, 2);
+							}
+							else{
+								float stock = 0;
+								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+								stock = stock + cantidad;
+								tbCarrito.setValueAt(stock, cont, 2);
+							}								
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error al verificar unidades de medida " + e);
+						}
+					}
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Error al cargar detalles venta: " + e);
+			}	finally {
+				try {
+					if (rsVD != null)
+						rsVD.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}
+			
+			
+			try {
+				consulta.iniciar();
+				rs = consulta.cargarVenta(nroVentaModificar);
+				rs.next();
+				int idCliente = rs.getInt("idcliente");
+				for(int i= 0; i<cbClientes.getItemCount(); i++)
+					if(cbClientes.getItemAt(i).getId() == idCliente)
+						cbClientes.setSelectedIndex(i);
+				String notaVenta = rs.getString("nota");
+					txtInfoAdicional.setText(notaVenta);
+				int metPago1 = rs.getInt("metpago1");
+				float montPago1 = rs.getFloat("montPago1");
+				int metPago2 = rs.getInt("metpago2");
+				float montPago2 = rs.getFloat("montPago2");
+					cbPago1.setSelectedIndex(metPago1);
+					cbPago2.setSelectedIndex(metPago2);
+					txtPago1.setText(""+montPago1);
+					txtPago2.setText(""+montPago2);
+			} catch (Exception e) {
+				// TODO: handle exception
+			} 	finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}
+
+			sumarSubTotales();
+			sumarTotalGenerales();
+
+			calcularVuelto();
 		}
 		
 	}
@@ -911,6 +1033,7 @@ public class Ventas extends JInternalFrame {
 				rs = consulta.buscarProductoID(idProd);
 				rs.next();
 				stock = rs.getFloat("cantidad");
+				stock = Float.parseFloat(tbCarrito.getValueAt(i, 2).toString());
 				String producto = rs.getString("producto");
 				String detalle = rs.getString("detalles");
 				String marca = rs.getString("marca");
@@ -993,8 +1116,11 @@ public class Ventas extends JInternalFrame {
 						rs = consulta.cargarConfiguraciones();
 						rs.next();
 						int fechaVauto = rs.getInt("fechaVauto");
-						if(fechaVauto == 0)
+						if(fechaVauto == 0){
+							if(nroVentaModificar != -1)
+								consulta.modificarVenta(nroVentaModificar);
 							consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+						}
 						else if (fechaVauto == 1){
 							
 							int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
@@ -1009,8 +1135,10 @@ public class Ventas extends JInternalFrame {
 							Date date = (Date) formatter.parse(fechaActualString);
 							Object fechaElegida = new java.sql.Timestamp(date.getTime());
 							
-							
+							if(nroVentaModificar != -1)
+								consulta.modificarVenta(nroVentaModificar);
 							consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+							
 						}
 					}catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
@@ -1079,9 +1207,43 @@ public class Ventas extends JInternalFrame {
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 								
 
-							consulta.iniciar();	
+							
+							if(nroVentaModificar!=-1){
+								try {
+									consulta.iniciar();
+									ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
+									
+									int cont = -1;
+									while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+										cont++;
+										int codproducto = rsVD.getInt("codproducto");
+										double cantidadVendida = rsVD.getDouble("cantidad");
+										consulta.reset();
+										
+										consulta.iniciar();
+										ResultSet rsPr = consulta.buscarProductoID(codproducto);
+										rsPr.next();
+										double cantidadActual = rsPr.getDouble("cantidad");
+										double cantTotal = cantidadVendida + cantidadActual;
+										consulta.reset();
+										
+										consulta.iniciar();
+										consulta.actualizarStock(cantTotal, codproducto);
+										consulta.reset();
+									}
+								} catch (Exception e2) {
+									// TODO: handle exception
+								}
+								
+
+								consulta.iniciar();
+								consulta.ModificarDetalleVenta(nroVentaModificar);
+								consulta.reset();
+							}
+							consulta.iniciar();
 							consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
 									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+							
 							consulta.reset();
 
 							/*
