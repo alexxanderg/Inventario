@@ -301,7 +301,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(Color.DARK_GRAY);
+		panel_1.setBackground(Color.BLACK);
 		panel_1.setForeground(Color.GRAY);
 		panel_1.setBounds(230, 0, 1134, 50);
 		contentPane.add(panel_1);

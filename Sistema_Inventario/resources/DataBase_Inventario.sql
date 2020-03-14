@@ -80,7 +80,7 @@ metpago2	tinyint, -- 0Efectivo 3Pago con tarjeta crédito/débito 2Depósito 3Tr
 montpago2	float,
 estado		tinyint -- 1Activa 2Modificada 3Eliminada
 );
-	
+
 create table tb_ventas_detalle(
 codventa	int not null,
 codproducto	int,
@@ -158,7 +158,8 @@ ventasinstock 	tinyint, -- 0NO 1SI Si perminte vender con stock 0
 reducirstock	tinyint, -- 0NO 1SI Si disminuirá stock al vender
 fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves que se realiza
 );
-  
+
+
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
 insert into tb_usuarios values(null,'bxb', 'bxb01', 'Byte x Byte', 0, 1);
