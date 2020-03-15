@@ -36,6 +36,10 @@ import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class MantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -52,13 +56,19 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenu mnOtrasOpciones;
 	private JMenuItem mntmRealizarKardex;
 	private JMenuItem mntmVerHistorial;
+	private JCheckBox chckbxFiltrar;
+	private JLabel lblCategoria;
+	private JComboBox comboBox;
 	
 	NuevoProducto np = new NuevoProducto(this, null);
 	JTable tb;
 	ResultSet rs;
 	consultas consulta = new consultas();
 	ModificarProducto mp = null;
+	DefaultTableModel dtm = new DefaultTableModel();
+	consultas model = new consultas();
 	public VentanaPrincipal vp;
+	private JTextField txtCodigo2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -107,12 +117,16 @@ public class MantenimientoProd extends JInternalFrame {
 			public void keyTyped(KeyEvent e) {
 				keyTypedTxtCodigo(e);
 			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtCodigo(arg0);
+			}
 		});
 		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
 		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
 		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(139, 45, 954, 34);
+		this.txtCodigo.setBounds(115, 45, 476, 34);
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
@@ -128,6 +142,46 @@ public class MantenimientoProd extends JInternalFrame {
 		tbProductos.setBackground(Color.WHITE);
 		tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbProductos);
+		
+		chckbxFiltrar = new JCheckBox("\u00BFFiltrar al escribir?");
+		chckbxFiltrar.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				itemStateChangedChckbxFiltrar(arg0);
+			}
+		});
+		chckbxFiltrar.setBackground(Color.WHITE);
+		chckbxFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		chckbxFiltrar.setBounds(901, 45, 192, 34);
+		getContentPane().add(chckbxFiltrar);
+		
+		lblCategoria = new JLabel("Categor\u00EDa:");
+		lblCategoria.setForeground(Color.DARK_GRAY);
+		lblCategoria.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCategoria.setBounds(621, 24, 110, 30);
+		getContentPane().add(lblCategoria);
+		
+		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Arial", Font.ITALIC, 18));
+		comboBox.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		comboBox.setBackground(new Color(245, 245, 245));
+		comboBox.setBounds(621, 49, 227, 30);
+		getContentPane().add(comboBox);
+		
+		txtCodigo2 = new JTextField();
+		txtCodigo2.setVisible(false);
+		txtCodigo2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtCodigo2(arg0);
+			}
+		});
+		txtCodigo2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtCodigo2.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
+		txtCodigo2.setColumns(10);
+		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		txtCodigo2.setBackground(new Color(245, 245, 245));
+		txtCodigo2.setBounds(135, 0, 476, 34);
+		getContentPane().add(txtCodigo2);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -222,12 +276,20 @@ public class MantenimientoProd extends JInternalFrame {
 	}
 	
 	public void cargar() {
-		DefaultTableModel dtm = new DefaultTableModel();
 		tb = this.tbProductos;
 		tb.setRowHeight(30);
 		tb.setModel(dtm);
 		
 		// CARGAR ATRIBUTOS EN TABLA
+		cargarTabla("todos");
+	}
+	
+	public void cargarTabla(String prod){
+		for (int i = 0; i < tbProductos.getRowCount(); i++) {
+			dtm.removeRow(i);
+			i -= 1;
+		}
+		
 		String atribTodos = "";
 		try {
 			consulta.iniciar();
@@ -281,7 +343,11 @@ public class MantenimientoProd extends JInternalFrame {
 		
 		try {
 			consulta.iniciar();
-			rs = consulta.cargarProductos();
+			if(prod.equals("todos"))
+				rs = consulta.cargarProductos();
+			else{
+				rs = consulta.cargarProductoParticular(prod);
+			}
 
 			while (rs.next()){
 				List<String> listProds = new ArrayList<String>();
@@ -341,6 +407,7 @@ public class MantenimientoProd extends JInternalFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
+
 		ajustarAnchoColumnas();
 	}
 	
@@ -420,6 +487,10 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
+		
+		
+		
+		
 	}
 	
 	// De manera global
@@ -453,8 +524,9 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		} catch (Exception f) {
 			mp = new ModificarProducto(""+idProd,this);;
-			mp.setLocationRelativeTo(null);
+			mp.setLocationRelativeTo(null); 
 			mp.setVisible(true);
+			mp.setExtendedState(0);
 		}
 	}
 	
@@ -493,68 +565,103 @@ public class MantenimientoProd extends JInternalFrame {
 	protected void keyTypedTxtCodigo(KeyEvent e) {
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER){
-			String producto = txtCodigo.getText();
+			if(txtCodigo.getText().length()==0)
+				JOptionPane.showMessageDialog(null, "Escriba el producto que desee buscar");
+			else{
+				String producto = txtCodigo.getText();
 
-			
-			String[] opciones = { "MODIFICAR", "ELIMINAR", "CANCELAR" };
-			int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-
-			if (seleccion == 0) {// MODIFICAR
-				try {
-					consulta.iniciar();
-					String idProd = producto.substring(producto.indexOf("(")+1, producto.indexOf(")"));
-					rs = consulta.buscarProductoID(Integer.parseInt(idProd));
-					abrirModificarProducto(idProd);
-				} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
-					try {
-						rs = consulta.buscarProductoBarras(producto);
-						rs.next();
-						int idProd = rs.getInt("codproducto");
-						abrirModificarProducto(""+idProd);
-					} catch (Exception e3) {
-						// TODO: handle exception
-					}				
-				}finally {
-					try {
-						if (rs != null)
-							rs.close();
-						if (consulta != null)
-							consulta.reset();
-		            } catch (Exception ex) {
-		            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-		            }
-				}
-			}
-			if (seleccion == 1) {//  ELIMINAR
-				try {
-					int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-					elminarProducto(""+idProd);
-				} catch (Exception e2) {
-					try {
-						consulta.iniciar();
-						rs = consulta.buscarProductoBarras(producto);
-						rs.next();
-						int idProd = rs.getInt("codproducto");
-						elminarProducto(""+idProd);
-					} catch (Exception e3) {
-						// TODO: handle exception
-					}	
-					
-				}finally {
-					try {
-						if (rs != null)
-							rs.close();
-						if (consulta != null)
-							consulta.reset();
-		            } catch (Exception ex) {
-		            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-		            }
-				}
+				txtCodigo.setText("");
 				
+				String[] opciones = { "MODIFICAR", "ELIMINAR", "CANCELAR" };
+				int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+
+				if (seleccion == 0) {// MODIFICAR
+					try {
+						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						model.iniciar();
+						rs = model.buscarProductoID(idProd);
+						abrirModificarProducto(idProd);
+						model.reset();
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+						try {
+							model.iniciar();
+							rs = model.buscarProductoBarras(producto);
+							rs.next();
+							int idProd = rs.getInt("codproducto");
+							abrirModificarProducto(idProd);
+							model.reset();
+						} catch (Exception e3) {
+							// TODO: handle exception
+						}	finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (model != null)
+									model.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }
+						}			
+					}finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (model != null)
+								model.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}
+				}
+				if (seleccion == 1) {//  ELIMINAR
+					try {
+						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						elminarProducto(""+idProd);
+					} catch (Exception e2) {
+						try {
+							model.iniciar();
+							rs = model.buscarProductoBarras(producto);
+							rs.next();
+							int idProd = rs.getInt("codproducto");
+							elminarProducto(""+idProd);
+							model.reset();
+						} catch (Exception e3) {
+							// TODO: handle exception
+						}	finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (model != null)
+									model.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }
+						}
+					}
+				}
 			}
-			txtCodigo.setText("");
-		}		
+		}
+		
+	}
+	
+
+	private void abrirModificarProducto(int idProd){
+		
+		try { 
+			if (mp.isShowing()) {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				mp.setVisible(true); 
+			} else {
+				mp.setLocationRelativeTo(null);
+				mp.setVisible(true);
+			}
+		} catch (Exception f) {
+			mp = new ModificarProducto(""+idProd,this);;
+			mp.setLocationRelativeTo(null);
+			mp.setVisible(true);
+		}
 	}
 	
 	public void cerrarVentanas(){
@@ -562,6 +669,19 @@ public class MantenimientoProd extends JInternalFrame {
 			mp.dispose();
 		mp = null;
 	}
-	
-	
+	protected void keyReleasedTxtCodigo(KeyEvent arg0) {
+	}
+	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
+		cargarTabla(txtCodigo.getText());
+	}
+	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
+		if(txtCodigo.isVisible()){
+			txtCodigo.setVisible(false);
+			txtCodigo2.setVisible(true);
+		}
+		else{
+			txtCodigo.setVisible(true);
+			txtCodigo2.setVisible(false);			
+		}
+	}
 }

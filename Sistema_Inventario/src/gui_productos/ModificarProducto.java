@@ -1333,12 +1333,11 @@ public class ModificarProducto extends JFrame {
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		try {
-			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbCategoria.getSelectedItem().toString().length() == 0 
-					|| cbAlmacen.getSelectedItem().toString().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
+			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbUnidadMedida.getSelectedItem().toString().length() == 0 ||  cbCategoria.getSelectedItem().toString().length() == 0 
+					|| cbAlmacen.getSelectedItem().toString().length() == 0 || cbDistribuidor.getItemCount()==0 || cbUnidadMedida.getSelectedItem().toString().length() > 30 ||  cbCategoria.getSelectedItem().toString().length() > 30 || cbAlmacen.getSelectedItem().toString().length() > 50 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
 					|| txtPrecioCompra.getText().length() == 0 || txtPrecioVenta.getText().length() == 0) {
-				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
+				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente.\nNOTA: Los campos UMedida, categoria y almacen, no pueden ser mayores a 30 caracteres");
 			} else {
-				
 				int id = 0;				id = Integer.parseInt(txtID.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
 				String nombreprod = ""; nombreprod = txtNombreProducto.getText();
@@ -1348,6 +1347,7 @@ public class ModificarProducto extends JFrame {
 				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
 				String marca = ""; 		marca = txtMarca.getText();
 				String color = ""; 		color = txtColor.getText();
+				int iddistrib = 0; 		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
 				double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
 				double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
@@ -1391,7 +1391,7 @@ public class ModificarProducto extends JFrame {
 				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 
 				consulta.iniciar();
-				consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen,
+				consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
 						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
 						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2,id);
 

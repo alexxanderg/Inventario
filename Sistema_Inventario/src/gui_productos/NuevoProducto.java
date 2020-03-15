@@ -1350,10 +1350,10 @@ public class NuevoProducto extends JFrame {
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		int rs = 0;
 		try {
-			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbCategoria.getSelectedItem().toString().length() == 0 
-					|| cbAlmacen.getSelectedItem().toString().length() == 0 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
+			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbUnidadMedida.getSelectedItem().toString().length() == 0 ||  cbCategoria.getSelectedItem().toString().length() == 0 
+					|| cbAlmacen.getSelectedItem().toString().length() == 0 || cbDistribuidor.getItemCount()==0 || cbUnidadMedida.getSelectedItem().toString().length() > 30 ||  cbCategoria.getSelectedItem().toString().length() > 30 || cbAlmacen.getSelectedItem().toString().length() > 50 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
 					|| txtPrecioCompra.getText().length() == 0 || txtPrecioVenta.getText().length() == 0) {
-				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente");
+				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente.\nNOTA: Los campos UMedida, categoria y almacen, no pueden ser mayores a 30 caracteres");
 			} else {				
 				int id = 0;				id = Integer.parseInt(txtID.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
@@ -1364,7 +1364,7 @@ public class NuevoProducto extends JFrame {
 					if(categoria.equals("General")) categoria = ".General";
 				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
 					if(almacen.equals("Principal")) almacen = ".Principal";
-				int iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
+				int iddistrib = 0;		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
 				String marca = ""; 		marca = txtMarca.getText();
 				String color = ""; 		color = txtColor.getText();
 				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());

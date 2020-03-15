@@ -109,6 +109,16 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarProductoParticular(String prod) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_productos where estado = 1 and producto like '%" + prod + "%' order by producto");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarVenta(int codVenta){
 		try {
 			st = con.createStatement();
@@ -272,13 +282,13 @@ public class consultas {
 		}
 	}
 	
-	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen,
+	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
 			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2,int cod) {
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
+			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, iddistrib=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
 
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, codbarra);
@@ -289,21 +299,22 @@ public class consultas {
 			prepareStmt.setString(6, lote);
 			prepareStmt.setString(7, laboratiorio);
 			prepareStmt.setString(8, umedida);
-			prepareStmt.setDate(9, fec_venc);
+			prepareStmt.setDate(9, 	 fec_venc);
 			prepareStmt.setString(10, categoria);
 			prepareStmt.setString(11, almacen);
-			prepareStmt.setDouble(12, stockini);
-			prepareStmt.setDouble(13, stockmin);
-			prepareStmt.setDouble(14, preco);
-			prepareStmt.setDouble(15, preve);
-			prepareStmt.setDouble(16, ptjgana);
-			prepareStmt.setString(17, nombrePromo1);
-			prepareStmt.setDouble(18, cantPromo1);
-			prepareStmt.setDouble(19, prePromo1);
-			prepareStmt.setString(20, nombrePromo2);
-			prepareStmt.setDouble(21, cantPromo2);
-			prepareStmt.setDouble(22, prePromo2);
-			prepareStmt.setInt(23, cod);
+			prepareStmt.setInt(12, 	  iddistrib);
+			prepareStmt.setDouble(13, stockini);
+			prepareStmt.setDouble(14, stockmin);
+			prepareStmt.setDouble(15, preco);
+			prepareStmt.setDouble(16, preve);
+			prepareStmt.setDouble(17, ptjgana);
+			prepareStmt.setString(18, nombrePromo1);
+			prepareStmt.setDouble(19, cantPromo1);
+			prepareStmt.setDouble(20, prePromo1);
+			prepareStmt.setString(21, nombrePromo2);
+			prepareStmt.setDouble(22, cantPromo2);
+			prepareStmt.setDouble(23, prePromo2);
+			prepareStmt.setInt(24, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {
