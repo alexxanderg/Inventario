@@ -199,6 +199,9 @@ select * from tb_clientes;
 select * from tb_kardex_detalles;
 select * from tb_configuraciones;
 
+
+select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
+
 select codproducto from tb_productos order by codproducto desc limit 1 ;
 
 select cd.cantidad, p.producto, p.detalles, p.marca, p.color, cd.preUni, cd.preSubT from tb_compras_detalles  cd inner join tb_productos p on p.codproducto = cd.idprod where idcompra = 1;
