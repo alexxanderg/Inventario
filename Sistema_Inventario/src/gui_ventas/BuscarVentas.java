@@ -418,7 +418,7 @@ public class BuscarVentas extends JInternalFrame {
 			}
 			else if(seleccion == 1){
 				vp.cargarVentas(nroCompra);
-				JOptionPane.showMessageDialog(null, "A continuación se cargará toda la venta realizada. \nEl stock mostrado, es la suma de lo que tiene en su poder + lo de la compra del cliente.\nNo se efectuará ningun cambio, hasta que haga click en Vender.");
+				JOptionPane.showMessageDialog(null, "A continuación se cargará toda la venta realizada. \nNo se efectuará ningun cambio, hasta que haga click en Vender.");
 				
 			}
 				

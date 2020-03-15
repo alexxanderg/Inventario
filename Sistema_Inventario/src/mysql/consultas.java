@@ -102,7 +102,7 @@ public class consultas {
 	public ResultSet cargarProductos() {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos  where estado = 1 order by producto");
+			rs = st.executeQuery("select * from tb_productos where estado = 1 order by producto");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -112,7 +112,7 @@ public class consultas {
 	public ResultSet cargarProductoParticular(String prod) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where estado = 1 and producto like '%" + prod + "%' order by producto");
+			rs = st.executeQuery("select * from tb_productos where producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -205,7 +205,7 @@ public class consultas {
 	public ResultSet buscarProductoBarras(String codbarra) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where codbarra = '" + codbarra + "'");
+			rs = st.executeQuery("select * from tb_productos where codbarra = '" + codbarra + "'" + " and estado = 1");
 		} catch (Exception e) {
 		}
 		return rs;

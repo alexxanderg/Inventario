@@ -563,8 +563,7 @@ public class Ventas extends JInternalFrame {
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Pre Indiv", "Descuento Tot", "SubTotal", "SubTotal", "IDPROD", "PC" });
-		
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Pre Indiv C/Desc", "Desc tot aplicado", "SubTotal", "IDPROD", "PC" });
 			try {
 				consulta.iniciar();
 				rs = consulta.cargarConfiguraciones();
@@ -610,58 +609,65 @@ public class Ventas extends JInternalFrame {
 			consulta.iniciar();
 			ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
 			try {
-				int cont = -1;
+				int cont = 0;
 				while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
-					cont++;
-					int codproducto = rsVD.getInt("codproducto");
-					txtBuscarProd.setText("(" + codproducto+")");
-					AgregarProductoATabla();
-					float cantidad = rsVD.getFloat("cantidad");
-						tbCarrito.setValueAt(cantidad, cont, 0);
-					float preVeSDInd = rsVD.getFloat("preVeSDInd");
-						tbCarrito.setValueAt(preVeSDInd, cont, 3);
-					float descTotal = rsVD.getFloat("descTotal");
-						tbCarrito.setValueAt(descTotal, cont, 4);	
-					float subTotal = rsVD.getFloat("subTotal");
-						tbCarrito.setValueAt(subTotal, cont, 5);
 					
-					String newUniMed = rsVD.getString("uMedidaUsada");
-					String prodCompletoLista = dtm.getValueAt(cont, 1).toString();					
-					String oldUniMed = prodCompletoLista.substring(prodCompletoLista.indexOf("(")+1, prodCompletoLista.indexOf(")"));
-					String newNomProd = prodCompletoLista.replaceAll(oldUniMed, newUniMed);
-					tbCarrito.setValueAt(newNomProd, cont, 1);
-					
-					if(!newUniMed.equals(oldUniMed)){
-						consulta.iniciar();
-						ResultSet rsBP = consulta.buscarProductoID(codproducto);
-						try {
-							rsBP.next();
-							String nomPromo1 = rsBP.getString("promo1");
-							double cantPromo1 = rsBP.getDouble("cantp1");
-							String nomPromo2 = rsBP.getString("promo2");
-							double cantPromo2 = rsBP.getDouble("cantp2");
-							if(newUniMed.equals(nomPromo1)){
-								double stock = 0;
-								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
-								stock = stock + cantPromo1;
-								tbCarrito.setValueAt(stock, cont, 2);
+					try {
+						int codproducto = rsVD.getInt("codproducto");
+						txtBuscarProd.setText("(" + codproducto+")");
+						AgregarProductoATabla();
+						float cantidad = rsVD.getFloat("cantidad");
+							tbCarrito.setValueAt(cantidad, cont, 0);
+						float preVeSDInd = rsVD.getFloat("preVeSDInd");
+							tbCarrito.setValueAt(preVeSDInd, cont, 3);
+						float descTotal = rsVD.getFloat("descTotal");
+							tbCarrito.setValueAt(descTotal, cont, 4);	
+						float subTotal = rsVD.getFloat("subTotal");
+							tbCarrito.setValueAt(subTotal, cont, 5);
+						
+						String newUniMed = rsVD.getString("uMedidaUsada");
+						String prodCompletoLista = dtm.getValueAt(cont, 1).toString();					
+						String oldUniMed = prodCompletoLista.substring(prodCompletoLista.indexOf("(")+1, prodCompletoLista.indexOf(")"));
+						String newNomProd = prodCompletoLista.replaceAll(oldUniMed, newUniMed);
+						tbCarrito.setValueAt(newNomProd, cont, 1);
+						
+						if(!newUniMed.equals(oldUniMed)){
+							consulta.iniciar();
+							ResultSet rsBP = consulta.buscarProductoID(codproducto);
+							try {
+								rsBP.next();
+								String nomPromo1 = rsBP.getString("promo1");
+								double cantPromo1 = rsBP.getDouble("cantp1");
+								String nomPromo2 = rsBP.getString("promo2");
+								double cantPromo2 = rsBP.getDouble("cantp2");
+								if(newUniMed.equals(nomPromo1)){
+									double stock = 0;
+									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+									stock = stock + cantPromo1;
+									tbCarrito.setValueAt(stock, cont, 2);
+								}
+								else if (newUniMed.equals(nomPromo2)){
+									double stock = 0;
+									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+									stock = stock + cantPromo2;
+									tbCarrito.setValueAt(stock, cont, 2);
+								}								
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, "Error al verificar unidades de medida " + e);
 							}
-							else if (newUniMed.equals(nomPromo2)){
-								double stock = 0;
-								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
-								stock = stock + cantPromo2;
-								tbCarrito.setValueAt(stock, cont, 2);
-							}
-							else{
-								float stock = 0;
-								stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
-								stock = stock + cantidad;
-								tbCarrito.setValueAt(stock, cont, 2);
-							}								
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(null, "Error al verificar unidades de medida " + e);
 						}
+						else{
+							float stock = 0;
+							stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+							stock = stock + cantidad;
+							tbCarrito.setValueAt(stock, cont, 2);
+						}
+
+						cont++;
+					} catch (Exception e) {
+						// TODO: handle exception
 					}
+					
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Error al cargar detalles venta: " + e);
@@ -747,11 +753,11 @@ public class Ventas extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbCarrito.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(7)); // Cantidad
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Cantidad
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Stock
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Precio
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Descuento
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(6)); // Stock
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(12)); // Precio
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(12)); // Descuento
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // SubTotal
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(1)); //ID
 		tcm.getColumn(7).setPreferredWidth(anchoColumna(1));//Preco
@@ -839,7 +845,7 @@ public class Ventas extends JInternalFrame {
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
-					//JOptionPane.showMessageDialog(null, "ERROR al agregar producto al carrito: " + e);
+					//JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
 				}
 			}
 			txtBuscarProd.setText(null);

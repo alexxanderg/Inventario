@@ -180,7 +180,7 @@ public class MantenimientoProd extends JInternalFrame {
 		txtCodigo2.setColumns(10);
 		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(135, 0, 476, 34);
+		txtCodigo2.setBounds(115, 45, 476, 34);
 		getContentPane().add(txtCodigo2);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
@@ -285,10 +285,7 @@ public class MantenimientoProd extends JInternalFrame {
 	}
 	
 	public void cargarTabla(String prod){
-		for (int i = 0; i < tbProductos.getRowCount(); i++) {
-			dtm.removeRow(i);
-			i -= 1;
-		}
+		limpiarTabla();
 		
 		String atribTodos = "";
 		try {
@@ -350,50 +347,53 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 
 			while (rs.next()){
-				List<String> listProds = new ArrayList<String>();
-		        listProds.add(rs.getString("codproducto"));
-		        listProds.add(rs.getString("codbarra"));
-		        listProds.add(rs.getString("producto"));
-		        listProds.add(rs.getString("detalles"));
-		        for (int x=0; x<parts.length; x++){
-					if(parts[x].equals("marca"))
-						listProds.add(rs.getString("marca"));
-					if(parts[x].equals("color"))
-						listProds.add(rs.getString("color"));
-					if(parts[x].equals("lote"))
-						listProds.add(rs.getString("lote"));
-					if(parts[x].equals("laboratorio"))
-						listProds.add(rs.getString("laboratorio"));
-					if(parts[x].equals("fvencimiento")){
-						try {
-							// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
-							SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-							// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
-							String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
-							listProds.add(fechaOrdenada);
-						} catch (Exception e) {
-							listProds.add("");
+				
+				if(rs.getInt("estado") == 1){
+					List<String> listProds = new ArrayList<String>();
+			        listProds.add(rs.getString("codproducto"));
+			        listProds.add(rs.getString("codbarra"));
+			        listProds.add(rs.getString("producto"));
+			        listProds.add(rs.getString("detalles"));
+			        for (int x=0; x<parts.length; x++){
+						if(parts[x].equals("marca"))
+							listProds.add(rs.getString("marca"));
+						if(parts[x].equals("color"))
+							listProds.add(rs.getString("color"));
+						if(parts[x].equals("lote"))
+							listProds.add(rs.getString("lote"));
+						if(parts[x].equals("laboratorio"))
+							listProds.add(rs.getString("laboratorio"));
+						if(parts[x].equals("fvencimiento")){
+							try {
+								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
+								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+								// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
+								String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
+								listProds.add(fechaOrdenada);
+							} catch (Exception e) {
+								listProds.add("");
+							}
 						}
 					}
-				}
-		        listProds.add(rs.getString("unimedida"));
-		        listProds.add(rs.getString("categoria"));
-		        listProds.add(rs.getString("almacen"));
-		        
-		        int iddistrib = rs.getInt("iddistrib");
-		        try {
-		        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
-		        	 rs2.next();
-				     listProds.add(rs2.getString("nombre"));		        	 
-				} catch (Exception e) {}
-		        
-		        listProds.add(rs.getString("cantidad"));
-		        listProds.add(rs.getString("precioCo"));
-		        listProds.add(rs.getString("ptjganancia"));
-		        listProds.add(rs.getString("precioVe"));
-		        
-		        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
-				dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
+			        listProds.add(rs.getString("unimedida"));
+			        listProds.add(rs.getString("categoria"));
+			        listProds.add(rs.getString("almacen"));
+			        
+			        int iddistrib = rs.getInt("iddistrib");
+			        try {
+			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
+			        	 rs2.next();
+					     listProds.add(rs2.getString("nombre"));		        	 
+					} catch (Exception e) {}
+			        
+			        listProds.add(rs.getString("cantidad"));
+			        listProds.add(rs.getString("precioCo"));
+			        listProds.add(rs.getString("ptjganancia"));
+			        listProds.add(rs.getString("precioVe"));
+			        
+			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
+					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
+				}				
 	        }
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
@@ -672,7 +672,11 @@ public class MantenimientoProd extends JInternalFrame {
 	protected void keyReleasedTxtCodigo(KeyEvent arg0) {
 	}
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
-		cargarTabla(txtCodigo.getText());
+		if(txtCodigo2.getText().length()==0){
+			limpiarTabla();
+		}
+		else
+			cargarTabla(txtCodigo2.getText());
 	}
 	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
 		if(txtCodigo.isVisible()){
@@ -680,8 +684,16 @@ public class MantenimientoProd extends JInternalFrame {
 			txtCodigo2.setVisible(true);
 		}
 		else{
+			cargarTabla("todos");
 			txtCodigo.setVisible(true);
 			txtCodigo2.setVisible(false);			
+		}
+	}
+	
+	private void limpiarTabla(){
+		for (int i = 0; i < tbProductos.getRowCount(); i++) {
+			dtm.removeRow(i);
+			i -= 1;
 		}
 	}
 }
