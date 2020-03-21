@@ -9,8 +9,11 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
+
+import clases.AbstractJasperReports;
 import gui_principal.VentanaPrincipal;
 import gui_ventas.Ventas;
+import mysql.MySQLConexion;
 import mysql.consultas;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -21,10 +24,17 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -46,7 +56,6 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
 	private JMenu mnEliminarProducto;
-	private JMenu mnIngresarStockA;
 	private JButton btnX;
 	private JLabel lblCdigo;
 	private JTextField txtCodigo;
@@ -57,8 +66,6 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenuItem mntmRealizarKardex;
 	private JMenuItem mntmVerHistorial;
 	private JCheckBox chckbxFiltrar;
-	private JLabel lblCategoria;
-	private JComboBox comboBox;
 	
 	NuevoProducto np = new NuevoProducto(this, null);
 	JTable tb;
@@ -69,6 +76,7 @@ public class MantenimientoProd extends JInternalFrame {
 	consultas model = new consultas();
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
+	private JButton btnExportar;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -151,21 +159,8 @@ public class MantenimientoProd extends JInternalFrame {
 		});
 		chckbxFiltrar.setBackground(Color.WHITE);
 		chckbxFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		chckbxFiltrar.setBounds(901, 45, 192, 34);
+		chckbxFiltrar.setBounds(597, 43, 182, 34);
 		getContentPane().add(chckbxFiltrar);
-		
-		lblCategoria = new JLabel("Categor\u00EDa:");
-		lblCategoria.setForeground(Color.DARK_GRAY);
-		lblCategoria.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCategoria.setBounds(621, 24, 110, 30);
-		getContentPane().add(lblCategoria);
-		
-		comboBox = new JComboBox();
-		comboBox.setFont(new Font("Arial", Font.ITALIC, 18));
-		comboBox.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		comboBox.setBackground(new Color(245, 245, 245));
-		comboBox.setBounds(621, 49, 227, 30);
-		getContentPane().add(comboBox);
 		
 		txtCodigo2 = new JTextField();
 		txtCodigo2.setVisible(false);
@@ -182,6 +177,18 @@ public class MantenimientoProd extends JInternalFrame {
 		txtCodigo2.setBackground(new Color(245, 245, 245));
 		txtCodigo2.setBounds(115, 45, 476, 34);
 		getContentPane().add(txtCodigo2);
+		
+		btnExportar = new JButton("<html><center>Exportar</center></html>");
+		btnExportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnExportar(arg0);
+			}
+		});
+		btnExportar.setForeground(Color.WHITE);
+		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnExportar.setBackground(new Color(102, 205, 170));
+		btnExportar.setBounds(785, 45, 138, 34);
+		getContentPane().add(btnExportar);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -226,19 +233,6 @@ public class MantenimientoProd extends JInternalFrame {
 		mnEliminarProducto.setBackground(SystemColor.control);
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
-		
-		mnIngresarStockA = new JMenu("|Agregar stock| ");
-		mnIngresarStockA.setVisible(false);
-		mnIngresarStockA.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnIngresarStockA(e);
-			}
-		});
-		mnIngresarStockA.setForeground(new Color(75, 0, 130));
-		mnIngresarStockA.setBackground(SystemColor.control);
-		mnIngresarStockA.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnIngresarStockA);
 		
 		mnOtrasOpciones = new JMenu("|Otras opciones|");
 		mnOtrasOpciones.setVisible(false);
@@ -552,10 +546,6 @@ public class MantenimientoProd extends JInternalFrame {
 		cargar();
 		consulta.reset();
 	}
-	
-	protected void mouseClickedMnIngresarStockA(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, "Ingresa stock con nuevos atributos creados en la DB");
-	}
 	protected void mouseClickedMntmRealizarKardex(MouseEvent e) {
 		JOptionPane.showMessageDialog(null, "Realizar kardex");
 	}
@@ -579,18 +569,16 @@ public class MantenimientoProd extends JInternalFrame {
 				if (seleccion == 0) {// MODIFICAR
 					try {
 						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-						model.iniciar();
-						rs = model.buscarProductoID(idProd);
-						abrirModificarProducto(idProd);
-						model.reset();
+						JOptionPane.showMessageDialog(null, ""+idProd);
+						abrirModificarProducto(""+idProd);
+						
 					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 						try {
 							model.iniciar();
 							rs = model.buscarProductoBarras(producto);
 							rs.next();
 							int idProd = rs.getInt("codproducto");
-							abrirModificarProducto(idProd);
-							model.reset();
+							abrirModificarProducto(""+idProd);
 						} catch (Exception e3) {
 							// TODO: handle exception
 						}	finally {
@@ -603,17 +591,9 @@ public class MantenimientoProd extends JInternalFrame {
 				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
 				            }
 						}			
-					}finally {
-						try {
-							if (rs != null)
-								rs.close();
-							if (model != null)
-								model.reset();
-			            } catch (Exception ex) {
-			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			            }
 					}
 				}
+				
 				if (seleccion == 1) {//  ELIMINAR
 					try {
 						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
@@ -643,25 +623,6 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		}
 		
-	}
-	
-
-	private void abrirModificarProducto(int idProd){
-		
-		try { 
-			if (mp.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				mp.setVisible(true); 
-			} else {
-				mp.setLocationRelativeTo(null);
-				mp.setVisible(true);
-			}
-		} catch (Exception f) {
-			mp = new ModificarProducto(""+idProd,this);;
-			mp.setLocationRelativeTo(null);
-			mp.setVisible(true);
-		}
 	}
 	
 	public void cerrarVentanas(){
@@ -696,4 +657,30 @@ public class MantenimientoProd extends JInternalFrame {
 			i -= 1;
 		}
 	}
+	
+	protected void actionPerformedBtnExportar(ActionEvent arg0) {
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+			String prod = "";
+			if (chckbxFiltrar.isSelected())
+				prod = txtCodigo2.getText();
+			else
+				prod = txtCodigo.getText();
+			
+			Map parameters = new HashMap();
+			parameters.put("prod", prod);
+
+			new AbstractJasperReports().createReport(con, "rInventario.jasper", parameters);
+			AbstractJasperReports.showViewer();
+			
+			con.close();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
+		}	
+	}
 }
+
+
+
+

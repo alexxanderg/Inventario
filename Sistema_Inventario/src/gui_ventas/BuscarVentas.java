@@ -53,13 +53,14 @@ import com.toedter.calendar.JDateChooser;
 
 import clases.AbstractJasperReports;
 import clases.Cliente;
+import clases.PintarTablaVentasBuscar;
 import clases.Usuarios;
 
 public class BuscarVentas extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
-	private JMenu mnNewMenu_2;
+	private JMenu mnEliminarVenta;
 	private JButton btnX;
 	private JScrollPane scrollPane;
 	private JTable tbVentas;
@@ -76,8 +77,7 @@ public class BuscarVentas extends JInternalFrame {
 	private JLabel lblTotDescuentos;
 	private JLabel lblTD;
 	
-	public VentanaPrincipal vp;	
-	JTable tb;
+	public VentanaPrincipal vp;
 	ResultSet rs;
 	consultas consulta = new consultas();
 	DefaultTableModel dtm = new DefaultTableModel();
@@ -87,6 +87,12 @@ public class BuscarVentas extends JInternalFrame {
 	private JScrollPane scrollPane_1;
 	private JLabel lblDetallesDeVenta;
 	private JTable tbDetalleVenta;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JLabel lblNewLabel;
+	private JLabel lblVentasModificadas;
+	private JLabel lblVentasEliminadas;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -140,6 +146,8 @@ public class BuscarVentas extends JInternalFrame {
 		tbVentas.setBackground(Color.WHITE);
 		tbVentas.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbVentas);
+		// tbProductos.getTableHeader().setResizingAllowed(false);
+		tbVentas.getTableHeader().setReorderingAllowed(false);
 		
 		btnVerVentas = new JButton("Buscar");
 		btnVerVentas.setBackground(new Color(30, 144, 255));
@@ -258,8 +266,39 @@ public class BuscarVentas extends JInternalFrame {
 		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 30));
 		lblDetallesDeVenta.setBounds(10, 356, 396, 34);
 		getContentPane().add(lblDetallesDeVenta);
-		// tbProductos.getTableHeader().setResizingAllowed(false);
-		tbVentas.getTableHeader().setReorderingAllowed(false);
+		
+		textField = new JTextField();
+		textField.setBounds(10, 291, 13, 13);
+		textField.setBackground(new Color(138, 230, 78)); //VERDE
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(10, 308, 13, 13);
+		textField_1.setBackground(new Color(236, 236, 69)); //AMARILLO
+		getContentPane().add(textField_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(10, 326, 13, 13);
+		textField_2.setBackground(new Color(251, 105, 120)); //ROJO
+		getContentPane().add(textField_2);
+		
+		lblNewLabel = new JLabel("Ventas correctas");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel.setBounds(33, 291, 95, 14);
+		getContentPane().add(lblNewLabel);
+		
+		lblVentasModificadas = new JLabel("Ventas modificadas");
+		lblVentasModificadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblVentasModificadas.setBounds(33, 308, 108, 14);
+		getContentPane().add(lblVentasModificadas);
+		
+		lblVentasEliminadas = new JLabel("Ventas eliminadas");
+		lblVentasEliminadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblVentasEliminadas.setBounds(33, 325, 95, 14);
+		getContentPane().add(lblVentasEliminadas);
 
 		
 		menuBar = new JMenuBar();
@@ -291,17 +330,17 @@ public class BuscarVentas extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Eliminar venta| ");
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+		mnEliminarVenta = new JMenu("|Eliminar venta| ");
+		mnEliminarVenta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnNewMenu_2.setForeground(new Color(220, 20, 60));
-		mnNewMenu_2.setBackground(SystemColor.control);
-		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnNewMenu_2);
+		mnEliminarVenta.setForeground(new Color(220, 20, 60));
+		mnEliminarVenta.setBackground(SystemColor.control);
+		mnEliminarVenta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnEliminarVenta);
 		
 		mnhistorialDeAcciones = new JMenu("|Historial de acciones realizadas| ");
 		mnhistorialDeAcciones.setVisible(false);
@@ -317,14 +356,21 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	
 	public void cargar() {
-		tb = this.tbVentas;
-		tb.setRowHeight(30);
-		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
 		
-		JTable tbCD = this.tbDetalleVenta;
-		tbCD.setRowHeight(30);
-		tbCD.setModel(dtmVD);
+		
+		
+		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+		tbVentas.setRowHeight(30);
+		tbVentas.setModel(dtm);
+		
+
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(new Color(239, 198, 46));
+		for (int i = 0; i < tbVentas.getModel().getColumnCount(); i++)
+			tbVentas.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+		
+		tbDetalleVenta.setRowHeight(30);
+		tbDetalleVenta.setModel(dtmVD);
 		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRECIO UNI", "DESCUENTO", "SUB TOTAL"});
 		
 		
@@ -373,7 +419,7 @@ public class BuscarVentas extends JInternalFrame {
 		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(7).setCellRenderer(tcr0);
-	
+		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
 		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
 		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(40));  // 
@@ -428,15 +474,40 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
+
+		String[] options = {"Eliminar", "Cancelar"};
+		int seleccion = JOptionPane.showOptionDialog(null, "¿Seguro de eliminar la Venta?\nEsta opción no se puede deshacer", "Eliminar venta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
 		
+		if(seleccion == 0){
+			try {
+				int nroVentaModificar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+				consulta.iniciar();
+				consulta.eliminarVenta(nroVentaModificar);	
+				actionPerformedBtnVerVentas(null);
+				JOptionPane.showMessageDialog(null, "Venta Eliminada");
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Error al eliminar venta");
+			}finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}		
+		}
 	}
+	
 	protected void actionPerformedBtnVerVentas(ActionEvent arg0) {
 		try {
-			
 			for (int i = 0; i < tbVentas.getRowCount(); i++) {
 				dtm.removeRow(i);
 				i -= 1;
-			}
+			}			
+			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+			tbVentas.setModel(dtm);
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
 						
@@ -469,6 +540,10 @@ public class BuscarVentas extends JInternalFrame {
 			while(rs.next()){
 				dtm.addRow(new Object[]{rs.getInt("codventa"), rs.getString("ncliente"), rs.getString("nusuario"), rs.getString("nota"), rs.getString("fecha"), rs.getFloat("descuento"), rs.getFloat("saldo"), rs.getFloat("totventa")});	
 			}
+			
+			this.tbVentas.setDefaultRenderer(Object.class, new PintarTablaVentasBuscar());
+
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar ventas: " + e.getMessage());
 		}finally {
@@ -513,6 +588,7 @@ public class BuscarVentas extends JInternalFrame {
 		try {
 			con = MySQLConexion.getConection();
 			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
+			String totalVenta = lblTotVentas.getText();
 			int metpago = -1;
 			
 			int añoi = dchDesde.getCalendar().get(Calendar.YEAR);
@@ -538,6 +614,7 @@ public class BuscarVentas extends JInternalFrame {
 			parameters.put("prtFechaI", timeStampDateI);
 			parameters.put("prtFechaF", timeStampDateF);
 			parameters.put("metpago", metpago);
+			parameters.put("totalVenta", totalVenta);
 
 			if (usu.equals("TODOS")) {
 				if (metpago == - 1) {

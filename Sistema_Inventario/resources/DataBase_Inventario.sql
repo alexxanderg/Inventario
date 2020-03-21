@@ -238,6 +238,15 @@ on v.idusuario = u.idusuario
 where v.fecha between'2019-10-14' and '2021-10-14'
 order by v.codventa;
 
+select p.codproducto, p.codbarra, p.producto, p.detalles, p.marca, p.color, p.laboratorio, p.lote, p.unimedida, p.fechaVenc, p.categoria, p.almacen, d.nombre, p.cantidad, p.precioCo, p.ptjganancia, p.precioVe, p.estado
+from tb_productos p
+inner join tb_distribuidores d
+on p.iddistrib = d.iddistrib
+where p.producto like '%12 colores%' or detalles like '%prod  %' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' 
+order by p.producto;
+
+producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto
+
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
@@ -318,6 +327,8 @@ select p.producto, p.detalles, p.marca, p.color, p.cantidad, kd.registros from t
 inner join tb_productos p on p.codproducto = kd.codproducto
 where kd.idkardex = 4;
 
+select DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha from tb_ventas v ;
+select * from tb_ventas;
 
 alter table tb_ventas
   add saldo		float after descuento;

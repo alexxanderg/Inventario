@@ -72,15 +72,11 @@ public class NuevaCompra extends JFrame {
 	private JLabel label;
 	private JTable tbCompras;
 	private JButton btnAnadirDistri;
-	private JLabel lblCantidad;
-	private JTextField txtCantidad;
 	private JButton btnIngresar;
 	private JLabel lblNotaDeCompra;
 	private JTextField txtNota;
 	private JLabel lblMtodoDePago;
 	private JComboBox cbMetPago;
-	private JLabel lblPrecioUni;
-	private JTextField txtPrecioUni;
 	private JLabel lblPagado;
 	private JTextField txtPagado;
 	private JLabel lblSaldo;
@@ -97,6 +93,8 @@ public class NuevaCompra extends JFrame {
 	MantenimientoCompras mantCompras = null;
 	private JButton btnNuevoProducto;
 	NuevoProducto np = new NuevoProducto(null, this);
+	private JButton btnQuitar;
+	private JButton btnAyuda;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -127,7 +125,7 @@ public class NuevaCompra extends JFrame {
 		setTitle("Crear producto");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1057, 638);
+		setBounds(100, 100, 1057, 652);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -138,14 +136,14 @@ public class NuevaCompra extends JFrame {
 		lblCdigoIntbarras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCdigoIntbarras.setForeground(Color.DARK_GRAY);
 		lblCdigoIntbarras.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCdigoIntbarras.setBounds(12, 70, 190, 23);
+		lblCdigoIntbarras.setBounds(12, 105, 205, 23);
 		contentPane.add(lblCdigoIntbarras);
 		
 		lblNombre = new JLabel("Serie:");
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombre.setForeground(Color.DARK_GRAY);
 		lblNombre.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombre.setBounds(554, 70, 60, 25);
+		lblNombre.setBounds(554, 105, 60, 25);
 		contentPane.add(lblNombre);
 		
 		txtSerie = new JTextField();
@@ -167,14 +165,14 @@ public class NuevaCompra extends JFrame {
 		txtSerie.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtSerie.setColumns(10);
 		txtSerie.setBackground(new Color(245, 245, 245));
-		txtSerie.setBounds(614, 70, 130, 25);
+		txtSerie.setBounds(614, 105, 130, 25);
 		contentPane.add(txtSerie);
 		
 		lblDescripcin = new JLabel("Nro:");
 		lblDescripcin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescripcin.setForeground(Color.DARK_GRAY);
 		lblDescripcin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDescripcin.setBounds(759, 70, 60, 25);
+		lblDescripcin.setBounds(759, 105, 60, 25);
 		contentPane.add(lblDescripcin);
 		
 		txtNroSerie = new JTextField();
@@ -196,7 +194,7 @@ public class NuevaCompra extends JFrame {
 		txtNroSerie.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNroSerie.setColumns(10);
 		txtNroSerie.setBackground(new Color(245, 245, 245));
-		txtNroSerie.setBounds(827, 70, 214, 25);
+		txtNroSerie.setBounds(827, 105, 214, 25);
 		contentPane.add(txtNroSerie);
 		
 		lblMarca = new JLabel("Moneda:");
@@ -204,7 +202,7 @@ public class NuevaCompra extends JFrame {
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMarca.setForeground(Color.DARK_GRAY);
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMarca.setBounds(554, 107, 88, 25);
+		lblMarca.setBounds(554, 142, 88, 25);
 		contentPane.add(lblMarca);
 		
 		lblColor = new JLabel("Tipo de cambio:");
@@ -212,20 +210,20 @@ public class NuevaCompra extends JFrame {
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblColor.setForeground(Color.DARK_GRAY);
 		lblColor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblColor.setBounds(759, 107, 149, 25);
+		lblColor.setBounds(759, 142, 149, 25);
 		contentPane.add(lblColor);
 		
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaVencimiento.setBounds(554, 143, 193, 25);
+		lblFechaVencimiento.setBounds(554, 178, 205, 25);
 		contentPane.add(lblFechaVencimiento);
 		
 		dchFeVencimiento = new JDateChooser();
 		dchFeVencimiento.setFont(new Font("Arial", Font.PLAIN, 16));
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
-		dchFeVencimiento.setBounds(759, 143, 282, 25);
+		dchFeVencimiento.setBounds(759, 178, 282, 25);
 		contentPane.add(dchFeVencimiento);
 		
 		lblPrecioDeVenta = new JLabel("TOTAL:");
@@ -233,7 +231,7 @@ public class NuevaCompra extends JFrame {
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrecioDeVenta.setForeground(new Color(30, 144, 255));
 		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
-		lblPrecioDeVenta.setBounds(12, 516, 135, 32);
+		lblPrecioDeVenta.setBounds(12, 542, 135, 32);
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtTotal = new JTextField();
@@ -257,14 +255,14 @@ public class NuevaCompra extends JFrame {
 			}
 		});
 		txtTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTotal.setForeground(Color.DARK_GRAY);
-		txtTotal.setFont(new Font("Arial", Font.PLAIN, 25));
+		txtTotal.setForeground(new Color(30, 144, 255));
+		txtTotal.setFont(new Font("Arial", Font.BOLD, 25));
 		txtTotal.setColumns(10);
 		txtTotal.setBackground(new Color(245, 245, 245));
-		txtTotal.setBounds(12, 549, 135, 34);
+		txtTotal.setBounds(12, 575, 135, 34);
 		contentPane.add(txtTotal);
 		
-		btnRegistrarCompra = new JButton("CREAR");
+		btnRegistrarCompra = new JButton("REGISTRAR");
 		btnRegistrarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCrearProducto(arg0);
@@ -273,7 +271,7 @@ public class NuevaCompra extends JFrame {
 		btnRegistrarCompra.setForeground(SystemColor.menu);
 		btnRegistrarCompra.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnRegistrarCompra.setBackground(new Color(30, 144, 255));
-		btnRegistrarCompra.setBounds(801, 522, 240, 61);
+		btnRegistrarCompra.setBounds(801, 548, 240, 61);
 		contentPane.add(btnRegistrarCompra);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -285,7 +283,7 @@ public class NuevaCompra extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(551, 522, 240, 61);
+		btnCancelar.setBounds(551, 548, 240, 61);
 		contentPane.add(btnCancelar);
 		
 		txtCrearProducto = new JTextField();
@@ -308,7 +306,7 @@ public class NuevaCompra extends JFrame {
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setForeground(Color.DARK_GRAY);
 		lblDistribuidor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDistribuidor.setBounds(12, 107, 191, 25);
+		lblDistribuidor.setBounds(12, 142, 191, 25);
 		contentPane.add(lblDistribuidor);
 		
 		cbDistribuidor = new JComboBox();
@@ -316,14 +314,14 @@ public class NuevaCompra extends JFrame {
 		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbDistribuidor.setBackground(new Color(245, 245, 245));
-		cbDistribuidor.setBounds(212, 107, 240, 25);
+		cbDistribuidor.setBounds(212, 142, 240, 25);
 		contentPane.add(cbDistribuidor);
 		
 		lblFechaDeEmisin = new JLabel("Fecha de emisi\u00F3n:");
 		lblFechaDeEmisin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaDeEmisin.setForeground(Color.DARK_GRAY);
 		lblFechaDeEmisin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeEmisin.setBounds(12, 143, 190, 23);
+		lblFechaDeEmisin.setBounds(12, 178, 190, 23);
 		contentPane.add(lblFechaDeEmisin);
 		
 		cbTipoComprobante = new JComboBox();
@@ -332,7 +330,7 @@ public class NuevaCompra extends JFrame {
 		cbTipoComprobante.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipoComprobante.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbTipoComprobante.setBackground(new Color(245, 245, 245));
-		cbTipoComprobante.setBounds(212, 70, 300, 25);
+		cbTipoComprobante.setBounds(212, 105, 300, 25);
 		contentPane.add(cbTipoComprobante);
 		
 		cbMoneda = new JComboBox();
@@ -341,7 +339,7 @@ public class NuevaCompra extends JFrame {
 		cbMoneda.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMoneda.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbMoneda.setBackground(new Color(245, 245, 245));
-		cbMoneda.setBounds(644, 107, 100, 25);
+		cbMoneda.setBounds(644, 142, 100, 25);
 		contentPane.add(cbMoneda);
 		
 		txtTipoCambio = new JTextField();
@@ -351,17 +349,17 @@ public class NuevaCompra extends JFrame {
 		txtTipoCambio.setColumns(10);
 		txtTipoCambio.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtTipoCambio.setBackground(new Color(245, 245, 245));
-		txtTipoCambio.setBounds(911, 107, 130, 25);
+		txtTipoCambio.setBounds(911, 142, 130, 25);
 		contentPane.add(txtTipoCambio);
 		
 		dchFeEmision = new JDateChooser();
-		dchFeEmision.setBounds(212, 143, 300, 23);
+		dchFeEmision.setBounds(212, 178, 300, 23);
 		contentPane.add(dchFeEmision);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		scrollPane.setBounds(12, 311, 1029, 193);
+		scrollPane.setBounds(12, 337, 1029, 193);
 		contentPane.add(scrollPane);
 		
 		tbCompras = new JTable();
@@ -372,23 +370,23 @@ public class NuevaCompra extends JFrame {
 		txtBuscarProducto = new JTextField();
 		txtBuscarProducto.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtBuscarProducto(e);
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtBuscarProducto(arg0);
 			}
 		});
 		txtBuscarProducto.setHorizontalAlignment(SwingConstants.LEFT);
-		txtBuscarProducto.setFont(new Font("Arial", Font.ITALIC, 20));
+		txtBuscarProducto.setFont(new Font("Arial", Font.ITALIC, 16));
 		txtBuscarProducto.setColumns(10);
 		txtBuscarProducto.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtBuscarProducto.setBackground(new Color(245, 245, 245));
-		txtBuscarProducto.setBounds(12, 270, 500, 34);
+		txtBuscarProducto.setBounds(12, 296, 766, 34);
 		contentPane.add(txtBuscarProducto);
 		
 		label = new JLabel("Buscar producto:");
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
-		label.setBounds(12, 244, 190, 23);
+		label.setBounds(12, 270, 190, 23);
 		contentPane.add(label);
 		
 		btnAnadirDistri = new JButton("+");
@@ -401,41 +399,8 @@ public class NuevaCompra extends JFrame {
 		btnAnadirDistri.setFont(new Font("Arial", Font.BOLD, 20));
 		btnAnadirDistri.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnAnadirDistri.setBackground(new Color(30, 144, 255));
-		btnAnadirDistri.setBounds(458, 107, 54, 25);
+		btnAnadirDistri.setBounds(458, 142, 54, 25);
 		contentPane.add(btnAnadirDistri);
-		
-		lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCantidad.setForeground(Color.DARK_GRAY);
-		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidad.setBounds(522, 244, 120, 23);
-		contentPane.add(lblCantidad);
-		
-		txtCantidad = new JTextField();
-		txtCantidad.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				focusGainedTxtCantidad(arg0);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				focusLostTxtCantidad(e);
-			}
-		});
-		txtCantidad.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				keyTypedTxtCantidad(arg0);
-			}
-		});
-		txtCantidad.setText("1");
-		txtCantidad.setHorizontalAlignment(SwingConstants.CENTER);
-		txtCantidad.setFont(new Font("Arial", Font.ITALIC, 20));
-		txtCantidad.setColumns(10);
-		txtCantidad.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		txtCantidad.setBackground(new Color(245, 245, 245));
-		txtCantidad.setBounds(522, 270, 120, 34);
-		contentPane.add(txtCantidad);
 		
 		btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
@@ -446,14 +411,14 @@ public class NuevaCompra extends JFrame {
 		btnIngresar.setForeground(SystemColor.menu);
 		btnIngresar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnIngresar.setBackground(new Color(60, 179, 113));
-		btnIngresar.setBounds(898, 266, 143, 34);
+		btnIngresar.setBounds(788, 296, 143, 34);
 		contentPane.add(btnIngresar);
 		
 		lblNotaDeCompra = new JLabel("Nota de compra:");
 		lblNotaDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotaDeCompra.setForeground(Color.DARK_GRAY);
 		lblNotaDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNotaDeCompra.setBounds(12, 177, 190, 23);
+		lblNotaDeCompra.setBounds(12, 212, 190, 23);
 		contentPane.add(lblNotaDeCompra);
 		
 		txtNota = new JTextField();
@@ -463,14 +428,14 @@ public class NuevaCompra extends JFrame {
 		txtNota.setColumns(10);
 		txtNota.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNota.setBackground(new Color(245, 245, 245));
-		txtNota.setBounds(212, 177, 295, 25);
+		txtNota.setBounds(212, 212, 300, 25);
 		contentPane.add(txtNota);
 		
 		lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
 		lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(554, 177, 190, 23);
+		lblMtodoDePago.setBounds(554, 212, 190, 23);
 		contentPane.add(lblMtodoDePago);
 		
 		cbMetPago = new JComboBox();
@@ -479,59 +444,38 @@ public class NuevaCompra extends JFrame {
 		cbMetPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMetPago.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbMetPago.setBackground(new Color(245, 245, 245));
-		cbMetPago.setBounds(759, 177, 282, 25);
+		cbMetPago.setBounds(759, 212, 282, 25);
 		contentPane.add(cbMetPago);
-		
-		lblPrecioUni = new JLabel("Precio Indiv.");
-		lblPrecioUni.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioUni.setForeground(Color.DARK_GRAY);
-		lblPrecioUni.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecioUni.setBounds(656, 244, 120, 23);
-		contentPane.add(lblPrecioUni);
-		
-		txtPrecioUni = new JTextField();
-		txtPrecioUni.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtPrecioUni(e);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				focusLostTxtPrecioUni(e);
-			}
-		});
-		txtPrecioUni.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtPrecioUni(e);
-			}
-		});
-		txtPrecioUni.setText("1");
-		txtPrecioUni.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPrecioUni.setFont(new Font("Arial", Font.ITALIC, 20));
-		txtPrecioUni.setColumns(10);
-		txtPrecioUni.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		txtPrecioUni.setBackground(new Color(245, 245, 245));
-		txtPrecioUni.setBounds(656, 270, 120, 34);
-		contentPane.add(txtPrecioUni);
 		
 		lblPagado = new JLabel("PAGADO:");
 		lblPagado.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblPagado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPagado.setForeground(new Color(60, 179, 113));
 		lblPagado.setFont(new Font("Candara", Font.BOLD, 25));
-		lblPagado.setBounds(212, 516, 135, 32);
+		lblPagado.setBounds(212, 542, 135, 32);
 		contentPane.add(lblPagado);
 		
 		txtPagado = new JTextField();
+		txtPagado.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				focusGainedTxtPagado(arg0);
+			}
+		});
+		txtPagado.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtPagado(arg0);
+			}
+		});
 		txtPagado.setText("0");
 		txtPagado.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPagado.setForeground(Color.DARK_GRAY);
+		txtPagado.setForeground(new Color(60, 179, 113));
 		txtPagado.setFont(new Font("Arial", Font.PLAIN, 25));
 		txtPagado.setColumns(10);
 		txtPagado.setBorder(new LineBorder(new Color(60, 179, 113), 2, true));
 		txtPagado.setBackground(new Color(245, 245, 245));
-		txtPagado.setBounds(212, 549, 135, 34);
+		txtPagado.setBounds(212, 575, 135, 34);
 		contentPane.add(txtPagado);
 		
 		lblSaldo = new JLabel("SALDO:");
@@ -539,18 +483,19 @@ public class NuevaCompra extends JFrame {
 		lblSaldo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSaldo.setForeground(new Color(220, 20, 60));
 		lblSaldo.setFont(new Font("Candara", Font.BOLD, 25));
-		lblSaldo.setBounds(370, 516, 135, 32);
+		lblSaldo.setBounds(370, 544, 135, 32);
 		contentPane.add(lblSaldo);
 		
 		txtSaldo = new JTextField();
+		txtSaldo.setEditable(false);
 		txtSaldo.setText("0");
 		txtSaldo.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSaldo.setForeground(Color.DARK_GRAY);
+		txtSaldo.setForeground(new Color(220, 20, 60));
 		txtSaldo.setFont(new Font("Arial", Font.PLAIN, 25));
 		txtSaldo.setColumns(10);
 		txtSaldo.setBorder(new LineBorder(new Color(220, 20, 60), 2, true));
 		txtSaldo.setBackground(new Color(245, 245, 245));
-		txtSaldo.setBounds(370, 549, 135, 34);
+		txtSaldo.setBounds(370, 575, 135, 34);
 		contentPane.add(txtSaldo);
 		
 		btnNuevoProducto = new JButton("+");
@@ -563,9 +508,33 @@ public class NuevaCompra extends JFrame {
 		btnNuevoProducto.setFont(new Font("Arial", Font.BOLD, 20));
 		btnNuevoProducto.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnNuevoProducto.setBackground(new Color(30, 144, 255));
-		btnNuevoProducto.setBounds(198, 241, 54, 25);
+		btnNuevoProducto.setBounds(212, 267, 54, 25);
 		contentPane.add(btnNuevoProducto);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, txtCantidad, txtPrecioUni, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
+		
+		btnQuitar = new JButton("Quitar");
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnQuitar(arg0);
+			}
+		});
+		btnQuitar.setForeground(SystemColor.menu);
+		btnQuitar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnQuitar.setBackground(new Color(220, 20, 60));
+		btnQuitar.setBounds(941, 296, 100, 34);
+		contentPane.add(btnQuitar);
+		
+		btnAyuda = new JButton("AYUDA");
+		btnAyuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnAyuda(e);
+			}
+		});
+		btnAyuda.setForeground(Color.DARK_GRAY);
+		btnAyuda.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnAyuda.setBackground(new Color(255, 215, 0));
+		btnAyuda.setBounds(827, 61, 214, 32);
+		contentPane.add(btnAyuda);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
 		cargarBuscador();
@@ -688,94 +657,104 @@ public class NuevaCompra extends JFrame {
 	}
 	
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
-		int tipComprobante =0;		tipComprobante = cbTipoComprobante.getSelectedIndex();
-		String serie = "";			serie = txtSerie.getText();
-		String nroSerie = "";		nroSerie = txtNroSerie.getText();
-		int idDistrib = 0;			idDistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
-		String moneda = "";			moneda = cbMoneda.getSelectedItem().toString();
-		String tc = "";				tc = txtTipoCambio.getText();
-		Object fechaEmision = null;
-		Object fechaVencimiento = null;
-		
-		String nota = "";			nota = txtNota.getText();
-		String metPago = "";		cbMetPago.getSelectedItem().toString();
-		double total = 0; 			total = Double.parseDouble(txtTotal.getText());
-			total = redondearDecimales(total, 2);
-		double pagado = 0; 			pagado = Double.parseDouble(txtPagado.getText());
-			pagado = redondearDecimales(pagado, 2);
-		double saldo = 0; 			saldo = Double.parseDouble(txtSaldo.getText());
-			saldo = redondearDecimales(saldo, 2);
-		
 		try {
-			int añoe = dchFeEmision.getCalendar().get(Calendar.YEAR);
-			int mese = dchFeEmision.getCalendar().get(Calendar.MARCH) + 1;
-			int diae = dchFeEmision.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaE = añoe + "-" + mese + "-" + diae;
-
-			DateFormat formatter;
-			formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = (Date) formatter.parse(fechaE);
-			fechaEmision = new java.sql.Timestamp(date.getTime());
-		} catch (Exception e) {
-		}
-		
-		try {
-			int añov = dchFeVencimiento.getCalendar().get(Calendar.YEAR);
-			int mesv = dchFeVencimiento.getCalendar().get(Calendar.MARCH) + 1;
-			int diav = dchFeVencimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaV = añov + "-" + mesv + "-" + diav;
-
-			DateFormat formatter;
-			formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = (Date) formatter.parse(fechaV);
-			fechaVencimiento = new java.sql.Timestamp(date.getTime());
-		} catch (Exception e) {
-		}
-
-		consulta.iniciar();
-		consulta.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idUsuario, total, pagado, saldo);
-		consulta.reset();
-		
-		int idCompra = 0;
-		try {
-			consulta.iniciar();
-			rs = consulta.ObtenerUltimoCodigoCompra();
-			while (rs.next())
-				idCompra = rs.getInt("idcompra");
-			consulta.reset();
-		} catch (Exception e3) {
-			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código de compra: " + e3);
-		}finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (consulta != null)
+			if(tbCompras.getRowCount() == 0)
+				JOptionPane.showMessageDialog(null, "Ingrese sus productos comprados");
+			else{
+				int opc = JOptionPane.showConfirmDialog(null, "¿Está seguro de registrar la compra?\nEste registro no se podrá eliminar o modificar en un futuro, le pedimos por favor verifique sus productos y precios", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (opc == 0) {
+					
+					int tipComprobante = 0;		tipComprobante = cbTipoComprobante.getSelectedIndex();
+					String serie = "";			serie = txtSerie.getText();
+					String nroSerie = "";		nroSerie = txtNroSerie.getText();
+					int idDistrib = 0;			idDistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
+					String moneda = "";			moneda = cbMoneda.getSelectedItem().toString();
+					String tc = "";				tc = txtTipoCambio.getText();
+					Object fechaEmision = null;
+					Object fechaVencimiento = null;
+					
+					String nota = "";			nota = txtNota.getText();
+					String metPago = "";		cbMetPago.getSelectedItem().toString();
+					double total = 0; 			total = Double.parseDouble(txtTotal.getText());
+						total = redondearDecimales(total, 2);
+					double pagado = 0; 			pagado = Double.parseDouble(txtPagado.getText());
+						pagado = redondearDecimales(pagado, 2);
+					double saldo = 0; 			saldo = Double.parseDouble(txtSaldo.getText());
+						saldo = redondearDecimales(saldo, 2);
+					
+					try {
+						int añoe = dchFeEmision.getCalendar().get(Calendar.YEAR);
+						int mese = dchFeEmision.getCalendar().get(Calendar.MARCH) + 1;
+						int diae = dchFeEmision.getCalendar().get(Calendar.DAY_OF_MONTH);
+						String fechaE = añoe + "-" + mese + "-" + diae;
+			
+						DateFormat formatter;
+						formatter = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = (Date) formatter.parse(fechaE);
+						fechaEmision = new java.sql.Timestamp(date.getTime());
+					} catch (Exception e) {
+					}
+					
+					try {
+						int añov = dchFeVencimiento.getCalendar().get(Calendar.YEAR);
+						int mesv = dchFeVencimiento.getCalendar().get(Calendar.MARCH) + 1;
+						int diav = dchFeVencimiento.getCalendar().get(Calendar.DAY_OF_MONTH);
+						String fechaV = añov + "-" + mesv + "-" + diav;
+			
+						DateFormat formatter;
+						formatter = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = (Date) formatter.parse(fechaV);
+						fechaVencimiento = new java.sql.Timestamp(date.getTime());
+					} catch (Exception e) {
+					}
+			
+					consulta.iniciar();
+					consulta.registrarCompra(tipComprobante, serie, nroSerie, idDistrib, moneda, tc, nota, metPago, fechaEmision, fechaVencimiento, idUsuario, total, pagado, saldo);
 					consulta.reset();
-            } catch (Exception ex) {
-            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-            }
-		}
-		
-		for (int i = 0; i < tbCompras.getRowCount(); i++) {
-			String prod = tbCompras.getValueAt(i, 1).toString();
-			int idProd = Integer.parseInt( prod.substring(prod.indexOf("(")+1, prod.indexOf(")")));
+					
+					int idCompra = 0;
+					try {
+						consulta.iniciar();
+						rs = consulta.ObtenerUltimoCodigoCompra();
+						while (rs.next())
+							idCompra = rs.getInt("idcompra");
+					} catch (Exception e3) {
+						JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código de compra: " + e3);
+					}finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (consulta != null)
+								consulta.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}
+					
+					for (int i = 0; i < tbCompras.getRowCount(); i++) {
+						String prod = tbCompras.getValueAt(i, 1).toString();
+						int idProd = Integer.parseInt( prod.substring(prod.indexOf("(")+1, prod.indexOf(")")));
+						
+						double cantProd = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
+						double preIndivProd = Float.parseFloat(tbCompras.getValueAt(i, 2).toString());
+							preIndivProd = redondearDecimales(preIndivProd, 2);
+						double preSubTotProd = Float.parseFloat(tbCompras.getValueAt(i, 3).toString());
+							preSubTotProd = redondearDecimales(preSubTotProd, 2);
+						
+						consulta.iniciar();
+						consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
+						consulta.anadirStockProducto(idProd, cantProd);
+						consulta.reset();
+					}
+					JOptionPane.showMessageDialog(null, "Compra registrada correctamente");
+					this.dispose();
+				}
+				
+			}
 			
-			double cantProd = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
-			double preIndivProd = Float.parseFloat(tbCompras.getValueAt(i, 2).toString());
-				preIndivProd = redondearDecimales(preIndivProd, 2);
-			double preSubTotProd = Float.parseFloat(tbCompras.getValueAt(i, 3).toString());
-				preSubTotProd = redondearDecimales(preSubTotProd, 2);
-			
-			consulta.iniciar();
-			consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
-			consulta.anadirStockProducto(idProd, cantProd);
-			consulta.reset();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Hubo un error con el registro de la compra: "+ e);
 		}
-		JOptionPane.showMessageDialog(null, "Compra registrada correctamente");
-		mantCompras.cargar();
-		mantCompras.tbCompras.setRowSelectionInterval(0, 0);
-		this.dispose();
-		
 	}
 	
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
@@ -820,26 +799,32 @@ public class NuevaCompra extends JFrame {
 	protected void actionPerformedBtnIngresar(ActionEvent e) {
 		AgregarProductoATabla();
 		txtBuscarProducto.requestFocus();
-		txtBuscarProducto.setText("");
-		txtCantidad.setText("1");
-		txtPrecioUni.setText("1");
+		txtBuscarProducto.setText(null);
 	}
 	public void AgregarProductoATabla() {
 		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
 			String nomProducto = txtBuscarProducto.getText();
 			//int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
-			double cantidad = Double.parseDouble(txtCantidad.getText());
+			/*double cantidad = Double.parseDouble(txtCantidad.getText());
 				cantidad = redondearDecimales(cantidad, 2);
 			double precioUnidad = Double.parseDouble(txtPrecioUni.getText());
 				precioUnidad = redondearDecimales(precioUnidad, 2);
 			double precioSubTot = precioUnidad*cantidad;
+				precioSubTot = redondearDecimales(precioSubTot, 2);*/
+			String  prod = txtBuscarProducto.getText();
+			double cantidad = Double.parseDouble( JOptionPane.showInputDialog(prod + "\n\nINGRESE LA CANTIDAD:\n\nEjm.: Si compro 1 saco de arroz de 50k, pero lo vende por kilos, debería ingresar 50\n"));
+				cantidad = redondearDecimales(cantidad, 2);
+			double precioUnidad = Double.parseDouble( JOptionPane.showInputDialog(prod + "\n\nINGRESE PRECIO DE COMPRA INDIVIDUAL:\n\nSe colocaría el precio de compra por kilo, no del saco\nEjm.: 3.5\n"));
+				precioUnidad = redondearDecimales(precioUnidad, 2);
+			double precioSubTot = precioUnidad*cantidad;
 				precioSubTot = redondearDecimales(precioSubTot, 2);
-				
+			
 			dtm.addRow(new Object[]{cantidad, nomProducto, precioUnidad, precioSubTot});
 			
 			sumarTotal();
 
 		} catch (Exception e) { 
+			JOptionPane.showMessageDialog(null, "Ingrese correctamente los datos", "Error al ingresar", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	private void sumarTotal(){
@@ -853,41 +838,14 @@ public class NuevaCompra extends JFrame {
 		txtTotal.setText(""+total);
 	}
 
-	
-	protected void keyTypedTxtBuscarProducto(KeyEvent e) {
-		char c = e.getKeyChar();
-		if (c == (char) KeyEvent.VK_ENTER)
-			txtCantidad.requestFocus();
-	}
-	
-	protected void keyTypedTxtCantidad(KeyEvent e) {
-		char c = e.getKeyChar();
-		if (c == (char) KeyEvent.VK_ENTER)
-			txtPrecioUni.requestFocus();
-	}
-	protected void keyTypedTxtPrecioUni(KeyEvent e) {
+	protected void keyReleasedTxtBuscarProducto(KeyEvent e) {
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER){
-			AgregarProductoATabla();
-			txtBuscarProducto.requestFocus();
-			txtBuscarProducto.setText("");
-			txtCantidad.setText("1");
-			txtPrecioUni.setText("1");
+			if(txtBuscarProducto.getText().length()!=0){
+				AgregarProductoATabla();
+				txtBuscarProducto.setText(null);
+			}
 		}
-	}
-	protected void focusGainedTxtCantidad(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtPrecioUni(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusLostTxtCantidad(FocusEvent e) {
-		if(txtCantidad.getText().length()==0)
-			txtCantidad.setText("0");
-	}
-	protected void focusLostTxtPrecioUni(FocusEvent e) {
-		if(txtPrecioUni.getText().length()==0)
-			txtPrecioUni.setText("0");
 	}
 	
 	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
@@ -909,4 +867,42 @@ public class NuevaCompra extends JFrame {
 	public void cargarProducto (String prod){
 		txtBuscarProducto.setText(prod);
 	}
+	protected void keyReleasedTxtPagado(KeyEvent arg0) {
+		try {
+			double total = Double.parseDouble( txtTotal.getText() );
+			double pagado = Double.parseDouble( txtPagado.getText() );
+			double saldo = total - pagado;
+			txtSaldo.setText(saldo+"");
+		} catch (Exception e) {
+			txtSaldo.setText("");
+		}
+	}
+	
+	protected void actionPerformedBtnQuitar(ActionEvent arg0) {
+		dtm.removeRow(tbCompras.getSelectedRow());
+	}
+	protected void focusGainedTxtPagado(FocusEvent e) {
+		seleccionarTexto(e);
+	}
+	
+	protected void actionPerformedBtnAyuda(ActionEvent e) {
+		JOptionPane.showMessageDialog(null, "A continuación registre los detalles y productos de su compra.\n\n"
+				+ "Ingrese los datos de el recibo de la compra (todos estos campos son opcionales)\n"
+				+ "En fecha de vencimiento puede colocar alguna fecha si desea que el sistema le avise cuando caducará el pago de la compra)\n\n"
+				+ "Para registrar sus productos comprados:\n"
+				+ "1.- Busque el producto por su nombre o codigo de barras.\n"
+				+ "2.- Ingrese la cantidad de este (según la unidad de medida con la que haya registrado el producto anteriormente).\n"
+				+ "3.- Ingrese su precio de compra individual.\n"
+				+ "Ejm.: Si compró un saco de arroz de 50k pero se registro por kilos. El ingreso sería de la siguiente forma:\n"
+				+ "Producto: Arroz camanejo (kilo)  -  Cantidad: 50  -  Precio: 3.0\n\n"
+				+ "Al finalizar, verá el monto total de su compra, al costado puede indicar si la pagó completamente o si queda un saldo pendiente.\n"
+				+ "Finalizar");
+	}
 }
+
+
+
+
+
+
+

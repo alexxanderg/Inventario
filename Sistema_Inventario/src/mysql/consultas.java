@@ -150,7 +150,7 @@ public class consultas {
 	public ResultSet cargarVentasUsuarioTodos(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -159,7 +159,7 @@ public class consultas {
 	public ResultSet cargarVentasUsuario(int idusuario, Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha, '%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -982,6 +982,19 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 	}
+	
+	public void eliminarVenta(int nroVenta) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_ventas set totcompra=0, totventa=0, ganancia=0, descuento=0, saldo=0, nota='', metpago1=0, montpago1=0, metpago2=0, montpago2=0, estado=3  where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, nroVenta);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}
 	public void ModificarDetalleVenta(int nroVenta) {
 		try {
 			st = con.createStatement();
@@ -1172,6 +1185,7 @@ public class consultas {
 		}
 		return rs;
 	}
+	
 	public ResultSet deshabilitarDistrib(int distrib) {
 		try {
 			String sql = "update tb_distribuidores set estado = 0 where iddistrib='"+distrib+"'";
@@ -1182,5 +1196,20 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR al eliminar DISTRIBUIDOR: " + e);
 		}
 		return rs;
+	}
+	
+	public void aniadirPagodeCompra(int nroCompra, double nuevoMontoPagado, double nuevoSaldo) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_compras set pagado = ?, saldo = ? where idcompra = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setDouble(1, nuevoMontoPagado);
+			prepareStmt.setDouble(2, nuevoSaldo);
+			prepareStmt.setInt(3, nroCompra);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "Pago añadido correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
+		}
 	}
 }

@@ -212,6 +212,12 @@ public class MantenimientoCompras extends JInternalFrame {
 		menuBar.add(mnCrearCompra);
 		
 		mnAgregarPago = new JMenu("|Agregar pago| ");
+		mnAgregarPago.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnAgregarPago(arg0);
+			}
+		});
 		mnAgregarPago.setForeground(new Color(220, 20, 60));
 		mnAgregarPago.setBackground(SystemColor.control);
 		mnAgregarPago.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -387,5 +393,53 @@ public class MantenimientoCompras extends JInternalFrame {
 	
 	protected void actionPerformedBtnGenerarReporte(ActionEvent e) {
 		
+	}
+	
+	public double redondearDecimales(double valorInicial, int numeroDecimales) {
+		double parteEntera, resultado;
+		resultado = valorInicial;
+		parteEntera = Math.floor(resultado);
+		resultado = (resultado - parteEntera) * Math.pow(10, numeroDecimales);
+		resultado = Math.round(resultado);
+		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
+		return resultado;
+	}
+	
+	protected void mouseClickedMnAgregarPago(MouseEvent arg0){
+		try {
+			int nroCompra = Integer.parseInt(tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString());
+			double totalCompra = Double.parseDouble(tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString());
+			double saldoActual = Double.parseDouble(tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString());
+			double pagoActual = totalCompra - saldoActual;
+		
+		
+			double montoPagoAniadir = Double.parseDouble( JOptionPane.showInputDialog("\nINGRESE EL PAGO A ADICIONAR:\n\nActualmente debe: " + saldoActual));
+			double nuevoMontoPagado = pagoActual + montoPagoAniadir;
+				nuevoMontoPagado = redondearDecimales(nuevoMontoPagado, 2);
+			double nuevoSaldo = totalCompra - nuevoMontoPagado;
+				redondearDecimales(nuevoSaldo, 2);
+				
+			consulta.iniciar();
+			consulta.aniadirPagodeCompra(nroCompra, nuevoMontoPagado, nuevoSaldo);
+			
+			actionPerformedBtnVerCompras(null);
+			
+			for(int i = 0; i<tbCompras.getRowCount(); i++){
+				if(nroCompra == Integer.parseInt( tbCompras.getValueAt(i, 0).toString()))
+					tbCompras.setRowSelectionInterval(i, i);
+			}
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Ingrese valores correctos");
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 }

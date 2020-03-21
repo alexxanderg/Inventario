@@ -1081,10 +1081,8 @@ public class NuevoProducto extends JFrame {
 		
 
 		if(nc!=null){
-			txtStockInicial.setEnabled(false);
-			txtPrecioCompra.setEnabled(false);
-			txtPrecioVenta.setEnabled(false);
-			txtPtjGanancia.setEditable(false);
+			lblCantidadActual.setVisible(false);
+			txtStockInicial.setVisible(false);
 		}
 	}
 	

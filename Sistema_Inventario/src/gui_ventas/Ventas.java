@@ -564,6 +564,13 @@ public class Ventas extends JInternalFrame {
 		
 		tbCarrito.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Pre Indiv C/Desc", "Desc tot aplicado", "SubTotal", "IDPROD", "PC" });
+	
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(new Color(239, 198, 46));
+		for (int i = 0; i < tbCarrito.getModel().getColumnCount(); i++)
+			tbCarrito.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+		
+		
 			try {
 				consulta.iniciar();
 				rs = consulta.cargarConfiguraciones();
