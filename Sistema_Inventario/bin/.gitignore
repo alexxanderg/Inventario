@@ -1,6 +1,8 @@
+/DataBase_Inventario.sql
+/Librerias/
+/cherry.jpg
 /cherryB.jpg
 /cherryBM.jpg
-/clases/
 /gui_clientes/
 /gui_compras/
 /gui_configuracion/
@@ -50,7 +52,6 @@
 /rComprobante.jasper
 /rFechaIngreso.jasper
 /rFechaVencer.jasper
-/rInventario.jasper
 /rKardexDetallado.jasper
 /rProductoMasVendidos.jasper
 /rProductoMenosVendidos.jasper
@@ -65,3 +66,4 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
+/clases/
