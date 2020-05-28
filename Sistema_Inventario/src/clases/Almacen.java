@@ -40,6 +40,9 @@ public class Almacen {
 		}	
 	}
 	
+	
+	
+	
 	@Override
 	public String toString(){
 		return almacen;
