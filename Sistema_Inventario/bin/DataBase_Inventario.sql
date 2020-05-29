@@ -200,6 +200,15 @@ select * from tb_kardex_detalles;
 select * from tb_configuraciones;
 
 
+select vd.codventa, vd.cantidad, pr.producto, v.fecha, c.nombre, vd.subTotal, v.totventa, u.nombre, v.nota, vd.uMedidaUsada
+from tb_ventas_detalle vd 
+inner join tb_productos pr on  vd.codproducto = pr.codproducto 
+inner join tb_ventas v on vd.codventa = v.codventa
+inner join tb_clientes c on c.idcliente = v.idcliente
+inner join tb_usuarios u on u.idusuario = v.idusuario
+where vd.codventa = 6;
+
+
 select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
 
 select codproducto from tb_productos order by codproducto desc limit 1 ;
