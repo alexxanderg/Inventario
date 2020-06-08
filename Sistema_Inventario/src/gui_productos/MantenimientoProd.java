@@ -569,7 +569,6 @@ public class MantenimientoProd extends JInternalFrame {
 				if (seleccion == 0) {// MODIFICAR
 					try {
 						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-						JOptionPane.showMessageDialog(null, ""+idProd);
 						abrirModificarProducto(""+idProd);
 						
 					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS

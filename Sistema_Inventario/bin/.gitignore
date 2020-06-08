@@ -1,8 +1,6 @@
-/DataBase_Inventario.sql
 /Librerias/
 /cherry.jpg
-/cherryB.jpg
-/cherryBM.jpg
+/clases/
 /gui_clientes/
 /gui_compras/
 /gui_configuracion/
@@ -16,7 +14,6 @@
 /imgBxB2.png
 /imgBxBhrztl.png
 /imgLogo.png
-/imgLogoBM.png
 /imgMenuclientes.png
 /imgMenucompras.png
 /imgMenuconfiguraciones.png
@@ -27,8 +24,6 @@
 /imgMenuventas.png
 /imgalmacen.png
 /imgbanner.png
-/imgbannerB.png
-/imgbannerBM.png
 /imgbtnanadir.png
 /imgbtneliminar.png
 /imgbtnmodificar.png
@@ -66,4 +61,3 @@
 /rVentasVendedorTodoMetodoxUsuario.jasper
 /rVentasVendedorTodosXMpago.jasper
 /utils/
-/clases/
