@@ -77,6 +77,7 @@ public class MantenimientoProd extends JInternalFrame {
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
 	private JButton btnExportar;
+	private JMenu mnAgregarStock;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -236,6 +237,18 @@ public class MantenimientoProd extends JInternalFrame {
 		
 		mnOtrasOpciones = new JMenu("|Otras opciones|");
 		mnOtrasOpciones.setVisible(false);
+		
+		mnAgregarStock = new JMenu("|Agregar stock| ");
+		mnAgregarStock.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnAgregarStock(e);
+			}
+		});
+		mnAgregarStock.setForeground(new Color(0, 0, 0));
+		mnAgregarStock.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnAgregarStock.setBackground(SystemColor.menu);
+		menuBar.add(mnAgregarStock);
 		mnOtrasOpciones.setForeground(new Color(255, 69, 0));
 		mnOtrasOpciones.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnOtrasOpciones.setBackground(SystemColor.menu);
@@ -526,11 +539,19 @@ public class MantenimientoProd extends JInternalFrame {
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		String codigoProducto = tbProductos.getValueAt(tb.getSelectedRow(), 0).toString();
-		String producto = tbProductos.getValueAt(tb.getSelectedRow(), 2).toString();
-		String descripcion = tbProductos.getValueAt(tb.getSelectedRow(), 3).toString();
-		String marca = tbProductos.getValueAt(tb.getSelectedRow(), 4).toString();
-		String color = tbProductos.getValueAt(tb.getSelectedRow(), 5).toString();
-		
+		String producto = "";
+		String descripcion = "";
+		String marca = "";
+		String color = "";
+		try {
+			
+			producto = tbProductos.getValueAt(tb.getSelectedRow(), 2).toString();
+			descripcion = tbProductos.getValueAt(tb.getSelectedRow(), 3).toString();
+			marca = tbProductos.getValueAt(tb.getSelectedRow(), 4).toString();
+			color = tbProductos.getValueAt(tb.getSelectedRow(), 5).toString();
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR el producto:\n" + producto + " " + descripcion + " " + marca + " " + color + " ?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
@@ -562,7 +583,7 @@ public class MantenimientoProd extends JInternalFrame {
 
 				txtCodigo.setText("");
 				
-				String[] opciones = { "MODIFICAR", "ELIMINAR", "CANCELAR" };
+				String[] opciones = { "MODIFICAR", "ELIMINAR", "AGREGAR STOCK", "CANCELAR" };
 				int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
@@ -619,9 +640,43 @@ public class MantenimientoProd extends JInternalFrame {
 						}
 					}
 				}
+
+				if (seleccion == 2) {//  agregar stock
+					try {
+						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						
+						model.iniciar();
+						rs = model.buscarProductoID(idProd);
+						rs.next();
+						String productoName = rs.getString("producto");
+						float cantidadActual = rs.getFloat("cantidad");
+						float preciocoProducto = rs.getFloat("precioCo");
+						float preciovePoducto = rs.getFloat("precioVe");
+						
+						float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto: " + productoName + "\nStock actual: " + cantidadActual));
+						
+						float cantidadFinal = cantidadActual + stockanadir;
+						
+						//JOptionPane.showMessageDialog(null, "Ahora: " + cantidadFinal);
+						model.ingresarStock(idProd, cantidadFinal);
+						cargar();
+						selecionarProducto(""+idProd);
+						
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error: " + e2);
+					} finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (model != null)
+								model.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}
+				}
 			}
 		}
-		
 	}
 	
 	public void cerrarVentanas(){
@@ -677,6 +732,45 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
 		}	
+	}
+	
+	protected void mouseClickedMnAgregarStock(MouseEvent e) {
+		try {
+			int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
+			try {
+				model.iniciar();
+				rs = model.buscarProductoID(idProducto);
+				rs.next();
+				String productoName = rs.getString("producto");
+				float cantidadActual = rs.getFloat("cantidad");
+				
+				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto: " + productoName + "\nStock actual: " + cantidadActual));
+				
+				float cantidadFinal = cantidadActual + stockanadir;
+				
+				//JOptionPane.showMessageDialog(null, "Ahora: " + cantidadFinal);
+				model.ingresarStock(idProducto, cantidadFinal);
+				cargar();
+				selecionarProducto(""+idProducto);
+				
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Error: " + e2);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (model != null)
+						model.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}
+			
+			
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+		 
 	}
 }
 

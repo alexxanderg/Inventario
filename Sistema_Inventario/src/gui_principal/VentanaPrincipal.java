@@ -21,9 +21,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
@@ -38,6 +45,8 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -99,6 +108,12 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public VentanaPrincipal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				windowClosingThis(e);
+			}
+		});
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1380, 735);
@@ -137,7 +152,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(colorDeselec);
-		btnInventario.setBounds(0, 292, 230, 50);
+		btnInventario.setBounds(0, 231, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -158,7 +173,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUsuario.setBackground(colorDeselec);
-		btnUsuario.setBounds(0, 475, 230, 50);
+		btnUsuario.setBounds(0, 414, 230, 50);
 		panel.add(btnUsuario);
 
 		btnClientes = new JButton("Clientes ");
@@ -174,7 +189,7 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnClientes.setBackground(colorDeselec);
-		btnClientes.setBounds(0, 414, 230, 50);
+		btnClientes.setBounds(0, 353, 230, 50);
 		panel.add(btnClientes);
 
 		btnReportes = new JButton("Reportes ");
@@ -190,7 +205,7 @@ public class VentanaPrincipal extends JFrame {
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnReportes.setBackground(colorDeselec);
-		btnReportes.setBounds(0, 536, 230, 50);
+		btnReportes.setBounds(0, 475, 230, 50);
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones ");
@@ -206,7 +221,7 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnConfiguraciones.setBackground(colorDeselec);
-		btnConfiguraciones.setBounds(0, 597, 230, 50);
+		btnConfiguraciones.setBounds(0, 536, 230, 50);
 		panel.add(btnConfiguraciones);
 		
 		btnDistribuidores = new JButton("Distribuidores");
@@ -221,10 +236,11 @@ public class VentanaPrincipal extends JFrame {
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDistribuidores.setBackground(colorDeselec);
-		btnDistribuidores.setBounds(0, 353, 230, 50);
+		btnDistribuidores.setBounds(0, 292, 230, 50);
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
+		btnCompras.setVisible(false);
 		btnCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnCompras(e);
@@ -307,7 +323,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("TIENDA'S  GABY");
+		lblNewLabel = new JLabel("BOTICA MITNAO");
 		lblNewLabel.setBounds(123, 0, 869, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -349,7 +365,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();
@@ -608,5 +624,30 @@ public class VentanaPrincipal extends JFrame {
 	}
 	protected void actionPerformedBtnNotificaciones(ActionEvent arg0) {
 		JOptionPane.showMessageDialog(null, "Área en construcción");
+	}
+	
+	protected void windowClosingThis(WindowEvent e) {
+		try {
+			DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
+			Date today = Calendar.getInstance().getTime();       
+			String reportDate = df.format(today);
+			File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
+			directorio.mkdirs(); 
+			Process p;
+			p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
+			InputStream is = p.getInputStream();
+			FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+			byte[] buffer = new byte[1000];
+			int leido = is.read(buffer);
+			while(leido>0){
+				fos.write(buffer, 0, leido);
+				leido = is.read(buffer);
+			}
+			//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
+			//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
+			fos.close();
+		} catch (IOException e1) {
+			//JOptionPane.showMessageDialog(null, e1);
+		}	
 	}
 }

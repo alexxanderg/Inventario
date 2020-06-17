@@ -70,12 +70,14 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	}
 
 	public AgregarStock(String temp, String temp2, String temp5, String temp6, String temp4) {
-		addWindowListener(this);
+		
 		cod = temp;
 		cantActual = temp2;
 		usuario = temp4;
 		precioCo = temp5;
 		precioVe = temp6;
+		
+		addWindowListener(this);
 		setResizable(false);
 		setBounds(100, 100, 560, 481);
 		getContentPane().setLayout(null);
@@ -276,7 +278,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				//Object date2 = new java.sql.Timestamp(d);
 				
 				//Consultas
-				model.ingresarStock(cod, total);
+				//model.ingresarStock(cod, total);
 				//model.registrarFechaIngreso(cod, ca, pc, pv, usuario);
 				model.modificarPC_PV(cod, pc, pv);
 				

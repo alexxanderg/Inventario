@@ -228,10 +228,10 @@ public class Ventas extends JInternalFrame {
 		txtInfoAdicional.setBounds(10, 138, 404, 34);
 		getContentPane().add(txtInfoAdicional);
 		
-		lblMtodoDePago = new JLabel("Pago 1:");
+		lblMtodoDePago = new JLabel("Paga con:");
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(441, 34, 110, 23);
+		lblMtodoDePago.setBounds(441, 113, 110, 23);
 		getContentPane().add(lblMtodoDePago);
 		
 		cbPago1 = new JComboBox();
@@ -239,7 +239,7 @@ public class Ventas extends JInternalFrame {
 		cbPago1.setBackground(new Color(245, 245, 245));
 		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
-		cbPago1.setBounds(441, 58, 139, 35);
+		cbPago1.setBounds(441, 137, 139, 35);
 		getContentPane().add(cbPago1);
 		
 		lblTotalVentaFinal = new JLabel("0");
@@ -271,7 +271,8 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setText("1");
+		txtNroImpresiones.setVisible(false);
+		txtNroImpresiones.setText("0");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
@@ -343,16 +344,18 @@ public class Ventas extends JInternalFrame {
 		txtPago1.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago1.setColumns(10);
 		txtPago1.setBackground(new Color(245, 245, 245));
-		txtPago1.setBounds(583, 58, 85, 34);
+		txtPago1.setBounds(583, 137, 85, 34);
 		getContentPane().add(txtPago1);
 		
 		lblMtodoDePago_1 = new JLabel("Pago 2:");
+		lblMtodoDePago_1.setVisible(false);
 		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
 		lblMtodoDePago_1.setBounds(441, 115, 110, 23);
 		getContentPane().add(lblMtodoDePago_1);
 		
 		cbPago2 = new JComboBox();
+		cbPago2.setVisible(false);
 		cbPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
@@ -361,6 +364,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(cbPago2);
 		
 		txtPago2 = new JTextField();
+		txtPago2.setVisible(false);
 		txtPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPago2.addFocusListener(new FocusAdapter() {
 			@Override
@@ -391,10 +395,11 @@ public class Ventas extends JInternalFrame {
 		lblS.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS.setForeground(Color.DARK_GRAY);
 		lblS.setFont(new Font("Candara", Font.BOLD, 20));
-		lblS.setBounds(601, 24, 32, 34);
+		lblS.setBounds(601, 103, 32, 34);
 		getContentPane().add(lblS);
 		
 		label_1 = new JLabel("S/");
+		label_1.setVisible(false);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));

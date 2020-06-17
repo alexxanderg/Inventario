@@ -254,14 +254,12 @@ on p.iddistrib = d.iddistrib
 where p.producto like '%12 colores%' or detalles like '%prod  %' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' 
 order by p.producto;
 
-producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto
-
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
 update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
 
-update tb_ventas set usuario='admin' where usuario='Alexander Gamarra';
+update tb_productos set iddistrib=1;
 
 SET SQL_SAFE_UPDATES = 0;
 
@@ -341,3 +339,13 @@ select * from tb_ventas;
 
 alter table tb_ventas
   add saldo		float after descuento;
+  
+create database db_temporal;
+use db_temporal;
+
+INSERT INTO db_inventario.tb_productos(codproducto, producto, detalles, laboratorio, unimedida, fechaVenc, categoria, cantidad, precioCo, precioVe, estado) -- 0INACTIVO 1ACTIVO
+SELECT codproducto, producto, detalles, laboratorio, unimedida, fechaVenc, categoria, cantidad, precioCo, precioVe, 1 FROM db_temporal.tb_productos;
+
+INSERT INTO newDatabase.table1 (Column1, Column2) 
+SELECT column1, column2 FROM oldDatabase.table1;
+
