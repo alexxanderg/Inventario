@@ -260,14 +260,13 @@ public class MantenimientoProductos extends JFrame implements ActionListener, Wi
 	}
 
 	public void ajustarAnchoColumnas() {
-	/*	TableColumnModel tcm = tbProductos.getColumnModel();
+		/*TableColumnModel tcm = tbProductos.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Codigo
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(12)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(8)); // Detalle
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(8)); // Categoria
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(8)); // Marca
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(7)); // Color
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(7)); // Laboratorio
 		tcm.getColumn(7).setPreferredWidth(anchoColumna(7)); // F. Vencimiento
 		tcm.getColumn(8).setPreferredWidth(anchoColumna(7)); // Nto Lote
 		tcm.getColumn(9).setPreferredWidth(anchoColumna(7)); // Uni. Medida

@@ -311,7 +311,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 
 		txtCopias = new JTextField();
 		txtCopias.addKeyListener(this);
-		txtCopias.setText("2");
+		txtCopias.setText("0");
 		txtCopias.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCopias.setForeground(Color.BLACK);
 		txtCopias.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -594,7 +594,7 @@ public class Ventas extends JFrame implements WindowListener, ActionListener, Ke
 	}
 
 	public void cargar() {
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 
 		Cliente cliente = new Cliente();
