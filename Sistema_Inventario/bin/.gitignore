@@ -1,7 +1,9 @@
 /gui_productos/
-/gui_reportes/
-/gui_usuarios/
+/gui_principal/
 /gui_ventas/
-/mysql/
-/org/
-/utils/
+/gui_compras/
+/gui_distribuidores/
+/gui_clientes/
+/gui_usuarios/
+/gui_reportes/
+/imgLogoBxB.png

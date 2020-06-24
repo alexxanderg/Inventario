@@ -36,6 +36,8 @@ import java.util.Date;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class Login extends JFrame implements ActionListener, KeyListener {
 
@@ -169,6 +171,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(lblCreditos);
 
 		this.setLocationRelativeTo(null);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtUsuario, txtPass, btnIngresar}));
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnIngresar) {

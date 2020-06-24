@@ -55,13 +55,12 @@ import clases.AbstractJasperReports;
 import clases.Cliente;
 import clases.PintarTablaVentasBuscar;
 import clases.Usuarios;
+import javax.swing.border.EmptyBorder;
 
 public class BuscarVentas extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
 	private JMenu mnEliminarVenta;
-	private JButton btnX;
 	private JScrollPane scrollPane;
 	private JTable tbVentas;
 	private JButton btnVerVentas;
@@ -71,7 +70,6 @@ public class BuscarVentas extends JInternalFrame {
 	private JDateChooser dchDesde;
 	private JLabel lblHasta;
 	private JDateChooser dchHasta;
-	private JMenu mnhistorialDeAcciones;
 	private JLabel lblTV;
 	private JLabel lblTotVentas;
 	private JLabel lblTotDescuentos;
@@ -115,18 +113,6 @@ public class BuscarVentas extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
-		btnX = new JButton("X");
-		this.btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setForeground(new Color(255, 255, 255));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1030, 0, 63, 30);
-		getContentPane().add(btnX);
-		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
@@ -158,95 +144,96 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(734, 10, 110, 57);
+		btnVerVentas.setBounds(829, 38, 123, 30);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(217, 37, 227, 30);
+		cbUsuarios.setBounds(312, 38, 227, 30);
 		getContentPane().add(cbUsuarios);
 		
-		lblVendedor = new JLabel("Vendedor:");
+		lblVendedor = new JLabel("Vendido por:");
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(217, 12, 110, 30);
+		lblVendedor.setBounds(312, 13, 123, 30);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
 		lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDesde.setForeground(new Color(102, 205, 170));
+		lblDesde.setForeground(Color.DARK_GRAY);
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(454, 10, 71, 30);
+		lblDesde.setBounds(549, 11, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(454, 37, 130, 30);
+		dchDesde.setBounds(549, 38, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
 		lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHasta.setForeground(new Color(102, 205, 170));
+		lblHasta.setForeground(Color.DARK_GRAY);
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(594, 10, 71, 30);
+		lblHasta.setBounds(689, 11, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(594, 37, 130, 30);
+		dchHasta.setBounds(689, 38, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
 		lblTV.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTV.setForeground(new Color(30, 144, 255));
-		lblTV.setFont(new Font("Candara", Font.BOLD, 30));
+		lblTV.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTV.setBackground(new Color(50, 205, 50));
-		lblTV.setBounds(687, 291, 255, 36);
+		lblTV.setBounds(754, 291, 221, 36);
 		getContentPane().add(lblTV);
 		
 		lblTotVentas = new JLabel("0");
 		lblTotVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotVentas.setForeground(new Color(30, 144, 255));
-		lblTotVentas.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblTotVentas.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotVentas.setBackground(new Color(50, 205, 50));
-		lblTotVentas.setBounds(952, 290, 141, 36);
+		lblTotVentas.setBounds(985, 290, 108, 36);
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
 		lblTotDescuentos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
-		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotDescuentos.setBackground(new Color(50, 205, 50));
-		lblTotDescuentos.setBounds(524, 290, 141, 36);
+		lblTotDescuentos.setBounds(662, 291, 95, 36);
 		getContentPane().add(lblTotDescuentos);
 		
-		lblTD = new JLabel("TOTAL DESCUENTOS S/ ");
+		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
 		lblTD.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTD.setForeground(new Color(205, 92, 92));
-		lblTD.setFont(new Font("Candara", Font.BOLD, 30));
+		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTD.setBackground(new Color(50, 205, 50));
-		lblTD.setBounds(170, 291, 344, 36);
+		lblTD.setBounds(355, 291, 296, 36);
 		getContentPane().add(lblTD);
 		
-		btnGenerarReporte = new JButton("<html><center>Ver reporte<br>detallado</center></html>");
+		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>VENTAS</center></html>");
+		btnGenerarReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnGenerarReporte(arg0);
 			}
 		});
-		btnGenerarReporte.setForeground(Color.WHITE);
+		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnGenerarReporte.setBackground(new Color(102, 205, 170));
-		btnGenerarReporte.setBounds(854, 10, 135, 57);
+		btnGenerarReporte.setBackground(new Color(255, 255, 255));
+		btnGenerarReporte.setBounds(962, 10, 131, 57);
 		getContentPane().add(btnGenerarReporte);
 		
-		lblBuscarVentas = new JLabel("Buscar ventas:");
-		lblBuscarVentas.setVerticalAlignment(SwingConstants.TOP);
+		lblBuscarVentas = new JLabel("<html>Historial<br>de ventas:</html>");
 		lblBuscarVentas.setForeground(Color.DARK_GRAY);
-		lblBuscarVentas.setFont(new Font("Candara", Font.BOLD, 30));
-		lblBuscarVentas.setBounds(10, 33, 219, 34);
+		lblBuscarVentas.setFont(new Font("Candara", Font.BOLD, 25));
+		lblBuscarVentas.setBounds(10, 11, 123, 56);
 		getContentPane().add(lblBuscarVentas);
 		
 		scrollPane_1 = new JScrollPane();
@@ -268,55 +255,46 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(lblDetallesDeVenta);
 		
 		textField = new JTextField();
-		textField.setBounds(10, 291, 13, 13);
+		textField.setEditable(false);
+		textField.setBounds(152, 19, 13, 13);
 		textField.setBackground(new Color(138, 230, 78)); //VERDE
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setColumns(10);
-		textField_1.setBounds(10, 308, 13, 13);
+		textField_1.setBounds(152, 36, 13, 13);
 		textField_1.setBackground(new Color(236, 236, 69)); //AMARILLO
 		getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
-		textField_2.setBounds(10, 326, 13, 13);
+		textField_2.setBounds(152, 54, 13, 13);
 		textField_2.setBackground(new Color(251, 105, 120)); //ROJO
 		getContentPane().add(textField_2);
 		
 		lblNewLabel = new JLabel("Ventas correctas");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(33, 291, 95, 14);
+		lblNewLabel.setBounds(175, 19, 95, 14);
 		getContentPane().add(lblNewLabel);
 		
 		lblVentasModificadas = new JLabel("Ventas modificadas");
 		lblVentasModificadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVentasModificadas.setBounds(33, 308, 108, 14);
+		lblVentasModificadas.setBounds(175, 36, 108, 14);
 		getContentPane().add(lblVentasModificadas);
 		
 		lblVentasEliminadas = new JLabel("Ventas eliminadas");
 		lblVentasEliminadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVentasEliminadas.setBounds(33, 325, 95, 14);
+		lblVentasEliminadas.setBounds(175, 53, 95, 14);
 		getContentPane().add(lblVentasEliminadas);
 
 		
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.setBackground(new Color(211, 211, 211));
+		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
-		
-		mnCrearProducto = new JMenu("|Ver detalles de venta| ");
-		mnCrearProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnCrearProducto(arg0);
-			}
-		});
-		mnCrearProducto.setForeground(new Color(30, 144, 255));
-		mnCrearProducto.setBackground(SystemColor.control);
-		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnCrearProducto);
 		
 		mnModificarProducto = new JMenu("|Modificar Venta| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
@@ -325,7 +303,7 @@ public class BuscarVentas extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		mnModificarProducto.setForeground(new Color(60, 179, 113));
+		mnModificarProducto.setForeground(new Color(50, 205, 50));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
@@ -337,17 +315,10 @@ public class BuscarVentas extends JInternalFrame {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnEliminarVenta.setForeground(new Color(220, 20, 60));
+		mnEliminarVenta.setForeground(new Color(240, 128, 128));
 		mnEliminarVenta.setBackground(SystemColor.control);
 		mnEliminarVenta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarVenta);
-		
-		mnhistorialDeAcciones = new JMenu("|Historial de acciones realizadas| ");
-		mnhistorialDeAcciones.setVisible(false);
-		mnhistorialDeAcciones.setForeground(new Color(186, 85, 211));
-		mnhistorialDeAcciones.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnhistorialDeAcciones.setBackground(SystemColor.menu);
-		menuBar.add(mnhistorialDeAcciones);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -362,12 +333,6 @@ public class BuscarVentas extends JInternalFrame {
 		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
 		tbVentas.setRowHeight(30);
 		tbVentas.setModel(dtm);
-		
-
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(239, 198, 46));
-		for (int i = 0; i < tbVentas.getModel().getColumnCount(); i++)
-			tbVentas.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
 		
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
@@ -390,6 +355,8 @@ public class BuscarVentas extends JInternalFrame {
 		date.getTime();
 		dchDesde.setDate(date);
 		dchHasta.setDate(date);
+		
+		ajustarAnchoColumnas();
 	}
 	
 	private void recargar(){
@@ -432,20 +399,8 @@ public class BuscarVentas extends JInternalFrame {
 		tbDetalleVenta.getColumnModel().getColumn(3).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 	}
-
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public void selecionarUsuario(String id) {
-	}
-	
-	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
-		
 	}
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		try {
@@ -571,6 +526,7 @@ public class BuscarVentas extends JInternalFrame {
 		
 		lblTotVentas.setText(""+sumTotal);
 		lblTotDescuentos.setText(""+sumDescuentos);
+		ajustarAnchoColumnas();
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {

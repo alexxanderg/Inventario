@@ -37,7 +37,6 @@ public class MantenimientoCompras extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearCompra;
 	private JMenu mnAgregarPago;
-	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	public JTable tbCompras;
@@ -83,18 +82,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
-		btnX = new JButton("X");
-		this.btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setForeground(new Color(255, 255, 255));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1030, 0, 63, 30);
-		getContentPane().add(btnX);
-		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
@@ -132,20 +119,20 @@ public class MantenimientoCompras extends JInternalFrame {
 		lblHistorialDeCompras = new JLabel("Historial de Compras:");
 		lblHistorialDeCompras.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblHistorialDeCompras.setForeground(Color.DARK_GRAY);
-		lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
+		lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 25));
 		lblHistorialDeCompras.setBounds(10, 35, 331, 34);
 		getContentPane().add(lblHistorialDeCompras);
 		
 		lblDetallesDeCompras = new JLabel("Detalles de Compra:");
 		lblDetallesDeCompras.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDetallesDeCompras.setForeground(Color.DARK_GRAY);
-		lblDetallesDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
+		lblDetallesDeCompras.setFont(new Font("Candara", Font.BOLD, 25));
 		lblDetallesDeCompras.setBounds(10, 355, 331, 34);
 		getContentPane().add(lblDetallesDeCompras);
 		
 		label = new JLabel("Desde:");
 		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(new Color(102, 205, 170));
+		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
 		label.setBackground(new Color(50, 205, 50));
 		label.setBounds(313, 12, 71, 30);
@@ -161,7 +148,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		
 		label_1 = new JLabel("Hasta:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setForeground(new Color(102, 205, 170));
+		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
 		label_1.setBackground(new Color(50, 205, 50));
 		label_1.setBounds(453, 12, 71, 30);
@@ -176,19 +163,20 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnVerCompras.setForeground(Color.WHITE);
 		btnVerCompras.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVerCompras.setBackground(new Color(30, 144, 255));
-		btnVerCompras.setBounds(598, 12, 110, 57);
+		btnVerCompras.setBounds(598, 35, 130, 34);
 		getContentPane().add(btnVerCompras);
 		
-		btnGenerarReporte = new JButton("<html><center>Ver reporte<br>detallado</center></html>");
+		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>COMPRAS</center></html>");
+		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnGenerarReporte(e);
 			}
 		});
-		btnGenerarReporte.setForeground(Color.WHITE);
+		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnGenerarReporte.setBackground(new Color(102, 205, 170));
-		btnGenerarReporte.setBounds(718, 12, 135, 57);
+		btnGenerarReporte.setBackground(Color.WHITE);
+		btnGenerarReporte.setBounds(944, 8, 149, 57);
 		getContentPane().add(btnGenerarReporte);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCompras.getTableHeader().setReorderingAllowed(false);
@@ -196,7 +184,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.setBackground(new Color(211, 211, 211));
+		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 		
 		mnCrearCompra = new JMenu("|Registrar nueva compra| ");
@@ -218,7 +206,7 @@ public class MantenimientoCompras extends JInternalFrame {
 				mouseClickedMnAgregarPago(arg0);
 			}
 		});
-		mnAgregarPago.setForeground(new Color(220, 20, 60));
+		mnAgregarPago.setForeground(new Color(240, 128, 128));
 		mnAgregarPago.setBackground(SystemColor.control);
 		mnAgregarPago.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnAgregarPago);
@@ -282,10 +270,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		tbDetallesCompra.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbDetallesCompra.getColumnModel().getColumn(2).setCellRenderer(tcr0);
 		tbDetallesCompra.getColumnModel().getColumn(3).setCellRenderer(tcr0);
-	}
-
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		this.dispose();
 	}
 	
 	protected void mouseClickedMnCrearCompra(MouseEvent e) {

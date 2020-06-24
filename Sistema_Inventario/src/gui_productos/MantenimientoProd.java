@@ -8,6 +8,9 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
 import com.mxrck.autocompleter.TextAutoCompleter;
 
 import clases.AbstractJasperReports;
@@ -21,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -50,13 +54,13 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.border.EmptyBorder;
 
 public class MantenimientoProd extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
 	private JMenu mnEliminarProducto;
-	private JButton btnX;
 	private JLabel lblCdigo;
 	private JTextField txtCodigo;
 	private JScrollPane scrollPane;
@@ -99,23 +103,11 @@ public class MantenimientoProd extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
-		btnX = new JButton("X");
-		this.btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setForeground(new Color(255, 255, 255));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1030, 0, 63, 30);
-		getContentPane().add(btnX);
-		
 		this.lblCdigo = new JLabel("Buscar:");
+		lblCdigo.setVerticalAlignment(SwingConstants.TOP);
 		lblCdigo.setForeground(Color.DARK_GRAY);
-		this.lblCdigo.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 30));
-		this.lblCdigo.setBounds(10, 45, 138, 34);
+		this.lblCdigo.setBounds(10, 45, 113, 34);
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtCodigo = new JTextField();
@@ -134,7 +126,7 @@ public class MantenimientoProd extends JInternalFrame {
 		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
 		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(115, 45, 476, 34);
+		this.txtCodigo.setBounds(123, 45, 428, 34);
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
@@ -152,14 +144,16 @@ public class MantenimientoProd extends JInternalFrame {
 		scrollPane.setViewportView(tbProductos);
 		
 		chckbxFiltrar = new JCheckBox("\u00BFFiltrar al escribir?");
+		chckbxFiltrar.setForeground(new Color(30, 144, 255));
+		chckbxFiltrar.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckbxFiltrar.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				itemStateChangedChckbxFiltrar(arg0);
 			}
 		});
 		chckbxFiltrar.setBackground(Color.WHITE);
-		chckbxFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		chckbxFiltrar.setBounds(597, 43, 182, 34);
+		chckbxFiltrar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		chckbxFiltrar.setBounds(354, 20, 197, 20);
 		getContentPane().add(chckbxFiltrar);
 		
 		txtCodigo2 = new JTextField();
@@ -175,19 +169,21 @@ public class MantenimientoProd extends JInternalFrame {
 		txtCodigo2.setColumns(10);
 		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(115, 45, 476, 34);
+		txtCodigo2.setBounds(123, 45, 428, 34);
 		getContentPane().add(txtCodigo2);
 		
-		btnExportar = new JButton("<html><center>Exportar</center></html>");
+		btnExportar = new JButton("EXPORTAR INVENTARIO");
+		btnExportar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnExportar.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnExportar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnExportar(arg0);
 			}
 		});
-		btnExportar.setForeground(Color.WHITE);
+		btnExportar.setForeground(new Color(138, 43, 226));
 		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnExportar.setBackground(new Color(102, 205, 170));
-		btnExportar.setBounds(785, 45, 138, 34);
+		btnExportar.setBackground(new Color(255, 255, 255));
+		btnExportar.setBounds(862, 20, 231, 58);
 		getContentPane().add(btnExportar);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
@@ -195,8 +191,9 @@ public class MantenimientoProd extends JInternalFrame {
 		
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.setBackground(new Color(211, 211, 211));
+		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, chckbxFiltrar, txtCodigo2, btnExportar}));
 		
 		mnCrearProducto = new JMenu("|Crear nuevo producto| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
@@ -217,7 +214,13 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		mnModificarProducto.setForeground(new Color(60, 179, 113));
+		
+		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
+		mnaadirStock.setForeground(new Color(0, 204, 255));
+		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnaadirStock.setBackground(SystemColor.menu);
+		menuBar.add(mnaadirStock);
+		mnModificarProducto.setForeground(new Color(50, 205, 50));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
@@ -229,14 +232,13 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnEliminarProducto.setForeground(new Color(220, 20, 60));
+		mnEliminarProducto.setForeground(new Color(240, 128, 128));
 		mnEliminarProducto.setBackground(SystemColor.control);
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
 		
 		mnOtrasOpciones = new JMenu("|Otras opciones|");
-		mnOtrasOpciones.setVisible(false);
-		mnOtrasOpciones.setForeground(new Color(255, 69, 0));
+		mnOtrasOpciones.setForeground(new Color(255, 102, 51));
 		mnOtrasOpciones.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnOtrasOpciones.setBackground(SystemColor.menu);
 		menuBar.add(mnOtrasOpciones);
@@ -263,8 +265,7 @@ public class MantenimientoProd extends JInternalFrame {
 		mntmVerHistorial.setFont(new Font("Arial", Font.PLAIN, 20));
 		mnOtrasOpciones.add(mntmVerHistorial);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
-		
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
 		cargarBuscador();
 	}
@@ -447,14 +448,6 @@ public class MantenimientoProd extends JInternalFrame {
 		/*DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);*/
-	}
-
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void selecionarProducto(String id) {

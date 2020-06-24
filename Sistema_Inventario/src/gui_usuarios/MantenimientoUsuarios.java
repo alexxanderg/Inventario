@@ -46,7 +46,6 @@ public class MantenimientoUsuarios extends JInternalFrame {
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
 	private JMenu mnNewMenu_2;
-	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbUsuarios;
@@ -78,18 +77,6 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 		
-		btnX = new JButton("X");
-		this.btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setForeground(new Color(255, 255, 255));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1030, 0, 63, 30);
-		getContentPane().add(btnX);
-		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
@@ -109,7 +96,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.setBackground(new Color(211, 211, 211));
+		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 		
 		mnCrearProducto = new JMenu("|Crear nuevo usuario| ");
@@ -131,7 +118,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		mnModificarProducto.setForeground(new Color(60, 179, 113));
+		mnModificarProducto.setForeground(new Color(50, 205, 50));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
@@ -143,7 +130,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnNewMenu_2.setForeground(new Color(220, 20, 60));
+		mnNewMenu_2.setForeground(new Color(240, 128, 128));
 		mnNewMenu_2.setBackground(SystemColor.control);
 		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnNewMenu_2);
@@ -202,14 +189,6 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
 		tbUsuarios.getColumnModel().getColumn(3).setCellRenderer(tcr0);*/
-	}
-
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void selecionarUsuario(String id) {

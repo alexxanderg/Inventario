@@ -32,7 +32,6 @@ public class MantenimientoClientes extends JInternalFrame {
 	private JMenu mnCrearCliente;
 	private JMenu mnModificarCliente;
 	private JMenu mnEliminarCliente;
-	private JButton btnX;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbCliente;
@@ -64,19 +63,8 @@ public class MantenimientoClientes extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 
-		btnX = new JButton("X");
-		this.btnX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnX(arg0);
-			}
-		});
-		btnX.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		btnX.setForeground(new Color(255, 255, 255));
-		btnX.setBackground(new Color(220, 20, 60));
-		btnX.setBounds(1030, 0, 63, 30);
-		getContentPane().add(btnX);
-
 		this.scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
 		this.scrollPane.setBounds(10, 41, 1083, 568);
 		getContentPane().add(this.scrollPane);
@@ -93,7 +81,7 @@ public class MantenimientoClientes extends JInternalFrame {
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.setBackground(new Color(211, 211, 211));
+		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 
 		mnCrearCliente = new JMenu("|Crear nuevo cliente| ");
@@ -115,7 +103,7 @@ public class MantenimientoClientes extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		mnModificarCliente.setForeground(new Color(60, 179, 113));
+		mnModificarCliente.setForeground(new Color(50, 205, 50));
 		mnModificarCliente.setBackground(SystemColor.control);
 		mnModificarCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarCliente);
@@ -127,7 +115,7 @@ public class MantenimientoClientes extends JInternalFrame {
 				mouseClickedMnNewMenu_2(e);
 			}
 		});
-		mnEliminarCliente.setForeground(new Color(220, 20, 60));
+		mnEliminarCliente.setForeground(new Color(240, 128, 128));
 		mnEliminarCliente.setBackground(SystemColor.control);
 		mnEliminarCliente.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarCliente);
@@ -173,14 +161,6 @@ public class MantenimientoClientes extends JInternalFrame {
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); //
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); //
 
-	}
-
-	protected void actionPerformedBtnX(ActionEvent arg0) {
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void selecionarCliente(String id) {

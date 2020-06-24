@@ -38,6 +38,8 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -61,7 +63,6 @@ public class VentanaPrincipal extends JFrame {
     private JLabel lblCerrarSesion;
     private JButton btnBuscarVentas;
 	public JLabel lblUsuario;
-
 	public Ventas ventas = null;
 	public BuscarVentas buscarV = null;
 	public MantenimientoCompras vCompras = null;
@@ -76,13 +77,13 @@ public class VentanaPrincipal extends JFrame {
 	consultas consulta = new consultas();
 	
 	Color colorSelec = new Color(240, 67, 85);
-    Color colorDeselec = new Color(74, 192, 244);
+    Color colorDeselec = new Color(30, 144, 255);
    
     /*Color colorSelec = new Color(255, 177, 70 );
     Color colorDeselec = new Color(243, 112, 112);*/
     int anchoImgBtn = 45;
     int altoImgBtn = 45;
-    private JLabel lblBxB;
+    private JLabel lblLogoBxB;
     private JButton btnNotificaciones;
 	
 	public static void main(String[] args) {
@@ -101,14 +102,14 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1380, 735);
+		setBounds(100, 100, 1382, 784);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
-		panel.setBackground(Color.BLACK);
+		panel.setBackground(Color.DARK_GRAY);
 		panel.setBounds(0, 0, 230, 707);
 		contentPane.add(panel);
 		
@@ -119,8 +120,8 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setIcon(new ImageIcon(imgVentas));
 		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnVentas.setForeground(Color.WHITE);
-		btnVentas.setBackground(colorDeselec);
-		btnVentas.setBounds(0, 170, 177, 50);
+		btnVentas.setBackground(new Color(30, 144, 255));
+		btnVentas.setBounds(0, 219, 177, 50);
 		btnVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnVentas(arg0);
@@ -136,8 +137,8 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setIcon(new ImageIcon(imgInventario));
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
-		btnInventario.setBackground(colorDeselec);
-		btnInventario.setBounds(0, 292, 230, 50);
+		btnInventario.setBackground(new Color(30, 144, 255));
+		btnInventario.setBounds(0, 341, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -157,8 +158,8 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setIcon(new ImageIcon(imgUsuarios));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUsuario.setBackground(colorDeselec);
-		btnUsuario.setBounds(0, 475, 230, 50);
+		btnUsuario.setBackground(new Color(30, 144, 255));
+		btnUsuario.setBounds(0, 524, 230, 50);
 		panel.add(btnUsuario);
 
 		btnClientes = new JButton("Clientes ");
@@ -173,8 +174,8 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setIcon(new ImageIcon(imgClientes));
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnClientes.setBackground(colorDeselec);
-		btnClientes.setBounds(0, 414, 230, 50);
+		btnClientes.setBackground(new Color(30, 144, 255));
+		btnClientes.setBounds(0, 463, 230, 50);
 		panel.add(btnClientes);
 
 		btnReportes = new JButton("Reportes ");
@@ -189,8 +190,8 @@ public class VentanaPrincipal extends JFrame {
 		btnReportes.setIcon(new ImageIcon(imgReportes));
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnReportes.setBackground(colorDeselec);
-		btnReportes.setBounds(0, 536, 230, 50);
+		btnReportes.setBackground(new Color(30, 144, 255));
+		btnReportes.setBounds(0, 585, 230, 50);
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones ");
@@ -205,8 +206,8 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setIcon(new ImageIcon(imgConfig));
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnConfiguraciones.setBackground(colorDeselec);
-		btnConfiguraciones.setBounds(0, 597, 230, 50);
+		btnConfiguraciones.setBackground(new Color(30, 144, 255));
+		btnConfiguraciones.setBounds(0, 646, 230, 50);
 		panel.add(btnConfiguraciones);
 		
 		btnDistribuidores = new JButton("Distribuidores");
@@ -220,8 +221,8 @@ public class VentanaPrincipal extends JFrame {
 		btnDistribuidores.setIcon(new ImageIcon(imgDist));
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnDistribuidores.setBackground(colorDeselec);
-		btnDistribuidores.setBounds(0, 353, 230, 50);
+		btnDistribuidores.setBackground(new Color(30, 144, 255));
+		btnDistribuidores.setBounds(0, 402, 230, 50);
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
@@ -235,15 +236,15 @@ public class VentanaPrincipal extends JFrame {
 		btnCompras.setIcon(new ImageIcon(imgCompras));
 		btnCompras.setForeground(Color.WHITE);
 		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCompras.setBackground(colorDeselec);
-		btnCompras.setBounds(0, 231, 230, 50);
+		btnCompras.setBackground(new Color(30, 144, 255));
+		btnCompras.setBounds(0, 280, 230, 50);
 		panel.add(btnCompras);
 		
 		lblUsuario = new JLabel("Aqui Va El Nombre del Usuario");
-		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setBounds(0, 110, 230, 36);
+		lblUsuario.setBounds(0, 132, 230, 36);
 		panel.add(lblUsuario);
 		
 		lblLogo = new JLabel("");
@@ -252,35 +253,23 @@ public class VentanaPrincipal extends JFrame {
 		lblLogo.setIcon(new ImageIcon(imgLogo));
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblLogo.setBounds(10, 10, 210, 100);
+		lblLogo.setBounds(10, 31, 210, 100);
 		panel.add(lblLogo);
 		
 		lblTipo = new JLabel("Aqui Va El Nombre del Usuario");
 		lblTipo.setVerticalAlignment(SwingConstants.TOP);
 		lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTipo.setForeground(Color.WHITE);
-		lblTipo.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		lblTipo.setBounds(0, 144, 230, 29);
+		lblTipo.setForeground(new Color(233, 150, 122));
+		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTipo.setBounds(0, 166, 230, 29);
 		panel.add(lblTipo);
 		
 		lblIdusuario = new JLabel("1");
+		lblIdusuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIdusuario.setVisible(false);
 		lblIdusuario.setForeground(Color.WHITE);
-		lblIdusuario.setBounds(0, 96, 67, 14);
+		lblIdusuario.setBounds(108, 194, 26, 14);
 		panel.add(lblIdusuario);
-		
-		lblCerrarSesion = new JLabel("Cerrar sesi\u00F3n");
-		lblCerrarSesion.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedLblCerrarSesion(arg0);
-			}
-		});
-		lblCerrarSesion.setForeground(new Color(240, 128, 128));
-		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCerrarSesion.setBounds(0, 665, 230, 20);
-		panel.add(lblCerrarSesion);
 		
 		btnBuscarVentas = new JButton("");
 		btnBuscarVentas.addActionListener(new ActionListener() {
@@ -292,23 +281,37 @@ public class VentanaPrincipal extends JFrame {
 		btnBuscarVentas.setIcon(new ImageIcon(imgBuscar));
 		btnBuscarVentas.setForeground(Color.WHITE);
 		btnBuscarVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnBuscarVentas.setBackground(colorDeselec);
-		btnBuscarVentas.setBounds(179, 170, 51, 50);
+		btnBuscarVentas.setBackground(new Color(30, 144, 255));
+		btnBuscarVentas.setBounds(179, 219, 51, 50);
 		panel.add(btnBuscarVentas);
+		
+		lblCerrarSesion = new JLabel("salir");
+		lblCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblCerrarSesion.setBounds(0, 0, 67, 29);
+		panel.add(lblCerrarSesion);
+		lblCerrarSesion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedLblCerrarSesion(arg0);
+			}
+		});
+		lblCerrarSesion.setForeground(new Color(250, 128, 114));
+		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(230, 50, 1134, 657);
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(Color.BLACK);
+		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setForeground(Color.GRAY);
 		panel_1.setBounds(230, 0, 1134, 50);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
 		lblNewLabel = new JLabel("MINIMARKET LA DOLORES");
-		lblNewLabel.setBounds(123, 0, 869, 50);
+		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -316,31 +319,40 @@ public class VentanaPrincipal extends JFrame {
 		
 		txtPrueba = new JTextField();
 		txtPrueba.setVisible(false);
-		txtPrueba.setBounds(980, 0, 33, 20);
+		txtPrueba.setBounds(940, 0, 18, 20);
 		panel_1.add(txtPrueba);
 		txtPrueba.setColumns(10);
 		
-		lblBxB = new JLabel("");
-		lblBxB.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		lblBxB.setBounds(1023, 0, 111, 50);
-		panel_1.add(lblBxB);
-		lblBxB.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgBxBhrztl.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
-		lblBxB.setIcon(new ImageIcon(imgLogoBxB));
-		lblBxB.setForeground(Color.WHITE);
-		lblBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblLogoBxB = new JLabel("");
+		lblLogoBxB.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedLblLogoBxB(e);
+			}
+		});
+		lblLogoBxB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblLogoBxB.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+		lblLogoBxB.setBounds(1023, 0, 111, 50);
+		panel_1.add(lblLogoBxB);
+		lblLogoBxB.setHorizontalAlignment(SwingConstants.CENTER);
+		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgLogoBxB.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
+		lblLogoBxB.setIcon(new ImageIcon(imgLogoBxB));
+		lblLogoBxB.setForeground(Color.WHITE);
+		lblLogoBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		btnNotificaciones = new JButton("<html><center>Tiene <br>notificaciones<center></html>");
+		btnNotificaciones = new JButton("!");
+		btnNotificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNotificaciones.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnNotificaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnNotificaciones(arg0);
 			}
 		});
 		btnNotificaciones.setVisible(false);
-		btnNotificaciones.setForeground(Color.WHITE);
-		btnNotificaciones.setBackground(new Color(220, 20, 60));
-		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNotificaciones.setBounds(0, 0, 130, 50);
+		btnNotificaciones.setForeground(new Color(255, 0, 0));
+		btnNotificaciones.setBackground(Color.DARK_GRAY);
+		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 35));
+		btnNotificaciones.setBounds(964, 0, 59, 50);
 		panel_1.add(btnNotificaciones);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
@@ -609,4 +621,21 @@ public class VentanaPrincipal extends JFrame {
 	protected void actionPerformedBtnNotificaciones(ActionEvent arg0) {
 		JOptionPane.showMessageDialog(null, "Área en construcción");
 	}
+	protected void mouseClickedLblLogoBxB(MouseEvent e) {
+		goToURL("https://www.bytexbyte.com.pe");
+		goToURL("https://www.fb.com/bytexbyte");
+	}
+	public void goToURL(String URL){
+        if (java.awt.Desktop.isDesktopSupported()) {
+         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+         if (desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+             try {
+                 java.net.URI uri = new java.net.URI(URL);
+                 desktop.browse(uri);
+             } catch (Exception ex) {
+             }
+         }
+     }
+ }
 }
