@@ -102,7 +102,7 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1382, 784);
+		setBounds(100, 100, 1382, 741);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -361,7 +361,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();
