@@ -244,6 +244,11 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.add(mnOtrasOpciones);
 		
 		mntmRealizarKardex = new JMenuItem("Realizar Kardex");
+		mntmRealizarKardex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedMntmRealizarKardex(arg0);
+			}
+		});
 		mntmRealizarKardex.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -255,6 +260,11 @@ public class MantenimientoProd extends JInternalFrame {
 		mnOtrasOpciones.add(mntmRealizarKardex);
 		
 		mntmVerHistorial = new JMenuItem("Ver Historial de Kardex");
+		mntmVerHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedMntmVerHistorial(e);
+			}
+		});
 		mntmVerHistorial.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -540,10 +550,10 @@ public class MantenimientoProd extends JInternalFrame {
 		consulta.reset();
 	}
 	protected void mouseClickedMntmRealizarKardex(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, "Realizar kardex");
+		JOptionPane.showMessageDialog(null, "Apartado en construcción");
 	}
 	protected void mouseClickedMntmVerHistorial(MouseEvent e) {
-		JOptionPane.showMessageDialog(null, "Historial kardex");
+		JOptionPane.showMessageDialog(null, "Apartado en construcción");
 	}
 	protected void keyTypedTxtCodigo(KeyEvent e) {
 		char c = e.getKeyChar();
@@ -671,6 +681,12 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
 		}	
+	}
+	protected void actionPerformedMntmRealizarKardex(ActionEvent arg0) {
+		JOptionPane.showMessageDialog(null, "Apartado en construcción");
+	}
+	protected void actionPerformedMntmVerHistorial(ActionEvent e) {
+		JOptionPane.showMessageDialog(null, "Apartado en construcción");
 	}
 }
 

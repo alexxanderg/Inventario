@@ -168,7 +168,7 @@ public class Reportes extends JInternalFrame {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(249, 194, 210, 40);
+		this.btngenerarReporteVentas.setBounds(249, 194, 219, 40);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
