@@ -310,7 +310,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("BYTE X BYTE");
+		lblNewLabel = new JLabel("DISTRIBIDORA SMART PER\u00DA");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -335,8 +335,8 @@ public class VentanaPrincipal extends JFrame {
 		lblLogoBxB.setBounds(1023, 0, 111, 50);
 		panel_1.add(lblLogoBxB);
 		lblLogoBxB.setHorizontalAlignment(SwingConstants.CENTER);
-		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgLogoBxB.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
-		lblLogoBxB.setIcon(new ImageIcon(imgLogoBxB));
+		//Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgLogoBxB.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
+		//lblLogoBxB.setIcon(new ImageIcon(imgLogoBxB));
 		lblLogoBxB.setForeground(Color.WHITE);
 		lblLogoBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		

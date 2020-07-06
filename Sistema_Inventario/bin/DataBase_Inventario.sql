@@ -9,7 +9,7 @@ pass		varchar(30) not null,
 nombre		varchar(50),
 tipo 	 	tinyint, -- 0ADMIN 1VENTAS
 estado		tinyint -- 0INACTIVO 1IACTIVO
-);
+); 
 
 create table tb_clientes(
 idcliente	int primary key auto_increment,
@@ -245,7 +245,7 @@ on p.iddistrib = d.iddistrib
 where p.producto like '%12 colores%' or detalles like '%prod  %' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' 
 order by p.producto;
 
-producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto
+select producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto;
 
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';

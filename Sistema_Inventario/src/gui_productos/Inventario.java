@@ -56,7 +56,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.border.EmptyBorder;
 
-public class MantenimientoProd extends JInternalFrame {
+public class Inventario extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
@@ -66,19 +66,14 @@ public class MantenimientoProd extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	private JMenu mnOtrasOpciones;
-	private JMenuItem mntmRealizarKardex;
-	private JMenuItem mntmVerHistorial;
 	private JCheckBox chckbxFiltrar;
 	
-	NuevoProducto np = new NuevoProducto(this, null);
 	JTable tb;
 	ResultSet rs;
 	consultas consulta = new consultas();
 	ModificarProducto mp = null;
 	DefaultTableModel dtm = new DefaultTableModel();
 	consultas model = new consultas();
-	String usuario;
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
 	private JButton btnExportar;
@@ -87,7 +82,7 @@ public class MantenimientoProd extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MantenimientoProd frame = new MantenimientoProd(null);
+					Inventario frame = new Inventario(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -96,9 +91,9 @@ public class MantenimientoProd extends JInternalFrame {
 		});
 	}
 
-	public MantenimientoProd(VentanaPrincipal vp) {
+	public Inventario(VentanaPrincipal vp) {
 		this.vp = vp;
-		usuario = vp.lblUsuario.getText();
+		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("ALMAC\u00C9N");
 		setBounds(100, 100, 1134, 679);
@@ -215,18 +210,6 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		
-		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
-		mnaadirStock.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnaadirStock(e);
-			}
-		});
-		mnaadirStock.setForeground(new Color(0, 204, 255));
-		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnaadirStock.setBackground(SystemColor.menu);
-		menuBar.add(mnaadirStock);
 		mnModificarProducto.setForeground(new Color(50, 205, 50));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -243,37 +226,6 @@ public class MantenimientoProd extends JInternalFrame {
 		mnEliminarProducto.setBackground(SystemColor.control);
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
-		
-		mnOtrasOpciones = new JMenu("|Otras opciones|");
-		mnOtrasOpciones.setForeground(new Color(255, 102, 51));
-		mnOtrasOpciones.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnOtrasOpciones.setBackground(SystemColor.menu);
-		menuBar.add(mnOtrasOpciones);
-		
-		mntmRealizarKardex = new JMenuItem("Realizar Kardex");
-		mntmRealizarKardex.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedMntmRealizarKardex(arg0);
-			}
-		});
-		mntmRealizarKardex.setForeground(new Color(255, 69, 0));
-		mntmRealizarKardex.setFont(new Font("Arial", Font.PLAIN, 20));
-		mnOtrasOpciones.add(mntmRealizarKardex);
-		
-		mntmVerHistorial = new JMenuItem("Ver Historial de Kardex");
-		mntmVerHistorial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedMntmVerHistorial(e);
-			}
-		});
-		mntmVerHistorial.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mntmVerHistorial.setForeground(new Color(255, 69, 0));
-		mntmVerHistorial.setFont(new Font("Arial", Font.PLAIN, 20));
-		mnOtrasOpciones.add(mntmVerHistorial);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -471,23 +423,7 @@ public class MantenimientoProd extends JInternalFrame {
 	}
 	
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {
-		try {
-			if (np.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				np.setVisible(true); 
-			} else {
-				np = new NuevoProducto(this, null);
-				np.setLocationRelativeTo(null);
-				np.setVisible(true);
-			}
-		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
-		}
-		
-		
-		
-		
+				
 	}
 	
 	// De manera global
@@ -497,34 +433,7 @@ public class MantenimientoProd extends JInternalFrame {
 		abrirModificarProducto(codigoProducto);
 	}
 	private void abrirModificarProducto(String idProd){
-		/*try {
-			cerrarVentanas();
-			mp = new mp(this);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
-			pintarBotones();
-			btnVentas.setBackground(colorSelec);
-		} catch (PropertyVetoException e) {
-			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
-		}*/
 		
-		try { 
-			if (mp.isShowing()) {
-				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
-				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
-				mp.setVisible(true); 
-			} else {
-				mp = new ModificarProducto(idProd, this);
-				mp.setLocationRelativeTo(null);
-				mp.setVisible(true);
-			}
-		} catch (Exception f) {
-			mp = new ModificarProducto(""+idProd,this);;
-			mp.setLocationRelativeTo(null); 
-			mp.setVisible(true);
-			mp.setExtendedState(0);
-		}
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
@@ -537,17 +446,10 @@ public class MantenimientoProd extends JInternalFrame {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR el producto:\n" + producto + " " + descripcion + " " + marca + " " + color + " ?", "Confirmación", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
-			elminarProducto(codigoProducto);
+			
 		}else{
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
-	}
-	
-	private void elminarProducto(String codigoProducto){
-		consulta.iniciar();
-		consulta.deshabilitarProducto(Integer.parseInt(codigoProducto));
-		cargar();
-		consulta.reset();
 	}
 	protected void keyTypedTxtCodigo(KeyEvent e) {
 		char c = e.getKeyChar();
@@ -594,14 +496,14 @@ public class MantenimientoProd extends JInternalFrame {
 				if (seleccion == 1) {//  ELIMINAR
 					try {
 						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-						elminarProducto(""+idProd);
+						
 					} catch (Exception e2) {
 						try {
 							model.iniciar();
 							rs = model.buscarProductoBarras(producto);
 							rs.next();
 							int idProd = rs.getInt("codproducto");
-							elminarProducto(""+idProd);
+							
 							model.reset();
 						} catch (Exception e3) {
 							// TODO: handle exception
@@ -675,50 +577,6 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
 		}	
-	}
-	protected void actionPerformedMntmRealizarKardex(ActionEvent arg0) {
-		
-		
-		
-		JOptionPane.showMessageDialog(null, "Apartado en construcción");
-	}
-	protected void actionPerformedMntmVerHistorial(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, "Apartado en construcción");
-	}
-	protected void mouseClickedMnaadirStock(MouseEvent e) {
-		try {
-			int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
-			try {
-				model.iniciar();
-				rs = model.buscarProductoID(idProducto);
-				rs.next();
-				String productoName = rs.getString("producto");
-				float cantidadActual = rs.getFloat("cantidad");
-				
-				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto: " + productoName + "\nStock actual: " + cantidadActual));
-				
-				float cantidadFinal = cantidadActual + stockanadir;
-				
-				//JOptionPane.showMessageDialog(null, "Ahora: " + cantidadFinal);
-				model.ingresarStock(idProducto, cantidadFinal);
-				cargar();
-				selecionarProducto(""+idProducto);
-				
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, "Error: " + e2);
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (model != null)
-						model.reset();
-	            } catch (Exception ex) {
-	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-	            }
-			}
-		} catch (Exception e2) {
-			// TODO: handle exception
-		}
 	}
 }
 

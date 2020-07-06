@@ -338,13 +338,28 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet ingresarStock(String cod, float cant) {
+	/*public ResultSet ingresarStock(String cod, float cant) {
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad = ? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setFloat(1, cant);
 			prepareStmt.setString(2, cod);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " AGREGADO CORRECTAMENTE ");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}*/
+	
+	public ResultSet ingresarStock(int cod, float cant) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set cantidad = ? where codproducto=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setFloat(1, cant);
+			prepareStmt.setInt(2, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " AGREGADO CORRECTAMENTE ");
 		} catch (Exception e) {

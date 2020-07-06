@@ -276,7 +276,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				//Object date2 = new java.sql.Timestamp(d);
 				
 				//Consultas
-				model.ingresarStock(cod, total);
+				//model.ingresarStock(cod, total);
 				//model.registrarFechaIngreso(cod, ca, pc, pv, usuario);
 				model.modificarPC_PV(cod, pc, pv);
 				

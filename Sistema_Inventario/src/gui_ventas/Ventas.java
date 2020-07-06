@@ -13,7 +13,13 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import clases.Cliente;
 import gui_clientes.NuevoCliente;
 import gui_principal.VentanaPrincipal;
+import mysql.MySQLConexion;
 import mysql.consultas;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -29,6 +35,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -246,14 +254,13 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setVisible(false);
-		txtNroImpresiones.setText("0");
+		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
 		txtNroImpresiones.setColumns(10);
-		txtNroImpresiones.setBackground(Color.LIGHT_GRAY);
-		txtNroImpresiones.setBounds(1089, 207, 19, 18);
+		txtNroImpresiones.setBackground(Color.ORANGE);
+		txtNroImpresiones.setBounds(1076, 207, 32, 18);
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
@@ -314,7 +321,7 @@ public class Ventas extends JInternalFrame {
 		lblMtodoDePago_1.setVisible(false);
 		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago_1.setBounds(134, 10, 110, 23);
+		lblMtodoDePago_1.setBounds(853, 174, 101, 25);
 		getContentPane().add(lblMtodoDePago_1);
 		
 		cbPago2 = new JComboBox();
@@ -323,7 +330,7 @@ public class Ventas extends JInternalFrame {
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(134, 38, 139, 35);
+		cbPago2.setBounds(853, 203, 101, 18);
 		getContentPane().add(cbPago2);
 		
 		txtPago2 = new JTextField();
@@ -351,7 +358,7 @@ public class Ventas extends JInternalFrame {
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(276, 39, 85, 34);
+		txtPago2.setBounds(959, 204, 32, 17);
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
@@ -363,10 +370,10 @@ public class Ventas extends JInternalFrame {
 		
 		label_1 = new JLabel("S/");
 		label_1.setVisible(false);
-		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
-		label_1.setBounds(294, 0, 32, 34);
+		label_1.setBounds(959, 174, 32, 25);
 		getContentPane().add(label_1);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
@@ -1267,58 +1274,54 @@ public class Ventas extends JInternalFrame {
 					// IMPRIMIR TICKET
 					int copias = Integer.parseInt(txtNroImpresiones.getText());
 					Connection con = null;
-//
-//					for (int i = 0; i < copias; i++) {
-//						try {
-//							Map<String, Object> parameters = new HashMap();
-//							parameters.put("prtNVenta", codVenta);
-//							parameters.put("prtCliente", cli);
-//							parameters.put("prtNroDoc", nrodoc);
-//							parameters.put("prtVendedor", usuario);
-//							parameters.put("prtNota", nota);
-//							/*
-//							 * new AbstractJasperReports().createReport(
-//							 * con.getConn(), "rPrueba.jasper", null);
-//							 * AbstractJasperReports.showViewer();
-//							 */
-//							try {
-//								con = MySQLConexion.getConection();
-//								/*
-//								 * JasperReport reporte = (JasperReport)
-//								 * JRLoader.loadObjectFromFile(
-//								 * "bin/rComprobante.jasper"); JasperPrint
-//								 * jasperPrint =
-//								 * JasperFillManager.fillReport(reporte,
-//								 * parameters, con);
-//								 * AbstractJasperReports.showViewer();
-//								 * JasperPrintManager.printReport(
-//								 * jasperPrint, false);
-//								 * 
-//								 */
-//								JasperPrint impressao = JasperFillManager.fillReport(
-//										getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
-//										parameters, con);
-//
-//								// AbstractJasperReports.showViewer();
-//								JasperPrintManager.printReport(impressao, false);
-//								/*
-//								 * this.setAlwaysOnTop(false);
-//								 * //JOptionPane.showMessageDialog(null,
-//								 * "VENTA CORRECTA");
-//								 * this.setAlwaysOnTop(true);
-//								 */
-//
-//							} catch (JRException ex) {
-//								// JOptionPane.showMessageDialog(null,
-//								// "ERROR " + ex.getMessage());
-//								// System.err.println("Error iReport: " +
-//								// ex.getMessage());
-//							}
-//
-//						} catch (Exception e) {
-//							JOptionPane.showMessageDialog(null, "ERROR " + e);
-//						}
-//					}
+
+					for (int i = 0; i < copias; i++) {
+						try {
+							Map<String, Object> parameters = new HashMap();
+							parameters.put("prtNVenta", ultCodVenta);
+							/*
+							 * new AbstractJasperReports().createReport(
+							 * con.getConn(), "rPrueba.jasper", null);
+							 * AbstractJasperReports.showViewer();
+							 */
+							try {
+								con = MySQLConexion.getConection();
+								/*
+								 * JasperReport reporte = (JasperReport)
+								 * JRLoader.loadObjectFromFile(
+								 * "bin/rComprobante.jasper"); JasperPrint
+								 * jasperPrint =
+								 * JasperFillManager.fillReport(reporte,
+								 * parameters, con);
+								 * AbstractJasperReports.showViewer();
+								 * JasperPrintManager.printReport(
+								 * jasperPrint, false);
+								 * 
+								 */
+								JasperPrint impressao = JasperFillManager.fillReport(
+										getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+										parameters, con);
+
+								// AbstractJasperReports.showViewer();
+								JasperPrintManager.printReport(impressao, false);
+								/*
+								 * this.setAlwaysOnTop(false);
+								 * //JOptionPane.showMessageDialog(null,
+								 * "VENTA CORRECTA");
+								 * this.setAlwaysOnTop(true);
+								 */
+
+							} catch (JRException ex) {
+								// JOptionPane.showMessageDialog(null,
+								// "ERROR " + ex.getMessage());
+								// System.err.println("Error iReport: " +
+								// ex.getMessage());
+							}
+
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "ERROR " + ex);
+						}
+					}
 					
 					
 					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);

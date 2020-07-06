@@ -83,6 +83,9 @@ public class Configuraciones extends JInternalFrame {
 	private JLabel lblPresentacin;
 	private JTextField textField_8;
 	private JButton button_15;
+	private JLabel lblCantidadDeImpresiones;
+	private JButton button_9;
+	private JTextField textField_9;
 
 
 	
@@ -148,7 +151,7 @@ public class Configuraciones extends JInternalFrame {
 		cbVenderSinStock.setFont(new Font("Candara", Font.PLAIN, 18));
 		cbVenderSinStock.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
 		
-		lblPermitirSeguirVendiendo = new JLabel("Permitir seguir vendiendo cuando no haya stock?");
+		lblPermitirSeguirVendiendo = new JLabel("\u00BFPermitir seguir vendiendo cuando no haya stock?");
 		lblPermitirSeguirVendiendo.setBounds(510, 346, 451, 26);
 		getContentPane().add(lblPermitirSeguirVendiendo);
 		lblPermitirSeguirVendiendo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -222,7 +225,7 @@ public class Configuraciones extends JInternalFrame {
 		btnGuardarAtributos.setBackground(new Color(30, 144, 255));
 		
 		lblreducirStockAl = new JLabel("\u00BFReducir stock al vender?");
-		lblreducirStockAl.setBounds(500, 267, 230, 26);
+		lblreducirStockAl.setBounds(510, 267, 220, 26);
 		getContentPane().add(lblreducirStockAl);
 		lblreducirStockAl.setHorizontalAlignment(SwingConstants.LEFT);
 		lblreducirStockAl.setFont(new Font("Candara", Font.BOLD, 20));
@@ -485,6 +488,30 @@ public class Configuraciones extends JInternalFrame {
 		button_15.setBackground(new Color(30, 144, 255));
 		button_15.setBounds(234, 443, 180, 25);
 		getContentPane().add(button_15);
+		
+		lblCantidadDeImpresiones = new JLabel("Cantidad de impresiones:");
+		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadDeImpresiones.setBounds(510, 504, 400, 26);
+		getContentPane().add(lblCantidadDeImpresiones);
+		
+		button_9 = new JButton("Guardar");
+		button_9.setForeground(Color.WHITE);
+		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
+		button_9.setBackground(new Color(30, 144, 255));
+		button_9.setBounds(730, 538, 180, 27);
+		getContentPane().add(button_9);
+		
+		textField_9 = new JTextField();
+		textField_9.setText("0");
+		textField_9.setHorizontalAlignment(SwingConstants.LEFT);
+		textField_9.setForeground(SystemColor.windowBorder);
+		textField_9.setFont(new Font("Arial", Font.PLAIN, 18));
+		textField_9.setColumns(10);
+		textField_9.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		textField_9.setBackground(new Color(245, 245, 245));
+		textField_9.setBounds(510, 542, 191, 23);
+		getContentPane().add(textField_9);
 
 		
 		menuBar = new JMenuBar();
@@ -540,7 +567,7 @@ public class Configuraciones extends JInternalFrame {
 				chckbxPromocion2.setSelected(true);
 		}
 		cbVenderSinStock.setSelectedIndex(ventasinstock);
-		cbReducirAlVender.setSelectedIndex(reducirstock);
+		cbReducirAlVender.setSelectedIndex(1);
 		cbModifFecha.setSelectedIndex(fechaVauto);
 	}
 	
