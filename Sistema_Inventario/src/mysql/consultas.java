@@ -239,6 +239,15 @@ public class consultas {
 		}
 		return rs;
 	}
+	
+	public ResultSet buscarProductosPorVencer() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 10");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
 
 	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,

@@ -348,8 +348,8 @@ public class ModificarProducto extends JFrame {
 			}
 		});
 		txtStockInicial.setHorizontalAlignment(SwingConstants.LEFT);
-		txtStockInicial.setForeground(Color.DARK_GRAY);
-		txtStockInicial.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtStockInicial.setForeground(new Color(220, 20, 60));
+		txtStockInicial.setFont(new Font("Arial", Font.BOLD, 16));
 		txtStockInicial.setColumns(10);
 		txtStockInicial.setBackground(new Color(245, 245, 245));
 		txtStockInicial.setBounds(210, 385, 150, 25);

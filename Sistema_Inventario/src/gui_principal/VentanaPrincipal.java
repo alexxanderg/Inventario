@@ -10,6 +10,7 @@ import gui_clientes.MantenimientoClientes;
 import gui_compras.MantenimientoCompras;
 import gui_configuracion.Configuraciones;
 import gui_distribuidores.MantenimientoDistribuidores;
+import gui_notificaciones.notificaciones;
 import gui_productos.MantenimientoProd;
 import gui_reportes.Reportes;
 import gui_usuarios.MantenimientoUsuarios;
@@ -72,6 +73,7 @@ public class VentanaPrincipal extends JFrame {
 	public MantenimientoClientes vCliente = null;
 	public Reportes vReportes = null;
 	public Configuraciones config = null;
+	public notificaciones notifica = null;
 
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -319,7 +321,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		txtPrueba = new JTextField();
 		txtPrueba.setVisible(false);
-		txtPrueba.setBounds(940, 0, 18, 20);
+		txtPrueba.setBounds(906, 0, 18, 20);
 		panel_1.add(txtPrueba);
 		txtPrueba.setColumns(10);
 		
@@ -335,12 +337,12 @@ public class VentanaPrincipal extends JFrame {
 		lblLogoBxB.setBounds(1023, 0, 111, 50);
 		panel_1.add(lblLogoBxB);
 		lblLogoBxB.setHorizontalAlignment(SwingConstants.CENTER);
-		//Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgLogoBxB.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
-		//lblLogoBxB.setIcon(new ImageIcon(imgLogoBxB));
+		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgBxBhrztl.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
+		lblLogoBxB.setIcon(new ImageIcon(imgLogoBxB));
 		lblLogoBxB.setForeground(Color.WHITE);
 		lblLogoBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		btnNotificaciones = new JButton("!");
+		btnNotificaciones = new JButton("\u25BC ");
 		btnNotificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNotificaciones.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnNotificaciones.addActionListener(new ActionListener() {
@@ -348,11 +350,10 @@ public class VentanaPrincipal extends JFrame {
 				actionPerformedBtnNotificaciones(arg0);
 			}
 		});
-		btnNotificaciones.setVisible(false);
-		btnNotificaciones.setForeground(new Color(255, 0, 0));
+		btnNotificaciones.setForeground(new Color(255, 255, 255));
 		btnNotificaciones.setBackground(Color.DARK_GRAY);
-		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 35));
-		btnNotificaciones.setBounds(964, 0, 59, 50);
+		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnNotificaciones.setBounds(966, 0, 57, 50);
 		panel_1.add(btnNotificaciones);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
@@ -368,18 +369,15 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	public void verificarNotificaciones(){
-		try {
+		/*try {
 			consulta.iniciar();
 			rs = consulta.cargarProductos();
 			rs.next();
-			String producto = rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color");
 			Float cantmin = rs.getFloat("cantmin");
 			Float cant = rs.getFloat("cantidad");
 			
 			if(cant <= cantmin)
 				btnNotificaciones.setVisible(true);
-			
-	        
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR NOTIFCACIONES: " + e);
 		}finally {
@@ -392,6 +390,25 @@ public class VentanaPrincipal extends JFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
+		
+		try {
+			consulta.iniciar();
+			rs = consulta.buscarProductosPorVencer();
+			rs.next();	
+			Float cantmin = rs.getFloat("cantmin");
+			btnNotificaciones.setVisible(true);
+		} catch (Exception e) {
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
+*/
 	}
 	
 	public void activarOpciones(int tipo){
@@ -575,6 +592,24 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 	
+	protected void actionPerformedBtnNotificaciones(ActionEvent arg0) {
+		try {
+			cerrarVentanas();
+			notifica = new notificaciones(this);
+			desktopPane.add(notifica);
+			notifica.show();
+			notifica.setMaximum(true);
+			pintarBotones();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Notificaciones: " + e);
+		}
+	}
+	
+	protected void mouseClickedLblLogoBxB(MouseEvent e) {
+		goToURL("https://www.bytexbyte.com.pe");
+		goToURL("https://www.fb.com/bytexbyte");
+	}
+	
 	public void cerrarVentanas(){
 		if(ventas != null)
 			ventas.dispose();
@@ -611,19 +646,16 @@ public class VentanaPrincipal extends JFrame {
 		if(config != null) 
 			config.dispose();
 		config = null;
+		
+		if(notifica != null) 
+			notifica.dispose();
+		notifica = null;
 	}
 	
 	protected void mouseClickedLblCerrarSesion(MouseEvent arg0) {
 		Login log = new Login();
 		log.setVisible(true);
 		this.dispose();
-	}
-	protected void actionPerformedBtnNotificaciones(ActionEvent arg0) {
-		JOptionPane.showMessageDialog(null, "Área en construcción");
-	}
-	protected void mouseClickedLblLogoBxB(MouseEvent e) {
-		goToURL("https://www.bytexbyte.com.pe");
-		goToURL("https://www.fb.com/bytexbyte");
 	}
 	public void goToURL(String URL){
         if (java.awt.Desktop.isDesktopSupported()) {

@@ -332,3 +332,16 @@ select * from tb_ventas;
 
 alter table tb_ventas
   add saldo		float after descuento;
+  
+  
+select * from tb_productos; 
+
+SELECT * FROM tb_productos 
+WHERE fechaVenc >= CURDATE()
+ORDER BY fechaVenc 
+LIMIT 2;
+
+SELECT * 
+FROM tb_productos 
+ORDER BY ABS( DATEDIFF( fechaVenc, NOW() ) ) 
+LIMIT 1;
