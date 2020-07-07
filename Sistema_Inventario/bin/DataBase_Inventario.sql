@@ -330,5 +330,22 @@ where kd.idkardex = 4;
 select DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha from tb_ventas v ;
 select * from tb_ventas;
 
-alter table tb_ventas
+alter table tb_productos
   add saldo		float after descuento;
+  
+  update tb_productos
+  set cantidad = 10;
+  
+  SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 3;
+  
+select * from tb_productos; 
+
+SELECT * FROM tb_productos 
+WHERE fechaVenc >= CURDATE()
+ORDER BY fechaVenc 
+LIMIT 2;
+
+SELECT * 
+FROM tb_productos 
+ORDER BY ABS( DATEDIFF( fechaVenc, NOW() ) ) 
+LIMIT 1;
