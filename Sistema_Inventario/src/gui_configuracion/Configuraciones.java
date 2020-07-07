@@ -119,7 +119,7 @@ public class Configuraciones extends JInternalFrame {
 				actionPerformedBtnModifFecha(e);
 			}
 		});
-		btnModifFecha.setBackground(new Color(30, 144, 255));
+		btnModifFecha.setBackground(new Color(30, 144, 255)); 
 		
 		cbModifFecha = new JComboBox();
 		cbModifFecha.setBounds(510, 465, 191, 26);
@@ -489,7 +489,7 @@ public class Configuraciones extends JInternalFrame {
 		button_15.setBounds(234, 443, 180, 25);
 		getContentPane().add(button_15);
 		
-		lblCantidadDeImpresiones = new JLabel("Cantidad de impresiones:");
+		lblCantidadDeImpresiones = new JLabel("Cantidad de impresiones al vender:");
 		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
 		lblCantidadDeImpresiones.setBounds(510, 504, 400, 26);

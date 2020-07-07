@@ -693,9 +693,10 @@ public class MantenimientoProd extends JInternalFrame {
 				rs = model.buscarProductoID(idProducto);
 				rs.next();
 				String productoName = rs.getString("producto");
+				String productoDetail = rs.getString("detalles");
 				float cantidadActual = rs.getFloat("cantidad");
 				
-				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto: " + productoName + "\nStock actual: " + cantidadActual));
+				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
 				
 				float cantidadFinal = cantidadActual + stockanadir;
 				
@@ -705,7 +706,7 @@ public class MantenimientoProd extends JInternalFrame {
 				selecionarProducto(""+idProducto);
 				
 			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, "Error: " + e2);
+				
 			} finally {
 				try {
 					if (rs != null)
