@@ -18,7 +18,7 @@ foreign key (usuario) references tb_usuarios(usuario)
 
 create table tb_productos(
 codproducto	varchar(100) not null primary key,
-producto	varchar(40),
+producto	varchar(200),
 detalles	varchar(100),
 unimedida	varchar(10),
 cantidad	float,
@@ -49,9 +49,6 @@ alter table tb_productos add(
 	categoria varchar(50)
 );
 
-alter table tb_productos
-  add color		varchar(40);
-  
 
 create table tb_ventas(
 codventa	int primary key auto_increment,
