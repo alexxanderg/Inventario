@@ -83,7 +83,7 @@ public class notificaciones extends JInternalFrame {
 		tbXVencer.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbXVencer);
 		
-		lblproductosPorVencer = new JLabel("<html>10 PRODUCTOS M\u00C1S A VENCER</html>");
+		lblproductosPorVencer = new JLabel("<html>15 PRODUCTOS M\u00C1S PR\u00D3XIMOS A VENCER</html>");
 		lblproductosPorVencer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblproductosPorVencer.setForeground(new Color(255, 255, 255));
 		lblproductosPorVencer.setFont(new Font("Candara", Font.BOLD, 25));

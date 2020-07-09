@@ -243,7 +243,7 @@ public class consultas {
 	public ResultSet buscarProductosPorVencer() {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 10");
+			rs = st.executeQuery("SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 15");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -775,13 +775,13 @@ public class consultas {
 			prepareStmt.setObject(2, date2);
 			prepareStmt.setString(3, nota);
 			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, "KARDEX REGISTRADO CORRECTAMENTE");
+			//JOptionPane.showMessageDialog(null, "KARDEX REGISTRADO CORRECTAMENTE");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: KARDEX EXISTENTE");
+			JOptionPane.showMessageDialog(null, "ERROR: KARDEX EXISTENTE " + e);
 		}
 	}
 
-	public ResultSet ObtenerUltimoKardex() {
+	public ResultSet ObtenerUltimoNroKardex() {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select idkardex from tb_kardex order by idkardex desc limit 1");
@@ -789,6 +789,17 @@ public class consultas {
 		}
 		return rs;
 	}
+	
+	public ResultSet cargarUltimoKardexYDetalle(int ultnrokardex) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select k.idkardex, k.fecha, k.nota, kd.codproducto, kd.registros from tb_kardex k inner join tb_kardex_detalles kd where k.idkardex = " + ultnrokardex + "  and kd.idkardex = " + ultnrokardex);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cosular ultimo kardex "  + e);
+		}
+		return rs;
+	}
+
 
 	public ResultSet ObtenerNombreProducto(String cod) {
 		try {
@@ -799,17 +810,16 @@ public class consultas {
 		return rs;
 	}
 
-	public void registrarDetallesKardex(int idkardex, String codigoProducto, int registros) {
+	public void registrarDetallesKardex(int idkardex, String codigoProducto, float registros) {
 		try {
 			st = con.createStatement();
 			String sql = "insert into tb_kardex_detalles (idkardex, codproducto, registros)" + " values (?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setInt(1, idkardex);
 			prepareStmt.setString(2, codigoProducto);
-			prepareStmt.setInt(3, registros);
+			prepareStmt.setDouble(3, registros);
 			prepareStmt.execute();
-			// JOptionPane.showMessageDialog(null, "DETALLE DE KARDEX REGISTRADO
-			// CORRECTAMENTE");
+			//JOptionPane.showMessageDialog(null, "DETALLE DE KARDEX REGISTRADO CORRECTAMENTE");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR EN DETALLE DE  KARDEX " + e);
 		}

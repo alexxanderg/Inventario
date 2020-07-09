@@ -323,12 +323,10 @@ public class BuscarVentas extends JInternalFrame {
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
 		cargar();
-		ajustarAnchoColumnas();
+		//ajustarAnchoColumnas();
 	}
 	
 	public void cargar() {
-		
-		
 		
 		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
 		tbVentas.setRowHeight(30);
@@ -526,7 +524,7 @@ public class BuscarVentas extends JInternalFrame {
 		
 		lblTotVentas.setText(""+sumTotal);
 		lblTotDescuentos.setText(""+sumDescuentos);
-		ajustarAnchoColumnas();
+		//ajustarAnchoColumnas();
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {

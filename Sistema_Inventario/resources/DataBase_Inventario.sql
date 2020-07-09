@@ -119,7 +119,7 @@ nota		varchar(200)
 create table tb_kardex_detalles(
 idkardex	int,
 codproducto int not null,
-registros	int not null,
+registros	float not null,
 foreign key (idkardex) references tb_kardex(idkardex),
 foreign key(codproducto) references tb_productos(codproducto)
 );
@@ -159,6 +159,8 @@ reducirstock	tinyint, -- 0NO 1SI Si disminuirá stock al vender
 fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves que se realiza
 );
 
+-- registros float - kardex_detalles
+
 
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
@@ -196,6 +198,7 @@ select * from tb_compras_detalles;
 
 select * from tb_ingreso_productos;
 select * from tb_clientes;
+select * from tb_kardex;
 select * from tb_kardex_detalles;
 select * from tb_configuraciones;
 
@@ -330,8 +333,8 @@ where kd.idkardex = 4;
 select DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha from tb_ventas v ;
 select * from tb_ventas;
 
-alter table tb_productos
-  add saldo		float after descuento;
+alter table tb_kardex_detalles
+  change registros  registros float ;
   
   update tb_productos
   set cantidad = 10;
@@ -349,3 +352,15 @@ SELECT *
 FROM tb_productos 
 ORDER BY ABS( DATEDIFF( fechaVenc, NOW() ) ) 
 LIMIT 1;
+
+select idkardex from tb_kardex order by idkardex desc limit 1;
+
+select * from tb_kardex_detalles;
+
+select idkardex from tb_kardex order by idkardex desc limit 1;
+
+select k.idkardex, k.fecha, k.nota, kd.codproducto, kd.registros
+from tb_kardex k 
+inner join tb_kardex_detalles kd
+where k.idkardex = 7 and kd.idkardex = 7;
+

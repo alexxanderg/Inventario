@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import mysql.consultas;
 
 public class PintarTablaVentasBuscar extends DefaultTableCellRenderer {
+	
   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     int nroVenta = Integer.parseInt(table.getValueAt(row, 0).toString());
     int estado = 0;

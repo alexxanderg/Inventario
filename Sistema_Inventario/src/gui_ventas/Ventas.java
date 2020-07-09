@@ -927,7 +927,7 @@ public class Ventas extends JInternalFrame {
 				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
 				
 				subt = (cant * preCDesc);
-				subt = redondearDecimales(subt, 2);
+				subt = redondearDecimales(subt, 1);
 				
 				tbCarrito.setValueAt(subt, i, 5);
 			} catch (Exception e) {
@@ -1396,7 +1396,7 @@ public class Ventas extends JInternalFrame {
 		tbCarrito.setValueAt(newNomProd,						tbCarrito.getSelectedRow(), 1);
 		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 3);
 		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 7);
-		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(pret, 1), 		tbCarrito.getSelectedRow(), 5);
 		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 4);
 		sumarSubTotales();
 		sumarTotalGenerales();

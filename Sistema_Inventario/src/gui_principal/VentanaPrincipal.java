@@ -11,6 +11,7 @@ import gui_compras.MantenimientoCompras;
 import gui_configuracion.Configuraciones;
 import gui_distribuidores.MantenimientoDistribuidores;
 import gui_notificaciones.notificaciones;
+import gui_productos.Kardex;
 import gui_productos.MantenimientoProd;
 import gui_reportes.Reportes;
 import gui_usuarios.MantenimientoUsuarios;
@@ -68,6 +69,7 @@ public class VentanaPrincipal extends JFrame {
 	public BuscarVentas buscarV = null;
 	public MantenimientoCompras vCompras = null;
 	public MantenimientoProd vProductos = null;
+	public Kardex vKardex = null;
 	public MantenimientoDistribuidores vdistribuidores = null;
 	public MantenimientoUsuarios vUsuarios = null;
 	public MantenimientoClientes vCliente = null;
@@ -140,7 +142,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(new Color(30, 144, 255));
-		btnInventario.setBounds(0, 341, 230, 50);
+		btnInventario.setBounds(0, 280, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -239,7 +241,7 @@ public class VentanaPrincipal extends JFrame {
 		btnCompras.setForeground(Color.WHITE);
 		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCompras.setBackground(new Color(30, 144, 255));
-		btnCompras.setBounds(0, 280, 230, 50);
+		btnCompras.setBounds(0, 341, 230, 50);
 		panel.add(btnCompras);
 		
 		lblUsuario = new JLabel("Aqui Va El Nombre del Usuario");
@@ -312,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("BxB");
+		lblNewLabel = new JLabel("OC\u00D3N MINIMARKET");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -342,7 +344,7 @@ public class VentanaPrincipal extends JFrame {
 		lblLogoBxB.setForeground(Color.WHITE);
 		lblLogoBxB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		btnNotificaciones = new JButton("\u25BC ");
+		btnNotificaciones = new JButton("! ");
 		btnNotificaciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNotificaciones.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnNotificaciones.addActionListener(new ActionListener() {
@@ -350,9 +352,9 @@ public class VentanaPrincipal extends JFrame {
 				actionPerformedBtnNotificaciones(arg0);
 			}
 		});
-		btnNotificaciones.setForeground(new Color(255, 255, 255));
+		btnNotificaciones.setForeground(new Color(220, 20, 60));
 		btnNotificaciones.setBackground(Color.DARK_GRAY);
-		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNotificaciones.setBounds(966, 0, 57, 50);
 		panel_1.add(btnNotificaciones);
 		
@@ -516,7 +518,7 @@ public class VentanaPrincipal extends JFrame {
 		int seleccion = JOptionPane.showOptionDialog(null, "Por favor, seleccione una opción", "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
 		
 		if(seleccion == 0){
-				try {
+			try {
 				cerrarVentanas();
 				vProductos = new MantenimientoProd(this);
 				desktopPane.add(vProductos);
@@ -529,7 +531,17 @@ public class VentanaPrincipal extends JFrame {
 			}	
 		}
 		if(seleccion == 1){
-			JOptionPane.showMessageDialog(null, "KARDEX");
+			try {
+				cerrarVentanas();
+				vKardex = new Kardex(this);
+				desktopPane.add(vKardex);
+				vKardex.show();
+				vKardex.setMaximum(true);
+				pintarBotones();
+				btnInventario.setBackground(colorSelec);
+			} catch (PropertyVetoException e) {
+				JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+			}	
 		}
 		
 	}

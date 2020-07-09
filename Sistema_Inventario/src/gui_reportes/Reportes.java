@@ -57,8 +57,8 @@ public class Reportes extends JInternalFrame {
 	private JDateChooser calendar_7;
 	private JButton btnVerRanking;
 	private JLabel lblCategora;
-	private JTextField txtMenores;
-	private JButton btnGenerarMenores;
+	private JTextField txtMayoresMenores;
+	private JButton btnGenerarMenoresMayores;
 	private JLabel lblHistorialDeCompras;
 	private JButton btnVerComprasCliente;
 	private JLabel lblPorVencer;
@@ -86,7 +86,7 @@ public class Reportes extends JInternalFrame {
 	private JCheckBox chckbxMayor;
 	private JCheckBox chckbxMenorA;
 	private JLabel lblMarca;
-	private JComboBox comboBox;
+	private JComboBox cbMarca;
 	/**
 	 * Launch the application.
 	 */
@@ -214,25 +214,25 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 		
-		this.txtMenores = new JTextField();
-		this.txtMenores.setBounds(166, 181, 145, 49);
-		this.panel_1.add(this.txtMenores);
-		this.txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.txtMenores.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.txtMenores.setColumns(10);
-		this.txtMenores.setBackground(SystemColor.controlHighlight);
+		this.txtMayoresMenores = new JTextField();
+		this.txtMayoresMenores.setBounds(166, 181, 145, 49);
+		this.panel_1.add(this.txtMayoresMenores);
+		this.txtMayoresMenores.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.txtMayoresMenores.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.txtMayoresMenores.setColumns(10);
+		this.txtMayoresMenores.setBackground(SystemColor.controlHighlight);
 		
-		this.btnGenerarMenores = new JButton("Ver reporte");
-		btnGenerarMenores.addActionListener(new ActionListener() {
+		this.btnGenerarMenoresMayores = new JButton("Ver reporte");
+		btnGenerarMenoresMayores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnGenerarMenores(e);
 			}
 		});
-		this.btnGenerarMenores.setBounds(321, 181, 161, 49);
-		this.panel_1.add(this.btnGenerarMenores);
-		this.btnGenerarMenores.setForeground(Color.WHITE);
-		this.btnGenerarMenores.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.btnGenerarMenores.setBackground(new Color(30, 144, 255));
+		this.btnGenerarMenoresMayores.setBounds(321, 181, 161, 49);
+		this.panel_1.add(this.btnGenerarMenoresMayores);
+		this.btnGenerarMenoresMayores.setForeground(Color.WHITE);
+		this.btnGenerarMenoresMayores.setFont(new Font("Tahoma", Font.BOLD, 18));
+		this.btnGenerarMenoresMayores.setBackground(new Color(30, 144, 255));
 		
 		this.cbCategoria = new JComboBox();
 		this.cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -296,20 +296,23 @@ public class Reportes extends JInternalFrame {
 		panel_1.add(chckbxMayor);
 		
 		chckbxMenorA = new JCheckBox("Stock < a:");
+		chckbxMenorA.setVisible(false);
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxMenorA.setBackground(new Color(169, 169, 169));
 		chckbxMenorA.setBounds(16, 207, 143, 23);
 		panel_1.add(chckbxMenorA);
 		
 		lblMarca = new JLabel("Marca:");
+		lblMarca.setVisible(false);
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
 		lblMarca.setBounds(16, 147, 143, 23);
 		panel_1.add(lblMarca);
 		
-		comboBox = new JComboBox();
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
-		comboBox.setBounds(166, 146, 316, 23);
-		panel_1.add(comboBox);
+		cbMarca = new JComboBox();
+		cbMarca.setVisible(false);
+		cbMarca.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbMarca.setBounds(166, 146, 316, 23);
+		panel_1.add(cbMarca);
 		
 		this.lblRanking = new JLabel("RANKING");
 		lblRanking.setBounds(10, 423, 537, 38);
@@ -375,7 +378,7 @@ public class Reportes extends JInternalFrame {
 			Categoria todaCategoria = new Categoria("TODAS");
 			cbCategoria.addItem(todaCategoria);
 			categoria.cargarCategorias(cbCategoria);
-
+			
 			Usuarios usu = new Usuarios();
 			Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
 			cbUsuarios.addItem(todos);
@@ -532,7 +535,7 @@ public class Reportes extends JInternalFrame {
 		}
 	}
 	protected void actionPerformedBtnGenerarMenores(ActionEvent e) {
-		if (txtMenores.getText().equals(""))
+		if (txtMayoresMenores.getText().equals(""))
 			JOptionPane.showMessageDialog(null, "Llene el campo correctamente");
 		else {
 			Connection con = null;
@@ -541,23 +544,23 @@ public class Reportes extends JInternalFrame {
 					String categoria = cbCategoria.getSelectedItem().toString();
 
 					con = MySQLConexion.getConection();
-					float menores = Float.parseFloat(txtMenores.getText());
+					float menoresmayores = Float.parseFloat(txtMayoresMenores.getText());
 					Map<String, Object> parameters = new HashMap();
-					parameters.put("prtcantidad", menores);
+					parameters.put("prtcantidad", menoresmayores);
 					parameters.put("categoria", categoria);
-					new AbstractJasperReports().createReport(con, "rCardexMenoresCategoria.jasper", parameters);
+					new AbstractJasperReports().createReport(con, "rCardexMayoresCategoria.jasper", parameters);
 					AbstractJasperReports.showViewer();
 					con.close();
-					txtMenores.setText(null);
+					txtMayoresMenores.setText(null);
 				} else {
 					con = MySQLConexion.getConection();
-					float menores = Float.parseFloat(txtMenores.getText());
+					float menoresmayores = Float.parseFloat(txtMayoresMenores.getText());
 					Map<String, Object> parameters = new HashMap();
-					parameters.put("prtcantidad", menores);
-					new AbstractJasperReports().createReport(con, "rCardexMenores.jasper", parameters);
+					parameters.put("prtcantidad", menoresmayores);
+					new AbstractJasperReports().createReport(con, "rCardexmayores.jasper", parameters);
 					AbstractJasperReports.showViewer();
 					con.close();
-					txtMenores.setText(null);
+					txtMayoresMenores.setText(null);
 				}
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "No se encontraron productos " + ex);

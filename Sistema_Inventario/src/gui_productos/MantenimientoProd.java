@@ -66,9 +66,6 @@ public class MantenimientoProd extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	private JMenu mnOtrasOpciones;
-	private JMenuItem mntmRealizarKardex;
-	private JMenuItem mntmVerHistorial;
 	private JCheckBox chckbxFiltrar;
 	
 	NuevoProducto np = new NuevoProducto(this, null);
@@ -243,37 +240,6 @@ public class MantenimientoProd extends JInternalFrame {
 		mnEliminarProducto.setBackground(SystemColor.control);
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
-		
-		mnOtrasOpciones = new JMenu("|Otras opciones|");
-		mnOtrasOpciones.setForeground(new Color(255, 102, 51));
-		mnOtrasOpciones.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnOtrasOpciones.setBackground(SystemColor.menu);
-		menuBar.add(mnOtrasOpciones);
-		
-		mntmRealizarKardex = new JMenuItem("Realizar Kardex");
-		mntmRealizarKardex.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedMntmRealizarKardex(arg0);
-			}
-		});
-		mntmRealizarKardex.setForeground(new Color(255, 69, 0));
-		mntmRealizarKardex.setFont(new Font("Arial", Font.PLAIN, 20));
-		mnOtrasOpciones.add(mntmRealizarKardex);
-		
-		mntmVerHistorial = new JMenuItem("Ver Historial de Kardex");
-		mntmVerHistorial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedMntmVerHistorial(e);
-			}
-		});
-		mntmVerHistorial.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mntmVerHistorial.setForeground(new Color(255, 69, 0));
-		mntmVerHistorial.setFont(new Font("Arial", Font.PLAIN, 20));
-		mnOtrasOpciones.add(mntmVerHistorial);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -675,15 +641,6 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
 		}	
-	}
-	protected void actionPerformedMntmRealizarKardex(ActionEvent arg0) {
-		
-		
-		
-		JOptionPane.showMessageDialog(null, "Apartado en construcción");
-	}
-	protected void actionPerformedMntmVerHistorial(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, "Apartado en construcción");
 	}
 	protected void mouseClickedMnaadirStock(MouseEvent e) {
 		try {
