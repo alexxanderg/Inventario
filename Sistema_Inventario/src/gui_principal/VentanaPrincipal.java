@@ -511,17 +511,27 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 	protected void actionPerformedBtnInventario(ActionEvent arg0) {
-		try {
-			cerrarVentanas();
-			vProductos = new MantenimientoProd(this);
-			desktopPane.add(vProductos);
-			vProductos.show();
-			vProductos.setMaximum(true);
-			pintarBotones();
-			btnInventario.setBackground(colorSelec);
-		} catch (PropertyVetoException e) {
-			JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
-		}	
+		
+		String[] options = {"Ver lista de productos", "Ver/Realizar Kardex"};
+		int seleccion = JOptionPane.showOptionDialog(null, "Por favor, seleccione una opción", "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
+		
+		if(seleccion == 0){
+				try {
+				cerrarVentanas();
+				vProductos = new MantenimientoProd(this);
+				desktopPane.add(vProductos);
+				vProductos.show();
+				vProductos.setMaximum(true);
+				pintarBotones();
+				btnInventario.setBackground(colorSelec);
+			} catch (PropertyVetoException e) {
+				JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+			}	
+		}
+		if(seleccion == 1){
+			JOptionPane.showMessageDialog(null, "KARDEX");
+		}
+		
 	}
 	
 	protected void actionPerformedBtnDistribuidores(ActionEvent arg0) {
