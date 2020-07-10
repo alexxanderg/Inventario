@@ -14,6 +14,7 @@ import com.toedter.calendar.JDateChooser;
 import clases.AbstractJasperReports;
 import clases.Categoria;
 import clases.Cliente;
+import clases.Marcas;
 import clases.Usuarios;
 import gui_principal.VentanaPrincipal;
 import mysql.MySQLConexion;
@@ -39,6 +40,10 @@ import java.awt.event.ActionEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.JCheckBox;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Reportes extends JInternalFrame {
 	private JComboBox <Usuarios> cbUsuarios;
@@ -57,7 +62,7 @@ public class Reportes extends JInternalFrame {
 	private JDateChooser calendar_7;
 	private JButton btnVerRanking;
 	private JLabel lblCategora;
-	private JTextField txtMayoresMenores;
+	private JTextField txtMenores;
 	private JButton btnGenerarMenoresMayores;
 	private JLabel lblHistorialDeCompras;
 	private JButton btnVerComprasCliente;
@@ -74,6 +79,7 @@ public class Reportes extends JInternalFrame {
 	private JLabel lblVentas;
 	private JComboBox<Categoria> cbCategoria;
 	private JComboBox<Cliente> cbCliente;
+	private JComboBox<Marcas> cbMarca;
 	
 
 
@@ -83,10 +89,9 @@ public class Reportes extends JInternalFrame {
 	private JButton btnX;
 	private JLabel lblProductos;
 	private JLabel lblFiltros;
-	private JCheckBox chckbxMayor;
+	private JCheckBox chckbxRestriccionCantidad;
 	private JCheckBox chckbxMenorA;
 	private JLabel lblMarca;
-	private JComboBox cbMarca;
 	/**
 	 * Launch the application.
 	 */
@@ -214,13 +219,14 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 		
-		this.txtMayoresMenores = new JTextField();
-		this.txtMayoresMenores.setBounds(166, 181, 145, 49);
-		this.panel_1.add(this.txtMayoresMenores);
-		this.txtMayoresMenores.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.txtMayoresMenores.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.txtMayoresMenores.setColumns(10);
-		this.txtMayoresMenores.setBackground(SystemColor.controlHighlight);
+		this.txtMenores = new JTextField();
+		txtMenores.setEnabled(false);
+		this.txtMenores.setBounds(166, 207, 145, 23);
+		this.panel_1.add(this.txtMenores);
+		this.txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.txtMenores.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.txtMenores.setColumns(10);
+		this.txtMenores.setBackground(SystemColor.controlHighlight);
 		
 		this.btnGenerarMenoresMayores = new JButton("Ver reporte");
 		btnGenerarMenoresMayores.addActionListener(new ActionListener() {
@@ -289,27 +295,37 @@ public class Reportes extends JInternalFrame {
 		lblFiltros.setBounds(16, 86, 143, 23);
 		panel_1.add(lblFiltros);
 		
-		chckbxMayor = new JCheckBox("Stock > a:");
-		chckbxMayor.setFont(new Font("Candara", Font.BOLD, 20));
-		chckbxMayor.setBackground(new Color(169, 169, 169));
-		chckbxMayor.setBounds(16, 181, 143, 23);
-		panel_1.add(chckbxMayor);
+		chckbxRestriccionCantidad = new JCheckBox(" Sin restricci\u00F3n de cantidad");
+		chckbxRestriccionCantidad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedChckbxRestriccionCantidad(e);
+			}
+		});
+		chckbxRestriccionCantidad.setSelected(true);
+		chckbxRestriccionCantidad.setFont(new Font("Candara", Font.BOLD, 20));
+		chckbxRestriccionCantidad.setBackground(new Color(169, 169, 169));
+		chckbxRestriccionCantidad.setBounds(16, 181, 295, 23);
+		panel_1.add(chckbxRestriccionCantidad);
 		
 		chckbxMenorA = new JCheckBox("Stock < a:");
-		chckbxMenorA.setVisible(false);
+		chckbxMenorA.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedChckbxMenorA(e);
+			}
+		});
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxMenorA.setBackground(new Color(169, 169, 169));
 		chckbxMenorA.setBounds(16, 207, 143, 23);
 		panel_1.add(chckbxMenorA);
 		
 		lblMarca = new JLabel("Marca:");
-		lblMarca.setVisible(false);
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
 		lblMarca.setBounds(16, 147, 143, 23);
 		panel_1.add(lblMarca);
 		
 		cbMarca = new JComboBox();
-		cbMarca.setVisible(false);
 		cbMarca.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMarca.setBounds(166, 146, 316, 23);
 		panel_1.add(cbMarca);
@@ -378,6 +394,12 @@ public class Reportes extends JInternalFrame {
 			Categoria todaCategoria = new Categoria("TODAS");
 			cbCategoria.addItem(todaCategoria);
 			categoria.cargarCategorias(cbCategoria);
+			
+			Marcas marca = new Marcas();
+			Marcas todaMarca = new Marcas("TODAS");
+			cbMarca.addItem(todaMarca);
+			marca.cargarMarcas(cbMarca);
+
 			
 			Usuarios usu = new Usuarios();
 			Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -531,11 +553,70 @@ public class Reportes extends JInternalFrame {
 			AbstractJasperReports.showViewer();
 			con.close();
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontó la venta " + ex);
+			JOptionPane.showMessageDialog(null, "No se enconta la venta " + ex);
 		}
 	}
 	protected void actionPerformedBtnGenerarMenores(ActionEvent e) {
-		if (txtMayoresMenores.getText().equals(""))
+		
+		Connection con = null;
+		try {
+			con = MySQLConexion.getConection();
+			
+			String categoria = cbCategoria.getSelectedItem().toString();
+			String marca = cbMarca.getSelectedItem().toString();
+			float cantidad = 9999999;
+			
+			if(chckbxMenorA.isSelected())
+				cantidad = Float.parseFloat(txtMenores.getText());
+			else
+				cantidad = 9999999;
+			
+			if ( categoria.equals("TODAS") && marca.equals("TODAS")) {
+				
+				Map<String, Object> parameters = new HashMap();
+				parameters.put("cantidad", cantidad);
+				
+				new AbstractJasperReports().createReport(con, "rCardexTodos.jasper", parameters);
+				AbstractJasperReports.showViewer();	
+			}
+			else if( categoria.equals("TODAS") && !(marca.equals("TODAS")) ){
+				Map<String, Object> parameters = new HashMap();
+				
+				parameters.put("marca", marca);
+				parameters.put("cantidad", cantidad);
+				
+				new AbstractJasperReports().createReport(con, "rCardexMarca.jasper", parameters);
+				AbstractJasperReports.showViewer();	
+			}
+			else if ( !(categoria.equals("TODAS")) && marca.equals("TODAS") ){
+				Map<String, Object> parameters = new HashMap();
+				
+				parameters.put("categoria", categoria);
+				parameters.put("cantidad", cantidad);
+				
+				new AbstractJasperReports().createReport(con, "rCardexCategoria.jasper", parameters);
+				AbstractJasperReports.showViewer();	
+			}
+			else if ( !(categoria.equals("TODAS")) && !(marca.equals("TODAS")) ){
+				Map<String, Object> parameters = new HashMap();
+				
+				parameters.put("categoria", categoria);
+				parameters.put("marca", marca);
+				parameters.put("cantidad", cantidad);
+				
+				new AbstractJasperReports().createReport(con, "rCardexCategoriaMarca.jasper", parameters);
+				AbstractJasperReports.showViewer();	
+			}
+			
+			con.close();
+			
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "No se encontraron productos " + ex);
+		}
+	
+		
+		/*
+		  if (txtMayoresMenores.getText().equals(""))
 			JOptionPane.showMessageDialog(null, "Llene el campo correctamente");
 		else {
 			Connection con = null;
@@ -566,7 +647,9 @@ public class Reportes extends JInternalFrame {
 				JOptionPane.showMessageDialog(null, "No se encontraron productos " + ex);
 			}
 		}
+		 */
 	}
+
 	protected void actionPerformedBtnVerProductosQue(ActionEvent e) {
 		Connection con = null;
 		try {
@@ -591,6 +674,39 @@ public class Reportes extends JInternalFrame {
 
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		}
+	}
+	
+	protected void mouseClickedChckbxRestriccionCantidad(MouseEvent e) {
+		try {
+			if( chckbxMenorA.isSelected() ){
+				chckbxMenorA.setSelected(false);
+				txtMenores.setEnabled(false);
+				chckbxRestriccionCantidad.setSelected(true);				
+			}
+			else{
+				chckbxMenorA.setSelected(true);
+				txtMenores.setEnabled(true);
+				chckbxRestriccionCantidad.setSelected(false);	
+			}
+		} catch (Exception ez) {
+			JOptionPane.showMessageDialog(null, "Error en combos1: " + ez);
+		}
+	}
+	protected void mouseClickedChckbxMenorA(MouseEvent e) {
+		try {
+			if( chckbxRestriccionCantidad.isSelected() ){
+				chckbxMenorA.setSelected(true);
+				txtMenores.setEnabled(true);
+				chckbxRestriccionCantidad.setSelected(false);
+			}
+			else{
+				chckbxMenorA.setSelected(false);
+				txtMenores.setEnabled(false);
+				chckbxRestriccionCantidad.setSelected(true);
+			}
+		} catch (Exception ez) {
+			JOptionPane.showMessageDialog(null, "Error en combos2: " + ez);
 		}
 	}
 }

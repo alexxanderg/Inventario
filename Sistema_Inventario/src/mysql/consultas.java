@@ -175,6 +175,15 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarMarcas() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select distinct marca from tb_productos order by marca");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarAlmacen() {
 		try {
 			st = con.createStatement();

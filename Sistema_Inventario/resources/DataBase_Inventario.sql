@@ -203,6 +203,12 @@ select * from tb_kardex_detalles;
 select * from tb_configuraciones;
 
 
+select * from tb_productos where cantidad < 50 and producto != '&'  order by producto;
+select * from tb_productos where cantidad < 8 and estado = 1 and categoria = '.General' and marca =  'FILA'  order by producto;
+
+
+
+
 select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
 
 select codproducto from tb_productos order by codproducto desc limit 1 ;
