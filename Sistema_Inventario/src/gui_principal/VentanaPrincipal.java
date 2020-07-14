@@ -314,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("OC\u00D3N MINIMARKET");
+		lblNewLabel = new JLabel("NAVITAL ORGANICA");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
@@ -501,6 +501,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	protected void actionPerformedBtnCompras(ActionEvent e) {
 		try {
+			JOptionPane.showMessageDialog(null, "Apartado en actualización, se están implementando mejoras.");
 			cerrarVentanas();
 			vCompras = new MantenimientoCompras(this);
 			desktopPane.add(vCompras);

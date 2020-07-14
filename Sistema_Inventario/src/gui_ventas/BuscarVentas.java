@@ -91,6 +91,7 @@ public class BuscarVentas extends JInternalFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblVentasModificadas;
 	private JLabel lblVentasEliminadas;
+	private JMenu mnactualizarNotaDe;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -303,6 +304,18 @@ public class BuscarVentas extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
+		
+		mnactualizarNotaDe = new JMenu("|Actualizar Nota de la venta| ");
+		mnactualizarNotaDe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnactualizarNotaDe(arg0);
+			}
+		});
+		mnactualizarNotaDe.setForeground(new Color(255, 215, 0));
+		mnactualizarNotaDe.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnactualizarNotaDe.setBackground(SystemColor.menu);
+		menuBar.add(mnactualizarNotaDe);
 		mnModificarProducto.setForeground(new Color(50, 205, 50));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -334,7 +347,7 @@ public class BuscarVentas extends JInternalFrame {
 		
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
-		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRECIO UNI", "DESCUENTO", "SUB TOTAL"});
+		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRE INDIV C/DESC", "DESCUENTO", "SUB TOTAL"});
 		
 		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -402,25 +415,59 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		try {
-			int nroCompra = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+			int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+			float subTotal = Float.parseFloat( tbVentas.getValueAt(tbVentas.getSelectedRow(), 7).toString() );
 			
-			String[] options = {"Modificar información de venta", "Modificar venta entera"};
-			int seleccion = JOptionPane.showOptionDialog(null, "¿Que desea modificar?", "Modificar venta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
-			
-			if(seleccion == 0){
-				String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificación de nota de venta", JOptionPane.INFORMATION_MESSAGE);
-				
-				consulta.iniciar();
-				consulta.modificarInformacion(nuevaNota, nroCompra);
-				recargar();
-				
+			if(subTotal == 0){
+				JOptionPane.showMessageDialog(null, "No puede modificar ventas eliminadas");
 			}
-			else if(seleccion == 1){
-				vp.cargarVentas(nroCompra);
-				JOptionPane.showMessageDialog(null, "A continuación se cargará toda la venta realizada. \nNo se efectuará ningun cambio, hasta que haga click en Vender.");
+			else{
+				int seleccion = JOptionPane.showConfirmDialog(null, "MODIFICAR VENTA\n\nALERTA! Al dar en SI, toda la información de la venta será borrada y a la vez cargada en la ventana de Ventas, \npara que pueda realizar las modificaciones que necesite.\nNO salga de la ventana de Ventas sin antes realizar las modificaciones requeridas. Caso contrario, la venta quedará en Cero.\n\n¿Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				
+				if(seleccion == 0){
+					//JOptionPane.showMessageDialog(null, "Se acaba de cargar toda la venta realizada. \nModifique lo que necesita y luego de clic en VENDER.\n\nNO se efectuará ningun cambio, hasta que lo haga.");	
+					try {
+						int nroVentaModificar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+						
+						vp.cargarVentas(nroVentaModificar);  // ACÁ SE ABRE LA VENTANA PARA QUE MODIFIQUE
+						
+						consulta.iniciar();
+						rs = consulta.cargarVentaDetalles(nroVentaModificar);
+						try {
+							while(rs.next()){
+								
+								int codproducto = rs.getInt("codproducto");
+								float cantVendida = rs.getFloat("cantidad");
+								
+								consulta.reIngresarStock(cantVendida, codproducto);
+
+								consulta.eliminarVentaDetalle(nroVentaModificar);
+							}
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error: al reingresar Stock " + e);
+						}
+						
+						consulta.eliminarVenta(nroVentaModificar);
+						
+						consulta.resetearCeroVentaDetalle(nroVentaModificar);
+						
+						//actionPerformedBtnVerVentas(null);
+						//actionPerformedBtnVerVentas(null);
+						//JOptionPane.showMessageDialog(null, "Venta Eliminada");
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error al eliminar venta");
+					}finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (consulta != null)
+								consulta.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}
+				}
 			}
-				
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Seleccione una venta");
 		}
@@ -429,14 +476,39 @@ public class BuscarVentas extends JInternalFrame {
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 
 		String[] options = {"Eliminar", "Cancelar"};
-		int seleccion = JOptionPane.showOptionDialog(null, "¿Seguro de eliminar la Venta?\nEsta opción no se puede deshacer", "Eliminar venta", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
+		int seleccion = JOptionPane.showOptionDialog(null, "¿Seguro de eliminar la Venta?\nEsta opción no se puede deshacer", "Confirmación", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
 		
 		if(seleccion == 0){
 			try {
-				int nroVentaModificar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+				int nroVentaEliminar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+				
 				consulta.iniciar();
-				consulta.eliminarVenta(nroVentaModificar);	
+				
+				rs = consulta.cargarVentaDetalles(nroVentaEliminar);
+				try {
+					while(rs.next()){
+						
+						int codproducto = rs.getInt("codproducto");
+						float cantVendida = rs.getFloat("cantidad");
+						
+						consulta.reIngresarStock(cantVendida, codproducto);
+
+						consulta.eliminarVentaDetalle(nroVentaEliminar);
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Error: al reingresar Stock " + e);
+				}
+				
+				
+				consulta.eliminarVenta(nroVentaEliminar);
+				consulta.resetearCeroVentaDetalle(nroVentaEliminar);
 				actionPerformedBtnVerVentas(null);
+				
+				for (int i = 0; i < tbDetalleVenta.getRowCount(); i++) {
+					dtmVD.removeRow(i);
+					i -= 1;
+				}
+				
 				JOptionPane.showMessageDialog(null, "Venta Eliminada");
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null, "Error al eliminar venta");
@@ -483,19 +555,33 @@ public class BuscarVentas extends JInternalFrame {
 			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date2 = (Date) formatter.parse(fechaFinal);
 			Object fechaf = new java.sql.Timestamp(date2.getTime());
-			
-			consulta.iniciar();
-			if(cbUsuarios.getSelectedIndex() == 0)
-				rs = consulta.cargarVentasUsuarioTodos(fechai, fechaf);
-			else
-				rs = consulta.cargarVentasUsuario(idusuario, fechai, fechaf);
-			
-			while(rs.next()){
-				dtm.addRow(new Object[]{rs.getInt("codventa"), rs.getString("ncliente"), rs.getString("nusuario"), rs.getString("nota"), rs.getString("fecha"), rs.getFloat("descuento"), rs.getFloat("saldo"), rs.getFloat("totventa")});	
+		
+			try {
+				consulta.iniciar();
+				if(cbUsuarios.getSelectedIndex() == 0)
+					rs = consulta.cargarVentasUsuarioTodos(fechai, fechaf);
+				else
+					rs = consulta.cargarVentasUsuario(idusuario, fechai, fechaf);
+				
+				while(rs.next()){
+					dtm.addRow(new Object[]{rs.getInt("codventa"), rs.getString("ncliente"), rs.getString("nusuario"), rs.getString("nota"), rs.getString("fecha"), rs.getFloat("descuento"), rs.getFloat("saldo"), rs.getFloat("totventa")});	
+				}
+				
+				this.tbVentas.setDefaultRenderer(Object.class, new PintarTablaVentasBuscar());
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
 			}
 			
-			this.tbVentas.setDefaultRenderer(Object.class, new PintarTablaVentasBuscar());
-
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar ventas: " + e.getMessage());
@@ -615,6 +701,23 @@ public class BuscarVentas extends JInternalFrame {
             } catch (Exception ex) {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
+		}
+	}
+	protected void mouseClickedMnactualizarNotaDe(MouseEvent arg0) {
+		try {
+			String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificación de nota de venta", JOptionPane.INFORMATION_MESSAGE);
+
+			if(nuevaNota != null){
+				int nroCompra = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+				consulta.iniciar();
+				consulta.modificarInformacion(nuevaNota, nroCompra);
+				recargar();
+			}
+			else{
+				
+			}			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al actualizar nota: " + e);
 		}
 	}
 }

@@ -110,16 +110,11 @@ public class Kardex extends JInternalFrame {
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtCodigo = new JTextField();
-		txtCodigo.setVisible(false);
 		txtCodigo.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				keyTypedTxtCodigo(e);
-			}
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				keyReleasedTxtCodigo(arg0);
 			}
 		});
 		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -158,6 +153,8 @@ public class Kardex extends JInternalFrame {
 		getContentPane().add(chckbxFiltrar);
 		
 		txtCodigo2 = new JTextField();
+		txtCodigo2.setVisible(false);
+		txtCodigo2.setEnabled(false);
 		txtCodigo2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -172,7 +169,7 @@ public class Kardex extends JInternalFrame {
 		txtCodigo2.setBounds(123, 89, 428, 34);
 		getContentPane().add(txtCodigo2);
 		
-		btnGuardar = new JButton("Guardar cambios");
+		btnGuardar = new JButton("Guardar conteo");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnGuardar(arg0);
@@ -238,7 +235,7 @@ public class Kardex extends JInternalFrame {
 		setJMenuBar(menuBar);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, chckbxFiltrar, txtCodigo2}));
 		
-		mnEmpezarCero = new JMenu("|Empezar de cero| ");
+		mnEmpezarCero = new JMenu("|Reiniciar conteo| ");
 		mnEmpezarCero.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -259,7 +256,7 @@ public class Kardex extends JInternalFrame {
 			}
 		});
 		
-		mncargarltimoRegistro = new JMenu("|Cargar \u00FAltimo registro| ");
+		mncargarltimoRegistro = new JMenu("|Cargar \u00FAltimo conteo| ");
 		mncargarltimoRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -271,14 +268,14 @@ public class Kardex extends JInternalFrame {
 		mncargarltimoRegistro.setBackground(SystemColor.menu);
 		menuBar.add(mncargarltimoRegistro);
 		
-		mnfusionar = new JMenu("|Fusionar| ");
+		mnfusionar = new JMenu("|Fusionar registros| ");
 		mnfusionar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnfusionar(arg0);
 			}
 		});
-		mnfusionar.setForeground(new Color(220, 20, 60));
+		mnfusionar.setForeground(new Color(240, 128, 128));
 		mnfusionar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnfusionar.setBackground(SystemColor.menu);
 		menuBar.add(mnfusionar);
@@ -290,7 +287,7 @@ public class Kardex extends JInternalFrame {
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
 		cargarBuscador();
-		cargarKardex();
+		cargarKardexCero();
 	}
 	
 	public void cargar() {
@@ -326,7 +323,7 @@ public class Kardex extends JInternalFrame {
 
         List<String> list = new ArrayList<String>();
         list.add("ID");
-        list.add("CÓDIGO");
+        list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
@@ -405,10 +402,10 @@ public class Kardex extends JInternalFrame {
 					     listProds.add(rs2.getString("nombre"));		        	 
 					} catch (Exception e) {}
 			        
-			        listProds.add(rs.getString("cantidad"));
 			        listProds.add(rs.getString("precioCo"));
 			        listProds.add(rs.getString("ptjganancia"));
 			        listProds.add(rs.getString("precioVe"));
+			        listProds.add(rs.getString("cantidad"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
@@ -431,11 +428,13 @@ public class Kardex extends JInternalFrame {
 	}
 	
 	public void cargarBuscador() {
-		ac = new TextAutoCompleter(txtCodigo);
-		consulta.iniciar();
-		ResultSet rs = consulta.cargarProductos();
-		ac.setMode(0);
+		
 		try {
+			ac = new TextAutoCompleter(txtCodigo);
+			consulta.iniciar();
+			ResultSet rs = consulta.cargarProductos();
+			ac.setMode(0);
+			
 			while (rs.next()) {
 				ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
 					"  -  (" + rs.getString("codproducto") + ")");
@@ -454,7 +453,7 @@ public class Kardex extends JInternalFrame {
 		}
 	}
 	
-	private void cargarKardex(){
+	private void cargarKardexCero(){
 		int cantProductos = tbProductos.getRowCount();
 		for (int j = 0; j < cantProductos; j++) {			
 			for(int i=0; i<tbProductos.getColumnCount(); i++){
@@ -500,10 +499,94 @@ public class Kardex extends JInternalFrame {
 	private void elminarProducto(String codigoProducto){
 	}
 	protected void keyTypedTxtCodigo(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER){
+			if(txtCodigo.getText().length()==0)
+				JOptionPane.showMessageDialog(null, "Escriba el producto que desee buscar");
+			else{
+				String producto = txtCodigo.getText();
+				txtCodigo.setText("");
+				
+					try {
+						int idProdBuscar = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						//JOptionPane.showMessageDialog(null, "IDBUSCAR: " + idProdBuscar);
+						
+						DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
+						
+						for (int j = 0; j < tbProductos.getRowCount(); j++) {
+							int idProdFila  = Integer.parseInt( String.valueOf(tm.getValueAt(j, 0)) );
+							
+							if(idProdBuscar == idProdFila){
+								tbProductos.setRowSelectionInterval(j, j);
+								
+								for(int i=0; i<tbProductos.getColumnCount(); i++){
+									
+									if(tbProductos.getColumnName(i).equals("CONTEO")){
+										if(tbProductos.getValueAt(j, i) == null || tbProductos.getValueAt(j, i).toString().equals("0")){
+											tbProductos.setValueAt(1, j, i);
+											JOptionPane.showMessageDialog(null, producto + "\n\nConteo = 1");
+										}
+										else{
+											int conteoold = Integer.parseInt(tbProductos.getValueAt(j, i).toString());
+											tbProductos.setValueAt(conteoold+1, j, i);
+											JOptionPane.showMessageDialog(null, producto + "\n\nConteo = " + (conteoold+1));
+										}
+									}
+									
+								}	
+							}
+						}
+						
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+						try {
+							model.iniciar();
+							rs = model.buscarProductoBarras(producto);
+							rs.next();
+							int idProdBuscar = rs.getInt("codproducto");
+							DefaultTableModel tm = (DefaultTableModel) tbProductos.getModel();
+							
+							for (int j = 0; j < tbProductos.getRowCount(); j++) {
+								int idProdFila = Integer.parseInt( String.valueOf(tm.getValueAt(j, 0)) );
+								
+								if(idProdBuscar == idProdFila){
+									tbProductos.setRowSelectionInterval(j, j);
+									for(int i=0; i<tbProductos.getColumnCount(); i++){
+										if(tbProductos.getColumnName(i).equals("CONTEO")){
+											if(tbProductos.getValueAt(j, i) == null || tbProductos.getValueAt(j, i).toString().equals("0")){
+												tbProductos.setValueAt(1, j, i);
+												JOptionPane.showMessageDialog(null, producto + "\n\nConteo = 1");
+											}
+											else{
+												int conteoold = Integer.parseInt(tbProductos.getValueAt(j, i).toString());
+												tbProductos.setValueAt(conteoold+1, j, i);
+												JOptionPane.showMessageDialog(null, producto + "\n\nConteo = " + (conteoold+1));
+											}
+
+										}
+									}	
+								}
+							}						
+							
+							
+						} catch (Exception e3) {
+							// TODO: handle exception
+						}	finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (model != null)
+									model.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }		
+					}
+				}
+			}
+		}
+		
 	}
 	
-	protected void keyReleasedTxtCodigo(KeyEvent arg0) {
-	}
+	
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
 		if(txtCodigo2.getText().length()==0){
 			limpiarTabla();
@@ -655,7 +738,8 @@ public class Kardex extends JInternalFrame {
 				}
 			}		
 
-			JOptionPane.showMessageDialog(null, "KARDEX REGISTRADO CORRECTAMENTE");
+			this.dispose();
+			JOptionPane.showMessageDialog(null, "CONTEO SALVADO CORRECTAMENTE");
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Error al guardar: " + ex.getMessage());
 		}
@@ -664,7 +748,7 @@ public class Kardex extends JInternalFrame {
 	}
 	protected void mouseClickedMnEmpezarCero(MouseEvent arg0) {
 		
-		int opc = JOptionPane.showConfirmDialog(null, "¿Está seguro de poner el conteo de sus productos en cero?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null, "Con esta opción su conteo realizado hasta ahora se podrá en cero.\n¿Continuar?", "Verificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			int cantProductos = tbProductos.getRowCount();
 			for (int j = 0; j < cantProductos; j++) {	
@@ -680,7 +764,7 @@ public class Kardex extends JInternalFrame {
 		}
 	}
 	protected void mouseClickedMncargarltimoRegistro(MouseEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Está seguro cargar el último registro? u \n Su conteo actual se perderá?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null, "Con esta opción, cargará su último conteo guardado, para que pueda revisarlo o continuar modificandolo.\n¿Continuar?", "Verificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if (opc == 0) {
 			
@@ -688,13 +772,18 @@ public class Kardex extends JInternalFrame {
 			try {
 				rs = consulta.ObtenerUltimoNroKardex();
 				int ultnrokardex = 0;
+				String nota = "";
 				
 				try {
 					rs.next();
 					ultnrokardex = rs.getInt("idkardex");
+					nota = rs.getString("nota");
+					txtNota.setText(nota);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "error al cargar ult nro de kardex " + e);
 				}
+				
+				
 				rs = consulta.cargarUltimoKardexYDetalle(ultnrokardex);
 				int idprod = 0;
 				String conteo = "";
@@ -706,8 +795,9 @@ public class Kardex extends JInternalFrame {
 					for (int j = 0; j < cantProductos; j++) {
 						if(Integer.parseInt(tbProductos.getValueAt(j, 0).toString()) == idprod){
 							
-
-							tbProductos.setValueAt(conteo, j, 12);
+							for(int i=0; i<tbProductos.getColumnCount(); i++)
+								if(tbProductos.getColumnName(i).equals("CONTEO"))
+									tbProductos.setValueAt(conteo, j, i);
 							
 						}
 					}
@@ -722,7 +812,47 @@ public class Kardex extends JInternalFrame {
 		}
 	}
 	protected void mouseClickedMnfusionar(MouseEvent arg0) {
-		JOptionPane.showMessageDialog(null, "EN CONSTRUCCIÓN");
+		int opc = JOptionPane.showConfirmDialog(null, "ALERTA: Con esta opción, el conteo realizado a cada producto, sobreescribirá el stock de este.\nNo hay manera de deshacer esta operación\n\n¿Continuar?", "Verificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if (opc == 0) {
+
+			int cantProductos = tbProductos.getRowCount();
+			for (int j = 0; j < cantProductos; j++) {
+
+				float conteo = 0;
+				int codproducto = 0;
+				for(int i=0; i<tbProductos.getColumnCount(); i++){
+					if(tbProductos.getColumnName(i).equals("CONTEO")){
+						
+						conteo = Float.parseFloat(tbProductos.getValueAt(j, i).toString());
+						codproducto = Integer.parseInt(tbProductos.getValueAt(j, 0).toString());
+						
+						model.iniciar();
+						try {
+							model.FusionarConteoKardex(codproducto, conteo);
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error al fusionar " + e);
+						}finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (model != null)
+									model.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }
+						}
+						
+						this.dispose();
+					}
+				}
+			}
+				JOptionPane.showMessageDialog(null, "Operación exitosa.");
+			
+		}
+		else{
+			
+		}
 	}
 }
 

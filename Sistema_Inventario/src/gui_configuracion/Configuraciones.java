@@ -51,38 +51,6 @@ public class Configuraciones extends JInternalFrame {
 	ResultSet rs;
 	String usuario;
 	consultas consulta = new consultas();
-	private JLabel lblNombreDelNegocio;
-	private JTextField textField;
-	private JButton button;
-	private JLabel lblImagenDelLogin;
-	private JTextField textField_1;
-	private JButton button_1;
-	private JButton button_2;
-	private JLabel lblImagenDelLogin_1;
-	private JTextField textField_2;
-	private JButton button_3;
-	private JButton button_4;
-	private JLabel lblImagenDelReporte;
-	private JTextField textField_3;
-	private JButton button_5;
-	private JButton button_6;
-	private JLabel lblLogopxpx;
-	private JTextField textField_4;
-	private JButton button_7;
-	private JButton button_8;
-	private JLabel lblDatosParaEl;
-	private JLabel lblDireccin;
-	private JTextField textField_5;
-	private JButton button_10;
-	private JLabel lblTelefono;
-	private JTextField textField_6;
-	private JButton button_12;
-	private JLabel lblRuc;
-	private JTextField textField_7;
-	private JButton button_14;
-	private JLabel lblPresentacin;
-	private JTextField textField_8;
-	private JButton button_15;
 	private JLabel lblCantidadDeImpresiones;
 	private JButton button_9;
 	private JTextField textField_9;
@@ -111,7 +79,7 @@ public class Configuraciones extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		btnModifFecha = new JButton("Guardar");
-		btnModifFecha.setBounds(730, 465, 180, 27);
+		btnModifFecha.setBounds(256, 465, 180, 27);
 		getContentPane().add(btnModifFecha);
 		btnModifFecha.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnModifFecha.setForeground(Color.WHITE);
@@ -123,19 +91,19 @@ public class Configuraciones extends JInternalFrame {
 		btnModifFecha.setBackground(new Color(30, 144, 255)); 
 		
 		cbModifFecha = new JComboBox();
-		cbModifFecha.setBounds(510, 465, 191, 26);
+		cbModifFecha.setBounds(36, 465, 191, 26);
 		getContentPane().add(cbModifFecha);
 		cbModifFecha.setFont(new Font("Candara", Font.PLAIN, 18));
 		cbModifFecha.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
 		
 		lblpermitirModificarFecha = new JLabel("\u00BFPermitir modificar fecha al vender?");
-		lblpermitirModificarFecha.setBounds(510, 431, 400, 26);
+		lblpermitirModificarFecha.setBounds(36, 431, 400, 26);
 		getContentPane().add(lblpermitirModificarFecha);
 		lblpermitirModificarFecha.setHorizontalAlignment(SwingConstants.LEFT);
 		lblpermitirModificarFecha.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		btnVenderSinStock = new JButton("Guardar");
-		btnVenderSinStock.setBounds(730, 379, 180, 27);
+		btnVenderSinStock.setBounds(256, 379, 180, 27);
 		getContentPane().add(btnVenderSinStock);
 		btnVenderSinStock.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVenderSinStock.setForeground(Color.WHITE);
@@ -147,74 +115,74 @@ public class Configuraciones extends JInternalFrame {
 		btnVenderSinStock.setBackground(new Color(30, 144, 255));
 		
 		cbVenderSinStock = new JComboBox();
-		cbVenderSinStock.setBounds(510, 379, 191, 26);
+		cbVenderSinStock.setBounds(36, 379, 191, 26);
 		getContentPane().add(cbVenderSinStock);
 		cbVenderSinStock.setFont(new Font("Candara", Font.PLAIN, 18));
 		cbVenderSinStock.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
 		
 		lblPermitirSeguirVendiendo = new JLabel("\u00BFPermitir seguir vendiendo cuando no haya stock?");
-		lblPermitirSeguirVendiendo.setBounds(510, 346, 451, 26);
+		lblPermitirSeguirVendiendo.setBounds(36, 346, 451, 26);
 		getContentPane().add(lblPermitirSeguirVendiendo);
 		lblPermitirSeguirVendiendo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPermitirSeguirVendiendo.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		lblNewLabel = new JLabel("Seleccione los atributos que desee manejar");
-		lblNewLabel.setBounds(500, 11, 400, 26);
+		lblNewLabel.setBounds(26, 11, 400, 26);
 		getContentPane().add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		chckbxMarca = new JCheckBox("Marca");
-		chckbxMarca.setBounds(500, 44, 135, 23);
+		chckbxMarca.setBounds(26, 44, 135, 23);
 		getContentPane().add(chckbxMarca);
 		chckbxMarca.setForeground(Color.DARK_GRAY);
 		chckbxMarca.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxMarca.setBackground(Color.WHITE);
 		
 		chckbxColor = new JCheckBox("Color");
-		chckbxColor.setBounds(500, 70, 97, 23);
+		chckbxColor.setBounds(26, 70, 97, 23);
 		getContentPane().add(chckbxColor);
 		chckbxColor.setForeground(Color.DARK_GRAY);
 		chckbxColor.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxColor.setBackground(Color.WHITE);
 		
 		chckbxFechaVencimiento = new JCheckBox("Fecha Vencimiento");
-		chckbxFechaVencimiento.setBounds(500, 96, 171, 23);
+		chckbxFechaVencimiento.setBounds(26, 96, 171, 23);
 		getContentPane().add(chckbxFechaVencimiento);
 		chckbxFechaVencimiento.setForeground(Color.DARK_GRAY);
 		chckbxFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxFechaVencimiento.setBackground(Color.WHITE);
 		
 		chckbxLote = new JCheckBox("Lote");
-		chckbxLote.setBounds(500, 122, 97, 23);
+		chckbxLote.setBounds(26, 122, 97, 23);
 		getContentPane().add(chckbxLote);
 		chckbxLote.setForeground(Color.DARK_GRAY);
 		chckbxLote.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxLote.setBackground(Color.WHITE);
 		
 		chckbxLaboratorio = new JCheckBox("Laboratorio");
-		chckbxLaboratorio.setBounds(500, 148, 135, 23);
+		chckbxLaboratorio.setBounds(26, 148, 135, 23);
 		getContentPane().add(chckbxLaboratorio);
 		chckbxLaboratorio.setForeground(Color.DARK_GRAY);
 		chckbxLaboratorio.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxLaboratorio.setBackground(Color.WHITE);
 		
 		chckbxPromocion1 = new JCheckBox("Promoci\u00F3n 1");
-		chckbxPromocion1.setBounds(500, 174, 135, 23);
+		chckbxPromocion1.setBounds(26, 174, 135, 23);
 		getContentPane().add(chckbxPromocion1);
 		chckbxPromocion1.setForeground(Color.DARK_GRAY);
 		chckbxPromocion1.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxPromocion1.setBackground(Color.WHITE);
 		
 		chckbxPromocion2 = new JCheckBox("Promoci\u00F3n 2");
-		chckbxPromocion2.setBounds(500, 200, 171, 23);
+		chckbxPromocion2.setBounds(26, 200, 171, 23);
 		getContentPane().add(chckbxPromocion2);
 		chckbxPromocion2.setForeground(Color.DARK_GRAY);
 		chckbxPromocion2.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxPromocion2.setBackground(Color.WHITE);
 		
 		btnGuardarAtributos = new JButton("Guardar");
-		btnGuardarAtributos.setBounds(730, 200, 180, 25);
+		btnGuardarAtributos.setBounds(256, 200, 180, 25);
 		getContentPane().add(btnGuardarAtributos);
 		btnGuardarAtributos.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnGuardarAtributos.setForeground(Color.WHITE);
@@ -226,19 +194,19 @@ public class Configuraciones extends JInternalFrame {
 		btnGuardarAtributos.setBackground(new Color(30, 144, 255));
 		
 		lblreducirStockAl = new JLabel("\u00BFReducir stock al vender?");
-		lblreducirStockAl.setBounds(510, 267, 220, 26);
+		lblreducirStockAl.setBounds(36, 267, 220, 26);
 		getContentPane().add(lblreducirStockAl);
 		lblreducirStockAl.setHorizontalAlignment(SwingConstants.LEFT);
 		lblreducirStockAl.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		cbReducirAlVender = new JComboBox();
 		cbReducirAlVender.setFont(new Font("Candara", Font.PLAIN, 18));
-		cbReducirAlVender.setBounds(510, 298, 191, 26);
+		cbReducirAlVender.setBounds(36, 298, 191, 26);
 		getContentPane().add(cbReducirAlVender);
 		cbReducirAlVender.setModel(new DefaultComboBoxModel(new String[] {"NO", "SI"}));
 		
 		btnReducirAlVender = new JButton("Guardar");
-		btnReducirAlVender.setBounds(730, 298, 180, 27);
+		btnReducirAlVender.setBounds(256, 298, 180, 27);
 		getContentPane().add(btnReducirAlVender);
 		btnReducirAlVender.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnReducirAlVender.setForeground(Color.WHITE);
@@ -249,294 +217,21 @@ public class Configuraciones extends JInternalFrame {
 		});
 		btnReducirAlVender.setBackground(new Color(30, 144, 255));
 		
-		lblNombreDelNegocio = new JLabel("Nombre del Negocio");
-		lblNombreDelNegocio.setEnabled(false);
-		lblNombreDelNegocio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreDelNegocio.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombreDelNegocio.setBounds(10, 11, 279, 26);
-		getContentPane().add(lblNombreDelNegocio);
-		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setHorizontalAlignment(SwingConstants.LEFT);
-		textField.setForeground(SystemColor.windowBorder);
-		textField.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField.setColumns(10);
-		textField.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField.setBackground(new Color(245, 245, 245));
-		textField.setBounds(10, 44, 404, 23);
-		getContentPane().add(textField);
-		
-		button = new JButton("Guardar");
-		button.setEnabled(false);
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button.setBackground(new Color(30, 144, 255));
-		button.setBounds(234, 70, 180, 25);
-		getContentPane().add(button);
-		
-		lblImagenDelLogin = new JLabel("Logo: (400px*300px)");
-		lblImagenDelLogin.setEnabled(false);
-		lblImagenDelLogin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImagenDelLogin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblImagenDelLogin.setBounds(10, 96, 336, 26);
-		getContentPane().add(lblImagenDelLogin);
-		
-		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
-		textField_1.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_1.setForeground(SystemColor.windowBorder);
-		textField_1.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_1.setColumns(10);
-		textField_1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_1.setBackground(new Color(245, 245, 245));
-		textField_1.setBounds(10, 119, 180, 23);
-		getContentPane().add(textField_1);
-		
-		button_1 = new JButton("Guardar");
-		button_1.setEnabled(false);
-		button_1.setForeground(Color.WHITE);
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_1.setBackground(new Color(30, 144, 255));
-		button_1.setBounds(234, 117, 180, 25);
-		getContentPane().add(button_1);
-		
-		button_2 = new JButton("...");
-		button_2.setEnabled(false);
-		button_2.setForeground(Color.WHITE);
-		button_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		button_2.setBackground(new Color(30, 144, 255));
-		button_2.setBounds(198, 123, 26, 19);
-		getContentPane().add(button_2);
-		
-		lblImagenDelLogin_1 = new JLabel("Imagen del login: (700px*300px)");
-		lblImagenDelLogin_1.setEnabled(false);
-		lblImagenDelLogin_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImagenDelLogin_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblImagenDelLogin_1.setBounds(10, 146, 336, 26);
-		getContentPane().add(lblImagenDelLogin_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setEnabled(false);
-		textField_2.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_2.setForeground(SystemColor.windowBorder);
-		textField_2.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_2.setColumns(10);
-		textField_2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_2.setBackground(new Color(245, 245, 245));
-		textField_2.setBounds(10, 172, 180, 23);
-		getContentPane().add(textField_2);
-		
-		button_3 = new JButton("...");
-		button_3.setEnabled(false);
-		button_3.setForeground(Color.WHITE);
-		button_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		button_3.setBackground(new Color(30, 144, 255));
-		button_3.setBounds(198, 176, 26, 19);
-		getContentPane().add(button_3);
-		
-		button_4 = new JButton("Guardar");
-		button_4.setEnabled(false);
-		button_4.setForeground(Color.WHITE);
-		button_4.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_4.setBackground(new Color(30, 144, 255));
-		button_4.setBounds(234, 170, 180, 25);
-		getContentPane().add(button_4);
-		
-		lblImagenDelReporte = new JLabel("Imagen del reporte: (300px*500px)");
-		lblImagenDelReporte.setEnabled(false);
-		lblImagenDelReporte.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImagenDelReporte.setFont(new Font("Candara", Font.BOLD, 20));
-		lblImagenDelReporte.setBounds(10, 198, 336, 26);
-		getContentPane().add(lblImagenDelReporte);
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_3.setForeground(SystemColor.windowBorder);
-		textField_3.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_3.setColumns(10);
-		textField_3.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_3.setBackground(new Color(245, 245, 245));
-		textField_3.setBounds(10, 223, 180, 23);
-		getContentPane().add(textField_3);
-		
-		button_5 = new JButton("...");
-		button_5.setEnabled(false);
-		button_5.setForeground(Color.WHITE);
-		button_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		button_5.setBackground(new Color(30, 144, 255));
-		button_5.setBounds(198, 227, 26, 19);
-		getContentPane().add(button_5);
-		
-		button_6 = new JButton("Guardar");
-		button_6.setEnabled(false);
-		button_6.setForeground(Color.WHITE);
-		button_6.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_6.setBackground(new Color(30, 144, 255));
-		button_6.setBounds(234, 221, 180, 25);
-		getContentPane().add(button_6);
-		
-		lblLogopxpx = new JLabel("Logo: (300px*500px)");
-		lblLogopxpx.setEnabled(false);
-		lblLogopxpx.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLogopxpx.setFont(new Font("Candara", Font.BOLD, 20));
-		lblLogopxpx.setBounds(10, 295, 336, 26);
-		getContentPane().add(lblLogopxpx);
-		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		textField_4.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_4.setForeground(SystemColor.windowBorder);
-		textField_4.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_4.setColumns(10);
-		textField_4.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_4.setBackground(new Color(245, 245, 245));
-		textField_4.setBounds(10, 319, 180, 23);
-		getContentPane().add(textField_4);
-		
-		button_7 = new JButton("...");
-		button_7.setEnabled(false);
-		button_7.setForeground(Color.WHITE);
-		button_7.setFont(new Font("Tahoma", Font.BOLD, 15));
-		button_7.setBackground(new Color(30, 144, 255));
-		button_7.setBounds(198, 323, 26, 19);
-		getContentPane().add(button_7);
-		
-		button_8 = new JButton("Guardar");
-		button_8.setEnabled(false);
-		button_8.setForeground(Color.WHITE);
-		button_8.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_8.setBackground(new Color(30, 144, 255));
-		button_8.setBounds(234, 317, 180, 25);
-		getContentPane().add(button_8);
-		
-		lblDatosParaEl = new JLabel("DATOS PARA EL COMPROBANTE:");
-		lblDatosParaEl.setEnabled(false);
-		lblDatosParaEl.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDatosParaEl.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDatosParaEl.setBounds(10, 268, 336, 26);
-		getContentPane().add(lblDatosParaEl);
-		
-		lblDireccin = new JLabel("Direcci\u00F3n:");
-		lblDireccin.setEnabled(false);
-		lblDireccin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDireccin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDireccin.setBounds(10, 426, 336, 26);
-		getContentPane().add(lblDireccin);
-		
-		textField_5 = new JTextField();
-		textField_5.setEnabled(false);
-		textField_5.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_5.setForeground(SystemColor.windowBorder);
-		textField_5.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_5.setColumns(10);
-		textField_5.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_5.setBackground(new Color(245, 245, 245));
-		textField_5.setBounds(10, 446, 214, 23);
-		getContentPane().add(textField_5);
-		
-		button_10 = new JButton("Guardar");
-		button_10.setEnabled(false);
-		button_10.setForeground(Color.WHITE);
-		button_10.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_10.setBackground(new Color(30, 144, 255));
-		button_10.setBounds(234, 400, 180, 25);
-		getContentPane().add(button_10);
-		
-		lblTelefono = new JLabel("Telefono:");
-		lblTelefono.setEnabled(false);
-		lblTelefono.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTelefono.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTelefono.setBounds(10, 473, 336, 26);
-		getContentPane().add(lblTelefono);
-		
-		textField_6 = new JTextField();
-		textField_6.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_6.setForeground(SystemColor.windowBorder);
-		textField_6.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_6.setColumns(10);
-		textField_6.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_6.setBackground(new Color(245, 245, 245));
-		textField_6.setBounds(10, 494, 214, 23);
-		getContentPane().add(textField_6);
-		
-		button_12 = new JButton("Guardar");
-		button_12.setEnabled(false);
-		button_12.setForeground(Color.WHITE);
-		button_12.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_12.setBackground(new Color(30, 144, 255));
-		button_12.setBounds(234, 492, 180, 25);
-		getContentPane().add(button_12);
-		
-		lblRuc = new JLabel("Ruc:");
-		lblRuc.setHorizontalAlignment(SwingConstants.LEFT);
-		lblRuc.setFont(new Font("Candara", Font.BOLD, 20));
-		lblRuc.setBounds(10, 520, 336, 26);
-		getContentPane().add(lblRuc);
-		
-		textField_7 = new JTextField();
-		textField_7.setEnabled(false);
-		textField_7.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_7.setForeground(SystemColor.windowBorder);
-		textField_7.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_7.setColumns(10);
-		textField_7.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_7.setBackground(new Color(245, 245, 245));
-		textField_7.setBounds(10, 542, 214, 23);
-		getContentPane().add(textField_7);
-		
-		button_14 = new JButton("Guardar");
-		button_14.setEnabled(false);
-		button_14.setForeground(Color.WHITE);
-		button_14.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_14.setBackground(new Color(30, 144, 255));
-		button_14.setBounds(234, 540, 180, 25);
-		getContentPane().add(button_14);
-		
-		lblPresentacin = new JLabel("Presentaci\u00F3n:");
-		lblPresentacin.setEnabled(false);
-		lblPresentacin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPresentacin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPresentacin.setBounds(10, 346, 336, 26);
-		getContentPane().add(lblPresentacin);
-		
-		textField_8 = new JTextField();
-		textField_8.setEnabled(false);
-		textField_8.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_8.setForeground(SystemColor.windowBorder);
-		textField_8.setFont(new Font("Arial", Font.ITALIC, 18));
-		textField_8.setColumns(10);
-		textField_8.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		textField_8.setBackground(new Color(245, 245, 245));
-		textField_8.setBounds(10, 366, 404, 23);
-		getContentPane().add(textField_8);
-		
-		button_15 = new JButton("Guardar");
-		button_15.setEnabled(false);
-		button_15.setForeground(Color.WHITE);
-		button_15.setFont(new Font("Tahoma", Font.BOLD, 20));
-		button_15.setBackground(new Color(30, 144, 255));
-		button_15.setBounds(234, 443, 180, 25);
-		getContentPane().add(button_15);
-		
 		lblCantidadDeImpresiones = new JLabel("Cantidad de impresiones al vender:");
 		lblCantidadDeImpresiones.setEnabled(false);
 		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadDeImpresiones.setBounds(510, 504, 400, 26);
+		lblCantidadDeImpresiones.setBounds(36, 504, 400, 26);
 		getContentPane().add(lblCantidadDeImpresiones);
 		
 		button_9 = new JButton("Guardar");
-		button_9.setEnabled(false);
 		button_9.setForeground(Color.WHITE);
 		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
 		button_9.setBackground(new Color(30, 144, 255));
-		button_9.setBounds(730, 538, 180, 27);
+		button_9.setBounds(256, 538, 180, 27);
 		getContentPane().add(button_9);
 		
 		textField_9 = new JTextField();
-		textField_9.setEnabled(false);
 		textField_9.setText("0");
 		textField_9.setHorizontalAlignment(SwingConstants.LEFT);
 		textField_9.setForeground(SystemColor.windowBorder);
@@ -544,7 +239,7 @@ public class Configuraciones extends JInternalFrame {
 		textField_9.setColumns(10);
 		textField_9.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		textField_9.setBackground(new Color(245, 245, 245));
-		textField_9.setBounds(510, 542, 191, 23);
+		textField_9.setBounds(36, 542, 191, 23);
 		getContentPane().add(textField_9);
 		
 		btnActualizarBD = new JButton("Verificar y actualizar base de datos");
@@ -557,7 +252,7 @@ public class Configuraciones extends JInternalFrame {
 		btnActualizarBD.setForeground(Color.WHITE);
 		btnActualizarBD.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnActualizarBD.setBackground(new Color(0, 206, 209));
-		btnActualizarBD.setBounds(510, 593, 400, 25);
+		btnActualizarBD.setBounds(611, 593, 400, 25);
 		getContentPane().add(btnActualizarBD);
 
 		

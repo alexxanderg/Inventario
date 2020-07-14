@@ -128,10 +128,10 @@ public class consultas {
 		}
 		return rs;
 	}
-	public ResultSet cargarVentaDetalles(int codVenta){
+	public ResultSet cargarVentaDetalles(int nroVentaModificar){
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_ventas_detalle where codventa = " + codVenta);
+			rs = st.executeQuery("select * from tb_ventas_detalle where codventa = " + nroVentaModificar);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar venta detalles: " + e);
 		}
@@ -214,8 +214,19 @@ public class consultas {
 	public ResultSet buscarProductoBarras(String codbarra) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where codbarra = '" + codbarra + "'" + " and estado = 1");
+			rs = st.executeQuery("select * from tb_productos where codbarra like '" + codbarra + "'  and length(codbarra)>2 and estado = 1");
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al buscar codbarra: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet buscarProductoBarrasyCod(String codbarra, int id) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select * from tb_productos where codbarra like '" + codbarra + "'  and length(codbarra)>2 and estado = 1 and codproducto != " + id);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al buscar codbarra: " + e);
 		}
 		return rs;
 	}
@@ -354,6 +365,19 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 		return rs;
+	}
+	
+	public void FusionarConteoKardex(int codproducto, float conteo){
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set cantidad=? where codproducto=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setFloat(1, conteo);
+			prepareStmt.setInt(2, codproducto);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al fusionar: " + e);
+		}
 	}
 
 	/*public ResultSet ingresarStock(String cod, float cant) {
@@ -793,7 +817,7 @@ public class consultas {
 	public ResultSet ObtenerUltimoNroKardex() {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select idkardex from tb_kardex order by idkardex desc limit 1");
+			rs = st.executeQuery("select idkardex, nota from tb_kardex order by idkardex desc limit 1");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -904,6 +928,18 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet consultarEstadoVenta(int nroVenta) {
+		try {
+			st = con.createStatement();
+			String sql = "select estado from tb_ventas where codventa=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, nroVenta);
+			prepareStmt.execute();
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
 	public ResultSet ObtenerUltimoCodigoCompra() {
 		try {
 			st = con.createStatement();
@@ -1000,20 +1036,31 @@ public class consultas {
 		return rs;
 	}
 
-	public void eliminarVentaDetalle(String cod_prod, String cod_vd) {
+	public void resetearCeroVentaDetalle(int nroVentaEliminar) {
 		try {
 			st = con.createStatement();
-			String sql = "update tb_ventas_detalle set cantidad=0, prevenOri=0, totvenOri=0, prevenFin=0, totvenFin=0 where codproducto = ? and codventa = ?";
+			String sql = "update tb_ventas_detalle set preVeSDInd=0, preVeSDTot=0, descIndiv=0, descTotal=0, subTotal=0, ganancia=0 where codventa = ?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setString(1, cod_prod);
-			prepareStmt.setString(2, cod_vd);
+			prepareStmt.setInt(1, nroVentaEliminar);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}
+	
+	public void eliminarVentaDetalle(int nroVentaEliminar) {
+		try {
+			st = con.createStatement();
+			String sql = "delete from tb_ventas_detalle where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, nroVentaEliminar);
 			prepareStmt.execute();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
 	}
 
-	public void modificarVenta(int nroVenta) {
+	/*public void modificarVenta(int nroVenta) {
 		try {
 			st = con.createStatement();
 			String sql = "update tb_ventas set totcompra=0, totventa=0, ganancia=0, descuento=0, saldo=0, nota='', metpago1=0, montpago1=0, metpago2=0, montpago2=0, estado=2  where codventa = ?";
@@ -1021,6 +1068,63 @@ public class consultas {
 			prepareStmt.setInt(1, nroVenta);
 			prepareStmt.execute();
 			//JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}*/
+	public void modificarVenta(int nroVenta, int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2) {
+		try {
+			java.util.Date d = new java.util.Date();
+			// java.sql.Date date2 = new java.sql.Date(d.getTime());
+			java.util.Date date = new Date();
+			Object date2 = new java.sql.Timestamp(date.getTime());
+			
+			st = con.createStatement();
+			String sql = "update tb_ventas set idcliente=?, fecha=?, idusuario=?, totcompra=?, totventa=?, ganancia=?, descuento=?, saldo=?, nota=?, metpago1=?, montpago1=?, metpago2=?, montpago2=?, estado=?  where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, idcliente);
+			prepareStmt.setObject(2, date2);
+			prepareStmt.setInt(3, idusuario);
+			prepareStmt.setDouble(4, pretotC);
+			prepareStmt.setDouble(5, preTotalVentaFinal);
+			prepareStmt.setDouble(6, gananciaFinal);
+			prepareStmt.setDouble(7, descTotal);
+			prepareStmt.setDouble(8, 0);
+			prepareStmt.setString(9, nota);
+			prepareStmt.setInt(10, metpago1);
+			prepareStmt.setDouble(11, monto1);
+			prepareStmt.setInt(12, metpago2);
+			prepareStmt.setDouble(13, monto2);
+			prepareStmt.setInt(14, 2);
+			prepareStmt.setInt(15, nroVenta);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE rs");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}
+	
+	public void modificarVenta2(int nroVenta, int idcliente, int idusuario, double pretotC, double preTotalVentaFinal, double gananciaFinal, double descTotal, String nota, int metpago1, double monto1, int metpago2, double monto2, Object fechaElegida) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_ventas set idcliente=?, fecha=?, totcompra=?, totventa=?, ganancia=?, descuento=?, saldo=?, nota=?, metpago1=?, montpago1=?, metpago2=?, montpago2=?, estado=?  where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, idcliente);
+			prepareStmt.setObject(2, fechaElegida);
+			prepareStmt.setInt(3, idusuario);
+			prepareStmt.setDouble(4, pretotC);
+			prepareStmt.setDouble(5, preTotalVentaFinal);
+			prepareStmt.setDouble(6, gananciaFinal);
+			prepareStmt.setDouble(7, descTotal);
+			prepareStmt.setString(8, nota);
+			prepareStmt.setInt(9, metpago1);
+			prepareStmt.setDouble(10, monto1);
+			prepareStmt.setInt(11, metpago2);
+			prepareStmt.setDouble(12, monto2);
+			prepareStmt.setInt(13, 2);
+			prepareStmt.setInt(14, nroVenta);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE rs");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -1141,6 +1245,19 @@ public class consultas {
 		}
 	}
 	
+	public void reIngresarStock(double cantVendida, int codproducto) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set cantidad = (cantidad+" + cantVendida + ") where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, codproducto);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "Stock actualizado");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
+		}
+	}
+	
 	public void modificarFechaAlVender(int eleccion) {
 		try {
 			st = con.createStatement();
@@ -1185,6 +1302,22 @@ public class consultas {
 			prepareStmt.setInt(1, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO ELIMINADO");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet duplicarProducto(int idProducto) {
+		try {
+			st = con.createStatement();
+			String sql = "INSERT INTO tb_productos (producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2) "
+					+ "SELECT producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2 FROM tb_productos "
+					+ "WHERE codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, idProducto);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, " PRODUCTO DUPLICADO");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}

@@ -671,7 +671,7 @@ public class Reportes extends JInternalFrame {
 			new AbstractJasperReports().createReport(con, "rFechaVencer.jasper", parameters);
 			AbstractJasperReports.showViewer();
 			con.close();
-
+			
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}

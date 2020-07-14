@@ -510,7 +510,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				this.dispose();
 			}
 		} catch (Exception e) {
+			this.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
+			this.setAlwaysOnTop(true);
 		}
 		
 	}

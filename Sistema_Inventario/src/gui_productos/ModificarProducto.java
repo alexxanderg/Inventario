@@ -1340,74 +1340,85 @@ public class ModificarProducto extends JFrame {
 			} else {
 				int id = 0;				id = Integer.parseInt(txtID.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
-				String nombreprod = ""; nombreprod = txtNombreProducto.getText();
-				String descripcion = "";descripcion = txtDescripcion.getText();
-				String umedida = ""; 	umedida = cbUnidadMedida.getSelectedItem().toString();
-				String categoria = ""; 	categoria = cbCategoria.getSelectedItem().toString();
-				String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
-				String marca = ""; 		marca = txtMarca.getText();
-				String color = ""; 		color = txtColor.getText();
-				int iddistrib = 0; 		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
-				double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
-				double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
-				double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
-				double ptjgana = 0; 	if(txtPtjGanancia.getText().length()>0) ptjgana = Float.parseFloat(txtPtjGanancia.getText());
-				double preveNew = 0; 	if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
-				
-				java.sql.Date fechaVencimiento = null;
-				try { // Cambio de utils a sql.Date para envio
-					Date datevencimiento = dateFechaVenc.getDate();
-					long d = datevencimiento.getTime();
-					fechaVencimiento = new java.sql.Date(d);
-				} catch (Exception e) {
-				}		
-				
-				String laboratiorio = ""; 	laboratiorio = txtLaboratorio.getText();
-				String lote = ""; 	lote = txtLote.getText();
-				
-				String nombrePromo1 = txtNombrePromo1.getText();
-				double cantPromo1 = Float.parseFloat(txtCantPromo1.getText());
-				double prePromo1 = Float.parseFloat(txtPrePromo1.getText());
-				String nombrePromo2 = txtNombrePromo2.getText();
-				double cantPromo2 = Float.parseFloat(txtCantPromo2.getText());
-				double prePromo2 = Float.parseFloat(txtPrePromo2.getText());
 				
 				try {
-						
-					stockini = redondearDecimales(stockini, 2);
-					stockmin = redondearDecimales(stockmin, 2);
-					precoNew = redondearDecimales(precoNew, 2);
-					cantPromo1 = redondearDecimales(cantPromo1, 2);
-					prePromo1 = redondearDecimales(prePromo1, 2);
-					cantPromo2 = redondearDecimales(cantPromo2, 2);
-					prePromo2 = redondearDecimales(prePromo2, 2);
+					consultas consulta2 = new consultas();
+					consulta2.iniciar();
+					ResultSet rs2 = consulta2.buscarProductoBarrasyCod(codbarra, id);
+					rs2.next();
+					String cb = rs2.getString("codbarra");
+					JOptionPane.showMessageDialog(null, "Ya existe producto con este código de barras");
+					
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Error al redondear: " + e);
-				}
 				
-				java.util.Date date = new Date(); // FECHA ACTUAL
-				Object fechaActual = new java.sql.Timestamp(date.getTime());
-				
-				String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
+					String nombreprod = ""; nombreprod = txtNombreProducto.getText();
+					String descripcion = "";descripcion = txtDescripcion.getText();
+					String umedida = ""; 	umedida = cbUnidadMedida.getSelectedItem().toString();
+					String categoria = ""; 	categoria = cbCategoria.getSelectedItem().toString();
+					String almacen = ""; 	almacen = cbAlmacen.getSelectedItem().toString();
+					String marca = ""; 		marca = txtMarca.getText();
+					String color = ""; 		color = txtColor.getText();
+					int iddistrib = 0; 		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
+					double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
+					double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
+					double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
+					double ptjgana = 0; 	if(txtPtjGanancia.getText().length()>0) ptjgana = Float.parseFloat(txtPtjGanancia.getText());
+					double preveNew = 0; 	if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
+					
+					java.sql.Date fechaVencimiento = null;
+					try { // Cambio de utils a sql.Date para envio
+						Date datevencimiento = dateFechaVenc.getDate();
+						long d = datevencimiento.getTime();
+						fechaVencimiento = new java.sql.Date(d);
+					} catch (Exception ex) {
+					}		
+					
+					String laboratiorio = ""; 	laboratiorio = txtLaboratorio.getText();
+					String lote = ""; 	lote = txtLote.getText();
+					
+					String nombrePromo1 = txtNombrePromo1.getText();
+					double cantPromo1 = Float.parseFloat(txtCantPromo1.getText());
+					double prePromo1 = Float.parseFloat(txtPrePromo1.getText());
+					String nombrePromo2 = txtNombrePromo2.getText();
+					double cantPromo2 = Float.parseFloat(txtCantPromo2.getText());
+					double prePromo2 = Float.parseFloat(txtPrePromo2.getText());
+					
+					try {
+						stockini = redondearDecimales(stockini, 2);
+						stockmin = redondearDecimales(stockmin, 2);
+						precoNew = redondearDecimales(precoNew, 2);
+						cantPromo1 = redondearDecimales(cantPromo1, 2);
+						prePromo1 = redondearDecimales(prePromo1, 2);
+						cantPromo2 = redondearDecimales(cantPromo2, 2);
+						prePromo2 = redondearDecimales(prePromo2, 2);
+					} catch (Exception ec) {
+						JOptionPane.showMessageDialog(null, "Error al redondear: " + ec);
+					}
+					
+					java.util.Date date = new Date(); // FECHA ACTUAL
+					Object fechaActual = new java.sql.Timestamp(date.getTime());
+					
+					String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 
-				consulta.iniciar();
-				consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
-						marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-						lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2,id);
+					consulta.iniciar();
+					consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
+							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
+							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2,id);
 
-				consulta.reset();
-				mantenimientoProductos.cargar();
-				mantenimientoProductos.selecionarProducto(""+id);
-				this.dispose();
-
-				/*if (rs == 0) {
-					model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
+					consulta.reset();
 					mantenimientoProductos.cargar();
 					mantenimientoProductos.selecionarProducto(""+id);
-					limpiar();
-					
-				} else
-					JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");*/
+					this.dispose();
+
+					/*if (rs == 0) {
+						model.registrarFechaIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
+						mantenimientoProductos.cargar();
+						mantenimientoProductos.selecionarProducto(""+id);
+						limpiar();
+						
+					} else
+						JOptionPane.showMessageDialog(null, "Ya existe producto con este ID");*/
+				}				
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al registrar produto: " + e);
@@ -1451,7 +1462,7 @@ public class ModificarProducto extends JFrame {
 				nd.setVisible(true);
 			}
 		} catch (Exception f) {
-			JOptionPane.showMessageDialog(null, "Error: " + f);
+			JOptionPane.showMessageDialog(null, "Error al cargar distribuidor: " + f);
 		}
 	}
 	

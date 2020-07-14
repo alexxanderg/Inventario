@@ -97,6 +97,7 @@ foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
 );
 
+--
 create table tb_ingreso_productos(
 coding			int primary key auto_increment,
 codproducto 	int,
@@ -109,6 +110,8 @@ nombreusu		varchar(50),
 fechaingreso	datetime,
 foreign key (codproducto) references tb_productos(codproducto)
 );
+--
+
 
 create table tb_kardex(
 idkardex	int primary key auto_increment,
@@ -162,6 +165,8 @@ fechaVauto		tinyint	 -- 0NO 1SI Para poder modificar la fecha de venta cada ves 
 -- registros float - kardex_detalles
 
 
+
+
 -- Usuarios de prueba
 insert into tb_usuarios values(null,'alex', 'Aa123', 'Alexander Gamarra', 1, 1);
 insert into tb_usuarios values(null,'bxb', 'bxb01', 'Byte x Byte', 0, 1);
@@ -191,34 +196,22 @@ select * from tb_usuarios;
 select * from tb_clientes;
 select * from tb_distribuidores;
 select * from tb_productos; 
-select * from tb_ventas;
-select * from tb_ventas_detalle;
-select * from tb_compras;
-select * from tb_compras_detalles;
+select * from tb_configuraciones;
 
-select * from tb_ingreso_productos;
-select * from tb_clientes;
 select * from tb_kardex;
 select * from tb_kardex_detalles;
-select * from tb_configuraciones;
+select * from tb_compras;
+select * from tb_compras_detalles;
+select * from tb_ventas;
+select * from tb_ventas_detalle;
+
+select * from tb_ingreso_productos;
 
 
 select * from tb_productos where cantidad < 50 and producto != '&'  order by producto;
 select * from tb_productos where cantidad < 8 and estado = 1 and categoria = '.General' and marca =  'FILA'  order by producto;
 
 
-
-
-select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
-
-select codproducto from tb_productos order by codproducto desc limit 1 ;
-
-select cd.cantidad, p.producto, p.detalles, p.marca, p.color, cd.preUni, cd.preSubT from tb_compras_detalles  cd inner join tb_productos p on p.codproducto = cd.idprod where idcompra = 1;
-
-select vd.cantidad, p.producto, p.detalles, p.marca, p.color, vd.preVeSDInd, vd.preVeSDTot, vd.descIndiv, vd.descTotal, vd.subTotal, vd.subTotal, vd.ganancia, vd.uMedidaUsada from tb_ventas_detalle vd
-inner join tb_productos p
-on p.codproducto = vd.codproducto
-where codventa = 1;
 
 -- delete from tb_ventas where codventa = 2;
 -- delete from tb_ventas where codventa = 52;
@@ -234,28 +227,15 @@ where codventa = 1;
 show processlist;
 show status like 'Threads%';
 
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, pr.marca, pr.color, pr.lote, pr.laboratorio, vd.descIndiv, vd.descTotal, vd.subTotal, v.fecha, c.nombre, v.totventa, u.usuario, v.metpago1, v.nota
-from tb_ventas v 
-inner join tb_ventas_detalle vd 
-on v.codventa=vd.codventa
-inner join tb_productos pr
-on pr.codproducto=vd.codproducto
-inner join tb_clientes c
-on v.idcliente = c.idcliente
-inner join tb_usuarios u
-on v.idusuario = u.idusuario
-where v.fecha between'2019-10-14' and '2021-10-14'
-order by v.codventa;
+SET SQL_SAFE_UPDATES = 0;
 
-select p.codproducto, p.codbarra, p.producto, p.detalles, p.marca, p.color, p.laboratorio, p.lote, p.unimedida, p.fechaVenc, p.categoria, p.almacen, d.nombre, p.cantidad, p.precioCo, p.ptjganancia, p.precioVe, p.estado
-from tb_productos p
-inner join tb_distribuidores d
-on p.iddistrib = d.iddistrib
-where p.producto like '%12 colores%' or detalles like '%prod  %' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' 
-order by p.producto;
+
+
+select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
+
+select codproducto from tb_productos order by codproducto desc limit 1 ;
 
 select producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto;
-
 
 select * from  db_inventario.tb_ventas where fecha between '2019-01-01 00:00:00' and '2020-09-07 23:59:59';
 
@@ -263,89 +243,29 @@ update tb_ventas SET fecha='2019-10-14' WHERE codventa=11;
 
 update tb_ventas set usuario='admin' where usuario='Alexander Gamarra';
 
-SET SQL_SAFE_UPDATES = 0;
-
 select vd.codventa,pr.producto,vd.cantidad,vd.prevenOri,vd.totvenOri,vd.prevenFin,vd.totvenFin from db_inventario.tb_ventas_detalle vd 
 inner join tb_productos pr on vd.codproducto=pr.codproducto where vd.codventa = 6;
 
-select v.codventa, v.cliente, v.fecha, v.usuario, v.totcompra, v.totventa, v.ganancia,
-vd.codproducto, vd.cantidad, vd.prevenOri, vd.totvenOri, vd.prevenFin, vd.totvenFin 
-from  db_inventario.tb_ventas v
-inner join tb_ventas_detalle vd
-on v.codventa = vd.codventa
-where fecha between '2019-01-01 00:00:00' and '2019-09-07 23:59:59'
-group by v.codventa;
-
-
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario
-from tb_ventas v 
-Inner join tb_ventas_detalle vd 
-On v.codventa=vd.codventa
-Inner join tb_productos pr
-On pr.codproducto=vd.codproducto
-where v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
-and v.usuario = 'alex';
-
 select * from tb_ventas where estado = 1 order by fecha desc;
-
-
-select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%m') as fecha, v.descuento, v.saldo, v.totventa
-from tb_ventas v
-inner join tb_clientes c
-on c.idcliente = v.idcliente
-inner join tb_usuarios u
-on u.idusuario = v.idusuario
-where v.estado = 1 
-and u.idusuario = 1
-and v.fecha between '2018-01-01 00:00:00' and '2019-10-07 23:59:59'
-order by v.fecha desc;
 
 select * from tb_usuarios where usuario = BINARY '' or '' = '' and pass = BINARY '' or '' = '';
  
 select sum(precioVe) from tb_productos where cantidad > 0 order by producto;
 
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario, v.metpago, v.nota
-from tb_ventas v 
-Inner join tb_ventas_detalle vd 
-On v.codventa=vd.codventa
-Inner join tb_productos pr
-On pr.codproducto=vd.codproducto
-where v.fecha between '2019-01-01' and '2020-12-12'
-and v.metpago = 3
-order by v.codventa;
-
-select vd.codventa, vd.cantidad, pr.producto, pr.detalles, vd.prevenFin,  vd.totvenFin, v.fecha, v.cliente, v.totventa, v.usuario, v.metpago, v.nota
-from tb_ventas v 
-Inner join tb_ventas_detalle vd 
-On v.codventa=vd.codventa
-Inner join tb_productos pr
-On pr.codproducto=vd.codproducto
-where v.fecha between '2020-01-01' and '2020-12-12'
-and v.usuario = 'Alexander Gamarra';
-
 select * from tb_clientes;
 
-select vd.codventa, vd.cantidad, pr.producto, vd.prevenFin, v.fecha, v.cliente, v.totventa
-from tb_ventas_detalle vd inner join tb_productos pr 
-inner join tb_ventas v on vd.codproducto = pr.codproducto 
-where vd.codventa = 50 and vd.codventa = v.codventa;
-
 select producto from tb_productos where codproducto like 'pol01%' limit 1;
-
-select p.producto, p.detalles, p.marca, p.color, p.cantidad, kd.registros from tb_kardex_detalles kd
-inner join tb_productos p on p.codproducto = kd.codproducto
-where kd.idkardex = 4;
 
 select DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha from tb_ventas v ;
 select * from tb_ventas;
 
 alter table tb_kardex_detalles
-  change registros  registros float ;
+change registros  registros float ;
   
-  update tb_productos
-  set cantidad = 10;
-  
-  SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 3;
+update tb_productos 
+set cantidad = 10;
+
+SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 3;
   
 select * from tb_productos; 
 
@@ -363,10 +283,31 @@ select idkardex from tb_kardex order by idkardex desc limit 1;
 
 select * from tb_kardex_detalles;
 
+delete  from tb_productos where codproducto = 11;
+
 select idkardex from tb_kardex order by idkardex desc limit 1;
 
 select k.idkardex, k.fecha, k.nota, kd.codproducto, kd.registros
 from tb_kardex k 
 inner join tb_kardex_detalles kd
 where k.idkardex = 7 and kd.idkardex = 7;
+
+
+INSERT INTO tb_productos (producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)
+SELECT producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2
+FROM tb_productos
+WHERE codproducto = 10;
+
+select * from tb_productos;
+select * from tb_ventas;
+select * from tb_ventas_detalle;
+
+delete from tb_ventas_detalle where codventa = 22;
+
+
+select * from tb_productos where codbarra like 'abc123' and length(codbarra)>2 and estado = 1 and codproducto != 17;
+
+
+
+
 

@@ -127,6 +127,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 					ventas2.seleccionarRow();
 				}
 				ventas2.sumarSubTotales();
+				ventas2.sumarTotalGenerales();
 			}
 		} catch (Exception e) {
 			this.setAlwaysOnTop(false);
@@ -150,7 +151,7 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 		tb = this.tbProductos;
 		tb.setModel(dtm);
 		tbProductos.setRowHeight(30);
-		dtm.setColumnIdentifiers(new Object[]{"Codigo", "Producto", "Detalle", "Uni. Medida", "Cantidad","PrecioVenta","PrecioComp"});
+		dtm.setColumnIdentifiers(new Object[]{"Codigo", "Producto", "Detalles, marca, color", "Uni. Medida", "Cantidad","PrecioVenta","PrecioComp"});
 		try {
 			consulta.iniciar();
 			rs = consulta.cargarProductos();
@@ -176,13 +177,13 @@ public class ListaDeProductos extends JDialog implements ActionListener, WindowL
 	}
 	private void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(10));  // Codigo
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(30));  // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25));  // Detalle
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(12));  // Uni. Medida
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(11));  // Stock
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(12));  // PrecioC
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(0));  // PrecioV
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(8));  // Codigo
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(20));  // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(35));  // Detalle
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(10));  // Uni. Medida
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(9));  // Stock
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(9));  // PrecioC
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(9));  // PrecioV
 		
 		/*DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);

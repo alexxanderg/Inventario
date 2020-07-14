@@ -79,6 +79,7 @@ public class MantenimientoProd extends JInternalFrame {
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
 	private JButton btnExportar;
+	private JMenu mnduplicarProducto;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -114,10 +115,6 @@ public class MantenimientoProd extends JInternalFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				keyTypedTxtCodigo(e);
-			}
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				keyReleasedTxtCodigo(arg0);
 			}
 		});
 		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -220,11 +217,23 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnaadirStock(e);
 			}
 		});
-		mnaadirStock.setForeground(new Color(0, 204, 255));
+		
+		mnduplicarProducto = new JMenu("|Duplicar producto| ");
+		mnduplicarProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnduplicarProducto(arg0);
+			}
+		});
+		mnduplicarProducto.setForeground(new Color(135, 206, 250));
+		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnduplicarProducto.setBackground(SystemColor.menu);
+		menuBar.add(mnduplicarProducto);
+		mnaadirStock.setForeground(new Color(50, 205, 50));
 		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnaadirStock.setBackground(SystemColor.menu);
 		menuBar.add(mnaadirStock);
-		mnModificarProducto.setForeground(new Color(50, 205, 50));
+		mnModificarProducto.setForeground(new Color(218, 112, 214));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
@@ -279,7 +288,7 @@ public class MantenimientoProd extends JInternalFrame {
 
         List<String> list = new ArrayList<String>();
         list.add("ID");
-        list.add("CÓDIGO");
+        list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
@@ -463,19 +472,7 @@ public class MantenimientoProd extends JInternalFrame {
 		abrirModificarProducto(codigoProducto);
 	}
 	private void abrirModificarProducto(String idProd){
-		/*try {
-			cerrarVentanas();
-			mp = new mp(this);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
-			pintarBotones();
-			btnVentas.setBackground(colorSelec);
-		} catch (PropertyVetoException e) {
-			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
-		}*/
-		
-		try { 
+		try {
 			if (mp.isShowing()) {
 				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				mp.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
@@ -486,8 +483,8 @@ public class MantenimientoProd extends JInternalFrame {
 				mp.setVisible(true);
 			}
 		} catch (Exception f) {
-			mp = new ModificarProducto(""+idProd,this);;
-			mp.setLocationRelativeTo(null); 
+			mp = new ModificarProducto(""+idProd, this);
+			mp.setLocationRelativeTo(null);
 			mp.setVisible(true);
 			mp.setExtendedState(0);
 		}
@@ -532,7 +529,6 @@ public class MantenimientoProd extends JInternalFrame {
 				if (seleccion == 0) {// MODIFICAR
 					try {
 						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
-						JOptionPane.showMessageDialog(null, ""+idProd);
 						abrirModificarProducto(""+idProd);
 						
 					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
@@ -592,8 +588,6 @@ public class MantenimientoProd extends JInternalFrame {
 		if(mp != null)
 			mp.dispose();
 		mp = null;
-	}
-	protected void keyReleasedTxtCodigo(KeyEvent arg0) {
 	}
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
 		if(txtCodigo2.getText().length()==0){
@@ -676,6 +670,22 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		} catch (Exception e2) {
 			// TODO: handle exception
+		}
+	}
+	 
+	protected void mouseClickedMnduplicarProducto(MouseEvent arg0) {
+		try {
+			int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			if (opc == 0) {
+				int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
+				
+				consulta.iniciar();
+				consulta.duplicarProducto(idProducto);
+				cargar();
+				consulta.reset();
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error: Seleccione un producto");
 		}
 	}
 }

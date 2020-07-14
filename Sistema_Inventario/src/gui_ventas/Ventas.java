@@ -582,6 +582,8 @@ public class Ventas extends JInternalFrame {
 	            }
 			}
 		
+			
+			// ACÁ ENTRA SI ES UNA VENTA PARA MODIFICAR
 		
 			if(nroVentaModificar != -1){
 			consulta.iniciar();
@@ -781,6 +783,7 @@ public class Ventas extends JInternalFrame {
 			String nomProducto = txtBuscarProd.getText();
 			txtPago1.setText("0");
 			txtPago2.setText("0");
+			txtVuelto.setText("0");
 			int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
 			consulta.iniciar();
 			rs = consulta.buscarProductoID(idProd);
@@ -1042,7 +1045,7 @@ public class Ventas extends JInternalFrame {
 		if (opc == 0) {
 			
 			int ventasinstock = 0; // 0NO 1SI
-			int flag = 0; //permite pasar a vender segun stock 0NO 1SI
+			int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
 			
 			if (tbCarrito.getRowCount() < 1) {
 				JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
@@ -1068,7 +1071,7 @@ public class Ventas extends JInternalFrame {
 				if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
 					flag = verificarStock();
 				else
-					flag = 1;
+					flag = 1;  // NO TIENE RESTRICCION Y SE VENDE SIN PROBLEMA
 				
 				if (flag == 1) {
 					int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
@@ -1078,7 +1081,7 @@ public class Ventas extends JInternalFrame {
 					String nota = txtInfoAdicional.getText();
 					
 					float totCompra = Float.parseFloat(lblTotalCompra.getText());
-					float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());	
+					float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());
 					float gananciaTot = Float.parseFloat(lblGananciaTotal.getText());
 					float descuentoTot = Float.parseFloat(lblDescuento.getText());
 					
@@ -1092,12 +1095,21 @@ public class Ventas extends JInternalFrame {
 						rs = consulta.cargarConfiguraciones();
 						rs.next();
 						int fechaVauto = rs.getInt("fechaVauto");
-						if(fechaVauto == 0){
-							if(nroVentaModificar != -1)
-								consulta.modificarVenta(nroVentaModificar);
-							consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+						
+						
+						if(fechaVauto == 0){ // AQUI SI LA FECHA ES AUTOMATICA
+							
+							if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+								//consulta.modificarVenta(nroVentaModificar);
+								
+								consulta.modificarVenta(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+								
+							}
+							else{	//AQUI SI ES VENTA NUEVA
+								consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+							}
 						}
-						else if (fechaVauto == 1){
+						else if (fechaVauto == 1){ // AQUI SI LA FECHA ES PERSONALIZADA
 							
 							int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
 							int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
@@ -1111,9 +1123,14 @@ public class Ventas extends JInternalFrame {
 							Date date = (Date) formatter.parse(fechaActualString);
 							Object fechaElegida = new java.sql.Timestamp(date.getTime());
 							
-							if(nroVentaModificar != -1)
-								consulta.modificarVenta(nroVentaModificar);
-							consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+							
+								
+							if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+								consulta.modificarVenta2(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+							}
+							else{	//AQUI SI ES VENTA NUEVA
+								consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+							}
 							
 						}
 					}catch (Exception e2) {
@@ -1184,13 +1201,15 @@ public class Ventas extends JInternalFrame {
 								
 
 							
-							if(nroVentaModificar!=-1){
+							/*if(nroVentaModificar!=-1){  // AQUI ENTRA SI ES VENTA A MODIFICAR
+								
 								try {
 									consulta.iniciar();
 									ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
 									
 									int cont = -1;
 									while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+										
 										cont++;
 										int codproducto = rsVD.getInt("codproducto");
 										double cantidadVendida = rsVD.getDouble("cantidad");
@@ -1213,9 +1232,11 @@ public class Ventas extends JInternalFrame {
 								
 
 								consulta.iniciar();
-								consulta.ModificarDetalleVenta(nroVentaModificar);
+								//consulta.ModificarDetalleVenta(nroVentaModificar);
 								consulta.reset();
-							}
+							}*/
+								
+								
 							consulta.iniciar();
 							consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
 									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);

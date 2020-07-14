@@ -152,7 +152,7 @@ public class notificaciones extends JInternalFrame {
 		}
 
         List<String> list = new ArrayList<String>();
-        list.add("C BARRAS");
+        list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
@@ -274,7 +274,7 @@ public class notificaciones extends JInternalFrame {
 		}
 
         List<String> list = new ArrayList<String>();
-        list.add("C BARRAS");
+        list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
