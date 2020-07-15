@@ -640,21 +640,29 @@ public class MantenimientoProd extends JInternalFrame {
 		try {
 			int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
 			try {
+				
 				model.iniciar();
 				rs = model.buscarProductoID(idProducto);
 				rs.next();
+				
 				String productoName = rs.getString("producto");
 				String productoDetail = rs.getString("detalles");
-				float cantidadActual = rs.getFloat("cantidad");
+				float cantActual = rs.getFloat("cantidad");
+				float precioCo = rs.getFloat("precioCo");
+				float precioVe = rs.getFloat("precioVe");
 				
-				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
 				
-				float cantidadFinal = cantidadActual + stockanadir;
+				AgregarStock as = new AgregarStock(idProducto, cantActual, precioCo, precioVe, usuario, this);
+				as.setVisible(true);
+				
+				/*float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
+				
+				float cantidadFinal = cantActual + stockanadir;
 				
 				//JOptionPane.showMessageDialog(null, "Ahora: " + cantidadFinal);
 				model.ingresarStock(idProducto, cantidadFinal);
 				cargar();
-				selecionarProducto(""+idProducto);
+				selecionarProducto(""+idProducto);*/
 				
 			} catch (Exception e2) {
 				

@@ -205,6 +205,8 @@ select * from tb_compras_detalles;
 select * from tb_ventas;
 select * from tb_ventas_detalle;
 
+select * from tb_productos; 
+
 select * from tb_ingreso_productos;
 
 

@@ -341,13 +341,13 @@ public class BuscarVentas extends JInternalFrame {
 	
 	public void cargar() {
 		
-		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO TOT", "SALDO", "TOTAL"});
 		tbVentas.setRowHeight(30);
 		tbVentas.setModel(dtm);
 		
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
-		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRE INDIV C/DESC", "DESCUENTO", "SUB TOTAL"});
+		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRE INDIV C/DESC", "DESCUENTO TOT", "SUB TOTAL"});
 		
 		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -437,9 +437,49 @@ public class BuscarVentas extends JInternalFrame {
 							while(rs.next()){
 								
 								int codproducto = rs.getInt("codproducto");
-								float cantVendida = rs.getFloat("cantidad");
+								float cantVendida = rs.getFloat("cantidad"); // NRO VENDIDO EN UNIDADES CAJAS LITROS ETC
+								String uMedidaUsada = rs.getString("uMedidaUsada");
+								float cantTotalVendidaUnidades = 0;
 								
-								consulta.reIngresarStock(cantVendida, codproducto);
+								consultas consulta2 = new consultas();
+								consulta2.iniciar();
+								ResultSet rs2 = consulta2.buscarProductoID(codproducto);
+								try {
+									rs2.next();
+									
+									String unimedida = rs2.getString("unimedida");
+									String promo1 = rs2.getString("promo1");
+									float cantp1 = rs2.getFloat("cantp1");
+									float prep1 = rs2.getFloat("prep1");
+									String promo2 = rs2.getString("promo2");
+									float cantp2 = rs2.getFloat("cantp2");
+									float prep2 = rs2.getFloat("prep2");
+									
+									if( uMedidaUsada.equals(unimedida) ){
+										cantTotalVendidaUnidades = cantVendida;
+										
+									} else if( uMedidaUsada.equals(promo1) ){
+										cantTotalVendidaUnidades = cantVendida * cantp1;
+										
+									} else if ( uMedidaUsada.equals(promo2)){
+										cantTotalVendidaUnidades = cantVendida * cantp2;
+										
+									}
+									
+								} catch (Exception e2) {
+									JOptionPane.showMessageDialog(null, "Error al buscar producto para reingresar stock: " + e2);
+								}finally {
+									try {
+										if (rs2 != null)
+											rs2.close();
+										if (consulta2 != null)
+											consulta2.reset();
+						            } catch (Exception ex) {
+						            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+						            }
+								}
+																
+								consulta.reIngresarStock(cantTotalVendidaUnidades, codproducto);
 
 								consulta.eliminarVentaDetalle(nroVentaModificar);
 							}
@@ -455,21 +495,21 @@ public class BuscarVentas extends JInternalFrame {
 						//actionPerformedBtnVerVentas(null);
 						//JOptionPane.showMessageDialog(null, "Venta Eliminada");
 					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Error al eliminar venta");
-					}finally {
-						try {
-							if (rs != null)
-								rs.close();
-							if (consulta != null)
-								consulta.reset();
-			            } catch (Exception ex) {
-			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			            }
+						JOptionPane.showMessageDialog(null, "Error al eliminar venta " + e2);
 					}
 				}
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Seleccione una venta");
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	
@@ -481,37 +521,66 @@ public class BuscarVentas extends JInternalFrame {
 		if(seleccion == 0){
 			try {
 				int nroVentaEliminar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
-				
 				consulta.iniciar();
-				
 				rs = consulta.cargarVentaDetalles(nroVentaEliminar);
-				try {
-					while(rs.next()){
+				
+				while(rs.next()){
+					
+					int codproducto = rs.getInt("codproducto");
+					float cantVendida = rs.getFloat("cantidad"); // NRO VENDIDO EN UNIDADES CAJAS LITROS ETC
+					String uMedidaUsada = rs.getString("uMedidaUsada");
+					float cantTotalVendidaUnidades = 0;
+					
+					consultas consulta2 = new consultas();
+					consulta2.iniciar();
+					ResultSet rs2 = consulta2.buscarProductoID(codproducto);
+					try {
+						rs2.next();
 						
-						int codproducto = rs.getInt("codproducto");
-						float cantVendida = rs.getFloat("cantidad");
+						String unimedida = rs2.getString("unimedida");
+						String promo1 = rs2.getString("promo1");
+						float cantp1 = rs2.getFloat("cantp1");
+						float prep1 = rs2.getFloat("prep1");
+						String promo2 = rs2.getString("promo2");
+						float cantp2 = rs2.getFloat("cantp2");
+						float prep2 = rs2.getFloat("prep2");
 						
-						consulta.reIngresarStock(cantVendida, codproducto);
-
-						consulta.eliminarVentaDetalle(nroVentaEliminar);
+						if( uMedidaUsada.equals(unimedida) ){
+							cantTotalVendidaUnidades = cantVendida;
+							
+						} else if( uMedidaUsada.equals(promo1) ){
+							cantTotalVendidaUnidades = cantVendida * cantp1;
+							
+						} else if ( uMedidaUsada.equals(promo2)){
+							cantTotalVendidaUnidades = cantVendida * cantp2;
+							
+						}
+						
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error al buscar producto para reingresar stock: " + e2);
+					}finally {
+						try {
+							if (rs2 != null)
+								rs2.close();
+							if (consulta2 != null)
+								consulta2.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
 					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Error: al reingresar Stock " + e);
+					
+					consulta.reIngresarStock(cantTotalVendidaUnidades, codproducto);
+					//consulta.eliminarVentaDetalle(nroVentaEliminar);
+					//consulta.modificarVenta3(nroVentaEliminar); // CAMBIAR ESTADO
+
+					consulta.eliminarVenta(nroVentaEliminar);
+					consulta.resetearCeroVentaDetalle(nroVentaEliminar);
 				}
 				
+				JOptionPane.showMessageDialog(null, "Venta Eliminada Correctamente");
 				
-				consulta.eliminarVenta(nroVentaEliminar);
-				consulta.resetearCeroVentaDetalle(nroVentaEliminar);
-				actionPerformedBtnVerVentas(null);
-				
-				for (int i = 0; i < tbDetalleVenta.getRowCount(); i++) {
-					dtmVD.removeRow(i);
-					i -= 1;
-				}
-				
-				JOptionPane.showMessageDialog(null, "Venta Eliminada");
 			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, "Error al eliminar venta");
+				JOptionPane.showMessageDialog(null, "Error al eliminar ventaaa " + e2);
 			}finally {
 				try {
 					if (rs != null)
@@ -521,7 +590,10 @@ public class BuscarVentas extends JInternalFrame {
 	            } catch (Exception ex) {
 	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
 	            }
-			}		
+			}
+			
+			actionPerformedBtnVerVentas(null);
+			
 		}
 	}
 	

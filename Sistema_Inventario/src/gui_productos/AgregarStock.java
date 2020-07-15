@@ -41,12 +41,12 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JButton btnGuardar;
 
 	String usuario;
-	String cod;
-	String cantActual;
-	String precioCo;
-	String precioVe;
-	consultas model = new consultas();
-	ResultSet rs;
+	int idProducto;
+	float cantActual;
+	float precioCoOld;
+	float precioVeOld;
+	
+	
 	private JTextField txtAgregarStock;
 	private JLabel lblPrecioCompra;
 	private JLabel lblPrecioVenta;
@@ -56,12 +56,17 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JDateChooser fecha_ingreso;
 	private JCheckBox chckbxPC;
 	private JCheckBox chckbxPV;
+	
+	MantenimientoProd mp = null;
+	consultas model = new consultas();
+	ResultSet rs;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			AgregarStock dialog = new AgregarStock(null, null,null, null,null);
+			AgregarStock dialog = new AgregarStock(0, 0, 0, 0, null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -69,13 +74,16 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		}
 	}
 
-	public AgregarStock(String temp, String temp2, String temp5, String temp6, String temp4) {
+	public AgregarStock(int idProducto, float cantActual, float precioCoOld, float precioVeOld, String usuario, MantenimientoProd mp) {
+		
+		this.idProducto = idProducto;
+		this.cantActual = cantActual;
+		this.usuario = usuario;
+		this.precioCoOld = precioCoOld;
+		this.precioVeOld = precioVeOld;
+		this.mp = mp;
+		
 		addWindowListener(this);
-		cod = temp;
-		cantActual = temp2;
-		usuario = temp4;
-		precioCo = temp5;
-		precioVe = temp6;
 		setResizable(false);
 		setBounds(100, 100, 560, 481);
 		getContentPane().setLayout(null);
@@ -250,9 +258,9 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	
 	public void cargar(){
 		this.setLocationRelativeTo(null);
-		txtStockActual.setText(cantActual);
-		txtPrecioCompra.setText(precioCo);
-		txtPrecioVenta.setText(precioVe);
+		txtStockActual.setText(""+cantActual);
+		txtPrecioCompra.setText(""+precioCoOld);
+		txtPrecioVenta.setText(""+precioVeOld);
 		
 		java.util.Date date = new Date();
 		date.getTime();
@@ -261,31 +269,35 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	
 	public void actualizar_ingresar(){
 		try {
-			float ci = Float.parseFloat(cantActual);
+			float ci = cantActual;
 			float ca = Float.parseFloat(txtCantidadAdicinal.getText());
 			float total = ci + ca;
 			if(ca <= 0)
 				JOptionPane.showMessageDialog(null, "Ingrese un numero mayor a cero");
 			else{
-				float pc = Float.parseFloat(txtPrecioCompra.getText());
-				float pv = Float.parseFloat(txtPrecioVenta.getText());
+				
+				float precioCoNew = Float.parseFloat(txtPrecioCompra.getText());
+				float precioVeNew = Float.parseFloat(txtPrecioVenta.getText());
 				
 				//Cambio de utils a sql.Date para envio
-				//Date  date = fecha_ingreso.getDate();
-				//long d = date.getTime();
-				//Object date2 = new java.sql.Timestamp(d);
+				Date  date = fecha_ingreso.getDate();
+				long d = date.getTime();
+				Object date2 = new java.sql.Timestamp(d);
 				
 				//Consultas
-				//model.ingresarStock(cod, total);
-				//model.registrarFechaIngreso(cod, ca, pc, pv, usuario);
-				model.modificarPC_PV(cod, pc, pv);
+				model.iniciar();
+				model.ingresarStock(idProducto, total);
+				model.registrarFechaIngreso(idProducto, ca, precioCoOld, precioVeOld,precioCoNew, precioVeNew, date2, usuario);
+				model.modificarPC_PV(idProducto, precioCoNew, precioVeNew);
 				
-				/*mp.setEnabled(true);
-				mp.cargarDatos();
-				mp.selecionarProducto(cod);
+				//mp.setEnabled(true);
+				mp.cargar();
+				mp.selecionarProducto(""+idProducto);
 				mp.ajustarAnchoColumnas();
-				mp.limpiar();*/
+				//mp.limpiar();
 				this.dispose();
+				
+				model.reset();
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");

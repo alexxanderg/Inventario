@@ -352,19 +352,46 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet modificarPC_PV(String cod, float prec, float prev) {
+	public ResultSet modificarPC_PV(int idProducto, float prec, float prev) {
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set precioCo=?, precioVe=? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setFloat(1, prec);
 			prepareStmt.setFloat(2, prev);
-			prepareStmt.setString(3, cod);
+			prepareStmt.setInt(3, idProducto);
 			prepareStmt.execute();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al modificar precio compra venta: " + e);
 		}
 		return rs;
+	}
+	
+	public int registrarFechaIngreso(int cod, float cant, float precioCoOld, float precioVeOld, float precioCoNew, float precioVeNew, Object date2, String usuario){
+		Connection con = MySQLConexion.getConection();
+		java.sql.Statement st;
+		ResultSet rs = null;
+		
+		java.util.Date date = new Date();
+		//Object date2 = new java.sql.Timestamp(date.getTime());
+		
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_ingreso_productos (codproducto, cantidad, precioCoOld, precioVeOld, precioCoNew, precioVeNew, nombreusu, fechaingreso)" + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, cod);
+			prepareStmt.setFloat(2, cant);
+			prepareStmt.setFloat(3, precioCoOld);
+			prepareStmt.setFloat(4, precioVeOld);
+			prepareStmt.setFloat(5, precioCoNew);
+			prepareStmt.setFloat(6, precioVeNew);
+			prepareStmt.setString(7, usuario);
+			prepareStmt.setObject(8, date2);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al añadir stock: " + e);
+		}
+		return 0;
 	}
 	
 	public void FusionarConteoKardex(int codproducto, float conteo){
@@ -396,6 +423,7 @@ public class consultas {
 	}*/
 	
 	public ResultSet ingresarStock(int cod, float cant) {
+		
 		try {
 			st = con.createStatement();
 			String sql = "update tb_productos set cantidad = ? where codproducto=?";
@@ -405,7 +433,7 @@ public class consultas {
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " AGREGADO CORRECTAMENTE ");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al ingresar stock: " + e);
 		}
 		return rs;
 	}
@@ -1123,6 +1151,18 @@ public class consultas {
 			prepareStmt.setDouble(12, monto2);
 			prepareStmt.setInt(13, 2);
 			prepareStmt.setInt(14, nroVenta);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE rs");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR: " + e);
+		}
+	}
+	public void modificarVenta3(int nroVenta) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_ventas set estado=?  where codventa = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, 3);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "MODIFICADO CORRECTAMENTE rs");
 		} catch (Exception e) {

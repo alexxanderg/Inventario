@@ -59,7 +59,8 @@ public class Ventas extends JInternalFrame {
 	private JLabel lblCdigo;
 	private JTextField txtBuscarProd;
 	private JScrollPane scrollPane;
-	private TextAutoCompleter ac;
+	private TextAutoCompleter acBuscador;
+	private TextAutoCompleter acNotas;
 	private JTable tbCarrito;
 	private JLabel lblCliente;
 	private JComboBox <Cliente> cbClientes;
@@ -703,15 +704,22 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	public void cargarBuscador() {
-		ac = new TextAutoCompleter(txtBuscarProd);
+		acBuscador = new TextAutoCompleter(txtBuscarProd);
+		acNotas = new TextAutoCompleter(txtInfoAdicional);
+		
 		consulta.iniciar();
 		rs = consulta.cargarProductos();
-		ac.setMode(0);
+		acBuscador.setMode(0);
+		acNotas.setMode(0);
 		try {
 			while (rs.next()) {
-				ac.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
+				acBuscador.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
 						" = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
 			}
+			
+			//acNotas.addItem("");
+
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
 		}
@@ -1147,38 +1155,43 @@ public class Ventas extends JInternalFrame {
 			            }
 					}
 					
+					
+					
 									/*
 									 * SE REALIZO EL REGISTRO DE LA VENTA
 									 * 
-									 * A CONTINUACION SE REGISTRARAN LOS DETALLES DE ESTA
+									 * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
 									 * 
 									 * */
-									
+								
 					int ultCodVenta = 0;
 					
 					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
-					
-						consulta.iniciar();
-						rs = consulta.ObtenerUltimoCodigo();
-						try {
-							while (rs.next())
-								ultCodVenta = rs.getInt("codventa");
-						} catch (Exception e3) {
-							JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
-						}finally {
+						
+						if(nroVentaModificar!=-1){  // AQUI ENTRA SI ES VENTA A MODIFICAR
+							ultCodVenta = nroVentaModificar;
+						}
+						else{
+							consulta.iniciar();
+							rs = consulta.ObtenerUltimoCodigo();
 							try {
-								if (rs != null)
-									rs.close();
-								if (consulta != null)
-									consulta.reset();
-				            } catch (Exception ex) {
-				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-				            }
+								while (rs.next())
+									ultCodVenta = rs.getInt("codventa");
+							} catch (Exception e3) {
+								JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+							}finally {
+								try {
+									if (rs != null)
+										rs.close();
+									if (consulta != null)
+										consulta.reset();
+					            } catch (Exception ex) {
+					            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+					            }
+							}
 						}
 						
 						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-							
-
 							String productoCompleto = tbCarrito.getValueAt(i, 1).toString();
 							String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(")+1, productoCompleto.indexOf(")"));
 							double cantADisminuir = 0;
@@ -1198,51 +1211,11 @@ public class Ventas extends JInternalFrame {
 								precioCoVenta = redondearDecimales(precioCoVenta, 2);
 							double gananciaProdVenta = subTotVenta - precioCoVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
-								
-
-							
-							/*if(nroVentaModificar!=-1){  // AQUI ENTRA SI ES VENTA A MODIFICAR
-								
-								try {
-									consulta.iniciar();
-									ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
-									
-									int cont = -1;
-									while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
-										
-										cont++;
-										int codproducto = rsVD.getInt("codproducto");
-										double cantidadVendida = rsVD.getDouble("cantidad");
-										consulta.reset();
-										
-										consulta.iniciar();
-										ResultSet rsPr = consulta.buscarProductoID(codproducto);
-										rsPr.next();
-										double cantidadActual = rsPr.getDouble("cantidad");
-										double cantTotal = cantidadVendida + cantidadActual;
-										consulta.reset();
-										
-										consulta.iniciar();
-										consulta.actualizarStock(cantTotal, codproducto);
-										consulta.reset();
-									}
-								} catch (Exception e2) {
-									// TODO: handle exception
-								}
-								
-
-								consulta.iniciar();
-								//consulta.ModificarDetalleVenta(nroVentaModificar);
-								consulta.reset();
-							}*/
-								
-								
+					
 							consulta.iniciar();
 							consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
 									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
-							
-							consulta.reset();
-
+													
 							/*
 							 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
 							 * 
@@ -1274,6 +1247,7 @@ public class Ventas extends JInternalFrame {
 										JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
 									}
 								}
+							
 							} catch (Exception e2) {
 								JOptionPane.showMessageDialog(null, "2do Error al verificar permiso para vender sin reducir stock " + e2);
 							}

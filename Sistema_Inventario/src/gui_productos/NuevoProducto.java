@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
+
+import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
 
 import clases.Almacen;
@@ -111,6 +113,13 @@ public class NuevoProducto extends JFrame {
 	private JLabel lblDistribuidor;
 	private JLabel label_9;
 	public JComboBox <Distribuidores> cbDistribuidor;
+
+	private TextAutoCompleter acCB;
+	private TextAutoCompleter acProd;
+	private TextAutoCompleter acDesc;
+	private TextAutoCompleter acMarc;
+	private TextAutoCompleter acCol;
+	private TextAutoCompleter acLab;
 	
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -973,7 +982,7 @@ public class NuevoProducto extends JFrame {
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, cbDistribuidor, btnAnadirDistri, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto, btnCancelar}));
 		
 		cargar();
-		
+		cargarBuscador();
 	}
 	
 	private void cargar(){
@@ -1083,6 +1092,47 @@ public class NuevoProducto extends JFrame {
 		if(nc!=null){
 			lblCantidadActual.setVisible(false);
 			txtStockInicial.setVisible(false);
+		}		
+	}
+	
+	public void cargarBuscador() {
+		acCB = new TextAutoCompleter(txtCodbarras);
+		acProd = new TextAutoCompleter(txtNombreProducto);
+		acDesc = new TextAutoCompleter(txtDescripcion);
+		acMarc = new TextAutoCompleter(txtMarca);
+		acCol = new TextAutoCompleter(txtColor);
+		acLab = new TextAutoCompleter(txtLaboratorio);
+		
+		consulta.iniciar();
+		rs = consulta.cargarProductos();
+		acCB.setMode(0);
+		acProd.setMode(0);
+		acDesc.setMode(0);
+		acMarc.setMode(0);
+		acCol.setMode(0);
+		acLab.setMode(0);
+		
+		try {
+			while (rs.next()) {
+				acCB.addItem(rs.getString("codbarra"));
+				acProd.addItem(rs.getString("producto"));
+				acDesc.addItem(rs.getString("detalles"));
+				acMarc.addItem(rs.getString("marca"));
+				acCol.addItem(rs.getString("color"));
+				acLab.addItem(rs.getString("laboratorio"));			
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
+		}
+		finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
 		}
 	}
 	
@@ -1533,22 +1583,22 @@ public class NuevoProducto extends JFrame {
 			txtPrecioVenta.setText("");
 	}
 	protected void focusGainedTxtCodbarras(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtNombreProducto(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtDescripcion(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtMarca(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtColor(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtLaboratorio(FocusEvent e) {
-		seleccionarTexto(e);
+		//seleccionarTexto(e);
 	}
 	protected void focusGainedTxtLote(FocusEvent e) {
 		seleccionarTexto(e);

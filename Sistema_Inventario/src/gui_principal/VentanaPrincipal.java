@@ -325,8 +325,7 @@ public class VentanaPrincipal extends JFrame {
 		txtPrueba.setVisible(false);
 		txtPrueba.setBounds(906, 0, 18, 20);
 		panel_1.add(txtPrueba);
-		txtPrueba.setColumns(10);
-		
+		txtPrueba.setColumns(10); 
 		lblLogoBxB = new JLabel("");
 		lblLogoBxB.addMouseListener(new MouseAdapter() {
 			@Override
@@ -562,6 +561,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	protected void actionPerformedBtnClientes(ActionEvent arg0) {
 		try {
+			
 			cerrarVentanas();
 			vCliente = new MantenimientoClientes(this);
 			desktopPane.add(vCliente);
