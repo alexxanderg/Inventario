@@ -80,8 +80,10 @@ public class VentanaPrincipal extends JFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	
-	Color colorSelec = new Color(240, 67, 85);
-    Color colorDeselec = new Color(30, 144, 255);
+	Color colorSelec = new Color(203, 71, 131);
+    Color colorDeselec = new Color(248, 163, 202);
+	/*Color colorSelec = new Color(240, 67, 85);
+    Color colorDeselec = new Color(30, 144, 255);*/
    
     /*Color colorSelec = new Color(255, 177, 70 );
     Color colorDeselec = new Color(243, 112, 112);*/
@@ -124,7 +126,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setIcon(new ImageIcon(imgVentas));
 		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnVentas.setForeground(Color.WHITE);
-		btnVentas.setBackground(new Color(30, 144, 255));
+		btnVentas.setBackground(colorDeselec);
 		btnVentas.setBounds(0, 219, 177, 50);
 		btnVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,7 +143,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setIcon(new ImageIcon(imgInventario));
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
-		btnInventario.setBackground(new Color(30, 144, 255));
+		btnInventario.setBackground(colorDeselec);
 		btnInventario.setBounds(0, 280, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
@@ -162,7 +164,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setIcon(new ImageIcon(imgUsuarios));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUsuario.setBackground(new Color(30, 144, 255));
+		btnUsuario.setBackground(colorDeselec);
 		btnUsuario.setBounds(0, 524, 230, 50);
 		panel.add(btnUsuario);
 
@@ -178,7 +180,7 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setIcon(new ImageIcon(imgClientes));
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnClientes.setBackground(new Color(30, 144, 255));
+		btnClientes.setBackground(colorDeselec);
 		btnClientes.setBounds(0, 463, 230, 50);
 		panel.add(btnClientes);
 
@@ -194,7 +196,7 @@ public class VentanaPrincipal extends JFrame {
 		btnReportes.setIcon(new ImageIcon(imgReportes));
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnReportes.setBackground(new Color(30, 144, 255));
+		btnReportes.setBackground(colorDeselec);
 		btnReportes.setBounds(0, 585, 230, 50);
 		panel.add(btnReportes);
 
@@ -210,7 +212,7 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setIcon(new ImageIcon(imgConfig));
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnConfiguraciones.setBackground(new Color(30, 144, 255));
+		btnConfiguraciones.setBackground(colorDeselec);
 		btnConfiguraciones.setBounds(0, 646, 230, 50);
 		panel.add(btnConfiguraciones);
 		
@@ -225,7 +227,7 @@ public class VentanaPrincipal extends JFrame {
 		btnDistribuidores.setIcon(new ImageIcon(imgDist));
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnDistribuidores.setBackground(new Color(30, 144, 255));
+		btnDistribuidores.setBackground(colorDeselec);
 		btnDistribuidores.setBounds(0, 402, 230, 50);
 		panel.add(btnDistribuidores);
 		
@@ -240,7 +242,7 @@ public class VentanaPrincipal extends JFrame {
 		btnCompras.setIcon(new ImageIcon(imgCompras));
 		btnCompras.setForeground(Color.WHITE);
 		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCompras.setBackground(new Color(30, 144, 255));
+		btnCompras.setBackground(colorDeselec);
 		btnCompras.setBounds(0, 341, 230, 50);
 		panel.add(btnCompras);
 		
@@ -285,7 +287,7 @@ public class VentanaPrincipal extends JFrame {
 		btnBuscarVentas.setIcon(new ImageIcon(imgBuscar));
 		btnBuscarVentas.setForeground(Color.WHITE);
 		btnBuscarVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnBuscarVentas.setBackground(new Color(30, 144, 255));
+		btnBuscarVentas.setBackground(colorDeselec);
 		btnBuscarVentas.setBounds(179, 219, 51, 50);
 		panel.add(btnBuscarVentas);
 		
@@ -314,10 +316,10 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("NAVITAL ORGANICA");
+		lblNewLabel = new JLabel("NAVITAL ORGANIC");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel);
 		

@@ -255,8 +255,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setVisible(false);
-		txtNroImpresiones.setText("0");
+		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1275,6 +1274,7 @@ public class Ventas extends JInternalFrame {
 						try {
 							Map<String, Object> parameters = new HashMap();
 							parameters.put("prtNVenta", ultCodVenta);
+							JOptionPane.showMessageDialog(null, ""+ultCodVenta + " " + copias);
 							/*
 							 * new AbstractJasperReports().createReport(
 							 * con.getConn(), "rPrueba.jasper", null);
@@ -1308,10 +1308,10 @@ public class Ventas extends JInternalFrame {
 								 */
 
 							} catch (JRException ex) {
-								// JOptionPane.showMessageDialog(null,
-								// "ERROR " + ex.getMessage());
-								// System.err.println("Error iReport: " +
-								// ex.getMessage());
+								 JOptionPane.showMessageDialog(null,
+								 "ERROR " + ex.getMessage());
+								 System.err.println("Error iReport: " +
+								 ex.getMessage());
 							}
 
 						} catch (Exception ex) {

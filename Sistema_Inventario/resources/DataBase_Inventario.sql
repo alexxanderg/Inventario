@@ -213,7 +213,7 @@ select * from tb_ingreso_productos;
 select * from tb_productos where cantidad < 50 and producto != '&'  order by producto;
 select * from tb_productos where cantidad < 8 and estado = 1 and categoria = '.General' and marca =  'FILA'  order by producto;
 
-
+update tb_productos set cantidad = 50 where codproducto=10;
 
 -- delete from tb_ventas where codventa = 2;
 -- delete from tb_ventas where codventa = 52;
@@ -269,12 +269,24 @@ set cantidad = 10;
 
 SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 3;
   
-select * from tb_productos; 
+
 
 SELECT * FROM tb_productos 
 WHERE fechaVenc >= CURDATE()
 ORDER BY fechaVenc 
 LIMIT 2;
+
+-- COMPROBANTE
+select * from tb_productos; 
+select v.fecha, cl.nombre cli, u.nombre usu, v.nota, vd.cantidad, pr.producto, pr.marca, pr.color, pr.detalles, pr.precioVe, vd.preVeSDInd, vd.descTotal, 
+vd.subTotal, v.totventa, v.descuento
+from tb_ventas v
+inner join tb_ventas_detalle vd on v.codventa = vd.codventa
+inner join tb_productos pr on vd.codproducto = pr.codproducto  
+inner join tb_clientes cl on v.idcliente = cl.idcliente
+inner join tb_usuarios u on v.idusuario = u.idusuario
+where vd.codventa = 4;
+
 
 SELECT * 
 FROM tb_productos 

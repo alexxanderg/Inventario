@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+
+import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
 
 import clases.AbstractJasperReports;
@@ -83,6 +85,7 @@ public class Reportes extends JInternalFrame {
 	
 
 
+	private TextAutoCompleter ac1;
 	ResultSet rs;
 	consultas consulta = new consultas();
 	VentanaPrincipal vp;
@@ -92,6 +95,16 @@ public class Reportes extends JInternalFrame {
 	private JCheckBox chckbxRestriccionCantidad;
 	private JCheckBox chckbxMenorA;
 	private JLabel lblMarca;
+	private JPanel panel_2;
+	private JLabel lblReporteDeCompras;
+	private JLabel label;
+	private JDateChooser calRI01;
+	private JLabel label_3;
+	private JDateChooser calRI02;
+	private JButton button;
+	private JLabel lblPorProducto;
+	private JButton btnPorProducto;
+	private JTextField txtProductos;
 	/**
 	 * Launch the application.
 	 */
@@ -119,8 +132,8 @@ public class Reportes extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		this.panel = new JPanel();
-		this.panel.setBackground(new Color(102, 205, 170));
-		this.panel.setBounds(0, 0, 557, 639);
+		this.panel.setBackground(new Color(219, 112, 147));
+		this.panel.setBounds(0, 0, 557, 502);
 		getContentPane().add(this.panel);
 		this.panel.setLayout(null);
 		
@@ -173,7 +186,7 @@ public class Reportes extends JInternalFrame {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(249, 194, 219, 40);
+		this.btngenerarReporteVentas.setBounds(72, 187, 396, 32);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -186,18 +199,18 @@ public class Reportes extends JInternalFrame {
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 		
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(72, 259, 137, 32);
+		lblHistorialDeCompras.setBounds(72, 240, 219, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(72, 291, 396, 23);
+		cbCliente.setBounds(72, 263, 396, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.btnVerComprasCliente = new JButton("Ver reporte");
-		btnVerComprasCliente.setBounds(249, 325, 219, 40);
+		btnVerComprasCliente.setBounds(72, 297, 396, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -208,8 +221,34 @@ public class Reportes extends JInternalFrame {
 		this.btnVerComprasCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btnVerComprasCliente.setBackground(new Color(30, 144, 255));
 		
+		lblPorProducto = new JLabel("POR PRODUCTO:");
+		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPorProducto.setBounds(72, 360, 232, 23);
+		panel.add(lblPorProducto);
+		
+		btnPorProducto = new JButton("Ver reporte");
+		btnPorProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnPorProducto(arg0);
+			}
+		});
+		btnPorProducto.setForeground(Color.WHITE);
+		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnPorProducto.setBackground(new Color(30, 144, 255));
+		btnPorProducto.setBounds(72, 417, 396, 32);
+		panel.add(btnPorProducto);
+		
+		txtProductos = new JTextField();
+		txtProductos.setHorizontalAlignment(SwingConstants.LEFT);
+		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtProductos.setColumns(10);
+		txtProductos.setBackground(SystemColor.controlHighlight);
+		txtProductos.setBounds(72, 383, 396, 23);
+		panel.add(txtProductos);
+		
 		this.panel_1 = new JPanel();
-		this.panel_1.setBackground(new Color(169, 169, 169));
+		this.panel_1.setBackground(new Color(255, 222, 173));
 		this.panel_1.setBounds(561, 0, 568, 639);
 		getContentPane().add(this.panel_1);
 		this.panel_1.setLayout(null);
@@ -246,33 +285,33 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblDel = new JLabel("desde:");
-		lblDel.setBounds(16, 312, 77, 23);
+		lblDel.setBounds(16, 295, 77, 23);
 		panel_1.add(lblDel);
 		this.lblDel.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDel.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_4 = new JDateChooser();
-		calendar_4.setBounds(84, 312, 141, 23);
+		calendar_4.setBounds(84, 295, 141, 23);
 		panel_1.add(calendar_4);
 		
-		this.lblPorVencer = new JLabel("Con fecha de vencimiento:");
-		lblPorVencer.setBounds(16, 273, 295, 23);
+		this.lblPorVencer = new JLabel("CON FECHA DE VENCIMIENTO:");
+		lblPorVencer.setBounds(16, 273, 308, 23);
 		panel_1.add(lblPorVencer);
 		this.lblPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.label_17 = new JLabel("hasta:");
-		label_17.setBounds(264, 312, 77, 23);
+		label_17.setBounds(264, 295, 77, 23);
 		panel_1.add(label_17);
 		this.label_17.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_17.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_5 = new JDateChooser();
-		calendar_5.setBounds(334, 312, 141, 23);
+		calendar_5.setBounds(334, 295, 141, 23);
 		panel_1.add(calendar_5);
 		
 		this.btnVerProductosQue = new JButton("Ver reporte");
-		btnVerProductosQue.setBounds(166, 346, 215, 38);
+		btnVerProductosQue.setBounds(16, 329, 466, 32);
 		panel_1.add(btnVerProductosQue);
 		btnVerProductosQue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -304,7 +343,7 @@ public class Reportes extends JInternalFrame {
 		});
 		chckbxRestriccionCantidad.setSelected(true);
 		chckbxRestriccionCantidad.setFont(new Font("Candara", Font.BOLD, 20));
-		chckbxRestriccionCantidad.setBackground(new Color(169, 169, 169));
+		chckbxRestriccionCantidad.setBackground(new Color(255, 222, 173));
 		chckbxRestriccionCantidad.setBounds(16, 181, 295, 23);
 		panel_1.add(chckbxRestriccionCantidad);
 		
@@ -316,7 +355,7 @@ public class Reportes extends JInternalFrame {
 			}
 		});
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
-		chckbxMenorA.setBackground(new Color(169, 169, 169));
+		chckbxMenorA.setBackground(new Color(255, 222, 173));
 		chckbxMenorA.setBounds(16, 207, 143, 23);
 		panel_1.add(chckbxMenorA);
 		
@@ -330,14 +369,14 @@ public class Reportes extends JInternalFrame {
 		cbMarca.setBounds(166, 146, 316, 23);
 		panel_1.add(cbMarca);
 		
-		this.lblRanking = new JLabel("RANKING");
-		lblRanking.setBounds(10, 423, 537, 38);
+		this.lblRanking = new JLabel("RANKING de productos:");
+		lblRanking.setBounds(16, 379, 231, 32);
 		panel_1.add(lblRanking);
-		this.lblRanking.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 23));
+		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(168, 466, 231, 33);
+		cbxRanking.setBounds(251, 379, 231, 32);
 		panel_1.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] {"M\u00E1s vendidos", "Menos vendidos"}));
@@ -350,11 +389,11 @@ public class Reportes extends JInternalFrame {
 		this.label_8.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_6 = new JDateChooser();
-		calendar_6.setBounds(86, 510, 141, 23);
+		calendar_6.setBounds(84, 418, 141, 23);
 		panel_1.add(calendar_6);
 		
 		this.btnVerRanking = new JButton("Ver reporte");
-		btnVerRanking.setBounds(166, 544, 231, 40);
+		btnVerRanking.setBounds(16, 452, 473, 32);
 		panel_1.add(btnVerRanking);
 		btnVerRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -366,24 +405,69 @@ public class Reportes extends JInternalFrame {
 		this.btnVerRanking.setBackground(new Color(30, 144, 255));
 		
 		this.calendar_7 = new JDateChooser();
-		calendar_7.setBounds(336, 510, 148, 23);
+		calendar_7.setBounds(334, 418, 148, 23);
 		panel_1.add(calendar_7);
 		
 		this.lblHasta = new JLabel("hasta:");
-		lblHasta.setBounds(266, 510, 77, 23);
+		lblHasta.setBounds(264, 425, 77, 16);
 		panel_1.add(lblHasta);
 		this.lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.lblDesde = new JLabel("desde:");
-		lblDesde.setBounds(22, 502, 73, 38);
+		lblDesde.setBounds(20, 417, 73, 24);
 		panel_1.add(lblDesde);
 		this.lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(147, 112, 219));
+		panel_2.setBounds(0, 508, 557, 131);
+		getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		lblReporteDeCompras = new JLabel("REPORTE DE INGRESOS");
+		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
+		lblReporteDeCompras.setBounds(10, 11, 535, 32);
+		panel_2.add(lblReporteDeCompras);
+		
+		label = new JLabel("del:");
+		label.setHorizontalAlignment(SwingConstants.LEFT);
+		label.setFont(new Font("Candara", Font.BOLD, 20));
+		label.setBounds(79, 50, 46, 23);
+		panel_2.add(label);
+		
+		calRI01 = new JDateChooser();
+		calRI01.setBounds(133, 50, 125, 23);
+		panel_2.add(calRI01);
+		
+		label_3 = new JLabel("al:");
+		label_3.setHorizontalAlignment(SwingConstants.LEFT);
+		label_3.setFont(new Font("Candara", Font.BOLD, 20));
+		label_3.setBounds(302, 50, 55, 23);
+		panel_2.add(label_3);
+		
+		calRI02 = new JDateChooser();
+		calRI02.setBounds(350, 50, 125, 23);
+		panel_2.add(calRI02);
+		
+		button = new JButton("Ver reporte");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedButton(e);
+			}
+		});
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Tahoma", Font.BOLD, 18));
+		button.setBackground(new Color(30, 144, 255));
+		button.setBounds(79, 84, 396, 32);
+		panel_2.add(button);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
 		cargar();
+		cargarBuscador();
 	}
 
 		private void cargar() {
@@ -414,6 +498,25 @@ public class Reportes extends JInternalFrame {
 			calendar_6.setDate(date);
 			calendar_7.setDate(date);
 	}
+		
+	public void cargarBuscador()
+	  {
+	    ac1 = new TextAutoCompleter(txtProductos);
+	    consultas consulta = new consultas();
+
+	    ac1.setMode(0);
+	    consulta.iniciar();
+	    ResultSet rs = consulta.cargarProductos();
+	    try {
+	    	while (rs.next()){
+		    	  ac1.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida") + 
+						"  -  (" + rs.getString("codproducto") + ")");
+		    	  }
+	    } catch (Exception e) {
+	      JOptionPane.showMessageDialog(null, "ERROR al cargar txtProductos: " + e);
+	    }
+	    consulta.reset();
+	  }
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
 		double parteEntera, resultado;
@@ -708,5 +811,55 @@ public class Reportes extends JInternalFrame {
 		} catch (Exception ez) {
 			JOptionPane.showMessageDialog(null, "Error en combos2: " + ez);
 		}
+	}
+	
+	protected void actionPerformedBtnPorProducto(ActionEvent arg0) {
+		 Connection con = null;
+	      try {
+
+			String nomProducto = txtProductos.getText();
+	    	int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
+			
+	        con = MySQLConexion.getConection();
+	        Map parameters = new HashMap();
+	        parameters.put("idProd", idProd);
+	        parameters.put("prod", nomProducto);
+	        new AbstractJasperReports().createReport(con, "rProductoEspecifico.jasper", parameters);
+	        this.txtProductos.setText(null);
+	        AbstractJasperReports.showViewer();
+	        con.close();
+	      } catch (Exception e1) {
+	        JOptionPane.showMessageDialog(null, "Error al cargar reporte");
+	      }
+	}
+	
+	protected void actionPerformedButton(ActionEvent e) {
+		
+		Connection con = null;
+	    try {
+	      con = MySQLConexion.getConection();
+	      String usu = this.cbUsuarios.getSelectedItem().toString();
+
+	      int añoi = this.calRI02.getCalendar().get(1);
+	      int mesi = this.calRI02.getCalendar().get(2) + 1;
+	      int diai = this.calRI02.getCalendar().get(5);
+	      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+	      int añof = this.calRI01.getCalendar().get(1);
+	      int mesf = this.calRI01.getCalendar().get(2) + 1;
+	      int diaf = this.calRI01.getCalendar().get(5);
+	      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+	      Map parameters = new HashMap();
+	      parameters.put("prtFechaI", fechai);
+	      parameters.put("prmtFechaF", fechaf);
+
+	      new AbstractJasperReports().createReport(con, "rFechaIngreso.jasper", parameters);
+	      AbstractJasperReports.showViewer();
+	      con.close();
+	    }
+	    catch (Exception ex) {
+	      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+	    }
+		
 	}
 }
