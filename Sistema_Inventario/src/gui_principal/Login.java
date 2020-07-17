@@ -71,7 +71,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 					//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 					
-					//UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");					
+					UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");					
 					Login frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);

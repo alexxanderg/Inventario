@@ -149,7 +149,7 @@ public class Kardex extends JInternalFrame {
 		});
 		chckbxFiltrar.setBackground(Color.WHITE);
 		chckbxFiltrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		chckbxFiltrar.setBounds(349, 98, 197, 20);
+		chckbxFiltrar.setBounds(342, 98, 197, 20);
 		getContentPane().add(chckbxFiltrar);
 		
 		txtCodigo2 = new JTextField();
@@ -595,7 +595,7 @@ public class Kardex extends JInternalFrame {
 			cargarTabla(txtCodigo2.getText());
 	}
 	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
-		if(txtCodigo.isVisible()){
+		/*if(txtCodigo.isVisible()){
 			txtCodigo.setVisible(false);
 			txtCodigo2.setVisible(true);
 		}
@@ -603,7 +603,7 @@ public class Kardex extends JInternalFrame {
 			cargarTabla("todos");
 			txtCodigo.setVisible(true);
 			txtCodigo2.setVisible(false);			
-		}
+		}*/
 	}
 	
 	private void limpiarTabla(){

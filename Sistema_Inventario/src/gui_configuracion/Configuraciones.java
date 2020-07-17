@@ -225,6 +225,7 @@ public class Configuraciones extends JInternalFrame {
 		getContentPane().add(lblCantidadDeImpresiones);
 		
 		button_9 = new JButton("Guardar");
+		button_9.setEnabled(false);
 		button_9.setForeground(Color.WHITE);
 		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
 		button_9.setBackground(new Color(30, 144, 255));
@@ -232,6 +233,7 @@ public class Configuraciones extends JInternalFrame {
 		getContentPane().add(button_9);
 		
 		textField_9 = new JTextField();
+		textField_9.setEnabled(false);
 		textField_9.setText("0");
 		textField_9.setHorizontalAlignment(SwingConstants.LEFT);
 		textField_9.setForeground(SystemColor.windowBorder);

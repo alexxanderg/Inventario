@@ -262,6 +262,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(lblDescuento);
 		
 		txtDescuentoIndiv = new JTextField();
+		txtDescuentoIndiv.setEditable(false);
 		txtDescuentoIndiv.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -336,6 +337,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(lblDescuentoTotal);
 		
 		txtDescuentoTot = new JTextField();
+		txtDescuentoTot.setEditable(false);
 		txtDescuentoTot.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {

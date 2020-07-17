@@ -716,7 +716,9 @@ public class Ventas extends JInternalFrame {
 						" = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
 			}
 			
-			//acNotas.addItem("");
+			acNotas.addItem("5% de descuento en su siguiente compra");
+			acNotas.addItem("10% de descuento en su siguiente compra");
+			acNotas.addItem("15% de descuento en su siguiente compra");
 
 			
 		} catch (Exception e) {
@@ -1274,7 +1276,6 @@ public class Ventas extends JInternalFrame {
 						try {
 							Map<String, Object> parameters = new HashMap();
 							parameters.put("prtNVenta", ultCodVenta);
-							JOptionPane.showMessageDialog(null, ""+ultCodVenta + " " + copias);
 							/*
 							 * new AbstractJasperReports().createReport(
 							 * con.getConn(), "rPrueba.jasper", null);

@@ -322,6 +322,10 @@ delete from tb_ventas_detalle where codventa = 22;
 select * from tb_productos where codbarra like 'abc123' and length(codbarra)>2 and estado = 1 and codproducto != 17;
 
 
-
+select ip.cantidad, pr.producto, pr.detalles,ip.precioCoNew,ip.precioVeNew,ip.nombreusu, ip.fechaingreso
+from db_inventario.tb_ingreso_productos ip
+inner join tb_productos pr
+on ip.codproducto = pr.codproducto
+where ip.fechaingreso between '2019-01-01 00:00:00' and '2021-09-07 23:59:59'
 
 

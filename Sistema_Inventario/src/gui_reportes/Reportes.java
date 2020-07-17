@@ -21,6 +21,12 @@ import clases.Usuarios;
 import gui_principal.VentanaPrincipal;
 import mysql.MySQLConexion;
 import mysql.consultas;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import javax.swing.JButton;
 import java.awt.Color;
@@ -105,6 +111,11 @@ public class Reportes extends JInternalFrame {
 	private JLabel lblPorProducto;
 	private JButton btnPorProducto;
 	private JTextField txtProductos;
+	private JPanel panel_3;
+	private JLabel lblImprimirTicket;
+	private JLabel lblTicketNro;
+	private JButton btnImprimirCopia;
+	private JTextField txtNroTicket;
 	/**
 	 * Launch the application.
 	 */
@@ -249,7 +260,7 @@ public class Reportes extends JInternalFrame {
 		
 		this.panel_1 = new JPanel();
 		this.panel_1.setBackground(new Color(255, 222, 173));
-		this.panel_1.setBounds(561, 0, 568, 639);
+		this.panel_1.setBounds(561, 0, 568, 502);
 		getContentPane().add(this.panel_1);
 		this.panel_1.setLayout(null);
 		
@@ -463,6 +474,44 @@ public class Reportes extends JInternalFrame {
 		button.setBackground(new Color(30, 144, 255));
 		button.setBounds(79, 84, 396, 32);
 		panel_2.add(button);
+		
+		panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBackground(new Color(147, 112, 219));
+		panel_3.setBounds(561, 508, 557, 131);
+		getContentPane().add(panel_3);
+		
+		lblImprimirTicket = new JLabel("IMPRIMIR COPIA DE TICKET");
+		lblImprimirTicket.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImprimirTicket.setFont(new Font("Candara", Font.BOLD, 30));
+		lblImprimirTicket.setBounds(10, 11, 535, 32);
+		panel_3.add(lblImprimirTicket);
+		
+		lblTicketNro = new JLabel("Ticket Nro: ");
+		lblTicketNro.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTicketNro.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTicketNro.setBounds(160, 55, 112, 23);
+		panel_3.add(lblTicketNro);
+		
+		btnImprimirCopia = new JButton("IMPRIMIR");
+		btnImprimirCopia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnImprimirCopia(e);
+			}
+		});
+		btnImprimirCopia.setForeground(Color.WHITE);
+		btnImprimirCopia.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnImprimirCopia.setBackground(new Color(30, 144, 255));
+		btnImprimirCopia.setBounds(79, 84, 396, 32);
+		panel_3.add(btnImprimirCopia);
+		
+		txtNroTicket = new JTextField();
+		txtNroTicket.setHorizontalAlignment(SwingConstants.LEFT);
+		txtNroTicket.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtNroTicket.setColumns(10);
+		txtNroTicket.setBackground(SystemColor.controlHighlight);
+		txtNroTicket.setBounds(280, 54, 136, 23);
+		panel_3.add(txtNroTicket);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -497,6 +546,9 @@ public class Reportes extends JInternalFrame {
 			calendar_5.setDate(date);
 			calendar_6.setDate(date);
 			calendar_7.setDate(date);
+			
+			calRI01.setDate(date);
+			calRI02.setDate(date);
 	}
 		
 	public void cargarBuscador()
@@ -862,4 +914,53 @@ public class Reportes extends JInternalFrame {
 	    }
 		
 	}
+	
+	protected void actionPerformedBtnImprimirCopia(ActionEvent e) {
+		/*
+		try {
+			int copias = Integer.parseInt(this.txtNroTicket.getText());
+      		Connection con = null;
+            con = MySQLConexion.getConection();
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("prtNVenta", Integer.valueOf(Integer.parseInt(this.txtNroTicket.getText())));
+            
+            try {
+              JasperReport reporte = 
+                (JasperReport)JRLoader.loadObjectFromFile("D:\\\\rComprobante.jasper");
+              JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, con);
+              JasperPrintManager.printReport(jasperPrint, false);
+            } catch (JRException ex) {
+              JOptionPane.showMessageDialog(null, "ERROR al imprimir: " + ex.getMessage());
+            } 
+            
+            con.close();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Llene los campos correctamente: " + e2);
+		}*/
+		
+		try {
+
+			int txtNroTicket = Integer.parseInt(this.txtNroTicket.getText());
+			Map<String, Object> parameters = new HashMap();
+			parameters.put("prtNVenta", txtNroTicket);
+			try {
+				Connection con = null;
+	            con = MySQLConexion.getConection();
+				JasperPrint impressao = JasperFillManager.fillReport(
+						getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+						parameters, con);
+
+				// AbstractJasperReports.showViewer();
+				JasperPrintManager.printReport(impressao, true);
+			} catch (JRException ex) {
+				 JOptionPane.showMessageDialog(null,
+				 "ERROR " + ex.getMessage());
+				 System.err.println("Error iReport: " +
+				 ex.getMessage());
+			}
+		}catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "ERROR " + ex);
+		}
+	}
+	
 }
