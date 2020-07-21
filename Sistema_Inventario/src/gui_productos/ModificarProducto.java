@@ -1166,8 +1166,8 @@ public class ModificarProducto extends JFrame {
 			}
 		} catch (Exception e2) {
 			if(txtPrecioCompra.getText().length() == 0){
-				txtPrecioCompra.setText("");
-				txtPtjGanancia.setText("");				
+				txtPrecioCompra.setText("0");
+				txtPtjGanancia.setText("0");				
 			}
 			else
 				txtPrecioVenta.setText(txtPrecioCompra.getText());
@@ -1185,7 +1185,7 @@ public class ModificarProducto extends JFrame {
 	protected void keyReleasedTxtPtjGanancia(KeyEvent e) {
 		try {
 			if(txtPrecioCompra.getText().length() == 0 && txtPtjGanancia.getText().length() == 0)
-				txtPrecioVenta.setText("");
+				txtPrecioVenta.setText("0");
 			else{
 				double preco = Float.parseFloat(txtPrecioCompra.getText());
 				double preve = Float.parseFloat(txtPrecioVenta.getText());
@@ -1214,12 +1214,15 @@ public class ModificarProducto extends JFrame {
 			else{
 				double preco = Float.parseFloat(txtPrecioCompra.getText());
 				double preve = Float.parseFloat(txtPrecioVenta.getText());
-				double newptj = ((preve-preco)/preco) * 100;
-				newptj = redondearDecimales(newptj, 2);
+				double newptj = 0;
+				if(preco != 0){
+					newptj = ((preve-preco)/preco) * 100;
+					newptj = redondearDecimales(newptj, 2);
+				}
 				txtPtjGanancia.setText(""+newptj);
 			}
 		} catch (Exception e2) {
-			txtPtjGanancia.setText("");
+			txtPtjGanancia.setText("0");
 		}		
 	}
 	protected void keyTypedTxtPrecioVenta(KeyEvent e) {

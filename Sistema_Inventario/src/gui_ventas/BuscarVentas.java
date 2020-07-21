@@ -17,6 +17,10 @@ import gui_configuracion.Configuraciones;
 import gui_principal.VentanaPrincipal;
 import mysql.MySQLConexion;
 import mysql.consultas;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -92,6 +96,7 @@ public class BuscarVentas extends JInternalFrame {
 	private JLabel lblVentasModificadas;
 	private JLabel lblVentasEliminadas;
 	private JMenu mnactualizarNotaDe;
+	private JMenu mnimprimirCopiaDe;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -332,6 +337,19 @@ public class BuscarVentas extends JInternalFrame {
 		mnEliminarVenta.setBackground(SystemColor.control);
 		mnEliminarVenta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarVenta);
+		
+		mnimprimirCopiaDe = new JMenu("|Imprimir copia de ticket| ");
+		mnimprimirCopiaDe.setEnabled(false);
+		mnimprimirCopiaDe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnimprimirCopiaDe(e);
+			}
+		});
+		mnimprimirCopiaDe.setForeground(new Color(218, 112, 214));
+		mnimprimirCopiaDe.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnimprimirCopiaDe.setBackground(SystemColor.menu);
+		menuBar.add(mnimprimirCopiaDe);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -780,9 +798,9 @@ public class BuscarVentas extends JInternalFrame {
 			String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificación de nota de venta", JOptionPane.INFORMATION_MESSAGE);
 
 			if(nuevaNota != null){
-				int nroCompra = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
+				int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
 				consulta.iniciar();
-				consulta.modificarInformacion(nuevaNota, nroCompra);
+				consulta.modificarInformacion(nuevaNota, nroVenta);
 				recargar();
 			}
 			else{
@@ -792,4 +810,35 @@ public class BuscarVentas extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "Error al actualizar nota: " + e);
 		}
 	}
+	
+	protected void mouseClickedMnimprimirCopiaDe(MouseEvent e) {
+		try {
+			int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );			
+			
+			try {
+				Map<String, Object> parameters = new HashMap();
+				parameters.put("prtNVenta", nroVenta);
+				try {
+					Connection con = null;
+		            con = MySQLConexion.getConection();
+					JasperPrint impressao = JasperFillManager.fillReport(
+							getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+							parameters, con);
+
+					// AbstractJasperReports.showViewer();
+					JasperPrintManager.printReport(impressao, true);
+				} catch (JRException ex) {
+					 JOptionPane.showMessageDialog(null,
+					 "ERROR " + ex.getMessage());
+					 System.err.println("Error iReport: " +
+					 ex.getMessage());
+				}
+			}catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "ERROR " + ex);
+			}
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+	}
+	
 }

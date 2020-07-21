@@ -80,10 +80,16 @@ public class VentanaPrincipal extends JFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	
-	Color colorSelec = new Color(203, 71, 131);
-    Color colorDeselec = new Color(248, 163, 202);
-	/*Color colorSelec = new Color(240, 67, 85);
-    Color colorDeselec = new Color(30, 144, 255);*/
+	
+	
+	/*Color colorSelec = new Color(57, 192, 38 ); // KAT
+    Color colorDeselec = new Color(133, 207, 122 );*/
+	
+	/*Color colorSelec = new Color(203, 71, 131); //NAVITAL
+    Color colorDeselec = new Color(248, 163, 202);*/
+	
+    Color colorSelec = new Color(240, 67, 85);  //BXB
+    Color colorDeselec = new Color(30, 144, 255);
    
     /*Color colorSelec = new Color(255, 177, 70 );
     Color colorDeselec = new Color(243, 112, 112);*/
@@ -316,7 +322,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("NAVITAL ORGANIC");
+		lblNewLabel = new JLabel("VAGONETA JEANS");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
@@ -365,7 +371,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();

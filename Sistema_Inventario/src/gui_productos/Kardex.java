@@ -588,11 +588,11 @@ public class Kardex extends JInternalFrame {
 	
 	
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
-		if(txtCodigo2.getText().length()==0){
+		/*if(txtCodigo2.getText().length()==0){
 			limpiarTabla();
 		}
 		else
-			cargarTabla(txtCodigo2.getText());
+			cargarTabla(txtCodigo2.getText());*/
 	}
 	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
 		/*if(txtCodigo.isVisible()){

@@ -11,6 +11,11 @@ public class MySQLConexion {
 	private static String URL="jdbc:mysql://localhost:3306/db_inventario?useSSL=false";
 	private static String USER="root";
 	private static String PASS="Aa123";
+	
+	/*private static String URL="jdbc:mysql://179.61.14.159:3306/bytexbyt_db_inventario?useSSL=false";
+	private static String USER="bytexbyt_ghalex";
+	private static String PASS="6H1tw1kSWK";*/
+	
 	static{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

@@ -255,7 +255,9 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setText("1");
+		txtNroImpresiones.setVisible(false);
+		txtNroImpresiones.setEditable(false);
+		txtNroImpresiones.setText("0");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1375,11 +1377,11 @@ public class Ventas extends JInternalFrame {
 		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
 		
 		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
-		
+
+		this.setEnabled(false);
 		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
 		cp.setVisible(true);
 		
-		this.setEnabled(false);
 		int fila = tbCarrito.getSelectedRow();
 		tbCarrito.setRowSelectionInterval(fila, fila);
 	}
@@ -1393,7 +1395,7 @@ public class Ventas extends JInternalFrame {
 		tbCarrito.setValueAt(newNomProd,						tbCarrito.getSelectedRow(), 1);
 		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 3);
 		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 7);
-		tbCarrito.setValueAt(redondearDecimales(pret, 1), 		tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 5);
 		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 4);
 		sumarSubTotales();
 		sumarTotalGenerales();

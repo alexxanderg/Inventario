@@ -154,17 +154,12 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		contentPane.add(lblSubtotal);
 		
 		txtCantidad = new JTextField();
-		txtCantidad.addFocusListener(new FocusAdapter() {
+		txtCantidad.addKeyListener(new KeyAdapter() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtCantidad(e);
-			}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				focusLostTxtCantidad(arg0);
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtCantidad(e);
 			}
 		});
-		txtCantidad.addKeyListener(this);
 		txtCantidad.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtCantidad.setBounds(268, 125, 134, 31);
 		contentPane.add(txtCantidad);
@@ -172,28 +167,19 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		
 		txtPUnidadOriginal = new JTextField();
 		txtPUnidadOriginal.setEditable(false);
-		txtPUnidadOriginal.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtPUnidad(e);
-			}
-		});
-		txtPUnidadOriginal.addKeyListener(this);
 		txtPUnidadOriginal.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtPUnidadOriginal.setColumns(10);
 		txtPUnidadOriginal.setBounds(268, 196, 134, 31);
 		contentPane.add(txtPUnidadOriginal);
 		
 		txtTotal = new JTextField();
-		txtTotal.setEditable(false);
-		txtTotal.addFocusListener(new FocusAdapter() {
+		txtTotal.addKeyListener(new KeyAdapter() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtSTotal(e);
+			public void keyReleased(KeyEvent e) {
+				keyReleasedTxtTotal(e);
 			}
 		});
 		txtTotal.setForeground(new Color(220, 20, 60));
-		txtTotal.addKeyListener(this);
 		txtTotal.setFont(new Font("Arial", Font.BOLD, 20));
 		txtTotal.setColumns(10);
 		txtTotal.setBounds(268, 348, 134, 31);
@@ -263,23 +249,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		
 		txtDescuentoIndiv = new JTextField();
 		txtDescuentoIndiv.setEditable(false);
-		txtDescuentoIndiv.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtDescuentoIndiv(e);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				focusLostTxtDescuentoIndiv(e);
-			}
-		});
 		txtDescuentoIndiv.setForeground(new Color(102, 205, 170));
-		txtDescuentoIndiv.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				keyReleasedTxtDescuento(arg0);
-			}
-		});
 		txtDescuentoIndiv.setText("0.0");
 		txtDescuentoIndiv.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtDescuentoIndiv.setColumns(10);
@@ -312,16 +282,6 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				keyReleasedTxtPreCDesc(e);
 			}
 		});
-		txtPreCDesc.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtPreCDesc(e);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				focusLostTxtPreCDesc(e);
-			}
-		});
 		txtPreCDesc.setText("0.0");
 		txtPreCDesc.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtPreCDesc.setColumns(10);
@@ -338,22 +298,6 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		
 		txtDescuentoTot = new JTextField();
 		txtDescuentoTot.setEditable(false);
-		txtDescuentoTot.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtDescuentoTot(e);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				focusLostTxtDescuentoTot(e);
-			}
-		});
-		txtDescuentoTot.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				keyReleasedTxtDescuentoTot(e);
-			}
-		});
 		txtDescuentoTot.setForeground(new Color(102, 205, 170));
 		txtDescuentoTot.setText("0.0");
 		txtDescuentoTot.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -453,7 +397,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				preCompraVenta = rs.getFloat("precioCo");
 			}
 		} catch (Exception e) {
+			this.setAlwaysOnTop(false);
 			JOptionPane.showMessageDialog(null, "Error al llamar datos originales " + e);
+			this.setAlwaysOnTop(true);
 		}finally {
 			try {
 				if (rs != null)
@@ -461,7 +407,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				if (consulta != null)
 					consulta.reset();
             } catch (Exception ex) {
+            	this.setAlwaysOnTop(false);
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            	this.setAlwaysOnTop(true);
             }
 		}
 		
@@ -480,13 +428,23 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		/*for (int i = 0; i < cbPrecio.getItemCount(); i++)
             if (cbPrecio.getItemAt(i).toString().equals(uniMedVenta))
         		cbPrecio.setSelectedIndex(i);*/
+		
 		txtTitulo.setText(nomProdVenta);
+		
 		txtCantidad.setText("" + cantVenta);
+		
 		txtPreCDesc.setText("" + preCDesc);
+		
 		txtPreCompra.setText("" + preCompraVenta);
+		
 		txtTotal.setText("" + subTotVenta);
-		txtDescuentoTot.setText("" + redondearDecimales(descTVenta, 2));	keyReleasedTxtDescuentoTot(null);	
-		calcular(0);
+			
+		
+		txtDescuentoIndiv.setText("" + redondearDecimales(descTVenta/cantVenta, 2));
+		
+
+		txtDescuentoTot.setText("" + redondearDecimales(descTVenta, 2));
+		
 	}
 	
 	protected void actionPerformedBtnCambiar(ActionEvent arg0) {
@@ -500,7 +458,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			double preCompra = 0; 	preCompra = Double.parseDouble(txtPreCompra.getText());
 			
 			if(newCant<=0 || newPreCDesc<0 || newDescIndiv<0 || newSTot<0 || newDescTot<0){
+				this.setAlwaysOnTop(false);
 				JOptionPane.showMessageDialog(null, "No está permitido valores negativos");
+				this.setAlwaysOnTop(true);
 			}
 			else{
 				if(cbPrecio.getSelectedIndex() == 0)
@@ -516,7 +476,6 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
 			this.setAlwaysOnTop(true);
 		}
-		
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
@@ -530,50 +489,9 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     }
 	
 	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getSource() == txtTotal) {
-			keyReleasedTxtSTotal(arg0);
-		}
-		if (arg0.getSource() == txtPUnidadOriginal) {
-			keyReleasedTxtPUnidad(arg0);
-		}
-		if (arg0.getSource() == txtCantidad) {
-			keyReleasedTxtCantidad(arg0);
-		}
-	}
-	protected void keyReleasedTxtCantidad(KeyEvent arg0) {
-		try {
-			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
-				descindiv = redondearDecimales(descindiv, 2);
-			double newcant = Double.parseDouble(txtCantidad.getText());
-				newcant = redondearDecimales(newcant, 2);
-			double desctot = newcant * descindiv;
-				desctot = redondearDecimales(desctot, 2);
-			txtDescuentoTot.setText("" + desctot);
-			calcular(0);
-			
-		} catch (Exception e) {
-		}
-	}
-	
-	protected void keyReleasedTxtPUnidad(KeyEvent arg0) {
-	}
-	
-	protected void keyReleasedTxtDescuento(KeyEvent arg0) {
-		try {
-			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
-				descindiv = redondearDecimales(descindiv, 2);
-			double newcant = Double.parseDouble(txtCantidad.getText());
-				newcant = redondearDecimales(newcant, 2);
-			double desctot = newcant * descindiv;
-				desctot = redondearDecimales(desctot, 2);
-			txtDescuentoTot.setText("" + desctot);
-			calcular(0);
-			
-		} catch (Exception e) {
-		}
 	}
 	protected void keyReleasedTxtDescuentoTot(KeyEvent arg0) {
-		try {
+		/*try {
 			double desctot = Double.parseDouble(txtDescuentoTot.getText());
 				desctot = redondearDecimales(desctot, 2);
 			double newcant = Double.parseDouble(txtCantidad.getText());
@@ -584,10 +502,10 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			calcular(0);
 			
 		} catch (Exception e) {
-		}
+		}/*
 	}
 	protected void keyReleasedTxtPreCDesc(KeyEvent arg0) {
-		try {
+		/*try {
 			double preUniCDescu = Double.parseDouble(txtPreCDesc.getText());
 				preUniCDescu = redondearDecimales(preUniCDescu, 2);
 			double newcant = Double.parseDouble(txtCantidad.getText());
@@ -608,13 +526,12 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 			calcular(1);//1VIENE DE PRECIO CON DESCUENTO
 			
 		} catch (Exception e) {
-		}
+		}*/
 	}
 	
 	
 	public void calcular(int origen){
 		try {
-			if(origen != 1){
 				double precioUniEnUso = 0;
 				double newprecioCompra = 0;
 				
@@ -650,80 +567,12 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 				txtPUnidadOriginal.setText(""+newPreUniSDesc);
 				txtPreCDesc.setText(""+newPreUniCDesc);
 				txtTotal.setText("" + preTotal);
-			}
+			
 		} catch (Exception e) {
 			txtTotal.setText("0");
 		}
 	}
 	
-	protected void keyReleasedTxtSTotal(KeyEvent arg0) {
-		try {
-			float cant = Float.parseFloat(txtCantidad.getText());
-			float pret = Float.parseFloat(txtTotal.getText());
-			double pre = pret/cant;
-			pre = redondearDecimales(pre,2);
-			
-			switch (cbPrecio.getSelectedIndex()) {
-			case 1:
-				txtPUnidadOriginal.setText("" + pre);				
-				break;
-			case 2:
-				/*txtPromo1.setText("" + pre);
-				float pu = Float.parseFloat(txtPromo1.getText()) / Float.parseFloat(cpromo1);
-				txtPUnidad.setText("" + redondearDecimales(pu, 2));*/
-				break;
-			case 3:
-				/*txtPromo2.setText(""+pre);
-				float pu2 = Float.parseFloat(txtPromo2.getText()) / Float.parseFloat(cpromo2);
-				txtPUnidad.setText("" + redondearDecimales(pu2, 2));*/
-				break;
-
-			default:
-				break;
-			}
-			
-			
-		} catch (Exception e) {
-			txtPUnidadOriginal.setText("0.00");
-		}
-		
-	}
-	protected void actionPerformedBtnMas1(ActionEvent arg0) {
-		try {
-			txtCantidad.setText(""+(Float.parseFloat(txtCantidad.getText()) + 1));
-			
-			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
-				descindiv = redondearDecimales(descindiv, 2);
-			double newcant = Double.parseDouble(txtCantidad.getText());
-				newcant = redondearDecimales(newcant, 2);
-			double desctot = newcant * descindiv;
-				desctot = redondearDecimales(desctot, 2);
-			txtDescuentoTot.setText("" + desctot);
-			
-			calcular(0);
-		} catch (Exception e) {
-		}
-	}
-	protected void actionPerformedBtnMenos1(ActionEvent arg0) {
-		
-		try {
-			float cant = Float.parseFloat(txtCantidad.getText());
-			if(cant <= 0)
-				txtCantidad.setText("1.00");
-			else{
-				txtCantidad.setText("" + (cant-1));
-				double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
-				descindiv = redondearDecimales(descindiv, 2);
-				double newcant = Double.parseDouble(txtCantidad.getText());
-					newcant = redondearDecimales(newcant, 2);
-				double desctot = newcant * descindiv;
-					desctot = redondearDecimales(desctot, 2);
-				txtDescuentoTot.setText("" + desctot);
-			}
-			calcular(0);
-		} catch (Exception e) {
-		}
-	}
 	protected void actionPerformedBtnEliminarProducto(ActionEvent arg0) {
 		ventas.eliminarFila();
 		ventas.setEnabled(true);
@@ -738,20 +587,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 		}
 	}
 	
-	protected void itemStateChangedComboBox(ItemEvent arg0) {
-		if(cbPrecio.getSelectedIndex() == 0){
-			txtPUnidadOriginal.setText(""+preUniOriginal);
-		}
-		if(cbPrecio.getSelectedIndex() == 1){
-			txtCantidad.setText("1");
-			txtPUnidadOriginal.setText(""+prePromo1);
-		}
-		if(cbPrecio.getSelectedIndex() == 2){
-			txtCantidad.setText("1");
-			txtPUnidadOriginal.setText(""+prePromo2);
-		}
-		calcular(0);
-	}
+	
 	
 	protected void actionPerformedBtnCancelar(ActionEvent arg0) {
 		this.dispose();
@@ -759,63 +595,150 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 	
-	private void seleccionarTexto(FocusEvent e){
-		Object o = e.getSource();
-        if(o instanceof javax.swing.JTextField){
-            javax.swing.JTextField txt = (javax.swing.JTextField) o;
-            txt.setSelectionStart(0);
-            txt.setSelectionEnd(txt.getText().length());
-        }
-	}
-	protected void focusGainedTxtPUnidad(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtCantidad(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtSTotal(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtDescuentoIndiv(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtPreCDesc(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusGainedTxtDescuentoTot(FocusEvent e) {
-		seleccionarTexto(e);
-	}
-	protected void focusLostTxtCantidad(FocusEvent arg0) {
-		if(txtCantidad.getText().length()==0){
-			txtCantidad.setText("0");
-			calcular(0);
+	public void recalcularContador(String sumrest){
+		try {
+			
+			double cant = Float.parseFloat(txtCantidad.getText());
+			cant = redondearDecimales(cant, 2);
+			
+			double precioOriginal = Double.parseDouble(txtPUnidadOriginal.getText());
+			precioOriginal = redondearDecimales(precioOriginal, 2);
+			
+			double descindiv = Double.parseDouble(txtDescuentoIndiv.getText());
+			descindiv = redondearDecimales(descindiv, 2);
+			
+			if(sumrest.equals("+")){
+				double newcant = cant + 1;
+				newcant = redondearDecimales(newcant, 2);
+				
+				double desctot = newcant * descindiv;
+				desctot = redondearDecimales(desctot, 1);
+				
+				double total = (newcant * precioOriginal) - desctot;
+					total = redondearDecimales(total, 2);
+				
+				txtCantidad.setText("" + newcant);
+				txtDescuentoTot.setText("" + desctot);
+				txtTotal.setText("" + total);
+			
+			} else if(sumrest.equals("-")){
+				double newcant = cant - 1;
+				newcant = redondearDecimales(newcant, 2);
+								
+				double desctot = newcant * descindiv;
+					desctot = redondearDecimales(desctot, 1);
+
+				double total = (newcant * precioOriginal) - desctot;
+					total = redondearDecimales(total, 2);
+					
+				txtCantidad.setText("" + (newcant));
+				txtDescuentoTot.setText("" + desctot);
+				txtTotal.setText("" + total);
+				
+				
+			} else if(sumrest.equals("")){				
+				double desctot = cant * descindiv;
+					desctot = redondearDecimales(desctot, 1);
+					
+				double total = (cant * precioOriginal) - desctot;
+					total = redondearDecimales(total, 2);
+					
+				txtDescuentoTot.setText("" + desctot);
+				txtTotal.setText("" + total);
+			
+			} else if(sumrest.equals("TxtPreCDesc")){
+				double newPreCDesc = Float.parseFloat(txtPreCDesc.getText());
+					newPreCDesc = redondearDecimales(newPreCDesc, 2);
+					
+				descindiv = precioOriginal - newPreCDesc;
+					descindiv = redondearDecimales(descindiv, 2);
+				
+				double desctot = cant * descindiv;
+					desctot = redondearDecimales(desctot, 1);
+				
+				double total = (cant * precioOriginal) - desctot;
+					total = redondearDecimales(total, 2);
+				
+				txtDescuentoIndiv.setText("" + descindiv);
+				txtDescuentoTot.setText("" + desctot);
+				txtTotal.setText("" + total);
+				
+			} else if(sumrest.equals("TxtTotal")){
+				double total = Float.parseFloat(txtTotal.getText());
+					total = redondearDecimales(total, 2);
+				
+				double newPreCDesc = total/cant;
+					newPreCDesc = redondearDecimales(newPreCDesc, 2);
+				
+				descindiv = precioOriginal - newPreCDesc;
+					descindiv = redondearDecimales(descindiv, 2);
+			
+				double desctot = cant * descindiv;
+					desctot = redondearDecimales(desctot, 1);
+			
+				txtPreCDesc.setText("" + newPreCDesc);
+				txtDescuentoIndiv.setText("" + descindiv);
+				txtDescuentoTot.setText("" + desctot);
+				
+			}	
+		} catch (Exception e) {
+			this.setAlwaysOnTop(false);
+			JOptionPane.showMessageDialog(null, "Ingrese valores correctos");
+			this.setAlwaysOnTop(true);
 		}
+		
+			
 	}
-	protected void focusLostTxtDescuentoIndiv(FocusEvent e) {
-		if(txtDescuentoIndiv.getText().length()==0){
-			txtDescuentoIndiv.setText("0");
-			calcular(0);
-		}
+	
+	protected void actionPerformedBtnMas1(ActionEvent arg0) {
+		recalcularContador("+");
 	}
-	protected void focusLostTxtPreCDesc(FocusEvent e) {
-		if(txtPreCDesc.getText().length()==0){
-			txtPreCDesc.setText("0");
-			calcular(0);
-		}
+	
+	protected void actionPerformedBtnMenos1(ActionEvent arg0) {
+		recalcularContador("-");		
 	}
-	protected void focusLostTxtDescuentoTot(FocusEvent e) {
-		if(txtDescuentoTot.getText().length()==0){
-			txtDescuentoTot.setText("0");
-			calcular(0);
+	
+	protected void keyReleasedTxtCantidad(KeyEvent e) {
+		recalcularContador("");
+	}
+	
+	protected void keyReleasedTxtPreCDesc(KeyEvent e) {
+		recalcularContador("TxtPreCDesc");
+	}
+	
+	protected void keyReleasedTxtTotal(KeyEvent e) {
+		recalcularContador("TxtTotal");
+	}
+	
+	protected void itemStateChangedComboBox(ItemEvent arg0) {
+		if(cbPrecio.getSelectedIndex() == 0){
+			txtPUnidadOriginal.setText(""+preUniOriginal);
+			txtPreCDesc.setText("" + txtPUnidadOriginal);
+			txtTotal.setText("" + txtPUnidadOriginal);
 		}
+		if(cbPrecio.getSelectedIndex() == 1){
+			txtCantidad.setText("1");
+			txtPUnidadOriginal.setText(""+prePromo1);
+			txtPreCDesc.setText("" + prePromo1);
+			txtTotal.setText("" + prePromo1);
+		}
+		if(cbPrecio.getSelectedIndex() == 2){
+			txtCantidad.setText("1");
+			txtPUnidadOriginal.setText(""+prePromo2);
+			txtPreCDesc.setText("" + prePromo2);
+			txtTotal.setText("" + prePromo2);
+		}
+
+		txtDescuentoIndiv.setText("0");
+		txtDescuentoTot.setText("0");
 	}
 }
+
+
+
+

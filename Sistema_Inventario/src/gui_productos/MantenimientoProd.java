@@ -518,64 +518,135 @@ public class MantenimientoProd extends JInternalFrame {
 			if(txtCodigo.getText().length()==0)
 				JOptionPane.showMessageDialog(null, "Escriba el producto que desee buscar");
 			else{
-				String producto = txtCodigo.getText();
-
+				String productoBuscado = txtCodigo.getText();
+				int codproducto = -1;
+				String productoName = "";
+				String productoDetail = "";
+				float cantActual = -1;
+				float precioCo = -1;
+				float precioVe = -1;
+				
+				try {
+					codproducto = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
+					try {
+						model.iniciar();
+						rs = model.buscarProductoID(codproducto);
+						rs.next();
+						
+						codproducto = rs.getInt("codproducto");
+						productoName = rs.getString("producto");
+						productoDetail = rs.getString("detalles");
+						cantActual = rs.getFloat("cantidad");
+						precioCo = rs.getFloat("precioCo");
+						precioVe = rs.getFloat("precioVe");
+					} catch (Exception e3) {
+					} finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (model != null)
+								model.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}
+				} catch (Exception e2) {
+					try {
+						model.iniciar();
+						rs = model.buscarProductoBarras(productoBuscado);
+						rs.next();
+						
+						codproducto = rs.getInt("codproducto");
+						productoName = rs.getString("producto");
+						productoDetail = rs.getString("detalles");
+						cantActual = rs.getFloat("cantidad");
+						precioCo = rs.getFloat("precioCo");
+						precioVe = rs.getFloat("precioVe");
+					} catch (Exception e3) {
+					} finally {
+						try {
+							if (rs != null)
+								rs.close();
+							if (model != null)
+								model.reset();
+			            } catch (Exception ex) {
+			            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            }
+					}		
+				}
+				
 				txtCodigo.setText("");
 				
-				String[] opciones = { "MODIFICAR", "ELIMINAR", "CANCELAR" };
-				int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Seleccione una opcion",
+				String[] opciones = { "AÑADIR STOCK", "MODIFICAR", "DUPLICAR", "ELIMINAR", "CANCELAR" };
+				int seleccion = JOptionPane.showOptionDialog(null, productoName + " " + productoDetail, "Seleccione una opcion",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
-				if (seleccion == 0) {// MODIFICAR
+				if (seleccion == 0) {// añadir stock
 					try {
-						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
+						model.iniciar();
+						AgregarStock as = new AgregarStock(idProd, cantActual, precioCo, precioVe, usuario, this);
+						as.setVisible(true);
+						model.reset();
+						
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+						AgregarStock as = new AgregarStock(codproducto, cantActual, precioCo, precioVe, usuario, this);
+						as.setVisible(true);				
+					}
+				}
+				
+				if (seleccion == 1) {// MODIFICAR
+					try {
+						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						abrirModificarProducto(""+idProd);
 						
 					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
 						try {
-							model.iniciar();
-							rs = model.buscarProductoBarras(producto);
-							rs.next();
-							int idProd = rs.getInt("codproducto");
-							abrirModificarProducto(""+idProd);
+							abrirModificarProducto(""+codproducto);
 						} catch (Exception e3) {
-							// TODO: handle exception
-						}	finally {
-							try {
-								if (rs != null)
-									rs.close();
-								if (model != null)
-									model.reset();
-				            } catch (Exception ex) {
-				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-				            }
-						}			
+						}
 					}
 				}
 				
-				if (seleccion == 1) {//  ELIMINAR
+				if (seleccion == 2) {// DUPLICAR
 					try {
-						int idProd = Integer.parseInt( producto.substring(producto.indexOf("(")+1, producto.indexOf(")")));
+						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
+						try {
+							int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+							if (opc == 0) {
+								model.iniciar();
+								model.duplicarProducto(idProd);
+								cargar();
+								model.reset();
+							}
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error: Seleccione un producto");
+						}	
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+						try {
+							int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+							if (opc == 0) {
+								model.iniciar();
+								model.duplicarProducto(codproducto);
+								cargar();
+								model.reset();
+							}
+						} catch (Exception e3) {
+							JOptionPane.showMessageDialog(null, "Error: Seleccione un producto");
+						}		
+					}
+				}				
+				
+				if (seleccion == 3) {//  ELIMINAR
+					try {
+						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						elminarProducto(""+idProd);
 					} catch (Exception e2) {
 						try {
-							model.iniciar();
-							rs = model.buscarProductoBarras(producto);
-							rs.next();
-							int idProd = rs.getInt("codproducto");
-							elminarProducto(""+idProd);
+							elminarProducto(""+codproducto);
 							model.reset();
 						} catch (Exception e3) {
 							// TODO: handle exception
-						}	finally {
-							try {
-								if (rs != null)
-									rs.close();
-								if (model != null)
-									model.reset();
-				            } catch (Exception ex) {
-				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-				            }
 						}
 					}
 				}
