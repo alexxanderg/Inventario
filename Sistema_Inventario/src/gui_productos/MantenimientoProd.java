@@ -691,20 +691,39 @@ public class MantenimientoProd extends JInternalFrame {
 		try {
 			con = MySQLConexion.getConection();
 			String prod = "";
-			if (chckbxFiltrar.isSelected())
-				prod = txtCodigo2.getText();
-			else
-				prod = txtCodigo.getText();
-			
 			Map parameters = new HashMap();
-			parameters.put("prod", prod);
+			
+			if (chckbxFiltrar.isSelected()){
+				if(txtCodigo2.getText().length() == 0){
+					JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
+					new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
+				}
+				else{
+					prod = txtCodigo2.getText();
+					JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
+					parameters.put("prod", prod);
+					new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
+				}
+			}
+			else{
+				if(txtCodigo.getText().length() == 0){
+					JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
+					new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
+				}
+				else{
+					prod = txtCodigo.getText();
+					JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
+					parameters.put("prod", prod);
+					new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
+				}
+			} 
+			
 
-			new AbstractJasperReports().createReport(con, "rInventario.jasper", parameters);
 			AbstractJasperReports.showViewer();
 			
 			con.close();
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Erro al cargar reporte: " + ex);
+			JOptionPane.showMessageDialog(null, "Error al cargar reporte: " + ex);
 		}	
 	}
 	protected void mouseClickedMnaadirStock(MouseEvent e) {
