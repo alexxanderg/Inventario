@@ -23,9 +23,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
@@ -42,6 +49,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -85,11 +94,11 @@ public class VentanaPrincipal extends JFrame {
 	/*Color colorSelec = new Color(57, 192, 38 ); // KAT
     Color colorDeselec = new Color(133, 207, 122 );*/
 	
-	Color colorSelec = new Color(203, 71, 131); //NAVITAL
-    Color colorDeselec = new Color(248, 163, 202);
+	/*Color colorSelec = new Color(203, 71, 131); //NAVITAL
+    Color colorDeselec = new Color(248, 163, 202);*/
 	
-    /*Color colorSelec = new Color(240, 67, 85);  //BXB
-    Color colorDeselec = new Color(30, 144, 255);*/
+    Color colorSelec = new Color(240, 67, 85);  //BXB
+    Color colorDeselec = new Color(30, 144, 255);
    
     /*Color colorSelec = new Color(255, 177, 70 );
     Color colorDeselec = new Color(243, 112, 112);*/
@@ -112,6 +121,12 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public VentanaPrincipal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				windowClosingThis(arg0);
+			}
+		});
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1382, 741);
@@ -322,7 +337,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("NAVITAL ORGANIC");
+		lblNewLabel = new JLabel("MINIMARKET LA DOLORES");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
@@ -701,4 +716,28 @@ public class VentanaPrincipal extends JFrame {
          }
      }
  }
+	protected void windowClosingThis(WindowEvent arg0) {
+		try {
+			DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
+			Date today = Calendar.getInstance().getTime();       
+			String reportDate = df.format(today);
+			File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
+			directorio.mkdirs(); 
+			Process p;
+			p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
+			InputStream is = p.getInputStream();
+			FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+			byte[] buffer = new byte[1000];
+			int leido = is.read(buffer);
+			while(leido>0){
+				fos.write(buffer, 0, leido);
+				leido = is.read(buffer);
+			}
+			//JOptionPane.showMessageDialog(null, "Copia de segudidad creada en: \n D:/ INFORMACION DEL SISTEMA / BACKUP_SISTEMA / ");
+			//JOptionPane.showMessageDialog(null, "Copia de segudidad realizada correctamente");
+			fos.close();
+		} catch (IOException e1) {
+			//JOptionPane.showMessageDialog(null, e1);
+		}
+	}
 }
