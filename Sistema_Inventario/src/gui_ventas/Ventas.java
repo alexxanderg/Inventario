@@ -255,9 +255,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setEditable(false);
-		txtNroImpresiones.setEnabled(false);
-		txtNroImpresiones.setText("0");
+		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
