@@ -1096,6 +1096,7 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	public void cargarBuscador() {
+		
 		acCB = new TextAutoCompleter(txtCodbarras);
 		acProd = new TextAutoCompleter(txtNombreProducto);
 		acDesc = new TextAutoCompleter(txtDescripcion);
@@ -1103,8 +1104,7 @@ public class NuevoProducto extends JFrame {
 		acCol = new TextAutoCompleter(txtColor);
 		acLab = new TextAutoCompleter(txtLaboratorio);
 		
-		consulta.iniciar();
-		rs = consulta.cargarProductos();
+
 		acCB.setMode(0);
 		acProd.setMode(0);
 		acDesc.setMode(0);
@@ -1112,19 +1112,44 @@ public class NuevoProducto extends JFrame {
 		acCol.setMode(0);
 		acLab.setMode(0);
 		
+		
+		consulta.iniciar();
+		/*rs = consulta.cargarProductos();
 		try {
-			while (rs.next()) {
+			while (rs.next())
 				acCB.addItem(rs.getString("codbarra"));
+		}catch(Exception e){}*/
+		
+		rs = consulta.cargarProductosProd();
+		try {
+			while (rs.next())
 				acProd.addItem(rs.getString("producto"));
+		}catch(Exception e){}
+		
+		rs = consulta.cargarProductosDeta();
+		try {
+			while (rs.next())
 				acDesc.addItem(rs.getString("detalles"));
+		}catch(Exception e){}
+		
+		rs = consulta.cargarProductosMarca();
+		try {
+			while (rs.next())
 				acMarc.addItem(rs.getString("marca"));
+		}catch(Exception e){}
+		
+		rs = consulta.cargarProductosColor();
+		try {
+			while (rs.next())
 				acCol.addItem(rs.getString("color"));
-				acLab.addItem(rs.getString("laboratorio"));			
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
-		}
-		finally {
+		}catch(Exception e){}
+		
+		rs = consulta.cargarProductosLab();
+		try {
+			while (rs.next())
+				acLab.addItem(rs.getString("laboratorio"));
+		}catch(Exception e){
+		}finally {
 			try {
 				if (rs != null)
 					rs.close();
@@ -1312,9 +1337,9 @@ public class NuevoProducto extends JFrame {
 			e.consume();
 	}
 	protected void keyTypedTxtCodbarras(KeyEvent e) {
-		char c = e.getKeyChar();
+		/*char c = e.getKeyChar();
 		if (txtCodbarras.getText().length() == 100 || c=='(' || c==')')
-			e.consume();
+			e.consume();*/
 	}
 	protected void keyTypedTxtNombreProducto(KeyEvent e) {
 		char c = e.getKeyChar();

@@ -339,6 +339,7 @@ public class BuscarVentas extends JInternalFrame {
 		menuBar.add(mnEliminarVenta);
 		
 		mnimprimirCopiaDe = new JMenu("|Imprimir copia de ticket| ");
+		mnimprimirCopiaDe.setVisible(false);
 		mnimprimirCopiaDe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

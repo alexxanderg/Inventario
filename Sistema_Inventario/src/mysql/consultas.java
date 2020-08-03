@@ -109,6 +109,61 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarProductosCodBarra() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT codbarra from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos BARRA: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarProductosProd() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT producto from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarProductosDeta() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT detalles from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarProductosMarca() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT marca from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarProductosColor() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT color from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	public ResultSet cargarProductosLab() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select DISTINCT laboratorio from tb_productos where estado = 1");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarProductoParticular(String prod) {
 		try {
 			st = con.createStatement();
