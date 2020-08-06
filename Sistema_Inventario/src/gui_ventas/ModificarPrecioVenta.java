@@ -475,21 +475,21 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
   
   protected void actionPerformedBtnCambiar(ActionEvent arg0) {
     try {
-      double newCant = 0.0D;
+      double newCant = 0.0;
       newCant = Double.parseDouble(this.txtCantidad.getText());
       String newUnimed = "0";
       newUnimed = this.cbPrecio.getSelectedItem().toString();
-      double newPreCDesc = 0.0D;
+      double newPreCDesc = 0.0;
       newPreCDesc = Double.parseDouble(this.txtPreCDesc.getText());
-      double newDescIndiv = 0.0D;
+      double newDescIndiv = 0.0;
       newDescIndiv = Double.parseDouble(this.txtDescuentoIndiv.getText());
-      double newDescTot = 0.0D;
+      double newDescTot = 0.0;
       newDescTot = Double.parseDouble(this.txtDescuentoTot.getText());
-      double newSTot = 0.0D;
+      double newSTot = 0.0;
       newSTot = Double.parseDouble(this.txtTotal.getText());
-      double preCompra = 0.0D;
+      double preCompra = 0.0;
       preCompra = Double.parseDouble(this.txtPreCompra.getText());
-      if (newCant <= 0.0D || newPreCDesc < 0.0D || newDescIndiv < 0.0D || newSTot < 0.0D || newDescTot < 0.0D) {
+      if (newCant <= 0.0 || newPreCDesc < 0.0 || newDescIndiv < 0.0 || newSTot < 0.0 || newDescTot < 0.0) {
         JOptionPane.showMessageDialog(null, "No estpermitido valores negativos");
       } else {
         if (this.cbPrecio.getSelectedIndex() == 0)
