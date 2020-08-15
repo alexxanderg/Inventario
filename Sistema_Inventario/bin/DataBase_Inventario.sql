@@ -233,6 +233,10 @@ SET SQL_SAFE_UPDATES = 0;
 
 
 
+
+select DISTINCT marca, codbarra from tb_productos where estado = 1 order by producto ;
+select DISTINCT codbarra from tb_productos where estado = 1;
+
 select * from tb_productos where estado = 1 and producto like '%aceite%' order by producto;
 
 select codproducto from tb_productos order by codproducto desc limit 1 ;
