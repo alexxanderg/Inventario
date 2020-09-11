@@ -17,6 +17,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
 import clases.Distribuidores;
 import gui_distribuidores.NuevoDistribuidor;
+import gui_principal.VentanaPrincipal;
 import gui_productos.NuevoProducto;
 import mysql.consultas;
 import javax.swing.JComboBox;
@@ -62,13 +63,13 @@ public class NuevaCompra extends JFrame {
 	private JButton btnCancelar;
 	private JTextField txtCrearProducto;
 	private JLabel lblDistribuidor;
-	private JLabel lblFechaDeEmisin;
+	public JLabel lblFechaDeEmisin;
 	private JComboBox cbTipoComprobante;
 	private JComboBox cbMoneda;
 	private JTextField txtTipoCambio;
 	private JDateChooser dchFeEmision;
 	private JScrollPane scrollPane;
-	private JTextField txtBuscarProducto;
+	public JTextField txtBuscarProducto;
 	private JLabel label;
 	private JTable tbCompras;
 	private JButton btnAnadirDistri;
@@ -95,6 +96,7 @@ public class NuevaCompra extends JFrame {
 	NuevoProducto np = new NuevoProducto(null, this);
 	private JButton btnQuitar;
 	private JButton btnAyuda;
+	DetalleCompra dc = new DetalleCompra(0, null);
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -797,10 +799,32 @@ public class NuevaCompra extends JFrame {
 	}
 	
 	protected void actionPerformedBtnIngresar(ActionEvent e) {
-		AgregarProductoATabla();
-		txtBuscarProducto.requestFocus();
-		txtBuscarProducto.setText(null);
+		if(txtBuscarProducto.getText().length()==0 || txtBuscarProducto.getText().equals(""))
+			JOptionPane.showMessageDialog(null, "Redacte producto.");
+		else
+			DetalleCompra();
+		//AgregarProductoATabla();
+		//txtBuscarProducto.requestFocus();
+		//txtBuscarProducto.setText(null);
 	}
+	private void DetalleCompra() {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, txtBuscarProducto.getText());
+		try {
+			if (dc.isShowing()) { //JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				dc.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				dc.setVisible(true); 
+			} else {
+				dc = new DetalleCompra(idUsuario, this);
+				dc.setLocationRelativeTo(null);
+				dc.setVisible(true);
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
+		}
+		
+	}
+
 	public void AgregarProductoATabla() {
 		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
 			String nomProducto = txtBuscarProducto.getText();
@@ -827,7 +851,7 @@ public class NuevaCompra extends JFrame {
 			JOptionPane.showMessageDialog(null, "Ingrese correctamente los datos", "Error al ingresar", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	private void sumarTotal(){
+	public void sumarTotal(){
 		double total = 0;
 		for (int i = 0; i < tbCompras.getRowCount(); i++) {
 			double cantProd = Float.parseFloat(tbCompras.getValueAt(i, 0).toString());
@@ -842,8 +866,9 @@ public class NuevaCompra extends JFrame {
 		char c = e.getKeyChar();
 		if (c == (char) KeyEvent.VK_ENTER){
 			if(txtBuscarProducto.getText().length()!=0){
-				AgregarProductoATabla();
-				txtBuscarProducto.setText(null);
+				DetalleCompra();
+				//AgregarProductoATabla();
+				//txtBuscarProducto.setText(null);
 			}
 		}
 	}
@@ -879,7 +904,11 @@ public class NuevaCompra extends JFrame {
 	}
 	
 	protected void actionPerformedBtnQuitar(ActionEvent arg0) {
-		dtm.removeRow(tbCompras.getSelectedRow());
+		try {
+			dtm.removeRow(tbCompras.getSelectedRow());
+		} catch (ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(null, "Seleccione un producto.");
+		}
 	}
 	protected void focusGainedTxtPagado(FocusEvent e) {
 		seleccionarTexto(e);
