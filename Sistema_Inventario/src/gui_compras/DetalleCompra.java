@@ -24,6 +24,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class DetalleCompra extends JFrame {
 
@@ -51,6 +54,9 @@ public class DetalleCompra extends JFrame {
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel label_2;
+	private JCheckBox chbxBonificacion;
+	private JTextField txtBonificacion;
+	private JLabel lblAgregarLa;
 	/**
 	 * Launch the application.
 	 */
@@ -165,7 +171,7 @@ public class DetalleCompra extends JFrame {
 		this.lblPrecioTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioTotal.setForeground(Color.DARK_GRAY);
 		this.lblPrecioTotal.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblPrecioTotal.setBounds(10, 193, 190, 25);
+		this.lblPrecioTotal.setBounds(10, 201, 190, 25);
 		this.contentPane.add(this.lblPrecioTotal);
 		
 		this.txtPrecioTotal = new JTextField();
@@ -195,7 +201,7 @@ public class DetalleCompra extends JFrame {
 		this.txtPrecioTotal.setColumns(10);
 		this.txtPrecioTotal.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.txtPrecioTotal.setBackground(new Color(245, 245, 245));
-		this.txtPrecioTotal.setBounds(302, 193, 149, 25);
+		this.txtPrecioTotal.setBounds(302, 201, 149, 25);
 		this.contentPane.add(this.txtPrecioTotal);
 		
 		this.lblTotalUnidades = new JLabel("Total Unidades");
@@ -230,7 +236,7 @@ public class DetalleCompra extends JFrame {
 		this.lblPrecioPorPaquete.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioPorPaquete.setForeground(Color.DARK_GRAY);
 		this.lblPrecioPorPaquete.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblPrecioPorPaquete.setBounds(10, 229, 190, 25);
+		this.lblPrecioPorPaquete.setBounds(10, 237, 190, 25);
 		this.contentPane.add(this.lblPrecioPorPaquete);
 		
 		this.txtPrePorPaquete = new JTextField();
@@ -251,14 +257,14 @@ public class DetalleCompra extends JFrame {
 		this.txtPrePorPaquete.setColumns(10);
 		this.txtPrePorPaquete.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.txtPrePorPaquete.setBackground(new Color(245, 245, 245));
-		this.txtPrePorPaquete.setBounds(302, 229, 149, 25);
+		this.txtPrePorPaquete.setBounds(302, 237, 149, 25);
 		this.contentPane.add(this.txtPrePorPaquete);
 		
 		this.lblPrecioPorUnidad = new JLabel("Precio por Unidad");
 		this.lblPrecioPorUnidad.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioPorUnidad.setForeground(Color.DARK_GRAY);
 		this.lblPrecioPorUnidad.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblPrecioPorUnidad.setBounds(10, 265, 190, 25);
+		this.lblPrecioPorUnidad.setBounds(10, 273, 190, 25);
 		this.contentPane.add(this.lblPrecioPorUnidad);
 		
 		this.txtPrePorUnidad = new JTextField();
@@ -275,7 +281,7 @@ public class DetalleCompra extends JFrame {
 		this.txtPrePorUnidad.setColumns(10);
 		this.txtPrePorUnidad.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.txtPrePorUnidad.setBackground(new Color(245, 245, 245));
-		this.txtPrePorUnidad.setBounds(302, 265, 149, 25);
+		this.txtPrePorUnidad.setBounds(302, 273, 149, 25);
 		this.contentPane.add(this.txtPrePorUnidad);
 		
 		this.button = new JButton("CREAR");
@@ -320,8 +326,50 @@ public class DetalleCompra extends JFrame {
 		this.label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_2.setForeground(Color.RED);
 		this.label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		this.label_2.setBounds(272, 193, 20, 25);
+		this.label_2.setBounds(272, 201, 20, 25);
 		this.contentPane.add(this.label_2);
+		
+		this.chbxBonificacion = new JCheckBox("Bonificaci\u00F3n");
+		this.chbxBonificacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedChckbxNewCheckBox(arg0);
+			}
+		});
+		this.chbxBonificacion.setForeground(Color.DARK_GRAY);
+		this.chbxBonificacion.setFont(new Font("Candara", Font.BOLD, 20));
+		this.chbxBonificacion.setBounds(6, 152, 150, 23);
+		this.contentPane.add(this.chbxBonificacion);
+		
+		this.txtBonificacion = new JTextField();
+		this.txtBonificacion.setText("0");
+		this.txtBonificacion.setEditable(false);
+		this.txtBonificacion.setEnabled(false);
+		this.txtBonificacion.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				focusGainedTxtBonificacion(arg0);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusLostTxtBonificacion(e);
+			}
+		});
+		this.txtBonificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		this.txtBonificacion.setForeground(new Color(220, 20, 60));
+		this.txtBonificacion.setFont(new Font("Arial", Font.BOLD, 16));
+		this.txtBonificacion.setColumns(10);
+		this.txtBonificacion.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		this.txtBonificacion.setBackground(new Color(245, 245, 245));
+		this.txtBonificacion.setBounds(302, 152, 150, 25);
+		this.contentPane.add(this.txtBonificacion);
+		
+		this.lblAgregarLa = new JLabel("* Agregar la cantidad de unidades");
+		this.lblAgregarLa.setVisible(false);
+		this.lblAgregarLa.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblAgregarLa.setForeground(Color.RED);
+		this.lblAgregarLa.setFont(new Font("Tahoma", Font.BOLD, 10));
+		this.lblAgregarLa.setBounds(10, 170, 245, 25);
+		this.contentPane.add(this.lblAgregarLa);
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
@@ -487,10 +535,12 @@ public class DetalleCompra extends JFrame {
 			double cantidad=Double.parseDouble(txtTotUnidades.getText());
 			double precioUnidad = Double.parseDouble(txtPrePorUnidad.getText());
 			double precioSubTot=Double.parseDouble(txtPrecioTotal.getText());
+			double bonificacion = Double.parseDouble(txtBonificacion.getText());
 			
 			//JOptionPane.showMessageDialog(null, nomProducto + " "+cantidad + " "+precioUnidad+" "+precioSubTot);
+			cantidad=cantidad+bonificacion;
 			
-			nuevCompra.dtm.addRow(new Object[]{cantidad,nomProducto,precioUnidad,precioSubTot});
+			nuevCompra.dtm.addRow(new Object[]{cantidad,nomProducto,precioUnidad,precioSubTot,bonificacion});
 			nuevCompra.sumarTotal();
 			nuevCompra.txtBuscarProducto.setText(null);
 			this.dispose();
@@ -500,5 +550,26 @@ public class DetalleCompra extends JFrame {
 	}
 	protected void actionPerformedButton_1(ActionEvent arg0) {
 		this.dispose();
+	}
+	protected void focusGainedTxtBonificacion(FocusEvent arg0) {
+		seleccionarTexto(arg0);
+		if(txtBonificacion.getText().equals("0"))
+			txtBonificacion.setText("");
+	}
+	protected void focusLostTxtBonificacion(FocusEvent e) {
+		if(txtBonificacion.getText().equals(""))
+			txtBonificacion.setText("0");
+	}
+	
+	protected void actionPerformedChckbxNewCheckBox(ActionEvent arg0) {
+		if (chbxBonificacion.isSelected()) {
+			txtBonificacion.setEditable(true);
+			txtBonificacion.setEnabled(true);
+			lblAgregarLa.setVisible(true);
+		}else{
+			txtBonificacion.setEditable(false);
+			txtBonificacion.setEnabled(false);
+			lblAgregarLa.setVisible(false);
+		}
 	}
 }

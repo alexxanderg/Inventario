@@ -544,7 +544,7 @@ public class NuevaCompra extends JFrame {
 	
 	private void cargar(){
 		tbCompras.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total"});
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total", ""});
 		ajustarAnchoColumnas();
 		tbCompras.setRowHeight(25);
 		
@@ -567,13 +567,15 @@ public class NuevaCompra extends JFrame {
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(10));  // 
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(60));  // 
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(15));  // 
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // 
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  //
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(0));  // 
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		tbCompras.getColumnModel().getColumn(0).setCellRenderer(tcr);
 		tbCompras.getColumnModel().getColumn(2).setCellRenderer(tcr);
-		tbCompras.getColumnModel().getColumn(3).setCellRenderer(tcr);		
+		tbCompras.getColumnModel().getColumn(3).setCellRenderer(tcr);
+		tbCompras.getColumnModel().getColumn(4).setCellRenderer(tcr);
 	}
 	
 	public void cargarBuscador() {
@@ -742,9 +744,11 @@ public class NuevaCompra extends JFrame {
 							preIndivProd = redondearDecimales(preIndivProd, 2);
 						double preSubTotProd = Float.parseFloat(tbCompras.getValueAt(i, 3).toString());
 							preSubTotProd = redondearDecimales(preSubTotProd, 2);
+						double bonificacion = Float.parseFloat(tbCompras.getValueAt(i, 4).toString());
+							bonificacion = redondearDecimales(bonificacion, 2);
 						
 						consulta.iniciar();
-						consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
+						consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd,bonificacion);	
 						consulta.anadirStockProducto(idProd, cantProd);
 						consulta.reset();
 					}
@@ -809,7 +813,6 @@ public class NuevaCompra extends JFrame {
 	}
 	private void DetalleCompra() {
 		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(null, txtBuscarProducto.getText());
 		try {
 			if (dc.isShowing()) { //JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
 				dc.setExtendedState(0); //MOSTRAR VENTANA ABIERTA

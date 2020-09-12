@@ -565,18 +565,19 @@ public class consultas {
 		return 0;
 	}
 	
-	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd) {
+	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd, double bonificacion) {
 		
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT)"
-					+ " values (?, ?, ?, ?, ?)";
+			String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT,bonificacion)"
+					+ " values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setInt(1, idCompra);
 			prepareStmt.setInt(2, idProd);
 			prepareStmt.setDouble(3, cantProd);
 			prepareStmt.setDouble(4, preIndivProd);
 			prepareStmt.setDouble(5, preSubTotProd);
+			prepareStmt.setDouble(6, bonificacion);
 			prepareStmt.execute();
 			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
 		} catch (Exception e) {

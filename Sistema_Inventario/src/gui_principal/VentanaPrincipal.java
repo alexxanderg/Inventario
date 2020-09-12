@@ -507,7 +507,6 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 	
-	
 	protected void actionPerformedBtnBuscarVentas(ActionEvent arg0) {
 		try {
 			cerrarVentanas();
