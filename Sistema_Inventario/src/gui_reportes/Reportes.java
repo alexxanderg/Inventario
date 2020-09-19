@@ -97,6 +97,8 @@ public class Reportes extends JInternalFrame implements ActionListener {
 	private JComboBox<Categoria> cbVentaCategoria;
 	private JComboBox<Categoria> cbCompraCategoria;
 	private JComboBox<Distribuidores> cbCompraProveedor;
+	private JComboBox<Distribuidores>  cbRankingProveedor;
+	private JComboBox<Categoria> cbRankingCategoria;
 	
 
 
@@ -151,6 +153,8 @@ public class Reportes extends JInternalFrame implements ActionListener {
 	private JLabel label_10;
 	private JDateChooser calRI04;
 	private JButton btnMejorVendedor;
+	private JLabel label_13;
+	private JLabel label_14;
 	
 	
 	/**
@@ -408,17 +412,17 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.BLACK);
-		panel_4.setBounds(280, 64, 2, 187);
+		panel_4.setBounds(280, 48, 2, 187);
 		panel_1.add(panel_4);
 		
 		this.lblCategora = new JLabel("Categor\u00EDa:");
-		this.lblCategora.setBounds(16, 93, 99, 23);
+		this.lblCategora.setBounds(16, 77, 99, 23);
 		this.panel_1.add(this.lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.txtMenores = new JTextField();
 		txtMenores.setEnabled(false);
-		this.txtMenores.setBounds(134, 185, 136, 23);
+		this.txtMenores.setBounds(134, 169, 136, 23);
 		this.panel_1.add(this.txtMenores);
 		this.txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.txtMenores.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -431,7 +435,7 @@ public class Reportes extends JInternalFrame implements ActionListener {
 				actionPerformedBtnGenerarMenores(e);
 			}
 		});
-		this.btnGenerarMenoresMayores.setBounds(134, 219, 136, 32);
+		this.btnGenerarMenoresMayores.setBounds(134, 203, 136, 32);
 		this.panel_1.add(this.btnGenerarMenoresMayores);
 		this.btnGenerarMenoresMayores.setForeground(Color.WHITE);
 		this.btnGenerarMenoresMayores.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -439,37 +443,37 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		
 		this.cbCategoria = new JComboBox();
 		this.cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbCategoria.setBounds(134, 92, 136, 23);
+		this.cbCategoria.setBounds(134, 76, 136, 23);
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblDel = new JLabel("desde:");
-		lblDel.setBounds(16, 295, 77, 23);
+		lblDel.setBounds(16, 273, 77, 23);
 		panel_1.add(lblDel);
 		this.lblDel.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDel.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_4 = new JDateChooser();
-		calendar_4.setBounds(84, 295, 141, 23);
+		calendar_4.setBounds(84, 273, 141, 23);
 		panel_1.add(calendar_4);
 		
 		this.lblPorVencer = new JLabel("CON FECHA DE VENCIMIENTO:");
-		lblPorVencer.setBounds(16, 273, 308, 23);
+		lblPorVencer.setBounds(16, 250, 308, 23);
 		panel_1.add(lblPorVencer);
 		this.lblPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.label_17 = new JLabel("hasta:");
-		label_17.setBounds(264, 295, 77, 23);
+		label_17.setBounds(264, 273, 77, 23);
 		panel_1.add(label_17);
 		this.label_17.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_17.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_5 = new JDateChooser();
-		calendar_5.setBounds(334, 295, 141, 23);
+		calendar_5.setBounds(334, 273, 141, 23);
 		panel_1.add(calendar_5);
 		
 		this.btnVerProductosQue = new JButton("Ver reporte");
-		btnVerProductosQue.setBounds(16, 329, 466, 32);
+		btnVerProductosQue.setBounds(16, 307, 466, 32);
 		panel_1.add(btnVerProductosQue);
 		btnVerProductosQue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -483,13 +487,13 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		lblProductos = new JLabel("REPORTE DE PRODUCTOS");
 		lblProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductos.setFont(new Font("Candara", Font.BOLD, 30));
-		lblProductos.setBounds(10, 21, 535, 32);
+		lblProductos.setBounds(10, 5, 535, 32);
 		panel_1.add(lblProductos);
 		
 		lblFiltros = new JLabel("FILTROS:");
 		lblFiltros.setForeground(new Color(0, 0, 205));
 		lblFiltros.setFont(new Font("Candara", Font.BOLD, 25));
-		lblFiltros.setBounds(16, 64, 143, 23);
+		lblFiltros.setBounds(16, 48, 143, 23);
 		panel_1.add(lblFiltros);
 		
 		chckbxRestriccionCantidad = new JCheckBox(" Sin restricci\u00F3n de cantidad");
@@ -502,7 +506,7 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		chckbxRestriccionCantidad.setSelected(true);
 		chckbxRestriccionCantidad.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxRestriccionCantidad.setBackground(new Color(255, 222, 173));
-		chckbxRestriccionCantidad.setBounds(16, 159, 295, 23);
+		chckbxRestriccionCantidad.setBounds(16, 143, 295, 23);
 		panel_1.add(chckbxRestriccionCantidad);
 		
 		chckbxMenorA = new JCheckBox("Stock < a:");
@@ -514,27 +518,27 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		});
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxMenorA.setBackground(new Color(255, 222, 173));
-		chckbxMenorA.setBounds(16, 185, 115, 23);
+		chckbxMenorA.setBounds(16, 169, 115, 23);
 		panel_1.add(chckbxMenorA);
 		
 		lblMarca = new JLabel("Marca:");
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMarca.setBounds(16, 125, 99, 23);
+		lblMarca.setBounds(16, 109, 99, 23);
 		panel_1.add(lblMarca);
 		
 		cbMarca = new JComboBox();
 		cbMarca.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbMarca.setBounds(135, 124, 135, 23);
+		cbMarca.setBounds(135, 108, 135, 23);
 		panel_1.add(cbMarca);
 		
 		this.lblRanking = new JLabel("RANKING de productos:");
-		lblRanking.setBounds(16, 379, 231, 32);
+		lblRanking.setBounds(16, 345, 231, 32);
 		panel_1.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(251, 379, 231, 32);
+		cbxRanking.setBounds(251, 345, 231, 32);
 		panel_1.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] {"M\u00E1s vendidos", "Menos vendidos"}));
@@ -581,17 +585,17 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		JLabel label_4 = new JLabel("FILTROS:");
 		label_4.setForeground(new Color(0, 0, 205));
 		label_4.setFont(new Font("Candara", Font.BOLD, 25));
-		label_4.setBounds(292, 64, 143, 23);
+		label_4.setBounds(292, 48, 143, 23);
 		panel_1.add(label_4);
 		
 		JLabel label_5 = new JLabel("Categor\u00EDa:");
 		label_5.setFont(new Font("Candara", Font.BOLD, 20));
-		label_5.setBounds(292, 93, 99, 23);
+		label_5.setBounds(292, 77, 99, 23);
 		panel_1.add(label_5);
 		
 		JLabel lblProveedor = new JLabel("Proveedor:");
 		lblProveedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblProveedor.setBounds(292, 125, 99, 23);
+		lblProveedor.setBounds(292, 109, 99, 23);
 		panel_1.add(lblProveedor);
 		
 		btnGenerarStockCategoriaProveedor = new JButton("Ver reporte");
@@ -599,22 +603,22 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		btnGenerarStockCategoriaProveedor.setForeground(Color.WHITE);
 		btnGenerarStockCategoriaProveedor.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnGenerarStockCategoriaProveedor.setBackground(new Color(30, 144, 255));
-		btnGenerarStockCategoriaProveedor.setBounds(410, 219, 136, 32);
+		btnGenerarStockCategoriaProveedor.setBounds(410, 203, 136, 32);
 		panel_1.add(btnGenerarStockCategoriaProveedor);
 		
 		JLabel lblStock = new JLabel("Stock < a:");
 		lblStock.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStock.setBounds(292, 186, 99, 23);
+		lblStock.setBounds(292, 169, 99, 23);
 		panel_1.add(lblStock);
 		
 		this.cbStockCategoria = new JComboBox();
 		this.cbStockCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbStockCategoria.setBounds(410, 92, 135, 23);
+		this.cbStockCategoria.setBounds(410, 76, 135, 23);
 		this.panel_1.add(this.cbStockCategoria);
 		
 		this.cbStockProveedor = new JComboBox();
 		this.cbStockProveedor.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbStockProveedor.setBounds(410, 127, 135, 23);
+		this.cbStockProveedor.setBounds(410, 108, 135, 23);
 		this.panel_1.add(this.cbStockProveedor);
 		
 		this.txtStockMenores = new JTextField();
@@ -622,8 +626,28 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		this.txtStockMenores.setFont(new Font("Arial", Font.PLAIN, 16));
 		this.txtStockMenores.setColumns(10);
 		this.txtStockMenores.setBackground(SystemColor.controlHighlight);
-		this.txtStockMenores.setBounds(409, 188, 136, 23);
+		this.txtStockMenores.setBounds(409, 169, 136, 23);
 		this.panel_1.add(this.txtStockMenores);
+		
+		this.label_13 = new JLabel("Categor\u00EDa:");
+		this.label_13.setFont(new Font("Candara", Font.BOLD, 20));
+		this.label_13.setBounds(16, 386, 99, 23);
+		this.panel_1.add(this.label_13);
+		
+		this.cbRankingCategoria = new JComboBox();
+		this.cbRankingCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.cbRankingCategoria.setBounds(134, 385, 136, 23);
+		this.panel_1.add(this.cbRankingCategoria);
+		
+		this.label_14 = new JLabel("Proveedor:");
+		this.label_14.setFont(new Font("Candara", Font.BOLD, 20));
+		this.label_14.setBounds(292, 386, 99, 23);
+		this.panel_1.add(this.label_14);
+		
+		this.cbRankingProveedor = new JComboBox();
+		this.cbRankingProveedor.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.cbRankingProveedor.setBounds(410, 385, 135, 23);
+		this.panel_1.add(this.cbRankingProveedor);
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(147, 112, 219));
@@ -776,6 +800,11 @@ public class Reportes extends JInternalFrame implements ActionListener {
 			cbCompraCategoria.addItem(todaCategoria4);
 			categoria4.cargarCategorias(cbCompraCategoria);
 			
+			Categoria categoria5 = new Categoria();
+			Categoria todaCategoria5 = new Categoria("TODAS");
+			cbRankingCategoria.addItem(todaCategoria5);
+			categoria5.cargarCategorias(cbRankingCategoria);
+			
 			Distribuidores distribuidor0 = new Distribuidores();
 			Distribuidores distribuidor1 = new Distribuidores(-1, "0", "0", "TODAS", "0", "0", "0", "0");
 			cbStockProveedor.addItem(distribuidor1);
@@ -785,6 +814,11 @@ public class Reportes extends JInternalFrame implements ActionListener {
 			Distribuidores distribuidor3 = new Distribuidores(-1, "0", "0", "TODAS", "0", "0", "0", "0");
 			cbCompraProveedor.addItem(distribuidor3);
 			distribuidor2.cargarDistribuidores(cbCompraProveedor);
+			
+			Distribuidores distribuidor4 = new Distribuidores();
+			Distribuidores distribuidor5 = new Distribuidores(-1, "0", "0", "TODAS", "0", "0", "0", "0");
+			cbRankingProveedor.addItem(distribuidor5);
+			distribuidor4.cargarDistribuidores(cbRankingProveedor);
 			
 			Marcas marca = new Marcas();
 			Marcas todaMarca = new Marcas("TODAS");
@@ -982,6 +1016,9 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		Connection con = null;
 		try {
 			con = MySQLConexion.getConection();
+			
+			String categoria = cbRankingCategoria.getSelectedItem().toString();
+			String proveedor = cbRankingProveedor.getSelectedItem().toString();
 
 			int añoi = calendar_6.getCalendar().get(Calendar.YEAR);
 			int mesi = calendar_6.getCalendar().get(Calendar.MARCH) + 1;
@@ -992,17 +1029,56 @@ public class Reportes extends JInternalFrame implements ActionListener {
 			int mesf = calendar_7.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = calendar_7.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
-			Map parameters = new HashMap();
+			
+			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("prtFechaI", fechai);
 			parameters.put("prmtFechaFI", fechaf);
 
 			if (cbxRanking.getSelectedIndex() == 0) {
-				new AbstractJasperReports().createReport(con, "rProductoMasVendidos.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if ( categoria.equals("TODAS") && proveedor.equals("TODAS")) {					
+					new AbstractJasperReports().createReport(con, "rProductoMasVendidos.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if( categoria.equals("TODAS") && !(proveedor.equals("TODAS")) ){
+					parameters.put("prProveedor", proveedor);
+					new AbstractJasperReports().createReport(con, "rProductoMasVendidosP.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if ( !(categoria.equals("TODAS")) && proveedor.equals("TODAS") ){
+					parameters.put("prCategoria", categoria);
+					new AbstractJasperReports().createReport(con, "rProductoMasVendidosC.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if ( !(categoria.equals("TODAS")) && !(proveedor.equals("TODAS")) ){
+					parameters.put("prCategoria", categoria);
+					parameters.put("prProveedor", proveedor);
+					JOptionPane.showMessageDialog(null, parameters);
+					new AbstractJasperReports().createReport(con, "rProductoMasVendidosPC.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
 			} else {
-				new AbstractJasperReports().createReport(con, "rProductoMenosVendidos.jasper", parameters);
-				AbstractJasperReports.showViewer();
+				if ( categoria.equals("TODAS") && proveedor.equals("TODAS")) {
+					new AbstractJasperReports().createReport(con, "rProductoMenosVendidos.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if( categoria.equals("TODAS") && !(proveedor.equals("TODAS")) ){
+					parameters.put("prmtProveedor", proveedor);
+					new AbstractJasperReports().createReport(con, "rProductoMenosVendidosP.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if ( !(categoria.equals("TODAS")) && proveedor.equals("TODAS") ){
+					parameters.put("prmtCategoria", categoria);
+					new AbstractJasperReports().createReport(con, "rProductoMenosVendidosC.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
+				else if ( !(categoria.equals("TODAS")) && !(proveedor.equals("TODAS")) ){
+					parameters.put("prmtCategoria", categoria);
+					parameters.put("prmtProveedor", proveedor);
+					new AbstractJasperReports().createReport(con, "rProductoMenosVendidosPC.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				}
 			}
+			
 
 			con.close();
 

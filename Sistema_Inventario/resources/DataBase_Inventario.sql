@@ -63,6 +63,18 @@ cantp2		float,
 prep2		float
 );  
 
+# region Tabla agregado
+create table tb_detalles_productos(
+id_det_pro 	int primary key auto_increment,
+fec_ven		datetime,
+cantidad	float,
+pre_comp	float,
+pre_vent	float,
+codproducto	int,
+foreign key(codproducto) references tb_productos(codproducto)
+);
+# endregion
+
 create table tb_ventas(
 codventa	int primary key auto_increment,
 idcliente	int,
