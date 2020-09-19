@@ -155,6 +155,11 @@ public class Reportes extends JInternalFrame implements ActionListener {
 	private JButton btnMejorVendedor;
 	private JLabel label_13;
 	private JLabel label_14;
+	private JPanel panel_8;
+	private JLabel label_15;
+	private JLabel label_16;
+	private JDateChooser calRI05;
+	private JDateChooser calRI06;
 	
 	
 	/**
@@ -192,44 +197,44 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		this.lblVendedor = new JLabel("POR VENDEDOR:");
 		this.lblVendedor.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblVendedor.setBounds(16, 85, 157, 23);
+		this.lblVendedor.setBounds(16, 47, 157, 23);
 		this.panel.add(this.lblVendedor);
 		
 		this.cbUsuarios = new JComboBox();
-		this.cbUsuarios.setBounds(183, 85, 109, 23);
+		this.cbUsuarios.setBounds(183, 47, 109, 23);
 		this.panel.add(this.cbUsuarios);
 		this.cbUsuarios.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.cbMetodoPago = new JComboBox();
 		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
-		this.cbMetodoPago.setBounds(183, 118, 109, 23);
+		this.cbMetodoPago.setBounds(183, 80, 109, 23);
 		this.panel.add(this.cbMetodoPago);
 		this.cbMetodoPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
 		this.lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblMtodoDePago.setBounds(16, 119, 157, 23);
+		this.lblMtodoDePago.setBounds(16, 81, 157, 23);
 		this.panel.add(this.lblMtodoDePago);
 		
 		this.label_1 = new JLabel("del:");
-		this.label_1.setBounds(102, 153, 46, 23);
+		this.label_1.setBounds(102, 115, 46, 23);
 		this.panel.add(this.label_1);
 		this.label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_1.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar = new JDateChooser();
-		this.calendar.setBounds(167, 153, 125, 23);
+		this.calendar.setBounds(167, 115, 125, 23);
 		this.panel.add(this.calendar);
 		
 		this.label_2 = new JLabel("al:");
-		this.label_2.setBounds(102, 187, 55, 23);
+		this.label_2.setBounds(102, 149, 55, 23);
 		this.panel.add(this.label_2);
 		this.label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_2.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_1 = new JDateChooser();
-		this.calendar_1.setBounds(167, 187, 125, 23);
+		this.calendar_1.setBounds(167, 149, 125, 23);
 		this.panel.add(this.calendar_1);
 		
 		this.btngenerarReporteVentas = new JButton("Ver reporte");
@@ -238,31 +243,31 @@ public class Reportes extends JInternalFrame implements ActionListener {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(70, 221, 179, 32);
+		this.btngenerarReporteVentas.setBounds(70, 183, 179, 32);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
 		
 		this.lblVentas = new JLabel("REPORTE DE VENTAS");
-		this.lblVentas.setBounds(16, 20, 535, 32);
+		this.lblVentas.setBounds(16, 5, 535, 32);
 		this.panel.add(this.lblVentas);
 		this.lblVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 		
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(70, 282, 144, 23);
+		lblHistorialDeCompras.setBounds(16, 300, 144, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(16, 305, 255, 23);
+		cbCliente.setBounds(16, 328, 255, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.btnVerComprasCliente = new JButton("Ver reporte");
-		btnVerComprasCliente.setBounds(16, 339, 255, 32);
+		btnVerComprasCliente.setBounds(16, 356, 255, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -276,7 +281,7 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		lblPorProducto = new JLabel("POR PRODUCTO:");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(70, 402, 166, 23);
+		lblPorProducto.setBounds(16, 399, 166, 23);
 		panel.add(lblPorProducto);
 		
 		btnPorProducto = new JButton("Ver reporte");
@@ -288,7 +293,7 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		btnPorProducto.setForeground(Color.WHITE);
 		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnPorProducto.setBackground(new Color(30, 144, 255));
-		btnPorProducto.setBounds(16, 459, 255, 32);
+		btnPorProducto.setBounds(16, 455, 255, 32);
 		panel.add(btnPorProducto);
 		
 		txtProductos = new JTextField();
@@ -301,38 +306,38 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		
 		this.panel_5 = new JPanel();
 		this.panel_5.setBackground(Color.BLACK);
-		this.panel_5.setBounds(302, 84, 2, 177);
+		this.panel_5.setBounds(302, 46, 2, 177);
 		this.panel.add(this.panel_5);
 		
 		this.lblPorCategoria = new JLabel("POR CATEGORIA:");
 		this.lblPorCategoria.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPorCategoria.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblPorCategoria.setBounds(314, 85, 157, 23);
+		this.lblPorCategoria.setBounds(314, 47, 157, 23);
 		this.panel.add(this.lblPorCategoria);
 		
 		this.cbVentaCategoria = new JComboBox();
 		this.cbVentaCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbVentaCategoria.setBounds(314, 118, 152, 23);
+		this.cbVentaCategoria.setBounds(314, 80, 152, 23);
 		this.panel.add(this.cbVentaCategoria);
 		
 		this.label_7 = new JLabel("del:");
 		this.label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_7.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label_7.setBounds(314, 153, 46, 23);
+		this.label_7.setBounds(314, 115, 46, 23);
 		this.panel.add(this.label_7);
 		
 		this.calendar_8 = new JDateChooser();
-		this.calendar_8.setBounds(379, 153, 125, 23);
+		this.calendar_8.setBounds(379, 115, 125, 23);
 		this.panel.add(this.calendar_8);
 		
 		this.label_9 = new JLabel("al:");
 		this.label_9.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_9.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label_9.setBounds(314, 187, 55, 23);
+		this.label_9.setBounds(314, 149, 55, 23);
 		this.panel.add(this.label_9);
 		
 		this.calendar_9 = new JDateChooser();
-		this.calendar_9.setBounds(379, 187, 125, 23);
+		this.calendar_9.setBounds(379, 149, 125, 23);
 		this.panel.add(this.calendar_9);
 		
 		this.btngenerarReporteVentaCategoria = new JButton("Ver reporte");
@@ -340,54 +345,54 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		this.btngenerarReporteVentaCategoria.setForeground(Color.WHITE);
 		this.btngenerarReporteVentaCategoria.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btngenerarReporteVentaCategoria.setBackground(new Color(30, 144, 255));
-		this.btngenerarReporteVentaCategoria.setBounds(339, 221, 179, 32);
+		this.btngenerarReporteVentaCategoria.setBounds(339, 183, 179, 32);
 		this.panel.add(this.btngenerarReporteVentaCategoria);
 		
 		this.panel_6 = new JPanel();
 		this.panel_6.setBackground(Color.BLACK);
-		this.panel_6.setBounds(281, 268, 2, 223);
+		this.panel_6.setBounds(302, 240, 2, 240);
 		this.panel.add(this.panel_6);
 		
 		this.lblReporteCompra = new JLabel("REPORTE Compra");
 		this.lblReporteCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblReporteCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblReporteCompra.setBounds(361, 271, 157, 23);
+		this.lblReporteCompra.setBounds(361, 243, 157, 23);
 		this.panel.add(this.lblReporteCompra);
 		
 		this.cbCompraCategoria = new JComboBox();
 		this.cbCompraCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbCompraCategoria.setBounds(442, 305, 109, 23);
+		this.cbCompraCategoria.setBounds(442, 277, 109, 23);
 		this.panel.add(this.cbCompraCategoria);
 		
 		this.lblProveedor_1 = new JLabel("Proveedor");
 		this.lblProveedor_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblProveedor_1.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblProveedor_1.setBounds(289, 339, 100, 23);
+		this.lblProveedor_1.setBounds(332, 311, 100, 23);
 		this.panel.add(this.lblProveedor_1);
 		
 		this.cbCompraProveedor = new JComboBox();
 		this.cbCompraProveedor.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbCompraProveedor.setBounds(442, 338, 109, 23);
+		this.cbCompraProveedor.setBounds(442, 310, 109, 23);
 		this.panel.add(this.cbCompraProveedor);
 		
 		this.label_11 = new JLabel("del:");
 		this.label_11.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_11.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label_11.setBounds(329, 383, 46, 23);
+		this.label_11.setBounds(329, 355, 46, 23);
 		this.panel.add(this.label_11);
 		
 		this.calendar_10 = new JDateChooser();
-		this.calendar_10.setBounds(394, 383, 125, 23);
+		this.calendar_10.setBounds(394, 355, 125, 23);
 		this.panel.add(this.calendar_10);
 		
 		this.label_12 = new JLabel("al:");
 		this.label_12.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_12.setFont(new Font("Candara", Font.BOLD, 20));
-		this.label_12.setBounds(329, 417, 55, 23);
+		this.label_12.setBounds(329, 389, 55, 23);
 		this.panel.add(this.label_12);
 		
 		this.calendar_11 = new JDateChooser();
-		this.calendar_11.setBounds(394, 417, 125, 23);
+		this.calendar_11.setBounds(394, 389, 125, 23);
 		this.panel.add(this.calendar_11);
 		
 		this.btnReporteCompraCategoriaProveedor = new JButton("Ver reporte");
@@ -395,14 +400,39 @@ public class Reportes extends JInternalFrame implements ActionListener {
 		this.btnReporteCompraCategoriaProveedor.setForeground(Color.WHITE);
 		this.btnReporteCompraCategoriaProveedor.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btnReporteCompraCategoriaProveedor.setBackground(new Color(30, 144, 255));
-		this.btnReporteCompraCategoriaProveedor.setBounds(329, 459, 179, 32);
+		this.btnReporteCompraCategoriaProveedor.setBounds(351, 431, 179, 32);
 		this.panel.add(this.btnReporteCompraCategoriaProveedor);
 		
 		this.lblCategoria = new JLabel("Categoria");
 		this.lblCategoria.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblCategoria.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblCategoria.setBounds(289, 305, 100, 23);
+		this.lblCategoria.setBounds(332, 277, 100, 23);
 		this.panel.add(this.lblCategoria);
+		
+		this.panel_8 = new JPanel();
+		this.panel_8.setBackground(Color.BLACK);
+		this.panel_8.setBounds(29, 226, 230, 2);
+		this.panel.add(this.panel_8);
+		
+		this.label_15 = new JLabel("del:");
+		this.label_15.setHorizontalAlignment(SwingConstants.LEFT);
+		this.label_15.setFont(new Font("Candara", Font.BOLD, 20));
+		this.label_15.setBounds(59, 240, 46, 23);
+		this.panel.add(this.label_15);
+		
+		this.label_16 = new JLabel("al:");
+		this.label_16.setHorizontalAlignment(SwingConstants.LEFT);
+		this.label_16.setFont(new Font("Candara", Font.BOLD, 20));
+		this.label_16.setBounds(59, 274, 55, 23);
+		this.panel.add(this.label_16);
+		
+		this.calRI05 = new JDateChooser();
+		this.calRI05.setBounds(124, 240, 125, 23);
+		this.panel.add(this.calRI05);
+		
+		this.calRI06 = new JDateChooser();
+		this.calRI06.setBounds(124, 274, 125, 23);
+		this.panel.add(this.calRI06);
 		
 		this.panel_1 = new JPanel();
 		this.panel_1.setBackground(new Color(255, 222, 173));
@@ -848,6 +878,8 @@ public class Reportes extends JInternalFrame implements ActionListener {
 			calRI02.setDate(date);
 			calRI03.setDate(date);
 			calRI04.setDate(date);
+			calRI05.setDate(date);
+			calRI06.setDate(date);
 	}
 		
 	public void cargarBuscador()
@@ -1092,9 +1124,21 @@ public class Reportes extends JInternalFrame implements ActionListener {
 			con = MySQLConexion.getConection();
 
 			String nrodoc = cbCliente.getItemAt(cbCliente.getSelectedIndex()).getNrodoc();
+			
+			int añoi = this.calRI05.getCalendar().get(1);
+		    int mesi = this.calRI05.getCalendar().get(2) + 1;
+		    int diai = this.calRI05.getCalendar().get(5);
+		    String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+		    int añof = this.calRI06.getCalendar().get(1);
+		    int mesf = this.calRI06.getCalendar().get(2) + 1;
+		    int diaf = this.calRI06.getCalendar().get(5);
+		    String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			Map<String, Object> parameters = new HashMap();
 			parameters.put("prtNroDoc", nrodoc);
+			parameters.put("prtFechaI", fechai);
+		    parameters.put("prmtFechaF", fechaf);
 			new AbstractJasperReports().createReport(con, "rComprasCliente.jasper", parameters);
 			AbstractJasperReports.showViewer();
 			con.close();
@@ -1320,9 +1364,22 @@ public class Reportes extends JInternalFrame implements ActionListener {
 
 			String nomProducto = txtProductos.getText();
 	    	int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
+	    	
+	    	int añoi = this.calRI05.getCalendar().get(1);
+		    int mesi = this.calRI05.getCalendar().get(2) + 1;
+		    int diai = this.calRI05.getCalendar().get(5);
+		    String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+		    int añof = this.calRI06.getCalendar().get(1);
+		    int mesf = this.calRI06.getCalendar().get(2) + 1;
+		    int diaf = this.calRI06.getCalendar().get(5);
+		    String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 			
 	        con = MySQLConexion.getConection();
 	        Map parameters = new HashMap();
+	        
+	        parameters.put("prtFechaI", fechai);
+		    parameters.put("prmtFechaF", fechaf);
 	        parameters.put("idProd", idProd);
 	        parameters.put("prod", nomProducto);
 	        new AbstractJasperReports().createReport(con, "rProductoEspecifico.jasper", parameters);
