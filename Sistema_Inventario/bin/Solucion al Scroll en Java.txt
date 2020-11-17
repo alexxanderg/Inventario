@@ -1,0 +1,15 @@
+//Inicio del panel al que se le quiere asignar
+scrollpane = new JScrollPane();
+scrollpane.setBounds(0, 0, 557, 502);
+
+// Abajo del this.panel.setLayout(null);
+this.panel.setPreferredSize(new Dimension(560,510));
+scrollpane.setViewportView(this.panel);
+
+// Despues del ultimo this.panel.add(this.ultimocomponente)
+add(scrollpane);
+
+
+AVISO: Este cambio alterará al eclipse MARS haciendo que no muestre el design, 
+Teniendo que calcularlo nosotros y hacerlo manualmente a los siguientes 
+componentes que quieras asignarle

@@ -205,7 +205,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     this.txtPUnidadOriginal.setBounds(268, 196, 134, 31);
     this.contentPane.add(this.txtPUnidadOriginal);
     this.txtTotal = new JTextField();
-    this.txtTotal.setEditable(false);
+    txtTotal.setEditable(false);
     this.txtTotal.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta.this.focusGainedTxtSTotal(e);
@@ -272,6 +272,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     this.lblDescuento.setBounds(42, 226, 172, 31);
     this.contentPane.add(this.lblDescuento);
     this.txtDescuentoIndiv = new JTextField();
+    txtDescuentoIndiv.setEditable(false);
     this.txtDescuentoIndiv.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta.this.focusGainedTxtDescuentoIndiv(e);
@@ -310,7 +311,6 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     this.lblPreCdescuento.setBounds(42, 257, 172, 31);
     this.contentPane.add(this.lblPreCdescuento);
     this.txtPreCDesc = new JTextField();
-    txtPreCDesc.setEditable(false);
     this.txtPreCDesc.addKeyListener(new KeyAdapter() {
           public void keyReleased(KeyEvent e) {
             ModificarPrecioVenta.this.keyReleasedTxtPreCDesc(e);
@@ -338,6 +338,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     this.lblDescuentoTotal.setBounds(42, 316, 172, 31);
     this.contentPane.add(this.lblDescuentoTotal);
     this.txtDescuentoTot = new JTextField();
+    txtDescuentoTot.setEditable(false);
     this.txtDescuentoTot.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta.this.focusGainedTxtDescuentoTot(e);
@@ -489,9 +490,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
       newSTot = Double.parseDouble(this.txtTotal.getText());
       double preCompra = 0.0;
       preCompra = Double.parseDouble(this.txtPreCompra.getText());
-      if (newCant <= 0.0 || newPreCDesc < 0.0 || newDescIndiv < 0.0 || newSTot < 0.0 || newDescTot < 0.0) {
-        JOptionPane.showMessageDialog(null, "No estpermitido valores negativos");
-      } else {
+     
         if (this.cbPrecio.getSelectedIndex() == 0)
           this.ventas.actualizartabla(newCant, newPreCDesc, preCompra * newCant, newSTot, newDescTot, newUnimed, this.uniMedVenta); 
         if (this.cbPrecio.getSelectedIndex() == 1)
@@ -499,7 +498,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
         if (this.cbPrecio.getSelectedIndex() == 2)
           this.ventas.actualizartabla(newCant, newPreCDesc, preCompra * newCant, newSTot, newDescTot, newUnimed, this.uniMedVenta); 
         dispose();
-      } 
+      
     } catch (Exception e) {
       setAlwaysOnTop(false);
       JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
@@ -570,27 +569,37 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
     try {
       double preUniCDescu = Double.parseDouble(this.txtPreCDesc.getText());
       preUniCDescu = redondearDecimales(preUniCDescu, 2);
+      
       double newcant = Double.parseDouble(this.txtCantidad.getText());
       newcant = redondearDecimales(newcant, 2);
-      double precioUniEnUso = 0.0D;
+      
+      double precioUniEnUso = 0.0;
       if (this.cbPrecio.getSelectedIndex() == 0)
-        precioUniEnUso = this.preCDesc; 
+        precioUniEnUso = this.preCDesc;
       if (this.cbPrecio.getSelectedIndex() == 1)
         precioUniEnUso = this.prePromo1; 
       if (this.cbPrecio.getSelectedIndex() == 2)
         precioUniEnUso = this.prePromo1; 
+      
       double descindiv = precioUniEnUso - preUniCDescu;
       descindiv = redondearDecimales(descindiv, 2);
       this.txtDescuentoIndiv.setText("" + descindiv);
-      calcular(1);
+      
+      double desctotal = newcant * descindiv;
+      txtDescuentoTot.setText("" + desctotal);
+      
+      double preTotal = newcant * preUniCDescu;
+      txtTotal.setText(preTotal + "");
+      
+      //calcular(1);
     } catch (Exception exception) {}
   }
   
   public void calcular(int origen) {
     try {
       if (origen != 1) {
-        double precioUniEnUso = 0.0D;
-        double newprecioCompra = 0.0D;
+        double precioUniEnUso = 0.0;
+        double newprecioCompra = 0.0;
         if (this.cbPrecio.getSelectedIndex() == 0) {
           precioUniEnUso = this.preCDesc;
           newprecioCompra = this.preCompraVenta;
