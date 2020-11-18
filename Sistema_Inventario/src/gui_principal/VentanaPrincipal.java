@@ -337,7 +337,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("CELL PER\u00DA");
+		lblNewLabel = new JLabel("SMART BOX");
 		lblNewLabel.setBounds(242, 0, 642, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
@@ -386,7 +386,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();
