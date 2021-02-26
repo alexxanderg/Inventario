@@ -116,6 +116,7 @@ public class Reportes extends JInternalFrame {
 	private JLabel lblTicketNro;
 	private JButton btnImprimirCopia;
 	private JTextField txtNroTicket;
+	private JButton btnVerReporteSimple;
 	/**
 	 * Launch the application.
 	 */
@@ -191,13 +192,14 @@ public class Reportes extends JInternalFrame {
 		this.calendar_1.setBounds(343, 153, 125, 23);
 		this.panel.add(this.calendar_1);
 		
-		this.btngenerarReporteVentas = new JButton("Ver reporte");
+		this.btngenerarReporteVentas = new JButton("<html><center>Ver reporte detallado</center></html>");
+		btngenerarReporteVentas.setVerticalAlignment(SwingConstants.TOP);
 		btngenerarReporteVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(72, 187, 396, 32);
+		this.btngenerarReporteVentas.setBounds(277, 187, 191, 57);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -210,18 +212,18 @@ public class Reportes extends JInternalFrame {
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 		
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(72, 240, 219, 23);
+		lblHistorialDeCompras.setBounds(72, 268, 219, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(72, 263, 396, 23);
+		cbCliente.setBounds(72, 291, 396, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.btnVerComprasCliente = new JButton("Ver reporte");
-		btnVerComprasCliente.setBounds(72, 297, 396, 32);
+		btnVerComprasCliente.setBounds(72, 325, 396, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -235,7 +237,7 @@ public class Reportes extends JInternalFrame {
 		lblPorProducto = new JLabel("POR PRODUCTO:");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(72, 360, 232, 23);
+		lblPorProducto.setBounds(72, 388, 232, 23);
 		panel.add(lblPorProducto);
 		
 		btnPorProducto = new JButton("Ver reporte");
@@ -247,7 +249,7 @@ public class Reportes extends JInternalFrame {
 		btnPorProducto.setForeground(Color.WHITE);
 		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnPorProducto.setBackground(new Color(30, 144, 255));
-		btnPorProducto.setBounds(72, 417, 396, 32);
+		btnPorProducto.setBounds(72, 445, 396, 32);
 		panel.add(btnPorProducto);
 		
 		txtProductos = new JTextField();
@@ -255,8 +257,21 @@ public class Reportes extends JInternalFrame {
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
 		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setBounds(72, 383, 396, 23);
+		txtProductos.setBounds(72, 411, 396, 23);
 		panel.add(txtProductos);
+		
+		btnVerReporteSimple = new JButton("<html><center>Ver reporte simple</center></html>");
+		btnVerReporteSimple.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnVerReporteSimple(e);
+			}
+		});
+		btnVerReporteSimple.setVerticalAlignment(SwingConstants.TOP);
+		btnVerReporteSimple.setForeground(Color.WHITE);
+		btnVerReporteSimple.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnVerReporteSimple.setBackground(new Color(30, 144, 255));
+		btnVerReporteSimple.setBounds(72, 187, 191, 57);
+		panel.add(btnVerReporteSimple);
 		
 		this.panel_1 = new JPanel();
 		this.panel_1.setBackground(new Color(255, 222, 173));
@@ -580,6 +595,44 @@ public class Reportes extends JInternalFrame {
 		return resultado;
 	}
 	
+
+	protected void actionPerformedBtnVerReporteSimple(ActionEvent e) {
+		Connection con = null;
+	    try
+	    {
+	      con = MySQLConexion.getConection();
+
+	      int añoi = this.calendar.getCalendar().get(1);
+	      int mesi = this.calendar.getCalendar().get(2) + 1;
+	      int diai = this.calendar.getCalendar().get(5);
+	      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+	      int añof = this.calendar_1.getCalendar().get(1);
+	      int mesf = this.calendar_1.getCalendar().get(2) + 1;
+	      int diaf = this.calendar_1.getCalendar().get(5);
+	      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+
+	      DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechai);
+			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter2.parse(fechaf);
+			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+	      
+	      Map parameters = new HashMap();
+	      parameters.put("prtFechaI", timeStampDateI);
+	      parameters.put("prtFechaF", timeStampDateF);
+
+	      new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
+	      AbstractJasperReports.showViewer();
+	    }
+	    catch (Exception ex)
+	    {
+	      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+	    }
+	}
 	
 	protected void actionPerformedBtngenerarReporteVentas(ActionEvent e) {
 		Connection con = null;
@@ -962,5 +1015,4 @@ public class Reportes extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "ERROR " + ex);
 		}
 	}
-	
 }

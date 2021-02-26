@@ -318,7 +318,7 @@ public class consultas {
 	public ResultSet buscarProductosPorVencer() {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM tb_productos WHERE fechaVenc >= CURDATE() ORDER BY fechaVenc LIMIT 15");
+			rs = st.executeQuery("SELECT * FROM db_inventario.tb_productos WHERE estado = 1 and fechaVenc != '' ORDER BY fechaVenc");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -407,14 +407,15 @@ public class consultas {
 		return rs;
 	}
 
-	public ResultSet modificarPC_PV(int idProducto, float prec, float prev) {
+	public ResultSet modificarPC_PV(int idProducto, float prec, java.sql.Date fec_venc, float prev) {
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set precioCo=?, precioVe=? where codproducto=?";
+			String sql = "update tb_productos set precioCo=?, precioVe=?, fechaVenc=? where codproducto=?";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setFloat(1, prec);
 			prepareStmt.setFloat(2, prev);
-			prepareStmt.setInt(3, idProducto);
+			prepareStmt.setDate(3, fec_venc);
+			prepareStmt.setInt(4, idProducto);
 			prepareStmt.execute();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar precio compra venta: " + e);

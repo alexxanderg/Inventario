@@ -1116,13 +1116,9 @@ public class ModificarProducto extends JFrame {
 	public void cargarBuscador() {
 
 		acProd = new TextAutoCompleter(txtNombreProducto);
-		acDesc = new TextAutoCompleter(txtDescripcion);
-		acMarc = new TextAutoCompleter(txtMarca);
 		acLab = new TextAutoCompleter(txtLaboratorio);
 		
 		acProd.setMode(0);
-		acDesc.setMode(0);
-		acMarc.setMode(0);
 		acLab.setMode(0);
 		
 		consulta.iniciar();

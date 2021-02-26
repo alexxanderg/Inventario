@@ -126,13 +126,14 @@ public class NuevoProducto extends JFrame {
 	MantenimientoProd mantenimientoProductos;
 	NuevaCompra nc = null;
 	int primeravez = 0; //0=NO. VERIFICA SI ES LA PRIMERA VEZ EN INGRESAR AL SISTEMA, PARA CREAR AUTOMATICAMENTE EL PRODUCTO EJEMPLO DE LOS COMBOS  
-	private JButton btnAnadirDistri;
+	String usuario;
 	
+	private JButton btnAnadirDistri;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoProducto frame = new NuevoProducto(null, null);
+					NuevoProducto frame = new NuevoProducto(null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -144,9 +145,10 @@ public class NuevoProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto(MantenimientoProd mantenimientoProductos, NuevaCompra nc) {
+	public NuevoProducto(MantenimientoProd mantenimientoProductos, NuevaCompra nc, String usuario) {
 		this.mantenimientoProductos = mantenimientoProductos;
 		this.nc = nc;
+		this.usuario = usuario;
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -1101,14 +1103,9 @@ public class NuevoProducto extends JFrame {
 	public void cargarBuscador() {
 		
 		acProd = new TextAutoCompleter(txtNombreProducto);
-		acDesc = new TextAutoCompleter(txtDescripcion);
-		acMarc = new TextAutoCompleter(txtMarca);
 		acLab = new TextAutoCompleter(txtLaboratorio);
-		
 
 		acProd.setMode(0);
-		acDesc.setMode(0);
-		acMarc.setMode(0);
 		acLab.setMode(0);
 		
 		
@@ -1501,7 +1498,8 @@ public class NuevoProducto extends JFrame {
 							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, primeravez);
 					
 					if (rs == 0) {
-						//consulta.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, nomUsuario, fechaActual);
+						consulta.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, usuario, fechaActual);
+						
 						
 						if (nc != null) {
 							String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + id + ")"; 

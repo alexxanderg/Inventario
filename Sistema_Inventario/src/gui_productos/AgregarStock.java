@@ -45,6 +45,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	float cantActual;
 	float precioCoOld;
 	float precioVeOld;
+	Date fv;
 	
 	
 	private JTextField txtAgregarStock;
@@ -54,19 +55,19 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JTextField txtPrecioCompra;
 	private JTextField txtPrecioVenta;
 	private JDateChooser fecha_ingreso;
-	private JCheckBox chckbxPC;
-	private JCheckBox chckbxPV;
 	
 	MantenimientoProd mp = null;
 	consultas model = new consultas();
 	ResultSet rs;
+	private JDateChooser fecha_vencimiento;
+	private JLabel lblFechaDeVencimiento;
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			AgregarStock dialog = new AgregarStock(0, 0, 0, 0, null, null);
+			AgregarStock dialog = new AgregarStock(0, 0, 0, 0, null, null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -74,13 +75,14 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		}
 	}
 
-	public AgregarStock(int idProducto, float cantActual, float precioCoOld, float precioVeOld, String usuario, MantenimientoProd mp) {
+	public AgregarStock(int idProducto, float cantActual, float precioCoOld, float precioVeOld, Date fv, String usuario, MantenimientoProd mp) {
 		
 		this.idProducto = idProducto;
 		this.cantActual = cantActual;
 		this.usuario = usuario;
 		this.precioCoOld = precioCoOld;
 		this.precioVeOld = precioVeOld;
+		this.fv = fv;
 		this.mp = mp;
 		
 		addWindowListener(this);
@@ -99,7 +101,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		txtStockActual = new JTextField();
 		txtStockActual.setEditable(false);
 		txtStockActual.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtStockActual.setForeground(SystemColor.windowBorder);
+		txtStockActual.setForeground(new Color(220, 20, 60));
 		txtStockActual.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtStockActual.setColumns(10);
 		txtStockActual.setBackground(SystemColor.controlHighlight);
@@ -122,7 +124,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 			}
 		});
 		txtCantidadAdicinal.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtCantidadAdicinal.setForeground(SystemColor.windowBorder);
+		txtCantidadAdicinal.setForeground(new Color(220, 20, 60));
 		txtCantidadAdicinal.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		txtCantidadAdicinal.setColumns(10);
 		txtCantidadAdicinal.setBackground(SystemColor.controlHighlight);
@@ -165,7 +167,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioVenta.setForeground(Color.BLACK);
 		this.lblPrecioVenta.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
-		this.lblPrecioVenta.setBounds(40, 255, 271, 38);
+		this.lblPrecioVenta.setBounds(40, 211, 271, 38);
 		getContentPane().add(this.lblPrecioVenta);
 		
 		this.lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
@@ -181,7 +183,6 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.txtPrecioCompra.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.txtPrecioCompra.setForeground(SystemColor.windowBorder);
 		this.txtPrecioCompra.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		this.txtPrecioCompra.setEditable(false);
 		this.txtPrecioCompra.setColumns(10);
 		this.txtPrecioCompra.setBackground(SystemColor.controlHighlight);
 		this.txtPrecioCompra.setBounds(321, 175, 166, 25);
@@ -192,41 +193,26 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.txtPrecioVenta.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.txtPrecioVenta.setForeground(SystemColor.windowBorder);
 		this.txtPrecioVenta.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		this.txtPrecioVenta.setEditable(false);
 		this.txtPrecioVenta.setColumns(10);
 		this.txtPrecioVenta.setBackground(SystemColor.controlHighlight);
-		this.txtPrecioVenta.setBounds(321, 267, 166, 25);
+		this.txtPrecioVenta.setBounds(321, 223, 166, 25);
 		getContentPane().add(this.txtPrecioVenta);
 		
 		this.fecha_ingreso = new JDateChooser();
-		this.fecha_ingreso.setBounds(321, 366, 166, 20);
+		this.fecha_ingreso.setBounds(321, 361, 166, 25);
 		getContentPane().add(this.fecha_ingreso);
 		
-		this.chckbxPC = new JCheckBox("<html><left>Marque la casilla si desea modificar el precio de compra.</left></html");
-		this.chckbxPC.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedChckbxPC(arg0);
-			}
-		});
-		this.chckbxPC.setVerticalAlignment(SwingConstants.TOP);
-		this.chckbxPC.setFont(new Font("Tahoma", Font.BOLD, 11));
-		this.chckbxPC.setForeground(Color.RED);
-		this.chckbxPC.setBounds(40, 198, 271, 61);
-		getContentPane().add(this.chckbxPC);
+		fecha_vencimiento = new JDateChooser();
+		fecha_vencimiento.setBounds(321, 273, 166, 25);
+		getContentPane().add(fecha_vencimiento);
 		
-		this.chckbxPV = new JCheckBox("<html><left>Marque la casilla si desea modificar el precio de venta.</left></html");
-		this.chckbxPV.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedChckbxPV(e);
-			}
-		});
-		this.chckbxPV.setVerticalAlignment(SwingConstants.TOP);
-		this.chckbxPV.setFont(new Font("Tahoma", Font.BOLD, 11));
-		this.chckbxPV.setForeground(Color.RED);
-		this.chckbxPV.setBounds(40, 300, 271, 55);
-		getContentPane().add(this.chckbxPV);
+		lblFechaDeVencimiento = new JLabel("Fecha de Vencimiento:");
+		lblFechaDeVencimiento.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblFechaDeVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFechaDeVencimiento.setForeground(Color.BLACK);
+		lblFechaDeVencimiento.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
+		lblFechaDeVencimiento.setBounds(40, 260, 271, 38);
+		getContentPane().add(lblFechaDeVencimiento);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidadAdicinal, btnGuardar}));
 		cargar();
 	}
@@ -261,6 +247,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		txtStockActual.setText(""+cantActual);
 		txtPrecioCompra.setText(""+precioCoOld);
 		txtPrecioVenta.setText(""+precioVeOld);
+		fecha_vencimiento.setDate(fv);
 		
 		java.util.Date date = new Date();
 		date.getTime();
@@ -279,6 +266,14 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				float precioCoNew = Float.parseFloat(txtPrecioCompra.getText());
 				float precioVeNew = Float.parseFloat(txtPrecioVenta.getText());
 				
+				java.sql.Date fechaVencimiento = null;
+				try { 
+					Date datevencimiento = fecha_vencimiento.getDate();
+					long d = datevencimiento.getTime();
+					fechaVencimiento = new java.sql.Date(d);
+				} catch (Exception ex) {
+				}	
+				
 				//Cambio de utils a sql.Date para envio
 				Date  date = fecha_ingreso.getDate();
 				long d = date.getTime();
@@ -287,8 +282,8 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 				//Consultas
 				model.iniciar();
 				model.ingresarStock(idProducto, total);
-				model.registrarFechaIngreso(idProducto, ca, precioCoOld, precioVeOld,precioCoNew, precioVeNew, date2, usuario);
-				model.modificarPC_PV(idProducto, precioCoNew, precioVeNew);
+				model.registrarFechaIngreso(idProducto, ca, precioCoOld, precioVeOld, precioCoNew, precioVeNew, date2, usuario);
+				model.modificarPC_PV(idProducto, precioCoNew, fechaVencimiento, precioVeNew);
 				
 				//mp.setEnabled(true);
 				mp.cargar();
@@ -321,19 +316,4 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 			arg0.consume();
 		}
 	}
-	protected void mouseClickedChckbxPC(MouseEvent arg0) {
-		if (chckbxPC.isSelected()) {
-			txtPrecioCompra.setEditable(true);
-		}else {
-			txtPrecioCompra.setEditable(false);
-		}
-	}
-	protected void mouseClickedChckbxPV(MouseEvent e) {
-		if (chckbxPV.isSelected()) {
-			txtPrecioVenta.setEditable(true);
-		}else {
-			txtPrecioVenta.setEditable(false);
-		}
-	}
-	
 }

@@ -492,6 +492,7 @@ public class Ventas extends JInternalFrame {
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProd, cbClientes, btnNewCliente, txtInfoAdicional, cbPago1, txtPago1, cbPago2, txtPago2, btnVender, dchFechaVenta, txtHora, txtMin}));
 		
 		mnlistaDeProductos = new JMenu("|Ver lista completa de productos| ");
+		mnlistaDeProductos.setVisible(false);
 		this.mnlistaDeProductos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

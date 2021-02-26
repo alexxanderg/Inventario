@@ -106,6 +106,7 @@ public class VentanaPrincipal extends JFrame {
     int altoImgBtn = 45;
     private JLabel lblLogoBxB;
     private JButton btnNotificaciones;
+    private JButton btnKardex;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -165,7 +166,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(colorDeselec);
-		btnInventario.setBounds(0, 280, 230, 50);
+		btnInventario.setBounds(0, 280, 177, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -325,6 +326,18 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setForeground(new Color(250, 128, 114));
 		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		btnKardex = new JButton("K");
+		btnKardex.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnKardex(e);
+			}
+		});
+		btnKardex.setForeground(Color.DARK_GRAY);
+		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnKardex.setBackground(new Color(30, 144, 255));
+		btnKardex.setBounds(179, 280, 51, 50);
+		panel.add(btnKardex);
 
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(230, 50, 1134, 657);
@@ -443,6 +456,7 @@ public class VentanaPrincipal extends JFrame {
 			btnClientes.setEnabled(false);
 			btnConfiguraciones.setEnabled(false);
 			btnInventario.setEnabled(false);
+			btnKardex.setEnabled(false);
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
 			btnVentas.setEnabled(true);
@@ -456,6 +470,7 @@ public class VentanaPrincipal extends JFrame {
 	private void pintarBotones(){
 		btnConfiguraciones.setBackground(colorDeselec);
 		btnInventario.setBackground(colorDeselec);
+		btnKardex.setBackground(colorDeselec);
 		btnReportes.setBackground(colorDeselec);
 		btnUsuario.setBackground(colorDeselec);
 		btnConfiguraciones.setBackground(colorDeselec);
@@ -523,7 +538,6 @@ public class VentanaPrincipal extends JFrame {
 	}
 	protected void actionPerformedBtnCompras(ActionEvent e) {
 		try {
-			JOptionPane.showMessageDialog(null, "Apartado en actualización, se están implementando mejoras.");
 			cerrarVentanas();
 			vCompras = new MantenimientoCompras(this);
 			desktopPane.add(vCompras);
@@ -536,37 +550,31 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 	protected void actionPerformedBtnInventario(ActionEvent arg0) {
-		
-		String[] options = {"Ver lista de productos", "Ver/Realizar Kardex"};
-		int seleccion = JOptionPane.showOptionDialog(null, "Por favor, seleccione una opción", "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
-		
-		if(seleccion == 0){
-			try {
-				cerrarVentanas();
-				vProductos = new MantenimientoProd(this);
-				desktopPane.add(vProductos);
-				vProductos.show();
-				vProductos.setMaximum(true);
-				pintarBotones();
-				btnInventario.setBackground(colorSelec);
-			} catch (PropertyVetoException e) {
-				JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
-			}	
-		}
-		if(seleccion == 1){
-			try {
-				cerrarVentanas();
-				vKardex = new Kardex(this);
-				desktopPane.add(vKardex);
-				vKardex.show();
-				vKardex.setMaximum(true);
-				pintarBotones();
-				btnInventario.setBackground(colorSelec);
-			} catch (PropertyVetoException e) {
-				JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
-			}	
-		}
-		
+		try {
+			cerrarVentanas();
+			vProductos = new MantenimientoProd(this);
+			desktopPane.add(vProductos);
+			vProductos.show();
+			vProductos.setMaximum(true);
+			pintarBotones();
+			btnInventario.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+		}				
+	}
+	
+	protected void actionPerformedBtnKardex(ActionEvent arg0) {
+		try {
+			cerrarVentanas();
+			vKardex = new Kardex(this);
+			desktopPane.add(vKardex);
+			vKardex.show();
+			vKardex.setMaximum(true);
+			pintarBotones();
+			btnKardex.setBackground(colorSelec);
+		} catch (PropertyVetoException e) {
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+		}	
 	}
 	
 	protected void actionPerformedBtnDistribuidores(ActionEvent arg0) {

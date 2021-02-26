@@ -68,7 +68,7 @@ public class MantenimientoProd extends JInternalFrame {
 	private JTable tbProductos;
 	private JCheckBox chckbxFiltrar;
 	
-	NuevoProducto np = new NuevoProducto(this, null);
+	NuevoProducto np = new NuevoProducto(this, null, null);
 	JTable tb;
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -306,11 +306,11 @@ public class MantenimientoProd extends JInternalFrame {
 		}
 		list.add("UNI MED");
 		list.add("CATEGORIA");
-		list.add("ALMACÉN");
-		list.add("DISTRIBUIDOR");
+		//list.add("ALMACÉN");
+		//list.add("DISTRIBUIDOR");
 		list.add("STOCK");
 		list.add("PREC CO");
-		list.add("% GAN");
+		//list.add("% GAN");
 		list.add("PREC VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
@@ -357,18 +357,18 @@ public class MantenimientoProd extends JInternalFrame {
 					}
 			        listProds.add(rs.getString("unimedida"));
 			        listProds.add(rs.getString("categoria"));
-			        listProds.add(rs.getString("almacen"));
+			        //listProds.add(rs.getString("almacen"));
 			        
-			        int iddistrib = rs.getInt("iddistrib");
+			        /*int iddistrib = rs.getInt("iddistrib");
 			        try {
 			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
 			        	 rs2.next();
 					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}
+					} catch (Exception e) {}*/
 			        
 			        listProds.add(rs.getString("cantidad"));
 			        listProds.add(rs.getString("precioCo"));
-			        listProds.add(rs.getString("ptjganancia"));
+			        //listProds.add(rs.getString("ptjganancia"));
 			        listProds.add(rs.getString("precioVe"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -452,7 +452,7 @@ public class MantenimientoProd extends JInternalFrame {
 				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				np.setVisible(true); 
 			} else {
-				np = new NuevoProducto(this, null);
+				np = new NuevoProducto(this, null, usuario);
 				np.setLocationRelativeTo(null);
 				np.setVisible(true);
 			}
@@ -525,6 +525,7 @@ public class MantenimientoProd extends JInternalFrame {
 				float cantActual = -1;
 				float precioCo = -1;
 				float precioVe = -1;
+				Date fv = null;
 				
 				try {
 					codproducto = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
@@ -562,6 +563,8 @@ public class MantenimientoProd extends JInternalFrame {
 						cantActual = rs.getFloat("cantidad");
 						precioCo = rs.getFloat("precioCo");
 						precioVe = rs.getFloat("precioVe");
+
+						fv = rs.getDate("fechaVenc");
 					} catch (Exception e3) {
 					} finally {
 						try {
@@ -585,12 +588,12 @@ public class MantenimientoProd extends JInternalFrame {
 					try {
 						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						model.iniciar();
-						AgregarStock as = new AgregarStock(idProd, cantActual, precioCo, precioVe, usuario, this);
+						AgregarStock as = new AgregarStock(idProd, cantActual, precioCo, precioVe, fv, usuario, this);
 						as.setVisible(true);
 						model.reset();
 						
 					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
-						AgregarStock as = new AgregarStock(codproducto, cantActual, precioCo, precioVe, usuario, this);
+						AgregarStock as = new AgregarStock(codproducto, cantActual, precioCo, precioVe, fv, usuario, this);
 						as.setVisible(true);				
 					}
 				}
@@ -740,9 +743,10 @@ public class MantenimientoProd extends JInternalFrame {
 				float cantActual = rs.getFloat("cantidad");
 				float precioCo = rs.getFloat("precioCo");
 				float precioVe = rs.getFloat("precioVe");
+				Date fv = rs.getDate("fechaVenc");
 				
 				
-				AgregarStock as = new AgregarStock(idProducto, cantActual, precioCo, precioVe, usuario, this);
+				AgregarStock as = new AgregarStock(idProducto, cantActual, precioCo, precioVe, fv, usuario, this);
 				as.setVisible(true);
 				
 				/*float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));

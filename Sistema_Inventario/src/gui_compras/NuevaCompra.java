@@ -56,8 +56,6 @@ public class NuevaCompra extends JFrame {
 	private JLabel lblColor;
 	private JLabel lblFechaVencimiento;
 	private JDateChooser dchFeVencimiento;
-	private JLabel lblPrecioDeVenta;
-	private JTextField txtTotal;
 	private JButton btnRegistrarCompra;
 	private JButton btnCancelar;
 	private JTextField txtCrearProducto;
@@ -77,10 +75,6 @@ public class NuevaCompra extends JFrame {
 	private JTextField txtNota;
 	private JLabel lblMtodoDePago;
 	private JComboBox cbMetPago;
-	private JLabel lblPagado;
-	private JTextField txtPagado;
-	private JLabel lblSaldo;
-	private JTextField txtSaldo;
 	public JComboBox <Distribuidores> cbDistribuidor;
 	
 
@@ -92,7 +86,7 @@ public class NuevaCompra extends JFrame {
 	int idUsuario = 0;
 	MantenimientoCompras mantCompras = null;
 	private JButton btnNuevoProducto;
-	NuevoProducto np = new NuevoProducto(null, this);
+	NuevoProducto np = new NuevoProducto(null, this, null);
 	private JButton btnQuitar;
 	private JButton btnAyuda;
 	
@@ -225,42 +219,6 @@ public class NuevaCompra extends JFrame {
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
 		dchFeVencimiento.setBounds(759, 178, 282, 25);
 		contentPane.add(dchFeVencimiento);
-		
-		lblPrecioDeVenta = new JLabel("TOTAL:");
-		lblPrecioDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecioDeVenta.setForeground(new Color(30, 144, 255));
-		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
-		lblPrecioDeVenta.setBounds(12, 542, 135, 32);
-		contentPane.add(lblPrecioDeVenta);
-		
-		txtTotal = new JTextField();
-		txtTotal.setEditable(false);
-		txtTotal.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusGainedTxtPrecioVenta(e);
-			}
-		});
-		txtTotal.setText("0");
-		txtTotal.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		txtTotal.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				keyReleasedTxtPrecioVenta(e);
-			}
-			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtPrecioVenta(e);
-			}
-		});
-		txtTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTotal.setForeground(new Color(30, 144, 255));
-		txtTotal.setFont(new Font("Arial", Font.BOLD, 25));
-		txtTotal.setColumns(10);
-		txtTotal.setBackground(new Color(245, 245, 245));
-		txtTotal.setBounds(12, 575, 135, 34);
-		contentPane.add(txtTotal);
 		
 		btnRegistrarCompra = new JButton("REGISTRAR");
 		btnRegistrarCompra.addActionListener(new ActionListener() {
@@ -447,57 +405,6 @@ public class NuevaCompra extends JFrame {
 		cbMetPago.setBounds(759, 212, 282, 25);
 		contentPane.add(cbMetPago);
 		
-		lblPagado = new JLabel("PAGADO:");
-		lblPagado.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPagado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPagado.setForeground(new Color(60, 179, 113));
-		lblPagado.setFont(new Font("Candara", Font.BOLD, 25));
-		lblPagado.setBounds(212, 542, 135, 32);
-		contentPane.add(lblPagado);
-		
-		txtPagado = new JTextField();
-		txtPagado.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				focusGainedTxtPagado(arg0);
-			}
-		});
-		txtPagado.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				keyReleasedTxtPagado(arg0);
-			}
-		});
-		txtPagado.setText("0");
-		txtPagado.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPagado.setForeground(new Color(60, 179, 113));
-		txtPagado.setFont(new Font("Arial", Font.PLAIN, 25));
-		txtPagado.setColumns(10);
-		txtPagado.setBorder(new LineBorder(new Color(60, 179, 113), 2, true));
-		txtPagado.setBackground(new Color(245, 245, 245));
-		txtPagado.setBounds(212, 575, 135, 34);
-		contentPane.add(txtPagado);
-		
-		lblSaldo = new JLabel("SALDO:");
-		lblSaldo.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblSaldo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSaldo.setForeground(new Color(220, 20, 60));
-		lblSaldo.setFont(new Font("Candara", Font.BOLD, 25));
-		lblSaldo.setBounds(370, 544, 135, 32);
-		contentPane.add(lblSaldo);
-		
-		txtSaldo = new JTextField();
-		txtSaldo.setEditable(false);
-		txtSaldo.setText("0");
-		txtSaldo.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSaldo.setForeground(new Color(220, 20, 60));
-		txtSaldo.setFont(new Font("Arial", Font.PLAIN, 25));
-		txtSaldo.setColumns(10);
-		txtSaldo.setBorder(new LineBorder(new Color(220, 20, 60), 2, true));
-		txtSaldo.setBackground(new Color(245, 245, 245));
-		txtSaldo.setBounds(370, 575, 135, 34);
-		contentPane.add(txtSaldo);
-		
 		btnNuevoProducto = new JButton("+");
 		btnNuevoProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -534,7 +441,7 @@ public class NuevaCompra extends JFrame {
 		btnAyuda.setBackground(new Color(255, 215, 0));
 		btnAyuda.setBounds(827, 61, 214, 32);
 		contentPane.add(btnAyuda);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
+		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
 		cargarBuscador();
@@ -628,19 +535,6 @@ public class NuevaCompra extends JFrame {
 				cbDistribuidor.setSelectedIndex(i);
 		}
 	}
-	
-	protected void keyReleasedTxtPrecioVenta(KeyEvent e) {
-		
-	}
-	protected void keyTypedTxtPrecioVenta(KeyEvent e) {
-		char c = e.getKeyChar();
-		if ((c < '0' || c > '9') && (c != (char) KeyEvent.VK_DELETE) && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_ENTER) && (c != '.')) 
-			e.consume();		
-		if (txtTotal.getText().length() == 8)
-			e.consume();
-		if (c == '.' && txtTotal.getText().contains("."))
-			e.consume();
-	}
 	protected void keyTypedTxtNombreProducto(KeyEvent e) {
 		char c = e.getKeyChar();
 		if (txtSerie.getText().length() == 200 || c=='(' || c==')')
@@ -675,13 +569,9 @@ public class NuevaCompra extends JFrame {
 					
 					String nota = "";			nota = txtNota.getText();
 					String metPago = "";		cbMetPago.getSelectedItem().toString();
-					double total = 0; 			total = Double.parseDouble(txtTotal.getText());
-						total = redondearDecimales(total, 2);
-					double pagado = 0; 			pagado = Double.parseDouble(txtPagado.getText());
-						pagado = redondearDecimales(pagado, 2);
-					double saldo = 0; 			saldo = Double.parseDouble(txtSaldo.getText());
-						saldo = redondearDecimales(saldo, 2);
-					
+					double total = 0;
+					double pagado = 0;
+					double saldo = 0;					
 					try {
 						int añoe = dchFeEmision.getCalendar().get(Calendar.YEAR);
 						int mese = dchFeEmision.getCalendar().get(Calendar.MARCH) + 1;
@@ -768,11 +658,6 @@ public class NuevaCompra extends JFrame {
             txt.setSelectionEnd(txt.getText().length());
         }
 	}
-	protected void focusGainedTxtPrecioVenta(FocusEvent e) {
-		seleccionarTexto(e);
-		if(txtTotal.getText().equals("0"))
-			txtTotal.setText("");
-	}
 	protected void focusGainedTxtNombreProducto(FocusEvent e) {
 		seleccionarTexto(e);
 	}
@@ -835,7 +720,6 @@ public class NuevaCompra extends JFrame {
 			total = total + precioSubTotProd;
 		}
 		total = redondearDecimales(total, 2);
-		txtTotal.setText(""+total);
 	}
 
 	protected void keyReleasedTxtBuscarProducto(KeyEvent e) {
@@ -855,7 +739,7 @@ public class NuevaCompra extends JFrame {
 				np.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
 				np.setVisible(true); 
 			} else {
-				np = new NuevoProducto(null, this);
+				np = new NuevoProducto(null, this, null);
 				np.setLocationRelativeTo(null);
 				np.setVisible(true);
 			}
@@ -867,22 +751,9 @@ public class NuevaCompra extends JFrame {
 	public void cargarProducto (String prod){
 		txtBuscarProducto.setText(prod);
 	}
-	protected void keyReleasedTxtPagado(KeyEvent arg0) {
-		try {
-			double total = Double.parseDouble( txtTotal.getText() );
-			double pagado = Double.parseDouble( txtPagado.getText() );
-			double saldo = total - pagado;
-			txtSaldo.setText(saldo+"");
-		} catch (Exception e) {
-			txtSaldo.setText("");
-		}
-	}
 	
 	protected void actionPerformedBtnQuitar(ActionEvent arg0) {
 		dtm.removeRow(tbCompras.getSelectedRow());
-	}
-	protected void focusGainedTxtPagado(FocusEvent e) {
-		seleccionarTexto(e);
 	}
 	
 	protected void actionPerformedBtnAyuda(ActionEvent e) {

@@ -64,7 +64,7 @@ public class notificaciones extends JInternalFrame {
 	public notificaciones(VentanaPrincipal vp) {
 		this.vp = vp;
 
-		getContentPane().setBackground(new Color(220, 20, 60));
+		getContentPane().setBackground(new Color(205, 92, 92));
 		setTitle("NOTIFICACIONES");
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
@@ -83,7 +83,7 @@ public class notificaciones extends JInternalFrame {
 		tbXVencer.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbXVencer);
 		
-		lblproductosPorVencer = new JLabel("<html>15 PRODUCTOS M\u00C1S PR\u00D3XIMOS A VENCER</html>");
+		lblproductosPorVencer = new JLabel("<html>PRODUCTOS VENCIDOS O POR VENCER</html>");
 		lblproductosPorVencer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblproductosPorVencer.setForeground(new Color(255, 255, 255));
 		lblproductosPorVencer.setFont(new Font("Candara", Font.BOLD, 25));
@@ -152,7 +152,7 @@ public class notificaciones extends JInternalFrame {
 		}
 
         List<String> list = new ArrayList<String>();
-        list.add("C BARRA");
+        //list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
@@ -164,14 +164,14 @@ public class notificaciones extends JInternalFrame {
 			if(parts[x].equals("lote"))
 				list.add("LOTE");
 			if(parts[x].equals("laboratorio"))
-				list.add("LAB");
+				list.add("LABORATORIO");
 			if(parts[x].equals("fvencimiento"))
 				list.add("FECHA VENC.");
 		}
 		list.add("UNI MED");
-		list.add("CATEGORIA");
-		list.add("ALMACÉN");
-		list.add("DISTRIBUIDOR");
+		//list.add("CATEGORIA");
+		//list.add("ALMACÉN");
+		//list.add("DISTRIBUIDOR");
 		list.add("STOCK");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
@@ -187,7 +187,7 @@ public class notificaciones extends JInternalFrame {
 			while (rs.next()){
 				if(rs.getInt("estado") == 1){
 					List<String> listProds = new ArrayList<String>();
-			        listProds.add(rs.getString("codbarra"));
+			        //listProds.add(rs.getString("codbarra"));
 			        listProds.add(rs.getString("producto"));
 			        listProds.add(rs.getString("detalles"));
 			        for (int x=0; x<parts.length; x++){
@@ -212,15 +212,15 @@ public class notificaciones extends JInternalFrame {
 						}
 					}
 			        listProds.add(rs.getString("unimedida"));
-			        listProds.add(rs.getString("categoria"));
-			        listProds.add(rs.getString("almacen"));
+			        //listProds.add(rs.getString("categoria"));
+			        //listProds.add(rs.getString("almacen"));
 			        
-			        int iddistrib = rs.getInt("iddistrib");
+			        /*int iddistrib = rs.getInt("iddistrib");
 			        try {
 			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
 			        	 rs2.next();
 					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}
+					} catch (Exception e) {}*/
 			        
 			        listProds.add(rs.getString("cantidad"));
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -274,7 +274,7 @@ public class notificaciones extends JInternalFrame {
 		}
 
         List<String> list = new ArrayList<String>();
-        list.add("C BARRA");
+        //list.add("C BARRA");
         list.add("NOMBRE");
         list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
@@ -283,19 +283,19 @@ public class notificaciones extends JInternalFrame {
 				list.add("MARCA");
 			if(parts[x].equals("color"))
 				list.add("COLOR");
-			if(parts[x].equals("lote"))
-				list.add("LOTE");
+			//if(parts[x].equals("lote"))
+			//	list.add("LOTE");
 			if(parts[x].equals("laboratorio"))
-				list.add("LAB");
-			if(parts[x].equals("fvencimiento"))
-				list.add("FECHA VENC.");
+				list.add("LABORATORIO");
+			//if(parts[x].equals("fvencimiento"))
+			//	list.add("FECHA VENC.");
 		}
 		list.add("UNI MED");
-		list.add("CATEGORIA");
-		list.add("ALMACÉN");
-		list.add("DISTRIBUIDOR");
-		list.add("STOCK");
-		list.add("STOCK MIN");
+		//list.add("CATEGORIA");
+		//list.add("ALMACÉN");
+		//list.add("DISTRIBUIDOR");
+		list.add("STOCK ACTUAL");
+		list.add("STOCK MINIMO");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
@@ -312,7 +312,7 @@ public class notificaciones extends JInternalFrame {
 				Float cant = rs.getFloat("cantidad");
 				if(rs.getInt("estado") == 1 && cant <= cantmin){
 					List<String> listProds = new ArrayList<String>();
-			        listProds.add(rs.getString("codbarra"));
+			        //listProds.add(rs.getString("codbarra"));
 			        listProds.add(rs.getString("producto"));
 			        listProds.add(rs.getString("detalles"));
 			        for (int x=0; x<parts.length; x++){
@@ -320,11 +320,11 @@ public class notificaciones extends JInternalFrame {
 							listProds.add(rs.getString("marca"));
 						if(parts[x].equals("color"))
 							listProds.add(rs.getString("color"));
-						if(parts[x].equals("lote"))
-							listProds.add(rs.getString("lote"));
+						//if(parts[x].equals("lote"))
+						//	listProds.add(rs.getString("lote"));
 						if(parts[x].equals("laboratorio"))
 							listProds.add(rs.getString("laboratorio"));
-						if(parts[x].equals("fvencimiento")){
+						/*if(parts[x].equals("fvencimiento")){
 							try {
 								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
 								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -334,18 +334,18 @@ public class notificaciones extends JInternalFrame {
 							} catch (Exception e) {
 								listProds.add("");
 							}
-						}
+						}*/
 					}
 			        listProds.add(rs.getString("unimedida"));
-			        listProds.add(rs.getString("categoria"));
-			        listProds.add(rs.getString("almacen"));
+			        //listProds.add(rs.getString("categoria"));
+			        //listProds.add(rs.getString("almacen"));
 			        
-			        int iddistrib = rs.getInt("iddistrib");
+			        /*int iddistrib = rs.getInt("iddistrib");
 			        try {
 			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
 			        	 rs2.next();
 					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}
+					} catch (Exception e) {}*/
 			        
 			        listProds.add(rs.getString("cantidad"));
 			        listProds.add(rs.getString("cantmin"));
@@ -380,9 +380,9 @@ public class notificaciones extends JInternalFrame {
 
 	public void ajustarAnchoColumnasPV() {
 		TableColumnModel tcm = tbXVencer.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(25)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(25)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
 		
 		for(int i=0; i<tbXVencer.getColumnCount(); i++)
 			if(tbXVencer.getColumnName(i).equals("FECHA VENC."))
@@ -395,13 +395,13 @@ public class notificaciones extends JInternalFrame {
 	
 	public void ajustarAnchoColumnasPA() {
 		TableColumnModel tcm = tbPorAgotar.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(25)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(25)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
 		
 		for(int i=0; i<tbPorAgotar.getColumnCount(); i++)
-			if(tbPorAgotar.getColumnName(i).equals("FECHA VENC."))
-				tcm.getColumn(i).setPreferredWidth(anchoColumna(10)); // FECHA DE VENCIMIENTO
+			if(tbPorAgotar.getColumnName(i).equals("UNI MED"))
+				tcm.getColumn(i).setPreferredWidth(anchoColumna(10));
 		
 		/*DefaultTableCellRenderer tcr2 = new DefaultTableCellRenderer();
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);

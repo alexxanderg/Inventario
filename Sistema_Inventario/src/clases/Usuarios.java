@@ -28,15 +28,17 @@ public class Usuarios {
 		rs = consulta.cargarUsuarios();
 		try {
 			while(rs.next())
-				cbUsuarios.addItem(
-						new Usuarios(
-								rs.getInt("idusuario"),
-								rs.getString("usuario"),
-								rs.getString("pass"),
-								rs.getString("nombre"),
-								rs.getInt("tipo")
-								)
-				);
+				if(!rs.getString("usuario").equals("bxb")) {
+					cbUsuarios.addItem(
+							new Usuarios(
+									rs.getInt("idusuario"),
+									rs.getString("usuario"),
+									rs.getString("pass"),
+									rs.getString("nombre"),
+									rs.getInt("tipo")
+									)
+					);
+				}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}	finally {

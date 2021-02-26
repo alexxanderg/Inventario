@@ -72,7 +72,6 @@ public class Kardex extends JInternalFrame {
 	String usuario;
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
-	private JButton btnGuardar;
 	private JButton btnMas1;
 	private JButton btnMenos1;
 	private JLabel lblNewLabel;
@@ -80,6 +79,7 @@ public class Kardex extends JInternalFrame {
 	private JLabel lblDejarNotaAdicional;
 	private JMenu mncargarltimoRegistro;
 	private JMenu mnfusionar;
+	private JLabel lblKardex;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -106,7 +106,7 @@ public class Kardex extends JInternalFrame {
 		lblCdigo.setVerticalAlignment(SwingConstants.TOP);
 		lblCdigo.setForeground(Color.DARK_GRAY);
 		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 30));
-		this.lblCdigo.setBounds(10, 89, 113, 34);
+		this.lblCdigo.setBounds(10, 179, 113, 34);
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtCodigo = new JTextField();
@@ -121,13 +121,13 @@ public class Kardex extends JInternalFrame {
 		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
 		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(123, 89, 428, 34);
+		this.txtCodigo.setBounds(123, 179, 428, 34);
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 134, 1083, 475);
+		this.scrollPane.setBounds(10, 224, 1083, 385);
 		getContentPane().add(this.scrollPane);
 		
 		tbProductos = new JTable();
@@ -149,7 +149,7 @@ public class Kardex extends JInternalFrame {
 		});
 		chckbxFiltrar.setBackground(Color.WHITE);
 		chckbxFiltrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		chckbxFiltrar.setBounds(342, 98, 197, 20);
+		chckbxFiltrar.setBounds(342, 188, 197, 20);
 		getContentPane().add(chckbxFiltrar);
 		
 		txtCodigo2 = new JTextField();
@@ -166,20 +166,8 @@ public class Kardex extends JInternalFrame {
 		txtCodigo2.setColumns(10);
 		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(123, 89, 428, 34);
+		txtCodigo2.setBounds(123, 179, 428, 34);
 		getContentPane().add(txtCodigo2);
-		
-		btnGuardar = new JButton("Guardar conteo");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnGuardar(arg0);
-			}
-		});
-		btnGuardar.setForeground(Color.WHITE);
-		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnGuardar.setBackground(new Color(30, 144, 255));
-		btnGuardar.setBounds(861, 90, 232, 33);
-		getContentPane().add(btnGuardar);
 		
 		btnMas1 = new JButton("+1");
 		btnMas1.addActionListener(new ActionListener() {
@@ -190,7 +178,7 @@ public class Kardex extends JInternalFrame {
 		btnMas1.setForeground(Color.WHITE);
 		btnMas1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnMas1.setBackground(new Color(50, 205, 50));
-		btnMas1.setBounds(1015, 46, 78, 33);
+		btnMas1.setBounds(1015, 179, 78, 33);
 		getContentPane().add(btnMas1);
 		
 		btnMenos1 = new JButton("-1");
@@ -202,13 +190,13 @@ public class Kardex extends JInternalFrame {
 		btnMenos1.setForeground(Color.WHITE);
 		btnMenos1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnMenos1.setBackground(new Color(220, 20, 60));
-		btnMenos1.setBounds(861, 46, 78, 33);
+		btnMenos1.setBounds(913, 180, 78, 33);
 		getContentPane().add(btnMenos1);
 		
-		lblNewLabel = new JLabel("<html><center>En esta ventana puede hacer una verificaci\u00F3n de su inventario, ir comparando su stock que indica el sistema con el que va revisando de manera fisica(columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
+		lblNewLabel = new JLabel("<html><center>En esta ventana puede hacer una verificaci\u00F3n de su inventario. Podr\u00E1 comparar su Stock que indica el sistema con el que va revisando de manera fisica (columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
 		lblNewLabel.setForeground(new Color(105, 105, 105));
-		lblNewLabel.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		lblNewLabel.setBounds(10, 0, 1083, 47);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel.setBounds(573, 74, 520, 78);
 		getContentPane().add(lblNewLabel);
 		
 		txtNota = new JTextField();
@@ -217,14 +205,20 @@ public class Kardex extends JInternalFrame {
 		txtNota.setColumns(10);
 		txtNota.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtNota.setBackground(new Color(245, 245, 245));
-		txtNota.setBounds(257, 45, 568, 34);
+		txtNota.setBounds(10, 118, 541, 34);
 		getContentPane().add(txtNota);
 		
-		lblDejarNotaAdicional = new JLabel("Dejar nota adicional:");
+		lblDejarNotaAdicional = new JLabel("ANOTACI\u00D3N:");
 		lblDejarNotaAdicional.setForeground(Color.DARK_GRAY);
 		lblDejarNotaAdicional.setFont(new Font("Candara", Font.BOLD, 25));
-		lblDejarNotaAdicional.setBounds(10, 45, 249, 34);
+		lblDejarNotaAdicional.setBounds(10, 77, 249, 34);
 		getContentPane().add(lblDejarNotaAdicional);
+		
+		lblKardex = new JLabel("KARDEX");
+		lblKardex.setForeground(Color.BLACK);
+		lblKardex.setFont(new Font("Candara", Font.BOLD, 30));
+		lblKardex.setBounds(500, 11, 113, 52);
+		getContentPane().add(lblKardex);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -235,26 +229,25 @@ public class Kardex extends JInternalFrame {
 		setJMenuBar(menuBar);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, chckbxFiltrar, txtCodigo2}));
 		
-		mnEmpezarCero = new JMenu("|Reiniciar conteo| ");
+		mnEmpezarCero = new JMenu("|Reiniciar conteo a cero| ");
 		mnEmpezarCero.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnEmpezarCero(arg0);
 			}
 		});
-		mnEmpezarCero.setForeground(new Color(30, 144, 255));
-		mnEmpezarCero.setBackground(SystemColor.control);
-		mnEmpezarCero.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnEmpezarCero);
 		
-		JMenu mnaadirStock = new JMenu("|Historial de cambios| ");
-		mnaadirStock.setVisible(false);
+		JMenu mnaadirStock = new JMenu("|Guardar conteo actual| ");
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedMnaadirStock(e);
 			}
 		});
+		mnaadirStock.setForeground(new Color(50, 205, 50));
+		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnaadirStock.setBackground(SystemColor.menu);
+		menuBar.add(mnaadirStock);
 		
 		mncargarltimoRegistro = new JMenu("|Cargar \u00FAltimo conteo| ");
 		mncargarltimoRegistro.addMouseListener(new MouseAdapter() {
@@ -263,26 +256,26 @@ public class Kardex extends JInternalFrame {
 				mouseClickedMncargarltimoRegistro(arg0);
 			}
 		});
-		mncargarltimoRegistro.setForeground(new Color(50, 205, 50));
+		mncargarltimoRegistro.setForeground(new Color(255, 215, 0));
 		mncargarltimoRegistro.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mncargarltimoRegistro.setBackground(SystemColor.menu);
 		menuBar.add(mncargarltimoRegistro);
+		mnEmpezarCero.setForeground(new Color(240, 128, 128));
+		mnEmpezarCero.setBackground(SystemColor.control);
+		mnEmpezarCero.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnEmpezarCero);
 		
-		mnfusionar = new JMenu("|Fusionar registros| ");
+		mnfusionar = new JMenu("|FUSIONAR| ");
 		mnfusionar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnfusionar(arg0);
 			}
 		});
-		mnfusionar.setForeground(new Color(240, 128, 128));
+		mnfusionar.setForeground(new Color(30, 144, 255));
 		mnfusionar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnfusionar.setBackground(SystemColor.menu);
 		menuBar.add(mnfusionar);
-		mnaadirStock.setForeground(new Color(218, 165, 32));
-		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnaadirStock.setBackground(SystemColor.menu);
-		menuBar.add(mnaadirStock);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -292,7 +285,7 @@ public class Kardex extends JInternalFrame {
 	
 	public void cargar() {
 		tb = this.tbProductos;
-		tb.setRowHeight(30);
+		tb.setRowHeight(40);
 		tb.setModel(dtm);
 		
 		// CARGAR ATRIBUTOS EN TABLA
@@ -332,20 +325,20 @@ public class Kardex extends JInternalFrame {
 				list.add("MARCA");
 			if(parts[x].equals("color"))
 				list.add("COLOR");
-			if(parts[x].equals("lote"))
-				list.add("LOTE");
+			//if(parts[x].equals("lote"))
+			//	list.add("LOTE");
 			if(parts[x].equals("laboratorio"))
 				list.add("LAB");
-			if(parts[x].equals("fvencimiento"))
-				list.add("FECHA VENC.");
+			//if(parts[x].equals("fvencimiento"))
+			//	list.add("FECHA VENC.");
 		}
 		list.add("UNI MED");
 		list.add("CATEGORIA");
-		list.add("ALMACÉN");
-		list.add("DISTRIBUIDOR");
-		list.add("PREC CO");
-		list.add("% GAN");
-		list.add("PREC VE");
+		//list.add("ALMACÉN");
+		//list.add("DISTRIBUIDOR");
+		//list.add("PREC CO");
+		//list.add("% GAN");
+		//list.add("PREC VE");
 		list.add("STOCK");
 		list.add("CONTEO");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -375,11 +368,11 @@ public class Kardex extends JInternalFrame {
 							listProds.add(rs.getString("marca"));
 						if(parts[x].equals("color"))
 							listProds.add(rs.getString("color"));
-						if(parts[x].equals("lote"))
-							listProds.add(rs.getString("lote"));
+						//if(parts[x].equals("lote"))
+						//	listProds.add(rs.getString("lote"));
 						if(parts[x].equals("laboratorio"))
 							listProds.add(rs.getString("laboratorio"));
-						if(parts[x].equals("fvencimiento")){
+						/*if(parts[x].equals("fvencimiento")){
 							try {
 								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
 								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -389,22 +382,22 @@ public class Kardex extends JInternalFrame {
 							} catch (Exception e) {
 								listProds.add("");
 							}
-						}
+						}*/
 					}
 			        listProds.add(rs.getString("unimedida"));
 			        listProds.add(rs.getString("categoria"));
-			        listProds.add(rs.getString("almacen"));
+			        //listProds.add(rs.getString("almacen"));
 			        
-			        int iddistrib = rs.getInt("iddistrib");
+			        /*int iddistrib = rs.getInt("iddistrib");
 			        try {
 			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
 			        	 rs2.next();
 					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}
+					} catch (Exception e) {}*/
 			        
-			        listProds.add(rs.getString("precioCo"));
-			        listProds.add(rs.getString("ptjganancia"));
-			        listProds.add(rs.getString("precioVe"));
+			        //listProds.add(rs.getString("precioCo"));
+			        //listProds.add(rs.getString("ptjganancia"));
+			        //listProds.add(rs.getString("precioVe"));
 			        listProds.add(rs.getString("cantidad"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -470,10 +463,10 @@ public class Kardex extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(1)); // ID
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(4)); // Código
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20)); // Producto
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(25)); // Detalle
 		
 		for(int i=0; i<tbProductos.getColumnCount(); i++)
 			if(tbProductos.getColumnName(i).equals("FECHA VENC."))
@@ -612,76 +605,7 @@ public class Kardex extends JInternalFrame {
 			i -= 1;
 		}
 	}
-	protected void mouseClickedMnaadirStock(MouseEvent e) {
-		try {
-			int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
-			try {
-				model.iniciar();
-				rs = model.buscarProductoID(idProducto);
-				rs.next();
-				String productoName = rs.getString("producto");
-				String productoDetail = rs.getString("detalles");
-				float cantidadActual = rs.getFloat("cantidad");
-				
-				float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
-				
-				float cantidadFinal = cantidadActual + stockanadir;
-				
-				//JOptionPane.showMessageDialog(null, "Ahora: " + cantidadFinal);
-				model.ingresarStock(idProducto, cantidadFinal);
-				cargar();
-				selecionarProducto(""+idProducto);
-				
-			} catch (Exception e2) {
-				
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-					if (model != null)
-						model.reset();
-	            } catch (Exception ex) {
-	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-	            }
-			}
-		} catch (Exception e2) {
-			// TODO: handle exception
-		}
-	}
-	protected void actionPerformedBtnMenos1(ActionEvent arg0) {
-		for(int i=0; i<tbProductos.getColumnCount(); i++){
-			if(tbProductos.getColumnName(i).equals("CONTEO")){
-				if(tbProductos.getValueAt(tbProductos.getSelectedRow(), i) == null || tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString().equals("0")){
-					tbProductos.setValueAt(0, tbProductos.getSelectedRow(), i);
-					JOptionPane.showMessageDialog(null, "No puede tener numeros negativos");
-				}
-				else{
-					int conteoold = Integer.parseInt(tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString());
-					tbProductos.setValueAt(conteoold-1, tbProductos.getSelectedRow(), i);
-					JOptionPane.showMessageDialog(null, "-1 \n\nConteo: " + (conteoold-1));
-				}
-
-			}
-		}		
-	}
-	protected void actionPerformedBtnMas1(ActionEvent arg0) {
-		for(int i=0; i<tbProductos.getColumnCount(); i++){
-			if(tbProductos.getColumnName(i).equals("CONTEO")){
-				if(tbProductos.getValueAt(tbProductos.getSelectedRow(), i) == null || tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString().equals("0")){
-					tbProductos.setValueAt(1, tbProductos.getSelectedRow(), i);
-					JOptionPane.showMessageDialog(null, "+1 \n\nConteo: 1");
-				}
-				else{
-					int conteoold = Integer.parseInt(tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString());
-					tbProductos.setValueAt(conteoold+1, tbProductos.getSelectedRow(), i);
-					JOptionPane.showMessageDialog(null, "+1 \n\nConteo: " + (conteoold+1));
-				}
-
-			}
-		}		
-	}
-	
-	protected void actionPerformedBtnGuardar(ActionEvent arg0) {
+	protected void mouseClickedMnaadirStock(MouseEvent arg0) {
 		String nota = "";
 		try {
 			nota = txtNota.getText();
@@ -745,6 +669,38 @@ public class Kardex extends JInternalFrame {
 		}
 		
 		
+	}
+	protected void actionPerformedBtnMenos1(ActionEvent arg0) {
+		for(int i=0; i<tbProductos.getColumnCount(); i++){
+			if(tbProductos.getColumnName(i).equals("CONTEO")){
+				if(tbProductos.getValueAt(tbProductos.getSelectedRow(), i) == null || tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString().equals("0")){
+					tbProductos.setValueAt(0, tbProductos.getSelectedRow(), i);
+					//JOptionPane.showMessageDialog(null, "No puede tener numeros negativos");
+				}
+				else{
+					int conteoold = Integer.parseInt(tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString());
+					tbProductos.setValueAt(conteoold-1, tbProductos.getSelectedRow(), i);
+					//JOptionPane.showMessageDialog(null, "-1 \n\nConteo: " + (conteoold-1));
+				}
+
+			}
+		}		
+	}
+	protected void actionPerformedBtnMas1(ActionEvent arg0) {
+		for(int i=0; i<tbProductos.getColumnCount(); i++){
+			if(tbProductos.getColumnName(i).equals("CONTEO")){
+				if(tbProductos.getValueAt(tbProductos.getSelectedRow(), i) == null || tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString().equals("0")){
+					tbProductos.setValueAt(1, tbProductos.getSelectedRow(), i);
+					//JOptionPane.showMessageDialog(null, "+1 \n\nConteo: 1");
+				}
+				else{
+					int conteoold = Integer.parseInt(tbProductos.getValueAt(tbProductos.getSelectedRow(), i).toString());
+					tbProductos.setValueAt(conteoold+1, tbProductos.getSelectedRow(), i);
+					//JOptionPane.showMessageDialog(null, "+1 \n\nConteo: " + (conteoold+1));
+				}
+
+			}
+		}		
 	}
 	protected void mouseClickedMnEmpezarCero(MouseEvent arg0) {
 		
