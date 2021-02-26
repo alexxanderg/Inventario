@@ -892,14 +892,14 @@ public class Reportes extends JInternalFrame {
 	      con = MySQLConexion.getConection();
 	      String usu = this.cbUsuarios.getSelectedItem().toString();
 
-	      int añoi = this.calRI02.getCalendar().get(1);
-	      int mesi = this.calRI02.getCalendar().get(2) + 1;
-	      int diai = this.calRI02.getCalendar().get(5);
+	      int añoi = this.calRI01.getCalendar().get(1);
+	      int mesi = this.calRI01.getCalendar().get(2) + 1;
+	      int diai = this.calRI01.getCalendar().get(5);
 	      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-	      int añof = this.calRI01.getCalendar().get(1);
-	      int mesf = this.calRI01.getCalendar().get(2) + 1;
-	      int diaf = this.calRI01.getCalendar().get(5);
+	      int añof = this.calRI02.getCalendar().get(1);
+	      int mesf = this.calRI02.getCalendar().get(2) + 1;
+	      int diaf = this.calRI02.getCalendar().get(5);
 	      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 	      Map parameters = new HashMap();
 	      parameters.put("prtFechaI", fechai);

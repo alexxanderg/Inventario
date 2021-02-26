@@ -335,7 +335,7 @@ public class NuevoProducto extends JFrame {
 		dateFechaVenc.setBounds(737, 61, 300, 25);
 		contentPane.add(dateFechaVenc);
 		
-		lblCantidadActual = new JLabel("Stock inicial:");
+		lblCantidadActual = new JLabel("Stock actual:");
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadActual.setForeground(new Color(220, 20, 60));
 		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
@@ -444,12 +444,12 @@ public class NuevoProducto extends JFrame {
 		txtPrecioVenta.setBounds(211, 493, 149, 25);
 		contentPane.add(txtPrecioVenta);
 		
-		lblNombrePromo1 = new JLabel("NOMBRE PROMO 1:");
+		lblNombrePromo1 = new JLabel("PROMOCI\u00D3N 1:");
 		lblNombrePromo1.setVisible(false);
 		lblNombrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombrePromo1.setForeground(new Color(32, 178, 170));
+		lblNombrePromo1.setForeground(new Color(50, 205, 50));
 		lblNombrePromo1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombrePromo1.setBounds(532, 167, 193, 25);
+		lblNombrePromo1.setBounds(532, 182, 193, 25);
 		contentPane.add(lblNombrePromo1);
 		
 		txtNombrePromo1 = new JTextField();
@@ -477,15 +477,15 @@ public class NuevoProducto extends JFrame {
 		txtNombrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo1.setColumns(10);
 		txtNombrePromo1.setBackground(new Color(245, 245, 245));
-		txtNombrePromo1.setBounds(737, 167, 300, 25);
+		txtNombrePromo1.setBounds(737, 182, 300, 25);
 		contentPane.add(txtNombrePromo1);
 		
-		lblCantidadPromo1 = new JLabel("CANTIDAD PROMO 1:");
+		lblCantidadPromo1 = new JLabel("CANTIDAD:");
 		lblCantidadPromo1.setVisible(false);
 		lblCantidadPromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadPromo1.setForeground(new Color(32, 178, 170));
+		lblCantidadPromo1.setForeground(new Color(50, 205, 50));
 		lblCantidadPromo1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadPromo1.setBounds(532, 203, 193, 25);
+		lblCantidadPromo1.setBounds(532, 218, 193, 25);
 		contentPane.add(lblCantidadPromo1);
 		
 		txtCantPromo1 = new JTextField();
@@ -513,15 +513,15 @@ public class NuevoProducto extends JFrame {
 		txtCantPromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo1.setColumns(10);
 		txtCantPromo1.setBackground(new Color(245, 245, 245));
-		txtCantPromo1.setBounds(737, 203, 300, 25);
+		txtCantPromo1.setBounds(737, 218, 300, 25);
 		contentPane.add(txtCantPromo1);
 		
-		lblPrePromo1 = new JLabel("PRECIO PROMO 1:");
+		lblPrePromo1 = new JLabel("PRECIO:");
 		lblPrePromo1.setVisible(false);
 		lblPrePromo1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrePromo1.setForeground(new Color(32, 178, 170));
+		lblPrePromo1.setForeground(new Color(50, 205, 50));
 		lblPrePromo1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrePromo1.setBounds(532, 239, 193, 25);
+		lblPrePromo1.setBounds(532, 254, 193, 25);
 		contentPane.add(lblPrePromo1);
 		
 		txtPrePromo1 = new JTextField();
@@ -549,15 +549,15 @@ public class NuevoProducto extends JFrame {
 		txtPrePromo1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo1.setColumns(10);
 		txtPrePromo1.setBackground(new Color(245, 245, 245));
-		txtPrePromo1.setBounds(737, 239, 300, 25);
+		txtPrePromo1.setBounds(737, 254, 300, 25);
 		contentPane.add(txtPrePromo1);
 		
-		lblNombrePromo2 = new JLabel("NOMBRE PROMO 2:");
+		lblNombrePromo2 = new JLabel("PROMOCI\u00D3N 2:");
 		lblNombrePromo2.setVisible(false);
 		lblNombrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombrePromo2.setForeground(new Color(147, 112, 219));
+		lblNombrePromo2.setForeground(new Color(220, 20, 60));
 		lblNombrePromo2.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombrePromo2.setBounds(532, 275, 193, 25);
+		lblNombrePromo2.setBounds(532, 302, 193, 25);
 		contentPane.add(lblNombrePromo2);
 		
 		txtNombrePromo2 = new JTextField();
@@ -585,15 +585,15 @@ public class NuevoProducto extends JFrame {
 		txtNombrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNombrePromo2.setColumns(10);
 		txtNombrePromo2.setBackground(new Color(245, 245, 245));
-		txtNombrePromo2.setBounds(737, 275, 300, 25);
+		txtNombrePromo2.setBounds(737, 302, 300, 25);
 		contentPane.add(txtNombrePromo2);
 		
-		lblCantidadPromo2 = new JLabel("CANTIDAD PROMO 2:");
+		lblCantidadPromo2 = new JLabel("CANTIDAD:");
 		lblCantidadPromo2.setVisible(false);
 		lblCantidadPromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadPromo2.setForeground(new Color(147, 112, 219));
+		lblCantidadPromo2.setForeground(new Color(220, 20, 60));
 		lblCantidadPromo2.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadPromo2.setBounds(532, 311, 193, 25);
+		lblCantidadPromo2.setBounds(532, 338, 193, 25);
 		contentPane.add(lblCantidadPromo2);
 		
 		txtCantPromo2 = new JTextField();
@@ -621,15 +621,15 @@ public class NuevoProducto extends JFrame {
 		txtCantPromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtCantPromo2.setColumns(10);
 		txtCantPromo2.setBackground(new Color(245, 245, 245));
-		txtCantPromo2.setBounds(737, 311, 300, 25);
+		txtCantPromo2.setBounds(737, 338, 300, 25);
 		contentPane.add(txtCantPromo2);
 		
-		lblPrePromo2 = new JLabel("PRECIO PROMO 2:");
+		lblPrePromo2 = new JLabel("PRECIO:");
 		lblPrePromo2.setVisible(false);
 		lblPrePromo2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrePromo2.setForeground(new Color(147, 112, 219));
+		lblPrePromo2.setForeground(new Color(220, 20, 60));
 		lblPrePromo2.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrePromo2.setBounds(532, 347, 193, 25);
+		lblPrePromo2.setBounds(532, 374, 193, 25);
 		contentPane.add(lblPrePromo2);
 		
 		txtPrePromo2 = new JTextField();
@@ -657,7 +657,7 @@ public class NuevoProducto extends JFrame {
 		txtPrePromo2.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrePromo2.setColumns(10);
 		txtPrePromo2.setBackground(new Color(245, 245, 245));
-		txtPrePromo2.setBounds(737, 347, 300, 25);
+		txtPrePromo2.setBounds(737, 374, 300, 25);
 		contentPane.add(txtPrePromo2);
 		
 		txtID = new JTextField();
@@ -736,10 +736,11 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(txtLaboratorio);
 		
 		lblAlmacn = new JLabel("Almac\u00E9n");
+		lblAlmacn.setVisible(false);
 		lblAlmacn.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAlmacn.setForeground(Color.DARK_GRAY);
 		lblAlmacn.setFont(new Font("Candara", Font.BOLD, 20));
-		lblAlmacn.setBounds(9, 311, 191, 25);
+		lblAlmacn.setBounds(532, 385, 191, 25);
 		contentPane.add(lblAlmacn);
 		
 		btnCrearProducto = new JButton("CREAR");
@@ -803,10 +804,11 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(label_1);
 		
 		label_2 = new JLabel("*");
+		label_2.setVisible(false);
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_2.setBounds(191, 311, 20, 25);
+		label_2.setBounds(714, 385, 20, 25);
 		contentPane.add(label_2);
 		
 		label_3 = new JLabel("*");
@@ -855,8 +857,8 @@ public class NuevoProducto extends JFrame {
 		lblDeGanancia.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDeGanancia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeGanancia.setForeground(new Color(30, 144, 255));
-		lblDeGanancia.setFont(new Font("Arial", Font.BOLD, 18));
-		lblDeGanancia.setBounds(370, 455, 139, 25);
+		lblDeGanancia.setFont(new Font("Arial", Font.BOLD, 16));
+		lblDeGanancia.setBounds(370, 457, 139, 36);
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
@@ -908,12 +910,13 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(cbCategoria);
 		
 		cbAlmacen = new JComboBox();
+		cbAlmacen.setVisible(false);
 		cbAlmacen.setForeground(Color.DARK_GRAY);
 		cbAlmacen.setEditable(true);
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbAlmacen.setBackground(new Color(245, 245, 245));
-		cbAlmacen.setBounds(209, 311, 300, 25);
+		cbAlmacen.setBounds(732, 385, 300, 25);
 		contentPane.add(cbAlmacen);
 		
 		cbUnidadMedida = new JComboBox();
@@ -949,14 +952,14 @@ public class NuevoProducto extends JFrame {
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setForeground(Color.DARK_GRAY);
 		lblDistribuidor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDistribuidor.setBounds(8, 347, 191, 25);
+		lblDistribuidor.setBounds(9, 311, 191, 25);
 		contentPane.add(lblDistribuidor);
 		
 		label_9 = new JLabel("*");
 		label_9.setHorizontalAlignment(SwingConstants.LEFT);
 		label_9.setForeground(Color.RED);
 		label_9.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_9.setBounds(190, 347, 20, 25);
+		label_9.setBounds(191, 311, 20, 25);
 		contentPane.add(label_9);
 		
 		cbDistribuidor = new JComboBox();
@@ -964,7 +967,7 @@ public class NuevoProducto extends JFrame {
 		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbDistribuidor.setBackground(new Color(245, 245, 245));
-		cbDistribuidor.setBounds(208, 347, 240, 25);
+		cbDistribuidor.setBounds(209, 311, 240, 25);
 		contentPane.add(cbDistribuidor);
 		
 		btnAnadirDistri = new JButton("+");
@@ -977,7 +980,7 @@ public class NuevoProducto extends JFrame {
 		btnAnadirDistri.setFont(new Font("Arial", Font.BOLD, 20));
 		btnAnadirDistri.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnAnadirDistri.setBackground(new Color(30, 144, 255));
-		btnAnadirDistri.setBounds(455, 347, 54, 25);
+		btnAnadirDistri.setBounds(456, 311, 54, 25);
 		contentPane.add(btnAnadirDistri);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, cbDistribuidor, btnAnadirDistri, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto, btnCancelar}));
 		
@@ -1097,19 +1100,15 @@ public class NuevoProducto extends JFrame {
 	
 	public void cargarBuscador() {
 		
-		acCB = new TextAutoCompleter(txtCodbarras);
 		acProd = new TextAutoCompleter(txtNombreProducto);
 		acDesc = new TextAutoCompleter(txtDescripcion);
 		acMarc = new TextAutoCompleter(txtMarca);
-		acCol = new TextAutoCompleter(txtColor);
 		acLab = new TextAutoCompleter(txtLaboratorio);
 		
 
-		acCB.setMode(0);
 		acProd.setMode(0);
 		acDesc.setMode(0);
 		acMarc.setMode(0);
-		acCol.setMode(0);
 		acLab.setMode(0);
 		
 		
