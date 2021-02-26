@@ -80,6 +80,8 @@ public class MantenimientoProd extends JInternalFrame {
 	private JTextField txtCodigo2;
 	private JButton btnExportar;
 	private JMenu mnduplicarProducto;
+	private JButton btnInventarioPreCo;
+	private JButton btnInventarioPreVe;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -167,7 +169,8 @@ public class MantenimientoProd extends JInternalFrame {
 		txtCodigo2.setBounds(123, 45, 428, 34);
 		getContentPane().add(txtCodigo2);
 		
-		btnExportar = new JButton("EXPORTAR INVENTARIO");
+		btnExportar = new JButton("<html><center>EXPORTAR INVENTARIO</center></html>");
+		btnExportar.setVerticalAlignment(SwingConstants.TOP);
 		btnExportar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExportar.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnExportar.addActionListener(new ActionListener() {
@@ -176,10 +179,38 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		});
 		btnExportar.setForeground(new Color(138, 43, 226));
-		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnExportar.setBackground(new Color(255, 255, 255));
-		btnExportar.setBounds(862, 20, 231, 58);
+		btnExportar.setBounds(596, 31, 145, 46);
 		getContentPane().add(btnExportar);
+		
+		btnInventarioPreCo = new JButton("<html><center>Ver valor de inventario a Precio Compra</center></html>");
+		btnInventarioPreCo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnInventarioPreCo(e);
+			}
+		});
+		btnInventarioPreCo.setVerticalAlignment(SwingConstants.TOP);
+		btnInventarioPreCo.setForeground(new Color(138, 43, 226));
+		btnInventarioPreCo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnInventarioPreCo.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
+		btnInventarioPreCo.setBackground(Color.WHITE);
+		btnInventarioPreCo.setBounds(751, 32, 166, 47);
+		getContentPane().add(btnInventarioPreCo);
+		
+		btnInventarioPreVe = new JButton("<html><center>Ver valor de inventario a Precio Venta</center></html>");
+		btnInventarioPreVe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnInventarioPreVe(e);
+			}
+		});
+		btnInventarioPreVe.setVerticalAlignment(SwingConstants.TOP);
+		btnInventarioPreVe.setForeground(new Color(138, 43, 226));
+		btnInventarioPreVe.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnInventarioPreVe.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
+		btnInventarioPreVe.setBackground(Color.WHITE);
+		btnInventarioPreVe.setBounds(927, 32, 166, 47);
+		getContentPane().add(btnInventarioPreVe);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -789,6 +820,43 @@ public class MantenimientoProd extends JInternalFrame {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error: Seleccione un producto");
 		}
+	}
+	protected void actionPerformedBtnInventarioPreCo(ActionEvent e) {
+		consultas consulta = new consultas();
+
+	    float compra = 0.0F;
+
+	    consulta.iniciar();
+	    ResultSet rs = consulta.ValorInventarioCompra();
+	    try {
+	      rs.next();
+	      compra = rs.getFloat("compra");
+	    }
+	    catch (Exception ex) {
+	      JOptionPane.showMessageDialog(null, "ERROR al cargar Compras: " + ex);
+	    }
+	    consulta.reset();
+
+	    JOptionPane.showMessageDialog(null, "El valor de su inventario actual a precio de Compra es de: S/ " + compra);
+	}
+	
+	protected void actionPerformedBtnInventarioPreVe(ActionEvent e) {
+		consultas consulta = new consultas();
+
+	    float venta = 0.0F;
+
+	    consulta.iniciar();
+	    ResultSet rs = consulta.ValorInventarioVenta();
+	    try {
+	      rs.next();
+	      venta = rs.getFloat("venta");
+	    }
+	    catch (Exception ex) {
+	      JOptionPane.showMessageDialog(null, "ERROR al cargar Ventas: " + ex);
+	    }
+	    consulta.reset();
+
+	    JOptionPane.showMessageDialog(null, "El valor de su inventario actual a precio de Venta es de: S/ " + venta);
 	}
 }
 

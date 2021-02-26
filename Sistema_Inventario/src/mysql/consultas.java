@@ -1484,4 +1484,24 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
 		}
 	}
+	
+	public ResultSet ValorInventarioVenta() {
+	    try {
+	      this.st = this.con.createStatement();
+	      this.rs = this.st.executeQuery("select sum( cantidad * precioVe) as venta FROM db_inventario.tb_productos where estado = 1");
+	    } catch (Exception e) {
+	      JOptionPane.showMessageDialog(null, "Error en consulta, al cargar inventario compras: " + e);
+	    }
+	    return this.rs;
+	  }
+	
+	 public ResultSet ValorInventarioCompra() {
+		    try {
+		      this.st = this.con.createStatement();
+		      this.rs = this.st.executeQuery("select sum( cantidad * precioCo) as compra FROM db_inventario.tb_productos where estado = 1");
+		    } catch (Exception e) {
+		      JOptionPane.showMessageDialog(null, "Error en consulta, al cargar inventario compras: " + e);
+		    }
+		    return this.rs;
+		  }
 }
