@@ -70,7 +70,6 @@ public class Reportes extends JInternalFrame {
 	private JDateChooser calendar_7;
 	private JButton btnVerRanking;
 	private JLabel lblCategora;
-	private JTextField txtMenores;
 	private JButton btnGenerarMenoresMayores;
 	private JLabel lblHistorialDeCompras;
 	private JButton btnVerComprasCliente;
@@ -284,15 +283,6 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 		
-		this.txtMenores = new JTextField();
-		txtMenores.setEnabled(false);
-		this.txtMenores.setBounds(166, 207, 145, 23);
-		this.panel_1.add(this.txtMenores);
-		this.txtMenores.setHorizontalAlignment(SwingConstants.RIGHT);
-		this.txtMenores.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.txtMenores.setColumns(10);
-		this.txtMenores.setBackground(SystemColor.controlHighlight);
-		
 		this.btnGenerarMenoresMayores = new JButton("Ver reporte");
 		btnGenerarMenoresMayores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -373,16 +363,20 @@ public class Reportes extends JInternalFrame {
 		chckbxRestriccionCantidad.setBounds(16, 181, 295, 23);
 		panel_1.add(chckbxRestriccionCantidad);
 		
-		chckbxMenorA = new JCheckBox("Stock < a:");
+		chckbxMenorA = new JCheckBox("Mostrar valor de inventario");
 		chckbxMenorA.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mouseClickedChckbxMenorA(e);
 			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				mouseEnteredChckbxMenorA(arg0);
+			}
 		});
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxMenorA.setBackground(new Color(255, 222, 173));
-		chckbxMenorA.setBounds(16, 207, 143, 23);
+		chckbxMenorA.setBounds(16, 207, 295, 23);
 		panel_1.add(chckbxMenorA);
 		
 		lblMarca = new JLabel("Marca:");
@@ -774,49 +768,87 @@ public class Reportes extends JInternalFrame {
 			String marca = cbMarca.getSelectedItem().toString();
 			float cantidad = 9999999;
 			
-			if(chckbxMenorA.isSelected())
-				cantidad = Float.parseFloat(txtMenores.getText());
-			else
-				cantidad = 9999999;
+			if(chckbxMenorA.isSelected()){
+				if ( categoria.equals("TODAS") && marca.equals("TODAS")) {
+					
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCompraTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if( categoria.equals("TODAS") && !(marca.equals("TODAS")) ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("marca", marca);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCompraMarca.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if ( !(categoria.equals("TODAS")) && marca.equals("TODAS") ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("categoria", categoria);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCompraCategoria.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if ( !(categoria.equals("TODAS")) && !(marca.equals("TODAS")) ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("categoria", categoria);
+					parameters.put("marca", marca);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCompraCategoriaMarca.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				
+				con.close();
+			}
+			else{
+				if ( categoria.equals("TODAS") && marca.equals("TODAS")) {
+					
+					Map<String, Object> parameters = new HashMap();
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCardexTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if( categoria.equals("TODAS") && !(marca.equals("TODAS")) ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("marca", marca);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCardexMarca.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if ( !(categoria.equals("TODAS")) && marca.equals("TODAS") ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("categoria", categoria);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCardexCategoria.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				else if ( !(categoria.equals("TODAS")) && !(marca.equals("TODAS")) ){
+					Map<String, Object> parameters = new HashMap();
+					
+					parameters.put("categoria", categoria);
+					parameters.put("marca", marca);
+					parameters.put("cantidad", cantidad);
+					
+					new AbstractJasperReports().createReport(con, "rCardexCategoriaMarca.jasper", parameters);
+					AbstractJasperReports.showViewer();	
+				}
+				
+				con.close();
+			}
 			
-			if ( categoria.equals("TODAS") && marca.equals("TODAS")) {
-				
-				Map<String, Object> parameters = new HashMap();
-				parameters.put("cantidad", cantidad);
-				
-				new AbstractJasperReports().createReport(con, "rCardexTodos.jasper", parameters);
-				AbstractJasperReports.showViewer();	
-			}
-			else if( categoria.equals("TODAS") && !(marca.equals("TODAS")) ){
-				Map<String, Object> parameters = new HashMap();
-				
-				parameters.put("marca", marca);
-				parameters.put("cantidad", cantidad);
-				
-				new AbstractJasperReports().createReport(con, "rCardexMarca.jasper", parameters);
-				AbstractJasperReports.showViewer();	
-			}
-			else if ( !(categoria.equals("TODAS")) && marca.equals("TODAS") ){
-				Map<String, Object> parameters = new HashMap();
-				
-				parameters.put("categoria", categoria);
-				parameters.put("cantidad", cantidad);
-				
-				new AbstractJasperReports().createReport(con, "rCardexCategoria.jasper", parameters);
-				AbstractJasperReports.showViewer();	
-			}
-			else if ( !(categoria.equals("TODAS")) && !(marca.equals("TODAS")) ){
-				Map<String, Object> parameters = new HashMap();
-				
-				parameters.put("categoria", categoria);
-				parameters.put("marca", marca);
-				parameters.put("cantidad", cantidad);
-				
-				new AbstractJasperReports().createReport(con, "rCardexCategoriaMarca.jasper", parameters);
-				AbstractJasperReports.showViewer();	
-			}
-			
-			con.close();
 			
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron productos " + ex);
@@ -889,12 +921,10 @@ public class Reportes extends JInternalFrame {
 		try {
 			if( chckbxMenorA.isSelected() ){
 				chckbxMenorA.setSelected(false);
-				txtMenores.setEnabled(false);
 				chckbxRestriccionCantidad.setSelected(true);				
 			}
 			else{
 				chckbxMenorA.setSelected(true);
-				txtMenores.setEnabled(true);
 				chckbxRestriccionCantidad.setSelected(false);	
 			}
 		} catch (Exception ez) {
@@ -905,12 +935,10 @@ public class Reportes extends JInternalFrame {
 		try {
 			if( chckbxRestriccionCantidad.isSelected() ){
 				chckbxMenorA.setSelected(true);
-				txtMenores.setEnabled(true);
 				chckbxRestriccionCantidad.setSelected(false);
 			}
 			else{
 				chckbxMenorA.setSelected(false);
-				txtMenores.setEnabled(false);
 				chckbxRestriccionCantidad.setSelected(true);
 			}
 		} catch (Exception ez) {
@@ -1014,5 +1042,7 @@ public class Reportes extends JInternalFrame {
 		}catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR " + ex);
 		}
+	}
+	protected void mouseEnteredChckbxMenorA(MouseEvent arg0) {
 	}
 }

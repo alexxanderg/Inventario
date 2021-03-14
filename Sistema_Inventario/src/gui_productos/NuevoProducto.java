@@ -1509,6 +1509,7 @@ public class NuevoProducto extends JFrame {
 						else{
 							String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 							mantenimientoProductos.cargar();
+							mantenimientoProductos.cargarBuscador();
 							mantenimientoProductos.selecionarProducto(""+id);
 							limpiar();
 						}

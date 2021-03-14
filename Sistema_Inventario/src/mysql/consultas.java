@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import clases.Usuarios;
+import gui_productos.Inventario;
 import mysql.MySQLConexion;
 
 public class consultas {
@@ -31,6 +32,7 @@ public class consultas {
 			JOptionPane.showMessageDialog(null, "Error al iniciar conexion");
 		}
 	}
+	 
 	
 	public void reset(){
 		try {

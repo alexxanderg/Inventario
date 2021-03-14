@@ -69,6 +69,7 @@ public class BuscarVentas extends JInternalFrame {
 	private JTable tbVentas;
 	private JButton btnVerVentas;
 	private JComboBox <Usuarios>cbUsuarios;
+	
 	private JLabel lblVendedor;
 	private JLabel lblDesde;
 	private JDateChooser dchDesde;
@@ -359,7 +360,7 @@ public class BuscarVentas extends JInternalFrame {
 	
 	public void cargar() {
 		
-		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO TOT", "SALDO", "TOTAL"});
+		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO TOT", "TOTAL"});
 		tbVentas.setRowHeight(30);
 		tbVentas.setModel(dtm);
 		
@@ -399,14 +400,13 @@ public class BuscarVentas extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbVentas.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(7));   // 
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(20));  // 
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(17));  // 
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(18));  // 
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(6));
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(8));   // 
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(21));  // 
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(21));  // 
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(18));  // 
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(19));  // 
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(7));
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(6));
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(6));
 		
 		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -414,7 +414,6 @@ public class BuscarVentas extends JInternalFrame {
 		tbVentas.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
-		tbVentas.getColumnModel().getColumn(7).setCellRenderer(tcr0);
 		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
 		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
@@ -434,7 +433,7 @@ public class BuscarVentas extends JInternalFrame {
 	protected void mouseClickedMnModificarProducto(MouseEvent e) {
 		try {
 			int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
-			float subTotal = Float.parseFloat( tbVentas.getValueAt(tbVentas.getSelectedRow(), 7).toString() );
+			float subTotal = Float.parseFloat( tbVentas.getValueAt(tbVentas.getSelectedRow(), 6).toString() );
 			
 			if(subTotal == 0){
 				JOptionPane.showMessageDialog(null, "No puede modificar ventas eliminadas");
@@ -621,7 +620,7 @@ public class BuscarVentas extends JInternalFrame {
 				dtm.removeRow(i);
 				i -= 1;
 			}			
-			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "TOTAL"});
 			tbVentas.setModel(dtm);
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
@@ -692,7 +691,7 @@ public class BuscarVentas extends JInternalFrame {
 		double sumDescuentos = 0;
 		
 		for (int i = 0; i < tbVentas.getRowCount(); i++) {
-			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 7).toString());
+			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 6).toString());
 			sumDescuentos = sumDescuentos + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
 		}
 		sumTotal = redondearDecimales(sumTotal, 2);

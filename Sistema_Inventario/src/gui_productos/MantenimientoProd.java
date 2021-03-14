@@ -532,6 +532,7 @@ public class MantenimientoProd extends JInternalFrame {
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			elminarProducto(codigoProducto);
+			cargarBuscador();
 		}else{
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
@@ -675,10 +676,12 @@ public class MantenimientoProd extends JInternalFrame {
 					try {
 						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						elminarProducto(""+idProd);
+						cargarBuscador();
 					} catch (Exception e2) {
 						try {
 							elminarProducto(""+codproducto);
 							model.reset();
+							cargarBuscador();
 						} catch (Exception e3) {
 							// TODO: handle exception
 						}

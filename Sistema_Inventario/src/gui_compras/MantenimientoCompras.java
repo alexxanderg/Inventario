@@ -36,7 +36,6 @@ import com.toedter.calendar.JDateChooser;
 public class MantenimientoCompras extends JInternalFrame {
 	private JMenuBar menuBar;
 	private JMenu mnCrearCompra;
-	private JMenu mnAgregarPago;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	public JTable tbCompras;
@@ -198,18 +197,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		mnCrearCompra.setBackground(SystemColor.control);
 		mnCrearCompra.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearCompra);
-		
-		mnAgregarPago = new JMenu("|Agregar pago| ");
-		mnAgregarPago.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnAgregarPago(arg0);
-			}
-		});
-		mnAgregarPago.setForeground(new Color(240, 128, 128));
-		mnAgregarPago.setBackground(SystemColor.control);
-		mnAgregarPago.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnAgregarPago);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -221,7 +208,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		tb = this.tbCompras;
 		tb.setRowHeight(30);
 		tb.setModel(dtmC);
-		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"});
+		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL"});
 		
 		JTable tbCD = this.tbDetallesCompra;
 		tbCD.setRowHeight(30);
@@ -243,14 +230,13 @@ public class MantenimientoCompras extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {// "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"
 		TableColumnModel tcmC = tbCompras.getColumnModel();
-		tcmC.getColumn(0).setPreferredWidth(anchoColumna(5));  // 
-		tcmC.getColumn(1).setPreferredWidth(anchoColumna(10));  // 
-		tcmC.getColumn(2).setPreferredWidth(anchoColumna(15));  // 
-		tcmC.getColumn(3).setPreferredWidth(anchoColumna(20));  // 
-		tcmC.getColumn(4).setPreferredWidth(anchoColumna(15));  // 
-		tcmC.getColumn(5).setPreferredWidth(anchoColumna(15));
-		tcmC.getColumn(6).setPreferredWidth(anchoColumna(10));
-		tcmC.getColumn(7).setPreferredWidth(anchoColumna(10));
+		tcmC.getColumn(0).setPreferredWidth(anchoColumna(7));  // 
+		tcmC.getColumn(1).setPreferredWidth(anchoColumna(12));  // 
+		tcmC.getColumn(2).setPreferredWidth(anchoColumna(17));  // 
+		tcmC.getColumn(3).setPreferredWidth(anchoColumna(21));  // 
+		tcmC.getColumn(4).setPreferredWidth(anchoColumna(16));  // 
+		tcmC.getColumn(5).setPreferredWidth(anchoColumna(16));
+		tcmC.getColumn(6).setPreferredWidth(anchoColumna(11));
 		
 		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -258,7 +244,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		tbCompras.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 		tbCompras.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 		tbCompras.getColumnModel().getColumn(6).setCellRenderer(tcr0);
-		tbCompras.getColumnModel().getColumn(7).setCellRenderer(tcr0);
 		
 		//"CANTIDAD", "PRODUCTO", "PRECIO UNI", "SUB TOTAL"
 		TableColumnModel tcmCD = tbDetallesCompra.getColumnModel();
@@ -389,7 +374,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		return resultado;
 	}
 	
-	protected void mouseClickedMnAgregarPago(MouseEvent arg0){
+	/*protected void mouseClickedMnAgregarPago(MouseEvent arg0){
 		try {
 			int nroCompra = Integer.parseInt(tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString());
 			double totalCompra = Double.parseDouble(tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString());
@@ -425,5 +410,5 @@ public class MantenimientoCompras extends JInternalFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
-	}
+	}*/
 }

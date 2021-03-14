@@ -505,6 +505,8 @@ public class Inventario extends JInternalFrame {
 							int idProd = rs.getInt("codproducto");
 							
 							model.reset();
+							cargarBuscador();
+							JOptionPane.showMessageDialog(null, "Inventario");
 						} catch (Exception e3) {
 							// TODO: handle exception
 						}	finally {
