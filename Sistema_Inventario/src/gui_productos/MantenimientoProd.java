@@ -66,7 +66,6 @@ public class MantenimientoProd extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	private JCheckBox chckbxFiltrar;
 	
 	NuevoProducto np = new NuevoProducto(this, null, null);
 	JTable tb;
@@ -111,20 +110,20 @@ public class MantenimientoProd extends JInternalFrame {
 		this.lblCdigo.setBounds(10, 45, 113, 34);
 		getContentPane().add(this.lblCdigo);
 		
-		this.txtCodigo = new JTextField();
-		txtCodigo.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		txtCodigo.addKeyListener(new KeyAdapter() {
+		txtCodigo2 = new JTextField();
+		txtCodigo2.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				keyTypedTxtCodigo(e);
+			public void keyReleased(KeyEvent arg0) {
+				keyReleasedTxtCodigo2(arg0);
 			}
 		});
-		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
-		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		this.txtCodigo.setColumns(10);
-		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(123, 45, 428, 34);
-		getContentPane().add(this.txtCodigo);
+		txtCodigo2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtCodigo2.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
+		txtCodigo2.setColumns(10);
+		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		txtCodigo2.setBackground(new Color(245, 245, 245));
+		txtCodigo2.setBounds(123, 45, 428, 34);
+		getContentPane().add(txtCodigo2);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
@@ -139,35 +138,6 @@ public class MantenimientoProd extends JInternalFrame {
 		tbProductos.setBackground(Color.WHITE);
 		tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbProductos);
-		
-		chckbxFiltrar = new JCheckBox("\u00BFFiltrar al escribir?");
-		chckbxFiltrar.setForeground(new Color(30, 144, 255));
-		chckbxFiltrar.setHorizontalAlignment(SwingConstants.RIGHT);
-		chckbxFiltrar.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				itemStateChangedChckbxFiltrar(arg0);
-			}
-		});
-		chckbxFiltrar.setBackground(Color.WHITE);
-		chckbxFiltrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		chckbxFiltrar.setBounds(354, 20, 197, 20);
-		getContentPane().add(chckbxFiltrar);
-		
-		txtCodigo2 = new JTextField();
-		txtCodigo2.setVisible(false);
-		txtCodigo2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				keyReleasedTxtCodigo2(arg0);
-			}
-		});
-		txtCodigo2.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCodigo2.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		txtCodigo2.setColumns(10);
-		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(123, 45, 428, 34);
-		getContentPane().add(txtCodigo2);
 		
 		btnExportar = new JButton("<html><center>EXPORTAR INVENTARIO</center></html>");
 		btnExportar.setVerticalAlignment(SwingConstants.TOP);
@@ -211,6 +181,23 @@ public class MantenimientoProd extends JInternalFrame {
 		btnInventarioPreVe.setBackground(Color.WHITE);
 		btnInventarioPreVe.setBounds(927, 32, 166, 47);
 		getContentPane().add(btnInventarioPreVe);
+		
+		this.txtCodigo = new JTextField();
+		this.txtCodigo.setVisible(false);
+		txtCodigo.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
+		txtCodigo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedTxtCodigo(e);
+			}
+		});
+		this.txtCodigo.setHorizontalAlignment(SwingConstants.LEFT);
+		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
+		this.txtCodigo.setColumns(10);
+		this.txtCodigo.setBackground(new Color(245, 245, 245));
+		this.txtCodigo.setBounds(123, 45, 428, 34);
+		getContentPane().add(this.txtCodigo);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.txtCodigo, this.txtCodigo2}));
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -219,7 +206,6 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodigo, chckbxFiltrar, txtCodigo2, btnExportar}));
 		
 		mnCrearProducto = new JMenu("|Crear nuevo producto| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
@@ -700,20 +686,10 @@ public class MantenimientoProd extends JInternalFrame {
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
 		if(txtCodigo2.getText().length()==0){
 			limpiarTabla();
+			cargarTabla("todos");
 		}
 		else
 			cargarTabla(txtCodigo2.getText());
-	}
-	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
-		if(txtCodigo.isVisible()){
-			txtCodigo.setVisible(false);
-			txtCodigo2.setVisible(true);
-		}
-		else{
-			cargarTabla("todos");
-			txtCodigo.setVisible(true);
-			txtCodigo2.setVisible(false);			
-		}
 	}
 	
 	private void limpiarTabla(){
@@ -730,31 +706,30 @@ public class MantenimientoProd extends JInternalFrame {
 			String prod = "";
 			Map parameters = new HashMap();
 			
-			if (chckbxFiltrar.isSelected()){
-				if(txtCodigo2.getText().length() == 0){
-					JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
-					new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
-				}
-				else{
-					prod = txtCodigo2.getText();
-					JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
-					parameters.put("prod", prod);
-					new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
-				}
+//			if (chckbxFiltrar.isSelected()){
+			if(txtCodigo2.getText().length() == 0){
+				JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
+				new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
 			}
 			else{
-				if(txtCodigo.getText().length() == 0){
-					JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
-					new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
-				}
-				else{
-					prod = txtCodigo.getText();
-					JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
-					parameters.put("prod", prod);
-					new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
-				}
-			} 
-			
+				prod = txtCodigo2.getText();
+				JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
+				parameters.put("prod", prod);
+				new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
+			}
+//			}
+//			else{
+//				if(txtCodigo.getText().length() == 0){
+//					JOptionPane.showMessageDialog(null, "Mostrando inventario total" + prod);
+//					new AbstractJasperReports().createReport(con, "rInventarioTodo.jasper", parameters);
+//				}
+//				else{
+//					prod = txtCodigo.getText();
+//					JOptionPane.showMessageDialog(null, "Mostrando inventario de productos con referecia de: " + prod);
+//					parameters.put("prod", prod);
+//					new AbstractJasperReports().createReport(con, "rInventarioFiltrado.jasper", parameters);					
+//				}
+//			} 
 
 			AbstractJasperReports.showViewer();
 			

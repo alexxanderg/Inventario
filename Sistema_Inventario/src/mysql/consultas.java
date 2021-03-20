@@ -169,7 +169,7 @@ public class consultas {
 	public ResultSet cargarProductoParticular(String prod) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto");
+			rs = st.executeQuery("select * from tb_productos where codproducto like '%" + prod + "%' or codbarra like '%" + prod + "%' or producto like '%" + prod + "%' or detalles like '%" + prod + "%' or marca like '%" + prod + "%' or color like '%" + prod + "%' or categoria like '%" + prod + "%' order by producto");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
