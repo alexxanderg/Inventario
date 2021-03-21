@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import gui_principal.VentanaPrincipal;
+import mysql.MySQLConexion;
 import mysql.consultas;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -16,11 +17,15 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +37,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
+
+import clases.AbstractJasperReports;
 
 public class MantenimientoCompras extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -361,7 +368,50 @@ public class MantenimientoCompras extends JInternalFrame {
 	}
 	
 	protected void actionPerformedBtnGenerarReporte(ActionEvent e) {
-		
+		String[] opciones = { "SIMPLE", "DETALLADO"};
+		int seleccion = JOptionPane.showOptionDialog(null, "REPORTE" , "Seleccione una opcion",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+		Connection con = null;
+	    try
+	    {
+	      con = MySQLConexion.getConection();
+
+	      int añoi = this.dchDesde.getCalendar().get(1);
+	      int mesi = this.dchDesde.getCalendar().get(2) + 1;
+	      int diai = this.dchDesde.getCalendar().get(5);
+	      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+	      int añof = this.dchHasta.getCalendar().get(1);
+	      int mesf = this.dchHasta.getCalendar().get(2) + 1;
+	      int diaf = this.dchHasta.getCalendar().get(5);
+	      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+
+	      DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechai);
+			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter2.parse(fechaf);
+			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+	      
+	      Map parameters = new HashMap();
+	      parameters.put("prtFechaI", timeStampDateI);
+	      parameters.put("prtFechaFi", timeStampDateF);
+
+	      if (seleccion == 0) {
+	    	  new AbstractJasperReports().createReport(con, "rCompraSimple.jasper", parameters);
+		      AbstractJasperReports.showViewer();
+	      }
+	      if (seleccion == 1) {
+	    	  new AbstractJasperReports().createReport(con, "rCompraDetallada.jasper", parameters);
+		      AbstractJasperReports.showViewer();
+	      }
+	    }
+	    catch (Exception ex)
+	    {
+	      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+	    }
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
