@@ -437,7 +437,7 @@ public class Reportes extends JInternalFrame {
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(147, 112, 219));
-		panel_2.setBounds(0, 508, 1118, 131);
+		panel_2.setBounds(0, 508, 1129, 131);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
