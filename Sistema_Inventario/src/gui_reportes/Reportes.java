@@ -110,11 +110,6 @@ public class Reportes extends JInternalFrame {
 	private JLabel lblPorProducto;
 	private JButton btnPorProducto;
 	private JTextField txtProductos;
-	private JPanel panel_3;
-	private JLabel lblImprimirTicket;
-	private JLabel lblTicketNro;
-	private JButton btnImprimirCopia;
-	private JTextField txtNroTicket;
 	private JButton btnVerReporteSimple;
 	/**
 	 * Launch the application.
@@ -442,34 +437,34 @@ public class Reportes extends JInternalFrame {
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(147, 112, 219));
-		panel_2.setBounds(0, 508, 557, 131);
+		panel_2.setBounds(0, 508, 1118, 131);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		lblReporteDeCompras = new JLabel("REPORTE DE INGRESOS");
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
-		lblReporteDeCompras.setBounds(10, 11, 535, 32);
+		lblReporteDeCompras.setBounds(291, 11, 535, 32);
 		panel_2.add(lblReporteDeCompras);
 		
 		label = new JLabel("del:");
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
-		label.setBounds(79, 50, 46, 23);
+		label.setBounds(355, 54, 46, 23);
 		panel_2.add(label);
 		
 		calRI01 = new JDateChooser();
-		calRI01.setBounds(133, 50, 125, 23);
+		calRI01.setBounds(409, 54, 125, 23);
 		panel_2.add(calRI01);
 		
 		label_3 = new JLabel("al:");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Candara", Font.BOLD, 20));
-		label_3.setBounds(302, 50, 55, 23);
+		label_3.setBounds(578, 54, 55, 23);
 		panel_2.add(label_3);
 		
 		calRI02 = new JDateChooser();
-		calRI02.setBounds(350, 50, 125, 23);
+		calRI02.setBounds(626, 54, 125, 23);
 		panel_2.add(calRI02);
 		
 		button = new JButton("Ver reporte");
@@ -481,46 +476,8 @@ public class Reportes extends JInternalFrame {
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Tahoma", Font.BOLD, 18));
 		button.setBackground(new Color(30, 144, 255));
-		button.setBounds(79, 84, 396, 32);
+		button.setBounds(355, 88, 396, 32);
 		panel_2.add(button);
-		
-		panel_3 = new JPanel();
-		panel_3.setLayout(null);
-		panel_3.setBackground(new Color(147, 112, 219));
-		panel_3.setBounds(561, 508, 557, 131);
-		getContentPane().add(panel_3);
-		
-		lblImprimirTicket = new JLabel("IMPRIMIR COPIA DE TICKET");
-		lblImprimirTicket.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImprimirTicket.setFont(new Font("Candara", Font.BOLD, 30));
-		lblImprimirTicket.setBounds(10, 11, 535, 32);
-		panel_3.add(lblImprimirTicket);
-		
-		lblTicketNro = new JLabel("Ticket Nro: ");
-		lblTicketNro.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTicketNro.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTicketNro.setBounds(160, 55, 112, 23);
-		panel_3.add(lblTicketNro);
-		
-		btnImprimirCopia = new JButton("IMPRIMIR");
-		btnImprimirCopia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedBtnImprimirCopia(e);
-			}
-		});
-		btnImprimirCopia.setForeground(Color.WHITE);
-		btnImprimirCopia.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnImprimirCopia.setBackground(new Color(30, 144, 255));
-		btnImprimirCopia.setBounds(79, 84, 396, 32);
-		panel_3.add(btnImprimirCopia);
-		
-		txtNroTicket = new JTextField();
-		txtNroTicket.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNroTicket.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtNroTicket.setColumns(10);
-		txtNroTicket.setBackground(SystemColor.controlHighlight);
-		txtNroTicket.setBounds(280, 54, 136, 23);
-		panel_3.add(txtNroTicket);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
 		
@@ -994,54 +951,6 @@ public class Reportes extends JInternalFrame {
 	      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 	    }
 		
-	}
-	
-	protected void actionPerformedBtnImprimirCopia(ActionEvent e) {
-		/*
-		try {
-			int copias = Integer.parseInt(this.txtNroTicket.getText());
-      		Connection con = null;
-            con = MySQLConexion.getConection();
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("prtNVenta", Integer.valueOf(Integer.parseInt(this.txtNroTicket.getText())));
-            
-            try {
-              JasperReport reporte = 
-                (JasperReport)JRLoader.loadObjectFromFile("D:\\\\rComprobante.jasper");
-              JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, con);
-              JasperPrintManager.printReport(jasperPrint, false);
-            } catch (JRException ex) {
-              JOptionPane.showMessageDialog(null, "ERROR al imprimir: " + ex.getMessage());
-            } 
-            
-            con.close();
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Llene los campos correctamente: " + e2);
-		}*/
-		
-		try {
-
-			int txtNroTicket = Integer.parseInt(this.txtNroTicket.getText());
-			Map<String, Object> parameters = new HashMap();
-			parameters.put("prtNVenta", txtNroTicket);
-			try {
-				Connection con = null;
-	            con = MySQLConexion.getConection();
-				JasperPrint impressao = JasperFillManager.fillReport(
-						getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
-						parameters, con);
-
-				// AbstractJasperReports.showViewer();
-				JasperPrintManager.printReport(impressao, true);
-			} catch (JRException ex) {
-				 JOptionPane.showMessageDialog(null,
-				 "ERROR " + ex.getMessage());
-				 System.err.println("Error iReport: " +
-				 ex.getMessage());
-			}
-		}catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "ERROR " + ex);
-		}
 	}
 	protected void mouseEnteredChckbxMenorA(MouseEvent arg0) {
 	}
