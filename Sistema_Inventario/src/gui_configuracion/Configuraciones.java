@@ -13,12 +13,21 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -55,6 +64,8 @@ public class Configuraciones extends JInternalFrame {
 	private JButton button_9;
 	private JTextField textField_9;
 	private JButton btnActualizarBD;
+	private JLabel lblCopiaDeSeguridad;
+	private JButton btnSeleccionCarpeta;
 
 
 	
@@ -256,6 +267,24 @@ public class Configuraciones extends JInternalFrame {
 		btnActualizarBD.setBackground(new Color(0, 206, 209));
 		btnActualizarBD.setBounds(611, 593, 400, 25);
 		getContentPane().add(btnActualizarBD);
+		
+		this.lblCopiaDeSeguridad = new JLabel("Copia de Seguridad");
+		this.lblCopiaDeSeguridad.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblCopiaDeSeguridad.setFont(new Font("Candara", Font.BOLD, 20));
+		this.lblCopiaDeSeguridad.setBounds(713, 18, 220, 26);
+		getContentPane().add(this.lblCopiaDeSeguridad);
+		
+		this.btnSeleccionCarpeta = new JButton("Guardar");
+		this.btnSeleccionCarpeta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnSeleccionCarpeta(arg0);
+			}
+		});
+		this.btnSeleccionCarpeta.setForeground(Color.WHITE);
+		this.btnSeleccionCarpeta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		this.btnSeleccionCarpeta.setBackground(new Color(30, 144, 255));
+		this.btnSeleccionCarpeta.setBounds(707, 55, 248, 48);
+		getContentPane().add(this.btnSeleccionCarpeta);
 
 		
 		menuBar = new JMenuBar();
@@ -406,5 +435,30 @@ public class Configuraciones extends JInternalFrame {
 	
 	protected void actionPerformedBtnActualizarBD(ActionEvent arg0) {
 		
+	}
+	
+	JFileChooser seleccionar = new JFileChooser();
+	File archivo;
+	protected void actionPerformedBtnSeleccionCarpeta(ActionEvent arg0) {
+		if(seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION){
+			JOptionPane.showMessageDialog(null, seleccionar.getSelectedFile());
+			archivo = seleccionar.getSelectedFile();
+			try {
+				Process p;
+				p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
+				InputStream is = p.getInputStream();
+				FileOutputStream fos = new FileOutputStream(archivo+".sql");
+				byte[] buffer = new byte[1000];
+				int leido = is.read(buffer);
+				while(leido>0){
+					fos.write(buffer, 0, leido);
+					leido = is.read(buffer);
+				}
+				JOptionPane.showMessageDialog(null, "Guardado");
+				fos.close();
+			} catch (IOException e1) {
+				//JOptionPane.showMessageDialog(null, e1);
+			}									
+		}
 	}
 }

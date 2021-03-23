@@ -725,7 +725,7 @@ public class VentanaPrincipal extends JFrame {
      }
  }
 	protected void windowClosingThis(WindowEvent arg0) {
-		try {
+		/*try {
 			DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
 			Date today = Calendar.getInstance().getTime();       
 			String reportDate = df.format(today);
@@ -746,6 +746,6 @@ public class VentanaPrincipal extends JFrame {
 			fos.close();
 		} catch (IOException e1) {
 			//JOptionPane.showMessageDialog(null, e1);
-		}
+		}*/
 	}
 }
