@@ -535,7 +535,7 @@ public class Ventas extends JInternalFrame {
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Stock", "Pre Indiv C/Desc", "Desc tot aplicado", "SubTotal", "IDPROD", "PC" });
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc"});
 	
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
 		headerRenderer.setBackground(new Color(239, 198, 46));
@@ -599,12 +599,14 @@ public class Ventas extends JInternalFrame {
 						AgregarProductoATabla();
 						float cantidad = rsVD.getFloat("cantidad");
 							tbCarrito.setValueAt(cantidad, cont, 0);
-						float preVeSDInd = rsVD.getFloat("preVeSDInd");
-							tbCarrito.setValueAt(preVeSDInd, cont, 3);
+						float preVeOri = rsVD.getFloat("precioVe");
+							tbCarrito.setValueAt(preVeOri, cont, 2);	
 						float descTotal = rsVD.getFloat("descTotal");
-							tbCarrito.setValueAt(descTotal, cont, 4);	
+							tbCarrito.setValueAt(descTotal, cont, 3);	
 						float subTotal = rsVD.getFloat("subTotal");
-							tbCarrito.setValueAt(subTotal, cont, 5);
+							tbCarrito.setValueAt(subTotal, cont, 4);
+						float preVeSDInd = rsVD.getFloat("preVeSDInd");
+							tbCarrito.setValueAt(preVeSDInd, cont, 8);
 						
 						String newUniMed = rsVD.getString("uMedidaUsada");
 						String prodCompletoLista = dtm.getValueAt(cont, 1).toString();					
@@ -623,15 +625,15 @@ public class Ventas extends JInternalFrame {
 								double cantPromo2 = rsBP.getDouble("cantp2");
 								if(newUniMed.equals(nomPromo1)){
 									double stock = 0;
-									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 7).toString());
 									stock = stock + cantPromo1;
-									tbCarrito.setValueAt(stock, cont, 2);
+									tbCarrito.setValueAt(stock, cont, 7);
 								}
 								else if (newUniMed.equals(nomPromo2)){
 									double stock = 0;
-									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+									stock = Float.parseFloat( tbCarrito.getValueAt(cont, 7).toString());
 									stock = stock + cantPromo2;
-									tbCarrito.setValueAt(stock, cont, 2);
+									tbCarrito.setValueAt(stock, cont, 7);
 								}								
 							} catch (Exception e) {
 								JOptionPane.showMessageDialog(null, "Error al verificar unidades de medida " + e);
@@ -639,9 +641,9 @@ public class Ventas extends JInternalFrame {
 						}
 						else{
 							float stock = 0;
-							stock = Float.parseFloat( tbCarrito.getValueAt(cont, 2).toString());
+							stock = Float.parseFloat( tbCarrito.getValueAt(cont, 7).toString());
 							stock = stock + cantidad;
-							tbCarrito.setValueAt(stock, cont, 2);
+							tbCarrito.setValueAt(stock, cont, 7);
 						}
 
 						cont++;
@@ -738,19 +740,23 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	private int anchoColumna(int porcentaje) {
-		return porcentaje * scrollPane.getWidth() / 100;
+		if(porcentaje <= 0)
+			return 0;
+		else
+			return porcentaje * scrollPane.getWidth() / 100;
 	}
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbCarrito.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(8)); // Cantidad
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Cantidad
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(6)); // Stock
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(12)); // Precio
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(12)); // Descuento
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); // SubTotal
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(1)); //ID
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(1));//Preco
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Precio ORIGINAL
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(16)); // Descuento
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(14)); // SubTotal
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(-1)); //ID
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(-1));//Preco
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(-1)); // Stock
+		tcm.getColumn(8).setPreferredWidth(anchoColumna(-1)); // Precio
 		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -759,7 +765,7 @@ public class Ventas extends JInternalFrame {
 		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);	
-		tbCarrito.getColumnModel().getColumn(5).setCellRenderer(tcr);	
+//		tbCarrito.getColumnModel().getColumn(5).setCellRenderer(tcr);	
 	}
 	
 	public void agregarCliente(int iddistrib){
@@ -803,7 +809,7 @@ public class Ventas extends JInternalFrame {
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
-						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 6).toString())) {// AQUÍ ENTRA SI
+						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 5).toString())) {// AQUÍ ENTRA SI
 																										// YA EXISTE EL
 																										// PRODUCTO EN
 																										// LA TABLA
@@ -826,8 +832,8 @@ public class Ventas extends JInternalFrame {
 					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 					while (rs.next()) {
 						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
-								rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
-								rs.getFloat("precioCo") });
+								rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
+								rs.getFloat("precioCo"), rs.getFloat("cantidad")});
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
@@ -849,7 +855,7 @@ public class Ventas extends JInternalFrame {
 					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA 
 						rs.beforeFirst();
 						while (rs.next()) {
-							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 6).toString())) {
+							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 5).toString())) {
 								cantidad = (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) + 1);
 								tbCarrito.setValueAt(cantidad, i, 0);
 								flag = 1;
@@ -866,8 +872,8 @@ public class Ventas extends JInternalFrame {
 						rs.beforeFirst();
 						while (rs.next()) {
 							dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
-									rs.getFloat("cantidad"), rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
-									rs.getFloat("precioCo") });
+									rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
+									rs.getFloat("precioCo"), rs.getFloat("cantidad")});
 							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
@@ -936,14 +942,14 @@ public class Ventas extends JInternalFrame {
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 			try {
 				double cant = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-				double preCDesc = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-				double desc = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+				double preCDesc = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
+				double desc = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
 				
 				subt = (cant * preCDesc);
 				subt = redondearDecimales(subt, 1);
 				
-				tbCarrito.setValueAt(subt, i, 5);
+				tbCarrito.setValueAt(subt, i, 4);
 			} catch (Exception e) {
 				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
 			}
@@ -968,16 +974,16 @@ public class Ventas extends JInternalFrame {
 		else {
 			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 				try {
-					totalCompra = totalCompra + Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+					totalCompra = totalCompra + Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
 					totalCompra = redondearDecimales(totalCompra, 2);
 					
-					descuento = descuento + Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+					descuento = descuento + Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
 					descuento = redondearDecimales(descuento, 2);
 					
-					totalVentaOriginal = totalVentaOriginal + (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) * Float.parseFloat(tbCarrito.getValueAt(i, 3).toString()));
+					totalVentaOriginal = totalVentaOriginal + (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) * Float.parseFloat(tbCarrito.getValueAt(i, 8).toString()));
 					totalVentaOriginal = redondearDecimales(totalVentaOriginal, 1);
 					
-					totalVentaFinal = totalVentaFinal + Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+					totalVentaFinal = totalVentaFinal + Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
 					totalVentaFinal = redondearDecimales(totalVentaFinal, 1);
 
 					ganancia = totalVentaFinal - totalCompra;
@@ -1014,7 +1020,7 @@ public class Ventas extends JInternalFrame {
 	
 	public int verificarStock() { 
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
+			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
 			float cantV = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 			float stock = 0;
 			try {
@@ -1022,7 +1028,7 @@ public class Ventas extends JInternalFrame {
 				rs = consulta.buscarProductoID(idProd);
 				rs.next();
 				stock = rs.getFloat("cantidad");
-				stock = Float.parseFloat(tbCarrito.getValueAt(i, 2).toString());
+				stock = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
 				String producto = rs.getString("producto");
 				String detalle = rs.getString("detalles");
 				String marca = rs.getString("marca");
@@ -1200,16 +1206,16 @@ public class Ventas extends JInternalFrame {
 							
 							
 							double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 6).toString());
-							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
+							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
 								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-							double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+							double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
 								descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
 							double descuentoIndivProdVenta = descuentoTotProdVenta/cantProdVenta;
 								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
-							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
 								subTotVenta = redondearDecimales(subTotVenta, 2);
-							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 7).toString());
+							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
 								precioCoVenta = redondearDecimales(precioCoVenta, 2);
 							double gananciaProdVenta = subTotVenta - precioCoVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
@@ -1367,13 +1373,13 @@ public class Ventas extends JInternalFrame {
 	protected void mouseClickedTbCarrito(MouseEvent arg0) {
 		// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 		
-		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
+		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
 		double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
 		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
-		double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
-		double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
-		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
-		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
+		double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 8).toString());
+		double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
+		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
+		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
 		
 		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
 
@@ -1392,10 +1398,10 @@ public class Ventas extends JInternalFrame {
 		
 		tbCarrito.setValueAt(redondearDecimales(cant, 2), 		tbCarrito.getSelectedRow(), 0);
 		tbCarrito.setValueAt(newNomProd,						tbCarrito.getSelectedRow(), 1);
-		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 3);
-		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 7);
-		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 5);
-		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 4);
+		tbCarrito.setValueAt(redondearDecimales(preCDesc, 2), 	tbCarrito.getSelectedRow(), 8);
+		tbCarrito.setValueAt(redondearDecimales(preo, 2), 		tbCarrito.getSelectedRow(), 6);
+		tbCarrito.setValueAt(redondearDecimales(pret, 2), 		tbCarrito.getSelectedRow(), 4);
+		tbCarrito.setValueAt(redondearDecimales(desc, 2), 		tbCarrito.getSelectedRow(), 3);
 		sumarSubTotales();
 		sumarTotalGenerales();
 	}
@@ -1467,7 +1473,7 @@ public class Ventas extends JInternalFrame {
 	
 	public int AnadirProductosdeListaCompleta(String codigo, String cantidad) {
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-			if (codigo.equals(tbCarrito.getValueAt(i, 6).toString())) {
+			if (codigo.equals(tbCarrito.getValueAt(i, 5).toString())) {
 				float temp = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 				float temp2 = Float.parseFloat(cantidad);
 				

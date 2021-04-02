@@ -490,7 +490,7 @@ public class ModificarPrecioVenta extends JFrame implements ActionListener, Wind
       double preCompra = 0.0;
       preCompra = Double.parseDouble(this.txtPreCompra.getText());
       if (newCant <= 0.0 || newPreCDesc < 0.0 || newDescIndiv < 0.0 || newSTot < 0.0 || newDescTot < 0.0) {
-        JOptionPane.showMessageDialog(null, "No estpermitido valores negativos");
+        JOptionPane.showMessageDialog(null, "No está permitido valores negativos");
       } else {
         if (this.cbPrecio.getSelectedIndex() == 0)
           this.ventas.actualizartabla(newCant, newPreCDesc, preCompra * newCant, newSTot, newDescTot, newUnimed, this.uniMedVenta); 
