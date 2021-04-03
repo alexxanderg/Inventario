@@ -97,7 +97,6 @@ public class Reportes extends JInternalFrame {
 	private JButton btnX;
 	private JLabel lblProductos;
 	private JLabel lblFiltros;
-	private JCheckBox chckbxRestriccionCantidad;
 	private JCheckBox chckbxMenorA;
 	private JLabel lblMarca;
 	private JPanel panel_2;
@@ -344,19 +343,6 @@ public class Reportes extends JInternalFrame {
 		lblFiltros.setFont(new Font("Candara", Font.BOLD, 25));
 		lblFiltros.setBounds(16, 86, 143, 23);
 		panel_1.add(lblFiltros);
-		
-		chckbxRestriccionCantidad = new JCheckBox(" Sin restricci\u00F3n de cantidad");
-		chckbxRestriccionCantidad.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedChckbxRestriccionCantidad(e);
-			}
-		});
-		chckbxRestriccionCantidad.setSelected(true);
-		chckbxRestriccionCantidad.setFont(new Font("Candara", Font.BOLD, 20));
-		chckbxRestriccionCantidad.setBackground(new Color(255, 222, 173));
-		chckbxRestriccionCantidad.setBounds(16, 181, 295, 23);
-		panel_1.add(chckbxRestriccionCantidad);
 		
 		chckbxMenorA = new JCheckBox("Mostrar valor de inventario");
 		chckbxMenorA.addMouseListener(new MouseAdapter() {
@@ -873,34 +859,8 @@ public class Reportes extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
 	}
-	
-	protected void mouseClickedChckbxRestriccionCantidad(MouseEvent e) {
-		try {
-			if( chckbxMenorA.isSelected() ){
-				chckbxMenorA.setSelected(false);
-				chckbxRestriccionCantidad.setSelected(true);				
-			}
-			else{
-				chckbxMenorA.setSelected(true);
-				chckbxRestriccionCantidad.setSelected(false);	
-			}
-		} catch (Exception ez) {
-			JOptionPane.showMessageDialog(null, "Error en combos1: " + ez);
-		}
-	}
 	protected void mouseClickedChckbxMenorA(MouseEvent e) {
-		try {
-			if( chckbxRestriccionCantidad.isSelected() ){
-				chckbxMenorA.setSelected(true);
-				chckbxRestriccionCantidad.setSelected(false);
-			}
-			else{
-				chckbxMenorA.setSelected(false);
-				chckbxRestriccionCantidad.setSelected(true);
-			}
-		} catch (Exception ez) {
-			JOptionPane.showMessageDialog(null, "Error en combos2: " + ez);
-		}
+		
 	}
 	
 	protected void actionPerformedBtnPorProducto(ActionEvent arg0) {
