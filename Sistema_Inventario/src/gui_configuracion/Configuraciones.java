@@ -63,7 +63,6 @@ public class Configuraciones extends JInternalFrame {
 	private JLabel lblCantidadDeImpresiones;
 	private JButton button_9;
 	private JTextField textField_9;
-	private JButton btnActualizarBD;
 	private JLabel lblCopiaDeSeguridad;
 	private JButton btnSeleccionCarpeta;
 
@@ -232,7 +231,7 @@ public class Configuraciones extends JInternalFrame {
 		lblCantidadDeImpresiones.setEnabled(false);
 		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadDeImpresiones.setBounds(36, 504, 400, 26);
+		lblCantidadDeImpresiones.setBounds(648, 137, 400, 26);
 		getContentPane().add(lblCantidadDeImpresiones);
 		
 		button_9 = new JButton("Guardar");
@@ -240,7 +239,7 @@ public class Configuraciones extends JInternalFrame {
 		button_9.setForeground(Color.WHITE);
 		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
 		button_9.setBackground(new Color(30, 144, 255));
-		button_9.setBounds(256, 538, 180, 27);
+		button_9.setBounds(868, 171, 180, 27);
 		getContentPane().add(button_9);
 		
 		textField_9 = new JTextField();
@@ -252,26 +251,13 @@ public class Configuraciones extends JInternalFrame {
 		textField_9.setColumns(10);
 		textField_9.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		textField_9.setBackground(new Color(245, 245, 245));
-		textField_9.setBounds(36, 542, 191, 23);
+		textField_9.setBounds(648, 175, 191, 23);
 		getContentPane().add(textField_9);
 		
-		btnActualizarBD = new JButton("Verificar y actualizar base de datos");
-		btnActualizarBD.setEnabled(false);
-		btnActualizarBD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				actionPerformedBtnActualizarBD(arg0);
-			}
-		});
-		btnActualizarBD.setForeground(Color.WHITE);
-		btnActualizarBD.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnActualizarBD.setBackground(new Color(0, 206, 209));
-		btnActualizarBD.setBounds(611, 593, 400, 25);
-		getContentPane().add(btnActualizarBD);
-		
-		this.lblCopiaDeSeguridad = new JLabel("Copia de Seguridad");
-		this.lblCopiaDeSeguridad.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblCopiaDeSeguridad = new JLabel("Crear copia de seguridad");
+		this.lblCopiaDeSeguridad.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblCopiaDeSeguridad.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblCopiaDeSeguridad.setBounds(713, 18, 220, 26);
+		this.lblCopiaDeSeguridad.setBounds(648, 11, 226, 26);
 		getContentPane().add(this.lblCopiaDeSeguridad);
 		
 		this.btnSeleccionCarpeta = new JButton("Guardar");
@@ -283,8 +269,14 @@ public class Configuraciones extends JInternalFrame {
 		this.btnSeleccionCarpeta.setForeground(Color.WHITE);
 		this.btnSeleccionCarpeta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		this.btnSeleccionCarpeta.setBackground(new Color(30, 144, 255));
-		this.btnSeleccionCarpeta.setBounds(707, 55, 248, 48);
+		this.btnSeleccionCarpeta.setBounds(648, 63, 400, 33);
 		getContentPane().add(this.btnSeleccionCarpeta);
+		
+		JLabel lblNewLabel_1 = new JLabel("Le permite guardar toda la informaci\u00F3n de su sistema hasta la fecha.");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setBounds(648, 33, 428, 27);
+		getContentPane().add(lblNewLabel_1);
 
 		
 		menuBar = new JMenuBar();
@@ -433,15 +425,11 @@ public class Configuraciones extends JInternalFrame {
 		}
 	}
 	
-	protected void actionPerformedBtnActualizarBD(ActionEvent arg0) {
-		
-	}
-	
 	JFileChooser seleccionar = new JFileChooser();
 	File archivo;
 	protected void actionPerformedBtnSeleccionCarpeta(ActionEvent arg0) {
 		if(seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION){
-			JOptionPane.showMessageDialog(null, seleccionar.getSelectedFile());
+			JOptionPane.showMessageDialog(null, seleccionar.getSelectedFile().getName());
 			archivo = seleccionar.getSelectedFile();
 			try {
 				Process p;
@@ -454,10 +442,10 @@ public class Configuraciones extends JInternalFrame {
 					fos.write(buffer, 0, leido);
 					leido = is.read(buffer);
 				}
-				JOptionPane.showMessageDialog(null, "Guardado");
+				JOptionPane.showMessageDialog(null, "Bakup creado correctamente");
 				fos.close();
 			} catch (IOException e1) {
-				//JOptionPane.showMessageDialog(null, e1);
+				JOptionPane.showMessageDialog(null, e1);
 			}									
 		}
 	}

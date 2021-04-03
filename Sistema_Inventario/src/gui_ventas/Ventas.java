@@ -535,7 +535,7 @@ public class Ventas extends JInternalFrame {
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc"});
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio Unitario", "Descuento", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc"});
 	
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
 		headerRenderer.setBackground(new Color(239, 198, 46));
@@ -750,9 +750,9 @@ public class Ventas extends JInternalFrame {
 		TableColumnModel tcm = tbCarrito.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Cantidad
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Precio ORIGINAL
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(16)); // Precio ORIGINAL
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(16)); // Descuento
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(14)); // SubTotal
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(16)); // SubTotal
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(-1)); //ID
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(-1));//Preco
 		tcm.getColumn(7).setPreferredWidth(anchoColumna(-1)); // Stock

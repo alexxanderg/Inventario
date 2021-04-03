@@ -92,7 +92,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		setTitle("Login");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 605, 415);
+		setBounds(100, 100, 614, 415);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.menu);
@@ -240,7 +240,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 	protected void windowClosingThis(WindowEvent arg0) {
-		try {
+		/*try {
 			DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
 			Date today = Calendar.getInstance().getTime();       
 			String reportDate = df.format(today);
@@ -261,7 +261,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			fos.close();
 		} catch (IOException e1) {
 			//JOptionPane.showMessageDialog(null, e1);
-		}
+		}*/
 	}
 	protected void mouseClickedLblNewLabel_3(MouseEvent arg0) {
 		/*JOptionPane.showMessageDialog(null, "Aqui agregar ventana de información");*/

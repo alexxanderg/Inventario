@@ -2,7 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/AutoCompleter.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1-1.0.0.jar"/>
@@ -23,6 +27,6 @@
 	<classpathentry kind="lib" path="lib/poi-3.17.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/Util.jar"/>
-	<classpathentry kind="lib" path="B:/Desarrollo/Eclipse/GIT/Inventario/Sistema_Inventario/lib/jasperreports-6.16.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ghalex/eclipse-workspace/Git/Inventario/Sistema_Inventario/lib/jasperreports-6.16.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
