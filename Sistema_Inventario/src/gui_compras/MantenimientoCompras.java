@@ -394,7 +394,7 @@ public class MantenimientoCompras extends JInternalFrame {
 			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date2 = (Date) formatter2.parse(fechaf);
 			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
-	      
+			
 	      Map parameters = new HashMap();
 	      parameters.put("prtFechaI", timeStampDateI);
 	      parameters.put("prtFechaFi", timeStampDateF);

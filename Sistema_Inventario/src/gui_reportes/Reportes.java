@@ -535,21 +535,24 @@ public class Reportes extends JInternalFrame {
 
 	protected void actionPerformedBtnVerReporteSimple(ActionEvent e) {
 		Connection con = null;
-	    try
-	    {
-	      con = MySQLConexion.getConection();
-
-	      int añoi = this.calendar.getCalendar().get(1);
-	      int mesi = this.calendar.getCalendar().get(2) + 1;
-	      int diai = this.calendar.getCalendar().get(5);
-	      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
-
-	      int añof = this.calendar_1.getCalendar().get(1);
-	      int mesf = this.calendar_1.getCalendar().get(2) + 1;
-	      int diaf = this.calendar_1.getCalendar().get(5);
-	      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
-
-	      DateFormat formatter;
+	    try{
+			con = MySQLConexion.getConection();
+			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
+			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
+			int metpago = cbMetodoPago.getSelectedIndex()- 1;
+	      
+	      
+			int añoi = calendar.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			
+			int añof = calendar_1.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			
+			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = (Date) formatter.parse(fechai);
 			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
@@ -558,12 +561,33 @@ public class Reportes extends JInternalFrame {
 			Date date2 = (Date) formatter2.parse(fechaf);
 			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
 	      
-	      Map parameters = new HashMap();
-	      parameters.put("prtFechaI", timeStampDateI);
-	      parameters.put("prtFechaF", timeStampDateF);
+			Map parameters = new HashMap();
+			parameters.put("prtFechaI", timeStampDateI);
+			parameters.put("prtFechaF", timeStampDateF);
+			parameters.put("metpago", metpago);
 
-	      new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
-	      AbstractJasperReports.showViewer();
+			if (usu.equals("TODOS")) {
+				if (metpago == - 1) {
+					new AbstractJasperReports().createReport(con, "rVentasTodos.jasper", parameters);
+					AbstractJasperReports.showViewer();
+				} else {
+					new AbstractJasperReports().createReport(con, "rVentasVendedorTodosXMpago.jasper",
+							parameters);
+					AbstractJasperReports.showViewer();
+				}
+			} else {
+				parameters.put("prmtVendedor", usu);
+				if (metpago == - 1) {
+					new AbstractJasperReports().createReport(con, "rVentasVendedor.jasper", parameters);
+					AbstractJasperReports.showViewer();
+					
+				} else {
+					new AbstractJasperReports().createReport(con, "rVentasVendedorTodoMetodoxUsuario.jasper",
+							parameters);
+					AbstractJasperReports.showViewer();
+				}
+			}
+			con.close();
 	    }
 	    catch (Exception ex)
 	    {
