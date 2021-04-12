@@ -7,7 +7,10 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import com.mxrck.autocompleter.TextAutoCompleter;
+
+import clases.AbstractJasperReports;
 import gui_principal.VentanaPrincipal;
+import mysql.MySQLConexion;
 import mysql.consultas;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -17,6 +20,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -41,6 +45,7 @@ public class MantenimientoClientes extends JInternalFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	NuevoCliente nc = new NuevoCliente(this, null);
+	private JButton btnexportar;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -66,7 +71,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 41, 1083, 568);
+		this.scrollPane.setBounds(10, 51, 1083, 558);
 		getContentPane().add(this.scrollPane);
 
 		tbCliente = new JTable();
@@ -76,6 +81,19 @@ public class MantenimientoClientes extends JInternalFrame {
 		tbCliente.setBackground(Color.WHITE);
 		tbCliente.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbCliente);
+		
+		this.btnexportar = new JButton("<html><center>EXPORTAR</center></html>");
+		this.btnexportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnexportar(arg0);
+			}
+		});
+		this.btnexportar.setForeground(new Color(138, 43, 226));
+		this.btnexportar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		this.btnexportar.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
+		this.btnexportar.setBackground(Color.WHITE);
+		this.btnexportar.setBounds(944, 5, 149, 41);
+		getContentPane().add(this.btnexportar);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCliente.getTableHeader().setReorderingAllowed(false);
 
@@ -226,5 +244,15 @@ public class MantenimientoClientes extends JInternalFrame {
 		} else {
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
+	}
+	protected void actionPerformedBtnexportar(ActionEvent arg0) {
+		Connection con = null;
+		try{
+	      con = MySQLConexion.getConection();
+	      new AbstractJasperReports().createReport(con, "rClientes.jasper");
+	      AbstractJasperReports.showViewer();
+	    }catch(Exception ex){
+	    	JOptionPane.showMessageDialog(null,"Error: " +ex);
+	    }
 	}
 }
