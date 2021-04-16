@@ -207,7 +207,7 @@ public class consultas {
 	public ResultSet cargarVentasUsuarioTodos(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha,'%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa as totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
@@ -216,7 +216,7 @@ public class consultas {
 	public ResultSet cargarVentasUsuario(int idusuario, Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha, '%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
+			rs = st.executeQuery("select v.codventa, c.nombre ncliente, u.nombre nusuario, v.nota, DATE_FORMAT(v.fecha, '%d-%m-%Y %h:%i %p') as fecha, v.descuento, v.saldo, v.totventa as totventa from tb_ventas v inner join tb_clientes c on c.idcliente = v.idcliente inner join tb_usuarios u on u.idusuario = v.idusuario where  u.idusuario = " + idusuario + " and v.fecha between '" + fechai + "' and '" + fechaf + "' order by v.fecha desc;");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar productos: " + e);
 		}
