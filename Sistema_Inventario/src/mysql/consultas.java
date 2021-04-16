@@ -311,7 +311,33 @@ public class consultas {
 	public ResultSet buscarProductoID(int idprod) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select * from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
+			rs = st.executeQuery("select "
+								+ "codproducto,"
+								+ "codbarra,"
+								+ "producto,"
+								+ "detalles,"
+								+ "marca,"
+								+ "color,"
+								+ "lote,"
+								+ "laboratorio,"
+								+ "unimedida,"
+								+ "fechaVenc,"
+								+ "categoria,"
+								+ "almacen,"
+								+ "iddistrib,"
+								+ "cantidad,"
+								+ "cantmin,"
+								+ "precioCo,"
+								+ "precioVe,"
+								+ "ptjganancia,"
+								+ "estado,"
+								+ "promo1,"
+								+ "cantp1,"
+								+ "prep1,"
+								+ "promo2,"
+								+ "cantp2,"
+								+ "prep2"
+								+ " from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
 		} catch (Exception e) {
 		}
 		return rs;

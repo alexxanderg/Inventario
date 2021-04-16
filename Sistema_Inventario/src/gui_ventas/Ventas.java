@@ -591,7 +591,7 @@ public class Ventas extends JInternalFrame {
 			ResultSet rsVD = consulta.cargarVentaDetalles(nroVentaModificar);
 			try {
 				int cont = 0;
-				while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+				while (rsVD.next()) {// "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
 					
 					try {
 						int codproducto = rsVD.getInt("codproducto");
@@ -753,10 +753,10 @@ public class Ventas extends JInternalFrame {
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(16)); // Precio ORIGINAL
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(16)); // Descuento
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(16)); // SubTotal
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(-1)); //ID
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(-1));//Preco
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(-1)); // Stock
-		tcm.getColumn(8).setPreferredWidth(anchoColumna(-1)); // Precio
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(0)); //ID
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(0));//Preco
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(0)); // Stock
+		tcm.getColumn(8).setPreferredWidth(anchoColumna(0)); // Precio
 		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -765,7 +765,6 @@ public class Ventas extends JInternalFrame {
 		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);	
-//		tbCarrito.getColumnModel().getColumn(5).setCellRenderer(tcr);	
 	}
 	
 	public void agregarCliente(int iddistrib){
@@ -829,11 +828,18 @@ public class Ventas extends JInternalFrame {
 			if (flag == 0) { // AQUÍ ENTRA SI EL 
 							//	PRODUCTO AGREGADO ES NUEVO
 				try {
-					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
+					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
 					while (rs.next()) {
-						dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
-								rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
-								rs.getFloat("precioCo"), rs.getFloat("cantidad")});
+						dtm.addRow(new Object[] { 
+								"1", 
+								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+								rs.getFloat("precioVe"), 
+								"0",
+								rs.getFloat("precioVe"), 
+								rs.getInt("codproducto"), 
+								rs.getFloat("precioCo"),								 
+								rs.getFloat("cantidad"),
+								rs.getFloat("precioVe")});
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
@@ -871,9 +877,16 @@ public class Ventas extends JInternalFrame {
 					try {
 						rs.beforeFirst();
 						while (rs.next()) {
-							dtm.addRow(new Object[] { "1", rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
-									rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"), rs.getFloat("precioCo"),
-									rs.getFloat("precioCo"), rs.getFloat("cantidad")});
+							dtm.addRow(new Object[] { 
+									"1", 
+									rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+									rs.getFloat("precioVe"), 
+									"0", 
+									rs.getFloat("precioVe"), 
+									rs.getInt("codproducto"), 
+									rs.getFloat("precioCo"),								 
+									rs.getFloat("cantidad"),
+									rs.getFloat("precioCo")});
 							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
