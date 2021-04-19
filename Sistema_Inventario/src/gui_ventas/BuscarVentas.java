@@ -620,7 +620,7 @@ public class BuscarVentas extends JInternalFrame {
 				dtm.removeRow(i);
 				i -= 1;
 			}			
-			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "SALDO", "TOTAL"});
+			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "TOTAL"});
 			tbVentas.setModel(dtm);
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
@@ -659,8 +659,7 @@ public class BuscarVentas extends JInternalFrame {
 							rs.getString("nusuario"), 
 							rs.getString("nota"), 
 							rs.getString("fecha"), 
-							rs.getFloat("descuento"), 
-							rs.getFloat("saldo"), 
+							rs.getFloat("descuento"),
 							rs.getFloat("totventa")});	
 				}
 				
@@ -699,7 +698,7 @@ public class BuscarVentas extends JInternalFrame {
 		double sumDescuentos = 0;
 		
 		for (int i = 0; i < tbVentas.getRowCount(); i++) {
-			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 7).toString());
+			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 6).toString());
 			sumDescuentos = sumDescuentos + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
 		}
 		sumTotal = redondearDecimales(sumTotal, 2);
