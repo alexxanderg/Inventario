@@ -5,6 +5,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import com.mxrck.autocompleter.TextAutoCompleter;
 import mysql.consultas;
 import javax.swing.JMenuBar;
@@ -14,9 +16,11 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -231,7 +235,7 @@ public class Configuraciones extends JInternalFrame {
 		lblCantidadDeImpresiones.setEnabled(false);
 		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadDeImpresiones.setBounds(648, 137, 400, 26);
+		lblCantidadDeImpresiones.setBounds(648, 242, 400, 26);
 		getContentPane().add(lblCantidadDeImpresiones);
 		
 		button_9 = new JButton("Guardar");
@@ -239,7 +243,7 @@ public class Configuraciones extends JInternalFrame {
 		button_9.setForeground(Color.WHITE);
 		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
 		button_9.setBackground(new Color(30, 144, 255));
-		button_9.setBounds(868, 171, 180, 27);
+		button_9.setBounds(868, 276, 180, 27);
 		getContentPane().add(button_9);
 		
 		textField_9 = new JTextField();
@@ -251,7 +255,7 @@ public class Configuraciones extends JInternalFrame {
 		textField_9.setColumns(10);
 		textField_9.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		textField_9.setBackground(new Color(245, 245, 245));
-		textField_9.setBounds(648, 175, 191, 23);
+		textField_9.setBounds(648, 280, 191, 23);
 		getContentPane().add(textField_9);
 		
 		this.lblCopiaDeSeguridad = new JLabel("Crear copia de seguridad");
@@ -277,6 +281,30 @@ public class Configuraciones extends JInternalFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1.setBounds(648, 33, 428, 27);
 		getContentPane().add(lblNewLabel_1);
+		
+		this.btnRestaurar = new JButton("Restaurar");
+		this.btnRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedBtnRestaurar(arg0);
+			}
+		});
+		this.btnRestaurar.setForeground(Color.WHITE);
+		this.btnRestaurar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		this.btnRestaurar.setBackground(new Color(30, 144, 255));
+		this.btnRestaurar.setBounds(648, 179, 400, 33);
+		getContentPane().add(this.btnRestaurar);
+		
+		this.lblLePermiteRestaurar = new JLabel("Le permite restaurar toda la informaci\u00F3n.");
+		this.lblLePermiteRestaurar.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblLePermiteRestaurar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		this.lblLePermiteRestaurar.setBounds(648, 149, 428, 27);
+		getContentPane().add(this.lblLePermiteRestaurar);
+		
+		this.lblRestaurarBaseDe = new JLabel("Restaurar Base de Datos");
+		this.lblRestaurarBaseDe.setHorizontalAlignment(SwingConstants.LEFT);
+		this.lblRestaurarBaseDe.setFont(new Font("Candara", Font.BOLD, 20));
+		this.lblRestaurarBaseDe.setBounds(648, 127, 226, 26);
+		getContentPane().add(this.lblRestaurarBaseDe);
 
 		
 		menuBar = new JMenuBar();
@@ -427,26 +455,77 @@ public class Configuraciones extends JInternalFrame {
 	
 	JFileChooser seleccionar = new JFileChooser();
 	File archivo;
+	JFileChooser seleccionarRestaurar = new JFileChooser();
+	File archivoRestaurar;
+	private JButton btnRestaurar;
+	private JLabel lblLePermiteRestaurar;
+	private JLabel lblRestaurarBaseDe;
 	protected void actionPerformedBtnSeleccionCarpeta(ActionEvent arg0) {
 		if(seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION){
-			JOptionPane.showMessageDialog(null, seleccionar.getSelectedFile().getName());
 			archivo = seleccionar.getSelectedFile();
 			try {
 				Process p;
 				p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
-				InputStream is = p.getInputStream();
-				FileOutputStream fos = new FileOutputStream(archivo+".sql");
+				new HiloLector(p.getErrorStream()).start();
+				InputStream entrada = p.getInputStream();
+				FileOutputStream salida = new FileOutputStream(archivo+".sql");
 				byte[] buffer = new byte[1000];
-				int leido = is.read(buffer);
+				int leido = entrada.read(buffer);
 				while(leido>0){
-					fos.write(buffer, 0, leido);
-					leido = is.read(buffer);
+					salida.write(buffer, 0, leido);
+					leido = entrada.read(buffer);
 				}
-				JOptionPane.showMessageDialog(null, "Bakup creado correctamente");
-				fos.close();
+				JOptionPane.showMessageDialog(null, "Backup creado correctamente");
+				salida.close();
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(null, e1);
 			}									
+		}
+	}
+	protected void actionPerformedBtnRestaurar(ActionEvent arg0) {
+		int opc = JOptionPane.showConfirmDialog(null, "ADVERTENCIA: Restaurar eliminará toda información" , "Restaurar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (opc == 0) {
+			if(seleccionarRestaurar.showDialog(null, "Abrir")==JFileChooser.APPROVE_OPTION){
+				archivoRestaurar=seleccionarRestaurar.getSelectedFile();
+				if (archivoRestaurar.canRead()) {
+					if (archivoRestaurar.getName().endsWith("sql")) {
+//						String documento= "";
+						try {
+							Process p;
+							p = Runtime.getRuntime().exec("mysql --host=localhost --user=root --password=Aa123 db_inventario");
+							new HiloLector(p.getErrorStream()).start();
+							OutputStream salida = p.getOutputStream();
+							FileInputStream entrada = new FileInputStream(archivoRestaurar);
+							byte[] buffer = new byte[1000];
+							
+							int leido = entrada.read(buffer);
+							while(leido>0){
+								salida.write(buffer, 0, leido);
+								leido = entrada.read(buffer);
+							}
+							
+							salida.flush();
+							salida.close();
+							entrada.close();
+							JOptionPane.showMessageDialog(null, "Base restaurada");
+							
+//							 int ascci;
+//							 while((ascci=entrada.read())!=-1){
+//								 char caracter = (char)ascci;
+//								 documento+=caracter;
+//							 }
+//							 System.out.print(documento);						
+						} catch (Exception e) {
+							System.out.print(e);
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Archivo no compatible");
+					}
+				}
+			}
+		}else{
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		}
 	}
 }
