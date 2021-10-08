@@ -14,11 +14,15 @@ public class MySQLConexion {
 	
 	/*private static String URL="jdbc:mysql://179.61.14.159:3306/bytexbyt_db_inventario?useSSL=false";
 	private static String USER="bytexbyt_ghalex";
-	private static String PASS="6H1tw1kSWK";*/
+	private static String PASS="6H1tw1kSWK";
+	
+	com.mysql.jdbc.Driver
+	com.mysql.cj.jdbc.Driver -------2021
+	*/
 	
 	static{
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

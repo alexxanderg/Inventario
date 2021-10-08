@@ -80,6 +80,8 @@ public class Kardex extends JInternalFrame {
 	private JMenu mncargarltimoRegistro;
 	private JMenu mnfusionar;
 	private JLabel lblKardex;
+	private JMenu mnValorMonetario;
+	ValorMonetarioKardex vValorMonetario;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -276,6 +278,17 @@ public class Kardex extends JInternalFrame {
 		mnfusionar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnfusionar.setBackground(SystemColor.menu);
 		menuBar.add(mnfusionar);
+		
+		mnValorMonetario = new JMenu("Valor Monetario");
+		mnValorMonetario.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnValorMonetario.setForeground(new Color(47, 79, 79));
+		menuBar.add(mnValorMonetario);
+		mnValorMonetario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnValorMonetario(arg0);
+			}
+		});
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -808,6 +821,23 @@ public class Kardex extends JInternalFrame {
 		}
 		else{
 			
+		}
+	}
+	
+	protected void mouseClickedMnValorMonetario(MouseEvent arg0) {
+		System.out.println(tbProductos);
+		vValorMonetario = new ValorMonetarioKardex(tbProductos);
+		try {
+			if (!vValorMonetario.isShowing()) {
+				vValorMonetario.setLocationRelativeTo(null);
+				vValorMonetario.setVisible(true);
+			} else {
+				//JOptionPane.showMessageDialog(null, "Ya tiene abierta la ventana");
+				vValorMonetario.setExtendedState(0); //MOSTRAR VENTANA ABIERTA
+				vValorMonetario.setVisible(true); 
+			}
+		} catch (Exception f) {
+			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
 }

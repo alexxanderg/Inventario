@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="lib/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/Util.jar"/>
 	<classpathentry kind="lib" path="B:/Desarrollo/Eclipse/GIT/Inventario/Sistema_Inventario/lib/jasperreports-6.16.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.26.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
