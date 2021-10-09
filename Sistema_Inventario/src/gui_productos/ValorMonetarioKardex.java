@@ -29,10 +29,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowListener;
@@ -69,7 +71,7 @@ public class ValorMonetarioKardex extends JFrame implements ActionListener, Wind
 	JTable tb;
 	ResultSet rs;
 	String usuario;
-	consultas model = null;
+	consultas consulta = new consultas();
 	DefaultTableModel dtm;
 
 	public static void main(String[] args) {
@@ -152,22 +154,81 @@ public class ValorMonetarioKardex extends JFrame implements ActionListener, Wind
 		//ajustarAnchoColumnas();
 		//colortabla();
 		
-		System.out.println(this.tb);
+		try {
+			consulta.iniciar();
+			rs = consulta.cargarProductos();
+			while(rs.next()) {
+				if (rs.getInt("estado") == 1) {
+					List<String> listProds = new ArrayList<String>();
+					listProds.add(rs.getString("codproducto"));
+					listProds.add(rs.getString("precioVe"));
+					System.out.println(listProds.get(0));
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		//System.out.println(this.tb);
 		TableModel model = this.tb.getModel();
-		((DefaultTableModel) model).addColumn("Valor");
+		((DefaultTableModel) model).addColumn("Valor S/.");
 		tbValorMonetario.setModel(model);
 		
+		JLabel lblValor = new JLabel("New label");
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblValor.setBounds(969, 624, 102, 52);
+		contentPane.add(lblValor);
+		
+		JLabel lblNewLabel_1 = new JLabel("Valor Total:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(780, 624, 134, 52);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblS = new JLabel("S/.");
+		lblS.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblS.setBounds(933, 624, 26, 52);
+		contentPane.add(lblS);
+		double tot = 0;
 		for (int i = 0; i<tbValorMonetario.getRowCount();i++) {
+			double resp = 0;
+			String var0 = tbValorMonetario.getValueAt(i, 0).toString();
 			String var1 = tbValorMonetario.getValueAt(i, 9).toString();
 			String var2 = tbValorMonetario.getValueAt(i, 10).toString();
-			double resp = Double.parseDouble(var1) - Double.parseDouble(var2);
-			tbValorMonetario.setValueAt(resp, i, 11);
-			System.out.println(tbValorMonetario.getValueAt(i, 11).toString());
-			//for (int j = 0; j < tbValorMonetario.getColumnCount(); j++) {
-			//	if (rootPaneCheckingEnabled) {
-			//		System.out.println(tbValorMonetario.getValueAt(i, j));
-			//	}
-			//}
+			double rest = Double.parseDouble(var1) - Double.parseDouble(var2);
+			try {
+				consulta.iniciar();
+				rs = consulta.cargarProductos();
+				while(rs.next()) {
+					if (rs.getInt("estado") == 1) {
+						List<String> listProds = new ArrayList<String>();
+						listProds.add(rs.getString("codproducto"));
+						listProds.add(rs.getString("precioVe"));
+						if(var0.contains(listProds.get(0))) {
+							resp = rest * Double.parseDouble(listProds.get(1));
+							tot += resp;
+							tbValorMonetario.setValueAt(resp, i, 11);
+						}
+						//System.out.println(listProds.get(0));
+					}
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (consulta != null)
+						consulta.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}	
+			
+			lblValor.setText(tot+"");
+			
+			//System.out.println(tbValorMonetario.getValueAt(i, 11).toString());
 		}
 
 	}
@@ -270,19 +331,7 @@ public class ValorMonetarioKardex extends JFrame implements ActionListener, Wind
 
 
 	public void selecionarProducto(String cod) {
-		int cantProductos = tbValorMonetario.getRowCount();
-		for (int i = 0; i < cantProductos; i++) {
-			if (cod.equals(tbValorMonetario.getValueAt(i, 0))) {
-				tbValorMonetario.setRowSelectionInterval(i, i);
-				int registro = Integer.parseInt(tbValorMonetario.getValueAt(i, 7).toString());
-				// JOptionPane.showMessageDialog(null, registro);
-				registro++;
-				// JOptionPane.showMessageDialog(null, registro);
-				tbValorMonetario.setValueAt(registro, i, 7);
-
-				break;
-			}
-		}
+		
 	}
 
 	protected void actionPerformedBtnVolver(ActionEvent arg0) {

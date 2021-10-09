@@ -412,8 +412,10 @@ public class Kardex extends JInternalFrame {
 			        //listProds.add(rs.getString("ptjganancia"));
 			        //listProds.add(rs.getString("precioVe"));
 			        listProds.add(rs.getString("cantidad"));
+			        //System.out.println(listProds);
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
+			        //System.out.println(columnasProds);
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
 				}				
 	        }
@@ -695,7 +697,6 @@ public class Kardex extends JInternalFrame {
 					tbProductos.setValueAt(conteoold-1, tbProductos.getSelectedRow(), i);
 					//JOptionPane.showMessageDialog(null, "-1 \n\nConteo: " + (conteoold-1));
 				}
-
 			}
 		}		
 	}
@@ -825,7 +826,7 @@ public class Kardex extends JInternalFrame {
 	}
 	
 	protected void mouseClickedMnValorMonetario(MouseEvent arg0) {
-		System.out.println(tbProductos);
+		//System.out.println(tbProductos);
 		vValorMonetario = new ValorMonetarioKardex(tbProductos);
 		try {
 			if (!vValorMonetario.isShowing()) {
