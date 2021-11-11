@@ -254,6 +254,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
+		btnCompras.setVisible(false);
 		btnCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnCompras(e);
@@ -350,8 +351,8 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("MINIMARKET D'TODO");
-		lblNewLabel.setBounds(242, 0, 642, 50);
+		lblNewLabel = new JLabel("SISTEMA DE GESTI\u00D3N DE INVENTARIO:  RAPIVENTA");
+		lblNewLabel.setBounds(128, 0, 895, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -390,8 +391,21 @@ public class VentanaPrincipal extends JFrame {
 		btnNotificaciones.setForeground(new Color(220, 20, 60));
 		btnNotificaciones.setBackground(Color.DARK_GRAY);
 		btnNotificaciones.setFont(new Font("Tahoma", Font.BOLD, 25));
-		btnNotificaciones.setBounds(966, 0, 57, 50);
+		btnNotificaciones.setBounds(0, 0, 57, 50);
 		panel_1.add(btnNotificaciones);
+		
+		JButton btnAyuda = new JButton("?");
+	    btnAyuda.addActionListener(new ActionListener() {
+	          public void actionPerformed(ActionEvent e) {
+	            VentanaPrincipal.this.actionPerformedBtnAyuda(e);
+	          }
+	        });
+	    btnAyuda.setForeground(new Color(220, 20, 60));
+	    btnAyuda.setFont(new Font("Tahoma", 1, 25));
+	    btnAyuda.setBorder(new EmptyBorder(0, 0, 0, 0));
+	    btnAyuda.setBackground(Color.DARK_GRAY);
+	    btnAyuda.setBounds(58, 0, 57, 50);
+	    this.panel_1.add(btnAyuda);
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtPrueba, btnVentas, btnCompras, btnInventario, btnDistribuidores, btnClientes, btnUsuario, btnReportes, btnConfiguraciones}));
 		
@@ -658,6 +672,10 @@ public class VentanaPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error al crear ventana Notificaciones: " + e);
 		}
 	}
+	
+	protected void actionPerformedBtnAyuda(ActionEvent e) {
+	    goToURL("https://youtu.be/6p6kpFOJILI");
+	  }
 	
 	protected void mouseClickedLblLogoBxB(MouseEvent e) {
 		goToURL("https://www.bytexbyte.com.pe");

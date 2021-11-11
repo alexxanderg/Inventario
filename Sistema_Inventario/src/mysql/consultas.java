@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -1030,6 +1031,51 @@ public class consultas {
 		return rs;
 	}
 	
+	  public ResultSet Cotizar(int idcliente, int idusuario, double preTotalVentaFinal, String nota) {
+		    Connection con = MySQLConexion.getConection();
+		    Date d = new Date();
+		    Date date = new Date();
+		    Object date2 = new Timestamp(date.getTime());
+		    try {
+		      this.st = con.createStatement();
+		      String sql = "insert into tb_cotizaciones (codcoti, idcliente, fecha, idusuario, totventa, nota, estado) values (?, ?, ?, ?, ?, ?, ?)";
+		      PreparedStatement prepareStmt = con.prepareStatement(sql);
+		      prepareStmt.setString(1, null);
+		      prepareStmt.setInt(2, idcliente);
+		      prepareStmt.setObject(3, date2);
+		      prepareStmt.setInt(4, idusuario);
+		      prepareStmt.setDouble(5, preTotalVentaFinal);
+		      prepareStmt.setString(6, nota);
+		      prepareStmt.setInt(7, 1);
+		      prepareStmt.execute();
+		    } catch (Exception e) {
+		      JOptionPane.showMessageDialog(null, "ERROR al registrar venta: " + e);
+		    } 
+		    return this.rs;
+		  }
+		  
+		  public ResultSet Cotizar2(int idcliente, int idusuario, double preTotalVentaFinal, String nota, Object fechaElegida) {
+		    Connection con = MySQLConexion.getConection();
+		    Date d = new Date();
+		    Date date = new Date();
+		    Object date2 = new Timestamp(date.getTime());
+		    try {
+		      this.st = con.createStatement();
+		      String sql = "insert into tb_cotizaciones (codcoti, idcliente, fecha, idusuario, totventa, nota, estado) values (?, ?, ?, ?, ?, ?, ?)";
+		      PreparedStatement prepareStmt = con.prepareStatement(sql);
+		      prepareStmt.setString(1, null);
+		      prepareStmt.setInt(2, idcliente);
+		      prepareStmt.setObject(3, date2);
+		      prepareStmt.setInt(4, idusuario);
+		      prepareStmt.setDouble(6, preTotalVentaFinal);
+		      prepareStmt.setString(9, nota);
+		      prepareStmt.setInt(14, 1);
+		      prepareStmt.execute();
+		    } catch (Exception e) {
+		      JOptionPane.showMessageDialog(null, "ERROR al registrar venta: " + e);
+		    } 
+		    return this.rs;
+		  }
 
 	public ResultSet ObtenerUltimoCodigo() {
 		try {
@@ -1039,6 +1085,13 @@ public class consultas {
 		}
 		return rs;
 	}
+	public ResultSet ObtenerUltimoCodigoCoti() {
+	    try {
+	      this.st = this.con.createStatement();
+	      this.rs = this.st.executeQuery("select codcoti from tb_cotizaciones order by codcoti desc limit 1");
+	    } catch (Exception exception) {}
+	    return this.rs;
+	  }
 	
 	public ResultSet consultarEstadoVenta(int nroVenta) {
 		try {
@@ -1086,6 +1139,28 @@ public class consultas {
 		}
 		return rs;
 	}
+	
+	  public ResultSet RegistarDetalleCoti(int codventa, int codproducto, double cantidad, double preVeSDInd, double preVeSDTot, double descIndiv, double descTotal, double subTotal, double ganancia, String uMedidaUsada) {
+		    try {
+		      this.st = this.con.createStatement();
+		      String sql = "insert into tb_cotizaciones_detalle (codcoti, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		      PreparedStatement prepareStmt = this.con.prepareStatement(sql);
+		      prepareStmt.setInt(1, codventa);
+		      prepareStmt.setInt(2, codproducto);
+		      prepareStmt.setDouble(3, cantidad);
+		      prepareStmt.setDouble(4, preVeSDInd);
+		      prepareStmt.setDouble(5, preVeSDTot);
+		      prepareStmt.setDouble(6, descIndiv);
+		      prepareStmt.setDouble(7, descTotal);
+		      prepareStmt.setDouble(8, subTotal);
+		      prepareStmt.setDouble(9, ganancia);
+		      prepareStmt.setString(10, uMedidaUsada);
+		      prepareStmt.execute();
+		    } catch (Exception e) {
+		      JOptionPane.showMessageDialog(null, "ERROR al registrar detalle de venta: " + e);
+		    } 
+		    return this.rs;
+		  }
 
 	public ResultSet RealizarDescuentoStock(int codProducto, double cantVenta) {
 		try {

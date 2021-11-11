@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import com.mxrck.autocompleter.TextAutoCompleter;
+
+import clases.AbstractJasperReports;
 import clases.Cliente;
 import gui_clientes.NuevoCliente;
 import gui_principal.VentanaPrincipal;
@@ -31,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -1084,15 +1087,22 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	protected void actionPerformedBtnVender(ActionEvent e) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = 0;
+		
+		if(chckCotizacion.isSelected())
+			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		else
+			opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		
 		if (opc == 0) {
 			
 			
 			
 			
-// EMPIEZA LA COTIZACIÓN
+// VERIFICA SI ES COTIZACIÓN
 			if (!this.chckCotizacion.isSelected()){
-			
+			// ESTO ES VENTA
 				int ventasinstock = 0; // 0NO 1SI
 				int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
 				
@@ -1340,7 +1350,7 @@ public class Ventas extends JInternalFrame {
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(
-												getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+												getClass().getClassLoader().getResourceAsStream("rComprobante80mm.jasper"),
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();
@@ -1380,15 +1390,141 @@ public class Ventas extends JInternalFrame {
 				}
 			}
 			
-//EMPIEZA LA COTIZACIÓN			
+	
 			
 			else {
+//EMPIEZA LA COTIZACIÓN					
 				
-				
+				 int idcliente = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getId();
+			        String nomCliente = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getNombre();
+			        String nroDoc = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getNrodoc();
+			        int idusuario = Integer.parseInt(this.vp.lblIdusuario.getText());
+			        String nota = this.txtInfoAdicional.getText();
+			        float totCompra = Float.parseFloat(this.lblTotalCompra.getText());
+			        float totVenta = Float.parseFloat(this.lblTotalVentaFinal.getText());
+			        float gananciaTot = Float.parseFloat(this.lblGananciaTotal.getText());
+			        float descuentoTot = Float.parseFloat(this.lblDescuento.getText());
+			        int metpago1 = 0;
+			        metpago1 = this.cbPago1.getSelectedIndex();
+			        int metpago2 = 0;
+			        metpago2 = this.cbPago2.getSelectedIndex();
+			        float monto1 = 0.0F;
+			        if (this.txtPago1.getText().length() > 0)
+			          monto1 = Float.parseFloat(this.txtPago1.getText()); 
+			        float monto2 = 0.0F;
+			        if (this.txtPago2.getText().length() > 0)
+			          monto2 = Float.parseFloat(this.txtPago2.getText()); 
+			        try {
+			          this.consulta.iniciar();
+			          this.rs = this.consulta.cargarConfiguraciones();
+			          this.rs.next();
+			          int fechaVauto = this.rs.getInt("fechaVauto");
+			          if (fechaVauto == 0) {
+			            this.consulta.Cotizar(idcliente, idusuario, totVenta, nota);
+			          } else if (fechaVauto == 1) {
+			            int a = this.dchFechaVenta.getCalendar().get(1);
+			            int mesi = this.dchFechaVenta.getCalendar().get(2) + 1;
+			            int diai = this.dchFechaVenta.getCalendar().get(5);
+			            String hora = this.txtHora.getText();
+			            String min = this.txtMin.getText();
+			            String fechaActualString = String.valueOf(a) + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
+			            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			            Date date = formatter.parse(fechaActualString);
+			            Object fechaElegida = new Timestamp(date.getTime());
+			            this.consulta.Cotizar2(idcliente, idusuario, totVenta, nota, fechaElegida);
+			          } 
+			        } catch (Exception e2) {
+			          JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
+			        } finally {
+			          try {
+			            if (this.rs != null)
+			              this.rs.close(); 
+			            if (this.consulta != null)
+			              this.consulta.reset(); 
+			          } catch (Exception ex) {
+			            JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			          } 
+			        } 
+			        
+			        
+			        
+			        
+			        
+			        int ultCoti = 0;
+			        try {
+			          this.consulta.iniciar();
+			          this.rs = this.consulta.ObtenerUltimoCodigoCoti();
+			          try {
+			        	  rs.next();
+			              ultCoti = this.rs.getInt("codcoti"); 
+			          } catch (Exception e3) {
+			            JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo c" + e3);
+			          } finally {
+			            try {
+			              if (this.rs != null)
+			                this.rs.close(); 
+			              if (this.consulta != null)
+			                this.consulta.reset(); 
+			            } catch (Exception ex) {
+			              JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+			            } 
+			          } 
+			          for (int j = 0; j < this.tbCarrito.getRowCount(); j++) {
+			            String productoCompleto = this.tbCarrito.getValueAt(j, 1).toString();
+			            String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(") + 1, productoCompleto.indexOf(")"));
+			            double cantADisminuir = 0.0D;
+			            double cantProdVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 0).toString());
+			            int idProdVenta = Integer.parseInt(this.tbCarrito.getValueAt(j, 5).toString());
+			            double precioVeUniSDescVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 8).toString());
+			            precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+			            double descuentoTotProdVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 3).toString());
+			            descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
+			            double descuentoIndivProdVenta = descuentoTotProdVenta / cantProdVenta;
+			            descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
+			            double subTotVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 4).toString());
+			            subTotVenta = redondearDecimales(subTotVenta, 2);
+			            double precioCoVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 6).toString());
+			            precioCoVenta = redondearDecimales(precioCoVenta, 2);
+			            double gananciaProdVenta = subTotVenta - precioCoVenta;
+			            gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
+			            this.consulta.iniciar();
+			            this.consulta.RegistarDetalleCoti(ultCoti, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales(precioVeUniSDescVenta * cantProdVenta, 2), 
+			                descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+			          } 
+			        } catch (Exception e2) {
+			          JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de coti: " + e2);
+			        } 
+
+			        JOptionPane.showMessageDialog(null, "COTIZACIÓN REALIZADA CORRECTAMENTE\n A CONTINUACIÓN SE GENERARÁ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO", "", 1);
+			        
+			        Connection con = null;
+			        for (int i = 0; i < 1; i++) {
+			          try {
+			            Map<String, Object> parameters2 = new HashMap<>();
+			            parameters2.put("prtNVenta", Integer.valueOf(ultCoti));
+			            try {
+			              con = MySQLConexion.getConection();
+			             
+			              
+			              new AbstractJasperReports().createReport(con, "rCotizacion80mm.jasper", parameters2);
+							AbstractJasperReports.showViewer();
+			              
+			              
+			            } catch (Exception ex) {
+			              JOptionPane.showMessageDialog(null, 
+			                  "ERROR " + ex.getMessage());
+			              System.err.println("Errorrrr iReport: " + 
+			                  ex.getMessage());
+			            } 
+			          } catch (Exception ex) {
+			            JOptionPane.showMessageDialog(null, "ERROR al generar reporte de cotizacion" + ex);
+			          } 
+			        } 
+			        this.vp.actionPerformedBtnVentas(null);
+			        dispose();
 				
 				
 			}
-			
 		}
 	}
 	
