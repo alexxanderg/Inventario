@@ -81,7 +81,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 			}
 		});
 	}
-	
+	 
 	public Login() {
 		addWindowListener(new WindowAdapter() {
 			@Override
