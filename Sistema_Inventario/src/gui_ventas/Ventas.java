@@ -1087,6 +1087,9 @@ public class Ventas extends JInternalFrame {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			
+			
+			
+			
 // EMPIEZA LA COTIZACIÓN
 			if (!this.chckCotizacion.isSelected()){
 			

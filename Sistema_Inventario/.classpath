@@ -27,6 +27,6 @@
 	<classpathentry kind="lib" path="lib/poi-3.17.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/Util.jar"/>
-	<classpathentry kind="lib" path="F:/ECLIPSE/Inventario/Sistema_Inventario/lib/jasperreports-6.16.0.jar"/>
+	<classpathentry kind="lib" path="D:/Dev/Eclipse/Inventario/Sistema_Inventario/lib/jasperreports-6.16.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
