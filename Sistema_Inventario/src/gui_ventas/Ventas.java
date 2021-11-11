@@ -886,7 +886,7 @@ public class Ventas extends JInternalFrame {
 									rs.getInt("codproducto"), 
 									rs.getFloat("precioCo"),								 
 									rs.getFloat("cantidad"),
-									rs.getFloat("precioCo")});
+									rs.getFloat("precioVe")});
 							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						}
 					} catch (Exception ex) {
