@@ -53,6 +53,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
 
 public class Ventas extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -94,7 +95,8 @@ public class Ventas extends JInternalFrame {
 	private JTextField txtMin;
 	private JLabel lblHora;
 	private JLabel lblMin;
-	
+	private JCheckBox chckCotizacion;
+	private JCheckBox chckImrpimir;
 
 	public VentanaPrincipal vp;
 	JTable tb;
@@ -221,7 +223,7 @@ public class Ventas extends JInternalFrame {
 		cbPago1 = new JComboBox();
 		cbPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago1.setBackground(new Color(245, 245, 245));
-		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
+		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
 		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago1.setBounds(844, 68, 153, 35);
 		getContentPane().add(cbPago1);
@@ -255,13 +257,14 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setText("0");
+		txtNroImpresiones.setVisible(false);
+		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
 		txtNroImpresiones.setColumns(10);
 		txtNroImpresiones.setBackground(Color.ORANGE);
-		txtNroImpresiones.setBounds(1076, 207, 32, 18);
+		txtNroImpresiones.setBounds(809, 243, 32, 18);
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
@@ -322,7 +325,7 @@ public class Ventas extends JInternalFrame {
 		lblMtodoDePago_1.setVisible(false);
 		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago_1.setBounds(853, 174, 101, 25);
+		lblMtodoDePago_1.setBounds(276, 170, 101, 25);
 		getContentPane().add(lblMtodoDePago_1);
 		
 		cbPago2 = new JComboBox();
@@ -331,7 +334,7 @@ public class Ventas extends JInternalFrame {
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(853, 203, 101, 18);
+		cbPago2.setBounds(276, 199, 101, 18);
 		getContentPane().add(cbPago2);
 		
 		txtPago2 = new JTextField();
@@ -359,7 +362,7 @@ public class Ventas extends JInternalFrame {
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(959, 204, 32, 17);
+		txtPago2.setBounds(382, 200, 32, 17);
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
@@ -374,7 +377,7 @@ public class Ventas extends JInternalFrame {
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
-		label_1.setBounds(959, 174, 32, 25);
+		label_1.setBounds(382, 170, 32, 25);
 		getContentPane().add(label_1);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
@@ -482,6 +485,17 @@ public class Ventas extends JInternalFrame {
 		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblFechaDeVenta.setBounds(466, 205, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
+		
+		chckCotizacion = new JCheckBox("\u00BFCotizaci\u00F3n?");
+		chckCotizacion.setBackground(SystemColor.window);
+		chckCotizacion.setBounds(843, 204, 126, 23);
+		getContentPane().add(chckCotizacion);
+		
+		chckImrpimir = new JCheckBox("\u00BFImprimir?");
+		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
+		chckImrpimir.setBackground(SystemColor.window);
+		chckImrpimir.setBounds(1007, 204, 101, 23);
+		getContentPane().add(chckImrpimir);
 
 		
 		menuBar = new JMenuBar();
@@ -1073,99 +1087,23 @@ public class Ventas extends JInternalFrame {
 		int opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			
-			int ventasinstock = 0; // 0NO 1SI
-			int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
+// EMPIEZA LA COTIZACIÓN
+			if (!this.chckCotizacion.isSelected()){
 			
-			if (tbCarrito.getRowCount() < 1) {
-				JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
-			} else {
-				try {
-					consulta.iniciar();
-					rs = consulta.verificarVentaSinStock();
-					rs.next();
-					ventasinstock = rs.getInt("ventasinstock");
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Error al consultar permisos de venta sin stock " + e2);
-				}finally {
-					try {
-						if (rs != null)
-							rs.close();
-						if (consulta != null)
-							consulta.reset();
-		            } catch (Exception ex) {
-		            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-		            }
-				}
+				int ventasinstock = 0; // 0NO 1SI
+				int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
 				
-				if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
-					flag = verificarStock();
-				else
-					flag = 1;  // NO TIENE RESTRICCION Y SE VENDE SIN PROBLEMA
-				
-				if (flag == 1) {
-					int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
-					String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
-					String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
-					int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
-					String nota = txtInfoAdicional.getText();
-					
-					float totCompra = Float.parseFloat(lblTotalCompra.getText());
-					float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());
-					float gananciaTot = Float.parseFloat(lblGananciaTotal.getText());
-					float descuentoTot = Float.parseFloat(lblDescuento.getText());
-					
-					int metpago1 = 0;	metpago1 = cbPago1.getSelectedIndex();
-					int metpago2 = 0;	metpago2 = cbPago2.getSelectedIndex();
-					float monto1 = 0;	if(txtPago1.getText().length()>0) monto1 = Float.parseFloat(txtPago1.getText());
-					float monto2 = 0;	if(txtPago2.getText().length()>0) monto2 = Float.parseFloat(txtPago2.getText());
-					
+				if (tbCarrito.getRowCount() < 1) {
+					JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
+				} else {
 					try {
 						consulta.iniciar();
-						rs = consulta.cargarConfiguraciones();
+						rs = consulta.verificarVentaSinStock();
 						rs.next();
-						int fechaVauto = rs.getInt("fechaVauto");
-						
-						
-						if(fechaVauto == 0){ // AQUI SI LA FECHA ES AUTOMATICA
-							
-							if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
-								//consulta.modificarVenta(nroVentaModificar);
-								
-								consulta.modificarVenta(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
-								
-							}
-							else{	//AQUI SI ES VENTA NUEVA
-								consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
-							}
-						}
-						else if (fechaVauto == 1){ // AQUI SI LA FECHA ES PERSONALIZADA
-							
-							int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
-							int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
-							int diai = dchFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
-							String hora = txtHora.getText();
-							String min = txtMin.getText();
-							String fechaActualString = añoi + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
-
-							DateFormat formatter;
-							formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-							Date date = (Date) formatter.parse(fechaActualString);
-							Object fechaElegida = new java.sql.Timestamp(date.getTime());
-							
-							
-								
-							if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
-								consulta.modificarVenta2(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
-							}
-							else{	//AQUI SI ES VENTA NUEVA
-								consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
-							}
-							
-						}
-					}catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
-					}
-					finally {
+						ventasinstock = rs.getInt("ventasinstock");
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error al consultar permisos de venta sin stock " + e2);
+					}finally {
 						try {
 							if (rs != null)
 								rs.close();
@@ -1176,181 +1114,276 @@ public class Ventas extends JInternalFrame {
 			            }
 					}
 					
+					if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
+						flag = verificarStock();
+					else
+						flag = 1;  // NO TIENE RESTRICCION Y SE VENDE SIN PROBLEMA
 					
-					
-									/*
-									 * SE REALIZO EL REGISTRO DE LA VENTA
-									 * 
-									 * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
-									 * 
-									 * */
-								
-					int ultCodVenta = 0;
-					
-					try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
+		//EMPIEZA LA VENTA
+					if (flag == 1) {
 						
-						if(nroVentaModificar!=-1){  // AQUI ENTRA SI ES VENTA A MODIFICAR
-							ultCodVenta = nroVentaModificar;
-						}
-						else{
-							consulta.iniciar();
-							rs = consulta.ObtenerUltimoCodigo();
-							try {
-								while (rs.next())
-									ultCodVenta = rs.getInt("codventa");
-							} catch (Exception e3) {
-								JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
-							}finally {
-								try {
-									if (rs != null)
-										rs.close();
-									if (consulta != null)
-										consulta.reset();
-					            } catch (Exception ex) {
-					            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-					            }
-							}
-						}
+						int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
+						String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
+						String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
+						int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
+						String nota = txtInfoAdicional.getText();
 						
-						for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-							String productoCompleto = tbCarrito.getValueAt(i, 1).toString();
-							String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(")+1, productoCompleto.indexOf(")"));
-							double cantADisminuir = 0;
-							
-							
-							double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-							int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
-							double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
-								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-							double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-								descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
-							double descuentoIndivProdVenta = descuentoTotProdVenta/cantProdVenta;
-								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
-							double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-								subTotVenta = redondearDecimales(subTotVenta, 2);
-							double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
-								precioCoVenta = redondearDecimales(precioCoVenta, 2);
-							double gananciaProdVenta = subTotVenta - precioCoVenta;
-								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
-					
-							consulta.iniciar();
-							consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
-									descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
-													
-							/*
-							 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
-							 * 
-							 * */
-							try {
-								consulta.iniciar();
-								rs = consulta.cargarConfiguraciones();
-								rs.next();
-								int reducirstock = rs.getInt("reducirstock");
-								
-								if(reducirstock == 1){
-									try {
-										rs = consulta.buscarProductoID(idProdVenta);
-										rs.next();
-										if(rs.getString("promo1").equals(uMedidaUsada)){
-											cantADisminuir = cantProdVenta * rs.getFloat("cantp1");
-											cantADisminuir = redondearDecimales(cantADisminuir, 2);
-										}
-										else if (rs.getString("promo2").equals(uMedidaUsada)){
-											cantADisminuir = cantProdVenta * rs.getFloat("cantp2");
-											cantADisminuir = redondearDecimales(cantADisminuir, 2);
-										}
-										else{
-											cantADisminuir = cantProdVenta;
-										}
-										
-										consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir);
-									} catch (Exception e2) {
-										JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
-									}
-								}
-							
-							} catch (Exception e2) {
-								JOptionPane.showMessageDialog(null, "2do Error al verificar permiso para vender sin reducir stock " + e2);
-							}
-							finally {
-								try {
-									if (rs != null)
-										rs.close();
-									if (consulta != null)
-										consulta.reset();
-					            } catch (Exception ex) {
-					            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-					            }
-							}
-						}
-
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de venta: " + e2);
-					}
-
-					// IMPRIMIR TICKET
-					int copias = Integer.parseInt(txtNroImpresiones.getText());
-					Connection con = null;
-
-					for (int i = 0; i < copias; i++) {
+						float totCompra = Float.parseFloat(lblTotalCompra.getText());
+						float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());
+						float gananciaTot = Float.parseFloat(lblGananciaTotal.getText());
+						float descuentoTot = Float.parseFloat(lblDescuento.getText());
+						
+						int metpago1 = 0;	metpago1 = cbPago1.getSelectedIndex();
+						int metpago2 = 0;	metpago2 = cbPago2.getSelectedIndex();
+						float monto1 = 0;	if(txtPago1.getText().length()>0) monto1 = Float.parseFloat(txtPago1.getText());
+						float monto2 = 0;	if(txtPago2.getText().length()>0) monto2 = Float.parseFloat(txtPago2.getText());
+						
 						try {
-							Map<String, Object> parameters = new HashMap();
-							parameters.put("prtNVenta", ultCodVenta);
-							/*
-							 * new AbstractJasperReports().createReport(
-							 * con.getConn(), "rPrueba.jasper", null);
-							 * AbstractJasperReports.showViewer();
-							 */
-							try {
-								con = MySQLConexion.getConection();
-								/*
-								 * JasperReport reporte = (JasperReport)
-								 * JRLoader.loadObjectFromFile(
-								 * "bin/rComprobante.jasper"); JasperPrint
-								 * jasperPrint =
-								 * JasperFillManager.fillReport(reporte,
-								 * parameters, con);
-								 * AbstractJasperReports.showViewer();
-								 * JasperPrintManager.printReport(
-								 * jasperPrint, false);
-								 * 
-								 */
-								JasperPrint impressao = JasperFillManager.fillReport(
-										getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
-										parameters, con);
-
-								// AbstractJasperReports.showViewer();
-								JasperPrintManager.printReport(impressao, false);
-								/*
-								 * this.setAlwaysOnTop(false);
-								 * //JOptionPane.showMessageDialog(null,
-								 * "VENTA CORRECTA");
-								 * this.setAlwaysOnTop(true);
-								 */
-
-							} catch (JRException ex) {
-								 JOptionPane.showMessageDialog(null,
-								 "ERROR " + ex.getMessage());
-								 System.err.println("Error iReport: " +
-								 ex.getMessage());
+							consulta.iniciar();
+							rs = consulta.cargarConfiguraciones();
+							rs.next();
+							int fechaVauto = rs.getInt("fechaVauto");
+							
+							
+							if(fechaVauto == 0){ // AQUI SI LA FECHA ES AUTOMATICA
+								
+								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+									//consulta.modificarVenta(nroVentaModificar);
+									
+									consulta.modificarVenta(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+									
+								}
+								else{	//AQUI SI ES VENTA NUEVA
+									consulta.Vender(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
+								}
 							}
-
-						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "ERROR " + ex);
+							else if (fechaVauto == 1){ // AQUI SI LA FECHA ES PERSONALIZADA
+								
+								int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
+								int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
+								int diai = dchFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
+								String hora = txtHora.getText();
+								String min = txtMin.getText();
+								String fechaActualString = añoi + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
+		
+								DateFormat formatter;
+								formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+								Date date = (Date) formatter.parse(fechaActualString);
+								Object fechaElegida = new java.sql.Timestamp(date.getTime());
+								
+								
+									
+								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+									consulta.modificarVenta2(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+								}
+								else{	//AQUI SI ES VENTA NUEVA
+									consulta.Vender2(idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
+								}
+								
+							}
+						}catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "1er Error al verificar permiso para vender sin reducir stock " + e2);
 						}
+						finally {
+							try {
+								if (rs != null)
+									rs.close();
+								if (consulta != null)
+									consulta.reset();
+				            } catch (Exception ex) {
+				            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+				            }
+						}
+						
+						
+						
+										/*
+										 * SE REALIZO EL REGISTRO DE LA VENTA
+										 * 
+										 * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
+										 * 
+										 * */
+									
+						int ultCodVenta = 0;
+						
+						try { // "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC"
+							
+							if(nroVentaModificar!=-1){  // AQUI ENTRA SI ES VENTA A MODIFICAR
+								ultCodVenta = nroVentaModificar;
+							}
+							else{
+								consulta.iniciar();
+								rs = consulta.ObtenerUltimoCodigo();
+								try {
+									while (rs.next())
+										ultCodVenta = rs.getInt("codventa");
+								} catch (Exception e3) {
+									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+								}finally {
+									try {
+										if (rs != null)
+											rs.close();
+										if (consulta != null)
+											consulta.reset();
+						            } catch (Exception ex) {
+						            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+						            }
+								}
+							}
+							
+							for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+								String productoCompleto = tbCarrito.getValueAt(i, 1).toString();
+								String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(")+1, productoCompleto.indexOf(")"));
+								double cantADisminuir = 0;
+								
+								
+								double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+								int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
+								double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
+									precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+								double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+									descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
+								double descuentoIndivProdVenta = descuentoTotProdVenta/cantProdVenta;
+									descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
+								double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+									subTotVenta = redondearDecimales(subTotVenta, 2);
+								double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
+									precioCoVenta = redondearDecimales(precioCoVenta, 2);
+								double gananciaProdVenta = subTotVenta - precioCoVenta;
+									gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
+						
+								consulta.iniciar();
+								consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
+										descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+														
+								/*
+								 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
+								 * 
+								 * */
+								try {
+									consulta.iniciar();
+									rs = consulta.cargarConfiguraciones();
+									rs.next();
+									int reducirstock = rs.getInt("reducirstock");
+									
+									if(reducirstock == 1){
+										try {
+											rs = consulta.buscarProductoID(idProdVenta);
+											rs.next();
+											if(rs.getString("promo1").equals(uMedidaUsada)){
+												cantADisminuir = cantProdVenta * rs.getFloat("cantp1");
+												cantADisminuir = redondearDecimales(cantADisminuir, 2);
+											}
+											else if (rs.getString("promo2").equals(uMedidaUsada)){
+												cantADisminuir = cantProdVenta * rs.getFloat("cantp2");
+												cantADisminuir = redondearDecimales(cantADisminuir, 2);
+											}
+											else{
+												cantADisminuir = cantProdVenta;
+											}
+											
+											consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+										} catch (Exception e2) {
+											JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
+										}
+									}
+								
+								} catch (Exception e2) {
+									JOptionPane.showMessageDialog(null, "2do Error al verificar permiso para vender sin reducir stock " + e2);
+								}
+								finally {
+									try {
+										if (rs != null)
+											rs.close();
+										if (consulta != null)
+											consulta.reset();
+						            } catch (Exception ex) {
+						            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+						            }
+								}
+							}
+		
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de venta: " + e2);
+						}
+		
+						// IMPRIMIR TICKET
+						
+						if(chckImrpimir.isSelected()) {
+							int copias = Integer.parseInt(txtNroImpresiones.getText());
+							Connection con = null;
+			
+							for (int i = 0; i < copias; i++) {
+								try {
+									Map<String, Object> parameters = new HashMap();
+									parameters.put("prtNVenta", ultCodVenta);
+									/*
+									 * new AbstractJasperReports().createReport(
+									 * con.getConn(), "rPrueba.jasper", null);
+									 * AbstractJasperReports.showViewer();
+									 */
+									try {
+										con = MySQLConexion.getConection();
+										/*
+										 * JasperReport reporte = (JasperReport)
+										 * JRLoader.loadObjectFromFile(
+										 * "bin/rComprobante.jasper"); JasperPrint
+										 * jasperPrint =
+										 * JasperFillManager.fillReport(reporte,
+										 * parameters, con);
+										 * AbstractJasperReports.showViewer();
+										 * JasperPrintManager.printReport(
+										 * jasperPrint, false);
+										 * 
+										 */
+										JasperPrint impressao = JasperFillManager.fillReport(
+												getClass().getClassLoader().getResourceAsStream("rComprobante.jasper"),
+												parameters, con);
+			
+										// AbstractJasperReports.showViewer();
+										JasperPrintManager.printReport(impressao, false);
+										/*
+										 * this.setAlwaysOnTop(false);
+										 * //JOptionPane.showMessageDialog(null,
+										 * "VENTA CORRECTA");
+										 * this.setAlwaysOnTop(true);
+										 */
+			
+									} catch (JRException ex) {
+										 JOptionPane.showMessageDialog(null,
+										 "ERROR " + ex.getMessage());
+										 System.err.println("Error iReport: " +
+										 ex.getMessage());
+									}
+			
+								} catch (Exception ex) {
+									JOptionPane.showMessageDialog(null, "ERROR " + ex);
+								}
+							}
+						}
+						
+						JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
+						//limpiarVentana();
+						//vp.abrirVentanaVentas();
+						vp.actionPerformedBtnVentas(null);
+						this.dispose();
+						/*
+						 * lblPaga.setText("Paga con: "); lblVuelto.setText(
+						 * "Su vuelto es: ");
+						 */
 					}
+//TERMINA LA VENTA
 					
-					
-					JOptionPane.showMessageDialog(null, "VENTA CORRECTA", "", JOptionPane.INFORMATION_MESSAGE);
-					//limpiarVentana();
-					//vp.abrirVentanaVentas();
-					vp.actionPerformedBtnVentas(null);
-					this.dispose();
-					/*
-					 * lblPaga.setText("Paga con: "); lblVuelto.setText(
-					 * "Su vuelto es: ");
-					 */
 				}
+			}
+			
+//EMPIEZA LA COTIZACIÓN			
+			
+			else {
+				
+				
+				
+				
 			}
 			
 		}
