@@ -50,6 +50,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -57,6 +58,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.JRadioButtonMenuItem;
 
 public class Ventas extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -98,7 +102,6 @@ public class Ventas extends JInternalFrame {
 	private JTextField txtMin;
 	private JLabel lblHora;
 	private JLabel lblMin;
-	private JCheckBox chckCotizacion;
 	private JCheckBox chckImrpimir;
 
 	public VentanaPrincipal vp;
@@ -110,6 +113,9 @@ public class Ventas extends JInternalFrame {
 	private JLabel lblNroCompramodificar;
 	private JMenu mnlimpiarVentana;
 	private JLabel lblFechaDeVenta;
+	private ButtonGroup grupobuttons;
+	private JRadioButton rbtnVenta;
+	private JRadioButton rbtnCoti;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -247,7 +253,7 @@ public class Ventas extends JInternalFrame {
 		lblTitTotal.setBounds(497, 136, 164, 36);
 		getContentPane().add(lblTitTotal);
 		
-		btnVender = new JButton("VENDER");
+		btnVender = new JButton("FINALIZAR");
 		btnVender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnVender(e);
@@ -267,7 +273,7 @@ public class Ventas extends JInternalFrame {
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
 		txtNroImpresiones.setColumns(10);
 		txtNroImpresiones.setBackground(Color.ORANGE);
-		txtNroImpresiones.setBounds(809, 243, 32, 18);
+		txtNroImpresiones.setBounds(1076, 11, 32, 18);
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
@@ -489,16 +495,29 @@ public class Ventas extends JInternalFrame {
 		lblFechaDeVenta.setBounds(466, 205, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
 		
-		chckCotizacion = new JCheckBox("\u00BFCotizaci\u00F3n?");
-		chckCotizacion.setBackground(SystemColor.window);
-		chckCotizacion.setBounds(843, 204, 126, 23);
-		getContentPane().add(chckCotizacion);
-		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
+		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
+		chckImrpimir.setSelected(true);
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
-		chckImrpimir.setBounds(1007, 204, 101, 23);
+		chckImrpimir.setBounds(1007, 203, 101, 23);
 		getContentPane().add(chckImrpimir);
+		
+		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
+		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rbtnCoti.setBackground(Color.WHITE);
+		rbtnCoti.setBounds(914, 204, 106, 23);
+		getContentPane().add(rbtnCoti);
+		
+		grupobuttons = new ButtonGroup();
+		grupobuttons.add(rbtnCoti);
+		
+		rbtnVenta = new JRadioButton("VENTA");
+		rbtnVenta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rbtnVenta.setBackground(Color.WHITE);
+		rbtnVenta.setBounds(844, 205, 68, 23);
+		getContentPane().add(rbtnVenta);
+		grupobuttons.add(rbtnVenta);
 
 		
 		menuBar = new JMenuBar();
@@ -547,6 +566,8 @@ public class Ventas extends JInternalFrame {
 	public void cargar() {
 		tbCarrito.setRowHeight(35);
 		lblNroCompramodificar.setText(""+nroVentaModificar);
+		rbtnVenta.setSelected(true);
+		
 		
 		Cliente cliente = new Cliente();
 		cliente.cargarClientes(cbClientes);
@@ -1089,19 +1110,16 @@ public class Ventas extends JInternalFrame {
 	protected void actionPerformedBtnVender(ActionEvent e) {
 		int opc = 0;
 		
-		if(chckCotizacion.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		else
+		if(rbtnVenta.isSelected())
 			opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(rbtnCoti.isSelected())
+			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		
 		if (opc == 0) {
 			
-			
-			
-			
 // VERIFICA SI ES COTIZACIÓN
-			if (!this.chckCotizacion.isSelected()){
+			if (this.rbtnVenta.isSelected()){
 			// ESTO ES VENTA
 				int ventasinstock = 0; // 0NO 1SI
 				int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
@@ -1391,8 +1409,7 @@ public class Ventas extends JInternalFrame {
 			}
 			
 	
-			
-			else {
+			if (this.rbtnCoti.isSelected()){
 //EMPIEZA LA COTIZACIÓN					
 				
 				 int idcliente = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getId();
@@ -1505,6 +1522,12 @@ public class Ventas extends JInternalFrame {
 			            try {
 			              con = MySQLConexion.getConection();
 			             
+			              JasperPrint impressao = JasperFillManager.fillReport(
+									getClass().getClassLoader().getResourceAsStream("rCotizacion80mm.jasper"),
+									parameters2, con);
+
+							JasperPrintManager.printReport(impressao, false);
+							
 			              
 			              new AbstractJasperReports().createReport(con, "rCotizacion80mm.jasper", parameters2);
 							AbstractJasperReports.showViewer();
@@ -1569,7 +1592,7 @@ public class Ventas extends JInternalFrame {
 		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
 
 		this.setEnabled(false);
-		ModificarPrecioVenta cp = new ModificarPrecioVenta(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
+		ModificarPrecioVenta2 cp = new ModificarPrecioVenta2(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
 		cp.setVisible(true);
 		
 		int fila = tbCarrito.getSelectedRow();

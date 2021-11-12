@@ -29,7 +29,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import mysql.consultas;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
+import javax.swing.SwingConstants;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class ModificarPrecioVenta2 extends JFrame implements ActionListener, WindowListener, KeyListener, ItemListener {
   private JPanel contentPane;
@@ -142,28 +148,28 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     setDefaultCloseOperation(3);
     setBounds(100, 100, 851, 368);
     this.contentPane = new JPanel();
-    this.contentPane.setForeground(Color.WHITE);
-    this.contentPane.setBackground(Color.DARK_GRAY);
-    this.contentPane.setBorder((Border)null);
+    contentPane.setForeground(Color.WHITE);
+    contentPane.setBackground(Color.DARK_GRAY);
+    this.contentPane.setBorder(null);
     setContentPane(this.contentPane);
     this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
-    this.contentPane.setLayout((LayoutManager)null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
     this.txtTitulo = new JLabel("TITULO");
     this.txtTitulo.setForeground(new Color(255, 255, 255));
-    this.txtTitulo.setFont(new Font("Verdana", 1, 20));
+    this.txtTitulo.setFont(new Font("Verdana", Font.BOLD, 20));
     this.txtTitulo.setHorizontalAlignment(0);
     this.txtTitulo.setBounds(0, 0, 851, 50);
     this.contentPane.add(this.txtTitulo);
     this.lblPrecioPorUnidad = new JLabel("Precio por:");
-    this.lblPrecioPorUnidad.setForeground(Color.WHITE);
+    lblPrecioPorUnidad.setForeground(Color.WHITE);
     this.lblPrecioPorUnidad.setVerticalAlignment(3);
     this.lblPrecioPorUnidad.setHorizontalAlignment(2);
     this.lblPrecioPorUnidad.setFont(new Font("Candara", 1, 20));
@@ -171,23 +177,23 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.contentPane.add(this.lblPrecioPorUnidad);
     this.lblSubtotal = new JLabel("<html>TOTAL:</html>");
     this.lblSubtotal.setForeground(new Color(205, 92, 92));
-    this.lblSubtotal.setVerticalAlignment(1);
-    this.lblSubtotal.setHorizontalAlignment(2);
-    this.lblSubtotal.setFont(new Font("Candara", 1, 30));
+    this.lblSubtotal.setVerticalAlignment(SwingConstants.TOP);
+    this.lblSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
+    this.lblSubtotal.setFont(new Font("Candara", Font.BOLD, 30));
     this.lblSubtotal.setBounds(656, 79, 134, 31);
     this.contentPane.add(this.lblSubtotal);
     this.lblNewLabel = new JLabel("Cantidad:");
-    this.lblNewLabel.setForeground(Color.WHITE);
+    lblNewLabel.setForeground(Color.WHITE);
     this.lblNewLabel.setVerticalAlignment(3);
-    this.lblNewLabel.setHorizontalAlignment(2);
+    this.lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblNewLabel.setFont(new Font("Candara", 1, 20));
     this.lblNewLabel.setBounds(44, 79, 172, 31);
     this.contentPane.add(this.lblNewLabel);
     this.txtPUnidadOriginal = new JTextField();
-    this.txtPUnidadOriginal.setBorder((Border)null);
-    this.txtPUnidadOriginal.setForeground(Color.WHITE);
-    this.txtPUnidadOriginal.setHorizontalAlignment(2);
-    this.txtPUnidadOriginal.setBackground(Color.DARK_GRAY);
+    txtPUnidadOriginal.setBorder(null);
+    txtPUnidadOriginal.setForeground(Color.WHITE);
+    txtPUnidadOriginal.setHorizontalAlignment(SwingConstants.LEFT);
+    txtPUnidadOriginal.setBackground(Color.DARK_GRAY);
     this.txtPUnidadOriginal.setEditable(false);
     this.txtPUnidadOriginal.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
@@ -200,9 +206,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtPUnidadOriginal.setBounds(292, 148, 100, 31);
     this.contentPane.add(this.txtPUnidadOriginal);
     this.txtTotal = new JTextField();
-    this.txtTotal.setBorder((Border)null);
-    this.txtTotal.setHorizontalAlignment(2);
-    this.txtTotal.setBackground(Color.DARK_GRAY);
+    txtTotal.setBorder(null);
+    txtTotal.setHorizontalAlignment(SwingConstants.LEFT);
+    txtTotal.setBackground(Color.DARK_GRAY);
     this.txtTotal.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta2.this.focusGainedTxtSTotal(e);
@@ -210,7 +216,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         });
     this.txtTotal.setForeground(new Color(205, 92, 92));
     this.txtTotal.addKeyListener(this);
-    this.txtTotal.setFont(new Font("Arial", 1, 23));
+    this.txtTotal.setFont(new Font("Arial", Font.BOLD, 23));
     this.txtTotal.setColumns(10);
     this.txtTotal.setBounds(697, 148, 93, 31);
     this.contentPane.add(this.txtTotal);
@@ -224,14 +230,14 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.btnMenos1 = new JButton("-1");
     this.btnMenos1.addActionListener(this);
     this.btnMenos1.setForeground(Color.WHITE);
-    this.btnMenos1.setFont(new Font("Arial", 1, 16));
+    this.btnMenos1.setFont(new Font("Arial", Font.BOLD, 16));
     this.btnMenos1.setBackground(new Color(220, 20, 60));
     this.btnMenos1.setBounds(44, 112, 55, 31);
     this.contentPane.add(this.btnMenos1);
     this.btnMas1 = new JButton("+1");
     this.btnMas1.addActionListener(this);
     this.btnMas1.setForeground(Color.WHITE);
-    this.btnMas1.setFont(new Font("Arial", 1, 16));
+    this.btnMas1.setFont(new Font("Arial", Font.BOLD, 16));
     this.btnMas1.setBackground(new Color(60, 179, 113));
     this.btnMas1.setBounds(102, 112, 55, 31);
     this.contentPane.add(this.btnMas1);
@@ -245,9 +251,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtPreCompra.setBounds(0, 308, 42, 31);
     this.contentPane.add(this.txtPreCompra);
     this.cbPrecio = new JComboBox();
-    this.cbPrecio.setForeground(Color.DARK_GRAY);
-    this.cbPrecio.setBackground(SystemColor.control);
-    this.cbPrecio.setBorder((Border)null);
+    cbPrecio.setForeground(Color.DARK_GRAY);
+    cbPrecio.setBackground(SystemColor.control);
+    cbPrecio.setBorder(null);
     this.cbPrecio.addItemListener(this);
     this.cbPrecio.setFont(new Font("Dialog", 1, 16));
     this.cbPrecio.setBounds(232, 111, 160, 31);
@@ -260,9 +266,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.lblDescuento.setBounds(144, 216, 172, 31);
     this.contentPane.add(this.lblDescuento);
     this.txtDescuentoIndiv = new JTextField();
-    this.txtDescuentoIndiv.setBorder((Border)null);
-    this.txtDescuentoIndiv.setEditable(false);
-    this.txtDescuentoIndiv.setBackground(Color.DARK_GRAY);
+    txtDescuentoIndiv.setBorder(null);
+    txtDescuentoIndiv.setEditable(false);
+    txtDescuentoIndiv.setBackground(Color.DARK_GRAY);
     this.txtDescuentoIndiv.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta2.this.focusGainedTxtDescuentoIndiv(e);
@@ -295,16 +301,16 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.btnCancelar.setBounds(242, 272, 175, 43);
     this.contentPane.add(this.btnCancelar);
     this.lblPreCdescuento = new JLabel("Nuevo precio:");
-    this.lblPreCdescuento.setForeground(Color.WHITE);
+    lblPreCdescuento.setForeground(Color.WHITE);
     this.lblPreCdescuento.setVerticalAlignment(3);
-    this.lblPreCdescuento.setHorizontalAlignment(2);
+    this.lblPreCdescuento.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblPreCdescuento.setFont(new Font("Candara", 1, 20));
     this.lblPreCdescuento.setBounds(430, 79, 160, 31);
     this.contentPane.add(this.lblPreCdescuento);
     this.txtNewPrecio = new JTextField();
-    this.txtNewPrecio.setForeground(Color.DARK_GRAY);
-    this.txtNewPrecio.setHorizontalAlignment(2);
-    this.txtNewPrecio.setBackground(SystemColor.controlHighlight);
+    txtNewPrecio.setForeground(Color.DARK_GRAY);
+    txtNewPrecio.setHorizontalAlignment(SwingConstants.LEFT);
+    txtNewPrecio.setBackground(SystemColor.controlHighlight);
     this.txtNewPrecio.addKeyListener(new KeyAdapter() {
           public void keyReleased(KeyEvent e) {
             ModificarPrecioVenta2.this.keyReleasedTxtPreCDesc(e);
@@ -325,9 +331,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtNewPrecio.setBounds(481, 148, 121, 31);
     this.contentPane.add(this.txtNewPrecio);
     this.txtCantidad = new JTextField();
-    this.txtCantidad.setForeground(Color.DARK_GRAY);
-    this.txtCantidad.setHorizontalAlignment(0);
-    this.txtCantidad.setBackground(SystemColor.controlHighlight);
+    txtCantidad.setForeground(Color.DARK_GRAY);
+    txtCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+    txtCantidad.setBackground(SystemColor.controlHighlight);
     this.txtCantidad.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta2.this.focusGainedTxtCantidad(e);
@@ -350,9 +356,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.lblDescuentoTotal.setBounds(427, 216, 172, 31);
     this.contentPane.add(this.lblDescuentoTotal);
     this.txtDescuentoTot = new JTextField();
-    this.txtDescuentoTot.setBorder((Border)null);
-    this.txtDescuentoTot.setEditable(false);
-    this.txtDescuentoTot.setBackground(Color.DARK_GRAY);
+    txtDescuentoTot.setBorder(null);
+    txtDescuentoTot.setEditable(false);
+    txtDescuentoTot.setBackground(Color.DARK_GRAY);
     this.txtDescuentoTot.addFocusListener(new FocusAdapter() {
           public void focusGained(FocusEvent e) {
             ModificarPrecioVenta2.this.focusGainedTxtDescuentoTot(e);
@@ -374,26 +380,27 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtDescuentoTot.setBounds(617, 216, 69, 31);
     this.contentPane.add(this.txtDescuentoTot);
     this.lblS = new JLabel("S/");
-    this.lblS.setForeground(Color.WHITE);
+    lblS.setForeground(Color.WHITE);
     this.lblS.setVerticalAlignment(3);
-    this.lblS.setHorizontalAlignment(2);
+    this.lblS.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblS.setFont(new Font("Candara", 1, 20));
     this.lblS.setBounds(448, 148, 33, 31);
     this.contentPane.add(this.lblS);
     this.label_3 = new JLabel("S/");
-    this.label_3.setForeground(Color.WHITE);
+    label_3.setForeground(Color.WHITE);
     this.label_3.setVerticalAlignment(3);
-    this.label_3.setHorizontalAlignment(2);
-    this.label_3.setFont(new Font("Candara", 1, 22));
+    this.label_3.setHorizontalAlignment(SwingConstants.LEFT);
+    this.label_3.setFont(new Font("Candara", Font.BOLD, 22));
     this.label_3.setBounds(258, 148, 24, 31);
     this.contentPane.add(this.label_3);
+    
     JLabel lblS_1 = new JLabel("S/");
-    lblS_1.setVerticalAlignment(3);
-    lblS_1.setHorizontalAlignment(2);
+    lblS_1.setVerticalAlignment(SwingConstants.BOTTOM);
+    lblS_1.setHorizontalAlignment(SwingConstants.LEFT);
     lblS_1.setForeground(new Color(205, 92, 92));
-    lblS_1.setFont(new Font("Candara", 1, 25));
+    lblS_1.setFont(new Font("Candara", Font.BOLD, 25));
     lblS_1.setBounds(656, 150, 61, 32);
-    this.contentPane.add(lblS_1);
+    contentPane.add(lblS_1);
     cargar();
   }
   
@@ -431,7 +438,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   }
   
   public void cargar() {
-    setLocationRelativeTo(null);
+    setLocationRelativeTo((Component)null);
     this.consulta.iniciar();
     ResultSet rs = this.consulta.buscarProductoID(this.idProd);
     try {
@@ -469,36 +476,44 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       this.cbPrecio.addItem(this.nomPromo2); 
     this.cbPrecio.setSelectedItem(this.uniMedVenta);
     this.txtTitulo.setText(this.nomProdVenta);
-    this.txtCantidad.setText(this.cantVenta);
-    this.txtNewPrecio.setText(this.preEnUso);
-    this.txtPreCompra.setText(this.preCompraVenta);
-    this.txtTotal.setText(this.subTotVenta);
-    this.txtDescuentoTot.setText(redondearDecimales(this.descTVenta, 2));
+    this.txtCantidad.setText("" + this.cantVenta);
+    this.txtNewPrecio.setText("" + this.preEnUso);
+    this.txtPreCompra.setText("" + this.preCompraVenta);
+    this.txtTotal.setText("" + this.subTotVenta);
+    this.txtDescuentoTot.setText("" + redondearDecimales(this.descTVenta, 2));
     keyReleasedTxtDescuentoTot((KeyEvent)null);
     calcular(0);
   }
   
   protected void actionPerformedBtnCambiar(ActionEvent arg0) {
     try {
-      double newCant = 0.0D;
+      double newCant = 0.0;
       newCant = Double.parseDouble(this.txtCantidad.getText());
+      
       String newUnimed = "0";
       newUnimed = this.cbPrecio.getSelectedItem().toString();
-      double newPrecio = 0.0D;
+      
+      double newPrecio = 0.0;
       newPrecio = Double.parseDouble(this.txtNewPrecio.getText());
-      double descIndiv = 0.0D;
+      
+      double descIndiv = 0.0;
       descIndiv = Double.parseDouble(this.txtDescuentoIndiv.getText());
-      double descTot = 0.0D;
+      
+      double descTot = 0.0;
       descTot = Double.parseDouble(this.txtDescuentoTot.getText());
-      double total = 0.0D;
+      
+      double total = 0.0;
       total = Double.parseDouble(this.txtTotal.getText());
-      double preCompra = 0.0D;
+      
+      double preCompra = 0.0;
       preCompra = Double.parseDouble(this.txtPreCompra.getText());
-      if (newCant <= 0.0D || newPrecio < 0.0D || total < 0.0D) {
-        JOptionPane.showMessageDialog(null, "No estpermitido valores negativos");
+      
+      if (newCant <= 0.0 || newPrecio < 0.0 || total < 0.0) {
+        JOptionPane.showMessageDialog(null, "No está permitido valores negativos");
       } else {
-        this.ventas.actualizartabla(newCant, newPrecio, preCompra * newCant, total, descTot, newUnimed, this.uniMedVenta);
-        dispose();
+          //this.ventas.actualizartabla(newCant, newPrecio, preCompra * newCant, total, descTot, newUnimed, this.uniMedVenta); 
+    	  this.ventas.actualizartabla(newCant, newPrecio, preCompra * newCant, total, descTot, newUnimed, this.uniMedVenta);
+          dispose();
       } 
     } catch (Exception e) {
       setAlwaysOnTop(false);
@@ -533,7 +548,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       newcant = redondearDecimales(newcant, 2);
       double desctot = newcant * descindiv;
       desctot = redondearDecimales(desctot, 2);
-      this.txtDescuentoTot.setText(desctot);
+      this.txtDescuentoTot.setText("" + desctot);
       calcular(0);
     } catch (Exception exception) {}
   }
@@ -548,7 +563,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       newcant = redondearDecimales(newcant, 2);
       double desctot = newcant * descindiv;
       desctot = redondearDecimales(desctot, 2);
-      this.txtDescuentoTot.setText(desctot);
+      this.txtDescuentoTot.setText("" + desctot);
       calcular(0);
     } catch (Exception exception) {}
   }
@@ -561,7 +576,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       newcant = redondearDecimales(newcant, 2);
       double descindiv = desctot / newcant;
       descindiv = redondearDecimales(descindiv, 2);
-      this.txtDescuentoIndiv.setText(descindiv);
+      this.txtDescuentoIndiv.setText("" + descindiv);
       calcular(0);
     } catch (Exception exception) {}
   }
@@ -572,31 +587,37 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       newPrecio = redondearDecimales(newPrecio, 2);
       double newcant = Double.parseDouble(this.txtCantidad.getText());
       newcant = redondearDecimales(newcant, 2);
-      double precioUniEnUso = 0.0D;
+      double precioUniEnUso = 0.0;
+      
       if (this.cbPrecio.getSelectedIndex() == 0)
         precioUniEnUso = this.preEnUso; 
       if (this.cbPrecio.getSelectedIndex() == 1)
         precioUniEnUso = this.prePromo1; 
       if (this.cbPrecio.getSelectedIndex() == 2)
-        precioUniEnUso = this.prePromo1; 
+        precioUniEnUso = this.prePromo1;
+      
       double descindiv = precioUniEnUso - newPrecio;
       descindiv = redondearDecimales(descindiv, 2);
-      this.txtDescuentoIndiv.setText(descindiv);
+      this.txtDescuentoIndiv.setText("" + descindiv);
+      
       double desctot = descindiv * newcant;
       desctot = redondearDecimales(desctot, 2);
-      this.txtDescuentoTot.setText(desctot);
+      this.txtDescuentoTot.setText("" + desctot);
+      
       double newTot = newcant * newPrecio;
       newTot = redondearDecimales(newTot, 2);
-      this.txtTotal.setText(newTot);
+      this.txtTotal.setText("" + newTot);
+
       calcular(1);
     } catch (Exception exception) {}
   }
   
   public void calcular(int origen) {
     try {
+    	
       if (origen != 1) {
-        double precioUniEnUso = 0.0D;
-        double newprecioCompra = 0.0D;
+        double precioUniEnUso = 0.0;
+        double newprecioCompra = 0.0;
         if (this.cbPrecio.getSelectedIndex() == 0) {
           precioUniEnUso = this.preEnUso;
           newprecioCompra = this.preCompraVenta;
@@ -609,17 +630,18 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
           precioUniEnUso = this.prePromo2;
           newprecioCompra = this.preCompraVenta * this.cantPromo2;
         } 
-        double newCant = 0.0D;
+        
+        double newCant = 0.0;
         newCant = Double.parseDouble(this.txtCantidad.getText());
-        double newPreUniSDesc = 0.0D;
+        double newPreUniSDesc = 0.0;
         newPreUniSDesc = Double.parseDouble(this.txtPUnidadOriginal.getText());
-        double newPrecioModif = 0.0D;
+        double newPrecioModif = 0.0;
         newPrecioModif = Double.parseDouble(this.txtNewPrecio.getText());
-        double newDescIndiv = 0.0D;
+        double newDescIndiv = 0.0;
         newDescIndiv = Double.parseDouble(this.txtDescuentoIndiv.getText());
-        double newDescTot = 0.0D;
+        double newDescTot = 0.0;
         newDescTot = Double.parseDouble(this.txtDescuentoTot.getText());
-        double preTotal = 0.0D;
+        double preTotal = 0.0;
         preTotal = Double.parseDouble(this.txtTotal.getText());
         newprecioCompra = redondearDecimales(newprecioCompra, 2);
         newPreUniSDesc = redondearDecimales(newPreUniSDesc, 2);
@@ -627,11 +649,12 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         newPrecioModif = redondearDecimales(newPrecioModif, 2);
         preTotal = newPrecioModif * newCant;
         preTotal = redondearDecimales(preTotal, 2);
-        this.txtPreCompra.setText(newprecioCompra);
-        this.txtPUnidadOriginal.setText(newPreUniSDesc);
-        this.txtNewPrecio.setText(newPrecioModif);
-        this.txtTotal.setText(preTotal);
-      } 
+        this.txtPreCompra.setText("" + newprecioCompra);
+        this.txtPUnidadOriginal.setText("" + newPreUniSDesc);
+        this.txtNewPrecio.setText("" + newPrecioModif);
+        this.txtTotal.setText("" + preTotal);
+      }
+      
     } catch (Exception e) {
       this.txtTotal.setText("0");
     } 
@@ -645,7 +668,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       pre = redondearDecimales(pre, 2);
       switch (this.cbPrecio.getSelectedIndex()) {
         case 1:
-          this.txtPUnidadOriginal.setText(pre);
+          this.txtPUnidadOriginal.setText("" + pre);
           break;
       } 
     } catch (Exception e) {
@@ -655,14 +678,14 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   
   protected void actionPerformedBtnMas1(ActionEvent arg0) {
     try {
-      this.txtCantidad.setText(Float.parseFloat(this.txtCantidad.getText()) + 1.0D);
+      this.txtCantidad.setText("" + (Float.parseFloat(this.txtCantidad.getText()) + 1.0));
       double descindiv = Double.parseDouble(this.txtDescuentoIndiv.getText());
       descindiv = redondearDecimales(descindiv, 2);
       double newcant = Double.parseDouble(this.txtCantidad.getText());
       newcant = redondearDecimales(newcant, 2);
       double desctot = newcant * descindiv;
       desctot = redondearDecimales(desctot, 2);
-      this.txtDescuentoTot.setText(desctot);
+      this.txtDescuentoTot.setText("" + desctot);
       calcular(0);
     } catch (Exception exception) {}
   }
@@ -670,17 +693,17 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   protected void actionPerformedBtnMenos1(ActionEvent arg0) {
     try {
       float cant = Float.parseFloat(this.txtCantidad.getText());
-      if (cant <= 0.0D) {
+      if (cant <= 0.0) {
         this.txtCantidad.setText("1.00");
       } else {
-        this.txtCantidad.setText(cant - 1.0D);
+        this.txtCantidad.setText("" + (cant - 1.0));
         double descindiv = Double.parseDouble(this.txtDescuentoIndiv.getText());
         descindiv = redondearDecimales(descindiv, 2);
         double newcant = Double.parseDouble(this.txtCantidad.getText());
         newcant = redondearDecimales(newcant, 2);
         double desctot = newcant * descindiv;
         desctot = redondearDecimales(desctot, 2);
-        this.txtDescuentoTot.setText(desctot);
+        this.txtDescuentoTot.setText("" + desctot);
       } 
       calcular(0);
     } catch (Exception exception) {}
@@ -694,18 +717,22 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   }
   
   protected void itemStateChangedComboBox(ItemEvent arg0) {
-    if (this.cbPrecio.getSelectedIndex() == 0)
-      this.txtPUnidadOriginal.setText(this.preUniOriginal); 
+    if (this.cbPrecio.getSelectedIndex() == 0) {
+      this.txtPUnidadOriginal.setText("" + this.preUniOriginal);
+    }
     if (this.cbPrecio.getSelectedIndex() == 1) {
       this.txtCantidad.setText("1");
-      this.txtPUnidadOriginal.setText(this.prePromo1);
+      this.txtPUnidadOriginal.setText("" + this.prePromo1);
     } 
     if (this.cbPrecio.getSelectedIndex() == 2) {
       this.txtCantidad.setText("1");
-      this.txtPUnidadOriginal.setText(this.prePromo2);
+      this.txtPUnidadOriginal.setText("" + this.prePromo2);
     } 
+    
     this.txtDescuentoIndiv.setText("0");
     this.txtDescuentoTot.setText("0");
+    
+    
     calcular(0);
   }
   
