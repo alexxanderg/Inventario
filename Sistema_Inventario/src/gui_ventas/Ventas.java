@@ -1581,22 +1581,23 @@ public class Ventas extends JInternalFrame {
 	protected void mouseClickedTbCarrito(MouseEvent arg0) {
 		// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento", "SubTotal", "ID", "PC" 
 		
-		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
-		double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
-		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
-		double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 8).toString());
-		double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
-		double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
-		double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
 		
-		String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
-
-		this.setEnabled(false);
-		ModificarPrecioVenta2 cp = new ModificarPrecioVenta2(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
-		cp.setVisible(true);
-		
-		int fila = tbCarrito.getSelectedRow();
-		tbCarrito.setRowSelectionInterval(fila, fila);
+			int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
+			double cantActual = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
+			String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
+			double preCDesc = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 8).toString());
+			double descT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
+			double subT = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
+			double preC = Float.parseFloat(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
+			
+			String unimedida = nomProd.substring(nomProd.indexOf("(")+1, nomProd.indexOf(")"));
+	
+			this.setEnabled(false);
+			ModificarPrecioVenta2 cp = new ModificarPrecioVenta2(this, idProd, nomProd, unimedida, cantActual, preCDesc, subT, preC, descT);
+			cp.setVisible(true);
+			
+			int fila = tbCarrito.getSelectedRow();
+			tbCarrito.setRowSelectionInterval(fila, fila);
 	}
 	
 	public void actualizartabla(double cant, double preCDesc, double preo, double pret, double desc, String newUniMed, String oldUniMed) {

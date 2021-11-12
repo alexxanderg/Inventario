@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FocusTraversalPolicy;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.sql.ResultSet;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -117,6 +120,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   String uniMedVenta;
   
   consultas consulta = new consultas();
+  private JButton btnBasura;
   
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
@@ -153,6 +157,10 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.contentPane.setBorder(null);
     setContentPane(this.contentPane);
     this.contentPane.setLayout((LayoutManager)null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
     contentPane.setLayout(null);
     contentPane.setLayout(null);
     contentPane.setLayout(null);
@@ -242,6 +250,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.btnMas1.setBounds(102, 112, 55, 31);
     this.contentPane.add(this.btnMas1);
     this.txtPreCompra = new JTextField();
+    txtPreCompra.setVisible(false);
     this.txtPreCompra.setEnabled(false);
     this.txtPreCompra.setEditable(false);
     this.txtPreCompra.setHorizontalAlignment(0);
@@ -401,10 +410,23 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     lblS_1.setFont(new Font("Candara", Font.BOLD, 25));
     lblS_1.setBounds(656, 150, 61, 32);
     contentPane.add(lblS_1);
+    
+    btnBasura = new JButton("");
+    btnBasura.addActionListener(this);
+    btnBasura.setBackground(Color.DARK_GRAY);
+    btnBasura.setBounds(701, 216, 124, 102);
+    contentPane.add(btnBasura);
+    Image imgLogo = new ImageIcon(this.getClass().getResource("/imgbasura.png")).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
+    btnBasura.setIcon(new ImageIcon(imgLogo));
+
+    
     cargar();
   }
   
   public void actionPerformed(ActionEvent arg0) {
+  	if (arg0.getSource() == btnBasura) {
+  		actionPerformedBtnBasura(arg0);
+  	}
     if (arg0.getSource() == this.btnMenos1)
       actionPerformedBtnMenos1(arg0); 
     if (arg0.getSource() == this.btnMas1)
@@ -804,4 +826,11 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       calcular(0);
     } 
   }
+	protected void actionPerformedBtnBasura(ActionEvent arg0) {
+		
+		this.ventas.eliminarFila();
+	    this.ventas.setEnabled(true);
+	    dispose();
+		
+	}
 }

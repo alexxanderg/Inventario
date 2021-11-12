@@ -187,7 +187,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUsuario.setBackground(colorDeselec);
-		btnUsuario.setBounds(0, 524, 230, 50);
+		btnUsuario.setBounds(0, 463, 230, 50);
 		panel.add(btnUsuario);
 
 		btnClientes = new JButton("Clientes ");
@@ -203,7 +203,7 @@ public class VentanaPrincipal extends JFrame {
 		btnClientes.setForeground(Color.WHITE);
 		btnClientes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnClientes.setBackground(colorDeselec);
-		btnClientes.setBounds(0, 463, 230, 50);
+		btnClientes.setBounds(0, 402, 230, 50);
 		panel.add(btnClientes);
 
 		btnReportes = new JButton("Reportes ");
@@ -219,7 +219,7 @@ public class VentanaPrincipal extends JFrame {
 		btnReportes.setForeground(Color.WHITE);
 		btnReportes.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnReportes.setBackground(colorDeselec);
-		btnReportes.setBounds(0, 585, 230, 50);
+		btnReportes.setBounds(0, 524, 230, 50);
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones ");
@@ -235,7 +235,7 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnConfiguraciones.setBackground(colorDeselec);
-		btnConfiguraciones.setBounds(0, 646, 230, 50);
+		btnConfiguraciones.setBounds(0, 585, 230, 50);
 		panel.add(btnConfiguraciones);
 		
 		btnDistribuidores = new JButton("Distribuidores");
@@ -250,7 +250,7 @@ public class VentanaPrincipal extends JFrame {
 		btnDistribuidores.setForeground(Color.WHITE);
 		btnDistribuidores.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDistribuidores.setBackground(colorDeselec);
-		btnDistribuidores.setBounds(0, 402, 230, 50);
+		btnDistribuidores.setBounds(0, 341, 230, 50);
 		panel.add(btnDistribuidores);
 		
 		btnCompras = new JButton("Compras");
