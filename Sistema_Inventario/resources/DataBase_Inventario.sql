@@ -97,6 +97,31 @@ foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
 );
 
+create table tb_cotizaciones(
+codcoti		int primary key auto_increment,
+idcliente	int,
+fecha		datetime,
+idusuario	int,
+totcompra 	float,
+totventa	float,
+nota		varchar(200),
+estado		tinyint -- 1Activa 2Modificada 3Eliminada
+);
+
+create table tb_cotizaciones_detalle(
+codcoti		int not null,
+codproducto	int,
+cantidad	float,
+preVeSDInd	float,	
+preVeSDTot	float,
+descIndiv	float,
+descTotal	float,
+subTotal	float,
+ganancia	float,
+uMedidaUsada varchar(30),
+primary key (codcoti, codproducto)
+);
+
 --
 create table tb_ingreso_productos(
 coding			int primary key auto_increment,

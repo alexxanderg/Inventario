@@ -497,7 +497,6 @@ public class Ventas extends JInternalFrame {
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckImrpimir.setSelected(true);
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
 		chckImrpimir.setBounds(1007, 203, 101, 23);
