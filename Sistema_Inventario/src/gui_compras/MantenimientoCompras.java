@@ -39,6 +39,8 @@ import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
 import clases.AbstractJasperReports;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
 
 public class MantenimientoCompras extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -66,6 +68,16 @@ public class MantenimientoCompras extends JInternalFrame {
 	private JLabel label_1;
 	private JButton btnVerCompras;
 	private JButton btnGenerarReporte;
+	private JLabel label_2;
+	private JTextField textField;
+	private JLabel lblFecha;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JButton btnVerCompras_1;
+	private JButton btnVerCompras_2;
+	private JTextField textField_1;
+	private JLabel label_3;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -91,7 +103,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 74, 1083, 250);
+		this.scrollPane.setBounds(10, 124, 1083, 200);
 		getContentPane().add(this.scrollPane);
 		
 		tbCompras = new JTable();
@@ -122,11 +134,11 @@ public class MantenimientoCompras extends JInternalFrame {
 		tbDetallesCompra.setBackground(Color.WHITE);
 		scrollPane_1.setViewportView(tbDetallesCompra);
 		
-		lblHistorialDeCompras = new JLabel("Historial de Compras:");
-		lblHistorialDeCompras.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblHistorialDeCompras.setForeground(Color.DARK_GRAY);
+		lblHistorialDeCompras = new JLabel("<html>BUSCAR<br>COMPRA<br>POR:</html>");
+		lblHistorialDeCompras.setVerticalAlignment(SwingConstants.TOP);
+		lblHistorialDeCompras.setForeground(SystemColor.textHighlight);
 		lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 25));
-		lblHistorialDeCompras.setBounds(10, 35, 331, 34);
+		lblHistorialDeCompras.setBounds(10, 9, 130, 104);
 		getContentPane().add(lblHistorialDeCompras);
 		
 		lblDetallesDeCompras = new JLabel("Detalles de Compra:");
@@ -141,15 +153,15 @@ public class MantenimientoCompras extends JInternalFrame {
 		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
 		label.setBackground(new Color(50, 205, 50));
-		label.setBounds(313, 12, 71, 30);
+		label.setBounds(155, 42, 71, 30);
 		getContentPane().add(label);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(313, 39, 130, 30);
+		dchDesde.setBounds(155, 69, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(453, 39, 130, 30);
+		dchHasta.setBounds(295, 69, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		label_1 = new JLabel("Hasta:");
@@ -157,7 +169,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
 		label_1.setBackground(new Color(50, 205, 50));
-		label_1.setBounds(453, 12, 71, 30);
+		label_1.setBounds(295, 42, 71, 30);
 		getContentPane().add(label_1);
 		
 		btnVerCompras = new JButton("Buscar");
@@ -169,10 +181,11 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnVerCompras.setForeground(Color.WHITE);
 		btnVerCompras.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVerCompras.setBackground(new Color(30, 144, 255));
-		btnVerCompras.setBounds(598, 35, 130, 34);
+		btnVerCompras.setBounds(447, 67, 130, 34);
 		getContentPane().add(btnVerCompras);
 		
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>COMPRAS</center></html>");
+		btnGenerarReporte.setVisible(false);
 		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -182,8 +195,71 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnGenerarReporte.setBackground(Color.WHITE);
-		btnGenerarReporte.setBounds(944, 8, 149, 57);
+		btnGenerarReporte.setBounds(434, 6, 149, 57);
 		getContentPane().add(btnGenerarReporte);
+		
+		label_2 = new JLabel("Por nro comprobante:");
+		label_2.setHorizontalAlignment(SwingConstants.LEFT);
+		label_2.setForeground(Color.DARK_GRAY);
+		label_2.setFont(new Font("Candara", Font.BOLD, 20));
+		label_2.setBackground(new Color(50, 205, 50));
+		label_2.setBounds(605, 8, 210, 30);
+		getContentPane().add(label_2);
+		
+		textField = new JTextField();
+		textField.setBounds(634, 42, 141, 20);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		lblFecha = new JLabel("Fecha:");
+		lblFecha.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFecha.setForeground(Color.DARK_GRAY);
+		lblFecha.setFont(new Font("Candara", Font.BOLD, 20));
+		lblFecha.setBackground(new Color(50, 205, 50));
+		lblFecha.setBounds(155, 9, 71, 30);
+		getContentPane().add(lblFecha);
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.textHighlight);
+		panel.setBounds(144, 11, 5, 100);
+		getContentPane().add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(SystemColor.textHighlight);
+		panel_1.setBounds(590, 9, 5, 100);
+		getContentPane().add(panel_1);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(SystemColor.textHighlight);
+		panel_2.setBounds(810, 9, 5, 100);
+		getContentPane().add(panel_2);
+		
+		btnVerCompras_1 = new JButton("Buscar");
+		btnVerCompras_1.setForeground(Color.WHITE);
+		btnVerCompras_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnVerCompras_1.setBackground(new Color(30, 144, 255));
+		btnVerCompras_1.setBounds(640, 65, 130, 34);
+		getContentPane().add(btnVerCompras_1);
+		
+		btnVerCompras_2 = new JButton("Buscar");
+		btnVerCompras_2.setForeground(Color.WHITE);
+		btnVerCompras_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnVerCompras_2.setBackground(new Color(30, 144, 255));
+		btnVerCompras_2.setBounds(872, 66, 130, 34);
+		getContentPane().add(btnVerCompras_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(866, 43, 141, 20);
+		getContentPane().add(textField_1);
+		
+		label_3 = new JLabel("Por lote:");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setForeground(Color.DARK_GRAY);
+		label_3.setFont(new Font("Candara", Font.BOLD, 20));
+		label_3.setBackground(new Color(50, 205, 50));
+		label_3.setBounds(837, 9, 210, 30);
+		getContentPane().add(label_3);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCompras.getTableHeader().setReorderingAllowed(false);
 
@@ -237,13 +313,13 @@ public class MantenimientoCompras extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {// "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"
 		TableColumnModel tcmC = tbCompras.getColumnModel();
-		tcmC.getColumn(0).setPreferredWidth(anchoColumna(7));  // 
-		tcmC.getColumn(1).setPreferredWidth(anchoColumna(12));  // 
-		tcmC.getColumn(2).setPreferredWidth(anchoColumna(17));  // 
-		tcmC.getColumn(3).setPreferredWidth(anchoColumna(21));  // 
-		tcmC.getColumn(4).setPreferredWidth(anchoColumna(16));  // 
-		tcmC.getColumn(5).setPreferredWidth(anchoColumna(16));
-		tcmC.getColumn(6).setPreferredWidth(anchoColumna(11));
+		tcmC.getColumn(0).setPreferredWidth(anchoColumna(10));  // 
+		tcmC.getColumn(1).setPreferredWidth(anchoColumna(15));  // 
+		tcmC.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
+		tcmC.getColumn(3).setPreferredWidth(anchoColumna(25));  // 
+		tcmC.getColumn(4).setPreferredWidth(anchoColumna(20));  // 
+		tcmC.getColumn(5).setPreferredWidth(anchoColumna(1));
+		tcmC.getColumn(6).setPreferredWidth(anchoColumna(9));
 		
 		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
@@ -423,42 +499,4 @@ public class MantenimientoCompras extends JInternalFrame {
 		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
 		return resultado;
 	}
-	
-	/*protected void mouseClickedMnAgregarPago(MouseEvent arg0){
-		try {
-			int nroCompra = Integer.parseInt(tbCompras.getValueAt(tbCompras.getSelectedRow(), 0).toString());
-			double totalCompra = Double.parseDouble(tbCompras.getValueAt(tbCompras.getSelectedRow(), 6).toString());
-			double saldoActual = Double.parseDouble(tbCompras.getValueAt(tbCompras.getSelectedRow(), 7).toString());
-			double pagoActual = totalCompra - saldoActual;
-		
-		
-			double montoPagoAniadir = Double.parseDouble( JOptionPane.showInputDialog("\nINGRESE EL PAGO A ADICIONAR:\n\nActualmente debe: " + saldoActual));
-			double nuevoMontoPagado = pagoActual + montoPagoAniadir;
-				nuevoMontoPagado = redondearDecimales(nuevoMontoPagado, 2);
-			double nuevoSaldo = totalCompra - nuevoMontoPagado;
-				redondearDecimales(nuevoSaldo, 2);
-				
-			consulta.iniciar();
-			consulta.aniadirPagodeCompra(nroCompra, nuevoMontoPagado, nuevoSaldo);
-			
-			actionPerformedBtnVerCompras(null);
-			
-			for(int i = 0; i<tbCompras.getRowCount(); i++){
-				if(nroCompra == Integer.parseInt( tbCompras.getValueAt(i, 0).toString()))
-					tbCompras.setRowSelectionInterval(i, i);
-			}
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ingrese valores correctos");
-		}finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (consulta != null)
-					consulta.reset();
-            } catch (Exception ex) {
-            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-            }
-		}
-	}*/
 }

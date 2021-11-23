@@ -549,7 +549,7 @@ public class consultas {
 	public ResultSet cargarCompras(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.fechaEmision between '" + fechai + "' and '" + fechaf + "' order by cp.idcompra desc");
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.fechaEmision between '" + fechai + "' and '" + fechaf + "' order by cp.fechaEmision desc");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras: " + e);
 		}

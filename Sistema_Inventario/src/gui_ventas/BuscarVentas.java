@@ -90,12 +90,6 @@ public class BuscarVentas extends JInternalFrame {
 	private JScrollPane scrollPane_1;
 	private JLabel lblDetallesDeVenta;
 	private JTable tbDetalleVenta;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JLabel lblNewLabel;
-	private JLabel lblVentasModificadas;
-	private JLabel lblVentasEliminadas;
 	private JMenu mnactualizarNotaDe;
 	private JMenu mnimprimirCopiaDe;
 
@@ -162,9 +156,10 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendido por:");
+		lblVendedor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(312, 13, 123, 30);
+		lblVendedor.setBounds(312, 10, 123, 29);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
@@ -237,10 +232,10 @@ public class BuscarVentas extends JInternalFrame {
 		btnGenerarReporte.setBounds(962, 10, 131, 57);
 		getContentPane().add(btnGenerarReporte);
 		
-		lblBuscarVentas = new JLabel("<html>Historial<br>de ventas:</html>");
+		lblBuscarVentas = new JLabel("<html>VENTAS REALIZADAS:</html>");
 		lblBuscarVentas.setForeground(Color.DARK_GRAY);
 		lblBuscarVentas.setFont(new Font("Candara", Font.BOLD, 25));
-		lblBuscarVentas.setBounds(10, 11, 123, 56);
+		lblBuscarVentas.setBounds(10, 11, 146, 56);
 		getContentPane().add(lblBuscarVentas);
 		
 		scrollPane_1 = new JScrollPane();
@@ -254,48 +249,12 @@ public class BuscarVentas extends JInternalFrame {
 		tbDetalleVenta.setFont(new Font("Arial", Font.ITALIC, 14));
 		scrollPane_1.setViewportView(tbDetalleVenta);
 		
-		lblDetallesDeVenta = new JLabel("Detalles de venta:");
-		lblDetallesDeVenta.setVerticalAlignment(SwingConstants.TOP);
+		lblDetallesDeVenta = new JLabel("Detalle de la venta:");
+		lblDetallesDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDetallesDeVenta.setForeground(Color.DARK_GRAY);
-		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 30));
-		lblDetallesDeVenta.setBounds(10, 356, 396, 34);
+		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
+		lblDetallesDeVenta.setBounds(10, 367, 396, 34);
 		getContentPane().add(lblDetallesDeVenta);
-		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(152, 19, 13, 13);
-		textField.setBackground(new Color(138, 230, 78)); //VERDE
-		getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(152, 36, 13, 13);
-		textField_1.setBackground(new Color(236, 236, 69)); //AMARILLO
-		getContentPane().add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(152, 54, 13, 13);
-		textField_2.setBackground(new Color(251, 105, 120)); //ROJO
-		getContentPane().add(textField_2);
-		
-		lblNewLabel = new JLabel("Ventas correctas");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(175, 19, 95, 14);
-		getContentPane().add(lblNewLabel);
-		
-		lblVentasModificadas = new JLabel("Ventas modificadas");
-		lblVentasModificadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVentasModificadas.setBounds(175, 36, 108, 14);
-		getContentPane().add(lblVentasModificadas);
-		
-		lblVentasEliminadas = new JLabel("Ventas eliminadas");
-		lblVentasEliminadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVentasEliminadas.setBounds(175, 53, 95, 14);
-		getContentPane().add(lblVentasEliminadas);
 
 		
 		menuBar = new JMenuBar();
@@ -304,6 +263,7 @@ public class BuscarVentas extends JInternalFrame {
 		setJMenuBar(menuBar);
 		
 		mnModificarProducto = new JMenu("|Modificar Venta| ");
+		mnModificarProducto.setVisible(false);
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -340,7 +300,6 @@ public class BuscarVentas extends JInternalFrame {
 		menuBar.add(mnEliminarVenta);
 		
 		mnimprimirCopiaDe = new JMenu("|Imprimir copia de ticket| ");
-		mnimprimirCopiaDe.setVisible(false);
 		mnimprimirCopiaDe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -387,6 +346,9 @@ public class BuscarVentas extends JInternalFrame {
 		dchHasta.setDate(date);
 		
 		ajustarAnchoColumnas();
+		
+		actionPerformedBtnVerVentas(null);
+		
 	}
 	
 	private void recargar(){

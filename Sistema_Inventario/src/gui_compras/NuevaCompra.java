@@ -89,6 +89,7 @@ public class NuevaCompra extends JFrame {
 	NuevoProducto np = new NuevoProducto(null, this, null);
 	private JButton btnQuitar;
 	private JButton btnAyuda;
+	private JLabel lblTotal;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -119,7 +120,7 @@ public class NuevaCompra extends JFrame {
 		setTitle("Crear producto");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1057, 652);
+		setBounds(100, 100, 1069, 652);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -192,6 +193,7 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(txtNroSerie);
 		
 		lblMarca = new JLabel("Moneda:");
+		lblMarca.setVisible(false);
 		lblMarca.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMarca.setForeground(Color.DARK_GRAY);
@@ -200,6 +202,7 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(lblMarca);
 		
 		lblColor = new JLabel("Tipo de cambio:");
+		lblColor.setVisible(false);
 		lblColor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblColor.setForeground(Color.DARK_GRAY);
@@ -208,16 +211,18 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(lblColor);
 		
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
+		lblFechaVencimiento.setVisible(false);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaVencimiento.setBounds(554, 178, 205, 25);
+		lblFechaVencimiento.setBounds(554, 247, 205, 25);
 		contentPane.add(lblFechaVencimiento);
 		
 		dchFeVencimiento = new JDateChooser();
+		dchFeVencimiento.setVisible(false);
 		dchFeVencimiento.setFont(new Font("Arial", Font.PLAIN, 16));
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
-		dchFeVencimiento.setBounds(759, 178, 282, 25);
+		dchFeVencimiento.setBounds(759, 247, 282, 25);
 		contentPane.add(dchFeVencimiento);
 		
 		btnRegistrarCompra = new JButton("REGISTRAR");
@@ -229,7 +234,7 @@ public class NuevaCompra extends JFrame {
 		btnRegistrarCompra.setForeground(SystemColor.menu);
 		btnRegistrarCompra.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnRegistrarCompra.setBackground(new Color(30, 144, 255));
-		btnRegistrarCompra.setBounds(801, 548, 240, 61);
+		btnRegistrarCompra.setBounds(262, 541, 240, 61);
 		contentPane.add(btnRegistrarCompra);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -241,7 +246,7 @@ public class NuevaCompra extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(551, 548, 240, 61);
+		btnCancelar.setBounds(12, 541, 240, 61);
 		contentPane.add(btnCancelar);
 		
 		txtCrearProducto = new JTextField();
@@ -292,6 +297,7 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(cbTipoComprobante);
 		
 		cbMoneda = new JComboBox();
+		cbMoneda.setVisible(false);
 		cbMoneda.setModel(new DefaultComboBoxModel(new String[] {"Soles", "Dolares"}));
 		cbMoneda.setForeground(Color.DARK_GRAY);
 		cbMoneda.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -301,6 +307,7 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(cbMoneda);
 		
 		txtTipoCambio = new JTextField();
+		txtTipoCambio.setVisible(false);
 		txtTipoCambio.setHorizontalAlignment(SwingConstants.LEFT);
 		txtTipoCambio.setForeground(Color.DARK_GRAY);
 		txtTipoCambio.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -372,7 +379,7 @@ public class NuevaCompra extends JFrame {
 		btnIngresar.setBounds(788, 296, 143, 34);
 		contentPane.add(btnIngresar);
 		
-		lblNotaDeCompra = new JLabel("Nota de compra:");
+		lblNotaDeCompra = new JLabel("Nros de Lote: ");
 		lblNotaDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotaDeCompra.setForeground(Color.DARK_GRAY);
 		lblNotaDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
@@ -386,14 +393,14 @@ public class NuevaCompra extends JFrame {
 		txtNota.setColumns(10);
 		txtNota.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNota.setBackground(new Color(245, 245, 245));
-		txtNota.setBounds(212, 212, 300, 25);
+		txtNota.setBounds(212, 212, 829, 25);
 		contentPane.add(txtNota);
 		
 		lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
 		lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(554, 212, 190, 23);
+		lblMtodoDePago.setBounds(554, 178, 190, 23);
 		contentPane.add(lblMtodoDePago);
 		
 		cbMetPago = new JComboBox();
@@ -402,7 +409,7 @@ public class NuevaCompra extends JFrame {
 		cbMetPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMetPago.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbMetPago.setBackground(new Color(245, 245, 245));
-		cbMetPago.setBounds(759, 212, 282, 25);
+		cbMetPago.setBounds(759, 178, 282, 25);
 		contentPane.add(cbMetPago);
 		
 		btnNuevoProducto = new JButton("+");
@@ -441,6 +448,13 @@ public class NuevaCompra extends JFrame {
 		btnAyuda.setBackground(new Color(255, 215, 0));
 		btnAyuda.setBounds(827, 61, 214, 32);
 		contentPane.add(btnAyuda);
+		
+		lblTotal = new JLabel("S/");
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotal.setForeground(Color.DARK_GRAY);
+		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
+		lblTotal.setBounds(827, 550, 214, 54);
+		contentPane.add(lblTotal);
 		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
@@ -570,6 +584,7 @@ public class NuevaCompra extends JFrame {
 					String nota = "";			nota = txtNota.getText();
 					String metPago = "";		cbMetPago.getSelectedItem().toString();
 					double total = 0;
+					total = Float.parseFloat(lblTotal.getText());
 					double pagado = 0;
 					double saldo = 0;					
 					try {
@@ -720,6 +735,8 @@ public class NuevaCompra extends JFrame {
 			total = total + precioSubTotProd;
 		}
 		total = redondearDecimales(total, 2);
+		
+		lblTotal.setText(""+total);
 	}
 
 	protected void keyReleasedTxtBuscarProducto(KeyEvent e) {
