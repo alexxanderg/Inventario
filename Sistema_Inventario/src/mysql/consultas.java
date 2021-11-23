@@ -337,7 +337,10 @@ public class consultas {
 								+ "prep1,"
 								+ "promo2,"
 								+ "cantp2,"
-								+ "prep2"
+								+ "prep2,"
+								+ "promo3,"
+								+ "cantp3,"
+								+ "prep3"
 								+ " from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
 		} catch (Exception e) {
 		}
@@ -355,11 +358,11 @@ public class consultas {
 
 	public int ingresarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
-			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, int primeravez) {
+			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, String nombrePromo3, double cantPromo3, double prePromo3, int primeravez) {
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_productos (codproducto, codbarra, producto, detalles, marca, color, lote, laboratorio, unimedida, fechaVenc, categoria, almacen, iddistrib, cantidad, cantmin, precioCo, precioVe, ptjganancia, estado, promo1, cantp1, prep1, promo2, cantp2, prep2, promo3, cantp3, prep3)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
 			prepareStmt.setString(2, codbarra);
@@ -386,6 +389,9 @@ public class consultas {
 			prepareStmt.setString(23, nombrePromo2);
 			prepareStmt.setDouble(24, cantPromo2);
 			prepareStmt.setDouble(25, prePromo2);
+			prepareStmt.setString(26, nombrePromo3);
+			prepareStmt.setDouble(27, cantPromo3);
+			prepareStmt.setDouble(28, prePromo3);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, "AGREGADO CORRECTAMENTE");
 			return 0;// 0= se creo correctamente
@@ -397,11 +403,11 @@ public class consultas {
 	
 	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
-			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2,int cod) {
+			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, String nombrePromo3, double cantPromo3, double prePromo3, int cod) {
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, iddistrib=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=? where codproducto=?";
+			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, iddistrib=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?, promo3=?, cantp3=?, prep3=?  where codproducto=?";
 
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, codbarra);
@@ -427,7 +433,10 @@ public class consultas {
 			prepareStmt.setString(21, nombrePromo2);
 			prepareStmt.setDouble(22, cantPromo2);
 			prepareStmt.setDouble(23, prePromo2);
-			prepareStmt.setInt(24, cod);
+			prepareStmt.setString(24, nombrePromo3);
+			prepareStmt.setDouble(25, cantPromo3);
+			prepareStmt.setDouble(26, prePromo3);
+			prepareStmt.setInt(27, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {

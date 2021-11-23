@@ -97,6 +97,12 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   
   double prePromo2;
   
+  String nomPromo3;
+  
+  double cantPromo3;
+  
+  double prePromo3;
+  
   String uniMedOriginal;
   
   double preUniOriginal;
@@ -259,6 +265,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.cbPrecio.setBounds(232, 111, 160, 31);
     this.contentPane.add(this.cbPrecio);
     this.txtPreCompra = new JTextField();
+    txtPreCompra.setVisible(false);
     this.txtPreCompra.setEditable(false);
     this.txtPreCompra.setHorizontalAlignment(0);
     this.txtPreCompra.setText("<dynamic>");
@@ -470,6 +477,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         this.nomPromo2 = rs.getString("promo2");
         this.cantPromo2 = rs.getDouble("cantp2");
         this.prePromo2 = rs.getDouble("prep2");
+        this.nomPromo3 = rs.getString("promo3");
+        this.cantPromo3 = rs.getDouble("cantp3");
+        this.prePromo3 = rs.getDouble("prep3");
         this.uniMedOriginal = rs.getString("unimedida");
         this.preUniOriginal = rs.getFloat("precioVe");
         this.preCompraVenta = rs.getFloat("precioCo");
@@ -495,6 +505,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       this.cbPrecio.addItem(this.nomPromo1); 
     if (!this.nomPromo2.equals("0"))
       this.cbPrecio.addItem(this.nomPromo2); 
+    if (!this.nomPromo3.equals("0"))
+        this.cbPrecio.addItem(this.nomPromo3); 
     this.cbPrecio.setSelectedItem(this.uniMedVenta);
     this.txtTitulo.setText(this.nomProdVenta);
     this.txtCantidad.setText("" + this.cantVenta);
@@ -749,6 +761,10 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       this.txtCantidad.setText("1");
       this.txtPUnidadOriginal.setText("" + this.prePromo2);
     } 
+    if (this.cbPrecio.getSelectedIndex() == 3) {
+        this.txtCantidad.setText("1");
+        this.txtPUnidadOriginal.setText("" + this.prePromo3);
+      }
     
     this.txtDescuentoIndiv.setText("0");
     this.txtDescuentoTot.setText("0");

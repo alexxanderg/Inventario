@@ -1308,6 +1308,10 @@ public class Ventas extends JInternalFrame {
 												cantADisminuir = cantProdVenta * rs.getFloat("cantp2");
 												cantADisminuir = redondearDecimales(cantADisminuir, 2);
 											}
+											else if (rs.getString("promo3").equals(uMedidaUsada)){
+												cantADisminuir = cantProdVenta * rs.getFloat("cantp3");
+												cantADisminuir = redondearDecimales(cantADisminuir, 2);
+											}
 											else{
 												cantADisminuir = cantProdVenta;
 											}

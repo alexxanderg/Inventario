@@ -89,8 +89,6 @@ public class VentanaPrincipal extends JFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	
-	
-	
 	/*Color colorSelec = new Color(57, 192, 38 ); // KAT
     Color colorDeselec = new Color(133, 207, 122 );*/
 	
