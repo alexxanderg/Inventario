@@ -565,6 +565,26 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet buscarCompraComprobante(String serie, String nSerie) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.serie = '" + serie + "' and cp.nroserie = '" + nSerie + "' order by cp.fechaEmision desc");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras comprobante consulta: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet buscarCompraLote(String lote) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.nota like '%" + lote + "%' order by cp.fechaEmision desc");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras comprobante consulta: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet buscarCompraDetalle(int nroCompra) {
 		try {
 			st = con.createStatement();

@@ -428,32 +428,38 @@ public class Reportes extends JInternalFrame {
 		panel_2.setLayout(null);
 		
 		lblReporteDeCompras = new JLabel("REPORTE DE INGRESOS");
+		lblReporteDeCompras.setVisible(false);
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
 		lblReporteDeCompras.setBounds(291, 11, 535, 32);
 		panel_2.add(lblReporteDeCompras);
 		
 		label = new JLabel("del:");
+		label.setVisible(false);
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
 		label.setBounds(355, 54, 46, 23);
 		panel_2.add(label);
 		
 		calRI01 = new JDateChooser();
+		calRI01.setVisible(false);
 		calRI01.setBounds(409, 54, 125, 23);
 		panel_2.add(calRI01);
 		
 		label_3 = new JLabel("al:");
+		label_3.setVisible(false);
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Candara", Font.BOLD, 20));
 		label_3.setBounds(578, 54, 55, 23);
 		panel_2.add(label_3);
 		
 		calRI02 = new JDateChooser();
+		calRI02.setVisible(false);
 		calRI02.setBounds(626, 54, 125, 23);
 		panel_2.add(calRI02);
 		
 		button = new JButton("Ver reporte");
+		button.setVisible(false);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedButton(e);

@@ -69,15 +69,17 @@ public class MantenimientoCompras extends JInternalFrame {
 	private JButton btnVerCompras;
 	private JButton btnGenerarReporte;
 	private JLabel label_2;
-	private JTextField textField;
+	private JTextField txtSerie;
 	private JLabel lblFecha;
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
-	private JButton btnVerCompras_1;
-	private JButton btnVerCompras_2;
-	private JTextField textField_1;
+	private JButton btnComprobante;
+	private JButton btnLote;
+	private JTextField txtLote;
 	private JLabel label_3;
+	private JTextField txtNserie;
+	private JLabel label_4;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -206,10 +208,10 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_2.setBounds(605, 8, 210, 30);
 		getContentPane().add(label_2);
 		
-		textField = new JTextField();
-		textField.setBounds(634, 42, 141, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtSerie = new JTextField();
+		txtSerie.setBounds(615, 42, 71, 20);
+		getContentPane().add(txtSerie);
+		txtSerie.setColumns(10);
 		
 		lblFecha = new JLabel("Fecha:");
 		lblFecha.setHorizontalAlignment(SwingConstants.LEFT);
@@ -234,24 +236,34 @@ public class MantenimientoCompras extends JInternalFrame {
 		panel_2.setBounds(810, 9, 5, 100);
 		getContentPane().add(panel_2);
 		
-		btnVerCompras_1 = new JButton("Buscar");
-		btnVerCompras_1.setForeground(Color.WHITE);
-		btnVerCompras_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnVerCompras_1.setBackground(new Color(30, 144, 255));
-		btnVerCompras_1.setBounds(640, 65, 130, 34);
-		getContentPane().add(btnVerCompras_1);
+		btnComprobante = new JButton("Buscar");
+		btnComprobante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnComprobante(e);
+			}
+		});
+		btnComprobante.setForeground(Color.WHITE);
+		btnComprobante.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnComprobante.setBackground(new Color(30, 144, 255));
+		btnComprobante.setBounds(640, 65, 130, 34);
+		getContentPane().add(btnComprobante);
 		
-		btnVerCompras_2 = new JButton("Buscar");
-		btnVerCompras_2.setForeground(Color.WHITE);
-		btnVerCompras_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnVerCompras_2.setBackground(new Color(30, 144, 255));
-		btnVerCompras_2.setBounds(872, 66, 130, 34);
-		getContentPane().add(btnVerCompras_2);
+		btnLote = new JButton("Buscar");
+		btnLote.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnLote(e);
+			}
+		});
+		btnLote.setForeground(Color.WHITE);
+		btnLote.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnLote.setBackground(new Color(30, 144, 255));
+		btnLote.setBounds(872, 66, 130, 34);
+		getContentPane().add(btnLote);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(866, 43, 141, 20);
-		getContentPane().add(textField_1);
+		txtLote = new JTextField();
+		txtLote.setColumns(10);
+		txtLote.setBounds(866, 43, 141, 20);
+		getContentPane().add(txtLote);
 		
 		label_3 = new JLabel("Por lote:");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -260,6 +272,19 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_3.setBackground(new Color(50, 205, 50));
 		label_3.setBounds(837, 9, 210, 30);
 		getContentPane().add(label_3);
+		
+		txtNserie = new JTextField();
+		txtNserie.setColumns(10);
+		txtNserie.setBounds(705, 42, 95, 20);
+		getContentPane().add(txtNserie);
+		
+		label_4 = new JLabel("-");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setForeground(Color.DARK_GRAY);
+		label_4.setFont(new Font("Candara", Font.BOLD, 20));
+		label_4.setBackground(new Color(50, 205, 50));
+		label_4.setBounds(684, 42, 21, 20);
+		getContentPane().add(label_4);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCompras.getTableHeader().setReorderingAllowed(false);
 
@@ -291,7 +316,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		tb = this.tbCompras;
 		tb.setRowHeight(30);
 		tb.setModel(dtmC);
-		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL"});
+		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "LOTES", "F EMISIÓN", "F VENCIMIENTO", "TOTAL"});
 		
 		JTable tbCD = this.tbDetallesCompra;
 		tbCD.setRowHeight(30);
@@ -498,5 +523,71 @@ public class MantenimientoCompras extends JInternalFrame {
 		resultado = Math.round(resultado);
 		resultado = (resultado / Math.pow(10, numeroDecimales)) + parteEntera;
 		return resultado;
+	}
+	
+	protected void actionPerformedBtnComprobante(ActionEvent e) {
+		for (int i = 0; i < tbCompras.getRowCount(); i++) {
+			dtmC.removeRow(i);
+			i -= 1;
+		}
+		for (int i = 0; i < tbDetallesCompra.getRowCount(); i++) {
+			dtmCD.removeRow(i);
+			i -= 1;
+		}
+		
+		String serie = txtSerie.getText();
+		String nSerie = txtNserie.getText();
+		
+		try {
+			consulta.iniciar();
+			rs = consulta.buscarCompraComprobante(serie, nSerie);
+			while(rs.next()){
+				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+			}
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "ERROR al cargar compra comprobante: " + ex.getMessage());
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
+		
+	}
+	
+	protected void actionPerformedBtnLote(ActionEvent e) {
+		for (int i = 0; i < tbCompras.getRowCount(); i++) {
+			dtmC.removeRow(i);
+			i -= 1;
+		}
+		for (int i = 0; i < tbDetallesCompra.getRowCount(); i++) {
+			dtmCD.removeRow(i);
+			i -= 1;
+		}
+		
+		String lote = txtLote.getText();
+		
+		try {
+			consulta.iniciar();
+			rs = consulta.buscarCompraLote(lote);
+			while(rs.next()){
+				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+			}
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "ERROR al cargar compra lote: " + ex.getMessage());
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}	
 	}
 }
