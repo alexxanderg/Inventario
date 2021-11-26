@@ -90,6 +90,7 @@ public class NuevaCompra extends JFrame {
 	private JButton btnQuitar;
 	private JButton btnAyuda;
 	private JLabel lblTotal;
+	private JLabel lblingreseAquLos;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -344,7 +345,7 @@ public class NuevaCompra extends JFrame {
 		txtBuscarProducto.setColumns(10);
 		txtBuscarProducto.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtBuscarProducto.setBackground(new Color(245, 245, 245));
-		txtBuscarProducto.setBounds(12, 296, 766, 34);
+		txtBuscarProducto.setBounds(12, 296, 544, 34);
 		contentPane.add(txtBuscarProducto);
 		
 		label = new JLabel("Buscar producto:");
@@ -422,7 +423,7 @@ public class NuevaCompra extends JFrame {
 		btnNuevoProducto.setFont(new Font("Arial", Font.BOLD, 20));
 		btnNuevoProducto.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnNuevoProducto.setBackground(new Color(30, 144, 255));
-		btnNuevoProducto.setBounds(212, 267, 54, 25);
+		btnNuevoProducto.setBounds(560, 301, 54, 25);
 		contentPane.add(btnNuevoProducto);
 		
 		btnQuitar = new JButton("Quitar");
@@ -455,6 +456,13 @@ public class NuevaCompra extends JFrame {
 		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
 		lblTotal.setBounds(827, 550, 214, 54);
 		contentPane.add(lblTotal);
+		
+		lblingreseAquLos = new JLabel("<html>Ingrese aqu\u00ED los nros de lote de sus productos<br>separados con un / <br>Ejm: 123123 / 1234212 / 52372873</html>");
+		lblingreseAquLos.setHorizontalAlignment(SwingConstants.LEFT);
+		lblingreseAquLos.setForeground(Color.DARK_GRAY);
+		lblingreseAquLos.setFont(new Font("Candara", Font.PLAIN, 14));
+		lblingreseAquLos.setBounds(212, 237, 300, 56);
+		contentPane.add(lblingreseAquLos);
 		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
@@ -502,7 +510,7 @@ public class NuevaCompra extends JFrame {
 			consulta.iniciar();
 			rs = consulta.cargarProductos();
 			while (rs.next()) 
-				ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " * " + rs.getString("unimedida") + 
+				ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + "*" + rs.getString("laboratorio") + " * " + rs.getString("unimedida") + 
 						" - " + rs.getString("almacen") + "  -  (" + rs.getString("codproducto") + ")");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);

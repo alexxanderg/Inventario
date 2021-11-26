@@ -440,8 +440,8 @@ public class MantenimientoProd extends JInternalFrame {
 		TableColumnModel tcm = tbProductos.getColumnModel(); // 
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20)); // Producto
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(5)); // Detalle
 		
 		for(int i=0; i<tbProductos.getColumnCount(); i++)
 			if(tbProductos.getColumnName(i).equals("FECHA VENC."))
