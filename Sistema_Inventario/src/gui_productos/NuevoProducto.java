@@ -1410,12 +1410,12 @@ public class NuevoProducto extends JFrame {
 	}
 	protected void keyTypedTxtMarca(KeyEvent e) {
 		char c = e.getKeyChar();
-		if (txtMarca.getText().length() == 30 || c=='(' || c==')')
+		if (txtMarca.getText().length() == 200 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtColor(KeyEvent e) {
 		char c = e.getKeyChar();
-		if (txtColor.getText().length() == 30 || c=='(' || c==')')
+		if (txtColor.getText().length() == 200 || c=='(' || c==')')
 			e.consume();
 	}
 	protected void keyTypedTxtLaboratorio(KeyEvent e) {

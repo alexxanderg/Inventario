@@ -316,12 +316,12 @@ public class MantenimientoCompras extends JInternalFrame {
 		tb = this.tbCompras;
 		tb.setRowHeight(30);
 		tb.setModel(dtmC);
-		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "LOTES", "F EMISIÓN", "F VENCIMIENTO", "TOTAL"});
+		dtmC.setColumnIdentifiers(new Object[]{"NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "TOTAL"});
 		
 		JTable tbCD = this.tbDetallesCompra;
 		tbCD.setRowHeight(30);
 		tbCD.setModel(dtmCD);
-		dtmCD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL"});
+		dtmCD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL", "LOTE"});
 		
 		
 		
@@ -336,33 +336,33 @@ public class MantenimientoCompras extends JInternalFrame {
 		return porcentaje * scrollPane.getWidth() / 100;
 	}
 
-	public void ajustarAnchoColumnas() {// "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "F VENCIMIENTO", "TOTAL", "SALDO"
+	public void ajustarAnchoColumnas() {// "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "TOTAL"
 		TableColumnModel tcmC = tbCompras.getColumnModel();
 		tcmC.getColumn(0).setPreferredWidth(anchoColumna(10));  // 
-		tcmC.getColumn(1).setPreferredWidth(anchoColumna(15));  // 
+		tcmC.getColumn(1).setPreferredWidth(anchoColumna(20));  // 
 		tcmC.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
-		tcmC.getColumn(3).setPreferredWidth(anchoColumna(25));  // 
-		tcmC.getColumn(4).setPreferredWidth(anchoColumna(20));  // 
-		tcmC.getColumn(5).setPreferredWidth(anchoColumna(1));
-		tcmC.getColumn(6).setPreferredWidth(anchoColumna(9));
+		tcmC.getColumn(3).setPreferredWidth(anchoColumna(20));  // 
+		tcmC.getColumn(4).setPreferredWidth(anchoColumna(20));  //
+		tcmC.getColumn(5).setPreferredWidth(anchoColumna(10));
 		
 		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		tbCompras.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 		tbCompras.getColumnModel().getColumn(5).setCellRenderer(tcr0);
-		tbCompras.getColumnModel().getColumn(6).setCellRenderer(tcr0);
 		
 		//"CANTIDAD", "PRODUCTO", "PRECIO UNI", "SUB TOTAL"
 		TableColumnModel tcmCD = tbDetallesCompra.getColumnModel();
 		tcmCD.getColumn(0).setPreferredWidth(anchoColumna(10));  // 
 		tcmCD.getColumn(1).setPreferredWidth(anchoColumna(50));  // 
-		tcmCD.getColumn(2).setPreferredWidth(anchoColumna(20));  // 
-		tcmCD.getColumn(3).setPreferredWidth(anchoColumna(20));  // 
+		tcmCD.getColumn(2).setPreferredWidth(anchoColumna(15));  // 
+		tcmCD.getColumn(3).setPreferredWidth(anchoColumna(15));  //
+		tcmCD.getColumn(4).setPreferredWidth(anchoColumna(10));  // 
 		
 		tbDetallesCompra.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbDetallesCompra.getColumnModel().getColumn(2).setCellRenderer(tcr0);
 		tbDetallesCompra.getColumnModel().getColumn(3).setCellRenderer(tcr0);
+		tbDetallesCompra.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 	}
 	
 	protected void mouseClickedMnCrearCompra(MouseEvent e) {
@@ -394,7 +394,7 @@ public class MantenimientoCompras extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.buscarCompraDetalle(nroCompra);
 			while (rs.next()){
-				dtmCD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color"), rs.getFloat("preUni"), rs.getFloat("preSubT")});
+				dtmCD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color"), rs.getFloat("preUni"), rs.getFloat("preSubT"), rs.getString("lote")});
 			}
 			consulta.reset();
 		} catch (Exception e) {
@@ -448,7 +448,7 @@ public class MantenimientoCompras extends JInternalFrame {
 				consulta.iniciar();
 				rs = consulta.cargarCompras(fechai, fechaf);
 				while(rs.next()){
-					dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+					dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getFloat("tot")});
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "ERROR al cargar compras: " + e.getMessage());
@@ -542,7 +542,7 @@ public class MantenimientoCompras extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.buscarCompraComprobante(serie, nSerie);
 			while(rs.next()){
-				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getFloat("tot")});
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar compra comprobante: " + ex.getMessage());
@@ -575,7 +575,7 @@ public class MantenimientoCompras extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.buscarCompraLote(lote);
 			while(rs.next()){
-				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getString("fechaVencimiento"), rs.getFloat("tot"), rs.getFloat("saldo")});
+				dtmC.addRow(new Object[]{rs.getInt("idcompra"), rs.getString("serie")+" - " + rs.getString("nroSerie"), rs.getString("nombre"), rs.getString("nota"), rs.getString("fechaEmision"), rs.getFloat("tot")});
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar compra lote: " + ex.getMessage());

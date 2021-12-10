@@ -90,7 +90,6 @@ public class NuevaCompra extends JFrame {
 	private JButton btnQuitar;
 	private JButton btnAyuda;
 	private JLabel lblTotal;
-	private JLabel lblingreseAquLos;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -380,7 +379,7 @@ public class NuevaCompra extends JFrame {
 		btnIngresar.setBounds(788, 296, 143, 34);
 		contentPane.add(btnIngresar);
 		
-		lblNotaDeCompra = new JLabel("Nros de Lote: ");
+		lblNotaDeCompra = new JLabel("Nota: ");
 		lblNotaDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotaDeCompra.setForeground(Color.DARK_GRAY);
 		lblNotaDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
@@ -456,13 +455,6 @@ public class NuevaCompra extends JFrame {
 		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
 		lblTotal.setBounds(827, 550, 214, 54);
 		contentPane.add(lblTotal);
-		
-		lblingreseAquLos = new JLabel("<html>Ingrese aqu\u00ED los nros de lote de sus productos<br>separados con un / <br>Ejm: 123123 / 1234212 / 52372873</html>");
-		lblingreseAquLos.setHorizontalAlignment(SwingConstants.LEFT);
-		lblingreseAquLos.setForeground(Color.DARK_GRAY);
-		lblingreseAquLos.setFont(new Font("Candara", Font.PLAIN, 14));
-		lblingreseAquLos.setBounds(212, 237, 300, 56);
-		contentPane.add(lblingreseAquLos);
 		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie, txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio, dchFeEmision, dchFeVencimiento, txtNota, cbMetPago, txtPagado, btnRegistrarCompra, btnCancelar}));
 		
 		cargar();
@@ -471,7 +463,7 @@ public class NuevaCompra extends JFrame {
 	
 	private void cargar(){
 		tbCompras.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total"});
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total", "Lote"});
 		ajustarAnchoColumnas();
 		tbCompras.setRowHeight(25);
 		
@@ -485,6 +477,7 @@ public class NuevaCompra extends JFrame {
 		dchFeEmision.setDate(date);
 		//dchFeVencimiento.setDate(date);
 	}
+	
 	private int anchoColumna(int porcentaje) {
 		return porcentaje * scrollPane.getWidth() / 100;
 	}
@@ -653,9 +646,11 @@ public class NuevaCompra extends JFrame {
 							preIndivProd = redondearDecimales(preIndivProd, 2);
 						double preSubTotProd = Float.parseFloat(tbCompras.getValueAt(i, 3).toString());
 							preSubTotProd = redondearDecimales(preSubTotProd, 2);
-						
+						String lote = tbCompras.getValueAt(i, 4).toString();
+							
+							
 						consulta.iniciar();
-						consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd);	
+						consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd, lote);	
 						consulta.anadirStockProducto(idProd, cantProd);
 						consulta.reset();
 					}
@@ -726,8 +721,9 @@ public class NuevaCompra extends JFrame {
 				precioUnidad = redondearDecimales(precioUnidad, 2);
 			double precioSubTot = precioUnidad*cantidad;
 				precioSubTot = redondearDecimales(precioSubTot, 2);
+			String lote = JOptionPane.showInputDialog(prod + "\n\nINGRESE NRO DE LOTE SI TUVIERA");
 			
-			dtm.addRow(new Object[]{cantidad, nomProducto, precioUnidad, precioSubTot});
+			dtm.addRow(new Object[]{cantidad, nomProducto, precioUnidad, precioSubTot, lote});
 			
 			sumarTotal();
 
