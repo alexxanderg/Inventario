@@ -231,7 +231,7 @@ public class NuevoProducto extends JFrame {
 		txtNombreProducto.setBounds(209, 95, 300, 25);
 		contentPane.add(txtNombreProducto);
 		
-		lblDescripcin = new JLabel("Descripci\u00F3n:");
+		lblDescripcin = new JLabel("Uso terapeutico:");
 		lblDescripcin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescripcin.setForeground(Color.DARK_GRAY);
 		lblDescripcin.setFont(new Font("Candara", Font.BOLD, 20));
@@ -267,7 +267,7 @@ public class NuevoProducto extends JFrame {
 		lblCategora.setBounds(9, 275, 190, 25);
 		contentPane.add(lblCategora);
 		
-		lblMarca = new JLabel("Marca:");
+		lblMarca = new JLabel("Sustancia activa:");
 		lblMarca.setVisible(false);
 		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMarca.setForeground(Color.DARK_GRAY);

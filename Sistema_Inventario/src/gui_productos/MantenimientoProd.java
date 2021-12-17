@@ -307,11 +307,11 @@ public class MantenimientoProd extends JInternalFrame {
         list.add("ID");
         list.add("C BARRA");
         list.add("NOMBRE");
-        list.add("DESCRIPCIÓN");
+        list.add("USO TERAPEUTICO");
 		String[] parts = atribTodos.split(",");
 		for (int x=0; x<parts.length; x++){
 			if(parts[x].equals("marca"))
-				list.add("MARCA");
+				list.add("SUSTANCIA ACTIVA");
 			if(parts[x].equals("color"))
 				list.add("COLOR");
 			if(parts[x].equals("lote"))
