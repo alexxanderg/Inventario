@@ -50,7 +50,6 @@ public class MantenimientoCompras extends JInternalFrame {
 	public JTable tbCompras;
 	public VentanaPrincipal vp;
 	private JScrollPane scrollPane_1;
-	private JLabel lblHistorialDeCompras;
 	private JLabel lblDetallesDeCompras;
 	private JTable tbDetallesCompra;
 	
@@ -70,7 +69,6 @@ public class MantenimientoCompras extends JInternalFrame {
 	private JButton btnGenerarReporte;
 	private JLabel label_2;
 	private JTextField txtSerie;
-	private JLabel lblFecha;
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
@@ -99,13 +97,13 @@ public class MantenimientoCompras extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("USUARIOS");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 124, 1083, 200);
+		this.scrollPane.setBounds(10, 124, 738, 200);
 		getContentPane().add(this.scrollPane);
 		
 		tbCompras = new JTable();
@@ -125,7 +123,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(10, 390, 1083, 200);
+		scrollPane_1.setBounds(10, 390, 738, 200);
 		getContentPane().add(scrollPane_1);
 		
 		tbDetallesCompra = new JTable();
@@ -135,13 +133,6 @@ public class MantenimientoCompras extends JInternalFrame {
 		tbDetallesCompra.setFont(new Font("Arial", Font.ITALIC, 14));
 		tbDetallesCompra.setBackground(Color.WHITE);
 		scrollPane_1.setViewportView(tbDetallesCompra);
-		
-		lblHistorialDeCompras = new JLabel("<html>BUSCAR<br>COMPRA<br>POR:</html>");
-		lblHistorialDeCompras.setVerticalAlignment(SwingConstants.TOP);
-		lblHistorialDeCompras.setForeground(SystemColor.textHighlight);
-		lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 25));
-		lblHistorialDeCompras.setBounds(10, 9, 130, 104);
-		getContentPane().add(lblHistorialDeCompras);
 		
 		lblDetallesDeCompras = new JLabel("Detalles de Compra:");
 		lblDetallesDeCompras.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -155,15 +146,15 @@ public class MantenimientoCompras extends JInternalFrame {
 		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
 		label.setBackground(new Color(50, 205, 50));
-		label.setBounds(155, 42, 71, 30);
+		label.setBounds(23, 10, 71, 30);
 		getContentPane().add(label);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(155, 69, 130, 30);
+		dchDesde.setBounds(23, 37, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(295, 69, 130, 30);
+		dchHasta.setBounds(163, 37, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		label_1 = new JLabel("Hasta:");
@@ -171,7 +162,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
 		label_1.setBackground(new Color(50, 205, 50));
-		label_1.setBounds(295, 42, 71, 30);
+		label_1.setBounds(163, 10, 71, 30);
 		getContentPane().add(label_1);
 		
 		btnVerCompras = new JButton("Buscar");
@@ -183,7 +174,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnVerCompras.setForeground(Color.WHITE);
 		btnVerCompras.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVerCompras.setBackground(new Color(30, 144, 255));
-		btnVerCompras.setBounds(447, 67, 130, 34);
+		btnVerCompras.setBounds(163, 79, 130, 34);
 		getContentPane().add(btnVerCompras);
 		
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>COMPRAS</center></html>");
@@ -197,7 +188,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnGenerarReporte.setBackground(Color.WHITE);
-		btnGenerarReporte.setBounds(434, 6, 149, 57);
+		btnGenerarReporte.setBounds(225, 10, 71, 30);
 		getContentPane().add(btnGenerarReporte);
 		
 		label_2 = new JLabel("Por nro comprobante:");
@@ -205,35 +196,27 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_2.setForeground(Color.DARK_GRAY);
 		label_2.setFont(new Font("Candara", Font.BOLD, 20));
 		label_2.setBackground(new Color(50, 205, 50));
-		label_2.setBounds(605, 8, 210, 30);
+		label_2.setBounds(318, 10, 210, 30);
 		getContentPane().add(label_2);
 		
 		txtSerie = new JTextField();
-		txtSerie.setBounds(615, 42, 71, 20);
+		txtSerie.setBounds(328, 44, 71, 20);
 		getContentPane().add(txtSerie);
 		txtSerie.setColumns(10);
 		
-		lblFecha = new JLabel("Fecha:");
-		lblFecha.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFecha.setForeground(Color.DARK_GRAY);
-		lblFecha.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFecha.setBackground(new Color(50, 205, 50));
-		lblFecha.setBounds(155, 9, 71, 30);
-		getContentPane().add(lblFecha);
-		
 		panel = new JPanel();
 		panel.setBackground(SystemColor.textHighlight);
-		panel.setBounds(144, 11, 5, 100);
+		panel.setBounds(10, 13, 5, 100);
 		getContentPane().add(panel);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.textHighlight);
-		panel_1.setBounds(590, 9, 5, 100);
+		panel_1.setBounds(303, 10, 5, 100);
 		getContentPane().add(panel_1);
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.textHighlight);
-		panel_2.setBounds(810, 9, 5, 100);
+		panel_2.setBounds(523, 10, 5, 100);
 		getContentPane().add(panel_2);
 		
 		btnComprobante = new JButton("Buscar");
@@ -245,7 +228,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnComprobante.setForeground(Color.WHITE);
 		btnComprobante.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnComprobante.setBackground(new Color(30, 144, 255));
-		btnComprobante.setBounds(640, 65, 130, 34);
+		btnComprobante.setBounds(353, 79, 130, 34);
 		getContentPane().add(btnComprobante);
 		
 		btnLote = new JButton("Buscar");
@@ -257,12 +240,12 @@ public class MantenimientoCompras extends JInternalFrame {
 		btnLote.setForeground(Color.WHITE);
 		btnLote.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLote.setBackground(new Color(30, 144, 255));
-		btnLote.setBounds(872, 66, 130, 34);
+		btnLote.setBounds(577, 79, 130, 34);
 		getContentPane().add(btnLote);
 		
 		txtLote = new JTextField();
 		txtLote.setColumns(10);
-		txtLote.setBounds(866, 43, 141, 20);
+		txtLote.setBounds(567, 44, 141, 20);
 		getContentPane().add(txtLote);
 		
 		label_3 = new JLabel("Por lote:");
@@ -270,12 +253,12 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_3.setForeground(Color.DARK_GRAY);
 		label_3.setFont(new Font("Candara", Font.BOLD, 20));
 		label_3.setBackground(new Color(50, 205, 50));
-		label_3.setBounds(837, 9, 210, 30);
+		label_3.setBounds(538, 10, 210, 30);
 		getContentPane().add(label_3);
 		
 		txtNserie = new JTextField();
 		txtNserie.setColumns(10);
-		txtNserie.setBounds(705, 42, 95, 20);
+		txtNserie.setBounds(418, 44, 95, 20);
 		getContentPane().add(txtNserie);
 		
 		label_4 = new JLabel("-");
@@ -283,7 +266,7 @@ public class MantenimientoCompras extends JInternalFrame {
 		label_4.setForeground(Color.DARK_GRAY);
 		label_4.setFont(new Font("Candara", Font.BOLD, 20));
 		label_4.setBackground(new Color(50, 205, 50));
-		label_4.setBounds(684, 42, 21, 20);
+		label_4.setBounds(397, 44, 21, 20);
 		getContentPane().add(label_4);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCompras.getTableHeader().setReorderingAllowed(false);

@@ -63,7 +63,6 @@ import javax.swing.border.EmptyBorder;
 
 public class BuscarVentas extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JMenu mnModificarProducto;
 	private JMenu mnEliminarVenta;
 	private JScrollPane scrollPane;
 	private JTable tbVentas;
@@ -86,7 +85,6 @@ public class BuscarVentas extends JInternalFrame {
 	DefaultTableModel dtm = new DefaultTableModel();
 	DefaultTableModel dtmVD = new DefaultTableModel();
 	private JButton btnGenerarReporte;
-	private JLabel lblBuscarVentas;
 	private JScrollPane scrollPane_1;
 	private JLabel lblDetallesDeVenta;
 	private JTable tbDetalleVenta;
@@ -111,13 +109,13 @@ public class BuscarVentas extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("HISTORIAL DE VENTAS");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 78, 1083, 210);
+		this.scrollPane.setBounds(10, 78, 738, 210);
 		getContentPane().add(this.scrollPane);
 		
 		tbVentas = new JTable();
@@ -129,7 +127,7 @@ public class BuscarVentas extends JInternalFrame {
 		});
 		tbVentas.setAutoCreateRowSorter(true);
 		tbVentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbVentas.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbVentas.setFont(new Font("Arial", Font.ITALIC, 12));
 		tbVentas.setBackground(Color.WHITE);
 		tbVentas.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbVentas);
@@ -145,21 +143,21 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(829, 38, 123, 30);
+		btnVerVentas.setBounds(490, 38, 123, 30);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(312, 38, 227, 30);
+		cbUsuarios.setBounds(10, 37, 190, 30);
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendido por:");
 		lblVendedor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(312, 10, 123, 29);
+		lblVendedor.setBounds(10, 9, 123, 29);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
@@ -167,11 +165,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblDesde.setForeground(Color.DARK_GRAY);
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(549, 11, 71, 30);
+		lblDesde.setBounds(210, 9, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(549, 38, 130, 30);
+		dchDesde.setBounds(210, 36, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
@@ -179,11 +177,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblHasta.setForeground(Color.DARK_GRAY);
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(689, 11, 71, 30);
+		lblHasta.setBounds(350, 9, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(689, 38, 130, 30);
+		dchHasta.setBounds(350, 36, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
@@ -191,7 +189,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTV.setForeground(new Color(30, 144, 255));
 		lblTV.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTV.setBackground(new Color(50, 205, 50));
-		lblTV.setBounds(754, 291, 221, 36);
+		lblTV.setBounds(409, 294, 221, 36);
 		getContentPane().add(lblTV);
 		
 		lblTotVentas = new JLabel("0");
@@ -199,7 +197,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotVentas.setForeground(new Color(30, 144, 255));
 		lblTotVentas.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotVentas.setBackground(new Color(50, 205, 50));
-		lblTotVentas.setBounds(985, 290, 108, 36);
+		lblTotVentas.setBounds(640, 293, 108, 36);
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
@@ -207,7 +205,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotDescuentos.setBackground(new Color(50, 205, 50));
-		lblTotDescuentos.setBounds(662, 291, 95, 36);
+		lblTotDescuentos.setBounds(317, 294, 95, 36);
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
@@ -215,7 +213,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTD.setBackground(new Color(50, 205, 50));
-		lblTD.setBounds(355, 291, 296, 36);
+		lblTD.setBounds(10, 294, 296, 36);
 		getContentPane().add(lblTD);
 		
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>VENTAS</center></html>");
@@ -229,24 +227,18 @@ public class BuscarVentas extends JInternalFrame {
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnGenerarReporte.setBackground(new Color(255, 255, 255));
-		btnGenerarReporte.setBounds(962, 10, 131, 57);
+		btnGenerarReporte.setBounds(623, 10, 131, 57);
 		getContentPane().add(btnGenerarReporte);
-		
-		lblBuscarVentas = new JLabel("<html>VENTAS REALIZADAS:</html>");
-		lblBuscarVentas.setForeground(Color.DARK_GRAY);
-		lblBuscarVentas.setFont(new Font("Candara", Font.BOLD, 25));
-		lblBuscarVentas.setBounds(10, 11, 146, 56);
-		getContentPane().add(lblBuscarVentas);
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(10, 401, 1083, 210);
+		scrollPane_1.setBounds(10, 401, 738, 210);
 		getContentPane().add(scrollPane_1);
 		
 		tbDetalleVenta = new JTable();
 		tbDetalleVenta.setAutoCreateRowSorter(true);
-		tbDetalleVenta.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbDetalleVenta.setFont(new Font("Arial", Font.ITALIC, 12));
 		scrollPane_1.setViewportView(tbDetalleVenta);
 		
 		lblDetallesDeVenta = new JLabel("Detalle de la venta:");
@@ -262,16 +254,7 @@ public class BuscarVentas extends JInternalFrame {
 		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 		
-		mnModificarProducto = new JMenu("|Modificar Venta| ");
-		mnModificarProducto.setVisible(false);
-		mnModificarProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnModificarProducto(e);
-			}
-		});
-		
-		mnactualizarNotaDe = new JMenu("|Actualizar Nota de la venta| ");
+		mnactualizarNotaDe = new JMenu("|Actualizar Nota| ");
 		mnactualizarNotaDe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -282,10 +265,6 @@ public class BuscarVentas extends JInternalFrame {
 		mnactualizarNotaDe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnactualizarNotaDe.setBackground(SystemColor.menu);
 		menuBar.add(mnactualizarNotaDe);
-		mnModificarProducto.setForeground(new Color(50, 205, 50));
-		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnModificarProducto);
 		
 		mnEliminarVenta = new JMenu("|Eliminar venta| ");
 		mnEliminarVenta.addMouseListener(new MouseAdapter() {
@@ -391,105 +370,6 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	
 	public void selecionarUsuario(String id) {
-	}
-	protected void mouseClickedMnModificarProducto(MouseEvent e) {
-		try {
-			int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
-			float subTotal = Float.parseFloat( tbVentas.getValueAt(tbVentas.getSelectedRow(), 6).toString() );
-			
-			if(subTotal == 0){
-				JOptionPane.showMessageDialog(null, "No puede modificar ventas eliminadas");
-			}
-			else{
-				int seleccion = JOptionPane.showConfirmDialog(null, "MODIFICAR VENTA\n\nALERTA! Al dar en SI, toda la información de la venta será borrada y a la vez cargada en la ventana de Ventas, \npara que pueda realizar las modificaciones que necesite.\nNO salga de la ventana de Ventas sin antes realizar las modificaciones requeridas. Caso contrario, la venta quedará en Cero.\n\n¿Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				
-				if(seleccion == 0){
-					//JOptionPane.showMessageDialog(null, "Se acaba de cargar toda la venta realizada. \nModifique lo que necesita y luego de clic en VENDER.\n\nNO se efectuará ningun cambio, hasta que lo haga.");	
-					try {
-						int nroVentaModificar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
-						
-						vp.cargarVentas(nroVentaModificar);  // ACÁ SE ABRE LA VENTANA PARA QUE MODIFIQUE
-						
-						consulta.iniciar();
-						rs = consulta.cargarVentaDetalles(nroVentaModificar);
-						try {
-							while(rs.next()){
-								
-								int codproducto = rs.getInt("codproducto");
-								float cantVendida = rs.getFloat("cantidad"); // NRO VENDIDO EN UNIDADES CAJAS LITROS ETC
-								String uMedidaUsada = rs.getString("uMedidaUsada");
-								float cantTotalVendidaUnidades = 0;
-								
-								consultas consulta2 = new consultas();
-								consulta2.iniciar();
-								ResultSet rs2 = consulta2.buscarProductoID(codproducto);
-								try {
-									rs2.next();
-									
-									String unimedida = rs2.getString("unimedida");
-									String promo1 = rs2.getString("promo1");
-									float cantp1 = rs2.getFloat("cantp1");
-									float prep1 = rs2.getFloat("prep1");
-									String promo2 = rs2.getString("promo2");
-									float cantp2 = rs2.getFloat("cantp2");
-									float prep2 = rs2.getFloat("prep2");
-									
-									if( uMedidaUsada.equals(unimedida) ){
-										cantTotalVendidaUnidades = cantVendida;
-										
-									} else if( uMedidaUsada.equals(promo1) ){
-										cantTotalVendidaUnidades = cantVendida * cantp1;
-										
-									} else if ( uMedidaUsada.equals(promo2)){
-										cantTotalVendidaUnidades = cantVendida * cantp2;
-										
-									}
-									
-								} catch (Exception e2) {
-									JOptionPane.showMessageDialog(null, "Error al buscar producto para reingresar stock: " + e2);
-								}finally {
-									try {
-										if (rs2 != null)
-											rs2.close();
-										if (consulta2 != null)
-											consulta2.reset();
-						            } catch (Exception ex) {
-						            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-						            }
-								}
-																
-								consulta.reIngresarStock(cantTotalVendidaUnidades, codproducto);
-
-								consulta.eliminarVentaDetalle(nroVentaModificar);
-							}
-						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(null, "Error: al reingresar Stock " + e);
-						}
-						
-						consulta.eliminarVenta(nroVentaModificar);
-						
-						consulta.resetearCeroVentaDetalle(nroVentaModificar);
-						
-						//actionPerformedBtnVerVentas(null);
-						//actionPerformedBtnVerVentas(null);
-						//JOptionPane.showMessageDialog(null, "Venta Eliminada");
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Error al eliminar venta " + e2);
-					}
-				}
-			}
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Seleccione una venta");
-		}finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (consulta != null)
-					consulta.reset();
-            } catch (Exception ex) {
-            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-            }
-		}
 	}
 	
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {

@@ -61,13 +61,13 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("DISTRIBUIDORES");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 41, 1083, 568);
+		this.scrollPane.setBounds(10, 41, 744, 568);
 		getContentPane().add(this.scrollPane);
 		
 		tbDistribuidores = new JTable();
@@ -110,7 +110,7 @@ public class MantenimientoDistribuidores extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnNewMenu_2 = new JMenu("|Eliminar distribuidor| ");
+		mnNewMenu_2 = new JMenu("|Eliminar| ");
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

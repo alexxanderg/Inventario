@@ -84,7 +84,7 @@ public class Kardex extends JInternalFrame
     this.usuario = vp.lblUsuario.getText();
     getContentPane().setBackground(Color.WHITE);
     setTitle("ALMACÉN");
-    setBounds(100, 100, 1134, 679);
+    setBounds(100, 100, 780, 679);
     getContentPane().setLayout(null);
 
     this.lblCdigo = new JLabel("Buscar:");
@@ -106,13 +106,13 @@ public class Kardex extends JInternalFrame
     this.txtCodigo.setFont(new Font("Arial", 3, 20));
     this.txtCodigo.setColumns(10);
     this.txtCodigo.setBackground(new Color(245, 245, 245));
-    this.txtCodigo.setBounds(123, 179, 428, 34);
+    this.txtCodigo.setBounds(123, 179, 314, 34);
     getContentPane().add(this.txtCodigo);
 
     this.scrollPane = new JScrollPane();
     this.scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
     this.scrollPane.setAutoscrolls(true);
-    this.scrollPane.setBounds(10, 224, 1083, 385);
+    this.scrollPane.setBounds(10, 224, 744, 385);
     getContentPane().add(this.scrollPane);
 
     this.tbProductos = new JTable();
@@ -164,19 +164,19 @@ public class Kardex extends JInternalFrame
     this.btnCalcular.setForeground(Color.WHITE);
     this.btnCalcular.setFont(new Font("Tahoma", 1, 16));
     this.btnCalcular.setBackground(new Color(50, 205, 50));
-    this.btnCalcular.setBounds(786, 160, 307, 52);
+    this.btnCalcular.setBounds(447, 161, 307, 52);
     getContentPane().add(this.btnCalcular);
 
     this.lblNewLabel = new JLabel("<html><center>En esta ventana puede hacer una verificación de su inventario. Podrá comparar su Stock que indica el sistema con el que va revisando de manera fisica (columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
     this.lblNewLabel.setForeground(new Color(105, 105, 105));
     this.lblNewLabel.setFont(new Font("Tahoma", 0, 12));
-    this.lblNewLabel.setBounds(300, 74, 520, 78);
+    this.lblNewLabel.setBounds(123, 72, 520, 78);
     getContentPane().add(this.lblNewLabel);
 
     this.lblKardex = new JLabel("KARDEX");
     this.lblKardex.setForeground(Color.BLACK);
     this.lblKardex.setFont(new Font("Candara", 1, 30));
-    this.lblKardex.setBounds(500, 11, 113, 52);
+    this.lblKardex.setBounds(323, 9, 113, 52);
     getContentPane().add(this.lblKardex);
 
     this.tbProductos.getTableHeader().setReorderingAllowed(false);

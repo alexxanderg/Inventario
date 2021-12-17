@@ -100,14 +100,14 @@ public class MantenimientoProd extends JInternalFrame {
 		usuario = vp.lblUsuario.getText();
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("ALMAC\u00C9N");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		this.lblCdigo = new JLabel("Buscar:");
 		lblCdigo.setVerticalAlignment(SwingConstants.TOP);
 		lblCdigo.setForeground(Color.DARK_GRAY);
 		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 30));
-		this.lblCdigo.setBounds(10, 45, 113, 34);
+		this.lblCdigo.setBounds(10, 11, 113, 34);
 		getContentPane().add(this.lblCdigo);
 		
 		txtCodigo2 = new JTextField();
@@ -122,13 +122,13 @@ public class MantenimientoProd extends JInternalFrame {
 		txtCodigo2.setColumns(10);
 		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(123, 45, 428, 34);
+		txtCodigo2.setBounds(10, 45, 244, 34);
 		getContentPane().add(txtCodigo2);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 90, 1083, 519);
+		this.scrollPane.setBounds(10, 90, 744, 519);
 		getContentPane().add(this.scrollPane);
 		
 		tbProductos = new JTable();
@@ -151,7 +151,7 @@ public class MantenimientoProd extends JInternalFrame {
 		btnExportar.setForeground(new Color(138, 43, 226));
 		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnExportar.setBackground(new Color(255, 255, 255));
-		btnExportar.setBounds(596, 31, 145, 46);
+		btnExportar.setBounds(257, 31, 145, 46);
 		getContentPane().add(btnExportar);
 		
 		btnInventarioPreCo = new JButton("<html><center>Ver valor de inventario a Precio Compra</center></html>");
@@ -165,7 +165,7 @@ public class MantenimientoProd extends JInternalFrame {
 		btnInventarioPreCo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnInventarioPreCo.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnInventarioPreCo.setBackground(Color.WHITE);
-		btnInventarioPreCo.setBounds(751, 32, 166, 47);
+		btnInventarioPreCo.setBounds(412, 32, 166, 47);
 		getContentPane().add(btnInventarioPreCo);
 		
 		btnInventarioPreVe = new JButton("<html><center>Ver valor de inventario a Precio Venta</center></html>");
@@ -179,7 +179,7 @@ public class MantenimientoProd extends JInternalFrame {
 		btnInventarioPreVe.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnInventarioPreVe.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnInventarioPreVe.setBackground(Color.WHITE);
-		btnInventarioPreVe.setBounds(927, 32, 166, 47);
+		btnInventarioPreVe.setBounds(588, 32, 166, 47);
 		getContentPane().add(btnInventarioPreVe);
 		
 		this.txtCodigo = new JTextField();
@@ -195,7 +195,7 @@ public class MantenimientoProd extends JInternalFrame {
 		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
 		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(123, 45, 428, 34);
+		this.txtCodigo.setBounds(10, 45, 244, 34);
 		getContentPane().add(this.txtCodigo);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{this.txtCodigo, this.txtCodigo2}));
 		// tbProductos.getTableHeader().setResizingAllowed(false);
@@ -207,7 +207,7 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Crear nuevo producto| ");
+		mnCrearProducto = new JMenu("|Crear nuevo| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -219,7 +219,7 @@ public class MantenimientoProd extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
-		mnModificarProducto = new JMenu("|Modificar producto| ");
+		mnModificarProducto = new JMenu("|Modificar| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -227,7 +227,7 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		});
 		
-		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
+		JMenu mnaadirStock = new JMenu("|A\u00F1adir| ");
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -235,7 +235,7 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		});
 		
-		mnduplicarProducto = new JMenu("|Duplicar producto| ");
+		mnduplicarProducto = new JMenu("|Duplicar| ");
 		mnduplicarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -255,7 +255,7 @@ public class MantenimientoProd extends JInternalFrame {
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnModificarProducto);
 		
-		mnEliminarProducto = new JMenu("|Eliminar producto| ");
+		mnEliminarProducto = new JMenu("|Eliminar | ");
 		mnEliminarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

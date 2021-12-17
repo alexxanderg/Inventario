@@ -89,7 +89,7 @@ public class Configuraciones extends JInternalFrame {
 	public Configuraciones() {
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("CONFIGURACION");
-		setBounds(100, 100, 1119, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		btnModifFecha = new JButton("Guardar");
@@ -235,7 +235,7 @@ public class Configuraciones extends JInternalFrame {
 		lblCantidadDeImpresiones.setEnabled(false);
 		lblCantidadDeImpresiones.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadDeImpresiones.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadDeImpresiones.setBounds(648, 242, 400, 26);
+		lblCantidadDeImpresiones.setBounds(452, 242, 400, 26);
 		getContentPane().add(lblCantidadDeImpresiones);
 		
 		button_9 = new JButton("Guardar");
@@ -243,7 +243,7 @@ public class Configuraciones extends JInternalFrame {
 		button_9.setForeground(Color.WHITE);
 		button_9.setFont(new Font("Tahoma", Font.BOLD, 20));
 		button_9.setBackground(new Color(30, 144, 255));
-		button_9.setBounds(868, 276, 180, 27);
+		button_9.setBounds(610, 276, 144, 27);
 		getContentPane().add(button_9);
 		
 		textField_9 = new JTextField();
@@ -255,13 +255,13 @@ public class Configuraciones extends JInternalFrame {
 		textField_9.setColumns(10);
 		textField_9.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		textField_9.setBackground(new Color(245, 245, 245));
-		textField_9.setBounds(648, 280, 191, 23);
+		textField_9.setBounds(452, 280, 112, 23);
 		getContentPane().add(textField_9);
 		
 		this.lblCopiaDeSeguridad = new JLabel("Crear copia de seguridad");
 		this.lblCopiaDeSeguridad.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblCopiaDeSeguridad.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblCopiaDeSeguridad.setBounds(648, 11, 226, 26);
+		this.lblCopiaDeSeguridad.setBounds(452, 11, 226, 26);
 		getContentPane().add(this.lblCopiaDeSeguridad);
 		
 		this.btnSeleccionCarpeta = new JButton("Guardar");
@@ -273,13 +273,13 @@ public class Configuraciones extends JInternalFrame {
 		this.btnSeleccionCarpeta.setForeground(Color.WHITE);
 		this.btnSeleccionCarpeta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		this.btnSeleccionCarpeta.setBackground(new Color(30, 144, 255));
-		this.btnSeleccionCarpeta.setBounds(648, 63, 400, 33);
+		this.btnSeleccionCarpeta.setBounds(452, 63, 302, 33);
 		getContentPane().add(this.btnSeleccionCarpeta);
 		
 		JLabel lblNewLabel_1 = new JLabel("Le permite guardar toda la informaci\u00F3n de su sistema hasta la fecha.");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setBounds(648, 33, 428, 27);
+		lblNewLabel_1.setBounds(452, 33, 428, 27);
 		getContentPane().add(lblNewLabel_1);
 		
 		this.btnRestaurar = new JButton("Restaurar");
@@ -291,19 +291,19 @@ public class Configuraciones extends JInternalFrame {
 		this.btnRestaurar.setForeground(Color.WHITE);
 		this.btnRestaurar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		this.btnRestaurar.setBackground(new Color(30, 144, 255));
-		this.btnRestaurar.setBounds(648, 179, 400, 33);
+		this.btnRestaurar.setBounds(452, 179, 302, 33);
 		getContentPane().add(this.btnRestaurar);
 		
 		this.lblLePermiteRestaurar = new JLabel("Le permite restaurar toda la informaci\u00F3n.");
 		this.lblLePermiteRestaurar.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblLePermiteRestaurar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		this.lblLePermiteRestaurar.setBounds(648, 149, 428, 27);
+		this.lblLePermiteRestaurar.setBounds(452, 149, 428, 27);
 		getContentPane().add(this.lblLePermiteRestaurar);
 		
 		this.lblRestaurarBaseDe = new JLabel("Restaurar Base de Datos");
 		this.lblRestaurarBaseDe.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRestaurarBaseDe.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblRestaurarBaseDe.setBounds(648, 127, 226, 26);
+		this.lblRestaurarBaseDe.setBounds(452, 127, 226, 26);
 		getContentPane().add(this.lblRestaurarBaseDe);
 
 		

@@ -66,13 +66,13 @@ public class notificaciones extends JInternalFrame {
 
 		getContentPane().setBackground(new Color(205, 92, 92));
 		setTitle("NOTIFICACIONES");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(20, 69, 1073, 240);
+		this.scrollPane.setBounds(20, 69, 734, 240);
 		getContentPane().add(this.scrollPane);
 
 		tbXVencer = new JTable();
@@ -87,20 +87,20 @@ public class notificaciones extends JInternalFrame {
 		lblproductosPorVencer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblproductosPorVencer.setForeground(new Color(255, 255, 255));
 		lblproductosPorVencer.setFont(new Font("Candara", Font.BOLD, 25));
-		lblproductosPorVencer.setBounds(20, 24, 1073, 45);
+		lblproductosPorVencer.setBounds(20, 24, 734, 45);
 		getContentPane().add(lblproductosPorVencer);
 		
 		lblproductosPorAgotarse = new JLabel("<html>PRODUCTOS POR AGOTARSE</html>");
 		lblproductosPorAgotarse.setHorizontalAlignment(SwingConstants.CENTER);
 		lblproductosPorAgotarse.setForeground(new Color(255, 255, 255));
 		lblproductosPorAgotarse.setFont(new Font("Candara", Font.BOLD, 25));
-		lblproductosPorAgotarse.setBounds(20, 332, 1073, 45);
+		lblproductosPorAgotarse.setBounds(20, 332, 734, 45);
 		getContentPane().add(lblproductosPorAgotarse);
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(20, 377, 1073, 240);
+		scrollPane_1.setBounds(20, 377, 734, 240);
 		getContentPane().add(scrollPane_1);
 		
 		tbPorAgotar = new JTable();

@@ -96,7 +96,7 @@ public class Inventario extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("ALMAC\u00C9N");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 		
 		this.lblCdigo = new JLabel("Buscar:");
@@ -122,13 +122,13 @@ public class Inventario extends JInternalFrame {
 		this.txtCodigo.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		this.txtCodigo.setColumns(10);
 		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(123, 45, 428, 34);
+		this.txtCodigo.setBounds(123, 45, 391, 34);
 		getContentPane().add(this.txtCodigo);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 90, 1083, 519);
+		this.scrollPane.setBounds(10, 90, 744, 519);
 		getContentPane().add(this.scrollPane);
 		
 		tbProductos = new JTable();
@@ -149,7 +149,7 @@ public class Inventario extends JInternalFrame {
 		});
 		chckbxFiltrar.setBackground(Color.WHITE);
 		chckbxFiltrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		chckbxFiltrar.setBounds(354, 20, 197, 20);
+		chckbxFiltrar.setBounds(317, 21, 197, 20);
 		getContentPane().add(chckbxFiltrar);
 		
 		txtCodigo2 = new JTextField();
@@ -165,7 +165,7 @@ public class Inventario extends JInternalFrame {
 		txtCodigo2.setColumns(10);
 		txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtCodigo2.setBackground(new Color(245, 245, 245));
-		txtCodigo2.setBounds(123, 45, 428, 34);
+		txtCodigo2.setBounds(123, 45, 391, 34);
 		getContentPane().add(txtCodigo2);
 		
 		btnExportar = new JButton("EXPORTAR INVENTARIO");
@@ -179,7 +179,7 @@ public class Inventario extends JInternalFrame {
 		btnExportar.setForeground(new Color(138, 43, 226));
 		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnExportar.setBackground(new Color(255, 255, 255));
-		btnExportar.setBounds(862, 20, 231, 58);
+		btnExportar.setBounds(523, 21, 231, 58);
 		getContentPane().add(btnExportar);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbProductos.getTableHeader().setReorderingAllowed(false);

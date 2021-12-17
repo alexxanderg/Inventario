@@ -136,13 +136,13 @@ public class Ventas extends JInternalFrame {
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Ventas");
-		setBounds(100, 100, 1134, 669);
+		setBounds(100, 100, 780, 669);
 		getContentPane().setLayout(null);
 		
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 272, 1098, 328);
+		this.scrollPane.setBounds(10, 272, 736, 328);
 		getContentPane().add(this.scrollPane);
 		
 		tbCarrito = new JTable();
@@ -179,7 +179,7 @@ public class Ventas extends JInternalFrame {
 		this.txtBuscarProd.setFont(new Font("Arial", Font.ITALIC, 20));
 		this.txtBuscarProd.setColumns(10);
 		this.txtBuscarProd.setBackground(new Color(245, 245, 245));
-		this.txtBuscarProd.setBounds(10, 227, 404, 34);
+		this.txtBuscarProd.setBounds(10, 227, 231, 34);
 		getContentPane().add(this.txtBuscarProd);
 		
 		lblCliente = new JLabel("Cliente:");
@@ -192,7 +192,7 @@ public class Ventas extends JInternalFrame {
 		cbClientes.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbClientes.setBackground(new Color(245, 245, 245));
 		cbClientes.setFont(new Font("Arial", Font.ITALIC, 18));
-		cbClientes.setBounds(10, 58, 346, 35);
+		cbClientes.setBounds(10, 58, 231, 35);
 		getContentPane().add(cbClientes);
 		
 		btnNewCliente = new JButton("+");
@@ -204,7 +204,7 @@ public class Ventas extends JInternalFrame {
 		btnNewCliente.setForeground(Color.WHITE);
 		btnNewCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnNewCliente.setBackground(new Color(30, 144, 255));
-		btnNewCliente.setBounds(358, 58, 56, 35);
+		btnNewCliente.setBounds(185, 24, 56, 35);
 		getContentPane().add(btnNewCliente);
 		
 		lblNotaAdicionalDe = new JLabel("Nota adicional de la venta:");
@@ -220,13 +220,13 @@ public class Ventas extends JInternalFrame {
 		txtInfoAdicional.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtInfoAdicional.setColumns(10);
 		txtInfoAdicional.setBackground(new Color(245, 245, 245));
-		txtInfoAdicional.setBounds(10, 138, 404, 34);
+		txtInfoAdicional.setBounds(10, 138, 231, 34);
 		getContentPane().add(txtInfoAdicional);
 		
 		lblMtodoDePago = new JLabel("Paga con:");
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(844, 44, 147, 23);
+		lblMtodoDePago.setBounds(482, 44, 147, 23);
 		getContentPane().add(lblMtodoDePago);
 		
 		cbPago1 = new JComboBox();
@@ -234,23 +234,23 @@ public class Ventas extends JInternalFrame {
 		cbPago1.setBackground(new Color(245, 245, 245));
 		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
 		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
-		cbPago1.setBounds(844, 68, 153, 35);
+		cbPago1.setBounds(482, 68, 153, 35);
 		getContentPane().add(cbPago1);
 		
 		lblTotalVentaFinal = new JLabel("0");
 		lblTotalVentaFinal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalVentaFinal.setForeground(new Color(50, 205, 50));
-		lblTotalVentaFinal.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblTotalVentaFinal.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTotalVentaFinal.setBackground(new Color(50, 205, 50));
-		lblTotalVentaFinal.setBounds(671, 136, 101, 36);
+		lblTotalVentaFinal.setBounds(386, 148, 101, 34);
 		getContentPane().add(lblTotalVentaFinal);
 		
 		lblTitTotal = new JLabel("TOTAL S/ ");
 		lblTitTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitTotal.setForeground(new Color(50, 205, 50));
-		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 30));
+		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTitTotal.setBackground(new Color(50, 205, 50));
-		lblTitTotal.setBounds(497, 136, 164, 36);
+		lblTitTotal.setBounds(251, 146, 125, 36);
 		getContentPane().add(lblTitTotal);
 		
 		btnVender = new JButton("FINALIZAR");
@@ -262,7 +262,7 @@ public class Ventas extends JInternalFrame {
 		btnVender.setForeground(Color.WHITE);
 		btnVender.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVender.setBackground(new Color(50, 205, 50));
-		btnVender.setBounds(844, 227, 264, 34);
+		btnVender.setBounds(482, 227, 264, 34);
 		getContentPane().add(btnVender);
 		
 		txtNroImpresiones = new JTextField();
@@ -273,7 +273,7 @@ public class Ventas extends JInternalFrame {
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
 		txtNroImpresiones.setColumns(10);
 		txtNroImpresiones.setBackground(Color.ORANGE);
-		txtNroImpresiones.setBounds(1076, 11, 32, 18);
+		txtNroImpresiones.setBounds(706, 11, 32, 18);
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
@@ -284,23 +284,23 @@ public class Ventas extends JInternalFrame {
 		txtVuelto.setEditable(false);
 		txtVuelto.setColumns(10);
 		txtVuelto.setBackground(new Color(245, 245, 245));
-		txtVuelto.setBounds(1007, 147, 101, 34);
+		txtVuelto.setBounds(645, 147, 101, 34);
 		getContentPane().add(txtVuelto);
 		
 		lblTitDescuento = new JLabel("Descuento S/");
 		lblTitDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitDescuento.setForeground(new Color(102, 205, 170));
-		lblTitDescuento.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTitDescuento.setFont(new Font("Candara", Font.BOLD, 16));
 		lblTitDescuento.setBackground(new Color(50, 205, 50));
-		lblTitDescuento.setBounds(497, 90, 153, 30);
+		lblTitDescuento.setBounds(251, 100, 130, 30);
 		getContentPane().add(lblTitDescuento);
 		
 		lblDescuento = new JLabel("0");
 		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescuento.setForeground(new Color(102, 205, 170));
-		lblDescuento.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblDescuento.setFont(new Font("Candara", Font.BOLD, 16));
 		lblDescuento.setBackground(new Color(50, 205, 50));
-		lblDescuento.setBounds(671, 90, 101, 30);
+		lblDescuento.setBounds(386, 100, 86, 30);
 		getContentPane().add(lblDescuento);
 		
 		txtPago1 = new JTextField();
@@ -327,14 +327,14 @@ public class Ventas extends JInternalFrame {
 		txtPago1.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago1.setColumns(10);
 		txtPago1.setBackground(new Color(245, 245, 245));
-		txtPago1.setBounds(1007, 68, 101, 34);
+		txtPago1.setBounds(645, 68, 101, 34);
 		getContentPane().add(txtPago1);
 		
 		lblMtodoDePago_1 = new JLabel("Pago 2:");
 		lblMtodoDePago_1.setVisible(false);
 		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago_1.setBounds(276, 170, 101, 25);
+		lblMtodoDePago_1.setBounds(103, 169, 101, 25);
 		getContentPane().add(lblMtodoDePago_1);
 		
 		cbPago2 = new JComboBox();
@@ -343,7 +343,7 @@ public class Ventas extends JInternalFrame {
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(276, 199, 101, 18);
+		cbPago2.setBounds(103, 198, 101, 18);
 		getContentPane().add(cbPago2);
 		
 		txtPago2 = new JTextField();
@@ -371,14 +371,14 @@ public class Ventas extends JInternalFrame {
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(382, 200, 32, 17);
+		txtPago2.setBounds(209, 199, 32, 17);
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
 		lblS.setHorizontalAlignment(SwingConstants.CENTER);
 		lblS.setForeground(Color.DARK_GRAY);
 		lblS.setFont(new Font("Candara", Font.BOLD, 20));
-		lblS.setBounds(1041, 34, 32, 34);
+		lblS.setBounds(679, 34, 32, 34);
 		getContentPane().add(lblS);
 		
 		label_1 = new JLabel("S/");
@@ -386,23 +386,23 @@ public class Ventas extends JInternalFrame {
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
-		label_1.setBounds(382, 170, 32, 25);
+		label_1.setBounds(209, 169, 32, 25);
 		getContentPane().add(label_1);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
 		lblTitTotOri.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitTotOri.setForeground(new Color(102, 205, 170));
-		lblTitTotOri.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTitTotOri.setFont(new Font("Candara", Font.BOLD, 16));
 		lblTitTotOri.setBackground(new Color(50, 205, 50));
-		lblTitTotOri.setBounds(497, 48, 153, 34);
+		lblTitTotOri.setBounds(251, 58, 130, 34);
 		getContentPane().add(lblTitTotOri);
 		
 		lblTotOriginal = new JLabel("0");
 		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotOriginal.setForeground(new Color(102, 205, 170));
-		lblTotOriginal.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTotOriginal.setFont(new Font("Candara", Font.BOLD, 16));
 		lblTotOriginal.setBackground(new Color(50, 205, 50));
-		lblTotOriginal.setBounds(671, 48, 101, 34);
+		lblTotOriginal.setBounds(386, 58, 86, 34);
 		getContentPane().add(lblTotOriginal);
 		
 		lblTotalCompra = new JLabel("0");
@@ -411,7 +411,7 @@ public class Ventas extends JInternalFrame {
 		lblTotalCompra.setForeground(new Color(30, 144, 255));
 		lblTotalCompra.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotalCompra.setBackground(new Color(50, 205, 50));
-		lblTotalCompra.setBounds(889, 0, 68, 17);
+		lblTotalCompra.setBounds(519, 0, 68, 17);
 		getContentPane().add(lblTotalCompra);
 		
 		lblGananciaTotal = new JLabel("0");
@@ -420,18 +420,18 @@ public class Ventas extends JInternalFrame {
 		lblGananciaTotal.setForeground(new Color(30, 144, 255));
 		lblGananciaTotal.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblGananciaTotal.setBackground(new Color(50, 205, 50));
-		lblGananciaTotal.setBounds(967, 0, 68, 17);
+		lblGananciaTotal.setBounds(597, 0, 68, 17);
 		getContentPane().add(lblGananciaTotal);
 		
 		lblElVueltoDe_1 = new JLabel("SU VUELTO ES:");
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
 		lblElVueltoDe_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblElVueltoDe_1.setBounds(844, 148, 176, 34);
+		lblElVueltoDe_1.setBounds(482, 148, 176, 34);
 		getContentPane().add(lblElVueltoDe_1);
 		
 		dchFechaVenta = new JDateChooser();
-		dchFechaVenta.setBounds(466, 227, 151, 34);
+		dchFechaVenta.setBounds(251, 227, 96, 34);
 		getContentPane().add(dchFechaVenta);
 		
 		txtHora = new JTextField();
@@ -447,7 +447,7 @@ public class Ventas extends JInternalFrame {
 		});
 		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
 		txtHora.setText("00");
-		txtHora.setBounds(627, 227, 53, 34);
+		txtHora.setBounds(357, 227, 53, 34);
 		getContentPane().add(txtHora);
 		txtHora.setColumns(10);
 		
@@ -465,19 +465,19 @@ public class Ventas extends JInternalFrame {
 		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMin.setText("00");
 		txtMin.setColumns(10);
-		txtMin.setBounds(690, 227, 56, 34);
+		txtMin.setBounds(416, 227, 56, 34);
 		getContentPane().add(txtMin);
 		
 		lblHora = new JLabel("Hora");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setBounds(627, 210, 53, 14);
+		lblHora.setBounds(357, 210, 53, 14);
 		getContentPane().add(lblHora);
 		
 		lblMin = new JLabel("Min");
 		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMin.setBounds(690, 210, 56, 14);
+		lblMin.setBounds(416, 210, 56, 14);
 		getContentPane().add(lblMin);
 		
 		lblNroCompramodificar = new JLabel("0");
@@ -486,13 +486,13 @@ public class Ventas extends JInternalFrame {
 		lblNroCompramodificar.setForeground(new Color(102, 205, 170));
 		lblNroCompramodificar.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblNroCompramodificar.setBackground(new Color(50, 205, 50));
-		lblNroCompramodificar.setBounds(795, 0, 63, 18);
+		lblNroCompramodificar.setBounds(425, 0, 63, 18);
 		getContentPane().add(lblNroCompramodificar);
 		
-		lblFechaDeVenta = new JLabel("Fecha de la venta:");
+		lblFechaDeVenta = new JLabel("Fecha");
 		lblFechaDeVenta.setForeground(Color.DARK_GRAY);
 		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeVenta.setBounds(466, 205, 164, 23);
+		lblFechaDeVenta.setBounds(251, 205, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
@@ -500,13 +500,13 @@ public class Ventas extends JInternalFrame {
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
-		chckImrpimir.setBounds(1007, 203, 101, 23);
+		chckImrpimir.setBounds(645, 203, 101, 23);
 		getContentPane().add(chckImrpimir);
 		
 		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
 		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnCoti.setBackground(Color.WHITE);
-		rbtnCoti.setBounds(914, 204, 106, 23);
+		rbtnCoti.setBounds(552, 204, 106, 23);
 		getContentPane().add(rbtnCoti);
 		
 		grupobuttons = new ButtonGroup();
@@ -515,7 +515,7 @@ public class Ventas extends JInternalFrame {
 		rbtnVenta = new JRadioButton("VENTA");
 		rbtnVenta.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnVenta.setBackground(Color.WHITE);
-		rbtnVenta.setBounds(844, 205, 68, 23);
+		rbtnVenta.setBounds(482, 205, 68, 23);
 		getContentPane().add(rbtnVenta);
 		grupobuttons.add(rbtnVenta);
 

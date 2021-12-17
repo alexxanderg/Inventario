@@ -65,13 +65,13 @@ public class MantenimientoClientes extends JInternalFrame {
 
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("DISTRIBUIDORES");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 780, 679);
 		getContentPane().setLayout(null);
 
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 51, 1083, 558);
+		this.scrollPane.setBounds(10, 51, 744, 558);
 		getContentPane().add(this.scrollPane);
 
 		tbCliente = new JTable();

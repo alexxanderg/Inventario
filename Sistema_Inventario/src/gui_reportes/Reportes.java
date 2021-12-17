@@ -133,56 +133,56 @@ public class Reportes extends JInternalFrame {
 		getContentPane().setBackground(Color.DARK_GRAY);
 		this.vp = vp;
 		
-		setBounds(100, 100, 1134, 669);
+		setBounds(100, 100, 780, 669);
 		getContentPane().setLayout(null);
 		
 		this.panel = new JPanel();
 		this.panel.setBackground(new Color(219, 112, 147));
-		this.panel.setBounds(0, 0, 557, 502);
+		this.panel.setBounds(0, 0, 421, 502);
 		getContentPane().add(this.panel);
 		this.panel.setLayout(null);
 		
 		this.lblVendedor = new JLabel("POR VENDEDOR:");
 		this.lblVendedor.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblVendedor.setBounds(72, 85, 157, 23);
+		this.lblVendedor.setBounds(16, 80, 157, 23);
 		this.panel.add(this.lblVendedor);
 		
 		this.cbUsuarios = new JComboBox();
-		this.cbUsuarios.setBounds(249, 86, 219, 23);
+		this.cbUsuarios.setBounds(193, 81, 219, 23);
 		this.panel.add(this.cbUsuarios);
 		this.cbUsuarios.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.cbMetodoPago = new JComboBox();
 		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
-		this.cbMetodoPago.setBounds(249, 119, 219, 23);
+		this.cbMetodoPago.setBounds(193, 114, 219, 23);
 		this.panel.add(this.cbMetodoPago);
 		this.cbMetodoPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
 		this.lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblMtodoDePago.setBounds(72, 119, 157, 23);
+		this.lblMtodoDePago.setBounds(16, 114, 157, 23);
 		this.panel.add(this.lblMtodoDePago);
 		
 		this.label_1 = new JLabel("del:");
-		this.label_1.setBounds(72, 153, 46, 23);
+		this.label_1.setBounds(16, 148, 46, 23);
 		this.panel.add(this.label_1);
 		this.label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_1.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar = new JDateChooser();
-		this.calendar.setBounds(126, 153, 125, 23);
+		this.calendar.setBounds(70, 148, 125, 23);
 		this.panel.add(this.calendar);
 		
 		this.label_2 = new JLabel("al:");
-		this.label_2.setBounds(295, 153, 55, 23);
+		this.label_2.setBounds(239, 148, 55, 23);
 		this.panel.add(this.label_2);
 		this.label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_2.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_1 = new JDateChooser();
-		this.calendar_1.setBounds(343, 153, 125, 23);
+		this.calendar_1.setBounds(287, 148, 125, 23);
 		this.panel.add(this.calendar_1);
 		
 		this.btngenerarReporteVentas = new JButton("<html><center>Ver reporte detallado</center></html>");
@@ -192,31 +192,31 @@ public class Reportes extends JInternalFrame {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(277, 187, 191, 57);
+		this.btngenerarReporteVentas.setBounds(221, 182, 191, 57);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
 		
 		this.lblVentas = new JLabel("REPORTE DE VENTAS");
-		this.lblVentas.setBounds(16, 20, 535, 32);
+		this.lblVentas.setBounds(16, 21, 396, 32);
 		this.panel.add(this.lblVentas);
 		this.lblVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 		
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(72, 268, 219, 23);
+		lblHistorialDeCompras.setBounds(16, 263, 219, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(72, 291, 396, 23);
+		cbCliente.setBounds(16, 286, 396, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		this.btnVerComprasCliente = new JButton("Ver reporte");
-		btnVerComprasCliente.setBounds(72, 325, 396, 32);
+		btnVerComprasCliente.setBounds(16, 320, 396, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -230,7 +230,7 @@ public class Reportes extends JInternalFrame {
 		lblPorProducto = new JLabel("POR PRODUCTO:");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(72, 388, 232, 23);
+		lblPorProducto.setBounds(16, 383, 232, 23);
 		panel.add(lblPorProducto);
 		
 		btnPorProducto = new JButton("Ver reporte");
@@ -242,7 +242,7 @@ public class Reportes extends JInternalFrame {
 		btnPorProducto.setForeground(Color.WHITE);
 		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnPorProducto.setBackground(new Color(30, 144, 255));
-		btnPorProducto.setBounds(72, 445, 396, 32);
+		btnPorProducto.setBounds(16, 440, 396, 32);
 		panel.add(btnPorProducto);
 		
 		txtProductos = new JTextField();
@@ -250,7 +250,7 @@ public class Reportes extends JInternalFrame {
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
 		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setBounds(72, 411, 396, 23);
+		txtProductos.setBounds(16, 406, 396, 23);
 		panel.add(txtProductos);
 		
 		btnVerReporteSimple = new JButton("<html><center>Ver reporte simple</center></html>");
@@ -263,17 +263,17 @@ public class Reportes extends JInternalFrame {
 		btnVerReporteSimple.setForeground(Color.WHITE);
 		btnVerReporteSimple.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnVerReporteSimple.setBackground(new Color(30, 144, 255));
-		btnVerReporteSimple.setBounds(72, 187, 191, 57);
+		btnVerReporteSimple.setBounds(16, 182, 191, 57);
 		panel.add(btnVerReporteSimple);
 		
 		this.panel_1 = new JPanel();
 		this.panel_1.setBackground(new Color(255, 222, 173));
-		this.panel_1.setBounds(561, 0, 568, 502);
+		this.panel_1.setBounds(423, 0, 341, 639);
 		getContentPane().add(this.panel_1);
 		this.panel_1.setLayout(null);
 		
 		this.lblCategora = new JLabel("Categor\u00EDa:");
-		this.lblCategora.setBounds(16, 115, 143, 23);
+		this.lblCategora.setBounds(16, 115, 110, 23);
 		this.panel_1.add(this.lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 		
@@ -283,7 +283,7 @@ public class Reportes extends JInternalFrame {
 				actionPerformedBtnGenerarMenores(e);
 			}
 		});
-		this.btnGenerarMenoresMayores.setBounds(321, 181, 161, 49);
+		this.btnGenerarMenoresMayores.setBounds(16, 199, 308, 32);
 		this.panel_1.add(this.btnGenerarMenoresMayores);
 		this.btnGenerarMenoresMayores.setForeground(Color.WHITE);
 		this.btnGenerarMenoresMayores.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -291,37 +291,37 @@ public class Reportes extends JInternalFrame {
 		
 		this.cbCategoria = new JComboBox();
 		this.cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.cbCategoria.setBounds(166, 114, 316, 23);
+		this.cbCategoria.setBounds(166, 114, 158, 23);
 		this.panel_1.add(this.cbCategoria);
 		
 		this.lblDel = new JLabel("desde:");
-		lblDel.setBounds(16, 295, 77, 23);
+		lblDel.setBounds(16, 296, 77, 23);
 		panel_1.add(lblDel);
 		this.lblDel.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDel.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_4 = new JDateChooser();
-		calendar_4.setBounds(84, 295, 141, 23);
+		calendar_4.setBounds(84, 296, 141, 23);
 		panel_1.add(calendar_4);
 		
 		this.lblPorVencer = new JLabel("CON FECHA DE VENCIMIENTO:");
-		lblPorVencer.setBounds(16, 273, 308, 23);
+		lblPorVencer.setBounds(16, 274, 308, 23);
 		panel_1.add(lblPorVencer);
 		this.lblPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.label_17 = new JLabel("hasta:");
-		label_17.setBounds(264, 295, 77, 23);
+		label_17.setBounds(16, 330, 77, 23);
 		panel_1.add(label_17);
 		this.label_17.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_17.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_5 = new JDateChooser();
-		calendar_5.setBounds(334, 295, 141, 23);
+		calendar_5.setBounds(84, 330, 141, 23);
 		panel_1.add(calendar_5);
 		
 		this.btnVerProductosQue = new JButton("Ver reporte");
-		btnVerProductosQue.setBounds(16, 329, 466, 32);
+		btnVerProductosQue.setBounds(16, 361, 308, 32);
 		panel_1.add(btnVerProductosQue);
 		btnVerProductosQue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -332,16 +332,16 @@ public class Reportes extends JInternalFrame {
 		this.btnVerProductosQue.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btnVerProductosQue.setBackground(new Color(30, 144, 255));
 		
-		lblProductos = new JLabel("REPORTE DE PRODUCTOS");
+		lblProductos = new JLabel("RE. DE PRODUCTOS");
 		lblProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductos.setFont(new Font("Candara", Font.BOLD, 30));
-		lblProductos.setBounds(10, 21, 535, 32);
+		lblProductos.setBounds(10, 21, 314, 32);
 		panel_1.add(lblProductos);
 		
 		lblFiltros = new JLabel("FILTROS:");
 		lblFiltros.setForeground(new Color(0, 0, 205));
 		lblFiltros.setFont(new Font("Candara", Font.BOLD, 25));
-		lblFiltros.setBounds(16, 86, 143, 23);
+		lblFiltros.setBounds(16, 77, 143, 32);
 		panel_1.add(lblFiltros);
 		
 		chckbxMenorA = new JCheckBox("Mostrar valor de inventario");
@@ -357,27 +357,27 @@ public class Reportes extends JInternalFrame {
 		});
 		chckbxMenorA.setFont(new Font("Candara", Font.BOLD, 20));
 		chckbxMenorA.setBackground(new Color(255, 222, 173));
-		chckbxMenorA.setBounds(16, 207, 295, 23);
+		chckbxMenorA.setBounds(16, 177, 295, 23);
 		panel_1.add(chckbxMenorA);
 		
 		lblMarca = new JLabel("Marca:");
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMarca.setBounds(16, 147, 143, 23);
+		lblMarca.setBounds(16, 147, 110, 23);
 		panel_1.add(lblMarca);
 		
 		cbMarca = new JComboBox();
 		cbMarca.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbMarca.setBounds(166, 146, 316, 23);
+		cbMarca.setBounds(166, 146, 158, 23);
 		panel_1.add(cbMarca);
 		
 		this.lblRanking = new JLabel("RANKING de productos:");
-		lblRanking.setBounds(16, 379, 231, 32);
+		lblRanking.setBounds(16, 404, 231, 32);
 		panel_1.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(251, 379, 231, 32);
+		cbxRanking.setBounds(16, 436, 231, 32);
 		panel_1.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] {"M\u00E1s vendidos", "Menos vendidos"}));
@@ -390,11 +390,11 @@ public class Reportes extends JInternalFrame {
 		this.label_8.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.calendar_6 = new JDateChooser();
-		calendar_6.setBounds(84, 418, 141, 23);
+		calendar_6.setBounds(84, 479, 141, 23);
 		panel_1.add(calendar_6);
 		
 		this.btnVerRanking = new JButton("Ver reporte");
-		btnVerRanking.setBounds(16, 452, 473, 32);
+		btnVerRanking.setBounds(16, 549, 315, 32);
 		panel_1.add(btnVerRanking);
 		btnVerRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -406,24 +406,24 @@ public class Reportes extends JInternalFrame {
 		this.btnVerRanking.setBackground(new Color(30, 144, 255));
 		
 		this.calendar_7 = new JDateChooser();
-		calendar_7.setBounds(334, 418, 148, 23);
+		calendar_7.setBounds(86, 513, 148, 23);
 		panel_1.add(calendar_7);
 		
 		this.lblHasta = new JLabel("hasta:");
-		lblHasta.setBounds(264, 425, 77, 16);
+		lblHasta.setBounds(16, 520, 77, 16);
 		panel_1.add(lblHasta);
 		this.lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		this.lblDesde = new JLabel("desde:");
-		lblDesde.setBounds(20, 417, 73, 24);
+		lblDesde.setBounds(20, 478, 73, 24);
 		panel_1.add(lblDesde);
 		this.lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(147, 112, 219));
-		panel_2.setBounds(0, 508, 1129, 131);
+		panel_2.setBounds(0, 508, 421, 131);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -431,31 +431,31 @@ public class Reportes extends JInternalFrame {
 		lblReporteDeCompras.setVisible(false);
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
-		lblReporteDeCompras.setBounds(291, 11, 535, 32);
+		lblReporteDeCompras.setBounds(10, 11, 410, 32);
 		panel_2.add(lblReporteDeCompras);
 		
 		label = new JLabel("del:");
 		label.setVisible(false);
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
-		label.setBounds(355, 54, 46, 23);
+		label.setBounds(20, 54, 46, 23);
 		panel_2.add(label);
 		
 		calRI01 = new JDateChooser();
 		calRI01.setVisible(false);
-		calRI01.setBounds(409, 54, 125, 23);
+		calRI01.setBounds(74, 54, 125, 23);
 		panel_2.add(calRI01);
 		
 		label_3 = new JLabel("al:");
 		label_3.setVisible(false);
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Candara", Font.BOLD, 20));
-		label_3.setBounds(578, 54, 55, 23);
+		label_3.setBounds(243, 54, 55, 23);
 		panel_2.add(label_3);
 		
 		calRI02 = new JDateChooser();
 		calRI02.setVisible(false);
-		calRI02.setBounds(626, 54, 125, 23);
+		calRI02.setBounds(291, 54, 97, 23);
 		panel_2.add(calRI02);
 		
 		button = new JButton("Ver reporte");
@@ -468,7 +468,7 @@ public class Reportes extends JInternalFrame {
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Tahoma", Font.BOLD, 18));
 		button.setBackground(new Color(30, 144, 255));
-		button.setBounds(355, 88, 396, 32);
+		button.setBounds(20, 88, 368, 32);
 		panel_2.add(button);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO

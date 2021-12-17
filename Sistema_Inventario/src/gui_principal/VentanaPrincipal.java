@@ -128,7 +128,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1382, 741);
+		setBounds(100, 100, 1023, 741);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -338,18 +338,18 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnKardex);
 
 		desktopPane = new JDesktopPane();
-		desktopPane.setBounds(230, 50, 1134, 657);
+		desktopPane.setBounds(230, 50, 780, 657);
 		contentPane.add(desktopPane);
 
 		panel_1 = new JPanel();
 		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setForeground(Color.GRAY);
-		panel_1.setBounds(230, 0, 1134, 50);
+		panel_1.setBounds(230, 0, 780, 50);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA DE GESTI\u00D3N DE INVENTARIO:  RAPIVENTA");
-		lblNewLabel.setBounds(128, 0, 895, 50);
+		lblNewLabel = new JLabel(" RAPIVENTA");
+		lblNewLabel.setBounds(128, 0, 506, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -357,7 +357,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		txtPrueba = new JTextField();
 		txtPrueba.setVisible(false);
-		txtPrueba.setBounds(906, 0, 18, 20);
+		txtPrueba.setBounds(551, 0, 18, 20);
 		panel_1.add(txtPrueba);
 		txtPrueba.setColumns(10); 
 		lblLogoBxB = new JLabel("");
@@ -369,7 +369,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		lblLogoBxB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblLogoBxB.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		lblLogoBxB.setBounds(1023, 0, 111, 50);
+		lblLogoBxB.setBounds(668, 0, 111, 50);
 		panel_1.add(lblLogoBxB);
 		lblLogoBxB.setHorizontalAlignment(SwingConstants.CENTER);
 		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgBxBhrztl.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
@@ -410,7 +410,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();
