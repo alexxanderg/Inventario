@@ -116,6 +116,7 @@ public class Ventas extends JInternalFrame {
 	private ButtonGroup grupobuttons;
 	private JRadioButton rbtnVenta;
 	private JRadioButton rbtnCoti;
+	private JButton btnCalcularVuelto;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -224,12 +225,14 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtInfoAdicional);
 		
 		lblMtodoDePago = new JLabel("Paga con:");
+		lblMtodoDePago.setVisible(false);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
 		lblMtodoDePago.setBounds(482, 44, 147, 23);
 		getContentPane().add(lblMtodoDePago);
 		
 		cbPago1 = new JComboBox();
+		cbPago1.setVisible(false);
 		cbPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago1.setBackground(new Color(245, 245, 245));
 		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
@@ -277,6 +280,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
+		txtVuelto.setVisible(false);
 		txtVuelto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtVuelto.setHorizontalAlignment(SwingConstants.CENTER);
 		txtVuelto.setForeground(new Color(30, 144, 255));
@@ -304,6 +308,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblDescuento);
 		
 		txtPago1 = new JTextField();
+		txtPago1.setVisible(false);
 		txtPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPago1.addFocusListener(new FocusAdapter() {
 			@Override
@@ -375,6 +380,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
+		lblS.setVisible(false);
 		lblS.setHorizontalAlignment(SwingConstants.CENTER);
 		lblS.setForeground(Color.DARK_GRAY);
 		lblS.setFont(new Font("Candara", Font.BOLD, 20));
@@ -424,6 +430,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblGananciaTotal);
 		
 		lblElVueltoDe_1 = new JLabel("SU VUELTO ES:");
+		lblElVueltoDe_1.setVisible(false);
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
 		lblElVueltoDe_1.setFont(new Font("Candara", Font.BOLD, 20));
@@ -518,6 +525,18 @@ public class Ventas extends JInternalFrame {
 		rbtnVenta.setBounds(482, 205, 68, 23);
 		getContentPane().add(rbtnVenta);
 		grupobuttons.add(rbtnVenta);
+		
+		btnCalcularVuelto = new JButton("Calcular vuelto");
+		btnCalcularVuelto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnCalcularVuelto(e);
+			}
+		});
+		btnCalcularVuelto.setForeground(Color.WHITE);
+		btnCalcularVuelto.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnCalcularVuelto.setBackground(new Color(30, 144, 255));
+		btnCalcularVuelto.setBounds(519, 114, 192, 35);
+		getContentPane().add(btnCalcularVuelto);
 
 		
 		menuBar = new JMenuBar();
@@ -1372,7 +1391,7 @@ public class Ventas extends JInternalFrame {
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(
-												getClass().getClassLoader().getResourceAsStream("rComprobante58mm.jasper"),
+												getClass().getClassLoader().getResourceAsStream("rComprobante80mm.jasper"),
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();
@@ -1732,4 +1751,11 @@ public class Ventas extends JInternalFrame {
 			
 		}
 	}
+	
+	protected void actionPerformedBtnCalcularVuelto(ActionEvent e) {
+		String total = lblTotalVentaFinal.getText();
+		CalcularVuelto cv = new CalcularVuelto(total);
+		cv.setVisible(true);
+	}
+	
 }
