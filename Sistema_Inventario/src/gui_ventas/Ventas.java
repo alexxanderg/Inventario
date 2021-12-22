@@ -61,6 +61,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class Ventas extends JInternalFrame implements ActionListener {
 	private JMenuBar menuBar;
@@ -549,6 +551,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		getContentPane().add(btnIngresar);
 		
 		chckbxPorPeso = new JCheckBox("Por peso");
+		chckbxPorPeso.addActionListener(this);
 		chckbxPorPeso.setForeground(new Color(220, 20, 60));
 		chckbxPorPeso.setSelected(true);
 		chckbxPorPeso.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -874,8 +877,10 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		if(chckbxPorPeso.isSelected()) {
 			if(txtBuscarProd.getText().length() == 13)
 				AgregarProductoATablaPorPeso();
-			else
-				JOptionPane.showMessageDialog(null, "Por favor, ingrese un codigo tipo: EAN13, de 13 digitos");
+			else {
+				JOptionPane.showMessageDialog(null, "No se encontró el producto. ");
+				txtBuscarProd.setText("");
+			}
 		}
 		else {
 			try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
@@ -888,7 +893,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 			rs = consulta.buscarProductoID(idProd);
 			int flag = 0;
 			float cantidad = 0;
-			for (int i = 0; i < tbCarrito.getRowCount(); i++) { 
+			/*for (int i = 0; i < tbCarrito.getRowCount(); i++) { 
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
@@ -907,7 +912,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 				} catch (SQLException e) {
 					//JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
-			}
+			}*/
 
 			if (flag == 0) { // AQUÍ ENTRA SI EL 
 							//	PRODUCTO AGREGADO ES NUEVO
@@ -1824,6 +1829,9 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		cv.setVisible(true);
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == chckbxPorPeso) {
+			actionPerformedChckbxPorPeso(e);
+		}
 		if (e.getSource() == btnIngresar) {
 			actionPerformedBtnIngresar(e);
 		}
@@ -1835,5 +1843,9 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		else 
 			AgregarProductoATabla();
 		
+	}
+	protected void actionPerformedChckbxPorPeso(ActionEvent e) {
+		txtBuscarProd.requestFocus();
+		txtBuscarProd.setText("");
 	}
 }

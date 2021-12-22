@@ -828,6 +828,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       if (origen != 1) {
         double precioUniEnUso = 0.0;
         double newprecioCompra = 0.0;
+        
         if (this.cbPrecio.getSelectedIndex() == 0) {
           precioUniEnUso = this.preEnUso;
           newprecioCompra = this.preCompraVenta;
@@ -852,6 +853,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         double newDescTot = 0.0;
         newDescTot = Double.parseDouble(this.txtDescuentoTot.getText());
         double preTotal = 0.0;
+        
         preTotal = Double.parseDouble(this.txtTotal.getText());
         newprecioCompra = redondearDecimales(newprecioCompra, 2);
         newPreUniSDesc = redondearDecimales(newPreUniSDesc, 2);
@@ -1029,6 +1031,34 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 	    dispose();
 		
 	}
+	
+	private void calcular2() {
+		double newPrecio = Double.parseDouble(this.txtNewPrecio.getText());
+	      newPrecio = redondearDecimales(newPrecio, 2);
+	      double newcant = Double.parseDouble(this.txtCantidad.getText());
+	      newcant = redondearDecimales(newcant, 2);
+	      double precioUniEnUso = 0.0;
+	      
+	      if (this.cbPrecio.getSelectedIndex() == 0)
+	        precioUniEnUso = this.preEnUso; 
+	      if (this.cbPrecio.getSelectedIndex() == 1)
+	        precioUniEnUso = this.prePromo1; 
+	      if (this.cbPrecio.getSelectedIndex() == 2)
+	        precioUniEnUso = this.prePromo1;
+	      
+	      double descindiv = precioUniEnUso - newPrecio;
+	      descindiv = redondearDecimales(descindiv, 2);
+	      this.txtDescuentoIndiv.setText("" + descindiv);
+	      
+	      double desctot = descindiv * newcant;
+	      desctot = redondearDecimales(desctot, 2);
+	      this.txtDescuentoTot.setText("" + desctot);
+	      
+	      double newTot = newcant * newPrecio;
+	      newTot = redondearDecimales(newTot, 2);
+	      this.txtTotal.setText("" + newTot);
+	}
+	
 	protected void actionPerformedBtnBorrar(ActionEvent e) {
 		 
 		if(txtSeleccionCaja.getText().equals("0")) {
@@ -1037,7 +1067,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 		else {
 				txtNewPrecio.setText("");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnUno(ActionEvent e) {
 		 String cantidad = txtCantidad.getText().toString();
@@ -1050,12 +1081,17 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 				txtCantidad.setText(cantidad+"1");
 		}	
 		else {
-			if(txtAgregarModificar.getText().equals("0"))
+			if(txtAgregarModificar.getText().equals("0")) {
+				JOptionPane.showMessageDialog(null, "1");
 				txtNewPrecio.setText("1");
-			else
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "2");
 				txtNewPrecio.setText(newprecio+"1");
+			}
 		}
 		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnDos(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1074,6 +1110,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 				txtNewPrecio.setText(newprecio+"2");
 		}
 		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnTres(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1091,7 +1128,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"3");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnCuatro(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1109,7 +1147,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"4");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR			
+		calcular2();
 	}
 	protected void actionPerformedBtnCinco(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1127,7 +1166,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"5");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR			
+		calcular2();
 	}
 	protected void actionPerformedBtnSeis(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1145,7 +1185,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"6");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnSiete(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1163,7 +1204,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"7");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnOcho(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1181,7 +1223,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"8");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnNueve(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1199,7 +1242,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"9");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR		
+		calcular2();
 	}
 	protected void actionPerformedBtnCero(ActionEvent e) {
 		String cantidad = txtCantidad.getText().toString();
@@ -1217,7 +1261,8 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+"0");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR			
+		calcular2();
 	}
 	protected void actionPerformedBtnPunto(ActionEvent e) {	
 		String cantidad = txtCantidad.getText().toString();
@@ -1235,6 +1280,6 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 			else
 				txtNewPrecio.setText(newprecio+".");
 		}
-		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR	
+		txtAgregarModificar.setText("1"); // 0=MODIFICAR TODO   1=AGREGAR
 	}
 }
