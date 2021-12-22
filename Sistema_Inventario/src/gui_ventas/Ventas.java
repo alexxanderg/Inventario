@@ -62,7 +62,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButtonMenuItem;
 
-public class Ventas extends JInternalFrame {
+public class Ventas extends JInternalFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JLabel lblCdigo;
 	private JTextField txtBuscarProd;
@@ -117,6 +117,8 @@ public class Ventas extends JInternalFrame {
 	private JRadioButton rbtnVenta;
 	private JRadioButton rbtnCoti;
 	private JButton btnCalcularVuelto;
+	private JButton btnIngresar;
+	private JCheckBox chckbxPorPeso;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -165,7 +167,7 @@ public class Ventas extends JInternalFrame {
 		this.lblCdigo = new JLabel("Buscar producto:");
 		lblCdigo.setForeground(Color.DARK_GRAY);
 		this.lblCdigo.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblCdigo.setBounds(10, 205, 195, 23);
+		this.lblCdigo.setBounds(10, 199, 195, 23);
 		getContentPane().add(this.lblCdigo);
 		
 		this.txtBuscarProd = new JTextField();
@@ -180,7 +182,7 @@ public class Ventas extends JInternalFrame {
 		this.txtBuscarProd.setFont(new Font("Arial", Font.ITALIC, 20));
 		this.txtBuscarProd.setColumns(10);
 		this.txtBuscarProd.setBackground(new Color(245, 245, 245));
-		this.txtBuscarProd.setBounds(10, 227, 231, 34);
+		this.txtBuscarProd.setBounds(10, 227, 366, 34);
 		getContentPane().add(this.txtBuscarProd);
 		
 		lblCliente = new JLabel("Cliente:");
@@ -339,7 +341,7 @@ public class Ventas extends JInternalFrame {
 		lblMtodoDePago_1.setVisible(false);
 		lblMtodoDePago_1.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago_1.setBounds(103, 169, 101, 25);
+		lblMtodoDePago_1.setBounds(10, 0, 101, 25);
 		getContentPane().add(lblMtodoDePago_1);
 		
 		cbPago2 = new JComboBox();
@@ -348,7 +350,7 @@ public class Ventas extends JInternalFrame {
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "CR\u00C9DITO"}));
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(103, 198, 101, 18);
+		cbPago2.setBounds(10, 29, 101, 18);
 		getContentPane().add(cbPago2);
 		
 		txtPago2 = new JTextField();
@@ -376,7 +378,7 @@ public class Ventas extends JInternalFrame {
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(209, 199, 32, 17);
+		txtPago2.setBounds(116, 30, 32, 17);
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
@@ -392,7 +394,7 @@ public class Ventas extends JInternalFrame {
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.DARK_GRAY);
 		label_1.setFont(new Font("Candara", Font.BOLD, 20));
-		label_1.setBounds(209, 169, 32, 25);
+		label_1.setBounds(116, 0, 32, 25);
 		getContentPane().add(label_1);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
@@ -438,7 +440,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblElVueltoDe_1);
 		
 		dchFechaVenta = new JDateChooser();
-		dchFechaVenta.setBounds(251, 227, 96, 34);
+		dchFechaVenta.setBounds(251, 192, 96, 34);
 		getContentPane().add(dchFechaVenta);
 		
 		txtHora = new JTextField();
@@ -454,7 +456,7 @@ public class Ventas extends JInternalFrame {
 		});
 		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
 		txtHora.setText("00");
-		txtHora.setBounds(357, 227, 53, 34);
+		txtHora.setBounds(357, 192, 53, 34);
 		getContentPane().add(txtHora);
 		txtHora.setColumns(10);
 		
@@ -472,19 +474,19 @@ public class Ventas extends JInternalFrame {
 		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMin.setText("00");
 		txtMin.setColumns(10);
-		txtMin.setBounds(416, 227, 56, 34);
+		txtMin.setBounds(416, 192, 56, 34);
 		getContentPane().add(txtMin);
 		
 		lblHora = new JLabel("Hora");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setBounds(357, 210, 53, 14);
+		lblHora.setBounds(357, 171, 53, 14);
 		getContentPane().add(lblHora);
 		
 		lblMin = new JLabel("Min");
 		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMin.setBounds(416, 210, 56, 14);
+		lblMin.setBounds(416, 171, 56, 14);
 		getContentPane().add(lblMin);
 		
 		lblNroCompramodificar = new JLabel("0");
@@ -499,7 +501,7 @@ public class Ventas extends JInternalFrame {
 		lblFechaDeVenta = new JLabel("Fecha");
 		lblFechaDeVenta.setForeground(Color.DARK_GRAY);
 		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeVenta.setBounds(251, 205, 164, 23);
+		lblFechaDeVenta.setBounds(251, 170, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
@@ -537,6 +539,23 @@ public class Ventas extends JInternalFrame {
 		btnCalcularVuelto.setBackground(new Color(30, 144, 255));
 		btnCalcularVuelto.setBounds(519, 114, 192, 35);
 		getContentPane().add(btnCalcularVuelto);
+		
+		btnIngresar = new JButton(">");
+		btnIngresar.addActionListener(this);
+		btnIngresar.setForeground(Color.WHITE);
+		btnIngresar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnIngresar.setBackground(new Color(30, 144, 255));
+		btnIngresar.setBounds(395, 227, 56, 34);
+		getContentPane().add(btnIngresar);
+		
+		chckbxPorPeso = new JCheckBox("Por peso");
+		chckbxPorPeso.setForeground(new Color(220, 20, 60));
+		chckbxPorPeso.setSelected(true);
+		chckbxPorPeso.setHorizontalAlignment(SwingConstants.RIGHT);
+		chckbxPorPeso.setFont(new Font("Tahoma", Font.BOLD, 15));
+		chckbxPorPeso.setBackground(Color.WHITE);
+		chckbxPorPeso.setBounds(260, 200, 112, 23);
+		getContentPane().add(chckbxPorPeso);
 
 		
 		menuBar = new JMenuBar();
@@ -851,7 +870,15 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	public void AgregarProductoATabla() {
-		try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
+		
+		if(chckbxPorPeso.isSelected()) {
+			if(txtBuscarProd.getText().length() == 13)
+				AgregarProductoATablaPorPeso();
+			else
+				JOptionPane.showMessageDialog(null, "Por favor, ingrese un codigo tipo: EAN13, de 13 digitos");
+		}
+		else {
+			try { // SI LO QUE SE INGRESA ES UN NOMBRE DE PRODUCTO
 			String nomProducto = txtBuscarProd.getText();
 			txtPago1.setText("0");
 			txtPago2.setText("0");
@@ -887,14 +914,14 @@ public class Ventas extends JInternalFrame {
 				try {
 					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
 					while (rs.next()) {
-						dtm.addRow(new Object[] { 
-								"1", 
+						dtm.addRow(new Object[] {
+								"1",
 								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
-								rs.getFloat("precioVe"), 
+								rs.getFloat("precioVe"),
 								"0",
-								rs.getFloat("precioVe"), 
-								rs.getInt("codproducto"), 
-								rs.getFloat("precioCo"),								 
+								rs.getFloat("precioVe"),
+								rs.getInt("codproducto"),
+								rs.getFloat("precioCo"),						 
 								rs.getFloat("cantidad"),
 								rs.getFloat("precioVe")});
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
@@ -979,7 +1006,46 @@ public class Ventas extends JInternalFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
+		}
 	}
+	
+	
+	public void AgregarProductoATablaPorPeso() {
+		
+		String codbarra = txtBuscarProd.getText();
+		String codProd = codbarra.substring(2, 7);
+		String pesoProd = codbarra.substring(7, 12);
+		double cantidad = Double.parseDouble(pesoProd) / 1000;
+		
+		consulta.iniciar();
+		rs = consulta.buscarProductoBarras(codProd);
+		
+		try {
+			rs.beforeFirst();
+			while (rs.next()) {
+				dtm.addRow(new Object[] { 
+						cantidad, 
+						rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " (" + rs.getString("unimedida") + ")",     
+						rs.getFloat("precioVe"), 
+						"0", 
+						cantidad * rs.getFloat("precioVe"), 
+						rs.getInt("codproducto"),
+						rs.getFloat("precioCo"),								 
+						rs.getFloat("cantidad"),
+						rs.getFloat("precioVe")});
+				tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
+			}
+		} catch (Exception ex) {
+		}
+		
+		consulta.reset();
+		//limpiarVentana();
+		txtBuscarProd.setText(null);
+		sumarSubTotales();
+		sumarTotalGenerales();
+		
+	}
+	
 	
 	private void limpiarVentana(){
 		try {
@@ -1731,7 +1797,7 @@ public class Ventas extends JInternalFrame {
 	protected void focusGainedTxtHora(FocusEvent e) {
 		seleccionarTexto(e);
 	}
-	protected void focusGainedTxtMin(FocusEvent e) {
+	protected void focusGainedTxtMin(FocusEvent e) {	
 		seleccionarTexto(e);
 	}
 	protected void focusLostTxtHora(FocusEvent e) {
@@ -1757,5 +1823,17 @@ public class Ventas extends JInternalFrame {
 		CalcularVuelto cv = new CalcularVuelto(total);
 		cv.setVisible(true);
 	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnIngresar) {
+			actionPerformedBtnIngresar(e);
+		}
+	}
 	
+	protected void actionPerformedBtnIngresar(ActionEvent e) {
+		if(txtBuscarProd.getText().length()==0)
+			JOptionPane.showMessageDialog(null, "Escriba el producto que desee vender");
+		else 
+			AgregarProductoATabla();
+		
+	}
 }
