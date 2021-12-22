@@ -105,8 +105,7 @@ subTotal	float,
 ganancia	float,
 uMedidaUsada varchar(30),
 foreign key (codventa) references tb_ventas(codventa),
-foreign key (codproducto) references tb_productos(codproducto),
-primary key (codventa, codproducto)
+foreign key (codproducto) references tb_productos(codproducto)
 );
 
 create table tb_cotizaciones(
@@ -251,7 +250,7 @@ select * from tb_ingreso_productos;
 select * from tb_productos where cantidad < 50 and producto != '&'  order by producto;
 select * from tb_productos where cantidad < 8 and estado = 1 and categoria = '.General' and marca =  'FILA'  order by producto;
 
-update tb_productos set cantidad = 50 where codproducto=10;
+update tb_productos set prep3 = 0;
 
 -- delete from tb_ventas where codventa = 2;
 -- delete from tb_ventas where codventa = 52;
