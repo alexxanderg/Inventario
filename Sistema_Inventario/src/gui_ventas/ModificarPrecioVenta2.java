@@ -211,7 +211,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtTitulo.setHorizontalAlignment(0);
     this.txtTitulo.setBounds(0, 0, 737, 50);
     this.contentPane.add(this.txtTitulo);
-    this.lblPrecioPorUnidad = new JLabel("Precio por:");
+    this.lblPrecioPorUnidad = new JLabel("Precio original:");
     lblPrecioPorUnidad.setForeground(Color.WHITE);
     this.lblPrecioPorUnidad.setVerticalAlignment(3);
     this.lblPrecioPorUnidad.setHorizontalAlignment(2);
@@ -591,12 +591,14 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     contentPane.add(btnPunto);
     
     txtSeleccionCaja = new JTextField();
+    txtSeleccionCaja.setVisible(false);
     txtSeleccionCaja.setText("0");
     txtSeleccionCaja.setBounds(118, 36, 42, 20);
     contentPane.add(txtSeleccionCaja);
     txtSeleccionCaja.setColumns(10);
     
     txtAgregarModificar = new JTextField();
+    txtAgregarModificar.setVisible(false);
     txtAgregarModificar.setText("0");
     txtAgregarModificar.setColumns(10);
     txtAgregarModificar.setBounds(118, 61, 42, 20);
@@ -692,7 +694,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtTotal.setText("" + this.subTotVenta);
     this.txtDescuentoTot.setText("" + redondearDecimales(this.descTVenta, 2));
     keyReleasedTxtDescuentoTot((KeyEvent)null);
-    calcular(0);
+    //calcular(0);
   }
   
   protected void actionPerformedBtnCambiar(ActionEvent arg0) {
@@ -1082,11 +1084,9 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 		}	
 		else {
 			if(txtAgregarModificar.getText().equals("0")) {
-				JOptionPane.showMessageDialog(null, "1");
 				txtNewPrecio.setText("1");
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "2");
 				txtNewPrecio.setText(newprecio+"1");
 			}
 		}
