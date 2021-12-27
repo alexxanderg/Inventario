@@ -113,13 +113,13 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   
   double cantVenta;
   
-  double preEnUso;
+  double precioUni;
   
   double subTotVenta;
   
   double preCompraVenta;
-  
-  double descTVenta;
+  double desci;
+  double desct;
   
   int idProd;
   
@@ -146,7 +146,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     EventQueue.invokeLater(new Runnable() {
           public void run() {
             try {
-              ModificarPrecioVenta2 frame = new ModificarPrecioVenta2(null, 0, null, null, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+              ModificarPrecioVenta2 frame = new ModificarPrecioVenta2(null, 0, null, null, 0.0, 0.0, 0.0, 0.0,0.0,0.0);
               frame.setVisible(true);
             } catch (Exception e) {
               e.printStackTrace();
@@ -155,17 +155,18 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         });
   }
   
-  public ModificarPrecioVenta2(Ventas ventas, int idProd, String nomProdVenta, String uniMedVenta, double cantVenta, double preCDesC, double subTotVenta, double preCompraVenta, double descTVenta) {
+  public ModificarPrecioVenta2(Ventas ventas, int idProd, String nomProdVenta, String uniMedVenta, double cantVenta, double precioUni, double subTotVenta, double preCompraVenta, double desci, double desct) {
     setTitle("Modificar precio de venta");
     this.ventas = ventas;
     this.nomProdVenta = nomProdVenta;
     this.uniMedVenta = uniMedVenta;
     this.cantVenta = cantVenta;
-    this.preEnUso = preCDesC;
+    this.precioUni = precioUni;
     this.subTotVenta = subTotVenta;
     this.preCompraVenta = preCompraVenta;
-    this.descTVenta = descTVenta;
     this.idProd = idProd;
+    this.desci=desci;
+    this.desct=desct;
     setAlwaysOnTop(true);
     addWindowListener(this);
     setResizable(false);
@@ -689,11 +690,12 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.cbPrecio.setSelectedItem(this.uniMedVenta);
     this.txtTitulo.setText(this.nomProdVenta);
     this.txtCantidad.setText("" + this.cantVenta);
-    this.txtNewPrecio.setText("" + this.preEnUso);
+    this.txtNewPrecio.setText("" + this.precioUni);
     this.txtPreCompra.setText("" + this.preCompraVenta);
     this.txtTotal.setText("" + this.subTotVenta);
-    this.txtDescuentoTot.setText("" + redondearDecimales(this.descTVenta, 2));
-    keyReleasedTxtDescuentoTot((KeyEvent)null);
+    this.txtDescuentoIndiv.setText(""+this.desci);
+
+    this.txtDescuentoTot.setText(""+this.desct);
     //calcular(0);
   }
   
@@ -729,7 +731,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       } 
     } catch (Exception e) {
       setAlwaysOnTop(false);
-      JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente");
+      JOptionPane.showMessageDialog(null, "Ingrese los datos correctamente: " + e);
       setAlwaysOnTop(true);
     } 
   }
@@ -761,7 +763,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       double desctot = newcant * descindiv;
       desctot = redondearDecimales(desctot, 2);
       this.txtDescuentoTot.setText("" + desctot);
-      calcular(0);
+      calcular2();
     } catch (Exception exception) {}
   }
   
@@ -802,7 +804,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       double precioUniEnUso = 0.0;
       
       if (this.cbPrecio.getSelectedIndex() == 0)
-        precioUniEnUso = this.preEnUso; 
+        precioUniEnUso = this.precioUni; 
       if (this.cbPrecio.getSelectedIndex() == 1)
         precioUniEnUso = this.prePromo1; 
       if (this.cbPrecio.getSelectedIndex() == 2)
@@ -820,7 +822,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
       newTot = redondearDecimales(newTot, 2);
       this.txtTotal.setText("" + newTot);
 
-      calcular(1);
+      calcular2();
     } catch (Exception exception) {}
   }
   
@@ -832,7 +834,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         double newprecioCompra = 0.0;
         
         if (this.cbPrecio.getSelectedIndex() == 0) {
-          precioUniEnUso = this.preEnUso;
+          precioUniEnUso = this.precioUni;
           newprecioCompra = this.preCompraVenta;
         } 
         if (this.cbPrecio.getSelectedIndex() == 1) {
@@ -1040,24 +1042,28 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
 	      double newcant = Double.parseDouble(this.txtCantidad.getText());
 	      newcant = redondearDecimales(newcant, 2);
 	      double precioUniEnUso = 0.0;
+	      double precioO = 0.0;
 	      
-	      if (this.cbPrecio.getSelectedIndex() == 0)
-	        precioUniEnUso = this.preEnUso; 
+	      if (this.cbPrecio.getSelectedIndex() == 0) {
+	        precioUniEnUso = this.precioUni; 
+	        precioO = this.preUniOriginal;
+	      }
 	      if (this.cbPrecio.getSelectedIndex() == 1)
 	        precioUniEnUso = this.prePromo1; 
 	      if (this.cbPrecio.getSelectedIndex() == 2)
 	        precioUniEnUso = this.prePromo1;
 	      
-	      double descindiv = precioUniEnUso - newPrecio;
-	      descindiv = redondearDecimales(descindiv, 2);
+	      double descindiv = precioO - newPrecio;
+	      descindiv = Math.round(descindiv*100.0)/100.0;
 	      this.txtDescuentoIndiv.setText("" + descindiv);
 	      
 	      double desctot = descindiv * newcant;
-	      desctot = redondearDecimales(desctot, 2);
+	      desctot = Math.round(desctot*100.0)/100.0;
 	      this.txtDescuentoTot.setText("" + desctot);
 	      
 	      double newTot = newcant * newPrecio;
-	      newTot = redondearDecimales(newTot, 2);
+
+	      newTot = Math.round(newTot*100.0)/100.0;
 	      this.txtTotal.setText("" + newTot);
 	}
 	

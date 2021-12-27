@@ -520,6 +520,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		getContentPane().add(chckImrpimir);
 
 		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
+		rbtnCoti.setVisible(false);
 		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnCoti.setBackground(Color.WHITE);
 		rbtnCoti.setBounds(552, 204, 106, 23);
@@ -529,6 +530,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		grupobuttons.add(rbtnCoti);
 
 		rbtnVenta = new JRadioButton("VENTA");
+		rbtnVenta.setVisible(false);
 		rbtnVenta.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnVenta.setBackground(Color.WHITE);
 		rbtnVenta.setBounds(482, 205, 68, 23);
@@ -608,8 +610,8 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		cliente.cargarClientes(cbClientes);
 
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio Unitario", "Descuento",
-				"SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" });
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio Unitario",
+				"SubTotal", "IDPROD", "PC", "Stock", "Pre Original" });
 
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
 		headerRenderer.setBackground(new Color(239, 198, 46));
@@ -819,13 +821,12 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		TableColumnModel tcm = tbCarrito.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Cantidad
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(16)); // Precio ORIGINAL
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(16)); // Descuento
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(16)); // SubTotal
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(0)); // ID
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(0));// Preco
-		tcm.getColumn(7).setPreferredWidth(anchoColumna(0)); // Stock
-		tcm.getColumn(8).setPreferredWidth(anchoColumna(0)); // Precio
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(20)); // Precio ORIGINAL
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(20)); // SubTotal
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(0)); // ID
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(0));// Preco
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(0)); // Stock
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(0)); // Precio
 
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -833,7 +834,6 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		tbCarrito.getColumnModel().getColumn(0).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(2).setCellRenderer(tcr);
 		tbCarrito.getColumnModel().getColumn(3).setCellRenderer(tcr);
-		tbCarrito.getColumnModel().getColumn(4).setCellRenderer(tcr);
 	}
 
 	public void agregarCliente(int iddistrib) {
@@ -898,7 +898,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 									+ rs.getString("marca") + " " + rs.getString("color") + " "
 									+ rs.getString("laboratorio") + " " + rs.getString("lote") + " ("
 									+ rs.getString("unimedida") + ")",
-							rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"),
+							rs.getFloat("precioVe"), rs.getFloat("precioVe"), rs.getInt("codproducto"),
 							rs.getFloat("precioCo"), rs.getFloat("cantidad"), rs.getFloat("precioVe") });
 					tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					
@@ -943,7 +943,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 									+ rs.getString("marca") + " " + rs.getString("color") + " "
 									+ rs.getString("laboratorio") + " " + rs.getString("lote") + " ("
 									+ rs.getString("unimedida") + ")",
-							rs.getFloat("precioVe"), "0", rs.getFloat("precioVe"), rs.getInt("codproducto"),
+							rs.getFloat("precioVe"), rs.getFloat("precioVe"), rs.getInt("codproducto"),
 							rs.getFloat("precioCo"), rs.getFloat("cantidad"), rs.getFloat("precioVe") });
 					tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 									
@@ -978,7 +978,7 @@ public class Ventas extends JInternalFrame implements ActionListener {
 						dtm.addRow(new Object[] { cantidad,
 								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca")
 										+ " " + rs.getString("color") + " (" + rs.getString("unimedida") + ")",
-								rs.getFloat("precioVe"), "0", cantidad * rs.getFloat("precioVe"),
+								rs.getFloat("precioVe"), cantidad * rs.getFloat("precioVe"),
 								rs.getInt("codproducto"), rs.getFloat("precioCo"), rs.getFloat("cantidad"),
 								rs.getFloat("precioVe") });
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
@@ -1054,15 +1054,13 @@ public class Ventas extends JInternalFrame implements ActionListener {
 									// "SubTotal", "ID", "PC"
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 			try {
-				double cant = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-				double preCDesc = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
-				double desc = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-				double subt = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+				double cant = Double.parseDouble(tbCarrito.getValueAt(i, 0).toString());
+				double preCDesc = Double.parseDouble(tbCarrito.getValueAt(i, 2).toString());
+				double subt = cant * preCDesc;
 
-				subt = (cant * preCDesc);
-				subt = redondearDecimales(subt, 1);
-
-				tbCarrito.setValueAt(subt, i, 4);
+				subt = Math.round(subt*100.0)/100.0;
+				
+				tbCarrito.setValueAt(subt, i,3);
 			} catch (Exception e) {
 				// JOptionPane.showMessageDialog(null, "ERROR: " + e);
 			}
@@ -1072,49 +1070,50 @@ public class Ventas extends JInternalFrame implements ActionListener {
 	public void sumarTotalGenerales() {
 		double totalCompra = 0;
 		double descuento = 0;
+		double descuentoTot = 0;
 		double ganancia = 0;
 		double igv = 0;
-		double totalVentaOriginal = 0;
+		double totalOriginal = 0;
 		double totalVentaFinal = 0;
 
 		if (tbCarrito.getRowCount() < 1) {
-			lblDescuento.setText("");
+//			lblDescuento.setText("");
 			lblGananciaTotal.setText("");
 			lblTotalCompra.setText("");
 			lblTotOriginal.setText("");
 			lblTotalVentaFinal.setText("");
 		} else {
 			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-				try {
-					totalCompra = totalCompra + Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
-					totalCompra = redondearDecimales(totalCompra, 2);
+				totalCompra = totalCompra + Double.parseDouble(tbCarrito.getValueAt(i, 5).toString());
 
-					descuento = descuento + Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
-					descuento = redondearDecimales(descuento, 2);
 
-					totalVentaOriginal = totalVentaOriginal + (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString())
-							* Float.parseFloat(tbCarrito.getValueAt(i, 8).toString()));
-					totalVentaOriginal = redondearDecimales(totalVentaOriginal, 1);
+				totalOriginal = totalOriginal + (Double.parseDouble(tbCarrito.getValueAt(i, 0).toString())
+						* Double.parseDouble(tbCarrito.getValueAt(i, 7).toString()));
+				
+				totalVentaFinal = totalVentaFinal + Double.parseDouble(tbCarrito.getValueAt(i, 3).toString());
 
-					totalVentaFinal = totalVentaFinal + Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
-					totalVentaFinal = redondearDecimales(totalVentaFinal, 1);
+				ganancia = totalVentaFinal - totalCompra;
+				
+				descuentoTot = totalOriginal - totalVentaFinal;
 
-					ganancia = totalVentaFinal - totalCompra;
-					ganancia = redondearDecimales(ganancia, 2);
+				igv = (totalVentaFinal * 1.18) - totalVentaFinal;
 
-					igv = (totalVentaFinal * 1.18) - totalVentaFinal;
-					igv = redondearDecimales(igv, 2);
-
-					lblDescuento.setText("" + descuento);
-					lblGananciaTotal.setText("" + ganancia);
-					lblTotalCompra.setText("" + totalCompra);
-					lblTotOriginal.setText("" + totalVentaOriginal);
-					lblTotalVentaFinal.setText("" + totalVentaFinal + "0");
-
-				} catch (Exception e) {
-					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
-				}
 			}
+			
+			totalOriginal = Math.round(totalOriginal*100.0)/100.0;
+			totalCompra = redondearDecimales(totalCompra, 2);
+			descuentoTot = redondearDecimales(descuentoTot, 2);
+			totalVentaFinal = redondearDecimales(totalVentaFinal, 1);
+			ganancia = redondearDecimales(ganancia, 2);
+			igv = redondearDecimales(igv, 2);
+			
+			lblDescuento.setText("" + descuentoTot);
+			lblGananciaTotal.setText("" + ganancia);
+			lblTotalCompra.setText("" + totalCompra);
+			lblTotOriginal.setText("" + totalOriginal);
+			lblTotalVentaFinal.setText("" + totalVentaFinal + "0");
+			
+			
 		}
 	}
 
@@ -1333,16 +1332,27 @@ public class Ventas extends JInternalFrame implements ActionListener {
 								double cantADisminuir = 0;
 
 								double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
-								int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
-								double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
+								int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 4).toString());
+								
+								double precioVeUniSDescVenta = Float.parseFloat(tbCarrito.getValueAt(i, 2).toString());
 								precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-								double descuentoTotProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
+								
+								double descuentoTotProdVenta = (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) * Float.parseFloat(tbCarrito.getValueAt(i, 7).toString())) - 
+										(Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()) * precioVeUniSDescVenta);;
+								
 								descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
-								double descuentoIndivProdVenta = descuentoTotProdVenta / cantProdVenta;
+								
+//								double descuentoIndivProdVenta = descuentoTotProdVenta / cantProdVenta;
+//								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
+								
+
+								double descuentoIndivProdVenta = 1.5;
+
 								descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
-								double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 4).toString());
+								
+								double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 3).toString());
 								subTotVenta = redondearDecimales(subTotVenta, 2);
-								double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
+								double precioCoVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
 								precioCoVenta = redondearDecimales(precioCoVenta, 2);
 								double gananciaProdVenta = subTotVenta - precioCoVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
@@ -1636,20 +1646,28 @@ public class Ventas extends JInternalFrame implements ActionListener {
 		// "Cantidad", "Producto y detalles", "Stock", "Precio Uni", "Descuento",
 		// "SubTotal", "ID", "PC"
 
-		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
+		int idProd = Integer.parseInt(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
 		double cantActual = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 0).toString());
 		String nomProd = tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 1).toString();
-		double preCDesc = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 8).toString());
-		double descT = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
-		double subT = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 4).toString());
-		double preC = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 6).toString());
+		double preUnitario = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 2).toString());
+		double subT = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 3).toString());
+		double preC = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 5).toString());
+		double preO = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 7).toString());
+		
+		double descI = preO-preUnitario;
+		descI = redondearDecimales(descI, 2);
+		
+		double descT = cantActual*descI;
+		descT = redondearDecimales(descT, 2);
 
+
+		
 		String unimedida = nomProd.substring(nomProd.indexOf("(") + 1, nomProd.indexOf(")"));
 
 		this.setEnabled(false);
 
-		ModificarPrecioVenta2 cp = new ModificarPrecioVenta2(this, idProd, nomProd, unimedida, cantActual, preCDesc,
-				subT, preC, descT);
+		ModificarPrecioVenta2 cp = new ModificarPrecioVenta2(this, idProd, nomProd, unimedida, cantActual, preUnitario,
+				subT, preC, descI, descT);
 		cp.setVisible(true);
 
 		int fila = tbCarrito.getSelectedRow();
@@ -1664,11 +1682,10 @@ public class Ventas extends JInternalFrame implements ActionListener {
 
 		tbCarrito.setValueAt(redondearDecimales(cant, 2), tbCarrito.getSelectedRow(), 0);
 		tbCarrito.setValueAt(newNomProd, tbCarrito.getSelectedRow(), 1);
-		tbCarrito.setValueAt(redondearDecimales(newPrecio, 2), tbCarrito.getSelectedRow(), 8);
-		tbCarrito.setValueAt(redondearDecimales(preo, 2), tbCarrito.getSelectedRow(), 6);
-		tbCarrito.setValueAt(redondearDecimales(pret, 2), tbCarrito.getSelectedRow(), 4);
-		tbCarrito.setValueAt(redondearDecimales(desc, 2), tbCarrito.getSelectedRow(), 3);
-		sumarSubTotales();
+		tbCarrito.setValueAt(redondearDecimales(newPrecio, 2), tbCarrito.getSelectedRow(), 2);
+		tbCarrito.setValueAt(redondearDecimales(preo, 2), tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(redondearDecimales(pret, 2), tbCarrito.getSelectedRow(), 3);
+		//sumarSubTotales();
 		sumarTotalGenerales();
 	}
 

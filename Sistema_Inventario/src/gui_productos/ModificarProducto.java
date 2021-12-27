@@ -980,6 +980,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(btnAnadirDistri);
 		
 		lblPrecio = new JLabel("PRECIO:");
+		lblPrecio.setVisible(false);
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setForeground(new Color(123, 104, 238));
 		lblPrecio.setFont(new Font("Candara", Font.BOLD, 20));
@@ -987,6 +988,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblPrecio);
 		
 		lblCantidad = new JLabel("CANTIDAD:");
+		lblCantidad.setVisible(false);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setForeground(new Color(123, 104, 238));
 		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
@@ -994,6 +996,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblCantidad);
 		
 		lblPromocion = new JLabel("PROMOCION 3:");
+		lblPromocion.setVisible(false);
 		lblPromocion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPromocion.setForeground(new Color(123, 104, 238));
 		lblPromocion.setFont(new Font("Candara", Font.BOLD, 20));
@@ -1001,6 +1004,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblPromocion);
 		
 		txtNombrePromo3 = new JTextField();
+		txtNombrePromo3.setVisible(false);
 		txtNombrePromo3.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNombrePromo3.setForeground(Color.DARK_GRAY);
 		txtNombrePromo3.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -1011,6 +1015,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtNombrePromo3);
 		
 		txtCantPromo3 = new JTextField();
+		txtCantPromo3.setVisible(false);
 		txtCantPromo3.setText("0");
 		txtCantPromo3.setHorizontalAlignment(SwingConstants.LEFT);
 		txtCantPromo3.setForeground(Color.DARK_GRAY);
@@ -1022,6 +1027,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtCantPromo3);
 		
 		txtPrePromo3 = new JTextField();
+		txtPrePromo3.setVisible(false);
 		txtPrePromo3.setText("0");
 		txtPrePromo3.setHorizontalAlignment(SwingConstants.LEFT);
 		txtPrePromo3.setForeground(Color.DARK_GRAY);
