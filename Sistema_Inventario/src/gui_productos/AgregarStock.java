@@ -61,6 +61,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	ResultSet rs;
 	private JDateChooser fecha_vencimiento;
 	private JLabel lblFechaDeVencimiento;
+	private JLabel lblNewLabel;
 	
 	/**
 	 * Launch the application.
@@ -159,7 +160,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.lblPrecioCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioCompra.setForeground(Color.BLACK);
 		this.lblPrecioCompra.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
-		this.lblPrecioCompra.setBounds(40, 162, 271, 38);
+		this.lblPrecioCompra.setBounds(40, 250, 271, 38);
 		getContentPane().add(this.lblPrecioCompra);
 		
 		this.lblPrecioVenta = new JLabel("Precio Venta:");
@@ -167,7 +168,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.lblPrecioVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPrecioVenta.setForeground(Color.BLACK);
 		this.lblPrecioVenta.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
-		this.lblPrecioVenta.setBounds(40, 211, 271, 38);
+		this.lblPrecioVenta.setBounds(40, 299, 271, 38);
 		getContentPane().add(this.lblPrecioVenta);
 		
 		this.lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
@@ -175,7 +176,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.lblFechaDeIngreso.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblFechaDeIngreso.setForeground(Color.BLACK);
 		this.lblFechaDeIngreso.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
-		this.lblFechaDeIngreso.setBounds(40, 348, 271, 38);
+		this.lblFechaDeIngreso.setBounds(40, 162, 271, 38);
 		getContentPane().add(this.lblFechaDeIngreso);
 		
 		this.txtPrecioCompra = new JTextField();
@@ -185,7 +186,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.txtPrecioCompra.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		this.txtPrecioCompra.setColumns(10);
 		this.txtPrecioCompra.setBackground(SystemColor.controlHighlight);
-		this.txtPrecioCompra.setBounds(321, 175, 166, 25);
+		this.txtPrecioCompra.setBounds(321, 263, 166, 25);
 		getContentPane().add(this.txtPrecioCompra);
 		
 		this.txtPrecioVenta = new JTextField();
@@ -195,15 +196,15 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		this.txtPrecioVenta.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		this.txtPrecioVenta.setColumns(10);
 		this.txtPrecioVenta.setBackground(SystemColor.controlHighlight);
-		this.txtPrecioVenta.setBounds(321, 223, 166, 25);
+		this.txtPrecioVenta.setBounds(321, 311, 166, 25);
 		getContentPane().add(this.txtPrecioVenta);
 		
 		this.fecha_ingreso = new JDateChooser();
-		this.fecha_ingreso.setBounds(321, 361, 166, 25);
+		this.fecha_ingreso.setBounds(321, 175, 166, 25);
 		getContentPane().add(this.fecha_ingreso);
 		
 		fecha_vencimiento = new JDateChooser();
-		fecha_vencimiento.setBounds(321, 273, 166, 25);
+		fecha_vencimiento.setBounds(321, 361, 166, 25);
 		getContentPane().add(fecha_vencimiento);
 		
 		lblFechaDeVencimiento = new JLabel("Fecha de Vencimiento:");
@@ -211,8 +212,13 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		lblFechaDeVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaDeVencimiento.setForeground(Color.BLACK);
 		lblFechaDeVencimiento.setFont(new Font("EngraversGothic BT", Font.PLAIN, 25));
-		lblFechaDeVencimiento.setBounds(40, 260, 271, 38);
+		lblFechaDeVencimiento.setBounds(40, 348, 271, 38);
 		getContentPane().add(lblFechaDeVencimiento);
+		
+		lblNewLabel = new JLabel("Modifique los siguientes campos si desea actualizarlos.");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setBounds(40, 224, 447, 28);
+		getContentPane().add(lblNewLabel);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidadAdicinal, btnGuardar}));
 		cargar();
 	}

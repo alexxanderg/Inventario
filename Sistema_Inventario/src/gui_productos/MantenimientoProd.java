@@ -140,6 +140,7 @@ public class MantenimientoProd extends JInternalFrame {
 		scrollPane.setViewportView(tbProductos);
 		
 		btnExportar = new JButton("<html><center>EXPORTAR INVENTARIO</center></html>");
+		btnExportar.setVisible(false);
 		btnExportar.setVerticalAlignment(SwingConstants.TOP);
 		btnExportar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExportar.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
@@ -149,9 +150,9 @@ public class MantenimientoProd extends JInternalFrame {
 			}
 		});
 		btnExportar.setForeground(new Color(138, 43, 226));
-		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnExportar.setFont(new Font("Tahoma", Font.BOLD, 5));
 		btnExportar.setBackground(new Color(255, 255, 255));
-		btnExportar.setBounds(596, 31, 145, 46);
+		btnExportar.setBounds(1014, 11, 79, 19);
 		getContentPane().add(btnExportar);
 		
 		btnInventarioPreCo = new JButton("<html><center>Ver valor de inventario a Precio Compra</center></html>");
@@ -165,7 +166,7 @@ public class MantenimientoProd extends JInternalFrame {
 		btnInventarioPreCo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnInventarioPreCo.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnInventarioPreCo.setBackground(Color.WHITE);
-		btnInventarioPreCo.setBounds(751, 32, 166, 47);
+		btnInventarioPreCo.setBounds(680, 32, 198, 47);
 		getContentPane().add(btnInventarioPreCo);
 		
 		btnInventarioPreVe = new JButton("<html><center>Ver valor de inventario a Precio Venta</center></html>");
@@ -179,7 +180,7 @@ public class MantenimientoProd extends JInternalFrame {
 		btnInventarioPreVe.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnInventarioPreVe.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnInventarioPreVe.setBackground(Color.WHITE);
-		btnInventarioPreVe.setBounds(927, 32, 166, 47);
+		btnInventarioPreVe.setBounds(914, 32, 179, 47);
 		getContentPane().add(btnInventarioPreVe);
 		
 		this.txtCodigo = new JTextField();
@@ -226,34 +227,19 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
+		mnModificarProducto.setForeground(new Color(218, 112, 214));
+		mnModificarProducto.setBackground(SystemColor.control);
+		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		menuBar.add(mnModificarProducto);
 		
-		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
-		mnaadirStock.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				mouseClickedMnaadirStock(e);
-			}
-		});
-		
-		mnduplicarProducto = new JMenu("|Duplicar producto| ");
+		mnduplicarProducto = new JMenu("|Duplicar| ");
+		mnduplicarProducto.setVisible(false);
 		mnduplicarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				mouseClickedMnduplicarProducto(arg0);
 			}
 		});
-		mnduplicarProducto.setForeground(new Color(135, 206, 250));
-		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnduplicarProducto.setBackground(SystemColor.menu);
-		menuBar.add(mnduplicarProducto);
-		mnaadirStock.setForeground(new Color(50, 205, 50));
-		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnaadirStock.setBackground(SystemColor.menu);
-		menuBar.add(mnaadirStock);
-		mnModificarProducto.setForeground(new Color(218, 112, 214));
-		mnModificarProducto.setBackground(SystemColor.control);
-		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		menuBar.add(mnModificarProducto);
 		
 		mnEliminarProducto = new JMenu("|Eliminar producto| ");
 		mnEliminarProducto.addMouseListener(new MouseAdapter() {
@@ -266,6 +252,22 @@ public class MantenimientoProd extends JInternalFrame {
 		mnEliminarProducto.setBackground(SystemColor.control);
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
+		
+		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
+		mnaadirStock.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mouseClickedMnaadirStock(e);
+			}
+		});
+		mnaadirStock.setForeground(new Color(50, 205, 50));
+		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnaadirStock.setBackground(SystemColor.menu);
+		menuBar.add(mnaadirStock);
+		mnduplicarProducto.setForeground(new Color(135, 206, 250));
+		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnduplicarProducto.setBackground(SystemColor.menu);
+		menuBar.add(mnduplicarProducto);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -440,8 +442,8 @@ public class MantenimientoProd extends JInternalFrame {
 		TableColumnModel tcm = tbProductos.getColumnModel(); // 
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Producto
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Producto
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Detalle
 		
 		for(int i=0; i<tbProductos.getColumnCount(); i++)
 			if(tbProductos.getColumnName(i).equals("FECHA VENC."))

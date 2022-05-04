@@ -192,7 +192,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		if(usu!=null){
 			nombreUsuario = usu.getNombre();
 			idusuario = usu.getIdusuario();
-			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario);
+			JOptionPane.showMessageDialog(contentPane, "Bienvenido: " + nombreUsuario + "\n\nEspere un momento, cargando el sistema...");
 			if(usu.getTipo() == 0){
 				VentanaPrincipal vp = new VentanaPrincipal();
 				vp.lblUsuario.setText(nombreUsuario);

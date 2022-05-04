@@ -168,28 +168,28 @@ public class Configuraciones extends JInternalFrame {
 		chckbxFechaVencimiento.setBackground(Color.WHITE);
 		
 		chckbxLote = new JCheckBox("Lote");
-		chckbxLote.setBounds(26, 122, 97, 23);
+		chckbxLote.setBounds(26, 200, 97, 23);
 		getContentPane().add(chckbxLote);
 		chckbxLote.setForeground(Color.DARK_GRAY);
 		chckbxLote.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxLote.setBackground(Color.WHITE);
 		
 		chckbxLaboratorio = new JCheckBox("Laboratorio");
-		chckbxLaboratorio.setBounds(26, 148, 135, 23);
+		chckbxLaboratorio.setBounds(26, 122, 135, 23);
 		getContentPane().add(chckbxLaboratorio);
 		chckbxLaboratorio.setForeground(Color.DARK_GRAY);
 		chckbxLaboratorio.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxLaboratorio.setBackground(Color.WHITE);
 		
 		chckbxPromocion1 = new JCheckBox("Promoci\u00F3n 1");
-		chckbxPromocion1.setBounds(26, 174, 135, 23);
+		chckbxPromocion1.setBounds(26, 148, 135, 23);
 		getContentPane().add(chckbxPromocion1);
 		chckbxPromocion1.setForeground(Color.DARK_GRAY);
 		chckbxPromocion1.setFont(new Font("Candara", Font.BOLD, 18));
 		chckbxPromocion1.setBackground(Color.WHITE);
 		
 		chckbxPromocion2 = new JCheckBox("Promoci\u00F3n 2");
-		chckbxPromocion2.setBounds(26, 200, 171, 23);
+		chckbxPromocion2.setBounds(26, 174, 171, 23);
 		getContentPane().add(chckbxPromocion2);
 		chckbxPromocion2.setForeground(Color.DARK_GRAY);
 		chckbxPromocion2.setFont(new Font("Candara", Font.BOLD, 18));

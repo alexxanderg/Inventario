@@ -185,7 +185,6 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		getContentPane().add(btnVerCompras);
 
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>COMPRAS</center></html>");
-		btnGenerarReporte.setVisible(false);
 		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -193,9 +192,9 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 			}
 		});
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
-		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGenerarReporte.setBackground(Color.WHITE);
-		btnGenerarReporte.setBounds(434, 6, 149, 57);
+		btnGenerarReporte.setBounds(447, 6, 130, 57);
 		getContentPane().add(btnGenerarReporte);
 
 		label_2 = new JLabel("Por nro comprobante:");

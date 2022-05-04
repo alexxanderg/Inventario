@@ -348,7 +348,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("RAPIVENTA");
+		lblNewLabel = new JLabel("SISTEMA RAPIVENTA");
 		lblNewLabel.setBounds(128, 0, 895, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
@@ -410,7 +410,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();

@@ -233,10 +233,28 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarLaboratorios() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select distinct laboratorio from tb_productos order by laboratorio");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
 	public ResultSet cargarMarcas() {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("select distinct marca from tb_productos order by marca");
+		} catch (Exception e) {
+		}
+		return rs;
+	}
+	
+	public ResultSet cargarColores() {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("select distinct color from tb_productos order by color");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -525,7 +543,7 @@ public class consultas {
 			prepareStmt.setFloat(1, cant);
 			prepareStmt.setInt(2, cod);
 			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, " AGREGADO CORRECTAMENTE ");
+			JOptionPane.showMessageDialog(null, " AGREGADO CORRECTAMENTE\nPuede consultar sus ingresos desde la ventana de Reportes");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al ingresar stock: " + e);
 		}

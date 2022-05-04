@@ -34,6 +34,10 @@ public class Distribuidores {
 		this.correo = correo;
 	}
 	
+	public Distribuidores(String nombre){
+		this.nombre = nombre;
+	}
+	
 	public void cargarDistribuidores(JComboBox<Distribuidores> cbDistribuidor){
 		consulta.iniciar();
 		rs = consulta.cargarDistribuidores();

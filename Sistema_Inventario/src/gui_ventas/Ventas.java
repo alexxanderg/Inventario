@@ -496,7 +496,6 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblFechaDeVenta);
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
-		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -870,7 +869,7 @@ public class Ventas extends JInternalFrame {
 					while (rs.next()) {
 						dtm.addRow(new Object[] { 
 								"1", 
-								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote") + " (" + rs.getString("unimedida") + ")",     
+								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " (" + rs.getString("unimedida") + ")",     
 								rs.getFloat("precioVe"), 
 								"0",
 								rs.getFloat("precioVe"), 
@@ -1372,7 +1371,7 @@ public class Ventas extends JInternalFrame {
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(
-												getClass().getClassLoader().getResourceAsStream("rComprobante80mm.jasper"),
+												getClass().getClassLoader().getResourceAsStream("rNotaVenta58mm.jasper"),
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();
