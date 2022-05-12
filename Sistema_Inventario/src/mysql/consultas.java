@@ -576,7 +576,7 @@ public class consultas {
 	public ResultSet cargarCompras(Object fechai, Object fechaf) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.fechaEmision between '" + fechai + "' and '" + fechaf + "' order by cp.fechaEmision desc");
+			rs = st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.fechaEmision between '" + fechai + "' and '" + fechaf + "' order by cp.idcompra desc");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras: " + e);
 		}
@@ -586,7 +586,7 @@ public class consultas {
 	public ResultSet buscarCompraDetalle(int nroCompra) {
 	    try {
 	        this.st = this.con.createStatement();
-	        this.rs = this.st.executeQuery("select cd.cantidad, p.producto, p.detalles, p.marca, p.color, cd.preUni, cd.preSubT, cd.lote from tb_compras_detalles  cd inner join tb_productos p on p.codproducto = cd.idprod where idcompra = " + nroCompra);
+	        this.rs = this.st.executeQuery("select cd.cantidad, p.producto, p.detalles, p.marca, p.color, cd.preUni, cd.preSubT, cd.lote, cd.fechaVenc from tb_compras_detalles  cd inner join tb_productos p on p.codproducto = cd.idprod where idcompra = " + nroCompra);
 	      } catch (Exception localException) {
 	      }
 	      return this.rs;
@@ -595,7 +595,7 @@ public class consultas {
 	public ResultSet buscarCompraComprobante(String serie, String nSerie) {
 	    try {
 	      this.st = this.con.createStatement();
-	      this.rs = this.st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.serie = '" + serie + "' and cp.nroserie = '" + nSerie + "' order by cp.fechaEmision desc");
+	      this.rs = this.st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib where  cp.serie = '" + serie + "' and cp.nroserie = '" + nSerie + "' order by cp.idcompra desc");
 	    } catch (Exception e) {
 	      JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras comprobante consulta: " + e);
 	    }
@@ -605,7 +605,7 @@ public class consultas {
 	  public ResultSet buscarCompraLote(String lote) {
 	    try {
 	      this.st = this.con.createStatement();
-	      this.rs = this.st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib inner join tb_compras_detalles cd on cp.idcompra = cd.idcompra where  cd.lote like '%" + lote + "%' order by cp.fechaEmision desc");
+	      this.rs = this.st.executeQuery("select cp.idcompra, cp.serie, cp.nroSerie, d.nombre, cp.nota, cp.fechaEmision, cp.fechaVencimiento, cp.tot, cp.saldo from  tb_compras cp inner join tb_distribuidores d on cp.idDistrib = d.iddistrib inner join tb_compras_detalles cd on cp.idcompra = cd.idcompra where  cd.lote like '%" + lote + "%' order by cp.idcompra desc");
 	    }
 	    catch (Exception e) {
 	      JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras comprobante consulta: " + e);
@@ -643,11 +643,11 @@ public class consultas {
 		return 0;
 	}
 	
-	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd, String lote)
+	public int registrarCompraDetalles(int idCompra, int idProd, double cantProd, double preIndivProd, double preSubTotProd, String lote, Object fechaVencimientoProducto)
 	  {
 	    try {
 	      this.st = this.con.createStatement();
-	      String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT, lote) values (?, ?, ?, ?, ?, ?)";
+	      String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT, lote, fechaVenc) values (?, ?, ?, ?, ?, ?, ?)";
 
 	      PreparedStatement prepareStmt = this.con.prepareStatement(sql);
 	      prepareStmt.setInt(1, idCompra);
@@ -656,6 +656,7 @@ public class consultas {
 	      prepareStmt.setDouble(4, preIndivProd);
 	      prepareStmt.setDouble(5, preSubTotProd);
 	      prepareStmt.setString(6, lote);
+	      prepareStmt.setObject(7, fechaVencimientoProducto);
 	      prepareStmt.execute();
 	    }
 	    catch (Exception e) {

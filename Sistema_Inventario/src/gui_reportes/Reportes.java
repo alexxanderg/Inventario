@@ -145,7 +145,7 @@ public class Reportes extends JInternalFrame {
 
 		this.panel = new JPanel();
 		this.panel.setBackground(new Color(143, 188, 143));
-		this.panel.setBounds(0, 0, 557, 502);
+		this.panel.setBounds(0, 0, 557, 639);
 		getContentPane().add(this.panel);
 		this.panel.setLayout(null);
 
@@ -213,19 +213,19 @@ public class Reportes extends JInternalFrame {
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(72, 268, 219, 23);
+		lblHistorialDeCompras.setBounds(72, 325, 219, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(72, 291, 396, 23);
+		cbCliente.setBounds(72, 348, 396, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.btnVerComprasCliente = new JButton("Ver reporte");
 		btnVerComprasCliente.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnVerComprasCliente.setBounds(187, 325, 170, 32);
+		btnVerComprasCliente.setBounds(187, 382, 170, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,7 +239,7 @@ public class Reportes extends JInternalFrame {
 		lblPorProducto = new JLabel("POR PRODUCTO:");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(72, 388, 232, 23);
+		lblPorProducto.setBounds(72, 461, 232, 23);
 		panel.add(lblPorProducto);
 
 		btnPorProducto = new JButton("Ver reporte");
@@ -252,7 +252,7 @@ public class Reportes extends JInternalFrame {
 		btnPorProducto.setForeground(Color.WHITE);
 		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnPorProducto.setBackground(new Color(30, 144, 255));
-		btnPorProducto.setBounds(187, 445, 170, 32);
+		btnPorProducto.setBounds(187, 518, 170, 32);
 		panel.add(btnPorProducto);
 
 		txtProductos = new JTextField();
@@ -260,7 +260,7 @@ public class Reportes extends JInternalFrame {
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
 		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setBounds(72, 411, 396, 23);
+		txtProductos.setBounds(72, 484, 396, 23);
 		panel.add(txtProductos);
 
 		btnVerReporteSimple = new JButton("<html><center>Ver reporte<br>simple</center></html>");
@@ -455,8 +455,9 @@ public class Reportes extends JInternalFrame {
 		panel_1.add(chckSoloStock);
 
 		panel_2 = new JPanel();
+		panel_2.setVisible(false);
 		panel_2.setBackground(new Color(147, 112, 219));
-		panel_2.setBounds(0, 508, 557, 131);
+		panel_2.setBounds(0, 624, 557, 131);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 

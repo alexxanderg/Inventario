@@ -117,6 +117,8 @@ public class Ventas extends JInternalFrame {
 	private JRadioButton rbtnVenta;
 	private JRadioButton rbtnCoti;
 
+	private JDateChooser dateFechaVenc;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

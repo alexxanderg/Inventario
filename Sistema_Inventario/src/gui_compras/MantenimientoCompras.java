@@ -310,7 +310,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		tbCD.setRowHeight(30);
 		tbCD.setModel(this.dtmCD);
 		this.dtmCD
-				.setColumnIdentifiers(new Object[] { "CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL", "LOTE" });
+				.setColumnIdentifiers(new Object[] { "CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL", "LOTE", "FECHA VENCIMIENTO" });
 
 		Date date = new Date();
 		date.getTime();
@@ -338,11 +338,12 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		this.tbCompras.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 
 		TableColumnModel tcmCD = this.tbDetallesCompra.getColumnModel();
-		tcmCD.getColumn(0).setPreferredWidth(anchoColumna(10));
+		tcmCD.getColumn(0).setPreferredWidth(anchoColumna(9));
 		tcmCD.getColumn(1).setPreferredWidth(anchoColumna(50));
-		tcmCD.getColumn(2).setPreferredWidth(anchoColumna(15));
-		tcmCD.getColumn(3).setPreferredWidth(anchoColumna(15));
-		tcmCD.getColumn(4).setPreferredWidth(anchoColumna(10));
+		tcmCD.getColumn(2).setPreferredWidth(anchoColumna(9));
+		tcmCD.getColumn(3).setPreferredWidth(anchoColumna(8));
+		tcmCD.getColumn(4).setPreferredWidth(anchoColumna(9));
+		tcmCD.getColumn(5).setPreferredWidth(anchoColumna(15));
 
 		this.tbDetallesCompra.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		this.tbDetallesCompra.getColumnModel().getColumn(2).setCellRenderer(tcr0);
@@ -382,7 +383,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 						this.rs.getString("producto") + " " + this.rs.getString("detalles") + " "
 								+ this.rs.getString("marca") + " " + this.rs.getString("color"),
 						Float.valueOf(this.rs.getFloat("preUni")), Float.valueOf(this.rs.getFloat("preSubT")),
-						this.rs.getString("lote") });
+						this.rs.getString("lote"), this.rs.getString("fechaVenc") });
 			}
 			this.consulta.reset();
 		} catch (Exception e) {
