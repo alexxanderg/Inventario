@@ -663,7 +663,7 @@ public class NuevaCompra extends JFrame {
 							Date date = formatter.parse(fechaVP);
 							fechaVencimientoProducto = new Timestamp(date.getTime());
 						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "ellol " + e1);
+							JOptionPane.showMessageDialog(null, "Fecha erronea: " + e1);
 						}
 						
 						
@@ -746,8 +746,6 @@ public class NuevaCompra extends JFrame {
 			
 			consulta.iniciar();
 			rs = consulta.buscarProductoID(idProd);
-			int flag = 0;
-			float cantidad = 0;
 			
 			try {
 				rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
@@ -785,7 +783,25 @@ public class NuevaCompra extends JFrame {
 			
 			sumarTotal();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ingrese correctamente los datos", "Error al ingresar", 0);
+			String codbarra = txtBuscarProducto.getText();
+			consulta.iniciar();
+			rs = consulta.buscarProductoBarras(codbarra);
+			int flag = 0;
+			float cantidad = 0;
+			
+				try {
+					rs.beforeFirst();
+					while (rs.next()) {
+						dtm.addRow(new Object[] { 
+								"1", 
+								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " (" + rs.getString("unimedida") + ")",     
+								rs.getFloat("precioCo"),
+								rs.getFloat("precioCo"),"","",rs.getString("codproducto")
+								});
+						tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
+					}
+				} catch (Exception ex) {
+				}
 		}
 	}
 

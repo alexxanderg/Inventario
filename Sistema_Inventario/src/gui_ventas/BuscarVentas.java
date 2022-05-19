@@ -790,7 +790,7 @@ public class BuscarVentas extends JInternalFrame {
 					Connection con = null;
 		            con = MySQLConexion.getConection();
 					JasperPrint impressao = JasperFillManager.fillReport(
-							getClass().getClassLoader().getResourceAsStream("rNotaVenta58mm.jasper"),
+							getClass().getClassLoader().getResourceAsStream("rNotaVenta80mm.jasper"),
 							parameters, con);
 
 					// AbstractJasperReports.showViewer();

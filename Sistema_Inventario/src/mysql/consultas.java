@@ -368,7 +368,11 @@ public class consultas {
 	public ResultSet buscarProductosPorVencer() {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM db_inventario.tb_productos WHERE estado = 1 and fechaVenc != '' ORDER BY fechaVenc");
+			//rs = st.executeQuery("SELECT * FROM db_inventario.tb_productos WHERE estado = 1 and fechaVenc != '' ORDER BY fechaVenc");
+			rs = st.executeQuery("select p.estado, p.producto, p.detalles, p.marca, p.color, p.laboratorio, p.unimedida, cd.cantidad, cd.lote, cd.fechaVenc \n"
+					+ "from db_inventario.tb_compras_detalles cd\n"
+					+ "inner join db_inventario.tb_productos p on p.codproducto = cd.idprod\n"
+					+ "where cd.fechaVenc != '' ORDER BY cd.fechaVenc");
 		} catch (Exception e) {
 		}
 		return rs;

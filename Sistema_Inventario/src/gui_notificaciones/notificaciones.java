@@ -152,30 +152,15 @@ public class notificaciones extends JInternalFrame {
 		}
 
         List<String> list = new ArrayList<String>();
-        //list.add("C BARRA");
-        list.add("NOMBRE");
-        list.add("DESCRIPCIÓN");
+        
 		String[] parts = atribTodos.split(",");
-		for (int x=0; x<parts.length; x++){
-			if(parts[x].equals("marca"))
-				list.add("MARCA");
-			if(parts[x].equals("color"))
-				list.add("COLOR");
-			if(parts[x].equals("lote"))
-				list.add("LOTE");
-			if(parts[x].equals("laboratorio"))
-				list.add("LABORATORIO");
-			if(parts[x].equals("fvencimiento"))
-				list.add("FECHA VENC.");
-		}
-		list.add("UNI MED");
-		//list.add("CATEGORIA");
-		//list.add("ALMACÉN");
-		//list.add("DISTRIBUIDOR");
-		list.add("STOCK");
-		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
-		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
-				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
+		//list.add("C BARRA");
+        list.add("PRODUCTO Y DETALLES");
+       
+		
+		list.add("CANTIDAD");
+		list.add("FECHA VENCIMIENTO");
+		String[] columnas = list.toArray(new String[list.size()]); 
 		dtm.setColumnIdentifiers(columnas);
 		
 		int count = 0;
@@ -188,41 +173,19 @@ public class notificaciones extends JInternalFrame {
 				if(rs.getInt("estado") == 1){
 					List<String> listProds = new ArrayList<String>();
 			        //listProds.add(rs.getString("codbarra"));
-			        listProds.add(rs.getString("producto"));
-			        listProds.add(rs.getString("detalles"));
-			        for (int x=0; x<parts.length; x++){
-						if(parts[x].equals("marca"))
-							listProds.add(rs.getString("marca"));
-						if(parts[x].equals("color"))
-							listProds.add(rs.getString("color"));
-						if(parts[x].equals("lote"))
-							listProds.add(rs.getString("lote"));
-						if(parts[x].equals("laboratorio"))
-							listProds.add(rs.getString("laboratorio"));
-						if(parts[x].equals("fvencimiento")){
-							try {
-								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
-								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-								// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
-								String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
-								listProds.add(fechaOrdenada);
-							} catch (Exception e) {
-								listProds.add("");
-							}
-						}
-					}
-			        listProds.add(rs.getString("unimedida"));
-			        //listProds.add(rs.getString("categoria"));
-			        //listProds.add(rs.getString("almacen"));
-			        
-			        /*int iddistrib = rs.getInt("iddistrib");
-			        try {
-			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
-			        	 rs2.next();
-					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}*/
-			        
+			        listProds.add(rs.getString("producto") + " - " + rs.getString("detalles") + " - " + rs.getString("marca") + " - " + rs.getString("color") + " - " + rs.getString("laboratorio") + " * " + rs.getString("unimedida"));
+			      			        
 			        listProds.add(rs.getString("cantidad"));
+			        
+			        try {
+						// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
+						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+						// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
+						String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
+						listProds.add(fechaOrdenada);
+					} catch (Exception e) {
+						listProds.add("");
+					}
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
 					
@@ -275,27 +238,11 @@ public class notificaciones extends JInternalFrame {
 
         List<String> list = new ArrayList<String>();
         //list.add("C BARRA");
-        list.add("NOMBRE");
-        list.add("DESCRIPCIÓN");
-		String[] parts = atribTodos.split(",");
-		for (int x=0; x<parts.length; x++){
-			if(parts[x].equals("marca"))
-				list.add("MARCA");
-			if(parts[x].equals("color"))
-				list.add("COLOR");
-			//if(parts[x].equals("lote"))
-			//	list.add("LOTE");
-			if(parts[x].equals("laboratorio"))
-				list.add("LABORATORIO");
-			//if(parts[x].equals("fvencimiento"))
-			//	list.add("FECHA VENC.");
-		}
-		list.add("UNI MED");
-		//list.add("CATEGORIA");
-		//list.add("ALMACÉN");
-		//list.add("DISTRIBUIDOR");
+        
+        list.add("PRODUCTO Y DETALLES");
 		list.add("STOCK ACTUAL");
 		list.add("STOCK MINIMO");
+        
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
@@ -313,41 +260,10 @@ public class notificaciones extends JInternalFrame {
 				if(rs.getInt("estado") == 1 && cant <= cantmin){
 					List<String> listProds = new ArrayList<String>();
 			        //listProds.add(rs.getString("codbarra"));
-			        listProds.add(rs.getString("producto"));
-			        listProds.add(rs.getString("detalles"));
-			        for (int x=0; x<parts.length; x++){
-						if(parts[x].equals("marca"))
-							listProds.add(rs.getString("marca"));
-						if(parts[x].equals("color"))
-							listProds.add(rs.getString("color"));
-						//if(parts[x].equals("lote"))
-						//	listProds.add(rs.getString("lote"));
-						if(parts[x].equals("laboratorio"))
-							listProds.add(rs.getString("laboratorio"));
-						/*if(parts[x].equals("fvencimiento")){
-							try {
-								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
-								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-								// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
-								String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
-								listProds.add(fechaOrdenada);
-							} catch (Exception e) {
-								listProds.add("");
-							}
-						}*/
-					}
-			        listProds.add(rs.getString("unimedida"));
-			        //listProds.add(rs.getString("categoria"));
-			        //listProds.add(rs.getString("almacen"));
-			        
-			        /*int iddistrib = rs.getInt("iddistrib");
-			        try {
-			        	 ResultSet rs2 = consulta.buscarDistribuidor(iddistrib);
-			        	 rs2.next();
-					     listProds.add(rs2.getString("nombre"));		        	 
-					} catch (Exception e) {}*/
-			        
-			        listProds.add(rs.getString("cantidad"));
+					listProds.add(rs.getString("producto") + " - " + rs.getString("detalles") + " - " + rs.getString("marca") + " - " + rs.getString("color") + " - " + rs.getString("laboratorio") + " * " + rs.getString("unimedida"));
+   			        
+				    listProds.add(rs.getString("cantidad"));
+				        
 			        listProds.add(rs.getString("cantmin"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -380,9 +296,9 @@ public class notificaciones extends JInternalFrame {
 
 	public void ajustarAnchoColumnasPV() {
 		TableColumnModel tcm = tbXVencer.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(25)); // Código
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(25)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(70)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
 		
 		for(int i=0; i<tbXVencer.getColumnCount(); i++)
 			if(tbXVencer.getColumnName(i).equals("FECHA VENC."))
@@ -395,9 +311,9 @@ public class notificaciones extends JInternalFrame {
 	
 	public void ajustarAnchoColumnasPA() {
 		TableColumnModel tcm = tbPorAgotar.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(25)); // Código
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(25)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(25)); // Detalle
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(70)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
 		
 		for(int i=0; i<tbPorAgotar.getColumnCount(); i++)
 			if(tbPorAgotar.getColumnName(i).equals("UNI MED"))

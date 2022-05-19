@@ -193,6 +193,13 @@ lote			varchar(50),
 foreign key (idcompra) references tb_compras(idcompra)
 );
 
+ALTER TABLE tb_compras_detalles ADD fechaVenc date;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tb_compras_detalles SET fechaVenc = null;
+
+
+
 create table tb_configuraciones(
 idconfig		int primary key auto_increment,
 atributosprod	varchar(200),

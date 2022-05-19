@@ -66,7 +66,6 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 	private JDateChooser dchHasta;
 	private JLabel label_1;
 	private JButton btnVerCompras;
-	private JButton btnGenerarReporte;
 	private JLabel label_2;
 	private JTextField txtSerie;
 	private JLabel lblFecha;
@@ -183,19 +182,6 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		btnVerCompras.setBackground(new Color(30, 144, 255));
 		btnVerCompras.setBounds(447, 67, 130, 34);
 		getContentPane().add(btnVerCompras);
-
-		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>COMPRAS</center></html>");
-		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
-		btnGenerarReporte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedBtnGenerarReporte(e);
-			}
-		});
-		btnGenerarReporte.setForeground(new Color(138, 43, 226));
-		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnGenerarReporte.setBackground(Color.WHITE);
-		btnGenerarReporte.setBounds(447, 6, 130, 57);
-		getContentPane().add(btnGenerarReporte);
 
 		label_2 = new JLabel("Por nro comprobante:");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
@@ -474,49 +460,6 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
 			}
 		} catch (Exception localException1) {
-		}
-	}
-
-	protected void actionPerformedBtnGenerarReporte(ActionEvent e) {
-		String[] opciones = { "SIMPLE", "DETALLADO" };
-		int seleccion = JOptionPane.showOptionDialog(null, "REPORTE", "Seleccione una opcion", -1, 3, null, opciones,
-				opciones[0]);
-		Connection con = null;
-		try {
-			con = MySQLConexion.getConection();
-
-			int añoi = this.dchDesde.getCalendar().get(1);
-			int mesi = this.dchDesde.getCalendar().get(2) + 1;
-			int diai = this.dchDesde.getCalendar().get(5);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
-
-			int añof = this.dchHasta.getCalendar().get(1);
-			int mesf = this.dchHasta.getCalendar().get(2) + 1;
-			int diaf = this.dchHasta.getCalendar().get(5);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
-
-			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date = formatter.parse(fechai);
-			Timestamp timeStampDateI = new Timestamp(date.getTime());
-
-			DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date2 = formatter2.parse(fechaf);
-			Timestamp timeStampDateF = new Timestamp(date2.getTime());
-
-			Map parameters = new HashMap();
-			parameters.put("prtFechaI", timeStampDateI);
-			parameters.put("prtFechaFi", timeStampDateF);
-
-			if (seleccion == 0) {
-				new AbstractJasperReports().createReport(con, "rCompraSimple.jasper", parameters);
-				AbstractJasperReports.showViewer();
-			}
-			if (seleccion == 1) {
-				new AbstractJasperReports().createReport(con, "rCompraDetallada.jasper", parameters);
-				AbstractJasperReports.showViewer();
-			}
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
 	}
 
