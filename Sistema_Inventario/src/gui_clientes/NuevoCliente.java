@@ -136,7 +136,7 @@ public class NuevoCliente extends JFrame {
 				itemStateChangedCbTipoDoc(arg0);
 			}
 		});
-		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "Pasaporte", "Doc.trib.no.dom.sin.ruc"}));
+		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "PASAPORTE", "SIN DOCUMENTO"}));
 		cbTipoDoc.setSelectedIndex(0);
 		cbTipoDoc.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipoDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -293,10 +293,7 @@ public class NuevoCliente extends JFrame {
 	protected void actionPerformedBtnCrear(ActionEvent arg0) {
 		try {
 			consulta.iniciar();
-			if(txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0){
-				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
-			}
-			else{
+			
 				String tipodoc = "";	tipodoc = cbTipoDoc.getSelectedItem().toString();
 				String nrodoc = "";	nrodoc = txtNroDoc.getText();
 				String nombre = "";	nombre = txtNombre.getText();
@@ -323,7 +320,7 @@ public class NuevoCliente extends JFrame {
 
 				consulta.reset();
 				dispose();
-			}
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error al crear cliente: " + e);
 		}finally {

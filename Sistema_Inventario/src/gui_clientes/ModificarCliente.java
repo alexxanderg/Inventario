@@ -128,7 +128,7 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 			}
 		});
 		cbTipoDoc.setModel(
-				new DefaultComboBoxModel(new String[] { "RUC", "DNI", "CE", "Pasaporte", "Doc.trib.no.dom.sin.ruc" }));
+				new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "PASAPORTE", "SIN DOCUMENTO"}));
 		cbTipoDoc.setSelectedIndex(0);
 		cbTipoDoc.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipoDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -302,9 +302,7 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 
 	protected void actionPerformedBtnModificar(ActionEvent arg0) {
 		try {
-			if (txtNroDoc.getText().length() == 0 || txtNombre.getText().length() == 0)
-				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos marcados con *");
-			else {
+			
 				int opc = JOptionPane.showConfirmDialog(null, "¿Desea modificar el CLIENTE?", "Confirmar cambios",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (opc == 0) {
@@ -329,7 +327,7 @@ public class ModificarCliente extends JFrame implements ActionListener, WindowLi
 					consulta.reset();
 					dispose();
 				}
-			}
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente: " + e);
 		}
