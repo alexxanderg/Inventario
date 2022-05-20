@@ -43,12 +43,10 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class Kardex extends JInternalFrame {
 	private JMenuBar menuBar;
-	private JLabel lblCdigo;
 	private JTextField txtCodigo;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
 	private JTable tbProductos;
-	private JCheckBox chckbxFiltrar;
 	JTable tb;
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -58,11 +56,8 @@ public class Kardex extends JInternalFrame {
 	String usuario;
 	public VentanaPrincipal vp;
 	private JTextField txtCodigo2;
-	private JButton btnCalcular;
-	private JLabel lblNewLabel;
 	private JMenu mncargarltimoRegistro;
 	private JMenu mnfusionar;
-	private JLabel lblKardex;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,26 +80,7 @@ public class Kardex extends JInternalFrame {
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 
-		this.lblCdigo = new JLabel("Buscar:");
-		this.lblCdigo.setVerticalAlignment(1);
-		this.lblCdigo.setForeground(Color.DARK_GRAY);
-		this.lblCdigo.setFont(new Font("Candara", 1, 30));
-		this.lblCdigo.setBounds(10, 179, 113, 34);
-		getContentPane().add(this.lblCdigo);
-
-		this.txtCodigo = new JTextField();
-		this.txtCodigo.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		this.txtCodigo.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				Kardex.this.keyTypedTxtCodigo(e);
-			}
-		});
-		this.txtCodigo.setHorizontalAlignment(2);
-		this.txtCodigo.setFont(new Font("Arial", 3, 20));
-		this.txtCodigo.setColumns(10);
-		this.txtCodigo.setBackground(new Color(245, 245, 245));
-		this.txtCodigo.setBounds(123, 179, 428, 34);
-		getContentPane().add(this.txtCodigo);
+		
 
 		this.scrollPane = new JScrollPane();
 		this.scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
@@ -120,61 +96,7 @@ public class Kardex extends JInternalFrame {
 		this.tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.scrollPane.setViewportView(this.tbProductos);
 
-		this.chckbxFiltrar = new JCheckBox("¿Filtrar al escribir?");
-		this.chckbxFiltrar.setVisible(false);
-		this.chckbxFiltrar.setForeground(new Color(30, 144, 255));
-		this.chckbxFiltrar.setHorizontalAlignment(4);
-		this.chckbxFiltrar.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				Kardex.this.itemStateChangedChckbxFiltrar(arg0);
-			}
-		});
-		this.chckbxFiltrar.setBackground(Color.WHITE);
-		this.chckbxFiltrar.setFont(new Font("Tahoma", 1, 15));
-		this.chckbxFiltrar.setBounds(342, 188, 197, 20);
-		getContentPane().add(this.chckbxFiltrar);
-
-		this.txtCodigo2 = new JTextField();
-		this.txtCodigo2.setVisible(false);
-		this.txtCodigo2.setEnabled(false);
-		this.txtCodigo2.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent arg0) {
-				Kardex.this.keyReleasedTxtCodigo2(arg0);
-			}
-		});
-		this.txtCodigo2.setHorizontalAlignment(2);
-		this.txtCodigo2.setFont(new Font("Arial", 3, 20));
-		this.txtCodigo2.setColumns(10);
-		this.txtCodigo2.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
-		this.txtCodigo2.setBackground(new Color(245, 245, 245));
-		this.txtCodigo2.setBounds(123, 179, 428, 34);
-		getContentPane().add(this.txtCodigo2);
-
-		this.btnCalcular = new JButton("<html><center>Calcular diferencia en S/ <br>de cada producto.</center></html>");
-		this.btnCalcular.setVerticalAlignment(1);
-		this.btnCalcular.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Kardex.this.actionPerformedBtnMas1(arg0);
-			}
-		});
-		this.btnCalcular.setForeground(Color.WHITE);
-		this.btnCalcular.setFont(new Font("Tahoma", 1, 16));
-		this.btnCalcular.setBackground(new Color(50, 205, 50));
-		this.btnCalcular.setBounds(786, 160, 307, 52);
-		getContentPane().add(this.btnCalcular);
-
-		this.lblNewLabel = new JLabel(
-				"<html><center>En esta ventana puede hacer una verificación de su inventario. Podrá comparar su Stock que indica el sistema con el que va revisando de manera fisica (columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
-		this.lblNewLabel.setForeground(new Color(105, 105, 105));
-		this.lblNewLabel.setFont(new Font("Tahoma", 0, 12));
-		this.lblNewLabel.setBounds(300, 74, 520, 78);
-		getContentPane().add(this.lblNewLabel);
-
-		this.lblKardex = new JLabel("KARDEX");
-		this.lblKardex.setForeground(Color.BLACK);
-		this.lblKardex.setFont(new Font("Candara", 1, 30));
-		this.lblKardex.setBounds(500, 11, 113, 52);
-		getContentPane().add(this.lblKardex);
+		
 
 		this.tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -182,8 +104,6 @@ public class Kardex extends JInternalFrame {
 		this.menuBar.setCursor(Cursor.getPredefinedCursor(12));
 		this.menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(this.menuBar);
-		setFocusTraversalPolicy(
-				new FocusTraversalOnArray(new Component[] { this.txtCodigo, this.chckbxFiltrar, this.txtCodigo2 }));
 
 		JMenu mnaadirStock = new JMenu("|Guardar conteo actual| ");
 		mnaadirStock.addMouseListener(new MouseAdapter() {
@@ -233,123 +153,12 @@ public class Kardex extends JInternalFrame {
 	}
 
 	public void cargarTabla(String prod) {
-		limpiarTabla();
-
-		String atribTodos = "";
-		try {
-			this.consulta.iniciar();
-			this.rs = this.consulta.cargarConfiguraciones();
-			this.rs.next();
-			atribTodos = this.rs.getString("atributosprod");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al cargar atributos: " + e);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
-
-		List list = new ArrayList();
-		list.add("ID");
-		list.add("PRODUCTO");
-		String[] parts = atribTodos.split(",");
-		list.add("UNI MED");
-		list.add("STOCK");
-		list.add("CONTEO");
-		list.add("DIFERENCIA EN S/");
-		String[] columnas = (String[]) list.toArray(new String[list.size()]);
-
-		this.dtm.setColumnIdentifiers(columnas);
-		try {
-			this.consulta.iniciar();
-			if (prod.equals("todos"))
-				this.rs = this.consulta.cargarProductos();
-			else {
-				this.rs = this.consulta.cargarProductoParticular(prod);
-			}
-
-			while (this.rs.next()) {
-				if (this.rs.getInt("estado") == 1) {
-					List listProds = new ArrayList();
-					listProds.add(this.rs.getString("codproducto"));
-					listProds.add(this.rs.getString("producto") + " " + this.rs.getString("detalles") + " "
-							+ this.rs.getString("marca") + " " + this.rs.getString("color") + " "
-							+ this.rs.getString("laboratorio"));
-					listProds.add(this.rs.getString("unimedida"));
-					listProds.add(this.rs.getString("cantidad"));
-
-					String[] columnasProds = (String[]) listProds.toArray(new String[list.size()]);
-					this.dtm.addRow(columnasProds);
-				}
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
-
+	
 		ajustarAnchoColumnas();
 	}
 
 	public void cargarBuscador() {
-		try {
-			this.ac = new TextAutoCompleter(this.txtCodigo);
-			this.consulta.iniciar();
-			ResultSet rs = this.consulta.cargarProductos();
-			this.ac.setMode(0);
-
-			while (rs.next())
-				this.ac.addItem(rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca")
-						+ " " + rs.getString("color") + " " + rs.getString("laboratorio") + " " + rs.getString("lote")
-						+ " * " + rs.getString("unimedida") + "  -  (" + rs.getString("codproducto") + ")");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
+		
 	}
 
 	private void cargarKardexCero() {
@@ -494,9 +303,6 @@ public class Kardex extends JInternalFrame {
 	protected void keyReleasedTxtCodigo2(KeyEvent arg0) {
 	}
 
-	protected void itemStateChangedChckbxFiltrar(ItemEvent arg0) {
-	}
-
 	private void limpiarTabla() {
 		for (int i = 0; i < this.tbProductos.getRowCount(); i++) {
 			this.dtm.removeRow(i);
@@ -582,58 +388,6 @@ public class Kardex extends JInternalFrame {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "Error al guardar: " + ex.getMessage());
 		}
-	}
-
-	protected void actionPerformedBtnMas1(ActionEvent arg0) {
-		JOptionPane.showMessageDialog(null, "Calculando, espere un momento...");
-		double diferenciaT = 0.0D;
-
-		for (int i = 0; i < this.tbProductos.getRowCount(); i++) {
-			int id = Integer.parseInt(this.tbProductos.getValueAt(i, 0).toString());
-
-			double conteo = Double.parseDouble(this.tbProductos.getValueAt(i, 4).toString());
-			try {
-				this.consulta.iniciar();
-				ResultSet rs = this.consulta.buscarProductoID(id);
-
-				rs.next();
-				double stock = rs.getDouble("cantidad");
-				double pventa = rs.getDouble("precioVe");
-
-				double precioReal = stock * pventa;
-				double precioActual = conteo * pventa;
-				double diferencia = precioActual - precioReal;
-
-				diferenciaT += diferencia;
-
-				diferencia = redondearDecimales(diferencia, 2);
-
-				this.tbProductos.setValueAt(diferencia, i, 5);
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
-				try {
-					if (this.rs != null)
-						this.rs.close();
-					if (this.consulta != null)
-						this.consulta.reset();
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-				}
-			} finally {
-				try {
-					if (this.rs != null)
-						this.rs.close();
-					if (this.consulta != null)
-						this.consulta.reset();
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-				}
-			}
-		}
-		if (diferenciaT >= 0.0D)
-			JOptionPane.showMessageDialog(null, "Tiene una diferencia TOTAL a favor de: S/" + diferenciaT);
-		else
-			JOptionPane.showMessageDialog(null, "Tiene una diferencia TOTAL a en contra de: S/" + diferenciaT);
 	}
 
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {

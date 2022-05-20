@@ -156,7 +156,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     addWindowListener(this);
     setResizable(false);
     setDefaultCloseOperation(3);
-    setBounds(100, 100, 851, 368);
+    setBounds(100, 100, 677, 368);
     this.contentPane = new JPanel();
     contentPane.setForeground(Color.WHITE);
     contentPane.setBackground(Color.DARK_GRAY);
@@ -178,8 +178,12 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     contentPane.setLayout(null);
     contentPane.setLayout(null);
     this.txtPreCompra = new JTextField();
+    txtPreCompra.setVisible(false);
     txtPreCompra.setForeground(new Color(169, 169, 169));
     txtPreCompra.setBackground(Color.DARK_GRAY);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
+    contentPane.setLayout(null);
     contentPane.setLayout(null);
     this.txtPreCompra.setEditable(false);
     this.txtPreCompra.setHorizontalAlignment(0);
@@ -194,7 +198,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtTitulo.setHorizontalAlignment(0);
     this.txtTitulo.setBounds(0, 0, 851, 50);
     this.contentPane.add(this.txtTitulo);
-    this.lblPrecioPorUnidad = new JLabel("Precio por:");
+    this.lblPrecioPorUnidad = new JLabel("Raci\u00F3n");
     lblPrecioPorUnidad.setForeground(Color.WHITE);
     this.lblPrecioPorUnidad.setVerticalAlignment(3);
     this.lblPrecioPorUnidad.setHorizontalAlignment(2);
@@ -206,7 +210,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.lblSubtotal.setVerticalAlignment(SwingConstants.TOP);
     this.lblSubtotal.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblSubtotal.setFont(new Font("Candara", Font.BOLD, 30));
-    this.lblSubtotal.setBounds(656, 79, 134, 31);
+    this.lblSubtotal.setBounds(415, 79, 134, 31);
     this.contentPane.add(this.lblSubtotal);
     this.lblNewLabel = new JLabel("Cantidad:");
     lblNewLabel.setForeground(Color.WHITE);
@@ -229,7 +233,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtPUnidadOriginal.addKeyListener(this);
     this.txtPUnidadOriginal.setFont(new Font("Tahoma", 1, 16));
     this.txtPUnidadOriginal.setColumns(10);
-    this.txtPUnidadOriginal.setBounds(292, 148, 100, 31);
+    this.txtPUnidadOriginal.setBounds(266, 110, 100, 31);
     this.contentPane.add(this.txtPUnidadOriginal);
     this.txtTotal = new JTextField();
     txtTotal.setBorder(null);
@@ -244,38 +248,42 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtTotal.addKeyListener(this);
     this.txtTotal.setFont(new Font("Arial", Font.BOLD, 23));
     this.txtTotal.setColumns(10);
-    this.txtTotal.setBounds(697, 148, 93, 31);
+    this.txtTotal.setBounds(456, 148, 93, 31);
     this.contentPane.add(this.txtTotal);
     this.btnCambiar = new JButton("Cambiar");
     this.btnCambiar.setForeground(new Color(255, 255, 255));
     this.btnCambiar.setBackground(new Color(30, 144, 255));
     this.btnCambiar.addActionListener(this);
     this.btnCambiar.setFont(new Font("Tahoma", 1, 18));
-    this.btnCambiar.setBounds(427, 272, 175, 43);
+    this.btnCambiar.setBounds(297, 210, 175, 43);
     this.contentPane.add(this.btnCambiar);
     this.btnMenos1 = new JButton("-1");
+    btnMenos1.setVisible(false);
     this.btnMenos1.addActionListener(this);
     this.btnMenos1.setForeground(Color.WHITE);
     this.btnMenos1.setFont(new Font("Arial", Font.BOLD, 16));
     this.btnMenos1.setBackground(new Color(220, 20, 60));
-    this.btnMenos1.setBounds(44, 112, 55, 31);
+    this.btnMenos1.setBounds(54, 180, 55, 31);
     this.contentPane.add(this.btnMenos1);
     this.btnMas1 = new JButton("+1");
+    btnMas1.setVisible(false);
     this.btnMas1.addActionListener(this);
     this.btnMas1.setForeground(Color.WHITE);
     this.btnMas1.setFont(new Font("Arial", Font.BOLD, 16));
     this.btnMas1.setBackground(new Color(60, 179, 113));
-    this.btnMas1.setBounds(102, 112, 55, 31);
+    this.btnMas1.setBounds(112, 180, 55, 31);
     this.contentPane.add(this.btnMas1);
     this.cbPrecio = new JComboBox();
+    cbPrecio.setVisible(false);
     cbPrecio.setForeground(Color.DARK_GRAY);
     cbPrecio.setBackground(SystemColor.control);
     cbPrecio.setBorder(null);
     this.cbPrecio.addItemListener(this);
     this.cbPrecio.setFont(new Font("Dialog", 1, 16));
-    this.cbPrecio.setBounds(232, 111, 160, 31);
+    this.cbPrecio.setBounds(112, 264, 160, 31);
     this.contentPane.add(this.cbPrecio);
     this.lblDescuento = new JLabel("Desc. individual: S/");
+    lblDescuento.setVisible(false);
     this.lblDescuento.setForeground(new Color(102, 205, 170));
     this.lblDescuento.setVerticalAlignment(3);
     this.lblDescuento.setHorizontalAlignment(4);
@@ -304,7 +312,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtDescuentoIndiv.setText("0.0");
     this.txtDescuentoIndiv.setFont(new Font("Tahoma", 1, 16));
     this.txtDescuentoIndiv.setColumns(10);
-    this.txtDescuentoIndiv.setBounds(332, 216, 69, 31);
+    this.txtDescuentoIndiv.setBounds(-44, 263, 69, 31);
     this.contentPane.add(this.txtDescuentoIndiv);
     this.btnCancelar = new JButton("Cancelar");
     this.btnCancelar.addActionListener(new ActionListener() {
@@ -315,16 +323,18 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.btnCancelar.setForeground(new Color(255, 255, 255));
     this.btnCancelar.setFont(new Font("Tahoma", 1, 18));
     this.btnCancelar.setBackground(new Color(220, 20, 60));
-    this.btnCancelar.setBounds(242, 272, 175, 43);
+    this.btnCancelar.setBounds(112, 210, 175, 43);
     this.contentPane.add(this.btnCancelar);
     this.lblPreCdescuento = new JLabel("Nuevo precio:");
+    lblPreCdescuento.setVisible(false);
     lblPreCdescuento.setForeground(Color.WHITE);
     this.lblPreCdescuento.setVerticalAlignment(3);
     this.lblPreCdescuento.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblPreCdescuento.setFont(new Font("Candara", 1, 20));
-    this.lblPreCdescuento.setBounds(430, 79, 160, 31);
+    this.lblPreCdescuento.setBounds(440, 147, 160, 31);
     this.contentPane.add(this.lblPreCdescuento);
     this.txtNewPrecio = new JTextField();
+    txtNewPrecio.setVisible(false);
     txtNewPrecio.setForeground(Color.DARK_GRAY);
     txtNewPrecio.setHorizontalAlignment(SwingConstants.LEFT);
     txtNewPrecio.setBackground(SystemColor.controlHighlight);
@@ -345,7 +355,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtNewPrecio.setText("0.0");
     this.txtNewPrecio.setFont(new Font("Tahoma", 1, 16));
     this.txtNewPrecio.setColumns(10);
-    this.txtNewPrecio.setBounds(481, 148, 121, 31);
+    this.txtNewPrecio.setBounds(415, 216, 121, 31);
     this.contentPane.add(this.txtNewPrecio);
     this.txtCantidad = new JTextField();
     txtCantidad.setForeground(Color.DARK_GRAY);
@@ -362,10 +372,11 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
         });
     this.txtCantidad.addKeyListener(this);
     this.txtCantidad.setFont(new Font("Tahoma", 1, 16));
-    this.txtCantidad.setBounds(44, 148, 113, 31);
+    this.txtCantidad.setBounds(44, 110, 113, 31);
     this.contentPane.add(this.txtCantidad);
     this.txtCantidad.setColumns(10);
     this.lblDescuentoTotal = new JLabel("Descuento total: S/");
+    lblDescuentoTotal.setVisible(false);
     this.lblDescuentoTotal.setForeground(new Color(102, 205, 170));
     this.lblDescuentoTotal.setVerticalAlignment(3);
     this.lblDescuentoTotal.setHorizontalAlignment(4);
@@ -394,21 +405,22 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     this.txtDescuentoTot.setText("0.0");
     this.txtDescuentoTot.setFont(new Font("Tahoma", 1, 16));
     this.txtDescuentoTot.setColumns(10);
-    this.txtDescuentoTot.setBounds(617, 216, 69, 31);
+    this.txtDescuentoTot.setBounds(-54, 229, 69, 31);
     this.contentPane.add(this.txtDescuentoTot);
     this.lblS = new JLabel("S/");
+    lblS.setVisible(false);
     lblS.setForeground(Color.WHITE);
     this.lblS.setVerticalAlignment(3);
     this.lblS.setHorizontalAlignment(SwingConstants.LEFT);
     this.lblS.setFont(new Font("Candara", 1, 20));
-    this.lblS.setBounds(448, 148, 33, 31);
+    this.lblS.setBounds(458, 216, 33, 31);
     this.contentPane.add(this.lblS);
     this.label_3 = new JLabel("S/");
     label_3.setForeground(Color.WHITE);
     this.label_3.setVerticalAlignment(3);
     this.label_3.setHorizontalAlignment(SwingConstants.LEFT);
     this.label_3.setFont(new Font("Candara", Font.BOLD, 22));
-    this.label_3.setBounds(258, 148, 24, 31);
+    this.label_3.setBounds(232, 110, 24, 31);
     this.contentPane.add(this.label_3);
     
     JLabel lblS_1 = new JLabel("S/");
@@ -416,13 +428,13 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
     lblS_1.setHorizontalAlignment(SwingConstants.LEFT);
     lblS_1.setForeground(new Color(205, 92, 92));
     lblS_1.setFont(new Font("Candara", Font.BOLD, 25));
-    lblS_1.setBounds(656, 150, 61, 32);
+    lblS_1.setBounds(415, 150, 61, 32);
     contentPane.add(lblS_1);
     
     btnBasura = new JButton("");
     btnBasura.addActionListener(this);
     btnBasura.setBackground(Color.DARK_GRAY);
-    btnBasura.setBounds(701, 216, 124, 102);
+    btnBasura.setBounds(501, 210, 124, 102);
     contentPane.add(btnBasura);
     Image imgLogo = new ImageIcon(this.getClass().getResource("/imgbasura.png")).getImage().getScaledInstance(100, 100, Image.SCALE_AREA_AVERAGING);
     btnBasura.setIcon(new ImageIcon(imgLogo));
@@ -558,6 +570,7 @@ public class ModificarPrecioVenta2 extends JFrame implements ActionListener, Win
   }
   
   public double redondearDecimales(double valorInicial, int numeroDecimales) {
+	  numeroDecimales = 3;
     double resultado = valorInicial;
     double parteEntera = Math.floor(resultado);
     resultado = (resultado - parteEntera) * Math.pow(10.0D, numeroDecimales);

@@ -27,7 +27,6 @@ import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,8 +44,6 @@ import javax.swing.UIManager;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JScrollPane;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class NuevaCompra extends JFrame {
 
@@ -56,6 +53,8 @@ public class NuevaCompra extends JFrame {
 	private JTextField txtSerie;
 	private JLabel lblDescripcin;
 	private JTextField txtNroSerie;
+	private JLabel lblMarca;
+	private JLabel lblColor;
 	private JLabel lblFechaVencimiento;
 	private JDateChooser dchFeVencimiento;
 	private JButton btnRegistrarCompra;
@@ -64,12 +63,15 @@ public class NuevaCompra extends JFrame {
 	private JLabel lblDistribuidor;
 	private JLabel lblFechaDeEmisin;
 	private JComboBox cbTipoComprobante;
+	private JComboBox cbMoneda;
+	private JTextField txtTipoCambio;
 	private JDateChooser dchFeEmision;
 	private JScrollPane scrollPane;
 	private JTextField txtBuscarProducto;
 	private JLabel label;
 	private JTable tbCompras;
 	private JButton btnAnadirDistri;
+	private JButton btnIngresar;
 	private JLabel lblNotaDeCompra;
 	private JTextField txtNota;
 	private JLabel lblMtodoDePago;
@@ -88,8 +90,6 @@ public class NuevaCompra extends JFrame {
 	private JButton btnQuitar;
 	private JButton btnAyuda;
 	private JLabel lblTotal;
-
-	private JDateChooser dateFechaVenc;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -160,7 +160,7 @@ public class NuevaCompra extends JFrame {
 		txtSerie.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtSerie.setColumns(10);
 		txtSerie.setBackground(new Color(245, 245, 245));
-		txtSerie.setBounds(612, 105, 132, 25);
+		txtSerie.setBounds(614, 105, 130, 25);
 		contentPane.add(txtSerie);
 
 		lblDescripcin = new JLabel("Nro:");
@@ -192,17 +192,36 @@ public class NuevaCompra extends JFrame {
 		txtNroSerie.setBounds(827, 105, 214, 25);
 		contentPane.add(txtNroSerie);
 
+		lblMarca = new JLabel("Moneda:");
+		lblMarca.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblMarca.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMarca.setForeground(Color.DARK_GRAY);
+		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
+		lblMarca.setBounds(554, 142, 88, 25);
+		contentPane.add(lblMarca);
+
+		lblColor = new JLabel("Tipo de cambio:");
+		lblColor.setVisible(false);
+		lblColor.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblColor.setForeground(Color.DARK_GRAY);
+		lblColor.setFont(new Font("Candara", Font.BOLD, 20));
+		lblColor.setBounds(759, 142, 149, 25);
+		contentPane.add(lblColor);
+
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
+		lblFechaVencimiento.setVisible(false);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaVencimiento.setBounds(554, 178, 205, 25);
+		lblFechaVencimiento.setBounds(554, 247, 205, 25);
 		contentPane.add(lblFechaVencimiento);
 
 		dchFeVencimiento = new JDateChooser();
-		dchFeVencimiento.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		dchFeVencimiento.setVisible(false);
+		dchFeVencimiento.setFont(new Font("Arial", Font.PLAIN, 16));
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
-		dchFeVencimiento.setBounds(759, 178, 282, 25);
+		dchFeVencimiento.setBounds(759, 247, 282, 25);
 		contentPane.add(dchFeVencimiento);
 
 		btnRegistrarCompra = new JButton("REGISTRAR");
@@ -264,7 +283,7 @@ public class NuevaCompra extends JFrame {
 		lblFechaDeEmisin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaDeEmisin.setForeground(Color.DARK_GRAY);
 		lblFechaDeEmisin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeEmisin.setBounds(554, 144, 177, 23);
+		lblFechaDeEmisin.setBounds(12, 178, 190, 23);
 		contentPane.add(lblFechaDeEmisin);
 
 		cbTipoComprobante = new JComboBox();
@@ -276,8 +295,28 @@ public class NuevaCompra extends JFrame {
 		cbTipoComprobante.setBounds(212, 105, 300, 25);
 		contentPane.add(cbTipoComprobante);
 
+		cbMoneda = new JComboBox();
+		cbMoneda.setModel(new DefaultComboBoxModel(new String[] { "Soles", "Dolares" }));
+		cbMoneda.setForeground(Color.DARK_GRAY);
+		cbMoneda.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbMoneda.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbMoneda.setBackground(new Color(245, 245, 245));
+		cbMoneda.setBounds(644, 142, 100, 25);
+		contentPane.add(cbMoneda);
+
+		txtTipoCambio = new JTextField();
+		txtTipoCambio.setVisible(false);
+		txtTipoCambio.setHorizontalAlignment(SwingConstants.LEFT);
+		txtTipoCambio.setForeground(Color.DARK_GRAY);
+		txtTipoCambio.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtTipoCambio.setColumns(10);
+		txtTipoCambio.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtTipoCambio.setBackground(new Color(245, 245, 245));
+		txtTipoCambio.setBounds(911, 142, 130, 25);
+		contentPane.add(txtTipoCambio);
+
 		dchFeEmision = new JDateChooser();
-		dchFeEmision.setBounds(759, 144, 282, 23);
+		dchFeEmision.setBounds(212, 178, 300, 23);
 		contentPane.add(dchFeEmision);
 
 		scrollPane = new JScrollPane();
@@ -287,11 +326,6 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(scrollPane);
 
 		tbCompras = new JTable();
-		tbCompras.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				propertyChangeTbCompras(evt);
-			}
-		});
 		tbCompras.setAutoCreateRowSorter(true);
 		tbCompras.setFont(new Font("Arial", Font.ITALIC, 14));
 		scrollPane.setViewportView(tbCompras);
@@ -331,11 +365,23 @@ public class NuevaCompra extends JFrame {
 		btnAnadirDistri.setBounds(458, 142, 54, 25);
 		contentPane.add(btnAnadirDistri);
 
+		btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionPerformedBtnIngresar(e);
+			}
+		});
+		btnIngresar.setForeground(SystemColor.menu);
+		btnIngresar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnIngresar.setBackground(new Color(60, 179, 113));
+		btnIngresar.setBounds(788, 296, 143, 34);
+		contentPane.add(btnIngresar);
+
 		lblNotaDeCompra = new JLabel("Nota:");
 		lblNotaDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotaDeCompra.setForeground(Color.DARK_GRAY);
 		lblNotaDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNotaDeCompra.setBounds(12, 178, 190, 23);
+		lblNotaDeCompra.setBounds(12, 212, 190, 23);
 		contentPane.add(lblNotaDeCompra);
 
 		txtNota = new JTextField();
@@ -345,7 +391,7 @@ public class NuevaCompra extends JFrame {
 		txtNota.setColumns(10);
 		txtNota.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNota.setBackground(new Color(245, 245, 245));
-		txtNota.setBounds(212, 178, 300, 25);
+		txtNota.setBounds(212, 212, 829, 25);
 		contentPane.add(txtNota);
 
 		lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
@@ -353,20 +399,21 @@ public class NuevaCompra extends JFrame {
 		lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(554, 214, 190, 23);
+		lblMtodoDePago.setBounds(554, 178, 190, 23);
 		contentPane.add(lblMtodoDePago);
 
 		cbMetPago = new JComboBox();
 		cbMetPago.setVisible(false);
-		cbMetPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
+		cbMetPago.setModel(new DefaultComboBoxModel(new String[] { "Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito",
+				"Transferencia", "Dep\u00F3sito", "CR\u00C9DITO" }));
 		cbMetPago.setForeground(Color.DARK_GRAY);
 		cbMetPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMetPago.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbMetPago.setBackground(new Color(245, 245, 245));
-		cbMetPago.setBounds(759, 214, 282, 25);
+		cbMetPago.setBounds(759, 178, 282, 25);
 		contentPane.add(cbMetPago);
 
-		btnNuevoProducto = new JButton("Crear nuevo");
+		btnNuevoProducto = new JButton("+");
 		btnNuevoProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnNuevoProducto(arg0);
@@ -375,8 +422,8 @@ public class NuevaCompra extends JFrame {
 		btnNuevoProducto.setForeground(Color.WHITE);
 		btnNuevoProducto.setFont(new Font("Arial", Font.BOLD, 20));
 		btnNuevoProducto.setBorder(new LineBorder(Color.WHITE, 1, true));
-		btnNuevoProducto.setBackground(new Color(60, 179, 113));
-		btnNuevoProducto.setBounds(891, 296, 150, 34);
+		btnNuevoProducto.setBackground(new Color(30, 144, 255));
+		btnNuevoProducto.setBounds(522, 299, 54, 25);
 		contentPane.add(btnNuevoProducto);
 
 		btnQuitar = new JButton("Quitar");
@@ -388,11 +435,10 @@ public class NuevaCompra extends JFrame {
 		btnQuitar.setForeground(SystemColor.menu);
 		btnQuitar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuitar.setBackground(new Color(220, 20, 60));
-		btnQuitar.setBounds(781, 296, 100, 34);
+		btnQuitar.setBounds(941, 296, 100, 34);
 		contentPane.add(btnQuitar);
 
 		btnAyuda = new JButton("AYUDA");
-		btnAyuda.setVisible(false);
 		btnAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnAyuda(e);
@@ -401,7 +447,7 @@ public class NuevaCompra extends JFrame {
 		btnAyuda.setForeground(Color.DARK_GRAY);
 		btnAyuda.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnAyuda.setBackground(new Color(255, 215, 0));
-		btnAyuda.setBounds(298, 222, 214, 32);
+		btnAyuda.setBounds(827, 61, 214, 32);
 		contentPane.add(btnAyuda);
 
 		lblTotal = new JLabel("S/");
@@ -410,22 +456,6 @@ public class NuevaCompra extends JFrame {
 		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
 		lblTotal.setBounds(827, 550, 214, 54);
 		contentPane.add(lblTotal);
-		
-		JLabel lblEjmB = new JLabel("ejm: B001");
-		lblEjmB.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblEjmB.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEjmB.setForeground(Color.DARK_GRAY);
-		lblEjmB.setFont(new Font("Candara", Font.BOLD, 15));
-		lblEjmB.setBounds(612, 80, 132, 23);
-		contentPane.add(lblEjmB);
-		
-		JLabel lblEjm = new JLabel("ejm: 135");
-		lblEjm.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblEjm.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEjm.setForeground(Color.DARK_GRAY);
-		lblEjm.setFont(new Font("Candara", Font.BOLD, 15));
-		lblEjm.setBounds(867, 80, 132, 23);
-		contentPane.add(lblEjm);
 		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
 		// Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie,
 		// txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio,
@@ -439,7 +469,7 @@ public class NuevaCompra extends JFrame {
 	private void cargar() {
 		this.tbCompras.setModel(this.dtm);
 		this.dtm.setColumnIdentifiers(
-				new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total", "Lote", "Fe.Ve. (dd-mm-aaaa)", "Codigo" });
+				new Object[] { "Cantidad", "Producto y detalles", "Precio indiv.", "Sub Total", "Lote" });
 		ajustarAnchoColumnas();
 		this.tbCompras.setRowHeight(25);
 
@@ -457,13 +487,10 @@ public class NuevaCompra extends JFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = this.tbCompras.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(50));
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(17));
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(1));
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(10));
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(60));
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(15));
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(0);
 
@@ -557,7 +584,7 @@ public class NuevaCompra extends JFrame {
 				JOptionPane.showMessageDialog(null, "Ingrese sus productos comprados");
 			} else {
 				int opc = JOptionPane.showConfirmDialog(null,
-						"¿Está seguro de registrar la compra?\nEste registro no se podrá eliminar o modificar en un futuro. Por favor verifique sus productos y precios",
+						"¿Está seguro de registrar la compra?\nEste registro no se podrá eliminar o modificar en un futuro, le pedimos por favor verifique sus productos y precios",
 						"Confirmar", 0, 3);
 				if (opc == 0) {
 					int tipComprobante = 0;
@@ -570,12 +597,12 @@ public class NuevaCompra extends JFrame {
 					idDistrib = ((Distribuidores) this.cbDistribuidor.getItemAt(this.cbDistribuidor.getSelectedIndex()))
 							.getIddist();
 					String moneda = "";
-					moneda = "Soles";
+					moneda = this.cbMoneda.getSelectedItem().toString();
 					String tc = "";
-					tc = "";
+					tc = this.txtTipoCambio.getText();
 					Object fechaEmision = null;
 					Object fechaVencimiento = null;
-										
+
 					String nota = "";
 					nota = this.txtNota.getText();
 					String metPago = "";
@@ -638,11 +665,9 @@ public class NuevaCompra extends JFrame {
 						}
 					}
 
-					// COMPRAS DETALLES
-					
 					for (int i = 0; i < this.tbCompras.getRowCount(); i++) {
 						String prod = this.tbCompras.getValueAt(i, 1).toString();
-						int idProd = Integer.parseInt(this.tbCompras.getValueAt(i, 6).toString());
+						int idProd = Integer.parseInt(prod.substring(prod.indexOf("(") + 1, prod.indexOf(")")));
 
 						double cantProd = Float.parseFloat(this.tbCompras.getValueAt(i, 0).toString());
 						double preIndivProd = Float.parseFloat(this.tbCompras.getValueAt(i, 2).toString());
@@ -650,34 +675,10 @@ public class NuevaCompra extends JFrame {
 						double preSubTotProd = Float.parseFloat(this.tbCompras.getValueAt(i, 3).toString());
 						preSubTotProd = redondearDecimales(preSubTotProd, 2);
 						String lote = this.tbCompras.getValueAt(i, 4).toString();
-						
-
-						Object fechaVencimientoProducto = null;
-						try {
-							
-							//String fechaVpP = añovp + "-" + mesvp + "-" + diavp;
-							String fechaVP = this.tbCompras.getValueAt(i, 5).toString();
-
-							//DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-							DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-							Date date = formatter.parse(fechaVP);
-							fechaVencimientoProducto = new Timestamp(date.getTime());
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Fecha erronea: " + e1);
-						}
-						
-						
-						/*java.sql.Date fVencimientoProducto = null;
-						try { // Cambio de utils a sql.Date para envio
-							Date datevencimiento = dateFechaVenc.getDate();
-							long d = datevencimiento.getTime();
-							fechaVencimientoProducto = new java.sql.Date(d);
-						} catch (Exception eq) {
-						}*/
 
 						this.consulta.iniciar();
 						this.consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd,
-								lote, fechaVencimientoProducto);
+								lote);
 						this.consulta.anadirStockProducto(idProd, cantProd);
 						this.consulta.reset();
 						
@@ -729,42 +730,18 @@ public class NuevaCompra extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: " + f);
 		}
 	}
-	
-	
-	protected void keyReleasedTxtBuscarProducto(KeyEvent e) {
-		char c = e.getKeyChar();
-		if ((c == '\n') && (this.txtBuscarProducto.getText().length() != 0)) {
-			AgregarProductoATabla();
-			this.txtBuscarProducto.setText(null);
-		}
+
+	protected void actionPerformedBtnIngresar(ActionEvent e) {
+		AgregarProductoATabla();
+		this.txtBuscarProducto.requestFocus();
+		this.txtBuscarProducto.setText(null);
 	}
 
 	public void AgregarProductoATabla() {
 		try {
 			String nomProducto = this.txtBuscarProducto.getText();
-			int idProd = Integer.parseInt( nomProducto.substring(nomProducto.indexOf("(")+1, nomProducto.indexOf(")")));
-			
-			consulta.iniciar();
-			rs = consulta.buscarProductoID(idProd);
-			
-			try {
-				rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
-				while (rs.next()) {
-					dtm.addRow(new Object[] { 
-							"1", 
-							rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " (" + rs.getString("unimedida") + ")",     
-							rs.getFloat("precioCo"),
-							rs.getFloat("precioCo"),"","",rs.getString("codproducto")
-							});
-					tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
-				}
-			} catch (Exception e) {
-				//JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
-			}
-			
-			
 
-			/*String prod = this.txtBuscarProducto.getText();
+			String prod = this.txtBuscarProducto.getText();
 			double cantidad = Double.parseDouble(JOptionPane.showInputDialog(prod
 					+ "\n\nINGRESE LA CANTIDAD:\n\nEjm.: Si compro 1 saco de arroz de 50k, pero lo vende por kilos, debería ingresar 50\n"));
 			cantidad = redondearDecimales(cantidad, 2);
@@ -776,37 +753,16 @@ public class NuevaCompra extends JFrame {
 			String lote = JOptionPane.showInputDialog(prod + "\n\nINGRESE NRO DE LOTE SI TUVIERA");
 
 			this.dtm.addRow(new Object[] { Double.valueOf(cantidad), nomProducto, Double.valueOf(precioUnidad),
-					Double.valueOf(precioSubTot), lote });*/
-			
-			
-			//this.dtm.addRow(new Object[] { 1, nomProducto, 2, 2,""});
-			
+					Double.valueOf(precioSubTot), lote });
+
 			sumarTotal();
 		} catch (Exception e) {
-			String codbarra = txtBuscarProducto.getText();
-			consulta.iniciar();
-			rs = consulta.buscarProductoBarras(codbarra);
-			int flag = 0;
-			float cantidad = 0;
-			
-				try {
-					rs.beforeFirst();
-					while (rs.next()) {
-						dtm.addRow(new Object[] { 
-								"1", 
-								rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " (" + rs.getString("unimedida") + ")",     
-								rs.getFloat("precioCo"),
-								rs.getFloat("precioCo"),"","",rs.getString("codproducto")
-								});
-						tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
-					}
-				} catch (Exception ex) {
-				}
+			JOptionPane.showMessageDialog(null, "Ingrese correctamente los datos", "Error al ingresar", 0);
 		}
 	}
 
 	private void sumarTotal() {
-		double total = 0.0;
+		double total = 0.0D;
 		for (int i = 0; i < this.tbCompras.getRowCount(); i++) {
 			double cantProd = Float.parseFloat(this.tbCompras.getValueAt(i, 0).toString());
 			double precioSubTotProd = Float.parseFloat(this.tbCompras.getValueAt(i, 3).toString());
@@ -817,7 +773,13 @@ public class NuevaCompra extends JFrame {
 		this.lblTotal.setText("" + total);
 	}
 
-	
+	protected void keyReleasedTxtBuscarProducto(KeyEvent e) {
+		char c = e.getKeyChar();
+		if ((c == '\n') && (this.txtBuscarProducto.getText().length() != 0)) {
+			AgregarProductoATabla();
+			this.txtBuscarProducto.setText(null);
+		}
+	}
 
 	protected void actionPerformedBtnNuevoProducto(ActionEvent arg0) {
 		try {
@@ -840,65 +802,10 @@ public class NuevaCompra extends JFrame {
 
 	protected void actionPerformedBtnQuitar(ActionEvent arg0) {
 		this.dtm.removeRow(this.tbCompras.getSelectedRow());
-
-		sumarTotal();
 	}
 
 	protected void actionPerformedBtnAyuda(ActionEvent e) {
 		JOptionPane.showMessageDialog(null,
-				"A continuación registre los detalles y productos de su compra.\n\n"
-				+ "Ingrese los datos de el recibo de la compra (todos estos campos son opcionales)\n"
-				+ "En fecha de vencimiento puede colocar alguna fecha si desea que el sistema le avise cuando caducará el pago de la compra)\n\n"
-				+ "Para registrar sus productos comprados:\n"
-				+ "1.- Busque el producto por su nombre o codigo de barras.\n"
-				+ "2.- Ingrese la cantidad de este (según la unidad de medida con la que haya registrado el producto anteriormente).\n"
-				+ "3.- Ingrese su precio de compra individual.\n"
-				+ "Ejm.: Si compró un saco de arroz de 50k pero se registro por kilos. El ingreso sería de la siguiente forma:\n"
-				+ "Producto: Arroz camanejo (kilo)  -  Cantidad: 50  -  Precio: 3.0\n\n"
-				+ "Al finalizar, verá el monto total de su compra, al costado puede indicar si la pagó completamente o si queda un saldo pendiente.\n"
-				+ "Finalizar");
+				"A continuación registre los detalles y productos de su compra.\n\nIngrese los datos de el recibo de la compra (todos estos campos son opcionales)\nEn fecha de vencimiento puede colocar alguna fecha si desea que el sistema le avise cuando caducará el pago de la compra)\n\nPara registrar sus productos comprados:\n1.- Busque el producto por su nombre o codigo de barras.\n2.- Ingrese la cantidad de este (según la unidad de medida con la que haya registrado el producto anteriormente).\n3.- Ingrese su precio de compra individual.\nEjm.: Si compró un saco de arroz de 50k pero se registro por kilos. El ingreso sería de la siguiente forma:\nProducto: Arroz camanejo (kilo)  -  Cantidad: 50  -  Precio: 3.0\n\nAl finalizar, verá el monto total de su compra, al costado puede indicar si la pagó completamente o si queda un saldo pendiente.\nFinalizar");
 	}
-	
-	
-	protected void propertyChangeTbCompras(PropertyChangeEvent evt) {
-		
-		try {
-			calcularSubTotales();
-			sumarTotal();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-	}
-	
-	void calcularSubTotales() {
-		double subtotal = 0.0;
-		for (int i = 0; i < this.tbCompras.getRowCount(); i++) {
-			double cantProd = Float.parseFloat(this.tbCompras.getValueAt(i, 0).toString());
-			double precioInd = Float.parseFloat(this.tbCompras.getValueAt(i, 2).toString());
-			double precioSubTot = cantProd * precioInd;
-			precioSubTot = redondearDecimales(precioSubTot, 2);
-			
-			this.tbCompras.setValueAt(precioSubTot, i, 3);
-			
-		}
-		subtotal = redondearDecimales(subtotal, 2);
-
-		this.lblTotal.setText("" + subtotal);
-	}
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

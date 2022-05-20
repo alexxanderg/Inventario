@@ -62,17 +62,17 @@ public class Reportes extends JInternalFrame {
 	private JComboBox<Usuarios> cbUsuarios;
 	private JComboBox cbMetodoPago;
 	private JLabel label_1;
-	private JDateChooser fRVI01;
+	private JDateChooser calendar;
 	private JLabel label_2;
-	private JDateChooser fRVF01;
+	private JDateChooser calendar_1;
 	private JButton btngenerarReporteVentas;
 	private JLabel lblDesde;
 	private JLabel lblRanking;
 	private JComboBox cbxRanking;
 	private JLabel label_8;
-	private JDateChooser fRPI01;
+	private JDateChooser calendar_6;
 	private JLabel lblHasta;
-	private JDateChooser fRPF01;
+	private JDateChooser calendar_7;
 	private JButton btnVerRanking;
 	private JLabel lblCategora;
 	private JButton btnInventarioCFiltros;
@@ -80,10 +80,10 @@ public class Reportes extends JInternalFrame {
 	private JButton btnVerComprasCliente;
 	private JLabel lblPorVencer;
 	private JLabel lblDel;
-	private JDateChooser fRPI02;
+	private JDateChooser calendar_4;
 	private JButton btnVerProductosQue;
 	private JLabel label_17;
-	private JDateChooser fRPF02;
+	private JDateChooser calendar_5;
 	private JPanel panel;
 	private JLabel lblVendedor;
 	private JLabel lblMtodoDePago;
@@ -107,17 +107,15 @@ public class Reportes extends JInternalFrame {
 	private JPanel panel_2;
 	private JLabel lblReporteDeCompras;
 	private JLabel label;
-	private JDateChooser fRCI01;
+	private JDateChooser calRI01;
 	private JLabel label_3;
-	private JDateChooser fRCF01;
-	private JButton btnCompras;
+	private JDateChooser calRI02;
+	private JButton button;
 	private JLabel lblPorProducto;
 	private JButton btnPorProducto;
 	private JTextField txtProductos;
 	private JButton btnVerReporteSimple;
 	private JCheckBox chckSoloStock;
-	private JLabel lblCategora_1;
-	private JComboBox cbMetodoPago_1;
 
 	/**
 	 * Launch the application.
@@ -147,52 +145,52 @@ public class Reportes extends JInternalFrame {
 
 		this.panel = new JPanel();
 		this.panel.setBackground(new Color(143, 188, 143));
-		this.panel.setBounds(0, 0, 557, 498);
+		this.panel.setBounds(0, 0, 557, 502);
 		getContentPane().add(this.panel);
 		this.panel.setLayout(null);
 
-		this.lblVendedor = new JLabel("Vendedor:");
+		this.lblVendedor = new JLabel("POR VENDEDOR:");
 		this.lblVendedor.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblVendedor.setBounds(72, 76, 157, 23);
+		this.lblVendedor.setBounds(72, 85, 157, 23);
 		this.panel.add(this.lblVendedor);
 
 		this.cbUsuarios = new JComboBox();
-		this.cbUsuarios.setBounds(249, 77, 219, 23);
+		this.cbUsuarios.setBounds(249, 86, 219, 23);
 		this.panel.add(this.cbUsuarios);
 		this.cbUsuarios.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.cbMetodoPago = new JComboBox();
 		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
-		this.cbMetodoPago.setBounds(249, 145, 219, 23);
+		this.cbMetodoPago.setBounds(249, 119, 219, 23);
 		this.panel.add(this.cbMetodoPago);
 		this.cbMetodoPago.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
 		this.lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblMtodoDePago.setBounds(72, 145, 157, 23);
+		this.lblMtodoDePago.setBounds(72, 119, 157, 23);
 		this.panel.add(this.lblMtodoDePago);
 
 		this.label_1 = new JLabel("del:");
-		this.label_1.setBounds(72, 179, 46, 23);
+		this.label_1.setBounds(72, 153, 46, 23);
 		this.panel.add(this.label_1);
 		this.label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_1.setFont(new Font("Candara", Font.BOLD, 20));
 
-		this.fRVI01 = new JDateChooser();
-		this.fRVI01.setBounds(126, 179, 125, 23);
-		this.panel.add(this.fRVI01);
+		this.calendar = new JDateChooser();
+		this.calendar.setBounds(126, 153, 125, 23);
+		this.panel.add(this.calendar);
 
 		this.label_2 = new JLabel("al:");
-		this.label_2.setBounds(295, 179, 55, 23);
+		this.label_2.setBounds(295, 153, 55, 23);
 		this.panel.add(this.label_2);
 		this.label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_2.setFont(new Font("Candara", Font.BOLD, 20));
 
-		this.fRVF01 = new JDateChooser();
-		this.fRVF01.setBounds(343, 179, 125, 23);
-		this.panel.add(this.fRVF01);
+		this.calendar_1 = new JDateChooser();
+		this.calendar_1.setBounds(343, 153, 125, 23);
+		this.panel.add(this.calendar_1);
 
 		this.btngenerarReporteVentas = new JButton("<html><center>Ver reporte detallado</center></html>");
 		btngenerarReporteVentas.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
@@ -202,32 +200,32 @@ public class Reportes extends JInternalFrame {
 				actionPerformedBtngenerarReporteVentas(e);
 			}
 		});
-		this.btngenerarReporteVentas.setBounds(277, 213, 191, 57);
+		this.btngenerarReporteVentas.setBounds(277, 187, 191, 57);
 		this.panel.add(this.btngenerarReporteVentas);
 		this.btngenerarReporteVentas.setForeground(Color.WHITE);
 		this.btngenerarReporteVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
 
 		this.lblVentas = new JLabel("REPORTE DE VENTAS");
-		this.lblVentas.setBounds(74, 20, 394, 32);
+		this.lblVentas.setBounds(74, 20, 477, 32);
 		this.panel.add(this.lblVentas);
-		this.lblVentas.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
 
 		this.lblHistorialDeCompras = new JLabel("POR CLIENTE:");
-		lblHistorialDeCompras.setBounds(72, 293, 219, 23);
+		lblHistorialDeCompras.setBounds(72, 268, 219, 23);
 		panel.add(lblHistorialDeCompras);
 		this.lblHistorialDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHistorialDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbCliente = new JComboBox();
-		cbCliente.setBounds(72, 316, 396, 23);
+		cbCliente.setBounds(72, 291, 396, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.btnVerComprasCliente = new JButton("Ver reporte");
 		btnVerComprasCliente.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnVerComprasCliente.setBounds(187, 350, 170, 32);
+		btnVerComprasCliente.setBounds(187, 325, 170, 32);
 		panel.add(btnVerComprasCliente);
 		btnVerComprasCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -241,7 +239,7 @@ public class Reportes extends JInternalFrame {
 		lblPorProducto = new JLabel("POR PRODUCTO:");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(72, 398, 232, 23);
+		lblPorProducto.setBounds(72, 388, 232, 23);
 		panel.add(lblPorProducto);
 
 		btnPorProducto = new JButton("Ver reporte");
@@ -254,7 +252,7 @@ public class Reportes extends JInternalFrame {
 		btnPorProducto.setForeground(Color.WHITE);
 		btnPorProducto.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnPorProducto.setBackground(new Color(30, 144, 255));
-		btnPorProducto.setBounds(187, 455, 170, 32);
+		btnPorProducto.setBounds(187, 445, 170, 32);
 		panel.add(btnPorProducto);
 
 		txtProductos = new JTextField();
@@ -262,7 +260,7 @@ public class Reportes extends JInternalFrame {
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
 		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setBounds(72, 421, 396, 23);
+		txtProductos.setBounds(72, 411, 396, 23);
 		panel.add(txtProductos);
 
 		btnVerReporteSimple = new JButton("<html><center>Ver reporte<br>simple</center></html>");
@@ -276,19 +274,8 @@ public class Reportes extends JInternalFrame {
 		btnVerReporteSimple.setForeground(Color.WHITE);
 		btnVerReporteSimple.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnVerReporteSimple.setBackground(new Color(30, 144, 255));
-		btnVerReporteSimple.setBounds(72, 213, 191, 57);
+		btnVerReporteSimple.setBounds(72, 187, 191, 57);
 		panel.add(btnVerReporteSimple);
-		
-		lblCategora_1 = new JLabel("Categor\u00EDa:");
-		lblCategora_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCategora_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCategora_1.setBounds(72, 111, 157, 23);
-		panel.add(lblCategora_1);
-		
-		cbMetodoPago_1 = new JComboBox();
-		cbMetodoPago_1.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbMetodoPago_1.setBounds(249, 111, 219, 23);
-		panel.add(cbMetodoPago_1);
 
 		this.panel_1 = new JPanel();
 		this.panel_1.setBackground(new Color(70, 130, 180));
@@ -320,40 +307,34 @@ public class Reportes extends JInternalFrame {
 		this.panel_1.add(this.cbCategoria);
 
 		this.lblDel = new JLabel("desde:");
-		lblDel.setVisible(false);
-		lblDel.setBounds(23, 548, 77, 23);
+		lblDel.setBounds(16, 410, 77, 23);
 		panel_1.add(lblDel);
 		this.lblDel.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDel.setFont(new Font("Candara", Font.BOLD, 20));
 
-		this.fRPI02 = new JDateChooser();
-		fRPI02.setVisible(false);
-		fRPI02.setBounds(91, 548, 141, 23);
-		panel_1.add(fRPI02);
+		this.calendar_4 = new JDateChooser();
+		calendar_4.setBounds(84, 410, 141, 23);
+		panel_1.add(calendar_4);
 
-		this.lblPorVencer = new JLabel("CON VENCIMIENTO:");
-		lblPorVencer.setVisible(false);
-		lblPorVencer.setBounds(23, 514, 308, 23);
+		this.lblPorVencer = new JLabel("CON FECHA DE VENCIMIENTO:");
+		lblPorVencer.setBounds(16, 388, 308, 23);
 		panel_1.add(lblPorVencer);
 		this.lblPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.label_17 = new JLabel("hasta:");
-		label_17.setVisible(false);
-		label_17.setBounds(271, 548, 77, 23);
+		label_17.setBounds(264, 410, 77, 23);
 		panel_1.add(label_17);
 		this.label_17.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_17.setFont(new Font("Candara", Font.BOLD, 20));
 
-		this.fRPF02 = new JDateChooser();
-		fRPF02.setVisible(false);
-		fRPF02.setBounds(341, 548, 141, 23);
-		panel_1.add(fRPF02);
+		this.calendar_5 = new JDateChooser();
+		calendar_5.setBounds(334, 410, 141, 23);
+		panel_1.add(calendar_5);
 
 		this.btnVerProductosQue = new JButton("Ver reporte");
-		btnVerProductosQue.setVisible(false);
 		btnVerProductosQue.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnVerProductosQue.setBounds(173, 582, 161, 32);
+		btnVerProductosQue.setBounds(166, 444, 161, 32);
 		panel_1.add(btnVerProductosQue);
 		btnVerProductosQue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -397,13 +378,13 @@ public class Reportes extends JInternalFrame {
 		panel_1.add(cbLaboratorio);
 
 		this.lblRanking = new JLabel("RANKING de productos:");
-		lblRanking.setBounds(16, 380, 231, 32);
+		lblRanking.setBounds(16, 523, 231, 32);
 		panel_1.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(251, 380, 231, 32);
+		cbxRanking.setBounds(251, 523, 231, 32);
 		panel_1.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] { "M\u00E1s vendidos", "Menos vendidos" }));
@@ -415,13 +396,13 @@ public class Reportes extends JInternalFrame {
 		this.label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		this.label_8.setFont(new Font("Candara", Font.BOLD, 20));
 
-		this.fRPI01 = new JDateChooser();
-		fRPI01.setBounds(84, 419, 141, 23);
-		panel_1.add(fRPI01);
+		this.calendar_6 = new JDateChooser();
+		calendar_6.setBounds(84, 562, 141, 23);
+		panel_1.add(calendar_6);
 
 		this.btnVerRanking = new JButton("Ver reporte");
 		btnVerRanking.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnVerRanking.setBounds(166, 453, 161, 32);
+		btnVerRanking.setBounds(166, 596, 161, 32);
 		panel_1.add(btnVerRanking);
 		btnVerRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -432,18 +413,18 @@ public class Reportes extends JInternalFrame {
 		this.btnVerRanking.setFont(new Font("Tahoma", Font.BOLD, 18));
 		this.btnVerRanking.setBackground(new Color(30, 144, 255));
 
-		this.fRPF01 = new JDateChooser();
-		fRPF01.setBounds(334, 419, 148, 23);
-		panel_1.add(fRPF01);
+		this.calendar_7 = new JDateChooser();
+		calendar_7.setBounds(334, 562, 148, 23);
+		panel_1.add(calendar_7);
 
 		this.lblHasta = new JLabel("hasta:");
-		lblHasta.setBounds(264, 426, 77, 16);
+		lblHasta.setBounds(264, 569, 77, 16);
 		panel_1.add(lblHasta);
 		this.lblHasta.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.lblDesde = new JLabel("desde:");
-		lblDesde.setBounds(20, 418, 73, 24);
+		lblDesde.setBounds(20, 561, 73, 24);
 		panel_1.add(lblDesde);
 		this.lblDesde.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
@@ -475,11 +456,11 @@ public class Reportes extends JInternalFrame {
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(147, 112, 219));
-		panel_2.setBounds(0, 504, 557, 135);
+		panel_2.setBounds(0, 508, 557, 131);
 		getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 
-		lblReporteDeCompras = new JLabel("REPORTE DE COMPRAS");
+		lblReporteDeCompras = new JLabel("REPORTE DE INGRESOS");
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 30));
 		lblReporteDeCompras.setBounds(10, 11, 535, 32);
@@ -491,9 +472,9 @@ public class Reportes extends JInternalFrame {
 		label.setBounds(74, 54, 46, 23);
 		panel_2.add(label);
 
-		fRCI01 = new JDateChooser();
-		fRCI01.setBounds(128, 54, 125, 23);
-		panel_2.add(fRCI01);
+		calRI01 = new JDateChooser();
+		calRI01.setBounds(128, 54, 125, 23);
+		panel_2.add(calRI01);
 
 		label_3 = new JLabel("al:");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
@@ -501,22 +482,22 @@ public class Reportes extends JInternalFrame {
 		label_3.setBounds(297, 54, 55, 23);
 		panel_2.add(label_3);
 
-		fRCF01 = new JDateChooser();
-		fRCF01.setBounds(345, 54, 125, 23);
-		panel_2.add(fRCF01);
+		calRI02 = new JDateChooser();
+		calRI02.setBounds(345, 54, 125, 23);
+		panel_2.add(calRI02);
 
-		btnCompras = new JButton("Ver reporte");
-		btnCompras.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnCompras.addActionListener(new ActionListener() {
+		button = new JButton("Ver reporte");
+		button.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedButton(e);
 			}
 		});
-		btnCompras.setForeground(Color.WHITE);
-		btnCompras.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnCompras.setBackground(new Color(30, 144, 255));
-		btnCompras.setBounds(179, 88, 177, 32);
-		panel_2.add(btnCompras);
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Tahoma", Font.BOLD, 18));
+		button.setBackground(new Color(30, 144, 255));
+		button.setBounds(179, 88, 177, 32);
+		panel_2.add(button);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
 
@@ -559,15 +540,15 @@ public class Reportes extends JInternalFrame {
 		usu.cargarUsuarios(cbUsuarios);
 		java.util.Date date = new Date();
 		date.getTime();
-		fRVI01.setDate(date);
-		fRVF01.setDate(date);
-		fRPI02.setDate(date);
-		fRPF02.setDate(date);
-		fRPI01.setDate(date);
-		fRPF01.setDate(date);
+		calendar.setDate(date);
+		calendar_1.setDate(date);
+		calendar_4.setDate(date);
+		calendar_5.setDate(date);
+		calendar_6.setDate(date);
+		calendar_7.setDate(date);
 
-		fRCI01.setDate(date);
-		fRCF01.setDate(date);
+		calRI01.setDate(date);
+		calRI02.setDate(date);
 	}
 
 	public void cargarBuscador() {
@@ -608,14 +589,14 @@ public class Reportes extends JInternalFrame {
 			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
 			int metpago = cbMetodoPago.getSelectedIndex() - 1;
 
-			int añoi = fRVI01.getCalendar().get(Calendar.YEAR);
-			int mesi = fRVI01.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = fRVI01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añoi = calendar.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fRVF01.getCalendar().get(Calendar.YEAR);
-			int mesf = fRVF01.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = fRVF01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añof = calendar_1.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
@@ -666,14 +647,14 @@ public class Reportes extends JInternalFrame {
 			String usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario();
 			int metpago = cbMetodoPago.getSelectedIndex() - 1;
 
-			int añoi = fRVI01.getCalendar().get(Calendar.YEAR);
-			int mesi = fRVI01.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = fRVI01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añoi = calendar.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fRVF01.getCalendar().get(Calendar.YEAR);
-			int mesf = fRVF01.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = fRVF01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añof = calendar_1.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_1.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_1.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
@@ -742,14 +723,14 @@ public class Reportes extends JInternalFrame {
 		try {
 			con = MySQLConexion.getConection();
 
-			int añoi = fRPI01.getCalendar().get(Calendar.YEAR);
-			int mesi = fRPI01.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = fRPI01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añoi = calendar_6.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar_6.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar_6.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fRPF01.getCalendar().get(Calendar.YEAR);
-			int mesf = fRPF01.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = fRPF01.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añof = calendar_7.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_7.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_7.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);
@@ -954,14 +935,14 @@ public class Reportes extends JInternalFrame {
 		try {
 			con = MySQLConexion.getConection();
 
-			int añoi = fRPI02.getCalendar().get(Calendar.YEAR);
-			int mesi = fRPI02.getCalendar().get(Calendar.MARCH) + 1;
-			int diai = fRPI02.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añoi = calendar_4.getCalendar().get(Calendar.YEAR);
+			int mesi = calendar_4.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = calendar_4.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fRPF02.getCalendar().get(Calendar.YEAR);
-			int mesf = fRPF02.getCalendar().get(Calendar.MARCH) + 1;
-			int diaf = fRPF02.getCalendar().get(Calendar.DAY_OF_MONTH);
+			int añof = calendar_5.getCalendar().get(Calendar.YEAR);
+			int mesf = calendar_5.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = calendar_5.getCalendar().get(Calendar.DAY_OF_MONTH);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);
@@ -998,7 +979,7 @@ public class Reportes extends JInternalFrame {
 	}
 
 	protected void actionPerformedButton(ActionEvent e) {
-/*
+
 
 		JOptionPane.showMessageDialog(null, "Se mostrará los productos creado e ingresos realizados mediante el boton * AÑADIR STOCK * de la ventana Inventario");
 		
@@ -1007,14 +988,14 @@ public class Reportes extends JInternalFrame {
 			con = MySQLConexion.getConection();
 			String usu = this.cbUsuarios.getSelectedItem().toString();
 
-			int añoi = this.fRCI01.getCalendar().get(1);
-			int mesi = this.fRCI01.getCalendar().get(2) + 1;
-			int diai = this.fRCI01.getCalendar().get(5);
+			int añoi = this.calRI01.getCalendar().get(1);
+			int mesi = this.calRI01.getCalendar().get(2) + 1;
+			int diai = this.calRI01.getCalendar().get(5);
 			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = this.fRCF01.getCalendar().get(1);
-			int mesf = this.fRCF01.getCalendar().get(2) + 1;
-			int diaf = this.fRCF01.getCalendar().get(5);
+			int añof = this.calRI02.getCalendar().get(1);
+			int mesf = this.calRI02.getCalendar().get(2) + 1;
+			int diaf = this.calRI02.getCalendar().get(5);
 			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);
@@ -1025,50 +1006,7 @@ public class Reportes extends JInternalFrame {
 			con.close();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
-		}*/
-
-		
-		String[] opciones = { "SIMPLE", "DETALLADO" };
-		int seleccion = JOptionPane.showOptionDialog(null, "REPORTE", "Seleccione una opcion", -1, 3, null, opciones,
-				opciones[0]);
-		Connection con = null;
-		try {
-			con = MySQLConexion.getConection();
-
-			int añoi = this.fRCI01.getCalendar().get(1);
-			int mesi = this.fRCI01.getCalendar().get(2) + 1;
-			int diai = this.fRCI01.getCalendar().get(5);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
-
-			int añof = this.fRCF01.getCalendar().get(1);
-			int mesf = this.fRCF01.getCalendar().get(2) + 1;
-			int diaf = this.fRCF01.getCalendar().get(5);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
-
-			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date = formatter.parse(fechai);
-			Timestamp timeStampDateI = new Timestamp(date.getTime());
-
-			DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date2 = formatter2.parse(fechaf);
-			Timestamp timeStampDateF = new Timestamp(date2.getTime());
-
-			Map parameters = new HashMap();
-			parameters.put("prtFechaI", timeStampDateI);
-			parameters.put("prtFechaFi", timeStampDateF);
-
-			if (seleccion == 0) {
-				new AbstractJasperReports().createReport(con, "rCompraSimple.jasper", parameters);
-				AbstractJasperReports.showViewer();
-			}
-			if (seleccion == 1) {
-				new AbstractJasperReports().createReport(con, "rCompraDetallada.jasper", parameters);
-				AbstractJasperReports.showViewer();
-			}
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
-		
-		
+
 	}
 }

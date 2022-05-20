@@ -117,8 +117,6 @@ public class Ventas extends JInternalFrame {
 	private JRadioButton rbtnVenta;
 	private JRadioButton rbtnCoti;
 
-	private JDateChooser dateFechaVenc;
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -184,7 +182,7 @@ public class Ventas extends JInternalFrame {
 		this.txtBuscarProd.setBounds(10, 227, 404, 34);
 		getContentPane().add(this.txtBuscarProd);
 		
-		lblCliente = new JLabel("Cliente:");
+		lblCliente = new JLabel("Unidad:");
 		lblCliente.setForeground(Color.DARK_GRAY);
 		lblCliente.setFont(new Font("Candara", Font.BOLD, 20));
 		lblCliente.setBounds(10, 34, 101, 23);
@@ -209,7 +207,7 @@ public class Ventas extends JInternalFrame {
 		btnNewCliente.setBounds(358, 58, 56, 35);
 		getContentPane().add(btnNewCliente);
 		
-		lblNotaAdicionalDe = new JLabel("Nota adicional de la venta:");
+		lblNotaAdicionalDe = new JLabel("Nota adicional:");
 		lblNotaAdicionalDe.setForeground(Color.DARK_GRAY);
 		lblNotaAdicionalDe.setFont(new Font("Candara", Font.BOLD, 20));
 		lblNotaAdicionalDe.setBounds(10, 115, 404, 23);
@@ -226,12 +224,14 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtInfoAdicional);
 		
 		lblMtodoDePago = new JLabel("Paga con:");
+		lblMtodoDePago.setVisible(false);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
 		lblMtodoDePago.setBounds(844, 44, 147, 23);
 		getContentPane().add(lblMtodoDePago);
 		
 		cbPago1 = new JComboBox();
+		cbPago1.setVisible(false);
 		cbPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago1.setBackground(new Color(245, 245, 245));
 		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
@@ -240,6 +240,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(cbPago1);
 		
 		lblTotalVentaFinal = new JLabel("0");
+		lblTotalVentaFinal.setVisible(false);
 		lblTotalVentaFinal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalVentaFinal.setForeground(new Color(50, 205, 50));
 		lblTotalVentaFinal.setFont(new Font("Calibri", Font.BOLD, 30));
@@ -248,6 +249,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblTotalVentaFinal);
 		
 		lblTitTotal = new JLabel("TOTAL S/ ");
+		lblTitTotal.setVisible(false);
 		lblTitTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitTotal.setForeground(new Color(50, 205, 50));
 		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 30));
@@ -279,6 +281,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
+		txtVuelto.setVisible(false);
 		txtVuelto.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtVuelto.setHorizontalAlignment(SwingConstants.CENTER);
 		txtVuelto.setForeground(new Color(30, 144, 255));
@@ -290,6 +293,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtVuelto);
 		
 		lblTitDescuento = new JLabel("Descuento S/");
+		lblTitDescuento.setVisible(false);
 		lblTitDescuento.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitDescuento.setForeground(new Color(102, 205, 170));
 		lblTitDescuento.setFont(new Font("Candara", Font.BOLD, 20));
@@ -298,6 +302,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblTitDescuento);
 		
 		lblDescuento = new JLabel("0");
+		lblDescuento.setVisible(false);
 		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescuento.setForeground(new Color(102, 205, 170));
 		lblDescuento.setFont(new Font("Calibri", Font.BOLD, 25));
@@ -306,6 +311,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblDescuento);
 		
 		txtPago1 = new JTextField();
+		txtPago1.setVisible(false);
 		txtPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPago1.addFocusListener(new FocusAdapter() {
 			@Override
@@ -377,6 +383,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(txtPago2);
 		
 		lblS = new JLabel("S/");
+		lblS.setVisible(false);
 		lblS.setHorizontalAlignment(SwingConstants.CENTER);
 		lblS.setForeground(Color.DARK_GRAY);
 		lblS.setFont(new Font("Candara", Font.BOLD, 20));
@@ -392,6 +399,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(label_1);
 		
 		lblTitTotOri = new JLabel("Total original S/ ");
+		lblTitTotOri.setVisible(false);
 		lblTitTotOri.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTitTotOri.setForeground(new Color(102, 205, 170));
 		lblTitTotOri.setFont(new Font("Candara", Font.BOLD, 20));
@@ -400,6 +408,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblTitTotOri);
 		
 		lblTotOriginal = new JLabel("0");
+		lblTotOriginal.setVisible(false);
 		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotOriginal.setForeground(new Color(102, 205, 170));
 		lblTotOriginal.setFont(new Font("Calibri", Font.BOLD, 25));
@@ -426,6 +435,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblGananciaTotal);
 		
 		lblElVueltoDe_1 = new JLabel("SU VUELTO ES:");
+		lblElVueltoDe_1.setVisible(false);
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
 		lblElVueltoDe_1.setFont(new Font("Candara", Font.BOLD, 20));
@@ -498,7 +508,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblFechaDeVenta);
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
-		chckImrpimir.setSelected(true);
+		chckImrpimir.setVisible(false);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -506,6 +516,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(chckImrpimir);
 		
 		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
+		rbtnCoti.setVisible(false);
 		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnCoti.setBackground(Color.WHITE);
 		rbtnCoti.setBounds(914, 204, 106, 23);
@@ -515,6 +526,7 @@ public class Ventas extends JInternalFrame {
 		grupobuttons.add(rbtnCoti);
 		
 		rbtnVenta = new JRadioButton("VENTA");
+		rbtnVenta.setVisible(false);
 		rbtnVenta.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnVenta.setBackground(Color.WHITE);
 		rbtnVenta.setBounds(844, 205, 68, 23);
@@ -575,7 +587,7 @@ public class Ventas extends JInternalFrame {
 		cliente.cargarClientes(cbClientes);
 		
 		tbCarrito.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Precio Unitario", "Descuento", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc"});
+		dtm.setColumnIdentifiers(new Object[] { "Cantidad", "Producto y detalles", "Ración", "Descuento", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc"});
 	
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
 		headerRenderer.setBackground(new Color(239, 198, 46));
@@ -791,7 +803,7 @@ public class Ventas extends JInternalFrame {
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Cantidad
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(50)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(16)); // Precio ORIGINAL
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(16)); // Descuento
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(1)); // Descuento
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(16)); // SubTotal
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(0)); //ID
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(0));//Preco
@@ -1062,6 +1074,7 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {
+		numeroDecimales = 3;
 		double parteEntera, resultado;
 		resultado = valorInicial;
 		parteEntera = Math.floor(resultado);
@@ -1374,7 +1387,7 @@ public class Ventas extends JInternalFrame {
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(
-												getClass().getClassLoader().getResourceAsStream("rNotaVenta80mm.jasper"),
+												getClass().getClassLoader().getResourceAsStream("rNotaVenta58mm.jasper"),
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();

@@ -92,11 +92,10 @@ public class VentanaPrincipal extends JFrame {
 	/*Color colorSelec = new Color(57, 192, 38 ); // KAT
     Color colorDeselec = new Color(133, 207, 122 );*/
 	
-	/*Color colorSelec = new Color(203, 71, 131); //NAVITAL
-    Color colorDeselec = new Color(248, 163, 202);*/
+	
 	
     Color colorSelec = new Color(240, 67, 85);  //BXB
-    Color colorDeselec = new Color(30, 144, 255);
+    Color colorDeselec = new Color(60, 179, 113);
    
     /*Color colorSelec = new Color(255, 177, 70 );
     Color colorDeselec = new Color(243, 112, 112);*/
@@ -139,7 +138,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 0, 230, 707);
 		contentPane.add(panel);
 		
-		btnVentas = new JButton("Vender");
+		btnVentas = new JButton("Salidas");
 		btnVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
@@ -164,7 +163,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInventario.setForeground(Color.WHITE);
 		btnInventario.setBackground(colorDeselec);
-		btnInventario.setBounds(0, 280, 177, 50);
+		btnInventario.setBounds(0, 280, 230, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -188,7 +187,7 @@ public class VentanaPrincipal extends JFrame {
 		btnUsuario.setBounds(0, 524, 230, 50);
 		panel.add(btnUsuario);
 
-		btnClientes = new JButton("Clientes ");
+		btnClientes = new JButton("Unidades");
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnClientes(arg0);
@@ -221,6 +220,8 @@ public class VentanaPrincipal extends JFrame {
 		panel.add(btnReportes);
 
 		btnConfiguraciones = new JButton("Configuraciones ");
+		btnConfiguraciones.setVisible(false);
+		btnConfiguraciones.setOpaque(false);
 		btnConfiguraciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnConfiguraciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -233,10 +234,10 @@ public class VentanaPrincipal extends JFrame {
 		btnConfiguraciones.setForeground(Color.WHITE);
 		btnConfiguraciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnConfiguraciones.setBackground(colorDeselec);
-		btnConfiguraciones.setBounds(0, 646, 230, 50);
+		btnConfiguraciones.setBounds(0, 682, 230, 50);
 		panel.add(btnConfiguraciones);
 		
-		btnDistribuidores = new JButton("Distribuidores");
+		btnDistribuidores = new JButton("Proveedores");
 		btnDistribuidores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnDistribuidores(arg0);
@@ -251,7 +252,7 @@ public class VentanaPrincipal extends JFrame {
 		btnDistribuidores.setBounds(0, 402, 230, 50);
 		panel.add(btnDistribuidores);
 		
-		btnCompras = new JButton("Compras");
+		btnCompras = new JButton("Ingresos");
 		btnCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnCompras(e);
@@ -325,16 +326,16 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		btnKardex = new JButton("K");
+		btnKardex = new JButton("<html>Ver movimiento<br>de productos</html>");
 		btnKardex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnKardex(e);
 			}
 		});
-		btnKardex.setForeground(Color.DARK_GRAY);
-		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 25));
-		btnKardex.setBackground(new Color(30, 144, 255));
-		btnKardex.setBounds(179, 280, 51, 50);
+		btnKardex.setForeground(Color.WHITE);
+		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnKardex.setBackground(colorDeselec);
+		btnKardex.setBounds(0, 642, 230, 50);
 		panel.add(btnKardex);
 
 		desktopPane = new JDesktopPane();

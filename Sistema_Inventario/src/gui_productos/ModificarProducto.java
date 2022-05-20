@@ -1026,7 +1026,6 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtCantPromo3);
 		
 		txtPrePromo3 = new JTextField();
-		txtPrePromo3.setVisible(false);
 		txtPrePromo3.setText("0");
 		txtPrePromo3.setHorizontalAlignment(SwingConstants.LEFT);
 		txtPrePromo3.setForeground(Color.DARK_GRAY);

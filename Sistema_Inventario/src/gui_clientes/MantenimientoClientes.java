@@ -174,10 +174,13 @@ public class MantenimientoClientes extends JInternalFrame {
 
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbCliente.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); //
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(10)); //
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); //
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(10)); //
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(1)); //
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(99)); //
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(1)); //
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(1)); //
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(1)); //
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(1)); //
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(1)); //
 
 	}
 

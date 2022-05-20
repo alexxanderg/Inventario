@@ -419,7 +419,7 @@ public class NuevoProducto extends JFrame {
 		txtPrecioCompra.setBounds(211, 457, 149, 25);
 		contentPane.add(txtPrecioCompra);
 		
-		lblPrecioDeVenta = new JLabel("Precio de Venta:");
+		lblPrecioDeVenta = new JLabel("Raci\u00F3n:");
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
 		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
@@ -863,6 +863,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(label_8);
 		
 		lblDeGanancia = new JLabel("% de ganancia:");
+		lblDeGanancia.setVisible(false);
 		lblDeGanancia.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDeGanancia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeGanancia.setForeground(new Color(30, 144, 255));
@@ -871,6 +872,7 @@ public class NuevoProducto extends JFrame {
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
+		txtPtjGanancia.setVisible(false);
 		txtPtjGanancia.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -1303,25 +1305,18 @@ public class NuevoProducto extends JFrame {
 	}
 	
 	protected void keyReleasedTxtPrecioCompra(KeyEvent e) { // LOS SIGUIENTES METODOS SON PARA MODIFICAR EL PRECIO DE VENTA SEGUN EL PORCENTAJE Y LAS RESTRICCIONES EN LOS TEXTBOX
-		try {
-			if(txtPrecioCompra.getText().equals("0"))
-				txtPtjGanancia.setText("");
-			else{
-				double preco = Float.parseFloat(txtPrecioCompra.getText());
-				double preve = Float.parseFloat(txtPrecioVenta.getText());
-				double ptjga = Float.parseFloat(txtPtjGanancia.getText());
-				double newpreve = preco + (preco * (ptjga*0.01));
-				newpreve = redondearDecimales(newpreve, 2);
-				txtPrecioVenta.setText(""+newpreve);
-			}
-		} catch (Exception e2) {
-			if(txtPrecioCompra.getText().length() == 0){
-				txtPrecioCompra.setText("0");
-				txtPtjGanancia.setText("0");				
-			}
-			else
-				txtPrecioVenta.setText(txtPrecioCompra.getText());
-		}	
+		/*
+		 * try { if(txtPrecioCompra.getText().equals("0")) txtPtjGanancia.setText("");
+		 * else{ double preco = Float.parseFloat(txtPrecioCompra.getText()); double
+		 * preve = Float.parseFloat(txtPrecioVenta.getText()); double ptjga =
+		 * Float.parseFloat(txtPtjGanancia.getText()); double newpreve = preco + (preco
+		 * * (ptjga*0.01)); newpreve = redondearDecimales(newpreve, 2);
+		 * txtPrecioVenta.setText(""+newpreve); } } catch (Exception e2) {
+		 * if(txtPrecioCompra.getText().length() == 0){ txtPrecioCompra.setText("0");
+		 * txtPtjGanancia.setText("0"); } else
+		 * txtPrecioVenta.setText(txtPrecioCompra.getText());
+		 */
+		//}	
 	}
 	protected void keyTypedTxtPrecioCompra(KeyEvent e) {
 		char c = e.getKeyChar();
@@ -1358,19 +1353,19 @@ public class NuevoProducto extends JFrame {
 			e.consume();
 	}
 	protected void keyReleasedTxtPrecioVenta(KeyEvent e) {
-		try {
-			if((txtPrecioCompra.getText().equals("0")) || txtPrecioCompra.getText().length() == 0)
-				txtPtjGanancia.setText("");
-			else{
-				double preco = Float.parseFloat(txtPrecioCompra.getText());
-				double preve = Float.parseFloat(txtPrecioVenta.getText());
-				double newptj = ((preve-preco)/preco) * 100;
-				newptj = redondearDecimales(newptj, 2);
-				txtPtjGanancia.setText(""+newptj);
-			}
-		} catch (Exception e2) {
-			txtPtjGanancia.setText("0");
-		}		
+//		try {
+//			if((txtPrecioCompra.getText().equals("0")) || txtPrecioCompra.getText().length() == 0)
+//				txtPtjGanancia.setText("");
+//			else{
+//				double preco = Float.parseFloat(txtPrecioCompra.getText());
+//				double preve = Float.parseFloat(txtPrecioVenta.getText());
+//				double newptj = ((preve-preco)/preco) * 100;
+//				newptj = redondearDecimales(newptj, 2);
+//				txtPtjGanancia.setText(""+newptj);
+//			}
+//		} catch (Exception e2) {
+//			txtPtjGanancia.setText("0");
+//		}		
 	}
 	protected void keyTypedTxtPrecioVenta(KeyEvent e) {
 		char c = e.getKeyChar();
