@@ -139,7 +139,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 0, 230, 707);
 		contentPane.add(panel);
 		
-		btnVentas = new JButton("Vender");
+		btnVentas = new JButton("Salidas");
 		btnVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);

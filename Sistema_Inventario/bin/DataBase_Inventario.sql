@@ -220,7 +220,6 @@ insert into tb_clientes values(	null, 'Doc.trib.no.dom.sin.ruc', '99999999', '.C
 insert into tb_clientes values(	null, 'DNI', '78548965', 'Juan Pérez', 'Las Orquídeas F7', '999888777', 'juanperez@gmail.com', 1);
 insert into tb_clientes values(	null, 'DNI', '00452789', 'Mario Gomez', '', '789456123', '', 1);
 insert into tb_clientes values(	null, 'DNI', '54668899', 'Marisol Torres', '', '123456789', 'maritorres@gmail.com', 1);
-insert into tb_clientes values(	null, 'RUC', '20604635447', 'BYTE x BYTE E.I.R.L.', 'Calle Octavio Muñoz Najar 213 Int 207', '986865523', 'admin@bytexbyte.com.pe', 1);
 
 INSERT INTO `tb_distribuidores` VALUES (1,'Doc.trib.no.dom.sin.ruc','99999999','.Distribuidor Varios','','','','',1),(2,'RUC','20557079441','COCA COLA','Jr.cajamarca 371 - Rimac - Lima - Lima','','','',1),(3,'RUC','20558078091','SOCOSANI','Av. Pumacahua 717 Cerro Colorado-Arequipa-Arequipa','','','',1),(4,'RUC','20454063423','KOLA REAL','Av.Salaverry N° S/N Bar. Huaranguillo Sachaca-Arequipa-Arequipa','','','',1),(5,'RUC','10452983147','BACKUS','Av. Nicolas Ayllon 3986','','','',1),(6,'RUC','20456334971','ALICORP','Lt.714 C.P.Semi Rural Pachacutec Cerro Colorado-Arequipa-Arequipa','','','',1),(7,'RUC','20498441662','GLORIA','Av. Lima 133 Urb Cercado de Mno Melgar-Arequipa','','','',1),(8,'RUC','20100220700','DIMEXA','Urb. Santa Maria B-12 Paucarpata Arequipa','','','',1),(9,'RUC','20100239559','J.MORAN','Av.San Martin Miraflores Arequipa','','','',1),(10,'RUC','00000000000','JERICO','','','','',1);
 
