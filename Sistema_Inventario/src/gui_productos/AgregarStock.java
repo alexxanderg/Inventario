@@ -62,6 +62,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 	private JDateChooser fecha_vencimiento;
 	private JLabel lblFechaDeVencimiento;
 	private JLabel lblNewLabel;
+	private JLabel lblEstaOpcinSolo;
 	
 	/**
 	 * Launch the application.
@@ -88,7 +89,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		
 		addWindowListener(this);
 		setResizable(false);
-		setBounds(100, 100, 560, 481);
+		setBounds(100, 100, 560, 527);
 		getContentPane().setLayout(null);
 		
 		lblStockActual = new JLabel("Stock actual:");
@@ -137,7 +138,7 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		btnGuardar.setForeground(SystemColor.menu);
 		btnGuardar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnGuardar.setBackground(new Color(30, 144, 255));
-		btnGuardar.setBounds(0, 397, 554, 55);
+		btnGuardar.setBounds(0, 433, 554, 55);
 		getContentPane().add(btnGuardar);
 		
 		txtAgregarStock = new JTextField();
@@ -219,6 +220,13 @@ public class AgregarStock extends JDialog implements ActionListener, WindowListe
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel.setBounds(40, 224, 447, 28);
 		getContentPane().add(lblNewLabel);
+		
+		lblEstaOpcinSolo = new JLabel("<html>Esta opci\u00F3n, solo se sumar\u00E1 a su stock, mas no dejar\u00E1 un registro. <br>Para hacerlo, debe hacerlo desde el m\u00F3dulo de compras.</html>");
+		lblEstaOpcinSolo.setForeground(new Color(220, 20, 60));
+		lblEstaOpcinSolo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEstaOpcinSolo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEstaOpcinSolo.setBounds(40, 397, 447, 28);
+		getContentPane().add(lblEstaOpcinSolo);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidadAdicinal, btnGuardar}));
 		cargar();
 	}

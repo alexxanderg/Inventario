@@ -227,18 +227,6 @@ public class MantenimientoProd extends JInternalFrame {
 				mouseClickedMnModificarProducto(e);
 			}
 		});
-		
-		mnduplicarProducto = new JMenu("|Duplicar| ");
-		mnduplicarProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnduplicarProducto(arg0);
-			}
-		});
-		mnduplicarProducto.setForeground(new Color(135, 206, 250));
-		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnduplicarProducto.setBackground(SystemColor.menu);
-		menuBar.add(mnduplicarProducto);
 		mnModificarProducto.setForeground(new Color(218, 112, 214));
 		mnModificarProducto.setBackground(SystemColor.control);
 		mnModificarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -256,8 +244,19 @@ public class MantenimientoProd extends JInternalFrame {
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
 		
+		mnduplicarProducto = new JMenu("|Duplicar| ");
+		mnduplicarProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnduplicarProducto(arg0);
+			}
+		});
+		mnduplicarProducto.setForeground(new Color(135, 206, 250));
+		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnduplicarProducto.setBackground(SystemColor.menu);
+		menuBar.add(mnduplicarProducto);
+		
 		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
-		mnaadirStock.setVisible(false);
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

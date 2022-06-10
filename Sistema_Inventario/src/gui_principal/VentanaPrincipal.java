@@ -14,6 +14,7 @@ import gui_notificaciones.notificaciones;
 import gui_productos.Kardex;
 import gui_productos.MantenimientoProd;
 import gui_reportes.Reportes;
+import gui_reportes.Reportes2;
 import gui_usuarios.MantenimientoUsuarios;
 import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
@@ -82,7 +83,7 @@ public class VentanaPrincipal extends JFrame {
 	public MantenimientoDistribuidores vdistribuidores = null;
 	public MantenimientoUsuarios vUsuarios = null;
 	public MantenimientoClientes vCliente = null;
-	public Reportes vReportes = null;
+	public Reportes2 vReportes = null;
 	public Configuraciones config = null;
 	public notificaciones notifica = null;
 
@@ -139,7 +140,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 0, 230, 707);
 		contentPane.add(panel);
 		
-		btnVentas = new JButton("Salidas");
+		btnVentas = new JButton("Ventas");
 		btnVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgVentas = new ImageIcon(this.getClass().getResource("/imgMenuventas.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
@@ -632,7 +633,7 @@ public class VentanaPrincipal extends JFrame {
 	protected void actionPerformedBtnReportes(ActionEvent e) {
 		try {
 			cerrarVentanas();
-			vReportes = new Reportes(this);
+			vReportes = new Reportes2(this);
 			desktopPane.add(vReportes);
 			vReportes.show();
 			vReportes.setMaximum(true);

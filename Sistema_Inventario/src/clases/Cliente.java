@@ -17,7 +17,12 @@ public class Cliente {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	
-	public Cliente(){}           
+	public Cliente(){}        
+	
+	public Cliente(String cliente){
+		this.nombre = cliente;
+	}
+	
 	public Cliente(int id, String tipodoc, String nrodoc, String nombre, String direccion, String telefono, String correo){
 		this.id = id;
 		this.tipodoc = tipodoc;
