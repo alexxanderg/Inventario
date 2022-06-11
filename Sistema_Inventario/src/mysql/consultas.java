@@ -559,6 +559,33 @@ public class consultas {
 		return rs;
 	}
 	
+	public ResultSet cargarTotalVentaYGanancia(Object fechai, Object fechaf, String metpago, String idProd, String categoria, String idusuario, String idcliente) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT sum(vd.subTotal) total, sum(vd.ganancia) ganancia\n"
+					+ "FROM tb_ventas v\n"
+					+ "INNER JOIN tb_ventas_detalle vd\n"
+					+ "	ON v.codventa = vd.codventa\n"
+					+ "INNER JOIN tb_productos p\n"
+					+ "	ON vd.codproducto = p.codproducto\n"
+					+ "INNER JOIN tb_usuarios u\n"
+					+ "	ON v.idusuario = u.idusuario\n"
+					+ "INNER JOIN tb_clientes c\n"
+					+ "	ON v.idcliente = c.idcliente\n"
+					+ "WHERE \n"
+					+ "	 v.idusuario LIKE '" + idusuario + "'\n"
+					+ "     AND v.idcliente LIKE '" + idcliente + "'\n"
+					+ "     AND v.metpago1 LIKE '" + metpago + "'\n"
+					+ "     AND vd.codproducto LIKE  '" + idProd + "'\n"
+					+ "     AND p.categoria LIKE  '" + categoria + "'\n"
+					+ "     AND v.fecha between '" + fechai + "' and '" + fechaf + "'\n"
+					+ "ORDER BY v.codventa");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar compras: " + e);
+		}
+		return rs;
+	}
+	
 	public ResultSet buscarCompraDetalle(int nroCompra) {
 	    try {
 	        this.st = this.con.createStatement();

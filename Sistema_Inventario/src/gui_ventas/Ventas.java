@@ -275,7 +275,7 @@ public class Ventas extends JInternalFrame {
 		txtNroImpresiones.setFont(new Font("Arial", Font.BOLD, 15));
 		txtNroImpresiones.setColumns(10);
 		txtNroImpresiones.setBackground(Color.ORANGE);
-		txtNroImpresiones.setBounds(1076, 11, 32, 18);
+		txtNroImpresiones.setBounds(1076, 192, 32, 18);
 		getContentPane().add(txtNroImpresiones);
 		
 		txtVuelto = new JTextField();
@@ -498,6 +498,7 @@ public class Ventas extends JInternalFrame {
 		getContentPane().add(lblFechaDeVenta);
 		
 		chckImrpimir = new JCheckBox("\u00BFImprimir?");
+		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -1373,11 +1374,11 @@ public class Ventas extends JInternalFrame {
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(
-												getClass().getClassLoader().getResourceAsStream("rNotaVenta80mm.jasper"),
+												getClass().getClassLoader().getResourceAsStream("rComprobanteSELECT.jasper"),
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();
-										JasperPrintManager.printReport(impressao, false);
+										JasperPrintManager.printReport(impressao, true);
 										/*
 										 * this.setAlwaysOnTop(false);
 										 * //JOptionPane.showMessageDialog(null,

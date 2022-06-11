@@ -714,6 +714,10 @@ public class BuscarVentas extends JInternalFrame {
 			parameters.put("metpago", metpago);
 			parameters.put("totalVenta", totalVenta);
 
+			
+			
+			
+			
 			if (usu.equals("TODOS")) {
 				if (metpago == - 1) {
 					new AbstractJasperReports().createReport(con, "rVentasDetalladasTodos.jasper", parameters);
@@ -790,7 +794,7 @@ public class BuscarVentas extends JInternalFrame {
 					Connection con = null;
 		            con = MySQLConexion.getConection();
 					JasperPrint impressao = JasperFillManager.fillReport(
-							getClass().getClassLoader().getResourceAsStream("rNotaVenta80mm.jasper"),
+							getClass().getClassLoader().getResourceAsStream("rComprobanteSELECT.jasper"),
 							parameters, con);
 
 					// AbstractJasperReports.showViewer();
