@@ -73,7 +73,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JLabel lblCategora;
 	private JButton btnInventarioCFiltros;
 	private JLabel lblHistorialDeCompras;
-	private JButton btnVerComprasCliente;
 	private JPanel panel;
 	private JLabel lblVendedor;
 	private JLabel lblMtodoDePago;
@@ -109,10 +108,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JTextField txtProductosVenta;
 	private JLabel lblNoAfectaLas;
 	private JButton btnIngresos;
-	private JLabel lblSeleccioneUnRango;
-	private JLabel lblSeleccioneUnRango_1;
-	private JLabel lblSeleccioneUnRango_2;
-	private JLabel lblSeleccioneUnRango_3;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -184,7 +180,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		this.btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
 
 		this.lblVentas = new JLabel("REPORTES");
-		this.lblVentas.setBounds(345, 11, 441, 32);
+		this.lblVentas.setBounds(355, 11, 441, 32);
 		this.panel.add(this.lblVentas);
 		this.lblVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
@@ -199,19 +195,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		cbCliente.setBounds(249, 200, 249, 23);
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
-
-		this.btnVerComprasCliente = new JButton("Ver reporte");
-		btnVerComprasCliente.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		btnVerComprasCliente.setBounds(836, 8, 239, 32);
-		panel.add(btnVerComprasCliente);
-		btnVerComprasCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionPerformedBtnVerComprasCliente(e);
-			}
-		});
-		this.btnVerComprasCliente.setForeground(Color.WHITE);
-		this.btnVerComprasCliente.setFont(new Font("Tahoma", Font.BOLD, 18));
-		this.btnVerComprasCliente.setBackground(new Color(30, 144, 255));
 
 		lblPorProducto = new JLabel("MOVIMIENTOS DE PRODUCTO");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
@@ -384,7 +367,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(Color.DARK_GRAY, 3, true));
-		panel_1.setBounds(345, 50, 441, 49);
+		panel_1.setBounds(345, 63, 441, 49);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -456,37 +439,11 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										btnIngresos.setBounds(72, 483, 178, 32);
 										panel.add(btnIngresos);
 										
-										lblSeleccioneUnRango = new JLabel("Seleccione un rango de fechas.");
-										lblSeleccioneUnRango.setHorizontalAlignment(SwingConstants.RIGHT);
-										lblSeleccioneUnRango.setForeground(new Color(220, 20, 60));
-										lblSeleccioneUnRango.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 13));
-										lblSeleccioneUnRango.setBackground(Color.DARK_GRAY);
-										lblSeleccioneUnRango.setBounds(261, 134, 237, 19);
-										panel.add(lblSeleccioneUnRango);
-										
-										lblSeleccioneUnRango_1 = new JLabel("Seleccione un rango de fechas.");
-										lblSeleccioneUnRango_1.setHorizontalAlignment(SwingConstants.RIGHT);
-										lblSeleccioneUnRango_1.setForeground(new Color(220, 20, 60));
-										lblSeleccioneUnRango_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 13));
-										lblSeleccioneUnRango_1.setBackground(Color.DARK_GRAY);
-										lblSeleccioneUnRango_1.setBounds(307, 420, 195, 19);
-										panel.add(lblSeleccioneUnRango_1);
-										
-										lblSeleccioneUnRango_2 = new JLabel("Seleccione un rango de fechas.");
-										lblSeleccioneUnRango_2.setHorizontalAlignment(SwingConstants.RIGHT);
-										lblSeleccioneUnRango_2.setForeground(new Color(220, 20, 60));
-										lblSeleccioneUnRango_2.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 13));
-										lblSeleccioneUnRango_2.setBackground(Color.DARK_GRAY);
-										lblSeleccioneUnRango_2.setBounds(291, 565, 207, 19);
-										panel.add(lblSeleccioneUnRango_2);
-										
-										lblSeleccioneUnRango_3 = new JLabel("Seleccione un rango de fechas.");
-										lblSeleccioneUnRango_3.setHorizontalAlignment(SwingConstants.RIGHT);
-										lblSeleccioneUnRango_3.setForeground(new Color(220, 20, 60));
-										lblSeleccioneUnRango_3.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 13));
-										lblSeleccioneUnRango_3.setBackground(Color.DARK_GRAY);
-										lblSeleccioneUnRango_3.setBounds(809, 134, 207, 19);
-										panel.add(lblSeleccioneUnRango_3);
+										lblNewLabel = new JLabel("Escoja un rango de fechas y luego el reporte que necesite.");
+										lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+										lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+										lblNewLabel.setBounds(345, 41, 441, 23);
+										panel.add(lblNewLabel);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
 
@@ -714,52 +671,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		}
-	}
-
-	protected void actionPerformedBtnVerComprasCliente(ActionEvent e) {
-			
-		  Connection con = null; try { con = MySQLConexion.getConection();
-		  
-		  String nrodoc = "" +
-		  cbCliente.getItemAt(cbCliente.getSelectedIndex()).getId();
-		  
-		  int idusuario =
-		  cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario(); String
-		  usu = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getUsuario(); int
-		  metpago = cbMetodoPago.getSelectedIndex() - 1;
-		  
-		  int añoi = fInicial.getCalendar().get(Calendar.YEAR); int mesi =
-				  fInicial.getCalendar().get(Calendar.MARCH) + 1; int diai =
-						  fInicial.getCalendar().get(Calendar.DAY_OF_MONTH); String fechai = añoi + "-"
-		  + mesi + "-" + diai + " 00:00:00";
-		  
-		  int añof = fFinal.getCalendar().get(Calendar.YEAR); int mesf =
-				  fFinal.getCalendar().get(Calendar.MARCH) + 1; int diaf =
-						  fFinal.getCalendar().get(Calendar.DAY_OF_MONTH); String fechaf = añof + "-"
-		  + mesf + "-" + diaf + " 23:59:59";
-		  
-		  DateFormat formatter; formatter = new
-		  SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date = (Date)
-		  formatter.parse(fechai); java.sql.Timestamp timeStampDateI = new
-		  Timestamp(date.getTime()); DateFormat formatter2; formatter2 = new
-		  SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date2 = (Date)
-		  formatter2.parse(fechaf); java.sql.Timestamp timeStampDateF = new
-		  Timestamp(date2.getTime()); double totalVenta = 0;
-		  
-		  Map parameters = new HashMap(); parameters.put("prtFechaI", timeStampDateI);
-		  parameters.put("prtFechaF", timeStampDateF);
-		  
-		  parameters.put("totalVenta", "" + totalVenta);
-		  parameters.put("prmtIdCliente", "" + nrodoc);
-		  
-		  new AbstractJasperReports().createReport(con,
-		  "rVentasDetalladasXCliente.jasper", parameters);
-		  AbstractJasperReports.showViewer();
-		  
-		  con.close(); } catch (Exception ex) { JOptionPane.showMessageDialog(null,
-		  "No se encontraron datos registrados en estas fechas" + ex); }
-		 
-
 	}
 
 	protected void actionPerformedBtnGenerarMenores(ActionEvent e) {
