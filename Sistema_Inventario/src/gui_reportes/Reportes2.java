@@ -592,16 +592,18 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 			}
 			
 			
-			String totalVenta = "0";
-			String totalGanancia = "0";
+			double totalVenta = 0;
+			double totalGanancia = 0;
 			
 			try {
 				consulta.iniciar();
 				rs = consulta.cargarTotalVentaYGanancia(timeStampDateI, timeStampDateF, metpago, idProd, categoria, idusuario, idcliente);
 				rs.next();
-				totalVenta = rs.getString("total");
-				totalGanancia = rs.getString("ganancia");
+				totalVenta = rs.getDouble("total");
+				totalGanancia = rs.getDouble("ganancia");
 
+				totalVenta = redondearDecimales(totalVenta, 2);
+				totalGanancia = redondearDecimales(totalGanancia, 2);
 				
 			} catch (Exception ex) {
 				//JOptionPane.showMessageDialog(null, "Error al cargar Totales y ganancia");
@@ -623,8 +625,8 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 			parameters.put("prtFechaI", timeStampDateI);
 			parameters.put("prtFechaF", timeStampDateF);
 			parameters.put("metpago", metpago);
-			parameters.put("totalVenta", totalVenta);
-			parameters.put("totalGanancia", totalGanancia);
+			parameters.put("totalVenta", "" + totalVenta);
+			parameters.put("totalGanancia", "" + totalGanancia);
 			parameters.put("codproducto", idProd);
 			parameters.put("categoria", categoria);
 			parameters.put("idUsuario", idusuario);
