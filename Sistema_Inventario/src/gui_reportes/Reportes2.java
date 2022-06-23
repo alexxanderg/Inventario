@@ -109,6 +109,8 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JLabel lblNoAfectaLas;
 	private JButton btnIngresos;
 	private JLabel lblNewLabel;
+	private JLabel lblProductosPorVencer;
+	private JButton btnProdVencer;
 
 	/**
 	 * Launch the application.
@@ -231,13 +233,13 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(textField_1);
 
 		lblReporteDeCompras = new JLabel("REPORTE DE COMPRAS");
-		lblReporteDeCompras.setBounds(72, 557, 271, 32);
+		lblReporteDeCompras.setBounds(619, 131, 271, 32);
 		panel.add(lblReporteDeCompras);
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 
 		btnCompras = new JButton("Ver reporte");
-		btnCompras.setBounds(249, 591, 249, 32);
+		btnCompras.setBounds(769, 165, 249, 32);
 		panel.add(btnCompras);
 		btnCompras.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnCompras.addActionListener(new ActionListener() {
@@ -327,27 +329,27 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		chckSoloStock.setBackground(new Color(143, 188, 143));
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(619, 302, 399, 5);
+		textField_2.setBounds(619, 341, 399, 5);
 		panel.add(textField_2);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBackground(Color.WHITE);
 
 		this.lblRanking = new JLabel("RANKING DE PRODUCTOS");
-		lblRanking.setBounds(617, 130, 231, 25);
+		lblRanking.setBounds(619, 223, 231, 25);
 		panel.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(619, 161, 399, 28);
+		cbxRanking.setBounds(621, 254, 399, 28);
 		panel.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] { "M\u00E1s vendidos", "Menos vendidos" }));
 		this.cbxRanking.setToolTipText("");
 
 		this.btnVerRanking = new JButton("Ver reporte");
-		btnVerRanking.setBounds(769, 200, 249, 32);
+		btnVerRanking.setBounds(771, 293, 249, 32);
 		panel.add(btnVerRanking);
 		btnVerRanking.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnVerRanking.addActionListener(new ActionListener() {
@@ -367,7 +369,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(Color.DARK_GRAY, 3, true));
-		panel_1.setBounds(345, 63, 441, 49);
+		panel_1.setBounds(342, 70, 441, 49);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -440,10 +442,27 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(btnIngresos);
 										
 										lblNewLabel = new JLabel("Escoja un rango de fechas y luego el reporte que necesite.");
+										lblNewLabel.setForeground(new Color(0, 0, 0));
+										lblNewLabel.setBackground(new Color(220, 20, 60));
 										lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 										lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-										lblNewLabel.setBounds(345, 41, 441, 23);
+										lblNewLabel.setBounds(352, 45, 426, 23);
 										panel.add(lblNewLabel);
+										
+										lblProductosPorVencer = new JLabel("PRODUCTOS POR VENCER");
+										lblProductosPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
+										lblProductosPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
+										lblProductosPorVencer.setBounds(72, 571, 249, 25);
+										panel.add(lblProductosPorVencer);
+										
+										btnProdVencer = new JButton("Ver reporte");
+										btnProdVencer.addActionListener(this);
+										btnProdVencer.setForeground(Color.WHITE);
+										btnProdVencer.setFont(new Font("Tahoma", Font.BOLD, 18));
+										btnProdVencer.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+										btnProdVencer.setBackground(new Color(30, 144, 255));
+										btnProdVencer.setBounds(320, 591, 178, 32);
+										panel.add(btnProdVencer);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
 
@@ -498,6 +517,9 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnProdVencer) {
+			actionPerformedBtnProdVencer(e);
+		}
 		if (e.getSource() == btnIngresos) {
 			actionPerformedBtnIngresos(e);
 		}
@@ -965,6 +987,34 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		}
 
 	}
+	
+	protected void actionPerformedBtnProdVencer(ActionEvent e) {
+		 Connection con = null;
+		    try {
+		      con = MySQLConexion.getConection();
+
+		      int añoi = this.fInicial.getCalendar().get(1);
+		      int mesi = this.fInicial.getCalendar().get(2) + 1;
+		      int diai = this.fInicial.getCalendar().get(5);
+		      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+		      int añof = this.fFinal.getCalendar().get(1);
+		      int mesf = this.fFinal.getCalendar().get(2) + 1;
+		      int diaf = this.fFinal.getCalendar().get(5);
+		      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+		      Map parameters = new HashMap();
+		      parameters.put("prtFechaI", fechai);
+		      parameters.put("prmtFechaF", fechaf);
+
+		      new AbstractJasperReports().createReport(con, "rProdVencer.jasper", parameters);
+		      AbstractJasperReports.showViewer();
+		      con.close();
+		    }
+		    catch (Exception ex) {
+		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		    }
+	}
+	
 }
 
 
