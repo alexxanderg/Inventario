@@ -450,12 +450,14 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(lblNewLabel);
 										
 										lblProductosPorVencer = new JLabel("PRODUCTOS POR VENCER");
+										lblProductosPorVencer.setVisible(false);
 										lblProductosPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 										lblProductosPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 										lblProductosPorVencer.setBounds(72, 571, 249, 25);
 										panel.add(lblProductosPorVencer);
 										
 										btnProdVencer = new JButton("Ver reporte");
+										btnProdVencer.setVisible(false);
 										btnProdVencer.addActionListener(this);
 										btnProdVencer.setForeground(Color.WHITE);
 										btnProdVencer.setFont(new Font("Tahoma", Font.BOLD, 18));

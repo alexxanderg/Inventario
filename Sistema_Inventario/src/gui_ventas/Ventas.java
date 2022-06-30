@@ -1378,7 +1378,7 @@ public class Ventas extends JInternalFrame {
 												parameters, con);
 			
 										// AbstractJasperReports.showViewer();
-										JasperPrintManager.printReport(impressao, true);
+										JasperPrintManager.printReport(impressao, false);
 										/*
 										 * this.setAlwaysOnTop(false);
 										 * //JOptionPane.showMessageDialog(null,
