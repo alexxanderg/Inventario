@@ -18,6 +18,7 @@ import gui_reportes.Reportes2;
 import gui_usuarios.MantenimientoUsuarios;
 import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
+import gui_ventas.Ventas2;
 import mysql.consultas;
 
 import javax.swing.ImageIcon;
@@ -76,6 +77,7 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnBuscarVentas;
 	public JLabel lblUsuario;
 	public Ventas ventas = null;
+	public Ventas2 ventas2 = null;
 	public BuscarVentas buscarV = null;
 	public MantenimientoCompras vCompras = null;
 	public MantenimientoProd vProductos = null;
@@ -496,10 +498,10 @@ public class VentanaPrincipal extends JFrame {
 	public void actionPerformedBtnVentas(ActionEvent arg0) {
 		try {
 			cerrarVentanas();
-			ventas = new Ventas(this, -1);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
+			ventas2 = new Ventas2(this, -1);
+			desktopPane.add(ventas2);
+			ventas2.show();
+			ventas2.setMaximum(true);
 			pintarBotones();
 			btnVentas.setBackground(colorSelec);
 		} catch (PropertyVetoException e) {
@@ -523,10 +525,10 @@ public class VentanaPrincipal extends JFrame {
 	public void cargarVentas(int nroCompra){
 		try {
 			cerrarVentanas();
-			ventas = new Ventas(this, nroCompra);
-			desktopPane.add(ventas);
-			ventas.show();
-			ventas.setMaximum(true);
+			ventas2 = new Ventas2(this, nroCompra);
+			desktopPane.add(ventas2);
+			ventas2.show();
+			ventas2.setMaximum(true);
 			pintarBotones();
 			btnVentas.setBackground(colorSelec);
 		} catch (PropertyVetoException e) {
@@ -681,9 +683,9 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	public void cerrarVentanas(){
-		if(ventas != null)
-			ventas.dispose();
-		ventas = null;
+		if(ventas2 != null)
+			ventas2.dispose();
+		ventas2 = null;
 	
 		if(buscarV != null) 
 			buscarV.dispose();

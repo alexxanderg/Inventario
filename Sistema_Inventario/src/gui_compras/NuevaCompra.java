@@ -47,6 +47,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.JScrollPane;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JCheckBox;
 
 public class NuevaCompra extends JFrame {
 
@@ -128,20 +129,21 @@ public class NuevaCompra extends JFrame {
 		contentPane.setLayout(null);
 
 		lblCdigoIntbarras = new JLabel("Tipo de comprobante:");
+		lblCdigoIntbarras.setBounds(12, 105, 205, 23);
 		lblCdigoIntbarras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCdigoIntbarras.setForeground(Color.DARK_GRAY);
 		lblCdigoIntbarras.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCdigoIntbarras.setBounds(12, 105, 205, 23);
 		contentPane.add(lblCdigoIntbarras);
 
 		lblNombre = new JLabel("Serie:");
+		lblNombre.setBounds(554, 105, 60, 25);
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombre.setForeground(Color.DARK_GRAY);
 		lblNombre.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNombre.setBounds(554, 105, 60, 25);
 		contentPane.add(lblNombre);
 
 		txtSerie = new JTextField();
+		txtSerie.setBounds(612, 105, 132, 25);
 		txtSerie.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -160,17 +162,17 @@ public class NuevaCompra extends JFrame {
 		txtSerie.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtSerie.setColumns(10);
 		txtSerie.setBackground(new Color(245, 245, 245));
-		txtSerie.setBounds(612, 105, 132, 25);
 		contentPane.add(txtSerie);
 
 		lblDescripcin = new JLabel("Nro:");
+		lblDescripcin.setBounds(759, 105, 60, 25);
 		lblDescripcin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescripcin.setForeground(Color.DARK_GRAY);
 		lblDescripcin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDescripcin.setBounds(759, 105, 60, 25);
 		contentPane.add(lblDescripcin);
 
 		txtNroSerie = new JTextField();
+		txtNroSerie.setBounds(827, 105, 214, 25);
 		txtNroSerie.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -189,23 +191,23 @@ public class NuevaCompra extends JFrame {
 		txtNroSerie.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNroSerie.setColumns(10);
 		txtNroSerie.setBackground(new Color(245, 245, 245));
-		txtNroSerie.setBounds(827, 105, 214, 25);
 		contentPane.add(txtNroSerie);
 
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
+		lblFechaVencimiento.setBounds(554, 178, 205, 25);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaVencimiento.setBounds(554, 178, 205, 25);
 		contentPane.add(lblFechaVencimiento);
 
 		dchFeVencimiento = new JDateChooser();
+		dchFeVencimiento.setBounds(759, 178, 282, 25);
 		dchFeVencimiento.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
-		dchFeVencimiento.setBounds(759, 178, 282, 25);
 		contentPane.add(dchFeVencimiento);
 
 		btnRegistrarCompra = new JButton("REGISTRAR");
+		btnRegistrarCompra.setBounds(262, 541, 240, 61);
 		btnRegistrarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCrearProducto(arg0);
@@ -214,10 +216,10 @@ public class NuevaCompra extends JFrame {
 		btnRegistrarCompra.setForeground(SystemColor.menu);
 		btnRegistrarCompra.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnRegistrarCompra.setBackground(new Color(30, 144, 255));
-		btnRegistrarCompra.setBounds(262, 541, 240, 61);
 		contentPane.add(btnRegistrarCompra);
 
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(12, 541, 240, 61);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnCancelar(arg0);
@@ -226,10 +228,10 @@ public class NuevaCompra extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(12, 541, 240, 61);
 		contentPane.add(btnCancelar);
 
 		txtCrearProducto = new JTextField();
+		txtCrearProducto.setBounds(0, 0, 1061, 50);
 		txtCrearProducto.setText("REGISTRAR COMPRA");
 		txtCrearProducto.setRequestFocusEnabled(false);
 		txtCrearProducto.setIgnoreRepaint(true);
@@ -241,39 +243,38 @@ public class NuevaCompra extends JFrame {
 		txtCrearProducto.setEditable(false);
 		txtCrearProducto.setColumns(10);
 		txtCrearProducto.setBackground(Color.DARK_GRAY);
-		txtCrearProducto.setBounds(0, 0, 1061, 50);
 		contentPane.add(txtCrearProducto);
 
 		lblDistribuidor = new JLabel("Distribuidor");
+		lblDistribuidor.setBounds(12, 142, 191, 25);
 		lblDistribuidor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDistribuidor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistribuidor.setForeground(Color.DARK_GRAY);
 		lblDistribuidor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblDistribuidor.setBounds(12, 142, 191, 25);
 		contentPane.add(lblDistribuidor);
 
 		cbDistribuidor = new JComboBox();
+		cbDistribuidor.setBounds(212, 142, 240, 25);
 		cbDistribuidor.setForeground(Color.DARK_GRAY);
 		cbDistribuidor.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbDistribuidor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbDistribuidor.setBackground(new Color(245, 245, 245));
-		cbDistribuidor.setBounds(212, 142, 240, 25);
 		contentPane.add(cbDistribuidor);
 
 		lblFechaDeEmisin = new JLabel("Fecha de emisi\u00F3n:");
+		lblFechaDeEmisin.setBounds(554, 144, 177, 23);
 		lblFechaDeEmisin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaDeEmisin.setForeground(Color.DARK_GRAY);
 		lblFechaDeEmisin.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeEmisin.setBounds(554, 144, 177, 23);
 		contentPane.add(lblFechaDeEmisin);
 
 		cbTipoComprobante = new JComboBox();
+		cbTipoComprobante.setBounds(212, 105, 300, 25);
 		cbTipoComprobante.setModel(new DefaultComboBoxModel(new String[] { "Nota de compra", "Boleta", "Factura" }));
 		cbTipoComprobante.setForeground(Color.DARK_GRAY);
 		cbTipoComprobante.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipoComprobante.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbTipoComprobante.setBackground(new Color(245, 245, 245));
-		cbTipoComprobante.setBounds(212, 105, 300, 25);
 		contentPane.add(cbTipoComprobante);
 
 		dchFeEmision = new JDateChooser();
@@ -281,9 +282,9 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(dchFeEmision);
 
 		scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 337, 1029, 193);
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		scrollPane.setBounds(12, 337, 1029, 193);
 		contentPane.add(scrollPane);
 
 		tbCompras = new JTable();
@@ -297,6 +298,7 @@ public class NuevaCompra extends JFrame {
 		scrollPane.setViewportView(tbCompras);
 
 		txtBuscarProducto = new JTextField();
+		txtBuscarProducto.setBounds(12, 296, 500, 34);
 		txtBuscarProducto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -308,17 +310,17 @@ public class NuevaCompra extends JFrame {
 		txtBuscarProducto.setColumns(10);
 		txtBuscarProducto.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtBuscarProducto.setBackground(new Color(245, 245, 245));
-		txtBuscarProducto.setBounds(12, 296, 500, 34);
 		contentPane.add(txtBuscarProducto);
 
 		label = new JLabel("Buscar producto:");
+		label.setBounds(12, 270, 190, 23);
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.DARK_GRAY);
 		label.setFont(new Font("Candara", Font.BOLD, 20));
-		label.setBounds(12, 270, 190, 23);
 		contentPane.add(label);
 
 		btnAnadirDistri = new JButton("+");
+		btnAnadirDistri.setBounds(458, 142, 54, 25);
 		btnAnadirDistri.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnAnadirDistri(e);
@@ -328,45 +330,45 @@ public class NuevaCompra extends JFrame {
 		btnAnadirDistri.setFont(new Font("Arial", Font.BOLD, 20));
 		btnAnadirDistri.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnAnadirDistri.setBackground(new Color(30, 144, 255));
-		btnAnadirDistri.setBounds(458, 142, 54, 25);
 		contentPane.add(btnAnadirDistri);
 
 		lblNotaDeCompra = new JLabel("Nota:");
+		lblNotaDeCompra.setBounds(12, 178, 190, 23);
 		lblNotaDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotaDeCompra.setForeground(Color.DARK_GRAY);
 		lblNotaDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNotaDeCompra.setBounds(12, 178, 190, 23);
 		contentPane.add(lblNotaDeCompra);
 
 		txtNota = new JTextField();
+		txtNota.setBounds(212, 178, 300, 25);
 		txtNota.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNota.setForeground(Color.DARK_GRAY);
 		txtNota.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtNota.setColumns(10);
 		txtNota.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtNota.setBackground(new Color(245, 245, 245));
-		txtNota.setBounds(212, 178, 300, 25);
 		contentPane.add(txtNota);
 
 		lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
+		lblMtodoDePago.setBounds(554, 214, 190, 23);
 		lblMtodoDePago.setVisible(false);
 		lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(554, 214, 190, 23);
 		contentPane.add(lblMtodoDePago);
 
 		cbMetPago = new JComboBox();
+		cbMetPago.setBounds(759, 214, 282, 25);
 		cbMetPago.setVisible(false);
 		cbMetPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
 		cbMetPago.setForeground(Color.DARK_GRAY);
 		cbMetPago.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbMetPago.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbMetPago.setBackground(new Color(245, 245, 245));
-		cbMetPago.setBounds(759, 214, 282, 25);
 		contentPane.add(cbMetPago);
 
 		btnNuevoProducto = new JButton("Crear nuevo");
+		btnNuevoProducto.setBounds(891, 296, 150, 34);
 		btnNuevoProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnNuevoProducto(arg0);
@@ -376,10 +378,10 @@ public class NuevaCompra extends JFrame {
 		btnNuevoProducto.setFont(new Font("Arial", Font.BOLD, 20));
 		btnNuevoProducto.setBorder(new LineBorder(Color.WHITE, 1, true));
 		btnNuevoProducto.setBackground(new Color(60, 179, 113));
-		btnNuevoProducto.setBounds(891, 296, 150, 34);
 		contentPane.add(btnNuevoProducto);
 
 		btnQuitar = new JButton("Quitar");
+		btnQuitar.setBounds(781, 296, 100, 34);
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnQuitar(arg0);
@@ -388,10 +390,10 @@ public class NuevaCompra extends JFrame {
 		btnQuitar.setForeground(SystemColor.menu);
 		btnQuitar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuitar.setBackground(new Color(220, 20, 60));
-		btnQuitar.setBounds(781, 296, 100, 34);
 		contentPane.add(btnQuitar);
 
 		btnAyuda = new JButton("AYUDA");
+		btnAyuda.setBounds(298, 222, 214, 32);
 		btnAyuda.setVisible(false);
 		btnAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -401,31 +403,35 @@ public class NuevaCompra extends JFrame {
 		btnAyuda.setForeground(Color.DARK_GRAY);
 		btnAyuda.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnAyuda.setBackground(new Color(255, 215, 0));
-		btnAyuda.setBounds(298, 222, 214, 32);
 		contentPane.add(btnAyuda);
 
 		lblTotal = new JLabel("S/");
+		lblTotal.setBounds(827, 550, 214, 54);
 		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal.setForeground(Color.DARK_GRAY);
 		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
-		lblTotal.setBounds(827, 550, 214, 54);
 		contentPane.add(lblTotal);
 		
 		JLabel lblEjmB = new JLabel("ejm: B001");
+		lblEjmB.setBounds(612, 80, 132, 23);
 		lblEjmB.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblEjmB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEjmB.setForeground(Color.DARK_GRAY);
 		lblEjmB.setFont(new Font("Candara", Font.BOLD, 15));
-		lblEjmB.setBounds(612, 80, 132, 23);
 		contentPane.add(lblEjmB);
 		
 		JLabel lblEjm = new JLabel("ejm: 135");
+		lblEjm.setBounds(867, 80, 132, 23);
 		lblEjm.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblEjm.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEjm.setForeground(Color.DARK_GRAY);
 		lblEjm.setFont(new Font("Candara", Font.BOLD, 15));
-		lblEjm.setBounds(867, 80, 132, 23);
 		contentPane.add(lblEjm);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("<html>\u00BFActulizar precios de compra y venta, en base al porcentaje de ganancia asignado?</html>");
+		chckbxNewCheckBox.setVerticalAlignment(SwingConstants.TOP);
+		chckbxNewCheckBox.setBounds(531, 565, 265, 37);
+		contentPane.add(chckbxNewCheckBox);
 		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
 		// Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie,
 		// txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio,
@@ -886,8 +892,6 @@ public class NuevaCompra extends JFrame {
 
 		this.lblTotal.setText("" + subtotal);
 	}
-	
-	
 }
 
 
