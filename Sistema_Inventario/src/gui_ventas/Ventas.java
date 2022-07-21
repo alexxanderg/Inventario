@@ -1286,8 +1286,8 @@ public class Ventas extends JInternalFrame {
 									gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 						
 								consulta.iniciar();
-								consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
-										descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
+								//consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta, precioVeUniSDescVenta, redondearDecimales((precioVeUniSDescVenta*cantProdVenta),2),
+								//		descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
 														
 								/*
 								 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
@@ -1734,4 +1734,5 @@ public class Ventas extends JInternalFrame {
 			
 		}
 	}
+	
 }

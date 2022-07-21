@@ -130,7 +130,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	private JLabel lblSubTotal;
 	private JButton btnMasUnoCant;
 	private JButton btnMenosUnoCant;
-	private JButton btnOk;
 	private JButton btnMasUnoPre;
 	private JButton btnMenosUnoPre;
 
@@ -147,6 +146,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	double preUniOriginal;
 	String uniMedVenta;
 	private JLabel lblImgVentas;
+	private JButton btnOkk;
+	private JButton btnBasura;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -589,14 +590,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		txtPrecio.setBounds(37, 314, 125, 41);
 		getContentPane().add(txtPrecio);
 
-		btnOk = new JButton("Ok");
-		btnOk.addActionListener(this);
-		btnOk.setForeground(Color.WHITE);
-		btnOk.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		btnOk.setBackground(new Color(50, 205, 50));
-		btnOk.setBounds(37, 414, 181, 34);
-		getContentPane().add(btnOk);
-
 		lblSubTotal = new JLabel("00.0");
 		lblSubTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubTotal.setForeground(new Color(30, 144, 255));
@@ -634,6 +627,29 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblImgVentas.setIcon(new ImageIcon(imgLogo));
 		lblImgVentas.setBounds(36, 11, 182, 160);
 		getContentPane().add(lblImgVentas);
+
+		btnBasura = new JButton("");
+		btnBasura.addActionListener(this);
+		btnBasura.setForeground(Color.WHITE);
+		btnBasura.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnBasura.setBackground(Color.WHITE);
+		btnBasura.setBounds(42, 414, 74, 52);
+		getContentPane().add(btnBasura);
+		Image imgLogoBasura = new ImageIcon(this.getClass().getResource("/imgbasura.png")).getImage()
+				.getScaledInstance(40, 40, Image.SCALE_AREA_AVERAGING);
+		btnBasura.setIcon(new ImageIcon(imgLogoBasura));
+
+		btnOkk = new JButton("");
+		btnOkk.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnOkk.addActionListener(this);
+		btnOkk.setForeground(Color.WHITE);
+		btnOkk.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnOkk.setBackground(Color.WHITE);
+		btnOkk.setBounds(144, 414, 74, 52);
+		getContentPane().add(btnOkk);
+		Image imgLogoOk = new ImageIcon(this.getClass().getResource("/imgOk.png")).getImage().getScaledInstance(47, 47,
+				Image.SCALE_AREA_AVERAGING);
+		btnOkk.setIcon(new ImageIcon(imgLogoOk));
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -1174,7 +1190,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 	public int verificarStock() {
 		for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 5).toString());
+			int idProd = Integer.parseInt(tbCarrito.getValueAt(i, 7).toString());
 			float cantV = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
 			float stock = 0;
 			try {
@@ -1341,12 +1357,10 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 							}
 						}
 
-						/*
-						 * SE REALIZÓ EL REGISTRO DE LA VENTA
-						 * 
-						 * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
-						 * 
-						 */
+					     /*
+					      * SE REALIZÓ EL REGISTRO DE LA VENTA
+					      * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
+					      */
 
 						int ultCodVenta = 0;
 
@@ -1413,7 +1427,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 										precioVeUniOriginal,
 										redondearDecimales((precioVeUniOriginal * cantProdVenta), 2),
 										redondearDecimales((descTotXProdV / cantProdVenta), 2), descTotXProdV,
-										subTotVenta, gananciaProdVenta, uMedidaUsada);
+										subTotVenta, gananciaProdVenta, uMedidaUsada, detallesProducto);
 
 								/*
 								 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
@@ -1492,7 +1506,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 										 * 
 										 */
 										JasperPrint impressao = JasperFillManager.fillReport(getClass().getClassLoader()
-												.getResourceAsStream("rNotaVenta80mm.jasper"), parameters, con);
+												.getResourceAsStream("rNotaVenta58mm.jasper"), parameters, con);
 
 										// AbstractJasperReports.showViewer();
 										JasperPrintManager.printReport(impressao, false);
@@ -1906,14 +1920,17 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBasura) {
+			actionPerformedBtnBasura(e);
+		}
+		if (e.getSource() == btnOkk) {
+			actionPerformedBtnOkk(e);
+		}
 		if (e.getSource() == btnMenosUnoPre) {
 			actionPerformedBtnMenosUnoPre(e);
 		}
 		if (e.getSource() == btnMasUnoPre) {
 			actionPerformedBtnMasUnoPre(e);
-		}
-		if (e.getSource() == btnOk) {
-			actionPerformedBtnOk(e);
 		}
 		if (e.getSource() == btnMenosUnoCant) {
 			actionPerformedBtnMenosUno(e);
@@ -1966,16 +1983,32 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			keyReleasedTxtPrecio(e);
 		}
 	}
+	
 
 	public void keyTyped(KeyEvent e) {
 	}
 
+	protected void keyTypedTxtPrecio(KeyEvent e) {
+		calculoUnitario();
+	}
+	
+	
 	protected void keyReleasedTxtPrecio(KeyEvent e) {
 		calculoUnitario();
+		
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER) {
+			actionPerformedBtnOkk(null);
+		}
 	}
 
 	protected void keyReleasedTxtCantidad(KeyEvent e) {
 		calculoUnitario();
+		
+		char c = e.getKeyChar();
+		if (c == (char) KeyEvent.VK_ENTER) {
+			actionPerformedBtnOkk(null);
+		}
 	}
 
 	public void calculoUnitario() {
@@ -1986,29 +2019,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		subtotal = redondearDecimales(subtotal, 2);
 		lblSubTotal.setText("" + subtotal);
 
-	}
-
-	protected void actionPerformedBtnOk(ActionEvent e) {// "Cant.", "Producto", "Detalles", "U.Med", "Precio",
-														// "SubTotal", "Desc","IDPROD", "PC", "Stock", "PVI Original"});
-		double newcantidadV = Double.parseDouble(txtCantidad.getText());
-		double newprecioV = Double.parseDouble(txtPrecio.getText());
-		double newsubtotal = Double.parseDouble(lblSubTotal.getText());
-		String newuniMedida = cbUnidadesdeMedida.getSelectedItem().toString();
-
-		tbCarrito.setValueAt(newcantidadV, tbCarrito.getSelectedRow(), 0);
-		tbCarrito.setValueAt(newprecioV, tbCarrito.getSelectedRow(), 4);
-		tbCarrito.setValueAt(newsubtotal, tbCarrito.getSelectedRow(), 5);
-		tbCarrito.setValueAt(newuniMedida, tbCarrito.getSelectedRow(), 3);
-
-		double precioOriginalV = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 10).toString());
-		// precioOriginal = redondearDecimales(precioOriginal, 2);
-
-		double descuento = (precioOriginalV * newcantidadV) - (newsubtotal);
-		descuento = redondearDecimales(descuento, 2);
-
-		tbCarrito.setValueAt(descuento, tbCarrito.getSelectedRow(), 6);
-
-		sumarTotalGenerales();
 	}
 
 	public void focusGained(FocusEvent e) {
@@ -2060,4 +2070,33 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		}
 
 	}
+
+	protected void actionPerformedBtnOkk(ActionEvent e) {// "Cant.", "Producto", "Detalles", "U.Med", "Precio",
+		// "SubTotal", "Desc","IDPROD", "PC", "Stock", "PVI Original"});
+		double newcantidadV = Double.parseDouble(txtCantidad.getText());
+		double newprecioV = Double.parseDouble(txtPrecio.getText());
+		double newsubtotal = Double.parseDouble(lblSubTotal.getText());
+		String newuniMedida = cbUnidadesdeMedida.getSelectedItem().toString();
+
+		tbCarrito.setValueAt(newcantidadV, tbCarrito.getSelectedRow(), 0);
+		tbCarrito.setValueAt(newprecioV, tbCarrito.getSelectedRow(), 4);
+		tbCarrito.setValueAt(newsubtotal, tbCarrito.getSelectedRow(), 5);
+		tbCarrito.setValueAt(newuniMedida, tbCarrito.getSelectedRow(), 3);
+
+		double precioOriginalV = Double.parseDouble(tbCarrito.getValueAt(tbCarrito.getSelectedRow(), 10).toString());
+		// precioOriginal = redondearDecimales(precioOriginal, 2);
+
+		double descuento = (precioOriginalV * newcantidadV) - (newsubtotal);
+		descuento = redondearDecimales(descuento, 2);
+
+		tbCarrito.setValueAt(descuento, tbCarrito.getSelectedRow(), 6);
+
+		sumarTotalGenerales();
+
+	}
+	
+	protected void actionPerformedBtnBasura(ActionEvent e) {
+		eliminarFila();
+	}
+	
 }

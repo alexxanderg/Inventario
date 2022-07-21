@@ -129,7 +129,7 @@ public class BuscarVentas extends JInternalFrame {
 		});
 		tbVentas.setAutoCreateRowSorter(true);
 		tbVentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbVentas.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbVentas.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
 		tbVentas.setBackground(Color.WHITE);
 		tbVentas.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbVentas);
@@ -207,7 +207,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotDescuentos.setBackground(new Color(50, 205, 50));
-		lblTotDescuentos.setBounds(662, 291, 95, 36);
+		lblTotDescuentos.setBounds(619, 291, 141, 36);
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
@@ -215,7 +215,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTD.setBackground(new Color(50, 205, 50));
-		lblTD.setBounds(355, 291, 296, 36);
+		lblTD.setBounds(312, 291, 296, 36);
 		getContentPane().add(lblTD);
 		
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>VENTAS</center></html>");
@@ -241,19 +241,20 @@ public class BuscarVentas extends JInternalFrame {
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(10, 401, 1083, 210);
+		scrollPane_1.setBounds(10, 372, 1083, 235);
 		getContentPane().add(scrollPane_1);
 		
 		tbDetalleVenta = new JTable();
+		tbDetalleVenta.setBackground(new Color(192, 192, 192));
 		tbDetalleVenta.setAutoCreateRowSorter(true);
-		tbDetalleVenta.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbDetalleVenta.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		scrollPane_1.setViewportView(tbDetalleVenta);
 		
 		lblDetallesDeVenta = new JLabel("Detalle de la venta:");
 		lblDetallesDeVenta.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDetallesDeVenta.setForeground(Color.DARK_GRAY);
 		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
-		lblDetallesDeVenta.setBounds(10, 367, 396, 34);
+		lblDetallesDeVenta.setBounds(10, 338, 396, 34);
 		getContentPane().add(lblDetallesDeVenta);
 
 		
@@ -325,7 +326,7 @@ public class BuscarVentas extends JInternalFrame {
 		
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
-		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "PRE INDIV C/DESC", "DESCUENTO TOT", "SUB TOTAL"});
+		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "DESC TOTAL", "SUB TOTAL"});
 		
 		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -370,8 +371,8 @@ public class BuscarVentas extends JInternalFrame {
 		tcm.getColumn(5).setPreferredWidth(anchoColumna(7));
 		tcm.getColumn(6).setPreferredWidth(anchoColumna(6));
 		
-		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
-		tcr0.setHorizontalAlignment(SwingConstants.CENTER);
+		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer(); //CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "DESC TOTAL", "SUB TOTAL
+		tcr0.setHorizontalAlignment(SwingConstants.CENTER); 
 		tbVentas.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(4).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
@@ -379,15 +380,17 @@ public class BuscarVentas extends JInternalFrame {
 		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
 		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
-		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(40));  // 
-		tcmVD.getColumn(2).setPreferredWidth(anchoColumna(15));  //
-		tcmVD.getColumn(3).setPreferredWidth(anchoColumna(15));  //
-		tcmVD.getColumn(4).setPreferredWidth(anchoColumna(15));  //
+		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(45));  // 
+		tcmVD.getColumn(2).setPreferredWidth(anchoColumna(10));  //
+		tcmVD.getColumn(3).setPreferredWidth(anchoColumna(10));  //
+		tcmVD.getColumn(4).setPreferredWidth(anchoColumna(10));  //
+		tcmVD.getColumn(5).setPreferredWidth(anchoColumna(10));  //
 		
 		tbDetalleVenta.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(2).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(3).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(4).setCellRenderer(tcr0);
+		tbDetalleVenta.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 	}
 	
 	public void selecionarUsuario(String id) {
@@ -749,7 +752,7 @@ public class BuscarVentas extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.cargarVentaDetallesProducto(nroVenta);
 			while (rs.next()){
-				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detalles")+" "+rs.getString("marca")+" "+ rs.getString("color") + " (" + rs.getString("uMedidaUsada")+")", rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
+				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detalles")+" "+rs.getString("marca")+" "+ rs.getString("color"), rs.getString("uMedidaUsada"), rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
 			}
 			consulta.reset();
 		} catch (Exception e) {
@@ -794,7 +797,7 @@ public class BuscarVentas extends JInternalFrame {
 					Connection con = null;
 		            con = MySQLConexion.getConection();
 					JasperPrint impressao = JasperFillManager.fillReport(
-							getClass().getClassLoader().getResourceAsStream("rNotaVenta80mm.jasper"),
+							getClass().getClassLoader().getResourceAsStream("rNotaVenta58mm.jasper"),
 							parameters, con);
 
 					// AbstractJasperReports.showViewer();
