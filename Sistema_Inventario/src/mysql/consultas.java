@@ -1497,6 +1497,21 @@ public class consultas {
 		}
 	}
 	
+	public void ActualizarPrecios(int idProducto, double preCompra, double preVenta) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set precioCo = ?, precioVe = ? where codproducto = ?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setDouble(1, preCompra);
+			prepareStmt.setDouble(2, preVenta);
+			prepareStmt.setInt(3, idProducto);
+			prepareStmt.execute();
+			JOptionPane.showMessageDialog(null, "Precios actualizados");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
+		}
+	}
+	
 	public void reIngresarStock(double cantVendida, int codproducto) {
 		try {
 			st = con.createStatement();

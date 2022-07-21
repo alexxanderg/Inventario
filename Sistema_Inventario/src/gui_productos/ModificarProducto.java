@@ -770,11 +770,11 @@ public class ModificarProducto extends JFrame {
 		btnCrearProducto.setBounds(797, 457, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
-		lblNota = new JLabel("<html>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
+		lblNota = new JLabel("<html>-  No utilice el signo par\u00E9ntesis \"( )\" en los datos del producto a registrarse. <br>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblNota.setBounds(532, 419, 505, 36);
+		lblNota.setBounds(532, 383, 505, 72);
 		contentPane.add(lblNota);
 		
 		lblCantidadMnima = new JLabel("Stock m\u00EDnimo:");

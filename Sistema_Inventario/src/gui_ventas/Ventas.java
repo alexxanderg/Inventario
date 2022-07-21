@@ -108,7 +108,7 @@ public class Ventas extends JInternalFrame {
 	JTable tb;
 	ResultSet rs = null;
 	consultas consulta = new consultas();
-	NuevoCliente nc = new NuevoCliente(null, this);
+	//NuevoCliente nc = new NuevoCliente(null, this);
 	int nroVentaModificar = -1;
 	private JLabel lblNroCompramodificar;
 	private JMenu mnlimpiarVentana;
@@ -1568,7 +1568,7 @@ public class Ventas extends JInternalFrame {
 	}
 	
 	protected void actionPerformedBtnNewCliente(ActionEvent arg0) {
-		try {
+		/*try {
 			if (nc.isShowing()) {
 				// JOptionPane.showMessageDialog(null, "Ya tiene abierta la
 				// ventana");
@@ -1581,7 +1581,7 @@ public class Ventas extends JInternalFrame {
 			}
 		} catch (Exception f) {
 			JOptionPane.showMessageDialog(null, "ErrorC: " + f);
-		}
+		}*/
 	}
 	
 	protected void mouseClickedTbCarrito(MouseEvent arg0) {

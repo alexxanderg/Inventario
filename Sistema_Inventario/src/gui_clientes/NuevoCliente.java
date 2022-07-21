@@ -24,9 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
 import clases.Cliente;
-import gui_ventas.Ventas;
+import gui_ventas.Ventas2;
 import mysql.consultas;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -47,13 +46,12 @@ public class NuevoCliente extends JFrame {
 	private JTextField txtTelefono;
 	private JTextField txtCorreo;
 	private JLabel lblCorreo;
-	private JLabel label;
 	private JLabel label_1;
 	
 	ResultSet rs;
 	consultas consulta = new consultas();
 	MantenimientoClientes mantenimientoCliente = null;
-	Ventas ventas = null;
+	Ventas2 ventas = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -68,7 +66,7 @@ public class NuevoCliente extends JFrame {
 		});
 	}
 
-	public NuevoCliente(MantenimientoClientes mantenimientoCliente, Ventas ventas) {
+	public NuevoCliente(MantenimientoClientes mantenimientoCliente, Ventas2 ventas) {
 		this.mantenimientoCliente = mantenimientoCliente;
 		this.ventas = ventas; 
 		
@@ -81,7 +79,7 @@ public class NuevoCliente extends JFrame {
 		
 		getContentPane().setBackground(UIManager.getColor("Button.background"));
 		setResizable(false);
-		setBounds(100, 100, 445, 419);
+		setBounds(100, 100, 456, 419);
 		getContentPane().setLayout(null);
 		
 		lblNombre = new JLabel("Tipo Documento");
@@ -136,7 +134,7 @@ public class NuevoCliente extends JFrame {
 				itemStateChangedCbTipoDoc(arg0);
 			}
 		});
-		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"RUC", "DNI", "CE", "PASAPORTE", "SIN DOCUMENTO"}));
+		cbTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"SIN DOCUMENTO", "DNI", "RUC", "CE", "PASAPORTE"}));
 		cbTipoDoc.setSelectedIndex(0);
 		cbTipoDoc.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbTipoDoc.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
@@ -264,13 +262,6 @@ public class NuevoCliente extends JFrame {
 		lblCorreo.setFont(new Font("Candara", Font.BOLD, 20));
 		lblCorreo.setBounds(231, 259, 175, 25);
 		getContentPane().add(lblCorreo);
-		
-		label = new JLabel("*");
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(Color.RED);
-		label.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label.setBounds(375, 73, 20, 25);
-		getContentPane().add(label);
 		
 		label_1 = new JLabel("*");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);

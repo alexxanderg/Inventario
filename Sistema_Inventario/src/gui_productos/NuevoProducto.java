@@ -687,7 +687,7 @@ public class NuevoProducto extends JFrame {
 		lblLote.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLote.setForeground(Color.DARK_GRAY);
 		lblLote.setFont(new Font("Candara", Font.BOLD, 20));
-		lblLote.setBounds(897, 385, 54, 25);
+		lblLote.setBounds(897, 349, 54, 25);
 		contentPane.add(lblLote);
 		
 		txtLote = new JTextField();
@@ -710,7 +710,7 @@ public class NuevoProducto extends JFrame {
 		txtLote.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLote.setColumns(10);
 		txtLote.setBackground(new Color(245, 245, 245));
-		txtLote.setBounds(961, 385, 85, 25);
+		txtLote.setBounds(961, 349, 85, 25);
 		contentPane.add(txtLote);
 		
 		lblLaboratorio = new JLabel("Laboratorio:");
@@ -764,11 +764,11 @@ public class NuevoProducto extends JFrame {
 		btnCrearProducto.setBounds(797, 459, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
-		lblNota = new JLabel("<html>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
+		lblNota = new JLabel("<html>-  No utilice el signo par\u00E9ntesis \"( )\" en los datos del producto a registrarse. <br>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblNota.setBounds(532, 410, 505, 36);
+		lblNota.setBounds(532, 385, 505, 61);
 		contentPane.add(lblNota);
 		
 		lblCantidadMnima = new JLabel("Stock m\u00EDnimo:");

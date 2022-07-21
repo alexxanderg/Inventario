@@ -89,6 +89,7 @@ public class NuevaCompra extends JFrame {
 	private JButton btnQuitar;
 	private JButton btnAyuda;
 	private JLabel lblTotal;
+	private JCheckBox chckActualizarPrecios;
 
 	private JDateChooser dateFechaVenc;
 
@@ -406,7 +407,7 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(btnAyuda);
 
 		lblTotal = new JLabel("S/");
-		lblTotal.setBounds(827, 550, 214, 54);
+		lblTotal.setBounds(850, 550, 191, 54);
 		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal.setForeground(Color.DARK_GRAY);
 		lblTotal.setFont(new Font("Candara", Font.BOLD, 30));
@@ -428,10 +429,11 @@ public class NuevaCompra extends JFrame {
 		lblEjm.setFont(new Font("Candara", Font.BOLD, 15));
 		contentPane.add(lblEjm);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("<html>\u00BFActulizar precios de compra y venta, en base al porcentaje de ganancia asignado?</html>");
-		chckbxNewCheckBox.setVerticalAlignment(SwingConstants.TOP);
-		chckbxNewCheckBox.setBounds(531, 565, 265, 37);
-		contentPane.add(chckbxNewCheckBox);
+		chckActualizarPrecios = new JCheckBox("<html>\u00BFActualizar precios de compra y venta, en base al porcentaje de ganancia de cada producto?</html>");
+		chckActualizarPrecios.setVerticalAlignment(SwingConstants.TOP);
+		chckActualizarPrecios.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		chckActualizarPrecios.setBounds(531, 552, 326, 50);
+		contentPane.add(chckActualizarPrecios);
 		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
 		// Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie,
 		// txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio,
@@ -647,6 +649,7 @@ public class NuevaCompra extends JFrame {
 					// COMPRAS DETALLES
 					
 					for (int i = 0; i < this.tbCompras.getRowCount(); i++) {
+						
 						String prod = this.tbCompras.getValueAt(i, 1).toString();
 						int idProd = Integer.parseInt(this.tbCompras.getValueAt(i, 6).toString());
 
@@ -660,35 +663,41 @@ public class NuevaCompra extends JFrame {
 
 						Object fechaVencimientoProducto = null;
 						try {
-							
-							//String fechaVpP = añovp + "-" + mesvp + "-" + diavp;
 							String fechaVP = this.tbCompras.getValueAt(i, 5).toString();
-
-							//DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 							DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 							Date date = formatter.parse(fechaVP);
 							fechaVencimientoProducto = new Timestamp(date.getTime());
 						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Fecha erronea: " + e1);
+							//JOptionPane.showMessageDialog(null, "Fecha erronea: " + e1);
 						}
-						
-						
-						/*java.sql.Date fVencimientoProducto = null;
-						try { // Cambio de utils a sql.Date para envio
-							Date datevencimiento = dateFechaVenc.getDate();
-							long d = datevencimiento.getTime();
-							fechaVencimientoProducto = new java.sql.Date(d);
-						} catch (Exception eq) {
-						}*/
-
 						this.consulta.iniciar();
 						this.consulta.registrarCompraDetalles(idCompra, idProd, cantProd, preIndivProd, preSubTotProd,
 								lote, fechaVencimientoProducto);
 						this.consulta.anadirStockProducto(idProd, cantProd);
 						this.consulta.reset();
 						
-//						consulta.iniciar();
-//						consulta.registrarIngreso(idProd, stockini, 0, 0, preIndivProd, preveNew, idUsuario, fechaEmision);
+						// ACTUALIZAR PRECIOS
+						try {
+							if(chckActualizarPrecios.isSelected()) {
+								this.consulta.iniciar();
+								rs = this.consulta.buscarProductoID(idProd);
+								
+								rs.next();
+								double ptjGanancia = rs.getDouble("ptjganancia");
+								double newpreve = preIndivProd + (preIndivProd * (ptjGanancia*0.01));
+								this.consulta.reset();
+								
+								
+								this.consulta.iniciar();
+								this.consulta.ActualizarPrecios(idProd, preIndivProd, newpreve);
+								
+								this.consulta.reset();
+							}
+								
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Error al actualizar precios: " + e);
+						}						
+						
 					}
 					JOptionPane.showMessageDialog(null, "Compra registrada correctamente");
 					dispose();
