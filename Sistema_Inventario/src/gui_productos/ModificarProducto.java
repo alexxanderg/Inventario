@@ -693,7 +693,7 @@ public class ModificarProducto extends JFrame {
 		lblLote.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLote.setForeground(Color.DARK_GRAY);
 		lblLote.setFont(new Font("Candara", Font.BOLD, 20));
-		lblLote.setBounds(867, 383, 194, 25);
+		lblLote.setBounds(898, 170, 194, 25);
 		contentPane.add(lblLote);
 		
 		txtLote = new JTextField();
@@ -716,7 +716,7 @@ public class ModificarProducto extends JFrame {
 		txtLote.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLote.setColumns(10);
 		txtLote.setBackground(new Color(245, 245, 245));
-		txtLote.setBounds(945, 376, 95, 25);
+		txtLote.setBounds(942, 167, 95, 25);
 		contentPane.add(txtLote);
 		
 		lblLaboratorio = new JLabel("Laboratorio:");

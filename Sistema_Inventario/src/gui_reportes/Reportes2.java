@@ -111,6 +111,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private JLabel lblProductosPorVencer;
 	private JButton btnProdVencer;
+	private JButton btnProdVencerAntiguo;
 
 	/**
 	 * Launch the application.
@@ -450,21 +451,29 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(lblNewLabel);
 										
 										lblProductosPorVencer = new JLabel("PRODUCTOS POR VENCER");
-										lblProductosPorVencer.setVisible(false);
 										lblProductosPorVencer.setHorizontalAlignment(SwingConstants.LEFT);
 										lblProductosPorVencer.setFont(new Font("Candara", Font.BOLD, 20));
 										lblProductosPorVencer.setBounds(72, 571, 249, 25);
 										panel.add(lblProductosPorVencer);
 										
-										btnProdVencer = new JButton("Ver reporte");
-										btnProdVencer.setVisible(false);
+										btnProdVencer = new JButton("<html><center>Fechas ingresadas en compras</center></html>");
+										btnProdVencer.setVerticalAlignment(SwingConstants.TOP);
 										btnProdVencer.addActionListener(this);
 										btnProdVencer.setForeground(Color.WHITE);
-										btnProdVencer.setFont(new Font("Tahoma", Font.BOLD, 18));
+										btnProdVencer.setFont(new Font("Tahoma", Font.BOLD, 15));
 										btnProdVencer.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 										btnProdVencer.setBackground(new Color(30, 144, 255));
-										btnProdVencer.setBounds(320, 591, 178, 32);
+										btnProdVencer.setBounds(320, 571, 178, 52);
 										panel.add(btnProdVencer);
+										
+										btnProdVencerAntiguo = new JButton("Fechas antiguas");
+										btnProdVencerAntiguo.addActionListener(this);
+										btnProdVencerAntiguo.setForeground(Color.WHITE);
+										btnProdVencerAntiguo.setFont(new Font("Tahoma", Font.BOLD, 15));
+										btnProdVencerAntiguo.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+										btnProdVencerAntiguo.setBackground(new Color(30, 144, 255));
+										btnProdVencerAntiguo.setBounds(72, 591, 178, 32);
+										panel.add(btnProdVencerAntiguo);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
 
@@ -519,6 +528,9 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnProdVencerAntiguo) {
+			actionPerformedBtnProdVencerAntiguo(e);
+		}
 		if (e.getSource() == btnProdVencer) {
 			actionPerformedBtnProdVencer(e);
 		}
@@ -990,6 +1002,35 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 
 	}
 	
+
+	protected void actionPerformedBtnProdVencerAntiguo(ActionEvent e) {
+		 Connection con = null;
+		    try {
+		      con = MySQLConexion.getConection();
+
+		      int añoi = this.fInicial.getCalendar().get(1);
+		      int mesi = this.fInicial.getCalendar().get(2) + 1;
+		      int diai = this.fInicial.getCalendar().get(5);
+		      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+		      int añof = this.fFinal.getCalendar().get(1);
+		      int mesf = this.fFinal.getCalendar().get(2) + 1;
+		      int diaf = this.fFinal.getCalendar().get(5);
+		      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+		      Map parameters = new HashMap();
+		      parameters.put("prtFechaI", fechai);
+		      parameters.put("prmtFechaF", fechaf);
+
+		      new AbstractJasperReports().createReport(con, "rFechaVencerAntiguo.jasper", parameters);
+		      AbstractJasperReports.showViewer();
+		      con.close();
+		    }
+		    catch (Exception ex) {
+		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		    }
+		
+	}
+	
 	protected void actionPerformedBtnProdVencer(ActionEvent e) {
 		 Connection con = null;
 		    try {
@@ -1008,7 +1049,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		      parameters.put("prtFechaI", fechai);
 		      parameters.put("prmtFechaF", fechaf);
 
-		      new AbstractJasperReports().createReport(con, "rProdVencer.jasper", parameters);
+		      new AbstractJasperReports().createReport(con, "rFechaVencer.jasper", parameters);
 		      AbstractJasperReports.showViewer();
 		      con.close();
 		    }
@@ -1016,7 +1057,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		    }
 	}
-	
 }
 
 

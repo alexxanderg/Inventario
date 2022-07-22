@@ -341,10 +341,11 @@ public class consultas {
 		try {
 			st = con.createStatement();
 			//rs = st.executeQuery("SELECT * FROM db_inventario.tb_productos WHERE estado = 1 and fechaVenc != '' ORDER BY fechaVenc");
-			rs = st.executeQuery("select p.estado, p.producto, p.detalles, p.marca, p.color, p.laboratorio, p.unimedida, cd.cantidad, cd.lote, cd.fechaVenc \n"
+			rs = st.executeQuery("select p.estado, p.codproducto, p.producto, p.detalles, p.marca, p.color, p.laboratorio, p.unimedida, cd.cantidad, cd.lote, cd.fechaVenc, cd.idcompra, c.serie, c.nroSerie \n"
 					+ "from db_inventario.tb_compras_detalles cd\n"
 					+ "inner join db_inventario.tb_productos p on p.codproducto = cd.idprod\n"
-					+ "where cd.fechaVenc != '' ORDER BY cd.fechaVenc");
+					+ "inner join db_inventario.tb_compras c on c.idcompra = cd.idcompra\n"
+					+ "where cd.fechaVenc != '' and vendido = 0 ORDER BY cd.fechaVenc");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -448,6 +449,21 @@ public class consultas {
 			prepareStmt.setFloat(2, prev);
 			prepareStmt.setDate(3, fec_venc);
 			prepareStmt.setInt(4, idProducto);
+			prepareStmt.execute();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar precio compra venta: " + e);
+		}
+		return rs;
+	}
+	
+	public ResultSet marcarVendidoProducto(String codProducto, String idcompra) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_compras_detalles set vendido=? where idprod=? and idcompra=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setInt(1, 1);
+			prepareStmt.setInt(2, Integer.parseInt(codProducto));
+			prepareStmt.setInt(3, Integer.parseInt(idcompra));
 			prepareStmt.execute();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar precio compra venta: " + e);
@@ -650,7 +666,7 @@ public class consultas {
 	  {
 	    try {
 	      this.st = this.con.createStatement();
-	      String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT, lote, fechaVenc) values (?, ?, ?, ?, ?, ?, ?)";
+	      String sql = "insert into tb_compras_detalles (idcompra, idprod, cantidad, preUni, preSubT, lote, fechaVenc, vendido) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	      PreparedStatement prepareStmt = this.con.prepareStatement(sql);
 	      prepareStmt.setInt(1, idCompra);
@@ -660,6 +676,7 @@ public class consultas {
 	      prepareStmt.setDouble(5, preSubTotProd);
 	      prepareStmt.setString(6, lote);
 	      prepareStmt.setObject(7, fechaVencimientoProducto);
+	      prepareStmt.setObject(8, 0);
 	      prepareStmt.execute();
 	    }
 	    catch (Exception e) {
@@ -1507,7 +1524,7 @@ public class consultas {
 			prepareStmt.setDouble(2, preVenta);
 			prepareStmt.setInt(3, idProducto);
 			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, "Precios actualizados");
+			//JOptionPane.showMessageDialog(null, "Precios actualizados");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar atributos: " + e);
 		}

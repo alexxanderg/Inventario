@@ -110,6 +110,12 @@ foreign key (codproducto) references tb_productos(codproducto),
 primary key (codventa, codproducto)
 );
 
+ALTER TABLE tb_ventas_detalle ADD detventa VARCHAR(200);
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE tb_ventas_detalle SET detventa = '';
+
+
 create table tb_cotizaciones(
 codcoti		int primary key auto_increment,
 idcliente	int,
@@ -191,12 +197,16 @@ preUni			float,
 preSubT			float,
 lote			varchar(50),
 fechaVenc		date,
+vendido         int, -- 0=SIN VENDER 1=VENDIDO
 foreign key (idcompra) references tb_compras(idcompra)
 );
 
 -- ALTER TABLE tb_compras_detalles ADD fechaVenc date;
+-- ALTER TABLE tb_compras_detalles ADD vendido int;
+
 -- SET SQL_SAFE_UPDATES = 0;
 -- UPDATE tb_compras_detalles SET fechaVenc = null;
+-- UPDATE tb_compras_detalles SET vendido = 0;
 
 
 

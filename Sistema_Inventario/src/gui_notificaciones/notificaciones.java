@@ -32,7 +32,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class notificaciones extends JInternalFrame {
+public class notificaciones extends JInternalFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JScrollPane scrollPane;
 	private TextAutoCompleter ac;
@@ -48,6 +48,8 @@ public class notificaciones extends JInternalFrame {
 	private JLabel lblproductosPorAgotarse;
 	private JScrollPane scrollPane_1;
 	private JTable tbPorAgotar;
+	private JButton btnMarcarVendido;
+	private JLabel lblordenadosDelMs;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -87,7 +89,7 @@ public class notificaciones extends JInternalFrame {
 		lblproductosPorVencer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblproductosPorVencer.setForeground(new Color(255, 255, 255));
 		lblproductosPorVencer.setFont(new Font("Candara", Font.BOLD, 25));
-		lblproductosPorVencer.setBounds(20, 24, 1073, 45);
+		lblproductosPorVencer.setBounds(210, 11, 684, 32);
 		getContentPane().add(lblproductosPorVencer);
 		
 		lblproductosPorAgotarse = new JLabel("<html>PRODUCTOS POR AGOTARSE</html>");
@@ -109,6 +111,21 @@ public class notificaciones extends JInternalFrame {
 		tbPorAgotar.setFont(new Font("Arial", Font.ITALIC, 14));
 		tbPorAgotar.setBackground(Color.WHITE);
 		scrollPane_1.setViewportView(tbPorAgotar);
+		
+		btnMarcarVendido = new JButton("Registrar como vendido");
+		btnMarcarVendido.addActionListener(this);
+		btnMarcarVendido.setForeground(Color.LIGHT_GRAY);
+		btnMarcarVendido.setBackground(Color.DARK_GRAY);
+		btnMarcarVendido.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		btnMarcarVendido.setBounds(876, 46, 217, 23);
+		getContentPane().add(btnMarcarVendido);
+		
+		lblordenadosDelMs = new JLabel("<html>Ordenados del m\u00E1s pr\u00F3ximo al m\u00E1s lejano. Si ya vendi\u00F3 el producto, m\u00E1rquelo como vendido  ---></html>");
+		lblordenadosDelMs.setHorizontalAlignment(SwingConstants.CENTER);
+		lblordenadosDelMs.setForeground(Color.WHITE);
+		lblordenadosDelMs.setFont(new Font("Candara", Font.ITALIC, 15));
+		lblordenadosDelMs.setBounds(220, 46, 684, 23);
+		getContentPane().add(lblordenadosDelMs);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbXVencer.getTableHeader().setReorderingAllowed(false);
 
@@ -155,11 +172,13 @@ public class notificaciones extends JInternalFrame {
         
 		String[] parts = atribTodos.split(",");
 		//list.add("C BARRA");
+		list.add("ID");
         list.add("PRODUCTO Y DETALLES");
        
 		
 		list.add("CANTIDAD");
-		list.add("FECHA VENCIMIENTO");
+		list.add("F. VENCIMIENTO");
+		list.add("COMPROBANTE");
 		String[] columnas = list.toArray(new String[list.size()]); 
 		dtm.setColumnIdentifiers(columnas);
 		
@@ -173,6 +192,7 @@ public class notificaciones extends JInternalFrame {
 				if(rs.getInt("estado") == 1){
 					List<String> listProds = new ArrayList<String>();
 			        //listProds.add(rs.getString("codbarra"));
+					listProds.add(rs.getString("codproducto") + "("+ rs.getString("idcompra")+")");
 			        listProds.add(rs.getString("producto") + " - " + rs.getString("detalles") + " - " + rs.getString("marca") + " - " + rs.getString("color") + " - " + rs.getString("laboratorio") + " * " + rs.getString("unimedida"));
 			      			        
 			        listProds.add(rs.getString("cantidad"));
@@ -186,6 +206,9 @@ public class notificaciones extends JInternalFrame {
 					} catch (Exception e) {
 						listProds.add("");
 					}
+			        
+			        listProds.add(rs.getString("serie") + "-" + rs.getString("nroSerie"));
+			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
 					
@@ -296,9 +319,12 @@ public class notificaciones extends JInternalFrame {
 
 	public void ajustarAnchoColumnasPV() {
 		TableColumnModel tcm = tbXVencer.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(70)); // Código
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
+
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(60)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Cantidad
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Fecha
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(10)); // Comprobante
 		
 		for(int i=0; i<tbXVencer.getColumnCount(); i++)
 			if(tbXVencer.getColumnName(i).equals("FECHA VENC."))
@@ -323,4 +349,35 @@ public class notificaciones extends JInternalFrame {
 		tcr2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbProductos.getColumnModel().getColumn(5).setCellRenderer(tcr2);*/
 	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnMarcarVendido) {
+			actionPerformedBtnMarcarVendido(e);
+		}
+	}
+	
+	protected void actionPerformedBtnMarcarVendido(ActionEvent e) {
+		
+		int opc = 0;
+		opc = JOptionPane.showConfirmDialog(null, "Esta acción quitará al producto de esta lista. ¿Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+		
+		if(opc == 0) {
+			String prodycompra = tbXVencer.getValueAt(tbPV.getSelectedRow(), 0).toString();
+			String codProducto = prodycompra.substring(0, prodycompra.indexOf("("));
+			String idcompra = prodycompra.substring(prodycompra.indexOf("(") + 1, prodycompra.indexOf(")"));
+			
+			
+			consulta.iniciar();
+			consulta.marcarVendidoProducto(codProducto, idcompra);
+
+			consulta.reset();
+			
+			int filaseleccionada = tbXVencer.getSelectedRow();
+			dtm.removeRow(tbXVencer.getSelectedRow());
+			tbXVencer.setRowSelectionInterval(filaseleccionada, filaseleccionada);
+		}
+		
+	}
+	
 }
+

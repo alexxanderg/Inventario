@@ -690,6 +690,8 @@ public class NuevaCompra extends JFrame {
 								
 								this.consulta.iniciar();
 								this.consulta.ActualizarPrecios(idProd, preIndivProd, newpreve);
+
+								JOptionPane.showMessageDialog(null, "Precios actualizados");
 								
 								this.consulta.reset();
 							}

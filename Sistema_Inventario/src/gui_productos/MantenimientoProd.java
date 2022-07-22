@@ -328,7 +328,7 @@ public class MantenimientoProd extends JInternalFrame {
 		//list.add("DISTRIBUIDOR");
 		list.add("STOCK");
 		list.add("PREC CO");
-		//list.add("% GAN");
+		list.add("% GAN");
 		list.add("PREC VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
@@ -386,7 +386,7 @@ public class MantenimientoProd extends JInternalFrame {
 			        
 			        listProds.add(rs.getString("cantidad"));
 			        listProds.add(rs.getString("precioCo"));
-			        //listProds.add(rs.getString("ptjganancia"));
+			        listProds.add(rs.getString("ptjganancia"));
 			        listProds.add(rs.getString("precioVe"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
