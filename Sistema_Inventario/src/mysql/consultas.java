@@ -198,7 +198,7 @@ public class consultas {
 	public ResultSet cargarVentaDetallesProducto(int codVenta){
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select vd.cantidad, p.producto, vd.detalles, p.marca, p.color, vd.preVeSDInd, vd.preVeSDTot, vd.descIndiv, vd.descTotal, vd.subTotal, vd.subTotal, vd.ganancia, vd.uMedidaUsada from tb_ventas_detalle vd inner join tb_productos p on p.codproducto = vd.codproducto where codventa = " + codVenta);
+			rs = st.executeQuery("select vd.cantidad, p.producto, vd.detventa, p.marca, p.color, vd.preVeSDInd, vd.preVeSDTot, vd.descIndiv, vd.descTotal, vd.subTotal, vd.subTotal, vd.ganancia, vd.uMedidaUsada from tb_ventas_detalle vd inner join tb_productos p on p.codproducto = vd.codproducto where codventa = " + codVenta);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error en consulta, al cargar venta detalles: " + e);
 		}

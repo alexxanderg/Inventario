@@ -752,7 +752,7 @@ public class BuscarVentas extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.cargarVentaDetallesProducto(nroVenta);
 			while (rs.next()){
-				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detalles")+" "+rs.getString("marca")+" "+ rs.getString("color"), rs.getString("uMedidaUsada"), rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
+				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detventa")+" "+rs.getString("marca")+" "+ rs.getString("color"), rs.getString("uMedidaUsada"), rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
 			}
 			consulta.reset();
 		} catch (Exception e) {
