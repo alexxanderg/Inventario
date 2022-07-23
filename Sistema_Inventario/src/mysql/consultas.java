@@ -1188,7 +1188,7 @@ public class consultas {
 			double preVeSDTot, double descIndiv, double descTotal, double subTotal, double ganancia, String uMedidaUsada, String detallesProducto) {
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada, detalles)"
+			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada, detventa)"
 					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			// JOptionPane.showMessageDialog(null, cantidad);
 			PreparedStatement prepareStmt = con.prepareStatement(sql);

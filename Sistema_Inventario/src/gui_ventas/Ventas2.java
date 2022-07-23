@@ -1505,6 +1505,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 										 * jasperPrint, false);
 										 * 
 										 */
+										
 										JasperPrint impressao = JasperFillManager.fillReport(getClass().getClassLoader()
 												.getResourceAsStream("rNotaVenta58mm.jasper"), parameters, con);
 
