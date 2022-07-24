@@ -819,6 +819,8 @@ public class NuevaCompra extends JFrame {
 					}
 				} catch (Exception ex) {
 				}
+
+				sumarTotal();
 		}
 	}
 

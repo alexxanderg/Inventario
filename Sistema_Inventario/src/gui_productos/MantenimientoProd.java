@@ -461,6 +461,15 @@ public class MantenimientoProd extends JInternalFrame {
 				break;
 			}
 		}
+		
+		int rowIndex = tbProductos.getSelectedRow();
+		int columnIndex = 0;
+		boolean includeSpacing = true;
+		 
+		java.awt.Rectangle cellRect = tbProductos.getCellRect(rowIndex, columnIndex, includeSpacing);
+		 
+		tbProductos.scrollRectToVisible(cellRect);
+		
 	}
 	
 	protected void mouseClickedMnCrearProducto(MouseEvent arg0) {

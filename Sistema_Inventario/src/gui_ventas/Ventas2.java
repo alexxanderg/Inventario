@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import com.itextpdf.awt.geom.Rectangle;
 import com.mxrck.autocompleter.TextAutoCompleter;
 
 import clases.AbstractJasperReports;
@@ -1080,6 +1082,19 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
 			}
 		}
+		
+		
+		
+		
+		int rowIndex = tbCarrito.getSelectedRow();
+		int columnIndex = 0;
+		boolean includeSpacing = true;
+		 
+		java.awt.Rectangle cellRect = tbCarrito.getCellRect(rowIndex, columnIndex, includeSpacing);
+		 
+		tbCarrito.scrollRectToVisible(cellRect);
+		
+		
 	}
 
 	private void limpiarVentana() {
@@ -2090,6 +2105,10 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		double descuento = (precioOriginalV * newcantidadV) - (newsubtotal);
 		descuento = redondearDecimales(descuento, 2);
 
+
+		if(descuento < 0)
+			descuento = 0;
+		
 		tbCarrito.setValueAt(descuento, tbCarrito.getSelectedRow(), 6);
 
 		sumarTotalGenerales();

@@ -412,6 +412,16 @@ public class Kardex extends JInternalFrame {
 
 						if (idProdBuscar == idProdFila) {
 							this.tbProductos.setRowSelectionInterval(j, j);
+							
+
+							int rowIndex = tbProductos.getSelectedRow();
+							int columnIndex = 0;
+							boolean includeSpacing = true;
+							 
+							java.awt.Rectangle cellRect = tbProductos.getCellRect(rowIndex, columnIndex, includeSpacing);
+							 
+							tbProductos.scrollRectToVisible(cellRect);
+							
 
 							for (int i = 0; i < this.tbProductos.getColumnCount(); i++) {
 								if (this.tbProductos.getColumnName(i).equals("CONTEO")) {
