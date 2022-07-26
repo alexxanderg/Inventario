@@ -77,7 +77,7 @@ public class NuevaCompra extends JFrame {
 	private JComboBox cbMetPago;
 	public JComboBox<Distribuidores> cbDistribuidor;
 
-	public DefaultTableModel dtm = new DefaultTableModel();
+	public Modelaso dtm = new Modelaso();
 	private TextAutoCompleter ac;
 	ResultSet rs;
 	consultas consulta = new consultas();
@@ -752,10 +752,33 @@ public class NuevaCompra extends JFrame {
 		char c = e.getKeyChar();
 		if ((c == '\n') && (this.txtBuscarProducto.getText().length() != 0)) {
 			AgregarProductoATabla();
+			
+
+			bloquearCeldas();
+			
 			this.txtBuscarProducto.setText(null);
 		}
 	}
 
+	public void bloquearCeldas() {
+		dtm.isCellEditable(tbCompras.getSelectedRow(), 1);
+		dtm.isCellEditable(tbCompras.getSelectedRow(), 3);
+		dtm.isCellEditable(tbCompras.getSelectedRow(), 6);
+	}
+	
+	public class Modelaso extends DefaultTableModel {
+
+		 public boolean isCellEditable (int row, int column)
+		    {
+			 // Aquí devolvemos true o false según queramos que una celda
+		        // identificada por fila,columna (row,column), sea o no editable
+		        if (column == 1 || column == 3 || column == 6 )
+		           return false;
+		        return true;
+		    }
+	}
+	
+	
 	public void AgregarProductoATabla() {
 		try {
 			String nomProducto = this.txtBuscarProducto.getText();

@@ -31,7 +31,7 @@ public class consultas {
 			con = MySQLConexion.getConection();
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Error al iniciar conexion");
-		}
+		} 
 	}
 	 
 	

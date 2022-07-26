@@ -37,10 +37,10 @@ public class PintarTablaVentasBuscar extends DefaultTableCellRenderer {
       setBackground(new Color(138, 230, 78));
       setForeground(Color.BLACK);
     } else if (estado == 2) {
-      setBackground(new Color(236, 236, 69));
+      setBackground(new Color(236, 236, 69)); 
       setForeground(Color.BLACK);
     } else if (estado == 3) {
-      setBackground(new Color(251, 105, 120));
+      setBackground(new Color(251, 105, 120)); 
       setForeground(Color.BLACK);
     } 
     

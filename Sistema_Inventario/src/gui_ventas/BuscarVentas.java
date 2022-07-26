@@ -375,7 +375,7 @@ public class BuscarVentas extends JInternalFrame {
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER); 
 		tbVentas.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(4).setCellRenderer(tcr0);
-		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0); 
 		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
 		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
@@ -608,7 +608,7 @@ public class BuscarVentas extends JInternalFrame {
 			DateFormat formatter2;
 			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date2 = (Date) formatter.parse(fechaFinal);
-			Object fechaf = new java.sql.Timestamp(date2.getTime());
+			Object fechaf = new java.sql.Timestamp(date2.getTime()); 
 		
 			try {
 				consulta.iniciar();
@@ -656,6 +656,10 @@ public class BuscarVentas extends JInternalFrame {
             	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
             }
 		}
+		
+		
+		
+		
 		
 		// CALCULAR TOTALES
 		

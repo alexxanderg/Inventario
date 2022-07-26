@@ -53,7 +53,7 @@ public class Kardex extends JInternalFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	ModificarProducto mp = null;
-	DefaultTableModel dtm = new DefaultTableModel();
+	Modelaso dtm = new Modelaso();
 	consultas model = new consultas();
 	String usuario;
 	public VentanaPrincipal vp;
@@ -317,8 +317,30 @@ public class Kardex extends JInternalFrame {
 		}
 
 		ajustarAnchoColumnas();
+		
+
+		bloquearCeldas();
 	}
 
+	public void bloquearCeldas() {
+		dtm.isCellEditable(tbProductos.getSelectedRow(), 0);
+		dtm.isCellEditable(tbProductos.getSelectedRow(), 1);
+		dtm.isCellEditable(tbProductos.getSelectedRow(), 2);
+		dtm.isCellEditable(tbProductos.getSelectedRow(), 3);
+		dtm.isCellEditable(tbProductos.getSelectedRow(), 5);
+	}
+
+	public class Modelaso extends DefaultTableModel {
+
+		 public boolean isCellEditable (int row, int column)
+		    {
+			 // Aquí devolvemos true o false según queramos que una celda
+		        // identificada por fila,columna (row,column), sea o no editable
+		        if (column == 0 || column == 1 ||column == 2 ||column == 3 ||column == 5)
+		           return false;
+		        return true;
+		    }
+	}
 	public void cargarBuscador() {
 		try {
 			this.ac = new TextAutoCompleter(this.txtCodigo);

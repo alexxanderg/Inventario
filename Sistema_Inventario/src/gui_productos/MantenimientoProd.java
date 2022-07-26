@@ -72,7 +72,7 @@ public class MantenimientoProd extends JInternalFrame {
 	ResultSet rs;
 	consultas consulta = new consultas();
 	ModificarProducto mp = null;
-	DefaultTableModel dtm = new DefaultTableModel();
+	Modelaso dtm = new Modelaso();
 	consultas model = new consultas();
 	String usuario;
 	public VentanaPrincipal vp;
@@ -280,6 +280,20 @@ public class MantenimientoProd extends JInternalFrame {
 		
 		// CARGAR ATRIBUTOS EN TABLA
 		cargarTabla("todos");
+		
+		
+	}
+	
+	public void bloquearCeldas() {
+		dtm.isCellEditable(tbProductos.getRowCount(), tbProductos.getColumnCount());
+	}
+	
+	public class Modelaso extends DefaultTableModel {
+
+		 public boolean isCellEditable (int row, int column)
+		    {
+			 return false;
+		    }
 	}
 	
 	public void cargarTabla(String prod){
@@ -407,6 +421,8 @@ public class MantenimientoProd extends JInternalFrame {
 		}
 
 		ajustarAnchoColumnas();
+
+		bloquearCeldas();
 	}
 	
 	public void cargarBuscador() {
