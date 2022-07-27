@@ -25,18 +25,17 @@ public class PintarTablaRealizarVenta extends DefaultTableCellRenderer {
 		
 		super.getTableCellRendererComponent(table, value, isSelected, false, row, column);
 		
-		   if (column == 5 ) {
-		     setBackground(new Color(138, 230, 78));
-		     setHorizontalAlignment(SwingConstants.CENTER);
-		   }
-		   
 		   setBorder(null);
 		   setForeground(Color.black);
-		   setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 18));
 		   
 		   if(column >=7 || column <=10)
-			   setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 20));
-		
+			   setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 30));
+		   
+			if (column == 5) {
+				setBackground(new Color(138, 230, 78));
+				setHorizontalAlignment(SwingConstants.CENTER);
+				setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 17));
+			}
 
 		   return this;
 		

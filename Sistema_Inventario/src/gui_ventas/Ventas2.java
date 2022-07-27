@@ -159,6 +159,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	private JTextField txtNewPrecioCo;
 	private JLabel lblS_1;
 	private JLabel lblS_2;
+	private JTextField textField;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -286,7 +287,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblTotalVentaFinal.setForeground(Color.DARK_GRAY);
 		lblTotalVentaFinal.setFont(new Font("Calibri", Font.BOLD, 40));
 		lblTotalVentaFinal.setBackground(new Color(138, 230, 78));
-		lblTotalVentaFinal.setBounds(409, 520, 188, 52);
+		lblTotalVentaFinal.setBounds(409, 542, 188, 52);
 		getContentPane().add(lblTotalVentaFinal);
 
 		lblTitTotal = new JLabel("TOTAL S/ ");
@@ -294,7 +295,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblTitTotal.setForeground(Color.DARK_GRAY); 
 		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 40));
 		lblTitTotal.setBackground(new Color(138, 230, 78));
-		lblTitTotal.setBounds(212, 520, 210, 52);
+		lblTitTotal.setBounds(216, 542, 206, 52);
 		getContentPane().add(lblTitTotal);
 
 		btnVender = new JButton("FINALIZAR");
@@ -337,7 +338,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblTitDescuento.setForeground(new Color(102, 205, 170));
 		lblTitDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTitDescuento.setBackground(new Color(50, 205, 50));
-		lblTitDescuento.setBounds(240, 483, 91, 18);
+		lblTitDescuento.setBounds(240, 507, 91, 18);
 		getContentPane().add(lblTitDescuento);
 
 		lblDescuento = new JLabel("0");
@@ -345,7 +346,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblDescuento.setForeground(new Color(102, 205, 170));
 		lblDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblDescuento.setBackground(new Color(50, 205, 50));
-		lblDescuento.setBounds(410, 487, 80, 14);
+		lblDescuento.setBounds(410, 511, 80, 14);
 		getContentPane().add(lblDescuento);
 
 		txtPago1 = new JTextField();
@@ -425,7 +426,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblTitTotOri.setForeground(new Color(102, 205, 170));
 		lblTitTotOri.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTitTotOri.setBackground(new Color(50, 205, 50));
-		lblTitTotOri.setBounds(238, 459, 101, 23);
+		lblTitTotOri.setBounds(238, 483, 101, 23);
 		getContentPane().add(lblTitTotOri);
 
 		lblTotOriginal = new JLabel("0");
@@ -433,7 +434,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblTotOriginal.setForeground(new Color(102, 205, 170));
 		lblTotOriginal.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTotOriginal.setBackground(new Color(50, 205, 50));
-		lblTotOriginal.setBounds(409, 459, 80, 23);
+		lblTotOriginal.setBounds(409, 483, 80, 23);
 		getContentPane().add(lblTotOriginal);
 
 		lblTotalCompra = new JLabel("0");
@@ -533,6 +534,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
+		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -677,7 +679,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblS_1.setForeground(new Color(102, 205, 170));
 		lblS_1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblS_1.setBackground(new Color(50, 205, 50));
-		lblS_1.setBounds(360, 459, 29, 23);
+		lblS_1.setBounds(360, 483, 29, 23);
 		getContentPane().add(lblS_1);
 		
 		lblS_2 = new JLabel("S/");
@@ -685,8 +687,15 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblS_2.setForeground(new Color(102, 205, 170));
 		lblS_2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblS_2.setBackground(new Color(50, 205, 50));
-		lblS_2.setBounds(361, 486, 39, 18);
+		lblS_2.setBounds(361, 510, 39, 18);
 		getContentPane().add(lblS_2);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBackground(new Color(138, 230, 78));
+		textField.setBounds(228, 584, 346, 6);
+		getContentPane().add(textField);
+		textField.setColumns(10);
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
