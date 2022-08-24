@@ -655,9 +655,9 @@ public class NuevaCompra extends JFrame {
 
 						double cantProd = Float.parseFloat(this.tbCompras.getValueAt(i, 0).toString());
 						double preIndivProd = Float.parseFloat(this.tbCompras.getValueAt(i, 2).toString());
-						preIndivProd = redondearDecimales(preIndivProd, 2);
+						preIndivProd = redondearDecimales(preIndivProd, 4);
 						double preSubTotProd = Float.parseFloat(this.tbCompras.getValueAt(i, 3).toString());
-						preSubTotProd = redondearDecimales(preSubTotProd, 2);
+						preSubTotProd = redondearDecimales(preSubTotProd, 4);
 						String lote = this.tbCompras.getValueAt(i, 4).toString();
 						
 
@@ -854,7 +854,7 @@ public class NuevaCompra extends JFrame {
 			double precioSubTotProd = Float.parseFloat(this.tbCompras.getValueAt(i, 3).toString());
 			total += precioSubTotProd;
 		}
-		total = redondearDecimales(total, 2);
+		total = redondearDecimales(total, 4);
 
 		this.lblTotal.setText("" + total);
 	}
@@ -919,12 +919,12 @@ public class NuevaCompra extends JFrame {
 			double cantProd = Float.parseFloat(this.tbCompras.getValueAt(i, 0).toString());
 			double precioInd = Float.parseFloat(this.tbCompras.getValueAt(i, 2).toString());
 			double precioSubTot = cantProd * precioInd;
-			precioSubTot = redondearDecimales(precioSubTot, 2);
+			precioSubTot = redondearDecimales(precioSubTot, 4);
 			
 			this.tbCompras.setValueAt(precioSubTot, i, 3);
 			
 		}
-		subtotal = redondearDecimales(subtotal, 2);
+		subtotal = redondearDecimales(subtotal, 4);
 
 		this.lblTotal.setText("" + subtotal);
 	}

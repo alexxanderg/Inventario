@@ -160,6 +160,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	private JLabel lblS_1;
 	private JLabel lblS_2;
 	private JTextField textField;
+	private JLabel lblCantidad;
+	private JLabel lblPrecio;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -602,7 +604,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		txtPrecio.setColumns(10);
 		txtPrecio.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		txtPrecio.setBackground(new Color(245, 245, 245));
-		txtPrecio.setBounds(37, 314, 125, 41);
+		txtPrecio.setBounds(37, 323, 125, 41);
 		getContentPane().add(txtPrecio);
 
 		lblSubTotal = new JLabel("00.0");
@@ -625,7 +627,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		btnMasUnoPre.setForeground(Color.WHITE);
 		btnMasUnoPre.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		btnMasUnoPre.setBackground(new Color(0, 191, 255));
-		btnMasUnoPre.setBounds(162, 314, 56, 20);
+		btnMasUnoPre.setBounds(162, 323, 56, 20);
 		getContentPane().add(btnMasUnoPre);
 
 		btnMenosUnoPre = new JButton("-1");
@@ -634,7 +636,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		btnMenosUnoPre.setForeground(Color.WHITE);
 		btnMenosUnoPre.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		btnMenosUnoPre.setBackground(new Color(220, 20, 60));
-		btnMenosUnoPre.setBounds(162, 335, 56, 20);
+		btnMenosUnoPre.setBounds(162, 344, 56, 20);
 		getContentPane().add(btnMenosUnoPre);
 
 		lblImgVentas = new JLabel("");
@@ -670,7 +672,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		
 		txtNewPrecioCo = new JTextField();
 		txtNewPrecioCo.setVisible(false);
-		txtNewPrecioCo.setBounds(132, 360, 86, 20);
+		txtNewPrecioCo.setBounds(142, 387, 86, 20);
 		getContentPane().add(txtNewPrecioCo);
 		txtNewPrecioCo.setColumns(10);
 		
@@ -696,6 +698,18 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		textField.setBounds(228, 584, 346, 6);
 		getContentPane().add(textField);
 		textField.setColumns(10);
+		
+		lblCantidad = new JLabel("Cantidad:");
+		lblCantidad.setForeground(Color.DARK_GRAY);
+		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidad.setBounds(37, 203, 101, 23);
+		getContentPane().add(lblCantidad);
+		
+		lblPrecio = new JLabel("Precio:");
+		lblPrecio.setForeground(Color.DARK_GRAY);
+		lblPrecio.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrecio.setBounds(37, 305, 101, 23);
+		getContentPane().add(lblPrecio);
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -1067,6 +1081,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				rs = consulta.buscarProductoBarras(codbarra);
 				int flag = 0;
 				float cantidad = 0;
+				int contador = 0;
+				
 				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
 						rs.beforeFirst();
@@ -1078,6 +1094,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								txtBuscarProd.setText(null);
 								txtBuscarProd.requestFocus();
 								tbCarrito.setRowSelectionInterval(i, i);
+								contador ++;
 							}
 						}
 					} catch (SQLException ex) {
@@ -1094,10 +1111,14 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
 									rs.getFloat("cantidad"), rs.getFloat("precioVe") });
 							tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
+							contador ++;
 						}
 					} catch (Exception ex) {
 					}
 				}
+				
+				if(contador == 0)
+					JOptionPane.showMessageDialog(null, "El producto no se encuentra registrado");
 
 				consulta.reset();
 				// limpiarVentana();
@@ -1219,15 +1240,13 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		} else {
 			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 				try {
-					totalCompra = totalCompra + ((Float.parseFloat(tbCarrito.getValueAt(i, 8).toString())
-							* (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString()))));
+					totalCompra = totalCompra + ((Float.parseFloat(tbCarrito.getValueAt(i, 8).toString())));
 					totalCompra = redondearDecimales(totalCompra, 2);
 
 					descuento = descuento + Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
 					descuento = redondearDecimales(descuento, 2);
 
-					totalVentaOriginal = totalVentaOriginal + (Float.parseFloat(tbCarrito.getValueAt(i, 0).toString())
-							* Float.parseFloat(tbCarrito.getValueAt(i, 10).toString()));
+					totalVentaOriginal = totalVentaOriginal + Float.parseFloat(tbCarrito.getValueAt(i, 10).toString());
 					totalVentaOriginal = redondearDecimales(totalVentaOriginal, 2);
 
 					totalVentaFinal = totalVentaFinal + Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());

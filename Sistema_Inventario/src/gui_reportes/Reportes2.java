@@ -467,6 +467,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(btnProdVencer);
 										
 										btnProdVencerAntiguo = new JButton("Fechas antiguas");
+										btnProdVencerAntiguo.setVisible(false);
 										btnProdVencerAntiguo.addActionListener(this);
 										btnProdVencerAntiguo.setForeground(Color.WHITE);
 										btnProdVencerAntiguo.setFont(new Font("Tahoma", Font.BOLD, 15));
