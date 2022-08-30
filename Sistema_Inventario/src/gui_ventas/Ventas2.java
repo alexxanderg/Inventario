@@ -1512,7 +1512,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								double preCoProUni = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
 								preCoProUni = redondearDecimales(preCoProUni, 2);
 
-								double gananciaProdVenta = subTotVenta - (preCoProUni * cantProdVenta);
+								double gananciaProdVenta = subTotVenta - (preCoProUni);
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 
 								consulta.iniciar();
