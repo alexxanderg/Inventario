@@ -157,6 +157,8 @@ public class MantenimientoUsuarios extends JInternalFrame {
 						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Administrador"});
 					if(t == 1)
 						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Vendedor"});
+					if(t == 2)
+						dtm.addRow(new Object[]{rs.getString("idusuario"), rs.getString("nombre"), rs.getString("usuario"), "************", "Supervisor"});
 				}
 			}
 		} catch (Exception e) {

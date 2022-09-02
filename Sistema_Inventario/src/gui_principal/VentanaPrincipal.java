@@ -477,6 +477,19 @@ public class VentanaPrincipal extends JFrame {
 			btnDistribuidores.setEnabled(false);
 			btnCompras.setEnabled(false);
 			break;
+		case 2:
+			btnClientes.setEnabled(false);
+			btnConfiguraciones.setEnabled(false);
+			btnInventario.setEnabled(true);
+			btnKardex.setEnabled(true);
+			btnReportes.setEnabled(false);
+			btnUsuario.setEnabled(false);
+			btnVentas.setEnabled(true);
+			btnBuscarVentas.setEnabled(true);
+			btnDistribuidores.setEnabled(false);
+			btnCompras.setEnabled(true);
+			break;
+			
 		}
 	}
 	

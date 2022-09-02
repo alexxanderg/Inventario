@@ -1051,7 +1051,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 					JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 			}
-
 			if (flag == 0) { // AQUÍ ENTRA SI EL
 								// PRODUCTO AGREGADO ES NUEVO
 				try {
@@ -1070,6 +1069,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 					JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
 				}
 			}
+			
 			txtBuscarProd.setText(null);
 			sumarSubTotales();
 			sumarTotalGenerales();

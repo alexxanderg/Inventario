@@ -92,7 +92,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		setTitle("Login");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 614, 415);
+		setBounds(100, 100, 614, 431);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.menu);
@@ -214,6 +214,15 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 					vp.lblTipo.setText("VENDEDOR");
 					vp.lblIdusuario.setText("" + idusuario);
 					vp.activarOpciones(1);
+					vp.setVisible(true);
+					this.dispose();
+				}
+				if (usu.getTipo() == 2) {
+					VentanaPrincipal vp = new VentanaPrincipal();
+					vp.lblUsuario.setText(nombreUsuario);
+					vp.lblTipo.setText("SUPERVISOR");
+					vp.lblIdusuario.setText("" + idusuario);
+					vp.activarOpciones(2);
 					vp.setVisible(true);
 					this.dispose();
 				}

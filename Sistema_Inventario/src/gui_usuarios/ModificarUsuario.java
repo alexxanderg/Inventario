@@ -122,7 +122,7 @@ public class ModificarUsuario extends JDialog implements ActionListener, WindowL
 		cbTipo.setForeground(Color.DARK_GRAY);
 		cbTipo.setBackground(Color.WHITE);
 		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor"}));
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor", "Supervisor"}));
 		cbTipo.setBounds(158, 290, 222, 36);
 		getContentPane().add(cbTipo);
 		

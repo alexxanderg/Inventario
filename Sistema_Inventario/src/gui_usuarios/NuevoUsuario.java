@@ -118,7 +118,7 @@ public class NuevoUsuario extends JDialog implements ActionListener, WindowListe
 		cbTipo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbTipo.setBackground(Color.WHITE);
 		cbTipo.setFont(new Font("Arial", Font.PLAIN, 16));
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor"}));
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Vendedor", "Supervisor"}));
 		cbTipo.setBounds(158, 290, 222, 36);
 		getContentPane().add(cbTipo);
 		
