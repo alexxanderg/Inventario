@@ -1214,7 +1214,8 @@ public class consultas {
 	  public ResultSet RegistarDetalleCoti(int codventa, int codproducto, double cantidad, double preVeSDInd, double preVeSDTot, double descIndiv, double descTotal, double subTotal, double ganancia, String uMedidaUsada) {
 		    try {
 		      this.st = this.con.createStatement();
-		      String sql = "insert into tb_cotizaciones_detalle (codcoti, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		      String sql = "insert into tb_cotizaciones_detalle"
+		      		+ " (codcoti, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		      PreparedStatement prepareStmt = this.con.prepareStatement(sql);
 		      prepareStmt.setInt(1, codventa);
 		      prepareStmt.setInt(2, codproducto);

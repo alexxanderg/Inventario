@@ -1710,26 +1710,63 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 							JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
 						}
 					}
+					
+					// Cant", "Producto", "Detalles(se puede modificar)", "U.Med", "Precio",
+					// "SubTotal", "Desc", "IDPROD", "PC", "Stock", "PVI Original"
+					
+					/*
+					 * String uMedidaUsada = tbCarrito.getValueAt(i, 3).toString();
+
+								double cantADisminuir = 0;
+
+								double cantProdVenta = Float.parseFloat(tbCarrito.getValueAt(i, 0).toString());
+
+								int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 7).toString());
+
+								double precioVeUniOriginal = Float.parseFloat(tbCarrito.getValueAt(i, 10).toString());
+								precioVeUniOriginal = redondearDecimales(precioVeUniOriginal, 2);
+
+								double descTotXProdV = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
+								descTotXProdV = redondearDecimales(descTotXProdV, 2);
+
+								double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
+								subTotVenta = redondearDecimales(subTotVenta, 2);
+
+								double preCoProUni = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
+								preCoProUni = redondearDecimales(preCoProUni, 2);
+
+								double gananciaProdVenta = subTotVenta - (preCoProUni);
+								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
+
+								consulta.iniciar();
+								consulta.RegistarDetalleVenta(ultCodVenta, idProdVenta, cantProdVenta,
+										precioVeUniOriginal,
+										redondearDecimales((precioVeUniOriginal * cantProdVenta), 2),
+										redondearDecimales((descTotXProdV / cantProdVenta), 2), descTotXProdV,
+										subTotVenta, gananciaProdVenta, uMedidaUsada, detallesProducto);
+
+					 * */
+					
 					for (int j = 0; j < this.tbCarrito.getRowCount(); j++) {
 						String productoCompleto = this.tbCarrito.getValueAt(j, 1).toString();
-						String uMedidaUsada = productoCompleto.substring(productoCompleto.indexOf("(") + 1,
-								productoCompleto.indexOf(")"));
+						String uMedidaUsada = tbCarrito.getValueAt(j, 3).toString();
 						double cantADisminuir = 0.0D;
 						double cantProdVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 0).toString());
-						int idProdVenta = Integer.parseInt(this.tbCarrito.getValueAt(j, 5).toString());
-						double precioVeUniSDescVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 8).toString());
-						precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
-						double descuentoTotProdVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 3).toString());
-						descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
+						int idProdVenta = Integer.parseInt(this.tbCarrito.getValueAt(j, 7).toString());
+						double precioVeUniSDescVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 10).toString());
+							precioVeUniSDescVenta = redondearDecimales(precioVeUniSDescVenta, 2);
+						double descuentoTotProdVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 6).toString());
+							descuentoTotProdVenta = redondearDecimales(descuentoTotProdVenta, 2);
 						double descuentoIndivProdVenta = descuentoTotProdVenta / cantProdVenta;
-						descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
-						double subTotVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 4).toString());
-						subTotVenta = redondearDecimales(subTotVenta, 2);
-						double precioCoVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 6).toString());
-						precioCoVenta = redondearDecimales(precioCoVenta, 2);
-						double gananciaProdVenta = subTotVenta - precioCoVenta;
-						gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
+							descuentoIndivProdVenta = redondearDecimales(descuentoIndivProdVenta, 2);
+						double subTotVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 5).toString());
+							subTotVenta = redondearDecimales(subTotVenta, 2);
+						double precioCoVenta = Float.parseFloat(this.tbCarrito.getValueAt(j, 8).toString());
+							precioCoVenta = redondearDecimales(precioCoVenta, 2);
+						double gananciaProdVenta = subTotVenta - (precioCoVenta);
+							gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 						this.consulta.iniciar();
+						
 						this.consulta.RegistarDetalleCoti(ultCoti, idProdVenta, cantProdVenta, precioVeUniSDescVenta,
 								redondearDecimales(precioVeUniSDescVenta * cantProdVenta, 2), descuentoIndivProdVenta,
 								descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
