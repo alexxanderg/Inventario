@@ -480,8 +480,8 @@ public class VentanaPrincipal extends JFrame {
 		case 2:
 			btnClientes.setEnabled(false);
 			btnConfiguraciones.setEnabled(false);
-			btnInventario.setEnabled(true);
-			btnKardex.setEnabled(true);
+			btnInventario.setEnabled(false);
+			btnKardex.setEnabled(false);
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
 			btnVentas.setEnabled(true);

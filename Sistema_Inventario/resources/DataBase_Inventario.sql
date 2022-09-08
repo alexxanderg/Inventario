@@ -69,12 +69,14 @@ prep3		float
 -- ALTER TABLE tb_productos ADD promo3 VARCHAR(30);
 -- ALTER TABLE tb_productos ADD cantp3 float;
 -- ALTER TABLE tb_productos ADD prep3 float;
+ALTER TABLE tb_productos ADD cantmax float;
 
--- SET SQL_SAFE_UPDATES = 0;
+ SET SQL_SAFE_UPDATES = 0;
 
 -- UPDATE tb_productos SET promo3 = 0;
 -- UPDATE tb_productos SET cantp3 = 0;
 -- UPDATE tb_productos SET prep3 = 0;
+UPDATE tb_productos SET cantmax = 0;
 
 create table tb_ventas(
 codventa	int primary key auto_increment,

@@ -536,7 +536,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
-		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -672,7 +671,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		
 		txtNewPrecioCo = new JTextField();
 		txtNewPrecioCo.setVisible(false);
-		txtNewPrecioCo.setBounds(142, 387, 86, 20);
+		txtNewPrecioCo.setBounds(144, 394, 86, 20);
 		getContentPane().add(txtNewPrecioCo);
 		txtNewPrecioCo.setColumns(10);
 		
