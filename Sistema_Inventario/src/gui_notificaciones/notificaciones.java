@@ -265,6 +265,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
         list.add("PRODUCTO Y DETALLES");
 		list.add("STOCK ACTUAL");
 		list.add("STOCK MINIMO");
+		list.add("STOCK MÁXIMO");
         
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
@@ -288,6 +289,8 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 				    listProds.add(rs.getString("cantidad"));
 				        
 			        listProds.add(rs.getString("cantmin"));
+			        
+			        listProds.add(rs.getString("cantmax"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
@@ -337,9 +340,10 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 	
 	public void ajustarAnchoColumnasPA() {
 		TableColumnModel tcm = tbPorAgotar.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(70)); // Código
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(55)); // Código
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));
 		
 		for(int i=0; i<tbPorAgotar.getColumnCount(); i++)
 			if(tbPorAgotar.getColumnName(i).equals("UNI MED"))
