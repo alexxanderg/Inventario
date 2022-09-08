@@ -399,11 +399,11 @@ public class consultas {
 	
 	public ResultSet modificarProducto(String codbarra, String nombreprod, String descripcion, String umedida, String categoria, String almacen, int iddistrib,
 			String marca, String color, double stockini, double stockmin, double preco, double ptjgana, double preve, java.sql.Date fec_venc, String laboratiorio,
-			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, String nombrePromo3, double cantPromo3, double prePromo3, int cod) {
+			String lote, String nombrePromo1, double cantPromo1, double prePromo1, String nombrePromo2, double cantPromo2, double prePromo2, String nombrePromo3, double cantPromo3, double prePromo3, int cod, double stockmax) {
 		try {
 			st = con.createStatement();
 			//String sql = "update tb_productos set codproducto = ?, producto=?, detalles=?, categoria=?, laboratorio = ?,fechaVenc=?, nrolote=?, unimedida=?, cantidad=?, precioCo=?, precioVe=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?,marca=?,color=? where codproducto=?";
-			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, iddistrib=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?, promo3=?, cantp3=?, prep3=?  where codproducto=?";
+			String sql = "update tb_productos set codbarra =?, producto=?, detalles=?, marca=?, color=?, lote=?, laboratorio=?, unimedida=?, fechaVenc=?, categoria=?, almacen=?, iddistrib=?, cantidad=?, cantmin=?, precioCo=?, precioVe=?, ptjganancia=?, promo1=?, cantp1=?, prep1=?, promo2=?, cantp2=?, prep2=?, promo3=?, cantp3=?, prep3=?, cantmax=?  where codproducto=?";
 
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, codbarra);
@@ -432,7 +432,8 @@ public class consultas {
 			prepareStmt.setString(24, nombrePromo3);
 			prepareStmt.setDouble(25, cantPromo3);
 			prepareStmt.setDouble(26, prePromo3);
-			prepareStmt.setInt(27, cod);
+			prepareStmt.setDouble(27, stockmax);
+			prepareStmt.setInt(28, cod);
 			prepareStmt.execute();
 			JOptionPane.showMessageDialog(null, " PRODUCTO MODIFICADO CORRECTAMENTE ");
 		} catch (Exception e) {

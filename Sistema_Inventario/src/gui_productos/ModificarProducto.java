@@ -1529,6 +1529,7 @@ public class ModificarProducto extends JFrame {
 					int iddistrib = 0; 		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
 					double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
 					double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
+					double stockmax = 0; 	if(txtStockMaximo.getText().length()>0) stockmax = Float.parseFloat(txtStockMaximo.getText());
 					double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
 					double ptjgana = 0; 	if(txtPtjGanancia.getText().length()>0) ptjgana = Float.parseFloat(txtPtjGanancia.getText());
 					double preveNew = 0; 	if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
@@ -1560,6 +1561,7 @@ public class ModificarProducto extends JFrame {
 					try {
 						stockini = redondearDecimales(stockini, 2);
 						stockmin = redondearDecimales(stockmin, 2);
+						stockmax = redondearDecimales(stockmax, 2);
 						precoNew = redondearDecimales(precoNew, 2);
 						cantPromo1 = redondearDecimales(cantPromo1, 2);
 						prePromo1 = redondearDecimales(prePromo1, 2);
@@ -1579,7 +1581,7 @@ public class ModificarProducto extends JFrame {
 					consulta.iniciar();
 					consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
 							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, nombrePromo3, cantPromo3, prePromo3,id);
+							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, nombrePromo3, cantPromo3, prePromo3,id, stockmax);
 
 					consulta.reset();
 					mantenimientoProductos.cargar();
