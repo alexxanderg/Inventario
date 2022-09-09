@@ -1,6 +1,6 @@
 create database db_inventario;
 
-use db_inventario;
+use db_inventario; 
 
 create table tb_usuarios(
 idusuario	int primary key auto_increment,

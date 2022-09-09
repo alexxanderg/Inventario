@@ -314,7 +314,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(btnVender);
 
 		txtNroImpresiones = new JTextField();
-		txtNroImpresiones.setVisible(false);
 		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
@@ -381,8 +380,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 		cbPago2 = new JComboBox();
 		cbPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		cbPago2.setModel(new DefaultComboBoxModel(
-				new String[] { "Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN" }));
+		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN", "-"}));
+		cbPago2.setSelectedIndex(5);
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
 		cbPago2.setBounds(607, 525, 153, 25);
@@ -440,7 +439,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblTotOriginal);
 
 		lblTotalCompra = new JLabel("0");
-		lblTotalCompra.setVisible(false);
 		lblTotalCompra.setVerticalAlignment(SwingConstants.TOP);
 		lblTotalCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalCompra.setForeground(new Color(30, 144, 255));
@@ -450,7 +448,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblTotalCompra);
 
 		lblGananciaTotal = new JLabel("0");
-		lblGananciaTotal.setVisible(false);
 		lblGananciaTotal.setVerticalAlignment(SwingConstants.TOP);
 		lblGananciaTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGananciaTotal.setForeground(new Color(30, 144, 255));
@@ -520,7 +517,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblMin);
 
 		lblNroCompramodificar = new JLabel("0");
-		lblNroCompramodificar.setVisible(false);
 		lblNroCompramodificar.setVerticalAlignment(SwingConstants.TOP);
 		lblNroCompramodificar.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNroCompramodificar.setForeground(new Color(102, 205, 170));
@@ -671,7 +667,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		btnOkk.setIcon(new ImageIcon(imgLogoOk));
 		
 		txtNewPrecioCo = new JTextField();
-		txtNewPrecioCo.setVisible(false);
 		txtNewPrecioCo.setBounds(144, 394, 86, 20);
 		getContentPane().add(txtNewPrecioCo);
 		txtNewPrecioCo.setColumns(10);
@@ -1487,11 +1482,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 										+ tbCarrito.getValueAt(i, 2).toString();
 								String detallesProducto = tbCarrito.getValueAt(i, 2).toString();
 
-								/*
-								 * String uMedidaUsada =
-								 * productoCompleto.substring(productoCompleto.indexOf("(") + 1,
-								 * productoCompleto.indexOf(")"));
-								 */
 								String uMedidaUsada = tbCarrito.getValueAt(i, 3).toString();
 
 								double cantADisminuir = 0;
@@ -1500,7 +1490,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 								int idProdVenta = Integer.parseInt(tbCarrito.getValueAt(i, 7).toString());
 
-								double precioVeUniOriginal = Float.parseFloat(tbCarrito.getValueAt(i, 10).toString());
+								double precioVeUniOriginal = Float.parseFloat(tbCarrito.getValueAt(i, 10).toString()) / cantProdVenta;
 								precioVeUniOriginal = redondearDecimales(precioVeUniOriginal, 2);
 
 								double descTotXProdV = Float.parseFloat(tbCarrito.getValueAt(i, 6).toString());
@@ -1509,10 +1499,10 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								double subTotVenta = Float.parseFloat(tbCarrito.getValueAt(i, 5).toString());
 								subTotVenta = redondearDecimales(subTotVenta, 2);
 
-								double preCoProUni = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString());
+								double preCoProUni = Float.parseFloat(tbCarrito.getValueAt(i, 8).toString()) / cantProdVenta;
 								preCoProUni = redondearDecimales(preCoProUni, 2);
 
-								double gananciaProdVenta = subTotVenta - (preCoProUni);
+								double gananciaProdVenta = subTotVenta - (preCoProUni)*cantProdVenta;
 								gananciaProdVenta = redondearDecimales(gananciaProdVenta, 2);
 
 								consulta.iniciar();
@@ -2265,15 +2255,15 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		double subTotalCompra = 0;		
 		double subTotalVentaOriginal = 0;
 
-			
+		
 		if (this.cbUnidadesdeMedida.getSelectedIndex() == 0)
 			subTotalCompra = newcantidadV * PrecioCo * 1;
-		if (this.cbUnidadesdeMedida.getSelectedIndex() == 1) 
+		if (this.cbUnidadesdeMedida.getSelectedIndex() == 1)
 			subTotalCompra = newcantidadV * PrecioCo * cantPromo1;
 		if (this.cbUnidadesdeMedida.getSelectedIndex() == 2)
 			subTotalCompra = newcantidadV * PrecioCo * cantPromo2;
 		if (this.cbUnidadesdeMedida.getSelectedIndex() == 3)
-			subTotalCompra = newcantidadV * PrecioCo * cantPromo3;		
+			subTotalCompra = newcantidadV * PrecioCo * cantPromo3;
 			
 
 		subTotalCompra = redondearDecimales(subTotalCompra, 2);
@@ -2301,8 +2291,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		double descuento = subTotalVentaOriginal - newsubtotal;
 		descuento = redondearDecimales(descuento, 2);
 
-		if(descuento<0)
-			descuento = 0;
+		//if(descuento<0)
+		//	descuento = 0;
 
 		
 		tbCarrito.setValueAt(descuento, tbCarrito.getSelectedRow(), 6);

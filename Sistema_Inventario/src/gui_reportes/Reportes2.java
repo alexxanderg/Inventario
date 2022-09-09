@@ -112,6 +112,10 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JLabel lblProductosPorVencer;
 	private JButton btnProdVencer;
 	private JButton btnProdVencerAntiguo;
+	private JLabel lblPagosDeLas;
+	private JButton btnPagosVentas;
+	private JTextField textField_3;
+	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -202,7 +206,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		lblPorProducto = new JLabel("MOVIMIENTOS DE PRODUCTO");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPorProducto.setBounds(72, 417, 396, 23);
+		lblPorProducto.setBounds(72, 451, 396, 23);
 		panel.add(lblPorProducto);
 
 		btnSalidas = new JButton("Salidas");
@@ -215,7 +219,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		btnSalidas.setForeground(Color.WHITE);
 		btnSalidas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnSalidas.setBackground(new Color(30, 144, 255));
-		btnSalidas.setBounds(320, 483, 178, 32);
+		btnSalidas.setBounds(320, 517, 178, 32);
 		panel.add(btnSalidas);
 
 		txtProductos = new JTextField();
@@ -223,7 +227,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
 		txtProductos.setBackground(SystemColor.controlHighlight);
-		txtProductos.setBounds(72, 447, 426, 25);
+		txtProductos.setBounds(72, 481, 426, 25);
 		panel.add(txtProductos);
 
 		textField_1 = new JTextField();
@@ -234,13 +238,13 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(textField_1);
 
 		lblReporteDeCompras = new JLabel("REPORTE DE COMPRAS");
-		lblReporteDeCompras.setBounds(619, 131, 271, 32);
+		lblReporteDeCompras.setBounds(619, 161, 271, 32);
 		panel.add(lblReporteDeCompras);
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 
 		btnCompras = new JButton("Ver reporte");
-		btnCompras.setBounds(769, 165, 249, 32);
+		btnCompras.setBounds(767, 191, 251, 32);
 		panel.add(btnCompras);
 		btnCompras.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnCompras.addActionListener(new ActionListener() {
@@ -337,20 +341,20 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		textField_2.setBackground(Color.WHITE);
 
 		this.lblRanking = new JLabel("RANKING DE PRODUCTOS");
-		lblRanking.setBounds(619, 223, 231, 25);
+		lblRanking.setBounds(621, 243, 231, 25);
 		panel.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(621, 254, 399, 28);
+		cbxRanking.setBounds(619, 263, 401, 28);
 		panel.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] { "M\u00E1s vendidos", "Menos vendidos" }));
 		this.cbxRanking.setToolTipText("");
 
 		this.btnVerRanking = new JButton("Ver reporte");
-		btnVerRanking.setBounds(771, 293, 249, 32);
+		btnVerRanking.setBounds(773, 298, 249, 32);
 		panel.add(btnVerRanking);
 		btnVerRanking.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnVerRanking.addActionListener(new ActionListener() {
@@ -410,7 +414,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										textField.setEditable(false);
 										textField.setColumns(10);
 										textField.setBackground(Color.WHITE);
-										textField.setBounds(72, 541, 426, 5);
+										textField.setBounds(72, 560, 426, 5);
 										panel.add(textField);
 										
 										txtProductosVenta = new JTextField();
@@ -439,7 +443,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										btnIngresos.setFont(new Font("Tahoma", Font.BOLD, 18));
 										btnIngresos.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 										btnIngresos.setBackground(new Color(30, 144, 255));
-										btnIngresos.setBounds(72, 483, 178, 32);
+										btnIngresos.setBounds(72, 517, 178, 32);
 										panel.add(btnIngresos);
 										
 										lblNewLabel = new JLabel("Escoja un rango de fechas y luego el reporte que necesite.");
@@ -473,8 +477,37 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										btnProdVencerAntiguo.setFont(new Font("Tahoma", Font.BOLD, 15));
 										btnProdVencerAntiguo.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 										btnProdVencerAntiguo.setBackground(new Color(30, 144, 255));
-										btnProdVencerAntiguo.setBounds(72, 591, 178, 32);
+										btnProdVencerAntiguo.setBounds(72, 592, 178, 32);
 										panel.add(btnProdVencerAntiguo);
+										
+										lblPagosDeLas = new JLabel("PAGOS DE LAS VENTAS");
+										lblPagosDeLas.setHorizontalAlignment(SwingConstants.LEFT);
+										lblPagosDeLas.setFont(new Font("Candara", Font.BOLD, 20));
+										lblPagosDeLas.setBounds(72, 400, 271, 32);
+										panel.add(lblPagosDeLas);
+										
+										btnPagosVentas = new JButton("Ver reporte");
+										btnPagosVentas.addActionListener(this);
+										btnPagosVentas.setForeground(Color.WHITE);
+										btnPagosVentas.setFont(new Font("Tahoma", Font.BOLD, 18));
+										btnPagosVentas.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+										btnPagosVentas.setBackground(new Color(30, 144, 255));
+										btnPagosVentas.setBounds(320, 400, 178, 32);
+										panel.add(btnPagosVentas);
+										
+										textField_3 = new JTextField();
+										textField_3.setEditable(false);
+										textField_3.setColumns(10);
+										textField_3.setBackground(Color.WHITE);
+										textField_3.setBounds(72, 435, 426, 5);
+										panel.add(textField_3);
+										
+										textField_4 = new JTextField();
+										textField_4.setEditable(false);
+										textField_4.setColumns(10);
+										textField_4.setBackground(Color.WHITE);
+										textField_4.setBounds(619, 234, 399, 5);
+										panel.add(textField_4);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
 
@@ -529,6 +562,9 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnPagosVentas) {
+			actionPerformedBtnPagosVentas(e);
+		}
 		if (e.getSource() == btnProdVencerAntiguo) {
 			actionPerformedBtnProdVencerAntiguo(e);
 		}
@@ -1058,6 +1094,48 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		    }
 	}
+	
+	protected void actionPerformedBtnPagosVentas(ActionEvent e) {
+		
+		 Connection con = null;
+		    try {
+		      con = MySQLConexion.getConection();
+
+		      int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+				int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
+				int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
+				String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+
+				int añof = fFinal.getCalendar().get(Calendar.YEAR);
+				int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
+				int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
+				String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+
+				DateFormat formatter;
+				formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date date = (Date) formatter.parse(fechai);
+				java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+				DateFormat formatter2;
+				formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date date2 = (Date) formatter2.parse(fechaf);
+				java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+				
+				Map<String, Object> parameters = new HashMap();
+				parameters.put("prtFechaI", timeStampDateI);
+				parameters.put("prtFechaF", timeStampDateF);
+				
+				
+
+		      new AbstractJasperReports().createReport(con, "rVentasPagos.jasper", parameters);
+		      AbstractJasperReports.showViewer();
+		      con.close();
+		    }
+		    catch (Exception ex) {
+		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
+		    }
+		
+	}
+	
 }
 
 

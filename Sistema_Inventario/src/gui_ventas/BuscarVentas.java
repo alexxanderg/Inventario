@@ -326,7 +326,7 @@ public class BuscarVentas extends JInternalFrame {
 		
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
-		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "DESC TOTAL", "SUB TOTAL"});
+		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "SUB TOTAL"});
 		
 		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -380,17 +380,15 @@ public class BuscarVentas extends JInternalFrame {
 		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
 		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
-		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(45));  // 
+		tcmVD.getColumn(1).setPreferredWidth(anchoColumna(55));  // 
 		tcmVD.getColumn(2).setPreferredWidth(anchoColumna(10));  //
 		tcmVD.getColumn(3).setPreferredWidth(anchoColumna(10));  //
 		tcmVD.getColumn(4).setPreferredWidth(anchoColumna(10));  //
-		tcmVD.getColumn(5).setPreferredWidth(anchoColumna(10));  //
 		
 		tbDetalleVenta.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(2).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(3).setCellRenderer(tcr0);
 		tbDetalleVenta.getColumnModel().getColumn(4).setCellRenderer(tcr0);
-		tbDetalleVenta.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 	}
 	
 	public void selecionarUsuario(String id) {
@@ -756,7 +754,7 @@ public class BuscarVentas extends JInternalFrame {
 			consulta.iniciar();
 			rs = consulta.cargarVentaDetallesProducto(nroVenta);
 			while (rs.next()){
-				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detventa")+" "+rs.getString("marca")+" "+ rs.getString("color"), rs.getString("uMedidaUsada"), rs.getFloat("preVeSDInd"), rs.getFloat("descTotal"), rs.getFloat("subTotal")});
+				dtmVD.addRow(new Object[]{rs.getFloat("cantidad"), rs.getString("producto")+" "+rs.getString("detventa")+" "+rs.getString("marca")+" "+ rs.getString("color"), rs.getString("uMedidaUsada"), rs.getFloat("preVeSDInd")-rs.getFloat("descIndiv"), rs.getFloat("subTotal")});
 			}
 			consulta.reset();
 		} catch (Exception e) {
