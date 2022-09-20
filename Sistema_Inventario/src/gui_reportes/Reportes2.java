@@ -1133,7 +1133,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		    catch (Exception ex) {
 		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		    }
-		
 	}
 	
 }

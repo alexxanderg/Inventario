@@ -314,6 +314,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(btnVender);
 
 		txtNroImpresiones = new JTextField();
+		txtNroImpresiones.setVisible(false);
 		txtNroImpresiones.setText("1");
 		txtNroImpresiones.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNroImpresiones.setForeground(Color.BLACK);
@@ -439,6 +440,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblTotOriginal);
 
 		lblTotalCompra = new JLabel("0");
+		lblTotalCompra.setVisible(false);
 		lblTotalCompra.setVerticalAlignment(SwingConstants.TOP);
 		lblTotalCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalCompra.setForeground(new Color(30, 144, 255));
@@ -448,6 +450,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblTotalCompra);
 
 		lblGananciaTotal = new JLabel("0");
+		lblGananciaTotal.setVisible(false);
 		lblGananciaTotal.setVerticalAlignment(SwingConstants.TOP);
 		lblGananciaTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGananciaTotal.setForeground(new Color(30, 144, 255));
@@ -517,6 +520,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblMin);
 
 		lblNroCompramodificar = new JLabel("0");
+		lblNroCompramodificar.setVisible(false);
 		lblNroCompramodificar.setVerticalAlignment(SwingConstants.TOP);
 		lblNroCompramodificar.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNroCompramodificar.setForeground(new Color(102, 205, 170));
@@ -667,6 +671,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		btnOkk.setIcon(new ImageIcon(imgLogoOk));
 		
 		txtNewPrecioCo = new JTextField();
+		txtNewPrecioCo.setVisible(false);
 		txtNewPrecioCo.setBounds(144, 394, 86, 20);
 		getContentPane().add(txtNewPrecioCo);
 		txtNewPrecioCo.setColumns(10);
