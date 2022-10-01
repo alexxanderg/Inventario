@@ -558,7 +558,7 @@ public class Ventas extends JInternalFrame {
 		mnlimpiarVentana.setBackground(SystemColor.menu);
 		menuBar.add(mnlimpiarVentana);
 		
-		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE Tï¿½TULO
 		
 		cargar();
 		cargarBuscador();
@@ -610,7 +610,7 @@ public class Ventas extends JInternalFrame {
 				}
 					
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
+				JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificaciï¿½n de fecha para venta " + e);
 			}
 			finally {
 				try {
@@ -624,7 +624,7 @@ public class Ventas extends JInternalFrame {
 			}
 		
 			
-			// ACÁ ENTRA SI ES UNA VENTA PARA MODIFICAR
+			// ACï¿½ ENTRA SI ES UNA VENTA PARA MODIFICAR
 		
 			if(nroVentaModificar != -1){
 			consulta.iniciar();
@@ -848,7 +848,7 @@ public class Ventas extends JInternalFrame {
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
-						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 5).toString())) {// AQUÍ ENTRA SI
+						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 5).toString())) {// AQUï¿½ ENTRA SI
 																										// YA EXISTE EL
 																										// PRODUCTO EN
 																										// LA TABLA
@@ -865,7 +865,7 @@ public class Ventas extends JInternalFrame {
 				}
 			}
 
-			if (flag == 0) { // AQUÍ ENTRA SI EL 
+			if (flag == 0) { // AQUï¿½ ENTRA SI EL 
 							//	PRODUCTO AGREGADO ES NUEVO
 				try {
 					rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
@@ -890,7 +890,7 @@ public class Ventas extends JInternalFrame {
 			sumarSubTotales();
 			sumarTotalGenerales();
 
-		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN Cï¿½DIGO DE BARRAS
 			try {
 				String codbarra = txtBuscarProd.getText();
 				consulta.iniciar();
@@ -898,7 +898,7 @@ public class Ventas extends JInternalFrame {
 				int flag = 0;
 				float cantidad = 0;
 				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA 
+					try {// AQUï¿½ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA 
 						rs.beforeFirst();
 						while (rs.next()) {
 							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 5).toString())) {
@@ -913,7 +913,7 @@ public class Ventas extends JInternalFrame {
 					} catch (SQLException ex) {
 					}
 				}
-				if (flag == 0) { // AQUÍ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
+				if (flag == 0) { // AQUï¿½ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
 					try {
 						rs.beforeFirst();
 						while (rs.next()) {
@@ -1113,21 +1113,21 @@ public class Ventas extends JInternalFrame {
 		int opc = 0;
 		
 		/*if(rbtnVenta.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "¿Relizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			opc = JOptionPane.showConfirmDialog(null, "ï¿½Relizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(rbtnCoti.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			opc = JOptionPane.showConfirmDialog(null, "ï¿½Realizar cotizaciï¿½n?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		*/
 		
 		if (opc == 0) {
 			
-// VERIFICA SI ES COTIZACIÓN
+// VERIFICA SI ES COTIZACIï¿½N
 			if (this.rbtnVenta.isSelected()){
 			// ESTO ES VENTA
 				int ventasinstock = 0; // 0NO 1SI
 				int flag = 0; //Permite pasar a vender segun stock 0NO 1SI
 				
 				if (tbCarrito.getRowCount() < 1) {
-					JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
+					JOptionPane.showMessageDialog(null, "Agregue algï¿½n producto a la lista");
 				} else {
 					try {
 						consulta.iniciar();
@@ -1147,7 +1147,7 @@ public class Ventas extends JInternalFrame {
 			            }
 					}
 					
-					if(ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
+					if(ventasinstock == 0) // NO ESTï¿½ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
 						flag = verificarStock();
 					else
 						flag = 1;  // NO TIENE RESTRICCION Y SE VENDE SIN PROBLEMA
@@ -1180,7 +1180,7 @@ public class Ventas extends JInternalFrame {
 							
 							if(fechaVauto == 0){ // AQUI SI LA FECHA ES AUTOMATICA
 								
-								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIï¿½N DE VENTA
 									//consulta.modificarVenta(nroVentaModificar);
 									
 									consulta.modificarVenta(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2);
@@ -1192,12 +1192,12 @@ public class Ventas extends JInternalFrame {
 							}
 							else if (fechaVauto == 1){ // AQUI SI LA FECHA ES PERSONALIZADA
 								
-								int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
+								int anioi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
 								int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
 								int diai = dchFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
 								String hora = txtHora.getText();
 								String min = txtMin.getText();
-								String fechaActualString = añoi + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
+								String fechaActualString = anioi + "-" + mesi + "-" + diai + " " + hora + ":" + min + ":00";
 		
 								DateFormat formatter;
 								formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -1206,7 +1206,7 @@ public class Ventas extends JInternalFrame {
 								
 								
 									
-								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIÓN DE VENTA
+								if(nroVentaModificar != -1){	//AQUI SI ES MODIFICACIï¿½N DE VENTA
 									consulta.modificarVenta2(nroVentaModificar, idcliente, idusuario, totCompra, totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2, monto2, fechaElegida);
 								}
 								else{	//AQUI SI ES VENTA NUEVA
@@ -1233,7 +1233,7 @@ public class Ventas extends JInternalFrame {
 										/*
 										 * SE REALIZO EL REGISTRO DE LA VENTA
 										 * 
-										 * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
+										 * A CONTINUACION SE REGISTRARï¿½N LOS DETALLES DE ESTA
 										 * 
 										 * */
 									
@@ -1251,7 +1251,7 @@ public class Ventas extends JInternalFrame {
 									while (rs.next())
 										ultCodVenta = rs.getInt("codventa");
 								} catch (Exception e3) {
-									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo cï¿½digo: " + e3);
 								}finally {
 									try {
 										if (rs != null)
@@ -1290,7 +1290,7 @@ public class Ventas extends JInternalFrame {
 								//		descuentoIndivProdVenta, descuentoTotProdVenta, subTotVenta, gananciaProdVenta, uMedidaUsada);
 														
 								/*
-								 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
+								 * A CONTINUACION SE DISMINUIRï¿½ EL STOCK DE CADA PRODUCTO
 								 * 
 								 * */
 								try {
@@ -1416,7 +1416,7 @@ public class Ventas extends JInternalFrame {
 			
 	
 			if (this.rbtnCoti.isSelected()){
-//EMPIEZA LA COTIZACIÓN					
+//EMPIEZA LA COTIZACIï¿½N					
 				
 				 int idcliente = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getId();
 			        String nomCliente = ((Cliente)this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getNombre();
@@ -1518,7 +1518,7 @@ public class Ventas extends JInternalFrame {
 			          JOptionPane.showMessageDialog(null, "ERROR al registrar detalles de coti: " + e2);
 			        } 
 
-			        JOptionPane.showMessageDialog(null, "COTIZACIÓN REALIZADA CORRECTAMENTE\n A CONTINUACIÓN SE GENERARÁ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO", "", 1);
+			        JOptionPane.showMessageDialog(null, "COTIZACIï¿½N REALIZADA CORRECTAMENTE\n A CONTINUACIï¿½N SE GENERARï¿½ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO", "", 1);
 			        
 			        Connection con = null;
 			        for (int i = 0; i < 1; i++) {
@@ -1699,7 +1699,7 @@ public class Ventas extends JInternalFrame {
 				return 0;
 			}
 		}
-		return 1; // 1 = NO ENCONTRÓ COINCIDENCIA
+		return 1; // 1 = NO ENCONTRï¿½ COINCIDENCIA
 	}
 	public void seleccionarRow() {
 		int cant = tbCarrito.getRowCount() - 1;
@@ -1726,7 +1726,7 @@ public class Ventas extends JInternalFrame {
 			txtMin.setText("00");
 	}
 	protected void mouseClickedMnlimpiarVentana(MouseEvent e) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Desea limpiar todos los campos llenados?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null, "ï¿½Desea limpiar todos los campos llenados?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0){
 			limpiarVentana();
 		}

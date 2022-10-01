@@ -138,7 +138,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 																							// LA
 																							// BARRA
 																							// DE
-																							// TÍTULO
+																							// Tï¿½TULO
 
 		cargarPorVencer();
 		cargarPorAgotar();
@@ -198,7 +198,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 			        listProds.add(rs.getString("cantidad"));
 			        
 			        try {
-						// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
+						// En esta linea de cï¿½digo estamos indicando el nuevo formato que queremos para nuestra fecha.
 						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 						// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
 						String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
@@ -265,10 +265,10 @@ public class notificaciones extends JInternalFrame implements ActionListener {
         list.add("PRODUCTO Y DETALLES");
 		list.add("STOCK ACTUAL");
 		list.add("STOCK MINIMO");
-		list.add("STOCK MÁXIMO");
+		//list.add("STOCK Mï¿½XIMO");
         
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
-		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
+		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categorï¿½a", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
 		dtm.setColumnIdentifiers(columnas);
 		
@@ -290,7 +290,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 				        
 			        listProds.add(rs.getString("cantmin"));
 			        
-			        listProds.add(rs.getString("cantmax"));
+			        //listProds.add(rs.getString("cantmax"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 					dtm.addRow(columnasProds); // AGREGAMOS EL PRODUCTO A LA LISTA
@@ -323,7 +323,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 	public void ajustarAnchoColumnasPV() {
 		TableColumnModel tcm = tbXVencer.getColumnModel(); // 
 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Código
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(10)); // Cï¿½digo
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(60)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(10)); // Cantidad
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Fecha
@@ -340,10 +340,10 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 	
 	public void ajustarAnchoColumnasPA() {
 		TableColumnModel tcm = tbPorAgotar.getColumnModel(); // 
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(55)); // Código
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(55)); // Cï¿½digo
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(15)); // Producto
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Detalle
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));
+		//tcm.getColumn(3).setPreferredWidth(anchoColumna(15));
 		
 		for(int i=0; i<tbPorAgotar.getColumnCount(); i++)
 			if(tbPorAgotar.getColumnName(i).equals("UNI MED"))
@@ -362,7 +362,7 @@ public class notificaciones extends JInternalFrame implements ActionListener {
 	protected void actionPerformedBtnMarcarVendido(ActionEvent e) {
 		
 		int opc = 0;
-		opc = JOptionPane.showConfirmDialog(null, "Esta acción quitará al producto de esta lista. ¿Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION,
+		opc = JOptionPane.showConfirmDialog(null, "Esta acciï¿½n quitarï¿½ al producto de esta lista. ï¿½Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 		
 		if(opc == 0) {

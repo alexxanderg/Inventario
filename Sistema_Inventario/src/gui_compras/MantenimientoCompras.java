@@ -280,7 +280,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		mnCrearCompra.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearCompra);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE Tï¿½TULO
 
 		cargar();
 		ajustarAnchoColumnas();
@@ -290,13 +290,13 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		this.tb = this.tbCompras;
 		this.tb.setRowHeight(30);
 		this.tb.setModel(this.dtmC);
-		this.dtmC.setColumnIdentifiers(new Object[] { "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIÓN", "TOTAL" });
+		this.dtmC.setColumnIdentifiers(new Object[] { "NRO", "SERIE", "DISTRIBUIDOR", "NOTA", "F EMISIï¿½N", "TOTAL" });
 
 		JTable tbCD = this.tbDetallesCompra;
 		tbCD.setRowHeight(30);
 		tbCD.setModel(this.dtmCD);
-		this.dtmCD
-				.setColumnIdentifiers(new Object[] { "CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL", "LOTE", "FECHA VENCIMIENTO" });
+		this.dtmCD.setColumnIdentifiers(
+				new Object[] { "CANTIDAD", "PRODUCTO", "PRECIO UNI COMP", "SUB TOTAL", "LOTE", "FECHA VENCIMIENTO" });
 
 		Date date = new Date();
 		date.getTime();
@@ -405,19 +405,19 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		}
 
 		try {
-			int añoi = this.dchDesde.getCalendar().get(1);
+			int anioi = this.dchDesde.getCalendar().get(1);
 			int mesi = this.dchDesde.getCalendar().get(2) + 1;
 			int diai = this.dchDesde.getCalendar().get(5);
-			String fechaInicial = añoi + "-" + mesi + "-" + diai + " " + "00:00:00";
+			String fechaInicial = anioi + "-" + mesi + "-" + diai + " " + "00:00:00";
 
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = formatter.parse(fechaInicial);
 			Object fechai = new Timestamp(date.getTime());
 
-			int añof = this.dchHasta.getCalendar().get(1);
+			int aniof = this.dchHasta.getCalendar().get(1);
 			int mesf = this.dchHasta.getCalendar().get(2) + 1;
 			int diaf = this.dchHasta.getCalendar().get(5);
-			String fechaFinal = añof + "-" + mesf + "-" + diaf + " " + "23:59:59";
+			String fechaFinal = aniof + "-" + mesf + "-" + diaf + " " + "23:59:59";
 
 			DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date2 = formatter.parse(fechaFinal);
@@ -533,7 +533,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 						this.rs.getString("serie") + " - " + this.rs.getString("nroSerie"), this.rs.getString("nombre"),
 						this.rs.getString("nota"), this.rs.getString("fechaEmision"),
 						Float.valueOf(this.rs.getFloat("tot")) });
-		} catch (Exception ex) {	
+		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar compra lote: " + ex.getMessage());
 			try {
 				if (this.rs != null)
@@ -554,6 +554,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 			}
 		}
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnComprobante) {
 			actionPerformedBtnComprobante(e);

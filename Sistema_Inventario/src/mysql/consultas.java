@@ -330,7 +330,7 @@ public class consultas {
 	public ResultSet buscarProductoID(int idprod) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select codproducto, codbarra,producto,detalles,marca,color,lote,laboratorio,unimedida,fechaVenc,categoria,almacen,iddistrib,cantidad,cantmin,precioCo,precioVe,ptjganancia,estado,"
+			rs = st.executeQuery("select codproducto, codbarra,producto,detalles,marca,color,lote,laboratorio,unimedida,fechaVenc,categoria,almacen,iddistrib,cantidad,cantmin,cantmax,precioCo,precioVe,ptjganancia,estado,"
 								+ "promo1,cantp1,prep1,promo2,cantp2,prep2,promo3,cantp3,prep3 from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
 		} catch (Exception e) {
 		}
@@ -393,7 +393,7 @@ public class consultas {
 			return 0;// 0= se creo correctamente
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
-			return 1; // 1= encontró producto con mismo codigo
+			return 1; // 1= encontrï¿½ producto con mismo codigo
 		}
 	}
 	
@@ -458,6 +458,26 @@ public class consultas {
 		return rs;
 	}
 	
+	
+	public ResultSet modificarStocks(int idProducto, float newPrincipal, float newAlmacen) {
+		try {
+			st = con.createStatement();
+			String sql = "update tb_productos set cantidad=?, cantmax=? where codproducto=?";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setFloat(1, newPrincipal);
+			prepareStmt.setFloat(2, newAlmacen);
+			prepareStmt.setInt(3, idProducto);
+			
+			prepareStmt.execute();
+			
+			JOptionPane.showMessageDialog(null, "Tranferencia correcta!");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al modificar precio compra venta: " + e);
+		}
+		return rs;
+	}
+	
+	
 	public ResultSet marcarVendidoProducto(String codProducto, String idcompra) {
 		try {
 			st = con.createStatement();
@@ -495,7 +515,7 @@ public class consultas {
 			prepareStmt.setObject(8, date2);
 			prepareStmt.execute();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al añadir stock: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al aï¿½adir stock: " + e);
 		}
 		return 0;
 	}
@@ -1280,7 +1300,7 @@ public class consultas {
 			prepareStmt.setInt(2, id);
 			prepareStmt.execute();
 
-			JOptionPane.showMessageDialog(null, "Información Alterada");
+			JOptionPane.showMessageDialog(null, "Informaciï¿½n Alterada");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR: " + e);
 		}
@@ -1480,7 +1500,7 @@ public class consultas {
 			prepareStmt.setInt(1, eleccion);
 			prepareStmt.execute();
 			if(eleccion == 1)
-				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin restricción del stock");
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin restricciï¿½n del stock");
 			if(eleccion == 0)
 				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora no puede vender stock menor a 0");
 		} catch (Exception e) {
@@ -1496,7 +1516,7 @@ public class consultas {
 			prepareStmt.setInt(1, eleccion);
 			prepareStmt.execute();
 			if(eleccion == 1)
-				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, si se descontará de su stock");
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, si se descontarï¿½ de su stock");
 			if(eleccion == 0)
 				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora puede vender sin que su stock se vea afectado");
 		} catch (Exception e) {
@@ -1554,9 +1574,9 @@ public class consultas {
 			prepareStmt.setInt(1, eleccion);
 			prepareStmt.execute();
 			if(eleccion == 1)
-				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, podrá escoger con que fecha registrarla");
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, podrï¿½ escoger con que fecha registrarla");
 			if(eleccion == 0)
-				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, se registrará con la fecha actual");
+				JOptionPane.showMessageDialog(null, "CAMBIO REALIZADO: Ahora, cuando venda, se registrarï¿½ con la fecha actual");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
 		}
@@ -1671,7 +1691,7 @@ public class consultas {
 			prepareStmt.setDouble(2, nuevoSaldo);
 			prepareStmt.setInt(3, nroCompra);
 			prepareStmt.execute();
-			JOptionPane.showMessageDialog(null, "Pago añadido correctamente");
+			JOptionPane.showMessageDialog(null, "Pago aï¿½adido correctamente");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al modificar reducirstock: " + e);
 		}

@@ -312,7 +312,7 @@ public class BuscarVentas extends JInternalFrame {
 		mnimprimirCopiaDe.setBackground(SystemColor.menu);
 		menuBar.add(mnimprimirCopiaDe);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE Tï¿½TULO
 		
 		cargar();
 		//ajustarAnchoColumnas();
@@ -402,14 +402,14 @@ public class BuscarVentas extends JInternalFrame {
 				JOptionPane.showMessageDialog(null, "No puede modificar ventas eliminadas");
 			}
 			else{
-				int seleccion = JOptionPane.showConfirmDialog(null, "MODIFICAR VENTA\n\nALERTA! Al dar en SI, toda la información de la venta será borrada y a la vez cargada en la ventana de Ventas, \npara que pueda realizar las modificaciones que necesite.\nNO salga de la ventana de Ventas sin antes realizar las modificaciones requeridas. Caso contrario, la venta quedará en Cero.\n\n¿Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				int seleccion = JOptionPane.showConfirmDialog(null, "MODIFICAR VENTA\n\nALERTA! Al dar en SI, toda la informaciï¿½n de la venta serï¿½ borrada y a la vez cargada en la ventana de Ventas, \npara que pueda realizar las modificaciones que necesite.\nNO salga de la ventana de Ventas sin antes realizar las modificaciones requeridas. Caso contrario, la venta quedarï¿½ en Cero.\n\nï¿½Continuar?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				
 				if(seleccion == 0){
-					//JOptionPane.showMessageDialog(null, "Se acaba de cargar toda la venta realizada. \nModifique lo que necesita y luego de clic en VENDER.\n\nNO se efectuará ningun cambio, hasta que lo haga.");	
+					//JOptionPane.showMessageDialog(null, "Se acaba de cargar toda la venta realizada. \nModifique lo que necesita y luego de clic en VENDER.\n\nNO se efectuarï¿½ ningun cambio, hasta que lo haga.");	
 					try {
 						int nroVentaModificar = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );
 						
-						vp.cargarVentas(nroVentaModificar);  // ACÁ SE ABRE LA VENTANA PARA QUE MODIFIQUE
+						vp.cargarVentas(nroVentaModificar);  // ACï¿½ SE ABRE LA VENTANA PARA QUE MODIFIQUE
 						
 						consulta.iniciar();
 						rs = consulta.cargarVentaDetalles(nroVentaModificar);
@@ -496,7 +496,7 @@ public class BuscarVentas extends JInternalFrame {
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 
 		String[] options = {"Eliminar", "Cancelar"};
-		int seleccion = JOptionPane.showOptionDialog(null, "¿Seguro de eliminar la Venta?\nEsta opción no se puede deshacer", "Confirmación", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
+		int seleccion = JOptionPane.showOptionDialog(null, "ï¿½Seguro de eliminar la Venta?\nEsta opciï¿½n no se puede deshacer", "Confirmaciï¿½n", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,  options, options[0]);
 		
 		if(seleccion == 0){
 			try {
@@ -588,20 +588,20 @@ public class BuscarVentas extends JInternalFrame {
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
 						
-			int añoi = dchDesde.getCalendar().get(Calendar.YEAR);
+			int anioi = dchDesde.getCalendar().get(Calendar.YEAR);
 			int mesi = dchDesde.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = dchDesde.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaInicial = añoi + "-" + mesi + "-" + diai + " " + "00:00:00";
+			String fechaInicial = anioi + "-" + mesi + "-" + diai + " " + "00:00:00";
 
 			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = (Date) formatter.parse(fechaInicial);
 			Object fechai = new java.sql.Timestamp(date.getTime());
 			
-			int añof = dchHasta.getCalendar().get(Calendar.YEAR);
+			int aniof = dchHasta.getCalendar().get(Calendar.YEAR);
 			int mesf = dchHasta.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = dchHasta.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaFinal = añof + "-" + mesf + "-" + diaf + " " + "23:59:59";
+			String fechaFinal = aniof + "-" + mesf + "-" + diaf + " " + "23:59:59";
 
 			DateFormat formatter2;
 			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -694,15 +694,15 @@ public class BuscarVentas extends JInternalFrame {
 			String totalVenta = lblTotVentas.getText();
 			int metpago = -1;
 			
-			int añoi = dchDesde.getCalendar().get(Calendar.YEAR);
+			int anioi = dchDesde.getCalendar().get(Calendar.YEAR);
 			int mesi = dchDesde.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = dchDesde.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = dchHasta.getCalendar().get(Calendar.YEAR);
+			int aniof = dchHasta.getCalendar().get(Calendar.YEAR);
 			int mesf = dchHasta.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = dchHasta.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -772,7 +772,7 @@ public class BuscarVentas extends JInternalFrame {
 	}
 	protected void mouseClickedMnactualizarNotaDe(MouseEvent arg0) {
 		try {
-			String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificación de nota de venta", JOptionPane.INFORMATION_MESSAGE);
+			String nuevaNota = JOptionPane.showInputDialog(null, "Deje la nota que desee", "Modificaciï¿½n de nota de venta", JOptionPane.INFORMATION_MESSAGE);
 
 			if(nuevaNota != null){
 				int nroVenta = Integer.parseInt( tbVentas.getValueAt(tbVentas.getSelectedRow(), 0).toString() );

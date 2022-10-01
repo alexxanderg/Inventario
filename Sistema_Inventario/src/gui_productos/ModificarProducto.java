@@ -784,7 +784,7 @@ public class ModificarProducto extends JFrame {
 		lblCantidadMnima.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadMnima.setForeground(Color.DARK_GRAY);
 		lblCantidadMnima.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadMnima.setBounds(9, 419, 190, 25);
+		lblCantidadMnima.setBounds(9, 453, 190, 25);
 		contentPane.add(lblCantidadMnima);
 		
 		txtStockMinimo = new JTextField();
@@ -807,7 +807,7 @@ public class ModificarProducto extends JFrame {
 		txtStockMinimo.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockMinimo.setColumns(10);
 		txtStockMinimo.setBackground(new Color(245, 245, 245));
-		txtStockMinimo.setBounds(210, 421, 150, 25);
+		txtStockMinimo.setBounds(210, 455, 150, 25);
 		contentPane.add(txtStockMinimo);
 		
 		label_1 = new JLabel("*");
@@ -1040,22 +1040,22 @@ public class ModificarProducto extends JFrame {
 		txtPrePromo3.setBounds(921, 275, 149, 25);
 		contentPane.add(txtPrePromo3);
 		
-		lblStockMximo = new JLabel("Stock m\u00E1ximo:");
+		lblStockMximo = new JLabel("Stock almacÃ©n:");
 		lblStockMximo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStockMximo.setForeground(Color.DARK_GRAY);
+		lblStockMximo.setForeground(new Color(46, 139, 87));
 		lblStockMximo.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStockMximo.setBounds(9, 457, 190, 25);
+		lblStockMximo.setBounds(9, 419, 190, 25);
 		contentPane.add(lblStockMximo);
 		
 		txtStockMaximo = new JTextField();
-		txtStockMaximo.setText("1");
+		txtStockMaximo.setText("0");
 		txtStockMaximo.setHorizontalAlignment(SwingConstants.LEFT);
-		txtStockMaximo.setForeground(Color.DARK_GRAY);
-		txtStockMaximo.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtStockMaximo.setForeground(new Color(46, 139, 87));
+		txtStockMaximo.setFont(new Font("Arial", Font.BOLD, 16));
 		txtStockMaximo.setColumns(10);
 		txtStockMaximo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtStockMaximo.setBackground(new Color(245, 245, 245));
-		txtStockMaximo.setBounds(210, 459, 150, 25);
+		txtStockMaximo.setBounds(210, 421, 150, 25);
 		contentPane.add(txtStockMaximo);
 		
 		label = new JLabel("*");
@@ -1515,7 +1515,7 @@ public class ModificarProducto extends JFrame {
 					ResultSet rs2 = consulta2.buscarProductoBarrasyCod(codbarra, id);
 					rs2.next();
 					String cb = rs2.getString("codbarra");
-					JOptionPane.showMessageDialog(null, "Ya existe producto con este código de barras");
+					JOptionPane.showMessageDialog(null, "Ya existe producto con este cï¿½digo de barras");
 					
 				} catch (Exception e) {
 				

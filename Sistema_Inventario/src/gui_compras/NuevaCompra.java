@@ -565,7 +565,7 @@ public class NuevaCompra extends JFrame {
 				JOptionPane.showMessageDialog(null, "Ingrese sus productos comprados");
 			} else {
 				int opc = JOptionPane.showConfirmDialog(null,
-						"¿Está seguro de registrar la compra?\nEste registro no se podrá eliminar o modificar en un futuro. Por favor verifique sus productos y precios",
+						"ï¿½Estï¿½ seguro de registrar la compra?\nEste registro no se podrï¿½ eliminar o modificar en un futuro. Por favor verifique sus productos y precios",
 						"Confirmar", 0, 3);
 				if (opc == 0) {
 					int tipComprobante = 0;
@@ -593,10 +593,10 @@ public class NuevaCompra extends JFrame {
 					double pagado = 0.0D;
 					double saldo = 0.0D;
 					try {
-						int añoe = this.dchFeEmision.getCalendar().get(1);
+						int anioe = this.dchFeEmision.getCalendar().get(1);
 						int mese = this.dchFeEmision.getCalendar().get(2) + 1;
 						int diae = this.dchFeEmision.getCalendar().get(5);
-						String fechaE = añoe + "-" + mese + "-" + diae;
+						String fechaE = anioe + "-" + mese + "-" + diae;
 
 						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 						Date date = formatter.parse(fechaE);
@@ -604,10 +604,10 @@ public class NuevaCompra extends JFrame {
 					} catch (Exception localException1) {
 					}
 					try {
-						int añov = this.dchFeVencimiento.getCalendar().get(1);
+						int aniov = this.dchFeVencimiento.getCalendar().get(1);
 						int mesv = this.dchFeVencimiento.getCalendar().get(2) + 1;
 						int diav = this.dchFeVencimiento.getCalendar().get(5);
-						String fechaV = añov + "-" + mesv + "-" + diav;
+						String fechaV = aniov + "-" + mesv + "-" + diav;
 
 						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 						Date date = formatter.parse(fechaV);
@@ -626,7 +626,7 @@ public class NuevaCompra extends JFrame {
 						while (this.rs.next())
 							idCompra = this.rs.getInt("idcompra");
 					} catch (Exception e3) {
-						JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código de compra: " + e3);
+						JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo cï¿½digo de compra: " + e3);
 						try {
 							if (this.rs != null)
 								this.rs.close();
@@ -770,7 +770,7 @@ public class NuevaCompra extends JFrame {
 
 		 public boolean isCellEditable (int row, int column)
 		    {
-			 // Aquí devolvemos true o false según queramos que una celda
+			 // Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 		        // identificada por fila,columna (row,column), sea o no editable
 		        if (column == 1 || column == 3 || column == 6 )
 		           return false;
@@ -806,10 +806,10 @@ public class NuevaCompra extends JFrame {
 
 			/*String prod = this.txtBuscarProducto.getText();
 			double cantidad = Double.parseDouble(JOptionPane.showInputDialog(prod
-					+ "\n\nINGRESE LA CANTIDAD:\n\nEjm.: Si compro 1 saco de arroz de 50k, pero lo vende por kilos, debería ingresar 50\n"));
+					+ "\n\nINGRESE LA CANTIDAD:\n\nEjm.: Si compro 1 saco de arroz de 50k, pero lo vende por kilos, deberï¿½a ingresar 50\n"));
 			cantidad = redondearDecimales(cantidad, 2);
 			double precioUnidad = Double.parseDouble(JOptionPane.showInputDialog(prod
-					+ "\n\nINGRESE PRECIO DE COMPRA INDIVIDUAL:\n\nSe colocaría el precio de compra por kilo, no del saco\nEjm.: 3.5\n"));
+					+ "\n\nINGRESE PRECIO DE COMPRA INDIVIDUAL:\n\nSe colocarï¿½a el precio de compra por kilo, no del saco\nEjm.: 3.5\n"));
 			precioUnidad = redondearDecimales(precioUnidad, 2);
 			double precioSubTot = precioUnidad * cantidad;
 			precioSubTot = redondearDecimales(precioSubTot, 2);
@@ -888,16 +888,16 @@ public class NuevaCompra extends JFrame {
 
 	protected void actionPerformedBtnAyuda(ActionEvent e) {
 		JOptionPane.showMessageDialog(null,
-				"A continuación registre los detalles y productos de su compra.\n\n"
+				"A continuaciï¿½n registre los detalles y productos de su compra.\n\n"
 				+ "Ingrese los datos de el recibo de la compra (todos estos campos son opcionales)\n"
-				+ "En fecha de vencimiento puede colocar alguna fecha si desea que el sistema le avise cuando caducará el pago de la compra)\n\n"
+				+ "En fecha de vencimiento puede colocar alguna fecha si desea que el sistema le avise cuando caducarï¿½ el pago de la compra)\n\n"
 				+ "Para registrar sus productos comprados:\n"
 				+ "1.- Busque el producto por su nombre o codigo de barras.\n"
-				+ "2.- Ingrese la cantidad de este (según la unidad de medida con la que haya registrado el producto anteriormente).\n"
+				+ "2.- Ingrese la cantidad de este (segï¿½n la unidad de medida con la que haya registrado el producto anteriormente).\n"
 				+ "3.- Ingrese su precio de compra individual.\n"
-				+ "Ejm.: Si compró un saco de arroz de 50k pero se registro por kilos. El ingreso sería de la siguiente forma:\n"
+				+ "Ejm.: Si comprï¿½ un saco de arroz de 50k pero se registro por kilos. El ingreso serï¿½a de la siguiente forma:\n"
 				+ "Producto: Arroz camanejo (kilo)  -  Cantidad: 50  -  Precio: 3.0\n\n"
-				+ "Al finalizar, verá el monto total de su compra, al costado puede indicar si la pagó completamente o si queda un saldo pendiente.\n"
+				+ "Al finalizar, verï¿½ el monto total de su compra, al costado puede indicar si la pagï¿½ completamente o si queda un saldo pendiente.\n"
 				+ "Finalizar");
 	}
 	

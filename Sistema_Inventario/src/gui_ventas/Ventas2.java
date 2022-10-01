@@ -748,7 +748,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		mnlimpiarVentana.setBackground(SystemColor.menu);
 		menuBar.add(mnlimpiarVentana);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE Tï¿½TULO
 
 		cargar();
 		cargarBuscador();
@@ -798,7 +798,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			}
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificación de fecha para venta " + e);
+			JOptionPane.showMessageDialog(null, "Error al cargar permisos de modificaciï¿½n de fecha para venta " + e);
 		} finally {
 			try {
 				if (rs != null)
@@ -810,7 +810,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			}
 		}
 
-		// ACÁ ENTRA SI ES UNA VENTA PARA MODIFICAR
+		// ACï¿½ ENTRA SI ES UNA VENTA PARA MODIFICAR
 
 		if (nroVentaModificar != -1) {
 			consulta.iniciar();
@@ -1035,7 +1035,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
-						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 7).toString())) {// AQUÍ ENTRA SI
+						if (rs.getString("codproducto").equals(tbCarrito.getValueAt(i, 7).toString())) {// AQUï¿½ ENTRA SI
 																										// YA EXISTE EL
 																										// PRODUCTO EN
 																										// LA TABLA
@@ -1051,7 +1051,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 					JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 			}
-			if (flag == 0) { // AQUÍ ENTRA SI EL
+			if (flag == 0) { // AQUï¿½ ENTRA SI EL
 								// PRODUCTO AGREGADO ES NUEVO
 				try {
 					rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio", "SubTotal",
@@ -1074,7 +1074,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			sumarSubTotales();
 			sumarTotalGenerales();
 
-		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+		} catch (Exception e) { // AQUI ES SI LO QUE SE INGRESA ES UN Cï¿½DIGO DE BARRAS
 			try {
 				String codbarra = txtBuscarProd.getText();
 				consulta.iniciar();
@@ -1084,7 +1084,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				int contador = 0;
 				
 				for (int i = 0; i < tbCarrito.getRowCount(); i++) {
-					try {// AQUÍ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
+					try {// AQUï¿½ ENTRA SI YA EXISTE EL PRODUCTO EN LA TABLA
 						rs.beforeFirst();
 						while (rs.next()) {
 							if (rs.getInt("codproducto") == Integer.parseInt(tbCarrito.getValueAt(i, 7).toString())) {
@@ -1100,7 +1100,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 					} catch (SQLException ex) {
 					}
 				}
-				if (flag == 0) { // AQUÍ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
+				if (flag == 0) { // AQUï¿½ ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
 					try {
 						rs.beforeFirst();
 						while (rs.next()) {
@@ -1325,22 +1325,22 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		int opc = 0;
 
 		if (rbtnVenta.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "¿Relizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION,
+			opc = JOptionPane.showConfirmDialog(null, "ï¿½Relizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 		if (rbtnCoti.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION,
+			opc = JOptionPane.showConfirmDialog(null, "ï¿½Realizar cotizaciï¿½n?", "Confirmar", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 
 		if (opc == 0) {
 
-// VERIFICA SI ES COTIZACIÓN
+// VERIFICA SI ES COTIZACIï¿½N
 			if (this.rbtnVenta.isSelected()) {
 				// ESTO ES VENTA
 				int ventasinstock = 0; // 0NO 1SI
 				int flag = 0; // Permite pasar a vender segun stock 0NO 1SI
 
 				if (tbCarrito.getRowCount() < 1) {
-					JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
+					JOptionPane.showMessageDialog(null, "Agregue algï¿½n producto a la lista");
 				} else {
 					try {
 						consulta.iniciar();
@@ -1360,7 +1360,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 						}
 					}
 
-					if (ventasinstock == 0) // NO ESTÁ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
+					if (ventasinstock == 0) // NO ESTï¿½ PERMITIDO VENDER SIN STOCK, SE DEBE VERIFICAR
 						flag = verificarStock();
 					else
 						flag = 1; // NO TIENE RESTRICCION Y SE VENDE SIN PROBLEMA
@@ -1400,7 +1400,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 							if (fechaVauto == 0) { // AQUI SI LA FECHA ES AUTOMATICA
 
-								if (nroVentaModificar != -1) { // AQUI SI ES MODIFICACIÓN DE VENTA
+								if (nroVentaModificar != -1) { // AQUI SI ES MODIFICACIï¿½N DE VENTA
 									// consulta.modificarVenta(nroVentaModificar);
 
 									consulta.modificarVenta(nroVentaModificar, idcliente, idusuario, totCompra,
@@ -1413,12 +1413,12 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								}
 							} else if (fechaVauto == 1) { // AQUI SI LA FECHA ES PERSONALIZADA
 
-								int añoi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
+								int anioi = dchFechaVenta.getCalendar().get(Calendar.YEAR);
 								int mesi = dchFechaVenta.getCalendar().get(Calendar.MARCH) + 1;
 								int diai = dchFechaVenta.getCalendar().get(Calendar.DAY_OF_MONTH);
 								String hora = txtHora.getText();
 								String min = txtMin.getText();
-								String fechaActualString = añoi + "-" + mesi + "-" + diai + " " + hora + ":" + min
+								String fechaActualString = anioi + "-" + mesi + "-" + diai + " " + hora + ":" + min
 										+ ":00";
 
 								DateFormat formatter;
@@ -1426,7 +1426,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								Date date = (Date) formatter.parse(fechaActualString);
 								Object fechaElegida = new java.sql.Timestamp(date.getTime());
 
-								if (nroVentaModificar != -1) { // AQUI SI ES MODIFICACIÓN DE VENTA
+								if (nroVentaModificar != -1) { // AQUI SI ES MODIFICACIï¿½N DE VENTA
 									consulta.modificarVenta2(nroVentaModificar, idcliente, idusuario, totCompra,
 											totVenta, gananciaTot, descuentoTot, nota, metpago1, monto1, metpago2,
 											monto2, fechaElegida);
@@ -1451,8 +1451,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 						}
 
 					     /*
-					      * SE REALIZÓ EL REGISTRO DE LA VENTA
-					      * A CONTINUACION SE REGISTRARÁN LOS DETALLES DE ESTA
+					      * SE REALIZï¿½ EL REGISTRO DE LA VENTA
+					      * A CONTINUACION SE REGISTRARï¿½N LOS DETALLES DE ESTA
 					      */
 
 						int ultCodVenta = 0;
@@ -1469,7 +1469,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 									while (rs.next())
 										ultCodVenta = rs.getInt("codventa");
 								} catch (Exception e3) {
-									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo código: " + e3);
+									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo cï¿½digo: " + e3);
 								} finally {
 									try {
 										if (rs != null)
@@ -1518,7 +1518,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 										subTotVenta, gananciaProdVenta, uMedidaUsada, detallesProducto);
 
 								/*
-								 * A CONTINUACION SE DISMINUIRÁ EL STOCK DE CADA PRODUCTO
+								 * A CONTINUACION SE DISMINUIRï¿½ EL STOCK DE CADA PRODUCTO
 								 * 
 								 */
 								try {
@@ -1630,7 +1630,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			}
 
 			if (this.rbtnCoti.isSelected()) {
-//EMPIEZA LA COTIZACIÓN					
+//EMPIEZA LA COTIZACIï¿½N					
 
 				int idcliente = ((Cliente) this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex())).getId();
 				String nomCliente = ((Cliente) this.cbClientes.getItemAt(this.cbClientes.getSelectedIndex()))
@@ -1771,7 +1771,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				}
 
 				JOptionPane.showMessageDialog(null,
-						"COTIZACIÓN REALIZADA CORRECTAMENTE\n A CONTINUACIÓN SE GENERARÁ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO",
+						"COTIZACIï¿½N REALIZADA CORRECTAMENTE\n A CONTINUACIï¿½N SE GENERARï¿½ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO",
 						"", 1);
 
 				Connection con = null;
@@ -1838,7 +1838,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 		 public boolean isCellEditable (int row, int column)
 		    {
-			 // Aquí devolvemos true o false según queramos que una celda
+			 // Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 		        // identificada por fila,columna (row,column), sea o no editable
 		        if (column == 1 || column == 3 ||column == 5 ||column == 6 ||column == 7 ||column == 8 ||column == 9 ||column == 10)
 		           return false;
@@ -2036,7 +2036,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				return 0;
 			}
 		}
-		return 1; // 1 = NO ENCONTRÓ COINCIDENCIA
+		return 1; // 1 = NO ENCONTRï¿½ COINCIDENCIA
 	}
 
 	public void seleccionarRow() {
@@ -2070,7 +2070,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	}
 
 	protected void mouseClickedMnlimpiarVentana(MouseEvent e) {
-		int opc = JOptionPane.showConfirmDialog(null, "¿Desea limpiar todos los campos llenados?", "Confirmar",
+		int opc = JOptionPane.showConfirmDialog(null, "ï¿½Desea limpiar todos los campos llenados?", "Confirmar",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			limpiarVentana();

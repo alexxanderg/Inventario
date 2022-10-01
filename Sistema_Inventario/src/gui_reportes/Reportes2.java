@@ -509,7 +509,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										textField_4.setBounds(619, 234, 399, 5);
 										panel.add(textField_4);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE Tï¿½TULO
 
 		cargar();
 		cargarBuscador();
@@ -619,15 +619,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		try {
 			con = MySQLConexion.getConection();
 
-			int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+			int anioi = fInicial.getCalendar().get(Calendar.YEAR);
 			int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fFinal.getCalendar().get(Calendar.YEAR);
+			int aniof = fFinal.getCalendar().get(Calendar.YEAR);
 			int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -720,15 +720,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		try {
 			con = MySQLConexion.getConection();
 
-			int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+			int anioi = fInicial.getCalendar().get(Calendar.YEAR);
 			int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fFinal.getCalendar().get(Calendar.YEAR);
+			int aniof = fFinal.getCalendar().get(Calendar.YEAR);
 			int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 			Map parameters = new HashMap();
 			parameters.put("prtFechaI", fechai);
 			parameters.put("prmtFechaFI", fechaf);
@@ -910,15 +910,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 			
 			con = MySQLConexion.getConection();
 
-			int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+			int anioi = fInicial.getCalendar().get(Calendar.YEAR);
 			int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fFinal.getCalendar().get(Calendar.YEAR);
+			int aniof = fFinal.getCalendar().get(Calendar.YEAR);
 			int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -956,15 +956,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 			
 			con = MySQLConexion.getConection();
 
-			int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+			int anioi = fInicial.getCalendar().get(Calendar.YEAR);
 			int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
 			int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = fFinal.getCalendar().get(Calendar.YEAR);
+			int aniof = fFinal.getCalendar().get(Calendar.YEAR);
 			int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
 			int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter;
 			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -1003,15 +1003,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		try {
 			con = MySQLConexion.getConection();
 
-			int añoi = this.fInicial.getCalendar().get(1);
+			int anioi = this.fInicial.getCalendar().get(1);
 			int mesi = this.fInicial.getCalendar().get(2) + 1;
 			int diai = this.fInicial.getCalendar().get(5);
-			String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-			int añof = this.fFinal.getCalendar().get(1);
+			int aniof = this.fFinal.getCalendar().get(1);
 			int mesf = this.fFinal.getCalendar().get(2) + 1;
 			int diaf = this.fFinal.getCalendar().get(5);
-			String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = formatter.parse(fechai);
@@ -1045,15 +1045,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		    try {
 		      con = MySQLConexion.getConection();
 
-		      int añoi = this.fInicial.getCalendar().get(1);
+		      int anioi = this.fInicial.getCalendar().get(1);
 		      int mesi = this.fInicial.getCalendar().get(2) + 1;
 		      int diai = this.fInicial.getCalendar().get(5);
-		      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+		      String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-		      int añof = this.fFinal.getCalendar().get(1);
+		      int aniof = this.fFinal.getCalendar().get(1);
 		      int mesf = this.fFinal.getCalendar().get(2) + 1;
 		      int diaf = this.fFinal.getCalendar().get(5);
-		      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+		      String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 		      Map parameters = new HashMap();
 		      parameters.put("prtFechaI", fechai);
 		      parameters.put("prmtFechaF", fechaf);
@@ -1073,15 +1073,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		    try {
 		      con = MySQLConexion.getConection();
 
-		      int añoi = this.fInicial.getCalendar().get(1);
+		      int anioi = this.fInicial.getCalendar().get(1);
 		      int mesi = this.fInicial.getCalendar().get(2) + 1;
 		      int diai = this.fInicial.getCalendar().get(5);
-		      String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+		      String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-		      int añof = this.fFinal.getCalendar().get(1);
+		      int aniof = this.fFinal.getCalendar().get(1);
 		      int mesf = this.fFinal.getCalendar().get(2) + 1;
 		      int diaf = this.fFinal.getCalendar().get(5);
-		      String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+		      String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 		      Map parameters = new HashMap();
 		      parameters.put("prtFechaI", fechai);
 		      parameters.put("prmtFechaF", fechaf);
@@ -1101,15 +1101,15 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		    try {
 		      con = MySQLConexion.getConection();
 
-		      int añoi = fInicial.getCalendar().get(Calendar.YEAR);
+		      	int anioi = fInicial.getCalendar().get(Calendar.YEAR);
 				int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
 				int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
-				String fechai = añoi + "-" + mesi + "-" + diai + " 00:00:00";
+				String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
 
-				int añof = fFinal.getCalendar().get(Calendar.YEAR);
+				int aniof = fFinal.getCalendar().get(Calendar.YEAR);
 				int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
 				int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
-				String fechaf = añof + "-" + mesf + "-" + diaf + " 23:59:59";
+				String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
 
 				DateFormat formatter;
 				formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

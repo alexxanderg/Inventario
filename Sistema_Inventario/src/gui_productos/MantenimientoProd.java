@@ -55,8 +55,9 @@ import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseListener;
 
-public class MantenimientoProd extends JInternalFrame {
+public class MantenimientoProd extends JInternalFrame implements MouseListener {
 	private JMenuBar menuBar;
 	private JMenu mnCrearProducto;
 	private JMenu mnModificarProducto;
@@ -81,6 +82,7 @@ public class MantenimientoProd extends JInternalFrame {
 	private JMenu mnduplicarProducto;
 	private JButton btnInventarioPreCo;
 	private JButton btnInventarioPreVe;
+	private JMenu mntransferirStock;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -208,7 +210,7 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
 		
-		mnCrearProducto = new JMenu("|Crear nuevo producto| ");
+		mnCrearProducto = new JMenu("|Crear nuevo| ");
 		mnCrearProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -220,7 +222,7 @@ public class MantenimientoProd extends JInternalFrame {
 		mnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnCrearProducto);
 		
-		mnModificarProducto = new JMenu("|Modificar producto| ");
+		mnModificarProducto = new JMenu("|Modificar| ");
 		mnModificarProducto.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -257,6 +259,7 @@ public class MantenimientoProd extends JInternalFrame {
 		menuBar.add(mnduplicarProducto);
 		
 		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
+		mnaadirStock.setVisible(false);
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -267,6 +270,13 @@ public class MantenimientoProd extends JInternalFrame {
 		mnaadirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mnaadirStock.setBackground(SystemColor.menu);
 		menuBar.add(mnaadirStock);
+		
+		mntransferirStock = new JMenu("|Transferir stock| ");
+		mntransferirStock.addMouseListener(this);
+		mntransferirStock.setForeground(new Color(50, 205, 50));
+		mntransferirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mntransferirStock.setBackground(SystemColor.menu);
+		menuBar.add(mntransferirStock);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -322,7 +332,7 @@ public class MantenimientoProd extends JInternalFrame {
         list.add("ID");
         list.add("C BARRA");
         list.add("NOMBRE");
-        list.add("DESCRIPCIÓN");
+        list.add("DESCRIPCIï¿½N");
 		String[] parts = atribTodos.split(",");
 		for (int x=0; x<parts.length; x++){
 			if(parts[x].equals("marca"))
@@ -338,14 +348,15 @@ public class MantenimientoProd extends JInternalFrame {
 		}
 		list.add("UNI MED");
 		list.add("CATEGORIA");
-		//list.add("ALMACÉN");
+		//list.add("ALMACï¿½N");
 		//list.add("DISTRIBUIDOR");
 		list.add("STOCK");
+		list.add("ALMACÃ‰N");
 		list.add("PREC CO");
 		list.add("% GAN");
 		list.add("PREC VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
-		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categoría", "Marca", "Color",
+		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categorï¿½a", "Marca", "Color",
 				"F. Vencimiento", "Uni. Medida", "Cantidad", "PrecioCompra", "PrecioVenta" });*/
 		dtm.setColumnIdentifiers(columnas);
 		
@@ -377,7 +388,7 @@ public class MantenimientoProd extends JInternalFrame {
 							listProds.add(rs.getString("laboratorio"));
 						if(parts[x].equals("fvencimiento")){
 							try {
-								// En esta linea de código estamos indicando el nuevo formato que queremos para nuestra fecha.
+								// En esta linea de cï¿½digo estamos indicando el nuevo formato que queremos para nuestra fecha.
 								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 								// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
 								String fechaOrdenada = formatter.format(rs.getDate("fechaVenc"));
@@ -399,6 +410,7 @@ public class MantenimientoProd extends JInternalFrame {
 					} catch (Exception e) {}*/
 			        
 			        listProds.add(rs.getString("cantidad"));
+			        listProds.add(rs.getString("cantmax")); // STOCK ALMACEN
 			        listProds.add(rs.getString("precioCo"));
 			        listProds.add(rs.getString("ptjganancia"));
 			        listProds.add(rs.getString("precioVe"));
@@ -456,7 +468,7 @@ public class MantenimientoProd extends JInternalFrame {
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = tbProductos.getColumnModel(); // 
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Código
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // Cï¿½digo
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Producto
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Detalle
 		
@@ -540,7 +552,7 @@ public class MantenimientoProd extends JInternalFrame {
 		String marca = tbProductos.getValueAt(tb.getSelectedRow(), 4).toString();
 		String color = tbProductos.getValueAt(tb.getSelectedRow(), 5).toString();
 		
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer ELIMINAR el producto:\n" + producto + " " + descripcion + " " + marca + " " + color + " ?", "Confirmación", JOptionPane.YES_NO_OPTION,
+		int opc = JOptionPane.showConfirmDialog(null, "ï¿½Seguro de querer ELIMINAR el producto:\n" + producto + " " + descripcion + " " + marca + " " + color + " ?", "Confirmaciï¿½n", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			elminarProducto(codigoProducto);
@@ -624,11 +636,11 @@ public class MantenimientoProd extends JInternalFrame {
 				
 				txtCodigo.setText("");
 				
-				String[] opciones = { "AÑADIR STOCK", "MODIFICAR", "DUPLICAR", "ELIMINAR", "CANCELAR" };
+				String[] opciones = { "Aï¿½ADIR STOCK", "MODIFICAR", "DUPLICAR", "ELIMINAR", "CANCELAR" };
 				int seleccion = JOptionPane.showOptionDialog(null, productoName + " " + productoDetail, "Seleccione una opcion",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
-				if (seleccion == 0) {// añadir stock
+				if (seleccion == 0) {// aï¿½adir stock
 					try {
 						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						model.iniciar();
@@ -636,7 +648,7 @@ public class MantenimientoProd extends JInternalFrame {
 						as.setVisible(true);
 						model.reset();
 						
-					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN Cï¿½DIGO DE BARRAS
 						AgregarStock as = new AgregarStock(codproducto, cantActual, precioCo, precioVe, fv, usuario, this);
 						as.setVisible(true);				
 					}
@@ -647,7 +659,7 @@ public class MantenimientoProd extends JInternalFrame {
 						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						abrirModificarProducto(""+idProd);
 						
-					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN Cï¿½DIGO DE BARRAS
 						try {
 							abrirModificarProducto(""+codproducto);
 						} catch (Exception e3) {
@@ -659,7 +671,7 @@ public class MantenimientoProd extends JInternalFrame {
 					try {
 						int idProd = Integer.parseInt( productoBuscado.substring(productoBuscado.indexOf("(")+1, productoBuscado.indexOf(")")));
 						try {
-							int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+							int opc = JOptionPane.showConfirmDialog(null, "ï¿½Crear una copia de este producto? \nEl cï¿½digo de barras no se copiarï¿½.", "Confirmaciï¿½n", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 							if (opc == 0) {
 								model.iniciar();
 								model.duplicarProducto(idProd);
@@ -669,9 +681,9 @@ public class MantenimientoProd extends JInternalFrame {
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, "Error: Seleccione un producto");
 						}	
-					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN CÓDIGO DE BARRAS
+					} catch (Exception e2) {// AQUI ES SI LO QUE SE INGRESA ES UN Cï¿½DIGO DE BARRAS
 						try {
-							int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+							int opc = JOptionPane.showConfirmDialog(null, "ï¿½Crear una copia de este producto? \nEl cï¿½digo de barras no se copiarï¿½.", "Confirmaciï¿½n", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 							if (opc == 0) {
 								model.iniciar();
 								model.duplicarProducto(codproducto);
@@ -784,7 +796,7 @@ public class MantenimientoProd extends JInternalFrame {
 				AgregarStock as = new AgregarStock(idProducto, cantActual, precioCo, precioVe, fv, usuario, this);
 				as.setVisible(true);
 				
-				/*float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a añadir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
+				/*float stockanadir = Float.parseFloat(JOptionPane.showInputDialog("Ingrese stock a aï¿½adir al producto:\n" + productoName + " " + productoDetail + "\n\nStock actual: " + cantidadActual+ "\n"));
 				
 				float cantidadFinal = cantActual + stockanadir;
 				
@@ -812,7 +824,7 @@ public class MantenimientoProd extends JInternalFrame {
 	 
 	protected void mouseClickedMnduplicarProducto(MouseEvent arg0) {
 		try {
-			int opc = JOptionPane.showConfirmDialog(null, "¿Crear una copia de este producto? \nEl código de barras no se copiará.", "Confirmación", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			int opc = JOptionPane.showConfirmDialog(null, "ï¿½Crear una copia de este producto? \nEl cï¿½digo de barras no se copiarï¿½.", "Confirmaciï¿½n", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 			if (opc == 0) {
 				int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
 				
@@ -861,6 +873,53 @@ public class MantenimientoProd extends JInternalFrame {
 	    consulta.reset();
 
 	    JOptionPane.showMessageDialog(null, "El valor de su inventario actual a precio de Venta es de: S/ " + venta);
+	}
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == mntransferirStock) {
+			mouseClickedMntransferirStock(e);
+		}
+	}
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void mouseClickedMntransferirStock(MouseEvent e) {
+		try {
+			int idProducto = Integer.parseInt(tbProductos.getValueAt(tb.getSelectedRow(), 0).toString());
+			try {
+				
+				model.iniciar();
+				rs = model.buscarProductoID(idProducto);
+				rs.next();
+				
+				float cantActual = rs.getFloat("cantidad");
+				float cantAlmacen = rs.getFloat("cantmax");
+				
+				TransferirStock ts = new TransferirStock(idProducto, cantActual, cantAlmacen, usuario, this);
+				ts.setVisible(true);
+				
+				
+			} catch (Exception e2) {
+				
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (model != null)
+						model.reset();
+	            } catch (Exception ex) {
+	            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+	            }
+			}
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+		
+		
 	}
 }
 
