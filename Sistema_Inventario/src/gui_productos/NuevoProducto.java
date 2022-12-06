@@ -1192,6 +1192,8 @@ public class NuevoProducto extends JFrame {
 		if(nc!=null){
 			lblCantidadActual.setVisible(false);
 			txtStockInicial.setVisible(false);
+			lblStockMximo.setVisible(false);
+			txtStockMaximo.setVisible(false);
 		}		
 	}
 	

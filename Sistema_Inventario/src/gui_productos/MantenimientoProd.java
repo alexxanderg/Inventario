@@ -259,7 +259,6 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		menuBar.add(mnduplicarProducto);
 		
 		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
-		mnaadirStock.setVisible(false);
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

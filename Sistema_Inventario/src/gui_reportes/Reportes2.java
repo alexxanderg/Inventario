@@ -481,12 +481,14 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(btnProdVencerAntiguo);
 										
 										lblPagosDeLas = new JLabel("PAGOS DE LAS VENTAS");
+										lblPagosDeLas.setVisible(false);
 										lblPagosDeLas.setHorizontalAlignment(SwingConstants.LEFT);
 										lblPagosDeLas.setFont(new Font("Candara", Font.BOLD, 20));
 										lblPagosDeLas.setBounds(72, 400, 271, 32);
 										panel.add(lblPagosDeLas);
 										
 										btnPagosVentas = new JButton("Ver reporte");
+										btnPagosVentas.setVisible(false);
 										btnPagosVentas.addActionListener(this);
 										btnPagosVentas.setForeground(Color.WHITE);
 										btnPagosVentas.setFont(new Font("Tahoma", Font.BOLD, 18));

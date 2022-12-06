@@ -480,7 +480,7 @@ public class VentanaPrincipal extends JFrame {
 		case 2:
 			btnClientes.setEnabled(false);
 			btnConfiguraciones.setEnabled(false);
-			btnInventario.setEnabled(false);
+			btnInventario.setEnabled(true);
 			btnKardex.setEnabled(false);
 			btnReportes.setEnabled(false);
 			btnUsuario.setEnabled(false);
@@ -520,12 +520,12 @@ public class VentanaPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
 		}
 		/*try {
-			if (ventas.isShowing()) { // VERIFICA SI LA VENTANA YA ESTÁ ABIERTA
+			if (ventas.isShowing()) { // VERIFICA SI LA VENTANA YA ESTï¿½ ABIERTA
 				ventas.setSelected(true); // PONER JINTERNALFRAME DELANTE DE LOS OTROS
 				pintarBotones();
 				btnVentas.setBackground(colorSelec);
 			}
-		} catch (Exception f) { // Aqui entrará si no se ha inicializado la ventana
+		} catch (Exception f) { // Aqui entrarï¿½ si no se ha inicializado la ventana
 			try {
 				abrirVentanaVentas();
 			} catch (Exception e) {
@@ -759,12 +759,12 @@ public class VentanaPrincipal extends JFrame {
 			DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss");
 			Date today = Calendar.getInstance().getTime();       
 			String reportDate = df.format(today);
-			File directorio=new File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
+			File directorio=new File("D:\\ï¿½INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); 
 			directorio.mkdirs(); 
 			Process p;
 			p = Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
 			InputStream is = p.getInputStream();
-			FileOutputStream fos = new FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
+			FileOutputStream fos = new FileOutputStream("D:\\ï¿½INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "+reportDate+".sql");
 			byte[] buffer = new byte[1000];
 			int leido = is.read(buffer);
 			while(leido>0){

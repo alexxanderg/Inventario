@@ -536,7 +536,6 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
-		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -948,6 +947,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			acNotas.addItem("5% de descuento en su siguiente compra");
 			acNotas.addItem("10% de descuento en su siguiente compra");
 			acNotas.addItem("15% de descuento en su siguiente compra");
+			acNotas.addItem("No se aceptan cambios ni devoluciones.");
+			
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERROR al cargar buscador: " + e);
@@ -1771,7 +1772,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				}
 
 				JOptionPane.showMessageDialog(null,
-						"COTIZACI�N REALIZADA CORRECTAMENTE\n A CONTINUACI�N SE GENERAR� SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO",
+						"COTIZACIÓN REALIZADA CORRECTAMENTE\n A CONTINUACIÓN SE GENERARÁ SU COMPROBANTE, PUEDE GUARDARLO EN PDF O IMPRIMIRLO",
 						"", 1);
 
 				Connection con = null;
@@ -1786,7 +1787,8 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 									getClass().getClassLoader().getResourceAsStream("rCotizacion80mm.jasper"),
 									parameters2, con);
 
-							JasperPrintManager.printReport(impressao, false);
+							if(chckImrpimir.isSelected())
+								JasperPrintManager.printReport(impressao, false);
 
 							new AbstractJasperReports().createReport(con, "rCotizacion80mm.jasper", parameters2);
 							AbstractJasperReports.showViewer();
