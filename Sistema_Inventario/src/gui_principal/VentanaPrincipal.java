@@ -19,7 +19,6 @@ import gui_ventas.BuscarVentas;
 import gui_ventas.Ventas;
 import gui_ventas.Ventas2;
 import mysql.consultas;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -350,7 +349,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNewLabel = new JLabel("SISTEMA RAPIVENTA");
+		lblNewLabel = new JLabel("RAPIVENTA FOOD");
 		lblNewLabel.setBounds(128, 0, 895, 50);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
