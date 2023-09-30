@@ -1210,21 +1210,22 @@ public class consultas {
 			double preVeSDTot, double descIndiv, double descTotal, double subTotal, double ganancia, String uMedidaUsada, String detallesProducto) {
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ventas_detalle (codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada, detventa)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_ventas_detalle (idventadetalle, codventa, codproducto, cantidad, preVeSDInd, preVeSDTot, descIndiv, descTotal, subTotal, ganancia, uMedidaUsada, detventa)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			// JOptionPane.showMessageDialog(null, cantidad);
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
-			prepareStmt.setInt(1, codventa);
-			prepareStmt.setInt(2, codproducto);
-			prepareStmt.setDouble(3, cantidad);
-			prepareStmt.setDouble(4, preVeSDInd);
-			prepareStmt.setDouble(5, preVeSDTot);
-			prepareStmt.setDouble(6, descIndiv);
-			prepareStmt.setDouble(7, descTotal);
-			prepareStmt.setDouble(8, subTotal);
-			prepareStmt.setDouble(9, ganancia);
-			prepareStmt.setString(10, uMedidaUsada);
-			prepareStmt.setString(11, detallesProducto);
+			prepareStmt.setString(1, null);
+			prepareStmt.setInt(2, codventa);
+			prepareStmt.setInt(3, codproducto);
+			prepareStmt.setDouble(4, cantidad);
+			prepareStmt.setDouble(5, preVeSDInd);
+			prepareStmt.setDouble(6, preVeSDTot);
+			prepareStmt.setDouble(7, descIndiv);
+			prepareStmt.setDouble(8, descTotal);
+			prepareStmt.setDouble(9, subTotal);
+			prepareStmt.setDouble(10, ganancia);
+			prepareStmt.setString(11, uMedidaUsada);
+			prepareStmt.setString(12, detallesProducto);
 			
 			prepareStmt.execute();
 		} catch (Exception e) {

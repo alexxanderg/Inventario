@@ -97,6 +97,7 @@ estado		tinyint -- 1Activa 2Modificada 3Eliminada
 );
 
 create table tb_ventas_detalle(
+idventadetalle	int primary key auto_increment,
 codventa	int not null,
 codproducto	int,
 cantidad	float,

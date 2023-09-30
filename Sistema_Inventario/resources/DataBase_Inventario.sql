@@ -97,6 +97,7 @@ estado		tinyint -- 1Activa 2Modificada 3Eliminada
 );
 
 create table tb_ventas_detalle(
+idventadetalle	int primary key auto_increment,
 codventa	int not null,
 codproducto	int,
 cantidad	float,
@@ -108,8 +109,7 @@ subTotal	float,
 ganancia	float,
 uMedidaUsada varchar(30),
 foreign key (codventa) references tb_ventas(codventa),
-foreign key (codproducto) references tb_productos(codproducto),
-primary key (codventa, codproducto)
+foreign key (codproducto) references tb_productos(codproducto)
 );
 
 ALTER TABLE tb_ventas_detalle ADD detventa VARCHAR(200);

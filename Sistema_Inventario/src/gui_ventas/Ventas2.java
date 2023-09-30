@@ -162,6 +162,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 	private JTextField textField;
 	private JLabel lblCantidad;
 	private JLabel lblPrecio;
+	private JComboBox cbMesa;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -253,20 +254,21 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		btnNewCliente.setBounds(576, 58, 56, 35);
 		getContentPane().add(btnNewCliente);
 
-		lblNotaAdicionalDe = new JLabel("Nota adicional para la venta: (opcional)");
+		lblNotaAdicionalDe = new JLabel("Mesa:");
 		lblNotaAdicionalDe.setForeground(Color.DARK_GRAY);
 		lblNotaAdicionalDe.setFont(new Font("Candara", Font.BOLD, 20));
 		lblNotaAdicionalDe.setBounds(704, 103, 404, 23);
 		getContentPane().add(lblNotaAdicionalDe);
 
 		txtInfoAdicional = new JTextField();
+		txtInfoAdicional.setVisible(false);
 		txtInfoAdicional.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtInfoAdicional.setHorizontalAlignment(SwingConstants.LEFT);
 		txtInfoAdicional.setForeground(SystemColor.windowBorder);
 		txtInfoAdicional.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtInfoAdicional.setColumns(10);
 		txtInfoAdicional.setBackground(new Color(245, 245, 245));
-		txtInfoAdicional.setBounds(704, 126, 404, 34);
+		txtInfoAdicional.setBounds(707, 5, 404, 34);
 		getContentPane().add(txtInfoAdicional);
 
 		lblMtodoDePago = new JLabel("Paga con:");
@@ -709,6 +711,13 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblPrecio.setFont(new Font("Candara", Font.BOLD, 20));
 		lblPrecio.setBounds(37, 305, 101, 23);
 		getContentPane().add(lblPrecio);
+		
+		cbMesa = new JComboBox();
+		cbMesa.setBorder(new LineBorder(new Color(30, 144, 255), 2));
+		cbMesa.setModel(new DefaultComboBoxModel(new String[] {"", "MESA 01", "MESA 02", "MESA 03", "MESA 04", "MESA 05", "MESA 06", "MESA 07", "MESA 08", "MESA 09", "MESA 10", "MESA 11", "MESA 12", "MESA 13", "MESA 14", "MESA 15", "MESA 16", "MESA 17", "MESA 18", "MESA 19", "MESA 20", "PARA LLEVAR", "APLICATIVO"}));
+		cbMesa.setFont(new Font("Arial", Font.BOLD, 18));
+		cbMesa.setBounds(704, 126, 214, 34);
+		getContentPane().add(cbMesa);
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -1032,7 +1041,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 			rs = consulta.buscarProductoID(idProd);
 			int flag = 0;
 			float cantidad = 0;
-			for (int i = 0; i < tbCarrito.getRowCount(); i++) {
+			/*for (int i = 0; i < tbCarrito.getRowCount(); i++) {
 				try {
 					rs.beforeFirst();
 					while (rs.next()) {
@@ -1051,7 +1060,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
-			}
+			}*/
 			if (flag == 0) { // AQU� ENTRA SI EL
 								// PRODUCTO AGREGADO ES NUEVO
 				try {
@@ -1375,8 +1384,9 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 						String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
 						String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
 						int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
-						String nota = txtInfoAdicional.getText();
-
+						//String nota = txtInfoAdicional.getText();
+						String nota = cbMesa.getSelectedItem().toString(); 
+						
 						float totCompra = Float.parseFloat(lblTotalCompra.getText());
 						float totVenta = Float.parseFloat(lblTotalVentaFinal.getText());
 						float gananciaTot = Float.parseFloat(lblGananciaTotal.getText());
@@ -1468,6 +1478,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 								rs = consulta.ObtenerUltimoCodigo();
 								try {
 									while (rs.next())
+										//ultCodVenta = rs.getInt("codventa");
 										ultCodVenta = rs.getInt("codventa");
 								} catch (Exception e3) {
 									JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo c�digo: " + e3);
@@ -1600,6 +1611,13 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 
 										// AbstractJasperReports.showViewer();
 										JasperPrintManager.printReport(impressao, false);
+										
+										JasperPrint impressao2 = JasperFillManager.fillReport(getClass().getClassLoader()
+												.getResourceAsStream("rNotaVentaResumen80.jasper"), parameters, con);
+
+										// AbstractJasperReports.showViewer();
+										JasperPrintManager.printReport(impressao2, false);
+										
 										/*
 										 * this.setAlwaysOnTop(false); //JOptionPane.showMessageDialog(null,
 										 * "VENTA CORRECTA"); this.setAlwaysOnTop(true);
