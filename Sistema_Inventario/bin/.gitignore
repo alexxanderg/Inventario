@@ -1,12 +1,6 @@
-/gui_reportes/
-/gui_ventas/
-/gui_clientes/
-/gui_compras/
-/gui_configuracion/
-/gui_distribuidores/
-/gui_notificaciones/
-/gui_principal/
 /gui_productos/
+/gui_reportes/
 /gui_usuarios/
+/gui_ventas/
 /mysql/
 /org/
