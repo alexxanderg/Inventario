@@ -538,6 +538,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
+		chckImrpimir.setSelected(true);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -713,8 +714,9 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		getContentPane().add(lblPrecio);
 		
 		cbMesa = new JComboBox();
+		cbMesa.setEditable(true);
 		cbMesa.setBorder(new LineBorder(new Color(30, 144, 255), 2));
-		cbMesa.setModel(new DefaultComboBoxModel(new String[] {"", "MESA 01", "MESA 02", "MESA 03", "MESA 04", "MESA 05", "MESA 06", "MESA 07", "MESA 08", "MESA 09", "MESA 10", "MESA 11", "MESA 12", "MESA 13", "MESA 14", "MESA 15", "MESA 16", "MESA 17", "MESA 18", "MESA 19", "MESA 20", "PARA LLEVAR", "APLICATIVO"}));
+		cbMesa.setModel(new DefaultComboBoxModel(new String[] {"", "MESA 01", "MESA 02", "MESA 03", "MESA 04", "MESA 05", "MESA 06", "MESA 07", "MESA 08", "MESA 09", "MESA 10", "MESA 11", "MESA 12", "MESA 13", "MESA 14", "MESA 15", "MESA 16", "MESA 17", "MESA 18", "MESA 19", "MESA 20", "PARA LLEVAR", "IR COMIENDO", "DELIVERY"}));
 		cbMesa.setFont(new Font("Arial", Font.BOLD, 18));
 		cbMesa.setBounds(704, 126, 214, 34);
 		getContentPane().add(cbMesa);

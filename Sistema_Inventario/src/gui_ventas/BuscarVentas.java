@@ -56,6 +56,7 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
 import clases.AbstractJasperReports;
+import clases.Categoria;
 import clases.Cliente;
 import clases.PintarTablaVentasBuscar;
 import clases.Usuarios;
@@ -92,6 +93,8 @@ public class BuscarVentas extends JInternalFrame {
 	private JTable tbDetalleVenta;
 	private JMenu mnactualizarNotaDe;
 	private JMenu mnimprimirCopiaDe;
+	private JLabel lblCategoria;
+	private JComboBox cbCategoria_Venta;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -145,21 +148,21 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(829, 38, 123, 30);
+		btnVerVentas.setBounds(893, 37, 200, 30);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(312, 38, 227, 30);
+		cbUsuarios.setBounds(231, 37, 227, 30);
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendido por:");
 		lblVendedor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(312, 10, 123, 29);
+		lblVendedor.setBounds(231, 9, 123, 29);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
@@ -167,11 +170,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblDesde.setForeground(Color.DARK_GRAY);
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(549, 11, 71, 30);
+		lblDesde.setBounds(468, 10, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(549, 38, 130, 30);
+		dchDesde.setBounds(468, 37, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
@@ -179,11 +182,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblHasta.setForeground(Color.DARK_GRAY);
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(689, 11, 71, 30);
+		lblHasta.setBounds(608, 10, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(689, 38, 130, 30);
+		dchHasta.setBounds(608, 37, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
@@ -203,6 +206,7 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
+		lblTotDescuentos.setVisible(false);
 		lblTotDescuentos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
@@ -211,6 +215,7 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
+		lblTD.setVisible(false);
 		lblTD.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
@@ -218,7 +223,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTD.setBounds(312, 291, 296, 36);
 		getContentPane().add(lblTD);
 		
-		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>VENTAS</center></html>");
+		btnGenerarReporte = new JButton("<html><center>EXPORTAR VENTAS</center></html>");
 		btnGenerarReporte.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnGenerarReporte.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		btnGenerarReporte.addActionListener(new ActionListener() {
@@ -227,9 +232,9 @@ public class BuscarVentas extends JInternalFrame {
 			}
 		});
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
-		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGenerarReporte.setBackground(new Color(255, 255, 255));
-		btnGenerarReporte.setBounds(962, 10, 131, 57);
+		btnGenerarReporte.setBounds(893, 10, 200, 23);
 		getContentPane().add(btnGenerarReporte);
 		
 		lblBuscarVentas = new JLabel("<html>VENTAS REALIZADAS:</html>");
@@ -256,6 +261,21 @@ public class BuscarVentas extends JInternalFrame {
 		lblDetallesDeVenta.setFont(new Font("Candara", Font.BOLD, 25));
 		lblDetallesDeVenta.setBounds(10, 338, 396, 34);
 		getContentPane().add(lblDetallesDeVenta);
+		
+		lblCategoria = new JLabel("Categoria:");
+		lblCategoria.setVisible(false);
+		lblCategoria.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCategoria.setForeground(Color.DARK_GRAY);
+		lblCategoria.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCategoria.setBackground(new Color(50, 205, 50));
+		lblCategoria.setBounds(748, 8, 108, 30);
+		getContentPane().add(lblCategoria);
+		
+		cbCategoria_Venta = new JComboBox();
+		cbCategoria_Venta.setVisible(false);
+		cbCategoria_Venta.setFont(new Font("Arial", Font.PLAIN, 16));
+		cbCategoria_Venta.setBounds(748, 37, 123, 30);
+		getContentPane().add(cbCategoria_Venta);
 
 		
 		menuBar = new JMenuBar();
@@ -273,6 +293,7 @@ public class BuscarVentas extends JInternalFrame {
 		});
 		
 		mnactualizarNotaDe = new JMenu("|Actualizar Nota de la venta| ");
+		mnactualizarNotaDe.setVisible(false);
 		mnactualizarNotaDe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -327,6 +348,11 @@ public class BuscarVentas extends JInternalFrame {
 		tbDetalleVenta.setRowHeight(30);
 		tbDetalleVenta.setModel(dtmVD);
 		dtmVD.setColumnIdentifiers(new Object[]{"CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "SUB TOTAL"});
+		
+		Categoria categoria_venta = new Categoria();
+		Categoria todaCategoria_venta = new Categoria("VER TODO");
+		cbCategoria_Venta.addItem(todaCategoria_venta);
+		categoria_venta.cargarCategorias(cbCategoria_Venta);
 		
 		
 		Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "TODOS", 0);
@@ -606,7 +632,13 @@ public class BuscarVentas extends JInternalFrame {
 			DateFormat formatter2;
 			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date2 = (Date) formatter.parse(fechaFinal);
-			Object fechaf = new java.sql.Timestamp(date2.getTime()); 
+			Object fechaf = new java.sql.Timestamp(date2.getTime());
+			
+			String categoria = "";
+			categoria = cbCategoria_Venta.getSelectedItem().toString();
+			if(cbCategoria_Venta.getSelectedIndex()==0)
+				categoria = "%%";
+		
 		
 			try {
 				consulta.iniciar();
@@ -817,5 +849,4 @@ public class BuscarVentas extends JInternalFrame {
 			// TODO: handle exception
 		}
 	}
-	
 }
