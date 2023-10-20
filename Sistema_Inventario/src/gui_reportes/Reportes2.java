@@ -161,7 +161,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		this.cbUsuarios.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.cbMetodoPago = new JComboBox();
-		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"VER TODO", "EFECTIVO", "TARJETA", "TRANSFERENCIA", "DEP\u00D3SITO", "YAPE/PLIN"}));
+		cbMetodoPago.setModel(new DefaultComboBoxModel(new String[] {"VER TODO", "EFECTIVO", "TARJETA", "TRANSFERENCIA", "YAPE", "PLIN"}));
 		this.cbMetodoPago.setBounds(249, 302, 249, 23);
 		this.panel.add(this.cbMetodoPago);
 		this.cbMetodoPago.setFont(new Font("Arial", Font.PLAIN, 16));

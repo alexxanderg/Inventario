@@ -274,16 +274,15 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblMtodoDePago = new JLabel("Paga con:");
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(607, 459, 147, 23);
+		lblMtodoDePago.setBounds(607, 503, 147, 23);
 		getContentPane().add(lblMtodoDePago);
 
 		cbPago1 = new JComboBox();
 		cbPago1.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago1.setBackground(new Color(245, 245, 245));
-		cbPago1.setModel(new DefaultComboBoxModel(
-				new String[] { "Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN" }));
+		cbPago1.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "YAPE", "PLIN"}));
 		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
-		cbPago1.setBounds(607, 483, 153, 25);
+		cbPago1.setBounds(607, 527, 153, 25);
 		getContentPane().add(cbPago1);
 
 		lblTotalVentaFinal = new JLabel("0");
@@ -378,19 +377,21 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		txtPago1.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago1.setColumns(10);
 		txtPago1.setBackground(new Color(245, 245, 245));
-		txtPago1.setBounds(770, 483, 101, 25);
+		txtPago1.setBounds(770, 527, 101, 25);
 		getContentPane().add(txtPago1);
 
 		cbPago2 = new JComboBox();
+		cbPago2.setVisible(false);
 		cbPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbPago2.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN", "-"}));
 		cbPago2.setSelectedIndex(5);
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(607, 525, 153, 25);
+		cbPago2.setBounds(637, 449, 153, 25);
 		getContentPane().add(cbPago2);
 
 		txtPago2 = new JTextField();
+		txtPago2.setVisible(false);
 		txtPago2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		txtPago2.addFocusListener(new FocusAdapter() {
 			@Override
@@ -415,7 +416,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(770, 526, 101, 25);
+		txtPago2.setBounds(800, 450, 101, 25);
 		getContentPane().add(txtPago2);
 
 		lblS = new JLabel("S/");
@@ -461,7 +462,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 		lblGananciaTotal.setBounds(193, 592, 68, 17);
 		getContentPane().add(lblGananciaTotal);
 
-		lblElVueltoDe_1 = new JLabel("SU VUELTO ES:");
+		lblElVueltoDe_1 = new JLabel("VUELTO:");
 		lblElVueltoDe_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
