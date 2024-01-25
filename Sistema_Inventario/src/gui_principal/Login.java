@@ -268,11 +268,11 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 		 * try { DateFormat df = new SimpleDateFormat("dd.MM.yyyy  HH.mm.ss"); Date
 		 * today = Calendar.getInstance().getTime(); String reportDate =
 		 * df.format(today); File directorio=new
-		 * File("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); directorio.mkdirs();
+		 * File("D:\\ï¿½INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA"); directorio.mkdirs();
 		 * Process p; p =
 		 * Runtime.getRuntime().exec("mysqldump -u root -pAa123 db_inventario");
 		 * InputStream is = p.getInputStream(); FileOutputStream fos = new
-		 * FileOutputStream("D:\\ INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "
+		 * FileOutputStream("D:\\ï¿½INFORMACION_DEL_SISTEMA\\BACKUP_SISTEMA\\backup_inventario  "
 		 * +reportDate+".sql"); byte[] buffer = new byte[1000]; int leido =
 		 * is.read(buffer); while(leido>0){ fos.write(buffer, 0, leido); leido =
 		 * is.read(buffer); } //JOptionPane.showMessageDialog(null,
@@ -285,7 +285,7 @@ public class Login extends JFrame implements ActionListener, KeyListener {
 
 	protected void mouseClickedLblNewLabel_3(MouseEvent arg0) {
 		/*
-		 * JOptionPane.showMessageDialog(null, "Aqui agregar ventana de información");
+		 * JOptionPane.showMessageDialog(null, "Aqui agregar ventana de informaciï¿½n");
 		 */
 		Creditos el = new Creditos();
 		el.setLocationRelativeTo(null);
