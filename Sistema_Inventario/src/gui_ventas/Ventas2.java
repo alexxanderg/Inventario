@@ -1049,15 +1049,15 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 						}
 					}
 				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, "ERROR: " + e);
+					//JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 			}
 			if (flag == 0) { // AQU� ENTRA SI EL
 								// PRODUCTO AGREGADO ES NUEVO
 				try {
-					rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio", "SubTotal",
+					//rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio", "SubTotal",
 										// "Desc","IDPROD", "PC", "Stock", "PVI Original"});
-					while (rs.next()) {
+					if (rs.next()) {
 						dtm.addRow(new Object[] { "1",
 								rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
 										+ "  " + rs.getString("laboratorio"),
@@ -1067,7 +1067,7 @@ public class Ventas2 extends JInternalFrame implements ActionListener, KeyListen
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
+					//JOptionPane.showMessageDialog(null, "No existe el producto*probando*: " + e);
 				}
 			}
 			
