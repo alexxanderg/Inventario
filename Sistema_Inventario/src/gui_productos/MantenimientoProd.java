@@ -246,19 +246,8 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		mnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnEliminarProducto);
 		
-		mnduplicarProducto = new JMenu("|Duplicar| ");
-		mnduplicarProducto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				mouseClickedMnduplicarProducto(arg0);
-			}
-		});
-		mnduplicarProducto.setForeground(new Color(135, 206, 250));
-		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
-		mnduplicarProducto.setBackground(SystemColor.menu);
-		menuBar.add(mnduplicarProducto);
-		
 		JMenu mnaadirStock = new JMenu("|A\u00F1adir stock| ");
+		mnaadirStock.setVisible(false);
 		mnaadirStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -276,6 +265,19 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		mntransferirStock.setFont(new Font("Tahoma", Font.BOLD, 20));
 		mntransferirStock.setBackground(SystemColor.menu);
 		menuBar.add(mntransferirStock);
+		
+		mnduplicarProducto = new JMenu("|Duplicar| ");
+		mnduplicarProducto.setVisible(false);
+		mnduplicarProducto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				mouseClickedMnduplicarProducto(arg0);
+			}
+		});
+		mnduplicarProducto.setForeground(new Color(135, 206, 250));
+		mnduplicarProducto.setFont(new Font("Tahoma", Font.BOLD, 20));
+		mnduplicarProducto.setBackground(SystemColor.menu);
+		menuBar.add(mnduplicarProducto);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 		cargar();
@@ -331,7 +333,7 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
         list.add("ID");
         list.add("C BARRA");
         list.add("NOMBRE");
-        list.add("DESCRIPCI�N");
+        list.add("DESCRIPCIÓN");
 		String[] parts = atribTodos.split(",");
 		for (int x=0; x<parts.length; x++){
 			if(parts[x].equals("marca"))
@@ -349,10 +351,11 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		list.add("CATEGORIA");
 		//list.add("ALMAC�N");
 		//list.add("DISTRIBUIDOR");
-		list.add("STOCK");
-		list.add("ALMACÉN");
+		list.add("STOCK 1");
+		list.add("STOCK 2");
+		list.add("STOCK 3");
+		list.add("STOCK 4");
 		list.add("PREC CO");
-		list.add("% GAN");
 		list.add("PREC VE");
 		String[] columnas = list.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
 		/*dtm.setColumnIdentifiers(new Object[] { "Codigo", "Producto", "Detalle","Categor�a", "Marca", "Color",
@@ -409,9 +412,10 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 					} catch (Exception e) {}*/
 			        
 			        listProds.add(rs.getString("cantidad"));
-			        listProds.add(rs.getString("cantmax")); // STOCK ALMACEN
+			        listProds.add(rs.getString("stock2")); // STOCK ALMACEN
+			        listProds.add(rs.getString("stock3"));
+			        listProds.add(rs.getString("stock4"));
 			        listProds.add(rs.getString("precioCo"));
-			        listProds.add(rs.getString("ptjganancia"));
 			        listProds.add(rs.getString("precioVe"));
 			        
 			        String[] columnasProds = listProds.toArray(new String[list.size()]); // CONVERTIR ARRAYLIST EN ARRAY
@@ -896,9 +900,11 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 				rs.next();
 				
 				float cantActual = rs.getFloat("cantidad");
-				float cantAlmacen = rs.getFloat("cantmax");
+				float stock2 = rs.getFloat("stock2");
+				float stock3 = rs.getFloat("stock3");
+				float stock4 = rs.getFloat("stock4");
 				
-				TransferirStock ts = new TransferirStock(idProducto, cantActual, cantAlmacen, usuario, this);
+				TransferirStock ts = new TransferirStock(idProducto, cantActual, stock2, stock3, stock4, usuario, this);
 				ts.setVisible(true);
 				
 				

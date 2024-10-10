@@ -96,10 +96,8 @@ public class ModificarProducto extends JFrame {
 	private JLabel lblCantidadMnima;
 	private JTextField txtStockMinimo;
 	private JLabel label_1;
-	private JLabel label_2;
 	private JLabel label_3;
 	private JLabel label_4;
-	private JLabel label_5;
 	private JLabel label_6;
 	private JLabel label_7;
 	private JLabel label_8;
@@ -131,9 +129,13 @@ public class ModificarProducto extends JFrame {
 	private JTextField txtNombrePromo3;
 	private JTextField txtCantPromo3;
 	private JTextField txtPrePromo3;
-	private JLabel lblStockMximo;
-	private JTextField txtStockMaximo;
 	private JLabel label;
+	private JLabel lblStockMximo_1;
+	private JLabel lblStockTienda;
+	private JTextField txtStock2;
+	private JTextField txtStock3;
+	private JTextField txtStock4;
+	private JLabel lblStockTienda_1;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -165,7 +167,7 @@ public class ModificarProducto extends JFrame {
 		setTitle("Crear producto");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1057, 602);
+		setBounds(100, 100, 1057, 642);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -343,11 +345,11 @@ public class ModificarProducto extends JFrame {
 		dateFechaVenc.setBounds(737, 61, 300, 25);
 		contentPane.add(dateFechaVenc);
 		
-		lblCantidadActual = new JLabel("Stock actual:");
+		lblCantidadActual = new JLabel("Stock tienda 1:");
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadActual.setForeground(new Color(220, 20, 60));
 		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadActual.setBounds(9, 383, 190, 25);
+		lblCantidadActual.setBounds(9, 347, 179, 25);
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
@@ -370,7 +372,7 @@ public class ModificarProducto extends JFrame {
 		txtStockInicial.setFont(new Font("Arial", Font.BOLD, 16));
 		txtStockInicial.setColumns(10);
 		txtStockInicial.setBackground(new Color(245, 245, 245));
-		txtStockInicial.setBounds(210, 385, 150, 25);
+		txtStockInicial.setBounds(210, 349, 150, 25);
 		contentPane.add(txtStockInicial);
 		
 		lblUniMedida = new JLabel("Uni. Medida");
@@ -398,7 +400,7 @@ public class ModificarProducto extends JFrame {
 		lblPrecioDeCompra.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeCompra.setForeground(Color.DARK_GRAY);
 		lblPrecioDeCompra.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecioDeCompra.setBounds(9, 491, 190, 25);
+		lblPrecioDeCompra.setBounds(10, 531, 178, 25);
 		contentPane.add(lblPrecioDeCompra);
 		
 		txtPrecioCompra = new JTextField();
@@ -425,14 +427,14 @@ public class ModificarProducto extends JFrame {
 		txtPrecioCompra.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioCompra.setColumns(10);
 		txtPrecioCompra.setBackground(new Color(245, 245, 245));
-		txtPrecioCompra.setBounds(210, 493, 149, 25);
+		txtPrecioCompra.setBounds(211, 533, 149, 25);
 		contentPane.add(txtPrecioCompra);
 		
 		lblPrecioDeVenta = new JLabel("Precio de Venta:");
 		lblPrecioDeVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecioDeVenta.setForeground(Color.DARK_GRAY);
 		lblPrecioDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecioDeVenta.setBounds(9, 529, 190, 25);
+		lblPrecioDeVenta.setBounds(10, 569, 178, 25);
 		contentPane.add(lblPrecioDeVenta);
 		
 		txtPrecioVenta = new JTextField();
@@ -459,7 +461,7 @@ public class ModificarProducto extends JFrame {
 		txtPrecioVenta.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPrecioVenta.setColumns(10);
 		txtPrecioVenta.setBackground(new Color(245, 245, 245));
-		txtPrecioVenta.setBounds(210, 529, 149, 25);
+		txtPrecioVenta.setBounds(211, 569, 149, 25);
 		contentPane.add(txtPrecioVenta);
 		
 		lblNombrePromo1 = new JLabel("PROMOCI\u00D3N 1:");
@@ -758,7 +760,7 @@ public class ModificarProducto extends JFrame {
 		lblAlmacn.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAlmacn.setForeground(Color.DARK_GRAY);
 		lblAlmacn.setFont(new Font("Candara", Font.BOLD, 20));
-		lblAlmacn.setBounds(9, 347, 191, 25);
+		lblAlmacn.setBounds(532, 386, 95, 25);
 		contentPane.add(lblAlmacn);
 		
 		btnCrearProducto = new JButton("MODIFICAR");
@@ -770,21 +772,21 @@ public class ModificarProducto extends JFrame {
 		btnCrearProducto.setForeground(SystemColor.menu);
 		btnCrearProducto.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCrearProducto.setBackground(new Color(30, 144, 255));
-		btnCrearProducto.setBounds(796, 493, 240, 61);
+		btnCrearProducto.setBounds(797, 533, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
 		lblNota = new JLabel("<html>-  No utilice el signo par\u00E9ntesis \"( )\" en los datos del producto a registrarse. <br>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblNota.setBounds(531, 419, 505, 72);
+		lblNota.setBounds(532, 459, 505, 72);
 		contentPane.add(lblNota);
 		
 		lblCantidadMnima = new JLabel("Stock m\u00EDnimo:");
 		lblCantidadMnima.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadMnima.setForeground(Color.DARK_GRAY);
 		lblCantidadMnima.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadMnima.setBounds(9, 453, 190, 25);
+		lblCantidadMnima.setBounds(10, 493, 178, 25);
 		contentPane.add(lblCantidadMnima);
 		
 		txtStockMinimo = new JTextField();
@@ -807,7 +809,7 @@ public class ModificarProducto extends JFrame {
 		txtStockMinimo.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtStockMinimo.setColumns(10);
 		txtStockMinimo.setBackground(new Color(245, 245, 245));
-		txtStockMinimo.setBounds(210, 455, 150, 25);
+		txtStockMinimo.setBounds(211, 495, 150, 25);
 		contentPane.add(txtStockMinimo);
 		
 		label_1 = new JLabel("*");
@@ -816,14 +818,6 @@ public class ModificarProducto extends JFrame {
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		label_1.setBounds(191, 94, 20, 25);
 		contentPane.add(label_1);
-		
-		label_2 = new JLabel("*");
-		label_2.setVisible(false);
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setForeground(Color.RED);
-		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_2.setBounds(191, 347, 20, 25);
-		contentPane.add(label_2);
 		
 		label_3 = new JLabel("*");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
@@ -836,28 +830,21 @@ public class ModificarProducto extends JFrame {
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_4.setBounds(191, 383, 20, 25);
+		label_4.setBounds(191, 347, 20, 25);
 		contentPane.add(label_4);
-		
-		label_5 = new JLabel("*");
-		label_5.setHorizontalAlignment(SwingConstants.LEFT);
-		label_5.setForeground(Color.RED);
-		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_5.setBounds(191, 419, 20, 25);
-		contentPane.add(label_5);
 		
 		label_6 = new JLabel("*");
 		label_6.setHorizontalAlignment(SwingConstants.LEFT);
 		label_6.setForeground(Color.RED);
 		label_6.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_6.setBounds(190, 493, 20, 25);
+		label_6.setBounds(190, 533, 20, 25);
 		contentPane.add(label_6);
 		
 		label_7 = new JLabel("*");
 		label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		label_7.setForeground(Color.RED);
 		label_7.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label_7.setBounds(190, 527, 20, 25);
+		label_7.setBounds(190, 567, 20, 25);
 		contentPane.add(label_7);
 		
 		label_8 = new JLabel("*");
@@ -872,7 +859,7 @@ public class ModificarProducto extends JFrame {
 		lblDeGanancia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDeGanancia.setForeground(new Color(30, 144, 255));
 		lblDeGanancia.setFont(new Font("Arial", Font.BOLD, 16));
-		lblDeGanancia.setBounds(369, 491, 139, 36);
+		lblDeGanancia.setBounds(370, 531, 139, 36);
 		contentPane.add(lblDeGanancia);
 		
 		txtPtjGanancia = new JTextField();
@@ -899,7 +886,7 @@ public class ModificarProducto extends JFrame {
 		txtPtjGanancia.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtPtjGanancia.setColumns(10);
 		txtPtjGanancia.setBackground(new Color(245, 245, 245));
-		txtPtjGanancia.setBounds(379, 529, 121, 25);
+		txtPtjGanancia.setBounds(380, 569, 121, 25);
 		contentPane.add(txtPtjGanancia);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -911,7 +898,7 @@ public class ModificarProducto extends JFrame {
 		btnCancelar.setForeground(SystemColor.menu);
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setBounds(531, 493, 240, 61);
+		btnCancelar.setBounds(532, 533, 240, 61);
 		contentPane.add(btnCancelar);
 		
 		cbCategoria = new JComboBox();
@@ -930,7 +917,7 @@ public class ModificarProducto extends JFrame {
 		cbAlmacen.setFont(new Font("Arial", Font.PLAIN, 16));
 		cbAlmacen.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbAlmacen.setBackground(new Color(245, 245, 245));
-		cbAlmacen.setBounds(209, 347, 300, 25);
+		cbAlmacen.setBounds(624, 383, 151, 25);
 		contentPane.add(cbAlmacen);
 		
 		txtCrearProducto = new JTextField();
@@ -983,10 +970,11 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(btnAnadirDistri);
 		
 		lblPrecio = new JLabel("PRECIO:");
+		lblPrecio.setVisible(false);
 		lblPrecio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrecio.setForeground(new Color(123, 104, 238));
 		lblPrecio.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrecio.setBounds(811, 275, 190, 25);
+		lblPrecio.setBounds(726, 419, 110, 25);
 		contentPane.add(lblPrecio);
 		
 		lblCantidad = new JLabel("CANTIDAD:");
@@ -994,7 +982,7 @@ public class ModificarProducto extends JFrame {
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setForeground(new Color(123, 104, 238));
 		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidad.setBounds(797, 239, 190, 25);
+		lblCantidad.setBounds(826, 419, 190, 25);
 		contentPane.add(lblCantidad);
 		
 		lblPromocion = new JLabel("PROMOCION 3:");
@@ -1002,7 +990,7 @@ public class ModificarProducto extends JFrame {
 		lblPromocion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPromocion.setForeground(new Color(123, 104, 238));
 		lblPromocion.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPromocion.setBounds(811, 221, 190, 25);
+		lblPromocion.setBounds(811, 386, 190, 25);
 		contentPane.add(lblPromocion);
 		
 		txtNombrePromo3 = new JTextField();
@@ -1040,31 +1028,67 @@ public class ModificarProducto extends JFrame {
 		txtPrePromo3.setBounds(921, 275, 149, 25);
 		contentPane.add(txtPrePromo3);
 		
-		lblStockMximo = new JLabel("Stock almacén:");
-		lblStockMximo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblStockMximo.setForeground(new Color(46, 139, 87));
-		lblStockMximo.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStockMximo.setBounds(9, 419, 190, 25);
-		contentPane.add(lblStockMximo);
-		
-		txtStockMaximo = new JTextField();
-		txtStockMaximo.setText("0");
-		txtStockMaximo.setHorizontalAlignment(SwingConstants.LEFT);
-		txtStockMaximo.setForeground(new Color(46, 139, 87));
-		txtStockMaximo.setFont(new Font("Arial", Font.BOLD, 16));
-		txtStockMaximo.setColumns(10);
-		txtStockMaximo.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtStockMaximo.setBackground(new Color(245, 245, 245));
-		txtStockMaximo.setBounds(210, 421, 150, 25);
-		contentPane.add(txtStockMaximo);
-		
 		label = new JLabel("*");
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(Color.RED);
 		label.setFont(new Font("Tahoma", Font.BOLD, 15));
-		label.setBounds(191, 457, 20, 25);
+		label.setBounds(191, 497, 20, 25);
 		contentPane.add(label);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, cbDistribuidor, btnAnadirDistri, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto, btnCancelar}));
+		
+		lblStockMximo_1 = new JLabel("Stock tienda 2:");
+		lblStockMximo_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStockMximo_1.setForeground(new Color(220, 20, 60));
+		lblStockMximo_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStockMximo_1.setBounds(9, 385, 172, 25);
+		contentPane.add(lblStockMximo_1);
+		
+		lblStockTienda = new JLabel("Stock tienda 3:");
+		lblStockTienda.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStockTienda.setForeground(new Color(220, 20, 60));
+		lblStockTienda.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStockTienda.setBounds(9, 419, 172, 25);
+		contentPane.add(lblStockTienda);
+		
+		txtStock2 = new JTextField();
+		txtStock2.setText("0");
+		txtStock2.setHorizontalAlignment(SwingConstants.LEFT);
+		txtStock2.setForeground(new Color(220, 20, 60));
+		txtStock2.setFont(new Font("Arial", Font.BOLD, 16));
+		txtStock2.setColumns(10);
+		txtStock2.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtStock2.setBackground(new Color(245, 245, 245));
+		txtStock2.setBounds(210, 385, 150, 25);
+		contentPane.add(txtStock2);
+		
+		txtStock3 = new JTextField();
+		txtStock3.setText("0");
+		txtStock3.setHorizontalAlignment(SwingConstants.LEFT);
+		txtStock3.setForeground(new Color(220, 20, 60));
+		txtStock3.setFont(new Font("Arial", Font.BOLD, 16));
+		txtStock3.setColumns(10);
+		txtStock3.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtStock3.setBackground(new Color(245, 245, 245));
+		txtStock3.setBounds(210, 419, 150, 25);
+		contentPane.add(txtStock3);
+		
+		txtStock4 = new JTextField();
+		txtStock4.setText("0");
+		txtStock4.setHorizontalAlignment(SwingConstants.LEFT);
+		txtStock4.setForeground(new Color(220, 20, 60));
+		txtStock4.setFont(new Font("Arial", Font.BOLD, 16));
+		txtStock4.setColumns(10);
+		txtStock4.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtStock4.setBackground(new Color(245, 245, 245));
+		txtStock4.setBounds(210, 455, 150, 25);
+		contentPane.add(txtStock4);
+		
+		lblStockTienda_1 = new JLabel("Stock tienda 4:");
+		lblStockTienda_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStockTienda_1.setForeground(new Color(220, 20, 60));
+		lblStockTienda_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStockTienda_1.setBounds(9, 455, 172, 25);
+		contentPane.add(lblStockTienda_1);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCodbarras, txtNombreProducto, txtDescripcion, txtMarca, txtColor, cbUnidadMedida, cbCategoria, cbAlmacen, cbDistribuidor, btnAnadirDistri, txtStockInicial, txtStockMinimo, txtPrecioCompra, txtPtjGanancia, txtPrecioVenta, dateFechaVenc, dateFechaVenc.getCalendarButton(), txtLaboratorio, txtLote, txtNombrePromo1, txtCantPromo1, txtPrePromo1, txtNombrePromo2, txtCantPromo2, txtPrePromo2, btnCrearProducto, btnCancelar, lblStockMximo_1, lblStockTienda, txtStock2, txtStock3, txtStock4, lblStockTienda_1}));
 		
 		cargar();
 		cargarBuscador();
@@ -1115,6 +1139,9 @@ public class ModificarProducto extends JFrame {
 			txtMarca.setText(rs.getString("marca"));
 			txtColor.setText(rs.getString("color"));
 			txtStockInicial.setText(""+rs.getFloat("cantidad"));
+			txtStock2.setText(""+rs.getFloat("stock2"));
+			txtStock3.setText(""+rs.getFloat("stock3"));
+			txtStock4.setText(""+rs.getFloat("stock4"));
 			txtStockMinimo.setText(""+ rs.getFloat("cantmin") );
 			txtPrecioCompra.setText(""+ rs.getFloat("precioCo"));
 			txtPrecioVenta.setText(""+ rs.getFloat("precioVe"));	
@@ -1131,7 +1158,6 @@ public class ModificarProducto extends JFrame {
 			txtNombrePromo3.setText(""+ rs.getString("promo3"));
 			txtCantPromo3.setText(""+ rs.getFloat("cantp3"));
 			txtPrePromo3.setText(""+ rs.getFloat("prep3"));
-			txtStockMaximo.setText(""+ rs.getFloat("cantmax"));
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "No existe el producto " + e);
@@ -1529,7 +1555,9 @@ public class ModificarProducto extends JFrame {
 					int iddistrib = 0; 		iddistrib = cbDistribuidor.getItemAt(cbDistribuidor.getSelectedIndex()).getIddist();
 					double stockini = 0; 	if(txtStockInicial.getText().length()>0) stockini = Float.parseFloat(txtStockInicial.getText());
 					double stockmin = 0; 	if(txtStockMinimo.getText().length()>0) stockmin = Float.parseFloat(txtStockMinimo.getText());
-					double stockmax = 0; 	if(txtStockMaximo.getText().length()>0) stockmax = Float.parseFloat(txtStockMaximo.getText());
+					double stock2 = 0; 	if(txtStock2.getText().length()>0) stock2 = Float.parseFloat(txtStock2.getText());
+					double stock3 = 0; 	if(txtStock3.getText().length()>0) stock3 = Float.parseFloat(txtStock3.getText());
+					double stock4 = 0; 	if(txtStock4.getText().length()>0) stock4 = Float.parseFloat(txtStock4.getText());
 					double precoNew = 0; 	if(txtPrecioCompra.getText().length()>0) precoNew = Float.parseFloat(txtPrecioCompra.getText());
 					double ptjgana = 0; 	if(txtPtjGanancia.getText().length()>0) ptjgana = Float.parseFloat(txtPtjGanancia.getText());
 					double preveNew = 0; 	if(txtPrecioVenta.getText().length()>0) preveNew = Float.parseFloat(txtPrecioVenta.getText());
@@ -1561,7 +1589,9 @@ public class ModificarProducto extends JFrame {
 					try {
 						stockini = redondearDecimales(stockini, 2);
 						stockmin = redondearDecimales(stockmin, 2);
-						stockmax = redondearDecimales(stockmax, 2);
+						stock2 = redondearDecimales(stock2, 2);
+						stock3 = redondearDecimales(stock3, 2);
+						stock4 = redondearDecimales(stock4, 2);
 						precoNew = redondearDecimales(precoNew, 2);
 						cantPromo1 = redondearDecimales(cantPromo1, 2);
 						prePromo1 = redondearDecimales(prePromo1, 2);
@@ -1581,7 +1611,7 @@ public class ModificarProducto extends JFrame {
 					consulta.iniciar();
 					consulta.modificarProducto(codbarra, nombreprod, descripcion, umedida, categoria, almacen, iddistrib,
 							marca, color, stockini, stockmin, precoNew, ptjgana, preveNew, fechaVencimiento, laboratiorio,
-							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, nombrePromo3, cantPromo3, prePromo3,id, stockmax);
+							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, nombrePromo3, cantPromo3, prePromo3,id, stock2, stock3, stock4);
 
 					consulta.reset();
 					mantenimientoProductos.cargar();

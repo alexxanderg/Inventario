@@ -57,17 +57,25 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 	consultas model = new consultas();
 	ResultSet rs;
 	private JLabel lblPrincipal;
-	private JLabel lblAlmacen;
+	private JLabel lblStock2;
 	
 	float cantPrincipal = 0;
-	float cantAlmacen = 0;
+	float stock2 = 0;
+	float stock3 = 0;
+	float stock4 = 0;
+	private JLabel lblStock3;
+	private JLabel lblStock4;
+	private JLabel lblTienda;
+	private JLabel lblTienda_1;
+	private JLabel lblTienda_2;
+	private JLabel lblTienda_3;
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			TransferirStock dialog = new TransferirStock(0, 0, 0, null, null);
+			TransferirStock dialog = new TransferirStock(0, 0, 0, 0, 0, null, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -75,7 +83,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		}
 	}
 
-	public TransferirStock(int idProducto, float cantPrincipal, float cantAlmacen, String usuario, MantenimientoProd mp) {
+	public TransferirStock(int idProducto, float cantPrincipal, float stock2, float stock3, float stock4, String usuario, MantenimientoProd mp) {
 		
 		this.idProducto = idProducto;
 		this.cantActual = cantPrincipal;
@@ -86,7 +94,9 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		this.mp = mp;
 		
 		this.cantPrincipal = cantPrincipal;
-		this.cantAlmacen = cantAlmacen;
+		this.stock2 = stock2;
+		this.stock3 = stock3;
+		this.stock4 = stock4;
 		
 		addWindowListener(this);
 		setResizable(false);
@@ -97,16 +107,16 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblStockActual.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblStockActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStockActual.setForeground(Color.BLACK);
-		lblStockActual.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblStockActual.setBounds(40, 144, 136, 38);
+		lblStockActual.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStockActual.setBounds(65, 144, 105, 38);
 		getContentPane().add(lblStockActual);
 		
 		lblCantidadAIngresar = new JLabel("Destino:");
 		lblCantidadAIngresar.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidadAIngresar.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadAIngresar.setForeground(Color.BLACK);
-		lblCantidadAIngresar.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblCantidadAIngresar.setBounds(40, 185, 136, 38);
+		lblCantidadAIngresar.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidadAIngresar.setBounds(65, 185, 105, 38);
 		getContentPane().add(lblCantidadAIngresar);
 		
 		txtCantidad = new JTextField();
@@ -118,10 +128,10 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		});
 		txtCantidad.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtCantidad.setForeground(new Color(220, 20, 60));
-		txtCantidad.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		txtCantidad.setFont(new Font("Candara", Font.BOLD, 20));
 		txtCantidad.setColumns(10);
 		txtCantidad.setBackground(SystemColor.controlHighlight);
-		txtCantidad.setBounds(180, 242, 166, 25);
+		txtCantidad.setBounds(180, 242, 128, 25);
 		getContentPane().add(txtCantidad);
 		
 		btnGuardar = new JButton("GUARDAR");
@@ -151,38 +161,86 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblCantidad.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setForeground(Color.BLACK);
-		lblCantidad.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblCantidad.setBounds(40, 229, 136, 38);
+		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
+		lblCantidad.setBounds(65, 229, 105, 38);
 		getContentPane().add(lblCantidad);
 		
 		cbOrigen = new JComboBox();
-		cbOrigen.setModel(new DefaultComboBoxModel(new String[] {"Principal", "Almacén"}));
-		cbOrigen.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		cbOrigen.setBounds(180, 158, 166, 22);
+		cbOrigen.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
+		cbOrigen.setFont(new Font("Candara", Font.BOLD, 15));
+		cbOrigen.setBounds(180, 155, 128, 25);
 		getContentPane().add(cbOrigen);
 		
 		cbDestino = new JComboBox();
-		cbDestino.setModel(new DefaultComboBoxModel(new String[] {"Principal", "Almacén"}));
-		cbDestino.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		cbDestino.setBounds(180, 199, 166, 24);
+		cbDestino.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
+		cbDestino.setFont(new Font("Candara", Font.BOLD, 15));
+		cbDestino.setBounds(180, 198, 128, 25);
 		getContentPane().add(cbDestino);
 		
 		lblPrincipal = new JLabel("Stock principal: ");
 		lblPrincipal.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrincipal.setForeground(Color.BLACK);
-		lblPrincipal.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblPrincipal.setBounds(40, 57, 303, 38);
+		lblPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrincipal.setForeground(new Color(219, 112, 147));
+		lblPrincipal.setFont(new Font("Candara", Font.BOLD, 20));
+		lblPrincipal.setBounds(135, 58, 56, 38);
 		getContentPane().add(lblPrincipal);
 		
-		lblAlmacen = new JLabel("Stock almacén:");
-		lblAlmacen.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblAlmacen.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlmacen.setForeground(Color.BLACK);
-		lblAlmacen.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblAlmacen.setBounds(40, 94, 303, 38);
-		getContentPane().add(lblAlmacen);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, btnGuardar}));
+		lblStock2 = new JLabel("Stock almacén:");
+		lblStock2.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblStock2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStock2.setForeground(new Color(240, 128, 128));
+		lblStock2.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStock2.setBounds(135, 95, 56, 38);
+		getContentPane().add(lblStock2);
+		
+		lblStock3 = new JLabel("Tienda 1: 0.0");
+		lblStock3.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblStock3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStock3.setForeground(new Color(240, 128, 128));
+		lblStock3.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStock3.setBounds(307, 58, 39, 38);
+		getContentPane().add(lblStock3);
+		
+		lblStock4 = new JLabel("Tienda 2: 0.0");
+		lblStock4.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblStock4.setHorizontalAlignment(SwingConstants.LEFT);
+		lblStock4.setForeground(new Color(240, 128, 128));
+		lblStock4.setFont(new Font("Candara", Font.BOLD, 20));
+		lblStock4.setBounds(307, 95, 39, 38);
+		getContentPane().add(lblStock4);
+		
+		lblTienda = new JLabel("Tienda 1 ->");
+		lblTienda.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTienda.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTienda.setForeground(new Color(0, 0, 0));
+		lblTienda.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda.setBounds(31, 58, 97, 38);
+		getContentPane().add(lblTienda);
+		
+		lblTienda_1 = new JLabel("Tienda 2 ->");
+		lblTienda_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTienda_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTienda_1.setForeground(new Color(0, 0, 0));
+		lblTienda_1.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda_1.setBounds(31, 95, 97, 38);
+		getContentPane().add(lblTienda_1);
+		
+		lblTienda_2 = new JLabel("Tienda 3 ->");
+		lblTienda_2.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTienda_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTienda_2.setForeground(Color.BLACK);
+		lblTienda_2.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda_2.setBounds(201, 58, 97, 38);
+		getContentPane().add(lblTienda_2);
+		
+		lblTienda_3 = new JLabel("Tienda 4 ->");
+		lblTienda_3.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblTienda_3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTienda_3.setForeground(Color.BLACK);
+		lblTienda_3.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda_3.setBounds(201, 95, 97, 38);
+		getContentPane().add(lblTienda_3);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, btnGuardar, lblStock3, lblStock4, lblTienda, lblTienda_1, lblTienda_2, lblTienda_3}));
 		cargar();
 	}
 	public void actionPerformed(ActionEvent arg0) {
@@ -218,8 +276,10 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		date.getTime();
 		
 		
-		lblPrincipal.setText("Stock principal: "+cantPrincipal);
-		lblAlmacen.setText("Stock almacén: "+cantAlmacen);
+		lblPrincipal.setText(""+cantPrincipal);
+		lblStock2.setText(""+stock2);
+		lblStock3.setText(""+stock3);
+		lblStock4.setText(""+stock4);
 		
 	}
 	
@@ -228,30 +288,40 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 			float ca = Float.parseFloat(txtCantidad.getText());
 			
 			if(cbOrigen.getSelectedIndex() == cbDestino.getSelectedIndex())
-				JOptionPane.showMessageDialog(null, "No destino no puede ser el mismo que el origen");
+				JOptionPane.showMessageDialog(null, "El destino no puede ser el mismo que el origen");
 			else {
 				if(ca <= 0)
 					JOptionPane.showMessageDialog(null, "Ingrese un numero mayor a cero");
 				else{
 					
-					int origen = cbOrigen.getSelectedIndex();
-					int destino = cbOrigen.getSelectedIndex();
-					float newPrincipal = 0;
-					float newAlmacen = 0;
+					int tiendaOrigen = cbOrigen.getSelectedIndex();
+					int tiendaDestino = cbOrigen.getSelectedIndex();
+					float newStockOrigen = 0;
+					float newStockDestino = 0;
 					
-					if(origen == 0) {
-						newPrincipal = cantPrincipal - ca;
-						newAlmacen = cantAlmacen + ca;
-					}
-					else if (origen == 1) {
-						newPrincipal = cantPrincipal + ca;
-						newAlmacen = cantAlmacen - ca;
-					}
+					if(tiendaOrigen == 0)
+						cantPrincipal = cantPrincipal - ca;
+					if(tiendaOrigen == 1)
+						stock2 = stock2 - ca;
+					if(tiendaOrigen == 2)
+						stock3 = stock3 - ca;
+					if(tiendaOrigen == 3)
+						stock4 = stock4 - ca;
 					
-					//JOptionPane.showMessageDialog(null, newPrincipal + " - " + newAlmacen); 
+					if(tiendaDestino == 0)
+						cantPrincipal = cantPrincipal + ca;
+					if(tiendaDestino == 1)
+						stock2 = stock2 + ca;
+					if(tiendaDestino == 2)
+						stock3 = stock3 + ca;
+					if(tiendaDestino == 3)
+						stock4 = stock4 + ca;
+					
+					
+					JOptionPane.showMessageDialog(null, cantPrincipal + " - " + stock2 + " - " + stock3 + " - " + stock4); 
 					
 					model.iniciar();
-					model.modificarStocks(idProducto, newPrincipal, newAlmacen);
+					model.modificarStocks(idProducto, cantPrincipal, stock2, stock3, stock4);
 					
 					//mp.setEnabled(true);
 					mp.cargar();
