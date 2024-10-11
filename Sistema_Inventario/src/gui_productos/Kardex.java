@@ -40,6 +40,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import mysql.consultas;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import javax.swing.SwingConstants;
 
 public class Kardex extends JInternalFrame {
 	private JMenuBar menuBar;
@@ -81,7 +82,7 @@ public class Kardex extends JInternalFrame {
 		this.vp = vp;
 		this.usuario = vp.lblUsuario.getText();
 		getContentPane().setBackground(Color.WHITE);
-		setTitle("ALMACÉN");
+		setTitle("ALMACï¿½N");
 		setBounds(100, 100, 1134, 679);
 		getContentPane().setLayout(null);
 
@@ -120,7 +121,7 @@ public class Kardex extends JInternalFrame {
 		this.tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.scrollPane.setViewportView(this.tbProductos);
 
-		this.chckbxFiltrar = new JCheckBox("¿Filtrar al escribir?");
+		this.chckbxFiltrar = new JCheckBox("ï¿½Filtrar al escribir?");
 		this.chckbxFiltrar.setVisible(false);
 		this.chckbxFiltrar.setForeground(new Color(30, 144, 255));
 		this.chckbxFiltrar.setHorizontalAlignment(4);
@@ -164,16 +165,17 @@ public class Kardex extends JInternalFrame {
 		getContentPane().add(this.btnCalcular);
 
 		this.lblNewLabel = new JLabel(
-				"<html><center>En esta ventana puede hacer una verificación de su inventario. Podrá comparar su Stock que indica el sistema con el que va revisando de manera fisica (columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
+				"<html><center>En esta ventana puede hacer una verificaciï¿½n de su inventario. Podrï¿½ comparar su Stock que indica el sistema con el que va revisando de manera fisica (columna CONTEO).<br> Cuando culmine, puede fusionar los cambios con sus productos reales.</center></html>");
 		this.lblNewLabel.setForeground(new Color(105, 105, 105));
 		this.lblNewLabel.setFont(new Font("Tahoma", 0, 12));
 		this.lblNewLabel.setBounds(300, 74, 520, 78);
 		getContentPane().add(this.lblNewLabel);
 
-		this.lblKardex = new JLabel("KARDEX");
+		this.lblKardex = new JLabel("ARQUEO DE INVENTARIO");
+		lblKardex.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblKardex.setForeground(Color.BLACK);
 		this.lblKardex.setFont(new Font("Candara", 1, 30));
-		this.lblKardex.setBounds(500, 11, 113, 52);
+		this.lblKardex.setBounds(10, 11, 1083, 52);
 		getContentPane().add(this.lblKardex);
 
 		this.tbProductos.getTableHeader().setReorderingAllowed(false);
@@ -196,7 +198,7 @@ public class Kardex extends JInternalFrame {
 		mnaadirStock.setBackground(SystemColor.menu);
 		this.menuBar.add(mnaadirStock);
 
-		this.mncargarltimoRegistro = new JMenu("|Cargar último conteo| ");
+		this.mncargarltimoRegistro = new JMenu("|Cargar ï¿½ltimo conteo| ");
 		this.mncargarltimoRegistro.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				Kardex.this.mouseClickedMncargarltimoRegistro(arg0);
@@ -334,7 +336,7 @@ public class Kardex extends JInternalFrame {
 
 		 public boolean isCellEditable (int row, int column)
 		    {
-			 // Aquí devolvemos true o false según queramos que una celda
+			 // Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 		        // identificada por fila,columna (row,column), sea o no editable
 		        if (column == 0 || column == 1 ||column == 2 ||column == 3 ||column == 5)
 		           return false;
@@ -679,8 +681,8 @@ public class Kardex extends JInternalFrame {
 
 	protected void mouseClickedMncargarltimoRegistro(MouseEvent arg0) {
 		int opc = JOptionPane.showConfirmDialog(null,
-				"Con esta opción, cargará su último conteo guardado, para que pueda revisarlo o continuar modificandolo.\n¿Continuar?",
-				"Verificación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				"Con esta opciï¿½n, cargarï¿½ su ï¿½ltimo conteo guardado, para que pueda revisarlo o continuar modificandolo.\nï¿½Continuar?",
+				"Verificaciï¿½n", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		if (opc == 0) {
 
@@ -728,8 +730,8 @@ public class Kardex extends JInternalFrame {
 
 	protected void mouseClickedMnfusionar(MouseEvent arg0) {
 		int opc = JOptionPane.showConfirmDialog(null,
-				"ALERTA: Con esta opción, el conteo real realizado a cada producto, sobreescribirá el stock que indica el sistema.\nNo hay manera de deshacer esta operación\n\n¿Continuar?",
-				"Verificación", 0, 3);
+				"ALERTA: Con esta opciï¿½n, el conteo real realizado a cada producto, sobreescribirï¿½ el stock que indica el sistema.\nNo hay manera de deshacer esta operaciï¿½n\n\nï¿½Continuar?",
+				"Verificaciï¿½n", 0, 3);
 
 		if (opc == 0) {
 
@@ -772,7 +774,7 @@ public class Kardex extends JInternalFrame {
 					}
 				}
 			}
-			JOptionPane.showMessageDialog(null, "Operación exitosa.");
+			JOptionPane.showMessageDialog(null, "Operaciï¿½n exitosa.");
 		}
 	}
 }

@@ -203,6 +203,7 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
+		lblTotDescuentos.setVisible(false);
 		lblTotDescuentos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
@@ -211,6 +212,7 @@ public class BuscarVentas extends JInternalFrame {
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
+		lblTD.setVisible(false);
 		lblTD.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
@@ -320,7 +322,7 @@ public class BuscarVentas extends JInternalFrame {
 	
 	public void cargar() {
 		
-		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO TOT", "TOTAL"});
+		dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "TOTAL"});
 		tbVentas.setRowHeight(30);
 		tbVentas.setModel(dtm);
 		
@@ -368,15 +370,13 @@ public class BuscarVentas extends JInternalFrame {
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(21));  // 
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(18));  // 
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(19));  // 
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(7));
-		tcm.getColumn(6).setPreferredWidth(anchoColumna(6));
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(6));
 		
-		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer(); //CANTIDAD", "PRODUCTO", "U. MED.", "PRE VENTA", "DESC TOTAL", "SUB TOTAL
+		DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer(); 
 		tcr0.setHorizontalAlignment(SwingConstants.CENTER); 
 		tbVentas.getColumnModel().getColumn(0).setCellRenderer(tcr0);
 		tbVentas.getColumnModel().getColumn(4).setCellRenderer(tcr0);
-		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0); 
-		tbVentas.getColumnModel().getColumn(6).setCellRenderer(tcr0);
+		tbVentas.getColumnModel().getColumn(5).setCellRenderer(tcr0);
 		
 		TableColumnModel tcmVD = tbDetalleVenta.getColumnModel();
 		tcmVD.getColumn(0).setPreferredWidth(anchoColumna(15));  // 
@@ -583,7 +583,7 @@ public class BuscarVentas extends JInternalFrame {
 				dtm.removeRow(i);
 				i -= 1;
 			}			
-			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "TOTAL"});
+			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "TOTAL"});
 			tbVentas.setModel(dtm);
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
@@ -621,8 +621,7 @@ public class BuscarVentas extends JInternalFrame {
 							rs.getString("ncliente"), 
 							rs.getString("nusuario"), 
 							rs.getString("nota"), 
-							rs.getString("fecha"), 
-							rs.getFloat("descuento"),
+							rs.getString("fecha"),
 							rs.getFloat("totventa")});	
 				}
 				
@@ -665,7 +664,7 @@ public class BuscarVentas extends JInternalFrame {
 		double sumDescuentos = 0;
 		
 		for (int i = 0; i < tbVentas.getRowCount(); i++) {
-			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 6).toString());
+			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
 			sumDescuentos = sumDescuentos + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
 		}
 		sumTotal = redondearDecimales(sumTotal, 2);

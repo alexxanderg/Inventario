@@ -1319,7 +1319,7 @@ public class Ventas extends JInternalFrame {
 												cantADisminuir = cantProdVenta;
 											}
 											
-											consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+											consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir, 0);
 										} catch (Exception e2) {
 											JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
 										}

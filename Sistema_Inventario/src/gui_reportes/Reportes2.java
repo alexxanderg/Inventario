@@ -203,7 +203,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(cbCliente);
 		this.cbCliente.setFont(new Font("Arial", Font.PLAIN, 16));
 
-		lblPorProducto = new JLabel("MOVIMIENTOS DE PRODUCTO");
+		lblPorProducto = new JLabel("KARDEX");
 		lblPorProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorProducto.setFont(new Font("Candara", Font.BOLD, 20));
 		lblPorProducto.setBounds(72, 451, 396, 23);
@@ -510,6 +510,14 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										textField_4.setBackground(Color.WHITE);
 										textField_4.setBounds(619, 234, 399, 5);
 										panel.add(textField_4);
+										
+										JButton btnK = new JButton("k");
+										btnK.setForeground(Color.WHITE);
+										btnK.setFont(new Font("Tahoma", Font.BOLD, 18));
+										btnK.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
+										btnK.setBackground(new Color(30, 144, 255));
+										btnK.setBounds(509, 517, 67, 32);
+										panel.add(btnK);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE T�TULO
 
@@ -1136,7 +1144,6 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		    }
 	}
-	
 }
 
 

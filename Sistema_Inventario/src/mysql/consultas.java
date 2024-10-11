@@ -330,8 +330,7 @@ public class consultas {
 	public ResultSet buscarProductoID(int idprod) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("select codproducto, codbarra,producto,detalles,marca,color,lote,laboratorio,unimedida,fechaVenc,categoria,almacen,iddistrib,cantidad,cantmin,stock2, stock3, stock4,precioCo,precioVe,ptjganancia,estado,"
-								+ "promo1,cantp1,prep1,promo2,cantp2,prep2,promo3,cantp3,prep3 from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
+			rs = st.executeQuery("select codproducto, codbarra,producto,detalles,marca,color,lote,laboratorio,unimedida,fechaVenc,categoria,almacen,iddistrib,cantidad,cantmin,stock2, stock3, stock4,precioCo,precioVe,ptjganancia,estado, promo1,cantp1,prep1,promo2,cantp2,prep2,promo3,cantp3,prep3 from tb_productos where codproducto = '" + idprod + "' and estado = 1 ");
 		} catch (Exception e) {
 		}
 		return rs;
@@ -585,6 +584,22 @@ public class consultas {
 			prepareStmt.setDouble(7, precioVeNew);
 			prepareStmt.setString(8, nombreusu);
 			prepareStmt.setObject(9, fActual);
+			prepareStmt.execute();
+			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al registrar Fecha ingreso: " + e);
+		}
+		return 0;
+	}
+	
+	public int registrarMovimiento(int idsiguiente, int tipo, String doc, String cliprov, int tienda, double ingreso, double salida, double precio, double total, double stock1, double stock2, double stock3, double stock4) {		
+		try {
+			st = con.createStatement();
+			String sql = "insert into tb_ingreso_productos (coding, codproducto, cantidad, precioCoOld, precioVeOld, precioCoNew, precioVeNew, nombreusu, fechaingreso)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prepareStmt = con.prepareStatement(sql);
+			prepareStmt.setString(1, null);
+			prepareStmt.setInt(2, idsiguiente);
 			prepareStmt.execute();
 			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
 		} catch (Exception e) {
@@ -1262,10 +1277,19 @@ public class consultas {
 		    return this.rs;
 		  }
 
-	public ResultSet RealizarDescuentoStock(int codProducto, double cantVenta) {
+	public ResultSet RealizarDescuentoStock(int codProducto, double cantVenta, int tienda) {
 		try {
 			st = con.createStatement();
-			String sql = "update tb_productos set cantidad=cantidad-? where codProducto=?";
+			String sql = "";
+			if(tienda == 0)
+				sql = "update tb_productos set cantidad=cantidad-? where codProducto=?";
+			if(tienda == 1)
+				sql = "update tb_productos set stock2=stock2-? where codProducto=?";
+			if(tienda == 2)
+				sql = "update tb_productos set stock3=stock3-? where codProducto=?";
+			if(tienda == 3)
+				sql = "update tb_productos set stock4=stock4-? where codProducto=?";
+			
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setDouble(1, cantVenta);
 			prepareStmt.setInt(2, codProducto);

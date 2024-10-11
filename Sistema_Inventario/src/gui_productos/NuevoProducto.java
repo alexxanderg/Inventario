@@ -86,7 +86,7 @@ public class NuevoProducto extends JFrame {
 	private JTextField txtCantPromo2;
 	private JLabel lblPrePromo2;
 	private JTextField txtPrePromo2;
-	private JTextField txtID;
+	private JTextField txtIDSiguiente;
 	private JLabel lblLote;
 	private JTextField txtLote;
 	private JLabel lblLaboratorio;
@@ -672,18 +672,18 @@ public class NuevoProducto extends JFrame {
 		txtPrePromo2.setBounds(737, 349, 150, 25);
 		contentPane.add(txtPrePromo2);
 		
-		txtID = new JTextField();
-		txtID.setVisible(false);
-		txtID.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
-		txtID.setEditable(false);
-		txtID.setText("0");
-		txtID.setHorizontalAlignment(SwingConstants.LEFT);
-		txtID.setForeground(Color.DARK_GRAY);
-		txtID.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtID.setColumns(10);
-		txtID.setBackground(new Color(245, 245, 245));
-		txtID.setBounds(59, 16, 44, 25);
-		contentPane.add(txtID);
+		txtIDSiguiente = new JTextField();
+		txtIDSiguiente.setVisible(false);
+		txtIDSiguiente.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		txtIDSiguiente.setEditable(false);
+		txtIDSiguiente.setText("0");
+		txtIDSiguiente.setHorizontalAlignment(SwingConstants.LEFT);
+		txtIDSiguiente.setForeground(Color.DARK_GRAY);
+		txtIDSiguiente.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtIDSiguiente.setColumns(10);
+		txtIDSiguiente.setBackground(new Color(245, 245, 245));
+		txtIDSiguiente.setBounds(59, 16, 44, 25);
+		contentPane.add(txtIDSiguiente);
 		
 		lblLote = new JLabel("Lote:");
 		lblLote.setVisible(false);
@@ -1113,9 +1113,9 @@ public class NuevoProducto extends JFrame {
 			rs = consulta.cargarID();
 			rs.next();
 			int idSiguiente = rs.getInt("codproducto")+1;
-			txtID.setText(""+idSiguiente);
+			txtIDSiguiente.setText(""+idSiguiente);
 		} catch (Exception e) {
-			txtID.setText("1");
+			txtIDSiguiente.setText("1");
 		}finally {
 			try {
 				if (rs != null)
@@ -1285,7 +1285,7 @@ public class NuevoProducto extends JFrame {
 		return resultado;
 	}
 	public void limpiar() {
-		txtID.setText("" + (Integer.parseInt(txtID.getText())+1));
+		txtIDSiguiente.setText("" + (Integer.parseInt(txtIDSiguiente.getText())+1));
 		txtCodbarras.setText(null);
 		txtNombreProducto.setText(null);
 		txtDescripcion.setText(null);
@@ -1537,13 +1537,13 @@ public class NuevoProducto extends JFrame {
 	protected void actionPerformedBtnCrearProducto(ActionEvent arg0) {
 		int rs = 0;
 		try {
-			if (txtID.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbUnidadMedida.getSelectedItem().toString().length() == 0 ||  cbCategoria.getSelectedItem().toString().length() == 0 
+			if (txtIDSiguiente.getText().length() == 0 || txtNombreProducto.getText().length() == 0 || cbUnidadMedida.getSelectedItem().toString().length() == 0 ||  cbCategoria.getSelectedItem().toString().length() == 0 
 					|| cbAlmacen.getSelectedItem().toString().length() == 0 || cbDistribuidor.getItemCount()==0 || cbUnidadMedida.getSelectedItem().toString().length() > 30 ||  cbCategoria.getSelectedItem().toString().length() > 30 || cbAlmacen.getSelectedItem().toString().length() > 50 || txtStockInicial.getText().length() == 0 || txtStockMinimo.getText().length() == 0
 					|| txtPrecioCompra.getText().length() == 0 || txtPrecioVenta.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "Por favor llene todos los campos correctamente.\nNOTA: Los campos UMedida, categoria y almacen, no pueden ser mayores a 30 caracteres");
 			
 			} else {			
-				int id = 0;				id = Integer.parseInt(txtID.getText());
+				int idsiguiente = 0;				idsiguiente = Integer.parseInt(txtIDSiguiente.getText());
 				String codbarra = "";	codbarra = txtCodbarras.getText();
 				
 				
@@ -1631,11 +1631,14 @@ public class NuevoProducto extends JFrame {
 							lote, nombrePromo1, cantPromo1, prePromo1, nombrePromo2, cantPromo2, prePromo2, nombrePromo3, cantPromo3, prePromo3, primeravez, stock2, stock3, stock4);
 					
 					if (rs == 0) {
-						consulta.registrarIngreso(id, stockini, 0, 0, precoNew, preveNew, usuario, fechaActual);
+						consulta.registrarIngreso(idsiguiente, stockini, 0, 0, precoNew, preveNew, usuario, fechaActual);
 						
+						double stockTotal = stockini+stock2+stock3+stock4;
+						
+						consulta.registrarMovimiento(idsiguiente, 0, "-", "-", 1, stockTotal, 0, precoNew, stockTotal*preveNew, stockini,stock2,stock3,stock4);
 						
 						if (nc != null) {
-							String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + id + ")"; 
+							String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + idsiguiente + ")"; 
 							nc.cargarProducto(prod);
 							this.dispose();
 						}
@@ -1643,7 +1646,7 @@ public class NuevoProducto extends JFrame {
 							String nomUsuario = mantenimientoProductos.vp.lblUsuario.getText(); // USUARIO
 							mantenimientoProductos.cargar();
 							mantenimientoProductos.cargarBuscador();
-							mantenimientoProductos.selecionarProducto(""+id);
+							mantenimientoProductos.selecionarProducto(""+idsiguiente);
 							limpiar();
 						}
 					} else

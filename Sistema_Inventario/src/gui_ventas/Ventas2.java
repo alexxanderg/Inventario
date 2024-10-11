@@ -17,6 +17,7 @@ import clases.AbstractJasperReports;
 import clases.Cliente;
 import clases.PintarTablaRealizarVenta;
 import clases.PintarTablaVentasBuscar;
+import clases.Usuarios;
 import gui_clientes.NuevoCliente;
 import gui_principal.VentanaPrincipal;
 import mysql.MySQLConexion;
@@ -134,6 +135,8 @@ public class Ventas2 extends JInternalFrame
 	private JTextField txtCantidad;
 	private JTextField txtPrecio;
 	private JComboBox cbUnidadesdeMedida;
+	private JComboBox<Usuarios> cbVendedor;
+	public  JComboBox cbTienda;
 	private JLabel lblCliente_2;
 	private JLabel lblSubTotal;
 	private JButton btnMasUnoCant;
@@ -163,12 +166,13 @@ public class Ventas2 extends JInternalFrame
 	private JTextField textField;
 	private JLabel lblCantidad;
 	private JLabel lblPrecio;
+	String tiendaElegida;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventas2 frame = new Ventas2(null, -1);
+					Ventas2 frame = new Ventas2(null, -1, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -177,9 +181,10 @@ public class Ventas2 extends JInternalFrame
 		});
 	}
 
-	public Ventas2(VentanaPrincipal vp, int nroVentaModificar) {
+	public Ventas2(VentanaPrincipal vp, int nroVentaModificar, String tiendaElegida) {
 		this.vp = vp;
 		this.nroVentaModificar = nroVentaModificar;
+		this.tiendaElegida = tiendaElegida;
 
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Ventas");
@@ -254,10 +259,10 @@ public class Ventas2 extends JInternalFrame
 		btnNewCliente.setBounds(576, 58, 56, 35);
 		getContentPane().add(btnNewCliente);
 
-		lblNotaAdicionalDe = new JLabel("Nota adicional para la venta: (opcional)");
+		lblNotaAdicionalDe = new JLabel("Nota:");
 		lblNotaAdicionalDe.setForeground(Color.DARK_GRAY);
 		lblNotaAdicionalDe.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNotaAdicionalDe.setBounds(704, 103, 404, 23);
+		lblNotaAdicionalDe.setBounds(928, 104, 180, 23);
 		getContentPane().add(lblNotaAdicionalDe);
 
 		txtInfoAdicional = new JTextField();
@@ -267,7 +272,7 @@ public class Ventas2 extends JInternalFrame
 		txtInfoAdicional.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtInfoAdicional.setColumns(10);
 		txtInfoAdicional.setBackground(new Color(245, 245, 245));
-		txtInfoAdicional.setBounds(704, 126, 404, 34);
+		txtInfoAdicional.setBounds(928, 127, 180, 34);
 		getContentPane().add(txtInfoAdicional);
 
 		lblMtodoDePago = new JLabel("Paga con:");
@@ -337,6 +342,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(txtVuelto);
 
 		lblTitDescuento = new JLabel("Descuento");
+		lblTitDescuento.setVisible(false);
 		lblTitDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitDescuento.setForeground(new Color(102, 205, 170));
 		lblTitDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -345,6 +351,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblTitDescuento);
 
 		lblDescuento = new JLabel("0");
+		lblDescuento.setVisible(false);
 		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescuento.setForeground(new Color(102, 205, 170));
 		lblDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -426,6 +433,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblS);
 
 		lblTitTotOri = new JLabel("Total original");
+		lblTitTotOri.setVisible(false);
 		lblTitTotOri.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitTotOri.setForeground(new Color(102, 205, 170));
 		lblTitTotOri.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -434,6 +442,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblTitTotOri);
 
 		lblTotOriginal = new JLabel("0");
+		lblTotOriginal.setVisible(false);
 		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotOriginal.setForeground(new Color(102, 205, 170));
 		lblTotOriginal.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -470,7 +479,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblElVueltoDe_1);
 
 		dchFechaVenta = new JDateChooser();
-		dchFechaVenta.setBounds(704, 70, 151, 23);
+		dchFechaVenta.setBounds(928, 34, 151, 23);
 		getContentPane().add(dchFechaVenta);
 
 		txtHora = new JTextField();
@@ -487,7 +496,7 @@ public class Ventas2 extends JInternalFrame
 		});
 		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
 		txtHora.setText("00");
-		txtHora.setBounds(865, 70, 53, 23);
+		txtHora.setBounds(938, 76, 53, 23);
 		getContentPane().add(txtHora);
 		txtHora.setColumns(10);
 
@@ -506,19 +515,19 @@ public class Ventas2 extends JInternalFrame
 		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMin.setText("00");
 		txtMin.setColumns(10);
-		txtMin.setBounds(928, 70, 56, 23);
+		txtMin.setBounds(1001, 76, 56, 23);
 		getContentPane().add(txtMin);
 
 		lblHora = new JLabel("Hora");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setBounds(865, 52, 53, 14);
+		lblHora.setBounds(938, 58, 53, 14);
 		getContentPane().add(lblHora);
 
 		lblMin = new JLabel("Min");
 		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMin.setBounds(928, 52, 56, 14);
+		lblMin.setBounds(1001, 58, 56, 14);
 		getContentPane().add(lblMin);
 
 		lblNroCompramodificar = new JLabel("0");
@@ -534,7 +543,7 @@ public class Ventas2 extends JInternalFrame
 		lblFechaDeVenta = new JLabel("Fecha de la venta:");
 		lblFechaDeVenta.setForeground(Color.DARK_GRAY);
 		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeVenta.setBounds(704, 47, 164, 23);
+		lblFechaDeVenta.setBounds(926, 11, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
@@ -545,6 +554,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(chckImrpimir);
 
 		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
+		rbtnCoti.setVisible(false);
 		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnCoti.setBackground(Color.WHITE);
 		rbtnCoti.setBounds(967, 498, 106, 23);
@@ -678,6 +688,7 @@ public class Ventas2 extends JInternalFrame
 		txtNewPrecioCo.setColumns(10);
 
 		lblS_1 = new JLabel("S/");
+		lblS_1.setVisible(false);
 		lblS_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblS_1.setForeground(new Color(102, 205, 170));
 		lblS_1.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -686,6 +697,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblS_1);
 
 		lblS_2 = new JLabel("S/");
+		lblS_2.setVisible(false);
 		lblS_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblS_2.setForeground(new Color(102, 205, 170));
 		lblS_2.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -711,13 +723,41 @@ public class Ventas2 extends JInternalFrame
 		lblPrecio.setFont(new Font("Candara", Font.BOLD, 20));
 		lblPrecio.setBounds(37, 305, 101, 23);
 		getContentPane().add(lblPrecio);
+		
+		JLabel lblVendedor = new JLabel("Vendedor:");
+		lblVendedor.setForeground(Color.DARK_GRAY);
+		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
+		lblVendedor.setBounds(669, 34, 229, 23);
+		getContentPane().add(lblVendedor);
+		
+		JLabel lblTienda = new JLabel("Tienda:");
+		lblTienda.setForeground(Color.DARK_GRAY);
+		lblTienda.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda.setBounds(669, 104, 229, 23);
+		getContentPane().add(lblTienda);
+		
+		cbVendedor = new JComboBox();
+		cbVendedor.setFont(new Font("Arial", Font.ITALIC, 18));
+		cbVendedor.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbVendedor.setBackground(new Color(245, 245, 245));
+		cbVendedor.setBounds(669, 58, 229, 35);
+		getContentPane().add(cbVendedor);
+		
+		cbTienda = new JComboBox();
+		cbTienda.setForeground(new Color(0, 0, 0));
+		cbTienda.setEnabled(false);
+		cbTienda.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
+		cbTienda.setFont(new Font("Arial", Font.BOLD, 20));
+		cbTienda.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbTienda.setBackground(new Color(245, 245, 245));
+		cbTienda.setBounds(669, 126, 229, 35);
+		getContentPane().add(cbTienda);
 
 		menuBar = new JMenuBar();
 		menuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.setBackground(Color.DARK_GRAY);
 		setJMenuBar(menuBar);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { txtBuscarProd, cbClientes, btnNewCliente,
-				txtInfoAdicional, cbPago1, txtPago1, cbPago2, txtPago2, btnVender, dchFechaVenta, txtHora, txtMin }));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtBuscarProd, cbClientes, btnNewCliente, txtInfoAdicional, cbPago1, txtPago1, cbPago2, txtPago2, btnVender, dchFechaVenta, txtHora, txtMin, lblVendedor, lblTienda, cbVendedor, cbTienda}));
 
 		mnlistaDeProductos = new JMenu("|Ver lista completa de productos| ");
 		mnlistaDeProductos.setVisible(false);
@@ -763,6 +803,18 @@ public class Ventas2 extends JInternalFrame
 
 		Cliente cliente = new Cliente();
 		cliente.cargarClientes(cbClientes);
+		
+		Usuarios usu = new Usuarios();
+		//Usuarios todos = new Usuarios(0, "TODOS", "TODOS", "VER TODO", 0);
+		//cbVendedor.addItem(todos);
+		usu.cargarUsuarios(cbVendedor);
+		int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
+		
+		/*for(int i = 0; i<cbVendedor.getItemCount(); i++)
+			if(cbVendedor.getItemAt(i).getIdusuario() == cbVendedor)
+				cbVendedor.setSelectedIndex(i);*/
+		
+		
 
 		tbCarrito.setModel(dtm);
 		dtm.setColumnIdentifiers(new Object[] { "Cant", "Producto", "Detalles(se puede modificar)", "U.Med", "Precio",
@@ -824,8 +876,25 @@ public class Ventas2 extends JInternalFrame
 						int codproducto = rsVD.getInt("codproducto");
 						txtBuscarProd.setText("(" + codproducto + ")");
 						AgregarProductoATabla();
-						float cantidad = rsVD.getFloat("cantidad");
-						tbCarrito.setValueAt(cantidad, cont, 0);
+						
+						if(cbTienda.getSelectedIndex()==0){
+							float cantidad = rsVD.getFloat("cantidad");
+							tbCarrito.setValueAt(cantidad, cont, 0);
+						}
+						if(cbTienda.getSelectedIndex()==1){
+							float cantidad = rsVD.getFloat("stock2");
+							tbCarrito.setValueAt(cantidad, cont, 0);
+						}
+						if(cbTienda.getSelectedIndex()==2){
+							float cantidad = rsVD.getFloat("stock3");
+							tbCarrito.setValueAt(cantidad, cont, 0);
+						}
+						if(cbTienda.getSelectedIndex()==3){
+							float cantidad = rsVD.getFloat("stock4");
+							tbCarrito.setValueAt(cantidad, cont, 0);
+						}
+						
+						
 						float preVeOri = rsVD.getFloat("precioVe");
 						tbCarrito.setValueAt(preVeOri, cont, 2);
 						float descTotal = rsVD.getFloat("descTotal");
@@ -868,7 +937,7 @@ public class Ventas2 extends JInternalFrame
 						} else {
 							float stock = 0;
 							stock = Float.parseFloat(tbCarrito.getValueAt(cont, 7).toString());
-							stock = stock + cantidad;
+							stock = stock;
 							tbCarrito.setValueAt(stock, cont, 7);
 						}
 
@@ -939,8 +1008,19 @@ public class Ventas2 extends JInternalFrame
 		acBuscador.setMode(0);
 		acNotas.setMode(0);
 		try {
+			String stocktienda = "";
 			while (rs.next()) {
-				acBuscador.addItem(rs.getString("cantidad") + " " + rs.getString("producto") + " "
+				if(tiendaElegida.equals("Tienda 1"))
+					stocktienda = rs.getString("cantidad");
+				if(tiendaElegida.equals("Tienda 2"))
+					stocktienda = rs.getString("stock2");
+				if(tiendaElegida.equals("Tienda 3"))
+					stocktienda = rs.getString("stock3");
+				if(tiendaElegida.equals("Tienda 4"))
+					stocktienda = rs.getString("stock4");
+				//JOptionPane.showMessageDialog(null, stocktienda);
+				
+				acBuscador.addItem(stocktienda + " " + rs.getString("producto") + " "
 						+ rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " "
 						+ rs.getString("laboratorio") + " " + rs.getString("lote") + " * " + rs.getString("unimedida")
 						+ " = S/" + rs.getString("precioVe") + "  -  (" + rs.getString("codproducto") + ")");
@@ -1053,19 +1133,40 @@ public class Ventas2 extends JInternalFrame
 					// JOptionPane.showMessageDialog(null, "ERROR: " + e);
 				}
 			}
-			if (flag == 0) { // AQU� ENTRA SI EL
-								// PRODUCTO AGREGADO ES NUEVO
+			if (flag == 0) { // AQU� ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
 				try {
 					// rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
 					// "SubTotal",
 					// "Desc","IDPROD", "PC", "Stock", "PVI Original"});
 					if (rs.next()) {
-						dtm.addRow(new Object[] { "1",
-								rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
-										+ "  " + rs.getString("laboratorio"),
-								rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
-								rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
-								rs.getFloat("cantidad"), rs.getFloat("precioVe") });
+						if(cbTienda.getSelectedIndex()==0)						
+							dtm.addRow(new Object[] { "1",
+									rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
+											+ "  " + rs.getString("laboratorio"),
+									rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
+									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
+									rs.getFloat("cantidad"), rs.getFloat("precioVe") });
+						if(cbTienda.getSelectedIndex()==1)						
+							dtm.addRow(new Object[] { "1",
+									rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
+											+ "  " + rs.getString("laboratorio"),
+									rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
+									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
+									rs.getFloat("stock2"), rs.getFloat("precioVe") });
+						if(cbTienda.getSelectedIndex()==2)						
+							dtm.addRow(new Object[] { "1",
+									rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
+											+ "  " + rs.getString("laboratorio"),
+									rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
+									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
+									rs.getFloat("stock3"), rs.getFloat("precioVe") });
+						if(cbTienda.getSelectedIndex()==3)						
+							dtm.addRow(new Object[] { "1",
+									rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
+											+ "  " + rs.getString("laboratorio"),
+									rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
+									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
+									rs.getFloat("stock4"), rs.getFloat("precioVe") });
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 					}
 				} catch (Exception e) {
@@ -1323,10 +1424,10 @@ public class Ventas2 extends JInternalFrame
 		int opc = 0;
 
 		if (rbtnVenta.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "�Relizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION,
+			opc = JOptionPane.showConfirmDialog(null, "¿Realizar venta?", "Confirmar", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 		if (rbtnCoti.isSelected())
-			opc = JOptionPane.showConfirmDialog(null, "�Realizar cotizaci�n?", "Confirmar", JOptionPane.YES_NO_OPTION,
+			opc = JOptionPane.showConfirmDialog(null, "¿Realizar cotización?", "Confirmar", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE);
 
 		if (opc == 0) {
@@ -1338,7 +1439,7 @@ public class Ventas2 extends JInternalFrame
 				int flag = 0; // Permite pasar a vender segun stock 0NO 1SI
 
 				if (tbCarrito.getRowCount() < 1) {
-					JOptionPane.showMessageDialog(null, "Agregue alg�n producto a la lista");
+					JOptionPane.showMessageDialog(null, "Agregue algún producto a la lista");
 				} else {
 					try {
 						consulta.iniciar();
@@ -1371,7 +1472,10 @@ public class Ventas2 extends JInternalFrame
 						int idcliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getId();
 						String nomCliente = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNombre();
 						String nroDoc = cbClientes.getItemAt(cbClientes.getSelectedIndex()).getNrodoc();
-						int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
+						//int idusuario = Integer.parseInt(vp.lblIdusuario.getText());
+						//String usu = cbVendedor.getItemAt(cbVendedor.getSelectedIndex()).getUsuario();
+						int idusuario =  cbVendedor.getItemAt(cbVendedor.getSelectedIndex()).getIdusuario();
+						
 						String nota = txtInfoAdicional.getText();
 
 						float totCompra = Float.parseFloat(lblTotalCompra.getText());
@@ -1543,8 +1647,10 @@ public class Ventas2 extends JInternalFrame
 											} else {
 												cantADisminuir = cantProdVenta;
 											}
+											
+											int tiendaSelect = cbTienda.getSelectedIndex();
 
-											consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir);
+											consulta.RealizarDescuentoStock(idProdVenta, cantADisminuir, tiendaSelect);
 										} catch (Exception e2) {
 											JOptionPane.showMessageDialog(null, "Error al disminuir Stock " + e2);
 										}

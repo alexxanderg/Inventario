@@ -327,14 +327,14 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		btnKardex = new JButton("K");
+		btnKardex = new JButton("AI");
 		btnKardex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnKardex(e);
 			}
 		});
 		btnKardex.setForeground(Color.DARK_GRAY);
-		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnKardex.setBackground(new Color(30, 144, 255));
 		btnKardex.setBounds(179, 280, 51, 50);
 		panel.add(btnKardex);
@@ -510,12 +510,30 @@ public class VentanaPrincipal extends JFrame {
 	public void actionPerformedBtnVentas(ActionEvent arg0) {
 		try {
 			cerrarVentanas();
-			ventas2 = new Ventas2(this, -1);
+			
+			Object tiendaelegida = JOptionPane.showInputDialog(null,"Seleccione una tienda",
+					   "TIENDA", JOptionPane.QUESTION_MESSAGE, null,
+					  new Object[] { "Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4" },"Seleccione");
+			
+			
+			
+			
+			ventas2 = new Ventas2(this, -1, tiendaelegida.toString());
 			desktopPane.add(ventas2);
 			ventas2.show();
 			ventas2.setMaximum(true);
 			pintarBotones();
 			btnVentas.setBackground(colorSelec);
+			
+			if(tiendaelegida.toString().equals("Tienda 1"))
+				ventas2.cbTienda.setSelectedIndex(0);
+			if(tiendaelegida.toString().equals("Tienda 2"))
+				ventas2.cbTienda.setSelectedIndex(1);
+			if(tiendaelegida.toString().equals("Tienda 3"))
+				ventas2.cbTienda.setSelectedIndex(2);
+			if(tiendaelegida.toString().equals("Tienda 4"))
+				ventas2.cbTienda.setSelectedIndex(3);
+			
 		} catch (PropertyVetoException e) {
 			JOptionPane.showMessageDialog(null, "Error al crear ventana Ventas: " + e);
 		}
@@ -537,7 +555,7 @@ public class VentanaPrincipal extends JFrame {
 	public void cargarVentas(int nroCompra){
 		try {
 			cerrarVentanas();
-			ventas2 = new Ventas2(this, nroCompra);
+			ventas2 = new Ventas2(this, nroCompra, "");
 			desktopPane.add(ventas2);
 			ventas2.show();
 			ventas2.setMaximum(true);

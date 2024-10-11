@@ -195,14 +195,16 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(txtNroSerie);
 
 		lblFechaVencimiento = new JLabel("Fecha de vencimiento:");
-		lblFechaVencimiento.setBounds(554, 178, 205, 25);
+		lblFechaVencimiento.setVisible(false);
+		lblFechaVencimiento.setBounds(554, 232, 205, 25);
 		lblFechaVencimiento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFechaVencimiento.setForeground(Color.DARK_GRAY);
 		lblFechaVencimiento.setFont(new Font("Candara", Font.BOLD, 20));
 		contentPane.add(lblFechaVencimiento);
 
 		dchFeVencimiento = new JDateChooser();
-		dchFeVencimiento.setBounds(759, 178, 282, 25);
+		dchFeVencimiento.setVisible(false);
+		dchFeVencimiento.setBounds(759, 232, 282, 25);
 		dchFeVencimiento.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		dchFeVencimiento.setForeground(Color.DARK_GRAY);
 		contentPane.add(dchFeVencimiento);
@@ -351,16 +353,16 @@ public class NuevaCompra extends JFrame {
 		contentPane.add(txtNota);
 
 		lblMtodoDePago = new JLabel("M\u00E9todo de pago:");
-		lblMtodoDePago.setBounds(554, 214, 190, 23);
 		lblMtodoDePago.setVisible(false);
+		lblMtodoDePago.setBounds(554, 268, 190, 23);
 		lblMtodoDePago.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
 		contentPane.add(lblMtodoDePago);
 
 		cbMetPago = new JComboBox();
-		cbMetPago.setBounds(759, 214, 282, 25);
 		cbMetPago.setVisible(false);
+		cbMetPago.setBounds(759, 268, 282, 25);
 		cbMetPago.setModel(new DefaultComboBoxModel(new String[] {"Efectivo", "Tarjeta Cr\u00E9dito/D\u00E9bito", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN"}));
 		cbMetPago.setForeground(Color.DARK_GRAY);
 		cbMetPago.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -434,6 +436,23 @@ public class NuevaCompra extends JFrame {
 		chckActualizarPrecios.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		chckActualizarPrecios.setBounds(531, 552, 326, 50);
 		contentPane.add(chckActualizarPrecios);
+		
+		JLabel lblTienda = new JLabel("Tienda:");
+		lblTienda.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTienda.setForeground(Color.DARK_GRAY);
+		lblTienda.setFont(new Font("Candara", Font.BOLD, 20));
+		lblTienda.setBounds(554, 178, 205, 25);
+		contentPane.add(lblTienda);
+		
+		JComboBox cbTienda = new JComboBox();
+		cbTienda.setVisible(false);
+		cbTienda.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
+		cbTienda.setForeground(Color.DARK_GRAY);
+		cbTienda.setFont(new Font("Arial", Font.BOLD, 16));
+		cbTienda.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
+		cbTienda.setBackground(new Color(245, 245, 245));
+		cbTienda.setBounds(759, 177, 282, 25);
+		contentPane.add(cbTienda);
 		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
 		// Component[]{txtBuscarProducto, btnIngresar, cbTipoComprobante, txtSerie,
 		// txtNroSerie, cbDistribuidor, btnAnadirDistri, cbMoneda, txtTipoCambio,
@@ -786,11 +805,11 @@ public class NuevaCompra extends JFrame {
 			
 			consulta.iniciar();
 			rs = consulta.buscarProductoID(idProd);
-			
+						
 			try {
-				rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
+				//rs.beforeFirst(); // "Cantidad", "Producto y detalles", "Pre Indiv Ori", "Desc tot aplicado", "SubTotal", "IDPROD", "PC", "Stock", "Pre Indiv C/Desc" 
 				while (rs.next()) {
-					dtm.addRow(new Object[] { 
+					dtm.addRow(new Object[] {
 							"1", 
 							rs.getString("producto") + " " + rs.getString("detalles") + " " + rs.getString("marca") + " " + rs.getString("color") + " " + rs.getString("laboratorio") + " (" + rs.getString("unimedida") + ")",     
 							rs.getFloat("precioCo"),
@@ -799,7 +818,7 @@ public class NuevaCompra extends JFrame {
 					tbCompras.setRowSelectionInterval(tbCompras.getRowCount() - 1, tbCompras.getRowCount() - 1);
 				}
 			} catch (Exception e) {
-				//JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
+				JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
 			}
 			
 			

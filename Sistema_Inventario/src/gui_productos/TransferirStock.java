@@ -295,7 +295,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 				else{
 					
 					int tiendaOrigen = cbOrigen.getSelectedIndex();
-					int tiendaDestino = cbOrigen.getSelectedIndex();
+					int tiendaDestino = cbDestino.getSelectedIndex();
 					float newStockOrigen = 0;
 					float newStockDestino = 0;
 					
@@ -317,8 +317,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 					if(tiendaDestino == 3)
 						stock4 = stock4 + ca;
 					
-					
-					JOptionPane.showMessageDialog(null, cantPrincipal + " - " + stock2 + " - " + stock3 + " - " + stock4); 
+					//JOptionPane.showMessageDialog(null, cantPrincipal + " - " + stock2 + " - " + stock3 + " - " + stock4); 
 					
 					model.iniciar();
 					model.modificarStocks(idProducto, cantPrincipal, stock2, stock3, stock4);
@@ -331,9 +330,6 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 					this.dispose();
 					
 					model.reset();
-					
-					
-					
 					
 				}
 			}
