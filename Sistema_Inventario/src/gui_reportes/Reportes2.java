@@ -116,6 +116,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	private JButton btnPagosVentas;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JButton btnK;
 
 	/**
 	 * Launch the application.
@@ -210,6 +211,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(lblPorProducto);
 
 		btnSalidas = new JButton("Salidas");
+		btnSalidas.setVisible(false);
 		btnSalidas.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnSalidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -219,7 +221,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		btnSalidas.setForeground(Color.WHITE);
 		btnSalidas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnSalidas.setBackground(new Color(30, 144, 255));
-		btnSalidas.setBounds(320, 517, 178, 32);
+		btnSalidas.setBounds(149, 517, 67, 32);
 		panel.add(btnSalidas);
 
 		txtProductos = new JTextField();
@@ -438,12 +440,13 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										panel.add(lblNoAfectaLas);
 										
 										btnIngresos = new JButton("Ingresos");
+										btnIngresos.setVisible(false);
 										btnIngresos.addActionListener(this);
 										btnIngresos.setForeground(Color.WHITE);
 										btnIngresos.setFont(new Font("Tahoma", Font.BOLD, 18));
 										btnIngresos.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 										btnIngresos.setBackground(new Color(30, 144, 255));
-										btnIngresos.setBounds(72, 517, 178, 32);
+										btnIngresos.setBounds(72, 517, 67, 32);
 										panel.add(btnIngresos);
 										
 										lblNewLabel = new JLabel("Escoja un rango de fechas y luego el reporte que necesite.");
@@ -511,12 +514,13 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										textField_4.setBounds(619, 234, 399, 5);
 										panel.add(textField_4);
 										
-										JButton btnK = new JButton("k");
+										btnK = new JButton("Buscar");
+										btnK.addActionListener(this);
 										btnK.setForeground(Color.WHITE);
 										btnK.setFont(new Font("Tahoma", Font.BOLD, 18));
 										btnK.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 										btnK.setBackground(new Color(30, 144, 255));
-										btnK.setBounds(509, 517, 67, 32);
+										btnK.setBounds(320, 517, 178, 32);
 										panel.add(btnK);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE T�TULO
@@ -572,6 +576,9 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnK) {
+			actionPerformedBtnK(e);
+		}
 		if (e.getSource() == btnPagosVentas) {
 			actionPerformedBtnPagosVentas(e);
 		}
@@ -1143,6 +1150,51 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		    catch (Exception ex) {
 		      JOptionPane.showMessageDialog(null, "No se encontraron datos registrados en estas fechas" + ex);
 		    }
+	}
+	
+	protected void actionPerformedBtnK(ActionEvent e) {
+		Connection con = null;
+		try {
+			
+			con = MySQLConexion.getConection();
+
+			int anioi = fInicial.getCalendar().get(Calendar.YEAR);
+			int mesi = fInicial.getCalendar().get(Calendar.MARCH) + 1;
+			int diai = fInicial.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechai = anioi + "-" + mesi + "-" + diai + " 00:00:00";
+
+			int aniof = fFinal.getCalendar().get(Calendar.YEAR);
+			int mesf = fFinal.getCalendar().get(Calendar.MARCH) + 1;
+			int diaf = fFinal.getCalendar().get(Calendar.DAY_OF_MONTH);
+			String fechaf = aniof + "-" + mesf + "-" + diaf + " 23:59:59";
+
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = (Date) formatter.parse(fechai);
+			java.sql.Timestamp timeStampDateI = new Timestamp(date.getTime());
+			DateFormat formatter2;
+			formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date2 = (Date) formatter2.parse(fechaf);
+			java.sql.Timestamp timeStampDateF = new Timestamp(date2.getTime());
+
+			String nomProducto = txtProductos.getText();
+			int idProd = Integer
+					.parseInt(nomProducto.substring(nomProducto.indexOf("(") + 1, nomProducto.indexOf(")")));
+
+			
+			Map parameters = new HashMap();
+			parameters.put("idProd", idProd);
+			//parameters.put("prod", nomProducto);
+			parameters.put("prtFechaI", timeStampDateI);
+			parameters.put("prtFechaF", timeStampDateF);
+			
+			new AbstractJasperReports().createReport(con, "rKardex.jasper", parameters);
+			this.txtProductos.setText(null);
+			AbstractJasperReports.showViewer();
+			con.close();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Error al cargar reporte");
+		}
 	}
 }
 

@@ -592,18 +592,29 @@ public class consultas {
 		return 0;
 	}
 	
-	public int registrarMovimiento(int idsiguiente, int tipo, String doc, String cliprov, int tienda, double ingreso, double salida, double precio, double total, double stock1, double stock2, double stock3, double stock4) {		
+	public int registrarMovimiento(Object fActual, int idsiguiente, int tipo, String doc, String cliprov, String  tienda, double ingreso, double salida, double stock1, double stock2, double stock3, double stock4) {		
 		try {
 			st = con.createStatement();
-			String sql = "insert into tb_ingreso_productos (coding, codproducto, cantidad, precioCoOld, precioVeOld, precioCoNew, precioVeNew, nombreusu, fechaingreso)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into tb_movimientos (idmovimiento, fecha, codproducto, tipo, documento, cliprov, tienda, ingreso, salida, stock1, stock2, stock3, stock4)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepareStmt = con.prepareStatement(sql);
 			prepareStmt.setString(1, null);
-			prepareStmt.setInt(2, idsiguiente);
+			prepareStmt.setObject(2, fActual);
+			prepareStmt.setInt(3, idsiguiente);
+			prepareStmt.setDouble(4, tipo);
+			prepareStmt.setString(5, doc);
+			prepareStmt.setString(6, cliprov);
+			prepareStmt.setString(7, tienda);
+			prepareStmt.setDouble(8, ingreso);
+			prepareStmt.setDouble(9, salida);
+			prepareStmt.setDouble(10, stock1);
+			prepareStmt.setDouble(11, stock2);
+			prepareStmt.setDouble(12, stock3);
+			prepareStmt.setDouble(13, stock4);
 			prepareStmt.execute();
-			//JOptionPane.showMessageDialog(null, "Registrado correctamente");
+			//JOptionPane.showMessageDialog(null, "Movimiento Registrado correctamente");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR al registrar Fecha ingreso: " + e);
+			JOptionPane.showMessageDialog(null, "ERROR al registrar movimiento de ingreso: " + e);
 		}
 		return 0;
 	}

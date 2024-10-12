@@ -1635,7 +1635,7 @@ public class NuevoProducto extends JFrame {
 						
 						double stockTotal = stockini+stock2+stock3+stock4;
 						
-						consulta.registrarMovimiento(idsiguiente, 0, "-", "-", 1, stockTotal, 0, precoNew, stockTotal*preveNew, stockini,stock2,stock3,stock4);
+						consulta.registrarMovimiento(fechaActual, idsiguiente, 0, "Creación", "-", "1", stockTotal, 0, stockini,stock2,stock3,stock4);
 						
 						if (nc != null) {
 							String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + idsiguiente + ")"; 

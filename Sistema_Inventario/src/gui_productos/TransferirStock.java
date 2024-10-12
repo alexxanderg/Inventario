@@ -100,7 +100,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		
 		addWindowListener(this);
 		setResizable(false);
-		setBounds(100, 100, 390, 372);
+		setBounds(100, 100, 467, 449);
 		getContentPane().setLayout(null);
 		
 		lblStockActual = new JLabel("Origen:");
@@ -108,7 +108,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblStockActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStockActual.setForeground(Color.BLACK);
 		lblStockActual.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStockActual.setBounds(65, 144, 105, 38);
+		lblStockActual.setBounds(10, 237, 86, 38);
 		getContentPane().add(lblStockActual);
 		
 		lblCantidadAIngresar = new JLabel("Destino:");
@@ -116,7 +116,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblCantidadAIngresar.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadAIngresar.setForeground(Color.BLACK);
 		lblCantidadAIngresar.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidadAIngresar.setBounds(65, 185, 105, 38);
+		lblCantidadAIngresar.setBounds(232, 237, 86, 38);
 		getContentPane().add(lblCantidadAIngresar);
 		
 		txtCantidad = new JTextField();
@@ -126,12 +126,12 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 				keyTypedTxtCantidadAdicinal(arg0);
 			}
 		});
-		txtCantidad.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtCantidad.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCantidad.setForeground(new Color(220, 20, 60));
 		txtCantidad.setFont(new Font("Candara", Font.BOLD, 20));
 		txtCantidad.setColumns(10);
 		txtCantidad.setBackground(SystemColor.controlHighlight);
-		txtCantidad.setBounds(180, 242, 128, 25);
+		txtCantidad.setBounds(226, 299, 128, 25);
 		getContentPane().add(txtCantidad);
 		
 		btnGuardar = new JButton("GUARDAR");
@@ -139,7 +139,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		btnGuardar.setForeground(SystemColor.menu);
 		btnGuardar.setFont(new Font("EngraversGothic BT", Font.BOLD, 30));
 		btnGuardar.setBackground(new Color(30, 144, 255));
-		btnGuardar.setBounds(0, 278, 374, 55);
+		btnGuardar.setBounds(0, 355, 451, 55);
 		getContentPane().add(btnGuardar);
 		
 		txtAgregarStock = new JTextField();
@@ -154,7 +154,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		txtAgregarStock.setEditable(false);
 		txtAgregarStock.setColumns(10);
 		txtAgregarStock.setBackground(Color.DARK_GRAY);
-		txtAgregarStock.setBounds(0, 0, 374, 58);
+		txtAgregarStock.setBounds(0, 0, 451, 58);
 		getContentPane().add(txtAgregarStock);
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
@@ -162,19 +162,20 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidad.setForeground(Color.BLACK);
 		lblCantidad.setFont(new Font("Candara", Font.BOLD, 20));
-		lblCantidad.setBounds(65, 229, 105, 38);
+		lblCantidad.setBounds(111, 286, 105, 38);
 		getContentPane().add(lblCantidad);
 		
 		cbOrigen = new JComboBox();
 		cbOrigen.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
 		cbOrigen.setFont(new Font("Candara", Font.BOLD, 15));
-		cbOrigen.setBounds(180, 155, 128, 25);
+		cbOrigen.setBounds(79, 251, 128, 25);
 		getContentPane().add(cbOrigen);
 		
 		cbDestino = new JComboBox();
 		cbDestino.setModel(new DefaultComboBoxModel(new String[] {"Tienda 1", "Tienda 2", "Tienda 3", "Tienda 4"}));
+		cbDestino.setSelectedIndex(1);
 		cbDestino.setFont(new Font("Candara", Font.BOLD, 15));
-		cbDestino.setBounds(180, 198, 128, 25);
+		cbDestino.setBounds(311, 251, 128, 25);
 		getContentPane().add(cbDestino);
 		
 		lblPrincipal = new JLabel("Stock principal: ");
@@ -182,7 +183,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrincipal.setForeground(new Color(219, 112, 147));
 		lblPrincipal.setFont(new Font("Candara", Font.BOLD, 20));
-		lblPrincipal.setBounds(135, 58, 56, 38);
+		lblPrincipal.setBounds(245, 66, 56, 38);
 		getContentPane().add(lblPrincipal);
 		
 		lblStock2 = new JLabel("Stock almacén:");
@@ -190,7 +191,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblStock2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStock2.setForeground(new Color(240, 128, 128));
 		lblStock2.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStock2.setBounds(135, 95, 56, 38);
+		lblStock2.setBounds(245, 103, 56, 38);
 		getContentPane().add(lblStock2);
 		
 		lblStock3 = new JLabel("Tienda 1: 0.0");
@@ -198,7 +199,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblStock3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStock3.setForeground(new Color(240, 128, 128));
 		lblStock3.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStock3.setBounds(307, 58, 39, 38);
+		lblStock3.setBounds(247, 139, 39, 38);
 		getContentPane().add(lblStock3);
 		
 		lblStock4 = new JLabel("Tienda 2: 0.0");
@@ -206,7 +207,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblStock4.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStock4.setForeground(new Color(240, 128, 128));
 		lblStock4.setFont(new Font("Candara", Font.BOLD, 20));
-		lblStock4.setBounds(307, 95, 39, 38);
+		lblStock4.setBounds(247, 176, 39, 38);
 		getContentPane().add(lblStock4);
 		
 		lblTienda = new JLabel("Tienda 1 ->");
@@ -214,7 +215,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblTienda.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTienda.setForeground(new Color(0, 0, 0));
 		lblTienda.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTienda.setBounds(31, 58, 97, 38);
+		lblTienda.setBounds(141, 66, 97, 38);
 		getContentPane().add(lblTienda);
 		
 		lblTienda_1 = new JLabel("Tienda 2 ->");
@@ -222,7 +223,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblTienda_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTienda_1.setForeground(new Color(0, 0, 0));
 		lblTienda_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTienda_1.setBounds(31, 95, 97, 38);
+		lblTienda_1.setBounds(141, 103, 97, 38);
 		getContentPane().add(lblTienda_1);
 		
 		lblTienda_2 = new JLabel("Tienda 3 ->");
@@ -230,7 +231,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblTienda_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTienda_2.setForeground(Color.BLACK);
 		lblTienda_2.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTienda_2.setBounds(201, 58, 97, 38);
+		lblTienda_2.setBounds(141, 139, 97, 38);
 		getContentPane().add(lblTienda_2);
 		
 		lblTienda_3 = new JLabel("Tienda 4 ->");
@@ -238,7 +239,7 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 		lblTienda_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTienda_3.setForeground(Color.BLACK);
 		lblTienda_3.setFont(new Font("Candara", Font.BOLD, 20));
-		lblTienda_3.setBounds(201, 95, 97, 38);
+		lblTienda_3.setBounds(141, 176, 97, 38);
 		getContentPane().add(lblTienda_3);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtCantidad, btnGuardar, lblStock3, lblStock4, lblTienda, lblTienda_1, lblTienda_2, lblTienda_3}));
 		cargar();
@@ -296,8 +297,6 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 					
 					int tiendaOrigen = cbOrigen.getSelectedIndex();
 					int tiendaDestino = cbDestino.getSelectedIndex();
-					float newStockOrigen = 0;
-					float newStockDestino = 0;
 					
 					if(tiendaOrigen == 0)
 						cantPrincipal = cantPrincipal - ca;
@@ -321,6 +320,15 @@ public class TransferirStock extends JDialog implements ActionListener, WindowLi
 					
 					model.iniciar();
 					model.modificarStocks(idProducto, cantPrincipal, stock2, stock3, stock4);
+					
+					
+					java.util.Date date = new Date(); // FECHA ACTUAL
+					Object fechaActual = new java.sql.Timestamp(date.getTime());
+					double stockTotal = cantPrincipal+stock2+stock3+stock4;
+
+					
+					model.registrarMovimiento(fechaActual, idProducto, 4, "Traspaso", "-", ""+ (tiendaOrigen+1) + "->" + (tiendaDestino+1), 0, ca, cantPrincipal,stock2,stock3,stock4);
+
 					
 					//mp.setEnabled(true);
 					mp.cargar();

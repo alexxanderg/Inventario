@@ -547,6 +547,7 @@ public class Ventas2 extends JInternalFrame
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
+		chckImrpimir.setVisible(false);
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
@@ -1620,6 +1621,42 @@ public class Ventas2 extends JInternalFrame
 										redondearDecimales((precioVeUniOriginal * cantProdVenta), 2),
 										redondearDecimales((descTotXProdV / cantProdVenta), 2), descTotXProdV,
 										subTotVenta, gananciaProdVenta, uMedidaUsada, detallesProducto);
+								
+								
+								java.util.Date date = new Date(); // FECHA ACTUAL
+								Object fechaActual = new java.sql.Timestamp(date.getTime());
+								
+								int tiendaselect = cbTienda.getSelectedIndex();
+								tiendaselect++;
+								
+								double stock1 = 0;
+								double stock2 = 0;
+								double stock3 = 0;
+								double stock4 = 0;
+								
+								try {
+									rs = consulta.buscarProductoID(idProdVenta);
+									rs.next();
+									
+									stock1 = rs.getDouble("cantidad");
+									stock2 = rs.getDouble("stock2");
+									stock3 = rs.getDouble("stock3");
+									stock4 = rs.getDouble("stock4");
+									
+									if(cbTienda.getSelectedIndex()==0)
+										stock1 = stock1-cantProdVenta;
+									if(cbTienda.getSelectedIndex()==1)
+										stock2 = stock2-cantProdVenta;
+									if(cbTienda.getSelectedIndex()==2)
+										stock3 = stock3-cantProdVenta;
+									if(cbTienda.getSelectedIndex()==3)
+										stock4 = stock4-cantProdVenta;
+									
+								} catch (Exception e3) {
+									JOptionPane.showMessageDialog(null, "Error al cargar stock de productos: "+e);
+								} 
+								
+								consulta.registrarMovimiento(fechaActual, idProdVenta, 1, "Venta: NV00"+ultCodVenta, "-", ""+tiendaselect, 0, cantProdVenta, stock1,stock2,stock3,stock4);
 
 								/*
 								 * A CONTINUACION SE DISMINUIR� EL STOCK DE CADA PRODUCTO

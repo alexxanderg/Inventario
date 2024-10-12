@@ -213,15 +213,14 @@ foreign key (idcompra) references tb_compras(idcompra)
 
 create table tb_movimientos(
 idmovimiento	int primary key auto_increment,
+fecha			datetime,
 codproducto 	int,	
 tipo			int, -- 0Creación 1Venta 2Compra 3Anulacion 4Traspaso
-documento		varchar(10),
-cliprov         varchar(50),
-tienda			int,
+documento		varchar(20),
+cliprov         varchar(100),
+tienda			varchar(10),
 ingreso			float,
 salida			float,
-costo           float,
-total           float,
 stock1			float,
 stock2			float,
 stock3			float,
