@@ -133,7 +133,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		setTitle("Sistema de Inventario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1382, 741);
+		setBounds(100, 100, 1268, 741);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -374,7 +374,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		lblLogoBxB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblLogoBxB.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
-		lblLogoBxB.setBounds(1023, 0, 111, 50);
+		lblLogoBxB.setBounds(916, 0, 111, 50);
 		panel_1.add(lblLogoBxB);
 		lblLogoBxB.setHorizontalAlignment(SwingConstants.CENTER);
 		Image imgLogoBxB = new ImageIcon(this.getClass().getResource("/imgBxBhrztl.png")).getImage().getScaledInstance(110, 47, Image.SCALE_AREA_AVERAGING);
