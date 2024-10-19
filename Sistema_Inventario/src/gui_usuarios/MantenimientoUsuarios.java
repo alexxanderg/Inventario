@@ -80,7 +80,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 41, 1083, 568);
+		this.scrollPane.setBounds(10, 41, 976, 568);
 		getContentPane().add(this.scrollPane);
 		
 		tbUsuarios = new JTable();
@@ -135,7 +135,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		menuBar.add(mnNewMenu_2);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE Tï¿½TULO
 		
 		cargar();
 	}
@@ -145,7 +145,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		tb = this.tbUsuarios;
 		tb.setRowHeight(30);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEÑA", "TIPO"});
+		dtm.setColumnIdentifiers(new Object[]{"ID", "NOMBRE", "USUARIO", "CONTRASEï¿½A", "TIPO"});
 		try {
 			consulta.iniciar();
 			rs = consulta.cargarUsuarios();
@@ -185,7 +185,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));  // ID
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(40));  // Nombre
 		tcm.getColumn(2).setPreferredWidth(anchoColumna(20));  // Usuario
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseña
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));  // Contraseï¿½a
 		tcm.getColumn(4).setPreferredWidth(anchoColumna(20));  // Tipo
 		
 		/*DefaultTableCellRenderer tcr0 = new DefaultTableCellRenderer();
@@ -247,7 +247,7 @@ public class MantenimientoUsuarios extends JInternalFrame {
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbUsuarios.getModel();
 		int idusuario = Integer.parseInt(String.valueOf(tm.getValueAt(tbUsuarios.getSelectedRow(), 0)));
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este usuario?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null, "ï¿½Seguro de querer eliminar este usuario?", "Confirmaciï¿½n", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			consulta.iniciar();
 			consulta.deshabilitarUsuario(idusuario);

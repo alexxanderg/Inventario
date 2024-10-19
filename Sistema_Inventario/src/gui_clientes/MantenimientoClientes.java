@@ -71,7 +71,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 51, 1083, 558);
+		this.scrollPane.setBounds(10, 51, 970, 558);
 		getContentPane().add(this.scrollPane);
 
 		tbCliente = new JTable();
@@ -92,7 +92,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		this.btnexportar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		this.btnexportar.setBorder(new LineBorder(new Color(138, 43, 226), 3, true));
 		this.btnexportar.setBackground(Color.WHITE);
-		this.btnexportar.setBounds(944, 5, 149, 41);
+		this.btnexportar.setBounds(831, 11, 149, 41);
 		getContentPane().add(this.btnexportar);
 		// tbProductos.getTableHeader().setResizingAllowed(false);
 		tbCliente.getTableHeader().setReorderingAllowed(false);
@@ -142,7 +142,7 @@ public class MantenimientoClientes extends JInternalFrame {
 																							// LA
 																							// BARRA
 																							// DE
-																							// TÍTULO
+																							// Tï¿½TULO
 
 		cargar();
 	}
@@ -152,7 +152,7 @@ public class MantenimientoClientes extends JInternalFrame {
 		tb = this.tbCliente;
 		tb.setRowHeight(30);
 		tb.setModel(dtm);
-		dtm.setColumnIdentifiers(new Object[] { "ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIÓN",
+		dtm.setColumnIdentifiers(new Object[] { "ID", "NOMBRE", "TIPO DOC", "NRO DOCUMENTO", "DIRECCIï¿½N",
 				"TELEFONO", "CORREO" });
 		consulta.iniciar();
 		rs = consulta.cargarClientes();
@@ -234,7 +234,7 @@ public class MantenimientoClientes extends JInternalFrame {
 	protected void mouseClickedMnNewMenu_2(MouseEvent e) {
 		DefaultTableModel tm = (DefaultTableModel) tbCliente.getModel();
 		int idCliente = Integer.parseInt(String.valueOf(tm.getValueAt(tbCliente.getSelectedRow(), 0)));
-		int opc = JOptionPane.showConfirmDialog(null, "¿Seguro de querer eliminar este cliente?", "Confirmación",
+		int opc = JOptionPane.showConfirmDialog(null, "ï¿½Seguro de querer eliminar este cliente?", "Confirmaciï¿½n",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (opc == 0) {
 			consulta.iniciar();

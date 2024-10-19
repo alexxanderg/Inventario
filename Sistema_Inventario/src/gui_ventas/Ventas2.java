@@ -183,13 +183,13 @@ public class Ventas2 extends JInternalFrame
 
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Ventas");
-		setBounds(100, 100, 1134, 669);
+		setBounds(100, 100, 1060, 669);
 		getContentPane().setLayout(null);
 
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(228, 171, 880, 277);
+		this.scrollPane.setBounds(228, 171, 777, 277);
 		getContentPane().add(this.scrollPane);
 
 		tbCarrito = new JTable();
@@ -257,7 +257,7 @@ public class Ventas2 extends JInternalFrame
 		lblNotaAdicionalDe = new JLabel("Nota adicional para la venta: (opcional)");
 		lblNotaAdicionalDe.setForeground(Color.DARK_GRAY);
 		lblNotaAdicionalDe.setFont(new Font("Candara", Font.BOLD, 20));
-		lblNotaAdicionalDe.setBounds(704, 103, 404, 23);
+		lblNotaAdicionalDe.setBounds(659, 103, 404, 23);
 		getContentPane().add(lblNotaAdicionalDe);
 
 		txtInfoAdicional = new JTextField();
@@ -267,13 +267,13 @@ public class Ventas2 extends JInternalFrame
 		txtInfoAdicional.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtInfoAdicional.setColumns(10);
 		txtInfoAdicional.setBackground(new Color(245, 245, 245));
-		txtInfoAdicional.setBounds(704, 126, 404, 34);
+		txtInfoAdicional.setBounds(659, 126, 346, 34);
 		getContentPane().add(txtInfoAdicional);
 
 		lblMtodoDePago = new JLabel("Paga con:");
 		lblMtodoDePago.setForeground(Color.DARK_GRAY);
 		lblMtodoDePago.setFont(new Font("Candara", Font.BOLD, 20));
-		lblMtodoDePago.setBounds(607, 459, 147, 23);
+		lblMtodoDePago.setBounds(545, 469, 147, 23);
 		getContentPane().add(lblMtodoDePago);
 
 		cbPago1 = new JComboBox();
@@ -282,15 +282,15 @@ public class Ventas2 extends JInternalFrame
 		cbPago1.setModel(new DefaultComboBoxModel(
 				new String[] { "Efectivo", "Tarjeta", "Transferencia", "Dep\u00F3sito", "YAPE/PLIN" }));
 		cbPago1.setFont(new Font("Arial", Font.ITALIC, 18));
-		cbPago1.setBounds(607, 483, 153, 25);
+		cbPago1.setBounds(545, 491, 153, 25);
 		getContentPane().add(cbPago1);
 
 		lblTotalVentaFinal = new JLabel("0");
-		lblTotalVentaFinal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalVentaFinal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalVentaFinal.setForeground(Color.DARK_GRAY);
 		lblTotalVentaFinal.setFont(new Font("Calibri", Font.BOLD, 40));
 		lblTotalVentaFinal.setBackground(new Color(138, 230, 78));
-		lblTotalVentaFinal.setBounds(409, 542, 188, 52);
+		lblTotalVentaFinal.setBounds(284, 523, 188, 52);
 		getContentPane().add(lblTotalVentaFinal);
 
 		lblTitTotal = new JLabel("TOTAL S/ ");
@@ -298,7 +298,7 @@ public class Ventas2 extends JInternalFrame
 		lblTitTotal.setForeground(Color.DARK_GRAY);
 		lblTitTotal.setFont(new Font("Candara", Font.BOLD, 40));
 		lblTitTotal.setBackground(new Color(138, 230, 78));
-		lblTitTotal.setBounds(216, 542, 206, 52);
+		lblTitTotal.setBounds(274, 481, 206, 52);
 		getContentPane().add(lblTitTotal);
 
 		btnVender = new JButton("FINALIZAR");
@@ -311,7 +311,7 @@ public class Ventas2 extends JInternalFrame
 		btnVender.setForeground(Color.DARK_GRAY);
 		btnVender.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnVender.setBackground(new Color(138, 230, 78));
-		btnVender.setBounds(926, 543, 182, 51);
+		btnVender.setBounds(823, 544, 182, 51);
 		getContentPane().add(btnVender);
 
 		txtNroImpresiones = new JTextField();
@@ -333,23 +333,25 @@ public class Ventas2 extends JInternalFrame
 		txtVuelto.setEditable(false);
 		txtVuelto.setColumns(10);
 		txtVuelto.setBackground(new Color(245, 245, 245));
-		txtVuelto.setBounds(770, 562, 101, 34);
+		txtVuelto.setBounds(708, 560, 101, 34);
 		getContentPane().add(txtVuelto);
 
 		lblTitDescuento = new JLabel("Descuento");
+		lblTitDescuento.setVisible(false);
 		lblTitDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitDescuento.setForeground(new Color(102, 205, 170));
 		lblTitDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTitDescuento.setBackground(new Color(50, 205, 50));
-		lblTitDescuento.setBounds(240, 507, 91, 18);
+		lblTitDescuento.setBounds(12, 529, 91, 18);
 		getContentPane().add(lblTitDescuento);
 
 		lblDescuento = new JLabel("0");
+		lblDescuento.setVisible(false);
 		lblDescuento.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDescuento.setForeground(new Color(102, 205, 170));
 		lblDescuento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblDescuento.setBackground(new Color(50, 205, 50));
-		lblDescuento.setBounds(410, 511, 80, 14);
+		lblDescuento.setBounds(150, 533, 80, 14);
 		getContentPane().add(lblDescuento);
 
 		txtPago1 = new JTextField();
@@ -377,7 +379,7 @@ public class Ventas2 extends JInternalFrame
 		txtPago1.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago1.setColumns(10);
 		txtPago1.setBackground(new Color(245, 245, 245));
-		txtPago1.setBounds(770, 483, 101, 25);
+		txtPago1.setBounds(708, 491, 101, 25);
 		getContentPane().add(txtPago1);
 
 		cbPago2 = new JComboBox();
@@ -387,7 +389,7 @@ public class Ventas2 extends JInternalFrame
 		cbPago2.setSelectedIndex(5);
 		cbPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbPago2.setBackground(new Color(245, 245, 245));
-		cbPago2.setBounds(607, 525, 153, 25);
+		cbPago2.setBounds(545, 523, 153, 25);
 		getContentPane().add(cbPago2);
 
 		txtPago2 = new JTextField();
@@ -415,30 +417,32 @@ public class Ventas2 extends JInternalFrame
 		txtPago2.setFont(new Font("Arial", Font.ITALIC, 18));
 		txtPago2.setColumns(10);
 		txtPago2.setBackground(new Color(245, 245, 245));
-		txtPago2.setBounds(770, 526, 101, 25);
+		txtPago2.setBounds(708, 524, 101, 25);
 		getContentPane().add(txtPago2);
 
 		lblS = new JLabel("S/");
 		lblS.setHorizontalAlignment(SwingConstants.CENTER);
 		lblS.setForeground(Color.DARK_GRAY);
 		lblS.setFont(new Font("Candara", Font.BOLD, 20));
-		lblS.setBounds(804, 449, 32, 34);
+		lblS.setBounds(742, 459, 32, 34);
 		getContentPane().add(lblS);
 
 		lblTitTotOri = new JLabel("Total original");
+		lblTitTotOri.setVisible(false);
 		lblTitTotOri.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitTotOri.setForeground(new Color(102, 205, 170));
 		lblTitTotOri.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTitTotOri.setBackground(new Color(50, 205, 50));
-		lblTitTotOri.setBounds(238, 483, 101, 23);
+		lblTitTotOri.setBounds(10, 505, 101, 23);
 		getContentPane().add(lblTitTotOri);
 
 		lblTotOriginal = new JLabel("0");
+		lblTotOriginal.setVisible(false);
 		lblTotOriginal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotOriginal.setForeground(new Color(102, 205, 170));
 		lblTotOriginal.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblTotOriginal.setBackground(new Color(50, 205, 50));
-		lblTotOriginal.setBounds(409, 483, 80, 23);
+		lblTotOriginal.setBounds(149, 505, 80, 23);
 		getContentPane().add(lblTotOriginal);
 
 		lblTotalCompra = new JLabel("0");
@@ -466,11 +470,11 @@ public class Ventas2 extends JInternalFrame
 		lblElVueltoDe_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblElVueltoDe_1.setForeground(new Color(30, 144, 255));
 		lblElVueltoDe_1.setFont(new Font("Candara", Font.BOLD, 20));
-		lblElVueltoDe_1.setBounds(607, 563, 176, 34);
+		lblElVueltoDe_1.setBounds(545, 561, 176, 34);
 		getContentPane().add(lblElVueltoDe_1);
 
 		dchFechaVenta = new JDateChooser();
-		dchFechaVenta.setBounds(704, 70, 151, 23);
+		dchFechaVenta.setBounds(659, 70, 151, 23);
 		getContentPane().add(dchFechaVenta);
 
 		txtHora = new JTextField();
@@ -487,7 +491,7 @@ public class Ventas2 extends JInternalFrame
 		});
 		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
 		txtHora.setText("00");
-		txtHora.setBounds(865, 70, 53, 23);
+		txtHora.setBounds(820, 70, 53, 23);
 		getContentPane().add(txtHora);
 		txtHora.setColumns(10);
 
@@ -506,19 +510,19 @@ public class Ventas2 extends JInternalFrame
 		txtMin.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMin.setText("00");
 		txtMin.setColumns(10);
-		txtMin.setBounds(928, 70, 56, 23);
+		txtMin.setBounds(883, 70, 56, 23);
 		getContentPane().add(txtMin);
 
 		lblHora = new JLabel("Hora");
 		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setBounds(865, 52, 53, 14);
+		lblHora.setBounds(820, 52, 53, 14);
 		getContentPane().add(lblHora);
 
 		lblMin = new JLabel("Min");
 		lblMin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblMin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMin.setBounds(928, 52, 56, 14);
+		lblMin.setBounds(883, 52, 56, 14);
 		getContentPane().add(lblMin);
 
 		lblNroCompramodificar = new JLabel("0");
@@ -534,29 +538,31 @@ public class Ventas2 extends JInternalFrame
 		lblFechaDeVenta = new JLabel("Fecha de la venta:");
 		lblFechaDeVenta.setForeground(Color.DARK_GRAY);
 		lblFechaDeVenta.setFont(new Font("Candara", Font.BOLD, 20));
-		lblFechaDeVenta.setBounds(704, 47, 164, 23);
+		lblFechaDeVenta.setBounds(659, 47, 164, 23);
 		getContentPane().add(lblFechaDeVenta);
 
 		chckImrpimir = new JCheckBox("\u00BFIMPIMIR COMPROBANTE?");
 		chckImrpimir.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckImrpimir.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckImrpimir.setBackground(SystemColor.window);
-		chckImrpimir.setBounds(926, 521, 182, 23);
+		chckImrpimir.setBounds(823, 522, 182, 23);
 		getContentPane().add(chckImrpimir);
 
 		rbtnCoti = new JRadioButton("COTIZACI\u00D3N");
+		rbtnCoti.setVisible(false);
 		rbtnCoti.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnCoti.setBackground(Color.WHITE);
-		rbtnCoti.setBounds(967, 498, 106, 23);
+		rbtnCoti.setBounds(864, 499, 106, 23);
 		getContentPane().add(rbtnCoti);
 
 		grupobuttons = new ButtonGroup();
 		grupobuttons.add(rbtnCoti);
 
 		rbtnVenta = new JRadioButton("VENTA");
+		rbtnVenta.setVisible(false);
 		rbtnVenta.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rbtnVenta.setBackground(Color.WHITE);
-		rbtnVenta.setBounds(986, 469, 68, 23);
+		rbtnVenta.setBounds(883, 470, 68, 23);
 		getContentPane().add(rbtnVenta);
 		grupobuttons.add(rbtnVenta);
 
@@ -678,25 +684,27 @@ public class Ventas2 extends JInternalFrame
 		txtNewPrecioCo.setColumns(10);
 
 		lblS_1 = new JLabel("S/");
+		lblS_1.setVisible(false);
 		lblS_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblS_1.setForeground(new Color(102, 205, 170));
 		lblS_1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblS_1.setBackground(new Color(50, 205, 50));
-		lblS_1.setBounds(360, 483, 29, 23);
+		lblS_1.setBounds(132, 505, 29, 23);
 		getContentPane().add(lblS_1);
 
 		lblS_2 = new JLabel("S/");
+		lblS_2.setVisible(false);
 		lblS_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblS_2.setForeground(new Color(102, 205, 170));
 		lblS_2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblS_2.setBackground(new Color(50, 205, 50));
-		lblS_2.setBounds(361, 510, 39, 18);
+		lblS_2.setBounds(133, 532, 39, 18);
 		getContentPane().add(lblS_2);
 
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setBackground(new Color(138, 230, 78));
-		textField.setBounds(228, 584, 346, 6);
+		textField.setBounds(242, 562, 287, 4);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 

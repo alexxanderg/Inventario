@@ -233,7 +233,7 @@ public class Configuraciones extends JInternalFrame {
 		this.lblCopiaDeSeguridad = new JLabel("Crear copia de seguridad");
 		this.lblCopiaDeSeguridad.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblCopiaDeSeguridad.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblCopiaDeSeguridad.setBounds(621, 291, 226, 26);
+		this.lblCopiaDeSeguridad.setBounds(549, 291, 226, 26);
 		getContentPane().add(this.lblCopiaDeSeguridad);
 		
 		this.btnSeleccionCarpeta = new JButton("Guardar");
@@ -245,13 +245,13 @@ public class Configuraciones extends JInternalFrame {
 		this.btnSeleccionCarpeta.setForeground(Color.WHITE);
 		this.btnSeleccionCarpeta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		this.btnSeleccionCarpeta.setBackground(new Color(30, 144, 255));
-		this.btnSeleccionCarpeta.setBounds(621, 343, 400, 33);
+		this.btnSeleccionCarpeta.setBounds(549, 343, 400, 33);
 		getContentPane().add(this.btnSeleccionCarpeta);
 		
 		JLabel lblNewLabel_1 = new JLabel("Le permite guardar toda la informaci\u00F3n de su sistema hasta la fecha.");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setBounds(621, 313, 428, 27);
+		lblNewLabel_1.setBounds(549, 313, 428, 27);
 		getContentPane().add(lblNewLabel_1);
 		
 		this.btnRestaurar = new JButton("Restaurar");
@@ -263,19 +263,19 @@ public class Configuraciones extends JInternalFrame {
 		this.btnRestaurar.setForeground(Color.WHITE);
 		this.btnRestaurar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		this.btnRestaurar.setBackground(new Color(30, 144, 255));
-		this.btnRestaurar.setBounds(621, 459, 400, 33);
+		this.btnRestaurar.setBounds(549, 459, 400, 33);
 		getContentPane().add(this.btnRestaurar);
 		
 		this.lblLePermiteRestaurar = new JLabel("Le permite restaurar toda la informaci\u00F3n.");
 		this.lblLePermiteRestaurar.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblLePermiteRestaurar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		this.lblLePermiteRestaurar.setBounds(621, 429, 428, 27);
+		this.lblLePermiteRestaurar.setBounds(549, 429, 428, 27);
 		getContentPane().add(this.lblLePermiteRestaurar);
 		
 		this.lblRestaurarBaseDe = new JLabel("Restaurar Base de Datos");
 		this.lblRestaurarBaseDe.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRestaurarBaseDe.setFont(new Font("Candara", Font.BOLD, 20));
-		this.lblRestaurarBaseDe.setBounds(621, 407, 226, 26);
+		this.lblRestaurarBaseDe.setBounds(549, 407, 226, 26);
 		getContentPane().add(this.lblRestaurarBaseDe);
 
 		
@@ -283,7 +283,7 @@ public class Configuraciones extends JInternalFrame {
 		menuBar.setBackground(new Color(211, 211, 211));
 		setJMenuBar(menuBar);
 
-		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE TÍTULO
+		((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); //QUITA LA BARRA DE Tï¿½TULO
 		cargar();
 	}
 	
@@ -455,7 +455,7 @@ public class Configuraciones extends JInternalFrame {
 		}
 	}
 	protected void actionPerformedBtnRestaurar(ActionEvent arg0) {
-		int opc = JOptionPane.showConfirmDialog(null, "ADVERTENCIA: Restaurar eliminará toda información" , "Restaurar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		int opc = JOptionPane.showConfirmDialog(null, "ADVERTENCIA: Restaurar eliminarï¿½ toda informaciï¿½n" , "Restaurar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 		if (opc == 0) {
 			if(seleccionarRestaurar.showDialog(null, "Abrir")==JFileChooser.APPROVE_OPTION){
 				archivoRestaurar=seleccionarRestaurar.getSelectedFile();

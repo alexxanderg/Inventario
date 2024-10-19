@@ -117,7 +117,7 @@ public class BuscarVentas extends JInternalFrame {
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 78, 1083, 210);
+		this.scrollPane.setBounds(10, 78, 992, 210);
 		getContentPane().add(this.scrollPane);
 		
 		tbVentas = new JTable();
@@ -145,21 +145,21 @@ public class BuscarVentas extends JInternalFrame {
 				actionPerformedBtnVerVentas(arg0);
 			}
 		});
-		btnVerVentas.setBounds(829, 38, 123, 30);
+		btnVerVentas.setBounds(704, 37, 123, 30);
 		getContentPane().add(btnVerVentas);
 		
 		cbUsuarios = new JComboBox();
 		cbUsuarios.setFont(new Font("Arial", Font.ITALIC, 18));
 		cbUsuarios.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		cbUsuarios.setBackground(new Color(245, 245, 245));
-		cbUsuarios.setBounds(312, 38, 227, 30);
+		cbUsuarios.setBounds(187, 37, 227, 30);
 		getContentPane().add(cbUsuarios);
 		
 		lblVendedor = new JLabel("Vendido por:");
 		lblVendedor.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblVendedor.setForeground(Color.DARK_GRAY);
 		lblVendedor.setFont(new Font("Candara", Font.BOLD, 20));
-		lblVendedor.setBounds(312, 10, 123, 29);
+		lblVendedor.setBounds(187, 9, 123, 29);
 		getContentPane().add(lblVendedor);
 		
 		lblDesde = new JLabel("Desde:");
@@ -167,11 +167,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblDesde.setForeground(Color.DARK_GRAY);
 		lblDesde.setFont(new Font("Candara", Font.BOLD, 20));
 		lblDesde.setBackground(new Color(50, 205, 50));
-		lblDesde.setBounds(549, 11, 71, 30);
+		lblDesde.setBounds(424, 10, 71, 30);
 		getContentPane().add(lblDesde);
 		
 		dchDesde = new JDateChooser();
-		dchDesde.setBounds(549, 38, 130, 30);
+		dchDesde.setBounds(424, 37, 130, 30);
 		getContentPane().add(dchDesde);
 		
 		lblHasta = new JLabel("Hasta:");
@@ -179,11 +179,11 @@ public class BuscarVentas extends JInternalFrame {
 		lblHasta.setForeground(Color.DARK_GRAY);
 		lblHasta.setFont(new Font("Candara", Font.BOLD, 20));
 		lblHasta.setBackground(new Color(50, 205, 50));
-		lblHasta.setBounds(689, 11, 71, 30);
+		lblHasta.setBounds(564, 10, 71, 30);
 		getContentPane().add(lblHasta);
 		
 		dchHasta = new JDateChooser();
-		dchHasta.setBounds(689, 38, 130, 30);
+		dchHasta.setBounds(564, 37, 130, 30);
 		getContentPane().add(dchHasta);
 		
 		lblTV = new JLabel("TOTAL VENTAS S/ ");
@@ -191,7 +191,7 @@ public class BuscarVentas extends JInternalFrame {
 		lblTV.setForeground(new Color(30, 144, 255));
 		lblTV.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTV.setBackground(new Color(50, 205, 50));
-		lblTV.setBounds(754, 291, 221, 36);
+		lblTV.setBounds(644, 292, 221, 36);
 		getContentPane().add(lblTV);
 		
 		lblTotVentas = new JLabel("0");
@@ -199,23 +199,25 @@ public class BuscarVentas extends JInternalFrame {
 		lblTotVentas.setForeground(new Color(30, 144, 255));
 		lblTotVentas.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotVentas.setBackground(new Color(50, 205, 50));
-		lblTotVentas.setBounds(985, 290, 108, 36);
+		lblTotVentas.setBounds(875, 291, 108, 36);
 		getContentPane().add(lblTotVentas);
 		
 		lblTotDescuentos = new JLabel("0");
+		lblTotDescuentos.setVisible(false);
 		lblTotDescuentos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotDescuentos.setForeground(new Color(205, 92, 92));
 		lblTotDescuentos.setFont(new Font("Calibri", Font.BOLD, 25));
 		lblTotDescuentos.setBackground(new Color(50, 205, 50));
-		lblTotDescuentos.setBounds(619, 291, 141, 36);
+		lblTotDescuentos.setBounds(505, 292, 141, 36);
 		getContentPane().add(lblTotDescuentos);
 		
 		lblTD = new JLabel("TOTAL DE DESCUENTOS S/ ");
+		lblTD.setVisible(false);
 		lblTD.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTD.setForeground(new Color(205, 92, 92));
 		lblTD.setFont(new Font("Candara", Font.BOLD, 25));
 		lblTD.setBackground(new Color(50, 205, 50));
-		lblTD.setBounds(312, 291, 296, 36);
+		lblTD.setBounds(198, 292, 296, 36);
 		getContentPane().add(lblTD);
 		
 		btnGenerarReporte = new JButton("<html><center>EXPORTAR<br>VENTAS</center></html>");
@@ -229,7 +231,7 @@ public class BuscarVentas extends JInternalFrame {
 		btnGenerarReporte.setForeground(new Color(138, 43, 226));
 		btnGenerarReporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnGenerarReporte.setBackground(new Color(255, 255, 255));
-		btnGenerarReporte.setBounds(962, 10, 131, 57);
+		btnGenerarReporte.setBounds(837, 9, 131, 57);
 		getContentPane().add(btnGenerarReporte);
 		
 		lblBuscarVentas = new JLabel("<html>VENTAS REALIZADAS:</html>");
@@ -241,7 +243,7 @@ public class BuscarVentas extends JInternalFrame {
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(10, 372, 1083, 235);
+		scrollPane_1.setBounds(10, 372, 992, 235);
 		getContentPane().add(scrollPane_1);
 		
 		tbDetalleVenta = new JTable();
@@ -583,7 +585,7 @@ public class BuscarVentas extends JInternalFrame {
 				dtm.removeRow(i);
 				i -= 1;
 			}			
-			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "DESCUENTO", "TOTAL"});
+			dtm.setColumnIdentifiers(new Object[]{"NRO", "CLIENTE", "VENDEDOR", "NOTA", "FECHA", "TOTAL"});
 			tbVentas.setModel(dtm);
 			
 			int idusuario = cbUsuarios.getItemAt(cbUsuarios.getSelectedIndex()).getIdusuario();
@@ -622,7 +624,7 @@ public class BuscarVentas extends JInternalFrame {
 							rs.getString("nusuario"), 
 							rs.getString("nota"), 
 							rs.getString("fecha"), 
-							rs.getFloat("descuento"),
+							//rs.getFloat("descuento"),
 							rs.getFloat("totventa")});	
 				}
 				
@@ -665,8 +667,8 @@ public class BuscarVentas extends JInternalFrame {
 		double sumDescuentos = 0;
 		
 		for (int i = 0; i < tbVentas.getRowCount(); i++) {
-			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 6).toString());
-			sumDescuentos = sumDescuentos + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
+			sumTotal = sumTotal + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
+			//sumDescuentos = sumDescuentos + Double.parseDouble(tbVentas.getValueAt(i, 5).toString());
 		}
 		sumTotal = redondearDecimales(sumTotal, 2);
 		sumDescuentos = redondearDecimales(sumDescuentos, 2);

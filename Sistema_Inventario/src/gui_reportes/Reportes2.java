@@ -187,7 +187,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		this.btngenerarReporteVentas.setBackground(new Color(30, 144, 255));
 
 		this.lblVentas = new JLabel("REPORTES");
-		this.lblVentas.setBounds(355, 11, 441, 32);
+		this.lblVentas.setBounds(333, 21, 441, 32);
 		this.panel.add(this.lblVentas);
 		this.lblVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblVentas.setFont(new Font("Candara", Font.BOLD, 30));
@@ -238,13 +238,13 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(textField_1);
 
 		lblReporteDeCompras = new JLabel("REPORTE DE COMPRAS");
-		lblReporteDeCompras.setBounds(619, 161, 271, 32);
+		lblReporteDeCompras.setBounds(573, 161, 271, 32);
 		panel.add(lblReporteDeCompras);
 		lblReporteDeCompras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblReporteDeCompras.setFont(new Font("Candara", Font.BOLD, 20));
 
 		btnCompras = new JButton("Ver reporte");
-		btnCompras.setBounds(767, 191, 251, 32);
+		btnCompras.setBounds(721, 191, 251, 32);
 		panel.add(btnCompras);
 		btnCompras.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnCompras.addActionListener(new ActionListener() {
@@ -258,63 +258,63 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 
 		lblFiltros = new JLabel("LISTADO DE PRODUCTOS");
 		lblFiltros.setBackground(Color.DARK_GRAY);
-		lblFiltros.setBounds(619, 357, 325, 32);
+		lblFiltros.setBounds(573, 357, 325, 32);
 		panel.add(lblFiltros);
 		lblFiltros.setForeground(Color.BLACK);
 		lblFiltros.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.lblCategora = new JLabel("Categor\u00EDa:");
-		lblCategora.setBounds(619, 398, 143, 23);
+		lblCategora.setBounds(573, 398, 143, 23);
 		panel.add(lblCategora);
 		this.lblCategora.setFont(new Font("Candara", Font.BOLD, 20));
 
 		lblMarca = new JLabel("Marca:");
-		lblMarca.setBounds(619, 433, 143, 23);
+		lblMarca.setBounds(573, 433, 143, 23);
 		panel.add(lblMarca);
 		lblMarca.setFont(new Font("Candara", Font.BOLD, 20));
 
 		JLabel lblColor = new JLabel("Color:");
-		lblColor.setBounds(619, 472, 143, 23);
+		lblColor.setBounds(573, 472, 143, 23);
 		panel.add(lblColor);
 		lblColor.setFont(new Font("Candara", Font.BOLD, 20));
 
 		JLabel lblLaboratorio = new JLabel("Laboratorio");
-		lblLaboratorio.setBounds(619, 507, 143, 23);
+		lblLaboratorio.setBounds(573, 507, 143, 23);
 		panel.add(lblLaboratorio);
 		lblLaboratorio.setFont(new Font("Candara", Font.BOLD, 20));
 
 		JLabel lblDistribuidor = new JLabel("Distribuidor:");
-		lblDistribuidor.setBounds(619, 542, 143, 23);
+		lblDistribuidor.setBounds(573, 542, 143, 23);
 		panel.add(lblDistribuidor);
 		lblDistribuidor.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbCategoria = new JComboBox();
-		cbCategoria.setBounds(769, 397, 249, 23);
+		cbCategoria.setBounds(723, 397, 249, 23);
 		panel.add(cbCategoria);
 		this.cbCategoria.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		cbMarca = new JComboBox();
-		cbMarca.setBounds(769, 432, 249, 23);
+		cbMarca.setBounds(723, 432, 249, 23);
 		panel.add(cbMarca);
 		cbMarca.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		cbColor = new JComboBox();
-		cbColor.setBounds(769, 471, 249, 23);
+		cbColor.setBounds(723, 471, 249, 23);
 		panel.add(cbColor);
 		cbColor.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		cbLaboratorio = new JComboBox();
-		cbLaboratorio.setBounds(769, 506, 249, 23);
+		cbLaboratorio.setBounds(723, 506, 249, 23);
 		panel.add(cbLaboratorio);
 		cbLaboratorio.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		cbDistribuidores = new JComboBox();
-		cbDistribuidores.setBounds(769, 541, 249, 23);
+		cbDistribuidores.setBounds(723, 541, 249, 23);
 		panel.add(cbDistribuidores);
 		cbDistribuidores.setFont(new Font("Arial", Font.PLAIN, 16));
 
 		this.btnInventarioCFiltros = new JButton("Ver reporte");
-		btnInventarioCFiltros.setBounds(769, 591, 249, 32);
+		btnInventarioCFiltros.setBounds(723, 591, 249, 32);
 		panel.add(btnInventarioCFiltros);
 		btnInventarioCFiltros.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnInventarioCFiltros.addActionListener(new ActionListener() {
@@ -329,32 +329,32 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		chckSoloStock = new JCheckBox("Ver solo los que tienen stock");
 		chckSoloStock.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		chckSoloStock.setHorizontalAlignment(SwingConstants.RIGHT);
-		chckSoloStock.setBounds(769, 571, 249, 23);
+		chckSoloStock.setBounds(723, 571, 249, 23);
 		panel.add(chckSoloStock);
 		chckSoloStock.setBackground(new Color(143, 188, 143));
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(619, 341, 399, 5);
+		textField_2.setBounds(573, 341, 399, 5);
 		panel.add(textField_2);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBackground(Color.WHITE);
 
 		this.lblRanking = new JLabel("RANKING DE PRODUCTOS");
-		lblRanking.setBounds(621, 243, 231, 25);
+		lblRanking.setBounds(575, 243, 231, 25);
 		panel.add(lblRanking);
 		this.lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 		this.lblRanking.setFont(new Font("Candara", Font.BOLD, 20));
 
 		this.cbxRanking = new JComboBox();
-		cbxRanking.setBounds(619, 263, 401, 28);
+		cbxRanking.setBounds(573, 263, 401, 28);
 		panel.add(cbxRanking);
 		this.cbxRanking.setFont(new Font("Candara", Font.BOLD, 20));
 		this.cbxRanking.setModel(new DefaultComboBoxModel(new String[] { "M\u00E1s vendidos", "Menos vendidos" }));
 		this.cbxRanking.setToolTipText("");
 
 		this.btnVerRanking = new JButton("Ver reporte");
-		btnVerRanking.setBounds(773, 298, 249, 32);
+		btnVerRanking.setBounds(727, 298, 249, 32);
 		panel.add(btnVerRanking);
 		btnVerRanking.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 		btnVerRanking.addActionListener(new ActionListener() {
@@ -374,7 +374,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(Color.DARK_GRAY, 3, true));
-		panel_1.setBounds(342, 70, 441, 49);
+		panel_1.setBounds(320, 80, 441, 49);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -434,7 +434,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										lblNoAfectaLas.setForeground(new Color(220, 20, 60));
 										lblNoAfectaLas.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 13));
 										lblNoAfectaLas.setBackground(Color.DARK_GRAY);
-										lblNoAfectaLas.setBounds(846, 366, 152, 19);
+										lblNoAfectaLas.setBounds(800, 366, 152, 19);
 										panel.add(lblNoAfectaLas);
 										
 										btnIngresos = new JButton("Ingresos");
@@ -451,7 +451,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										lblNewLabel.setBackground(new Color(220, 20, 60));
 										lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 										lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-										lblNewLabel.setBounds(352, 45, 426, 23);
+										lblNewLabel.setBounds(330, 55, 426, 23);
 										panel.add(lblNewLabel);
 										
 										lblProductosPorVencer = new JLabel("PRODUCTOS POR VENCER");
@@ -508,7 +508,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 										textField_4.setEditable(false);
 										textField_4.setColumns(10);
 										textField_4.setBackground(Color.WHITE);
-										textField_4.setBounds(619, 234, 399, 5);
+										textField_4.setBounds(573, 234, 399, 5);
 										panel.add(textField_4);
 
 		((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null); // QUITA LA BARRA DE T�TULO

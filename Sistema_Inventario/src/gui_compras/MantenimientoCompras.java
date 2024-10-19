@@ -96,13 +96,13 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("USUARIOS");
-		setBounds(100, 100, 1134, 679);
+		setBounds(100, 100, 1030, 679);
 		getContentPane().setLayout(null);
 
 		this.scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane.setAutoscrolls(true);
-		this.scrollPane.setBounds(10, 124, 1083, 200);
+		this.scrollPane.setBounds(10, 124, 992, 200);
 		getContentPane().add(this.scrollPane);
 
 		tbCompras = new JTable();
@@ -122,7 +122,7 @@ public class MantenimientoCompras extends JInternalFrame implements ActionListen
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(30, 144, 255), 2, true));
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(10, 390, 1083, 200);
+		scrollPane_1.setBounds(10, 390, 992, 200);
 		getContentPane().add(scrollPane_1);
 
 		tbDetallesCompra = new JTable();
