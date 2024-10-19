@@ -330,14 +330,14 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		btnKardex = new JButton("K");
+		btnKardex = new JButton("AI");
 		btnKardex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnKardex(e);
 			}
 		});
 		btnKardex.setForeground(Color.DARK_GRAY);
-		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnKardex.setBackground(new Color(30, 144, 255));
 		btnKardex.setBounds(179, 280, 51, 50);
 		panel.add(btnKardex);
