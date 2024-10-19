@@ -1,5 +1,6 @@
-/gui_principal/
+/gui_productos/
+/gui_reportes/
+/gui_usuarios/
 /gui_ventas/
-/imgbanner.png
-/imgLogo.png
-/cherry.png
+/mysql/
+/org/

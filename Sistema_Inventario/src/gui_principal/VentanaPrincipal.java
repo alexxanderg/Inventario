@@ -88,6 +88,9 @@ public class VentanaPrincipal extends JFrame {
 	public Configuraciones config = null;
 	public notificaciones notifica = null;
 
+	
+	
+	
 	ResultSet rs;
 	consultas consulta = new consultas();
 	
