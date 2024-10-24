@@ -1136,9 +1136,12 @@ public class Ventas2 extends JInternalFrame
 			}
 			if (flag == 0) { // AQU� ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
 				try {
-					// rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
+					 rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
 					// "SubTotal",
 					// "Desc","IDPROD", "PC", "Stock", "PVI Original"});
+					
+					JOptionPane.showMessageDialog(null, "ingresó - " + cbTienda.getSelectedIndex());
+					
 					if (rs.next()) {
 						if(cbTienda.getSelectedIndex()==0)						
 							dtm.addRow(new Object[] { "1",
@@ -1160,7 +1163,7 @@ public class Ventas2 extends JInternalFrame
 											+ "  " + rs.getString("laboratorio"),
 									rs.getString("detalles"), rs.getString("unimedida"), rs.getFloat("precioVe"),
 									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
-									rs.getFloat("stock3"), rs.getFloat("precioVe") });
+					 				rs.getFloat("stock3"), rs.getFloat("precioVe") });
 						if(cbTienda.getSelectedIndex()==3)						
 							dtm.addRow(new Object[] { "1",
 									rs.getString("producto") + "  " + rs.getString("marca") + "  " + rs.getString("color")
@@ -1169,9 +1172,12 @@ public class Ventas2 extends JInternalFrame
 									rs.getFloat("precioVe"), "0", rs.getInt("codproducto"), rs.getFloat("precioCo"),
 									rs.getFloat("stock4"), rs.getFloat("precioVe") });
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
+						
+						JOptionPane.showMessageDialog(null, "fin");
+						
 					}
 				} catch (Exception e) {
-					// JOptionPane.showMessageDialog(null, "No existe el producto*probando*: " + e);
+					JOptionPane.showMessageDialog(null, "No existe el producto*probando*: " + e);
 				}
 			}
 

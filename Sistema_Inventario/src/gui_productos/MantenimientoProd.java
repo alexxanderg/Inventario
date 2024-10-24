@@ -136,7 +136,7 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		tbProductos = new JTable();
 		tbProductos.setAutoCreateRowSorter(true);
 		tbProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbProductos.setFont(new Font("Arial", Font.ITALIC, 14));
+		tbProductos.setFont(new Font("Arial", Font.ITALIC, 12));
 		tbProductos.setBackground(Color.WHITE);
 		tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		scrollPane.setViewportView(tbProductos);
@@ -472,7 +472,7 @@ public class MantenimientoProd extends JInternalFrame implements MouseListener {
 		TableColumnModel tcm = tbProductos.getColumnModel(); // 
 		tcm.getColumn(0).setPreferredWidth(anchoColumna(2)); // ID
 		tcm.getColumn(1).setPreferredWidth(anchoColumna(5)); // C�digo
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(15)); // Producto
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(30)); // Producto
 		tcm.getColumn(3).setPreferredWidth(anchoColumna(10)); // Detalle
 		
 		for(int i=0; i<tbProductos.getColumnCount(); i++)

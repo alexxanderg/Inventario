@@ -64,10 +64,6 @@
 /rProductoMenosVendidos.jasper
 /rProductoSalida.jasper
 /rVentaDetalle.jasper
-/rVentasDetalladasConFiltros.jasper
-/rVentasDetalladasTodos.jasper
-/rVentasDetalladasVendedor.jasper
-/rVentasDetalladasXCliente.jasper
 /clases/
 /gui_clientes/
 /gui_compras/
@@ -81,6 +77,10 @@
 /gui_ventas/
 /mysql/
 /org/
+/rVentasDetalladasConFiltros.jasper
+/rVentasDetalladasTodos.jasper
+/rVentasDetalladasVendedor.jasper
+/rVentasDetalladasXCliente.jasper
 /rVentasPagos.jasper
 /rVentasTodoUsuario.jasper
 /wa.png

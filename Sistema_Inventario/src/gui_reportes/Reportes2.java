@@ -58,8 +58,10 @@ import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-public class Reportes2 extends JInternalFrame implements ActionListener {
+public class Reportes2 extends JInternalFrame implements ActionListener, KeyListener {
 	private JComboBox<Usuarios> cbUsuarios;
 	private JComboBox cbMetodoPago;
 	private JLabel label_1;
@@ -225,6 +227,7 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		panel.add(btnSalidas);
 
 		txtProductos = new JTextField();
+		txtProductos.addKeyListener(this);
 		txtProductos.setHorizontalAlignment(SwingConstants.LEFT);
 		txtProductos.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtProductos.setColumns(10);
@@ -1195,6 +1198,21 @@ public class Reportes2 extends JInternalFrame implements ActionListener {
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(null, "Error al cargar reporte");
 		}
+	}
+	public void keyPressed(KeyEvent e) {
+	}
+	public void keyReleased(KeyEvent e) {
+	}
+	public void keyTyped(KeyEvent e) {
+		if (e.getSource() == txtProductos) {
+			keyTypedTxtProductos(e);
+		}
+	}
+	protected void keyTypedTxtProductos(KeyEvent e) {
+		char c = e.getKeyChar();
+
+		if (c == (char) KeyEvent.VK_ENTER)
+			actionPerformedBtnK(null);
 	}
 }
 
