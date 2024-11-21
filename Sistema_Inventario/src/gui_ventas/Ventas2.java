@@ -1064,7 +1064,7 @@ public class Ventas2 extends JInternalFrame
 			if (flag == 0) { // AQU� ENTRA SI EL
 								// PRODUCTO AGREGADO ES NUEVO
 				try {
-					// rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
+					rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
 					// "SubTotal",
 					// "Desc","IDPROD", "PC", "Stock", "PVI Original"});
 					if (rs.next()) {
