@@ -767,7 +767,7 @@ public class NuevoProducto extends JFrame {
 		btnCrearProducto.setBounds(797, 537, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
-		lblNota = new JLabel("<html>-  No utilice paréntesis \"( )\" en los datos del producto.<br>- Los * son campos obligatorios.<br>- Si no desea añadir promociones, deje los campos con \" 0 \"</html>");
+		lblNota = new JLabel("<html>-  No utilice paréntesis \"( )\" en los datos del producto.<br>- Los * son campos obligatorios.</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
@@ -1635,7 +1635,7 @@ public class NuevoProducto extends JFrame {
 						
 						double stockTotal = stockini+stock2+stock3+stock4;
 						
-						consulta.registrarMovimiento(fechaActual, idsiguiente, 0, "Creación", "-", "1", stockTotal, 0, stockini,stock2,stock3,stock4);
+						consulta.registrarMovimiento(fechaActual, idsiguiente, 0, "Creación", "-", "1,2,3,4", stockTotal, 0, stockini,stock2,stock3,stock4);
 						
 						if (nc != null) {
 							String prod = nombreprod + " " +  descripcion + " " + marca + " " + color + " * " +  umedida + " - " + almacen + " - (" + idsiguiente + ")"; 

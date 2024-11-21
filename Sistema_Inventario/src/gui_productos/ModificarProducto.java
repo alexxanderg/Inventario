@@ -346,6 +346,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(dateFechaVenc);
 		
 		lblCantidadActual = new JLabel("Stock tienda 1:");
+		lblCantidadActual.setVisible(false);
 		lblCantidadActual.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadActual.setForeground(new Color(220, 20, 60));
 		lblCantidadActual.setFont(new Font("Candara", Font.BOLD, 20));
@@ -353,6 +354,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblCantidadActual);
 		
 		txtStockInicial = new JTextField();
+		txtStockInicial.setVisible(false);
 		txtStockInicial.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -775,7 +777,7 @@ public class ModificarProducto extends JFrame {
 		btnCrearProducto.setBounds(797, 533, 240, 61);
 		contentPane.add(btnCrearProducto);
 		
-		lblNota = new JLabel("<html>-  No utilice el signo par\u00E9ntesis \"( )\" en los datos del producto a registrarse. <br>- Los * son campos obligatorios.<br>- Si no desea a\u00F1adir promociones, deje los campos con \" 0 \"</html>");
+		lblNota = new JLabel("<html>-  No utilice el signo paréntesis \"( )\" en los datos del producto a registrarse. <br>- Los * son campos obligatorios.</html>");
 		lblNota.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNota.setForeground(new Color(220, 20, 60));
 		lblNota.setFont(new Font("Tahoma", Font.ITALIC, 13));
@@ -827,6 +829,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(label_3);
 		
 		label_4 = new JLabel("*");
+		label_4.setVisible(false);
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -1036,6 +1039,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(label);
 		
 		lblStockMximo_1 = new JLabel("Stock tienda 2:");
+		lblStockMximo_1.setVisible(false);
 		lblStockMximo_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStockMximo_1.setForeground(new Color(220, 20, 60));
 		lblStockMximo_1.setFont(new Font("Candara", Font.BOLD, 20));
@@ -1043,6 +1047,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblStockMximo_1);
 		
 		lblStockTienda = new JLabel("Stock tienda 3:");
+		lblStockTienda.setVisible(false);
 		lblStockTienda.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStockTienda.setForeground(new Color(220, 20, 60));
 		lblStockTienda.setFont(new Font("Candara", Font.BOLD, 20));
@@ -1050,6 +1055,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(lblStockTienda);
 		
 		txtStock2 = new JTextField();
+		txtStock2.setVisible(false);
 		txtStock2.setText("0");
 		txtStock2.setHorizontalAlignment(SwingConstants.LEFT);
 		txtStock2.setForeground(new Color(220, 20, 60));
@@ -1061,6 +1067,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtStock2);
 		
 		txtStock3 = new JTextField();
+		txtStock3.setVisible(false);
 		txtStock3.setText("0");
 		txtStock3.setHorizontalAlignment(SwingConstants.LEFT);
 		txtStock3.setForeground(new Color(220, 20, 60));
@@ -1072,6 +1079,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtStock3);
 		
 		txtStock4 = new JTextField();
+		txtStock4.setVisible(false);
 		txtStock4.setText("0");
 		txtStock4.setHorizontalAlignment(SwingConstants.LEFT);
 		txtStock4.setForeground(new Color(220, 20, 60));
@@ -1083,6 +1091,7 @@ public class ModificarProducto extends JFrame {
 		contentPane.add(txtStock4);
 		
 		lblStockTienda_1 = new JLabel("Stock tienda 4:");
+		lblStockTienda_1.setVisible(false);
 		lblStockTienda_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStockTienda_1.setForeground(new Color(220, 20, 60));
 		lblStockTienda_1.setFont(new Font("Candara", Font.BOLD, 20));

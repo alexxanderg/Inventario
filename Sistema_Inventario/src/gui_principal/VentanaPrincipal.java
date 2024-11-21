@@ -13,6 +13,7 @@ import gui_distribuidores.MantenimientoDistribuidores;
 import gui_notificaciones.notificaciones;
 import gui_productos.Kardex;
 import gui_productos.MantenimientoProd;
+import gui_productos.Movimientos;
 import gui_reportes.Reportes2;
 import gui_usuarios.MantenimientoUsuarios;
 import gui_ventas.BuscarVentas;
@@ -81,6 +82,7 @@ public class VentanaPrincipal extends JFrame {
 	public MantenimientoCompras vCompras = null;
 	public MantenimientoProd vProductos = null;
 	public Kardex vKardex = null;
+	public Movimientos vMovimientos = null;
 	public MantenimientoDistribuidores vdistribuidores = null;
 	public MantenimientoUsuarios vUsuarios = null;
 	public MantenimientoClientes vCliente = null;
@@ -149,7 +151,7 @@ public class VentanaPrincipal extends JFrame {
 		btnVentas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnVentas.setForeground(Color.BLACK);
 		btnVentas.setBackground(colorDeselec);
-		btnVentas.setBounds(0, 219, 177, 50);
+		btnVentas.setBounds(0, 219, 153, 50);
 		btnVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				actionPerformedBtnVentas(arg0);
@@ -158,15 +160,15 @@ public class VentanaPrincipal extends JFrame {
 		panel.setLayout(null);
 		panel.add(btnVentas);
 		
-		btnInventario = new JButton("Inventario ");
+		btnInventario = new JButton("<html><center>Inventario</center></html>");
 		btnInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnInventario.setHorizontalAlignment(SwingConstants.LEFT);
 		Image imgInventario = new ImageIcon(this.getClass().getResource("/imgMenuinventario.png")).getImage().getScaledInstance(anchoImgBtn, altoImgBtn, Image.SCALE_AREA_AVERAGING);
 		btnInventario.setIcon(new ImageIcon(imgInventario));
-		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnInventario.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnInventario.setForeground(Color.BLACK);
 		btnInventario.setBackground(colorDeselec);
-		btnInventario.setBounds(0, 280, 177, 50);
+		btnInventario.setBounds(0, 280, 153, 50);
 		panel.add(btnInventario);
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -310,7 +312,7 @@ public class VentanaPrincipal extends JFrame {
 		btnBuscarVentas.setForeground(Color.BLACK);
 		btnBuscarVentas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBuscarVentas.setBackground(colorDeselec);
-		btnBuscarVentas.setBounds(179, 219, 51, 50);
+		btnBuscarVentas.setBounds(156, 219, 74, 50);
 		panel.add(btnBuscarVentas);
 		
 		lblCerrarSesion = new JLabel("salir");
@@ -327,16 +329,16 @@ public class VentanaPrincipal extends JFrame {
 		lblCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		btnKardex = new JButton("AI");
+		btnKardex = new JButton("<html><center>MOVIMI<br>ENTOS</center></html>");
 		btnKardex.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionPerformedBtnKardex(e);
 			}
 		});
 		btnKardex.setForeground(Color.DARK_GRAY);
-		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnKardex.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnKardex.setBackground(new Color(89, 220, 109));
-		btnKardex.setBounds(179, 280, 51, 50);
+		btnKardex.setBounds(156, 280, 74, 50);
 		panel.add(btnKardex);
 
 		desktopPane = new JDesktopPane();
@@ -609,15 +611,23 @@ public class VentanaPrincipal extends JFrame {
 	
 	protected void actionPerformedBtnKardex(ActionEvent arg0) {
 		try {
-			cerrarVentanas();
+			/*cerrarVentanas();
 			vKardex = new Kardex(this);
 			desktopPane.add(vKardex);
 			vKardex.show();
 			vKardex.setMaximum(true);
 			pintarBotones();
+			btnKardex.setBackground(colorSelec);*/
+			
+			cerrarVentanas();
+			vMovimientos = new Movimientos(this);
+			desktopPane.add(vMovimientos);
+			vMovimientos.show();
+			vMovimientos.setMaximum(true);
+			pintarBotones();
 			btnKardex.setBackground(colorSelec);
 		} catch (PropertyVetoException e) {
-			JOptionPane.showMessageDialog(null, "Error al crear ventana Inventario: " + e);
+			JOptionPane.showMessageDialog(null, "Error al crear ventana Movimientos: " + e);
 		}	
 	}
 	

@@ -1136,11 +1136,11 @@ public class Ventas2 extends JInternalFrame
 			}
 			if (flag == 0) { // AQU� ENTRA SI EL PRODUCTO AGREGADO ES NUEVO
 				try {
-					 rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
+					//rs.beforeFirst(); // "Cant.", "Producto", "Detalles", "U.Med", "Precio",
 					// "SubTotal",
 					// "Desc","IDPROD", "PC", "Stock", "PVI Original"});
 					
-					JOptionPane.showMessageDialog(null, "ingresó - " + cbTienda.getSelectedIndex());
+					//JOptionPane.showMessageDialog(null, "ingresó - " + cbTienda.getSelectedIndex());
 					
 					if (rs.next()) {
 						if(cbTienda.getSelectedIndex()==0)						
@@ -1173,11 +1173,11 @@ public class Ventas2 extends JInternalFrame
 									rs.getFloat("stock4"), rs.getFloat("precioVe") });
 						tbCarrito.setRowSelectionInterval(tbCarrito.getRowCount() - 1, tbCarrito.getRowCount() - 1);
 						
-						JOptionPane.showMessageDialog(null, "fin");
+						//JOptionPane.showMessageDialog(null, "fin");
 						
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "No existe el producto*probando*: " + e);
+					JOptionPane.showMessageDialog(null, "No existe el producto: " + e);
 				}
 			}
 
