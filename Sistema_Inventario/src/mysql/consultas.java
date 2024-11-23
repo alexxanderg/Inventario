@@ -1757,4 +1757,17 @@ public class consultas {
 		    }
 		    return this.rs;
 		  }
+	 public ResultSet cargarMovimientos() {
+			try {
+				st = con.createStatement();
+				rs = st.executeQuery("\r\n"
+						+ "select m.idmovimiento, m.fecha, p.producto, m.tipo, m.documento, m.cliprov, m.tienda, m.tienda, m.ingreso, m.salida, m.stock1, m.stock2, m.stock3, m.stock4\r\n"
+						+ "from tb_movimientos m\r\n"
+						+ "inner join tb_productos p\r\n"
+						+ "where m.codproducto = p.codproducto;");
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Error: " + e);
+			}
+			return rs;
+		}
 }

@@ -1,6 +1,9 @@
 package gui_productos;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
+
+import clases.PintarTablaVentasBuscar;
+import clases.Usuarios;
 import gui_principal.VentanaPrincipal;
 import java.awt.Color;
 import java.awt.Component;
@@ -56,6 +59,7 @@ public class Movimientos extends JInternalFrame {
 	String usuario;
 	public VentanaPrincipal vp;
 	private JLabel lblKardex;
+	private JLabel lblNewLabel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -87,7 +91,7 @@ public class Movimientos extends JInternalFrame {
 		this.tbProductos = new JTable();
 		this.tbProductos.setAutoCreateRowSorter(true);
 		this.tbProductos.setSelectionMode(0);
-		this.tbProductos.setFont(new Font("Arial", 2, 14));
+		this.tbProductos.setFont(new Font("Arial", 2, 12));
 		this.tbProductos.setBackground(Color.WHITE);
 		this.tbProductos.setBorder(new LineBorder(new Color(30, 144, 255), 1, true));
 		this.scrollPane.setViewportView(this.tbProductos);
@@ -96,8 +100,14 @@ public class Movimientos extends JInternalFrame {
 		lblKardex.setHorizontalAlignment(SwingConstants.CENTER);
 		this.lblKardex.setForeground(Color.BLACK);
 		this.lblKardex.setFont(new Font("Candara", 1, 30));
-		this.lblKardex.setBounds(10, 11, 1083, 52);
+		this.lblKardex.setBounds(265, 14, 456, 52);
 		getContentPane().add(this.lblKardex);
+		
+		lblNewLabel = new JLabel("<html>Nota: Solo se solo puede eliminar tranferencias.<br>\r\nLas compras y ventas debe realizarlo desde sus ventanas específicas.</html>");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel.setForeground(new Color(219, 112, 147));
+		lblNewLabel.setBounds(752, 14, 341, 66);
+		getContentPane().add(lblNewLabel);
 
 		this.tbProductos.getTableHeader().setReorderingAllowed(false);
 
@@ -112,13 +122,15 @@ public class Movimientos extends JInternalFrame {
 				Movimientos.this.mouseClickedMnaadirStock(e);
 			}
 		});
-		mnaadirStock.setForeground(new Color(50, 205, 50));
+		mnaadirStock.setForeground(new Color(220, 20, 60));
 		mnaadirStock.setFont(new Font("Tahoma", 1, 20));
 		mnaadirStock.setBackground(SystemColor.menu);
 		this.menuBar.add(mnaadirStock);
 
 		((BasicInternalFrameUI) getUI()).setNorthPane(null);
 		
+		cargar();
+		cargarDatos();
 	}
 
 	public void cargar() {
@@ -126,105 +138,57 @@ public class Movimientos extends JInternalFrame {
 		this.tb.setRowHeight(40);
 		this.tb.setModel(this.dtm);
 
-		cargarTabla("todos");
-	}
-
-	public void cargarTabla(String prod) {
-		limpiarTabla();
-
-		String atribTodos = "";
-		try {
-			this.consulta.iniciar();
-			this.rs = this.consulta.cargarConfiguraciones();
-			this.rs.next();
-			atribTodos = this.rs.getString("atributosprod");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al cargar atributos: " + e);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
-
-		List list = new ArrayList();
-		list.add("ID");
-		list.add("PRODUCTO");
-		String[] parts = atribTodos.split(",");
-		list.add("UNI MED");
-		list.add("STOCK");
-		list.add("CONTEO");
-		list.add("DIFERENCIA EN S/");
-		String[] columnas = (String[]) list.toArray(new String[list.size()]);
-
-		this.dtm.setColumnIdentifiers(columnas);
-		try {
-			this.consulta.iniciar();
-			if (prod.equals("todos"))
-				this.rs = this.consulta.cargarProductos();
-			else {
-				this.rs = this.consulta.cargarProductoParticular(prod);
-			}
-
-			while (this.rs.next()) {
-				if (this.rs.getInt("estado") == 1) {
-					List listProds = new ArrayList();
-					listProds.add(this.rs.getString("codproducto"));
-					listProds.add(this.rs.getString("producto") + " " + this.rs.getString("detalles") + " "
-							+ this.rs.getString("marca") + " " + this.rs.getString("color") + " "
-							+ this.rs.getString("laboratorio"));
-					listProds.add(this.rs.getString("unimedida"));
-					listProds.add(this.rs.getString("cantidad"));
-
-					String[] columnasProds = (String[]) listProds.toArray(new String[list.size()]);
-					this.dtm.addRow(columnasProds);
-				}
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "ERROR AL CARGAR DATOS2: " + e);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.consulta != null)
-					this.consulta.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
-
+		dtm.setColumnIdentifiers(new Object[]{"ID", "FECHA", "PRODUCTO", "REFEENCIA", "INGRESO", "SALIDA", "TIENDA", "T1","T2","T3","T4"});
+		tbProductos.setRowHeight(30);
+		tbProductos.setModel(dtm);
+		
+		
+		
+		/*java.util.Date date = new Date();
+		date.getTime();
+		dchDesde.setDate(date);
+		dchHasta.setDate(date);*/
+		
 		ajustarAnchoColumnas();
 		
-
-		bloquearCeldas();
 	}
+	
+	public void cargarDatos() {
 
-	public void bloquearCeldas() {
-		dtm.isCellEditable(tbProductos.getSelectedRow(), 0);
-		dtm.isCellEditable(tbProductos.getSelectedRow(), 1);
-		dtm.isCellEditable(tbProductos.getSelectedRow(), 2);
-		dtm.isCellEditable(tbProductos.getSelectedRow(), 3);
-		dtm.isCellEditable(tbProductos.getSelectedRow(), 5);
+		try {
+			consulta.iniciar();
+			rs = consulta.cargarMovimientos();
+			
+			tbProductos.setModel(dtm);
+			while(rs.next()){
+				dtm.addRow(new Object[]{
+						rs.getInt("idmovimiento"), 
+						rs.getDate("fecha"), 
+						rs.getString("producto"), 
+						rs.getString("documento"), 
+						rs.getString("ingreso"),
+						rs.getString("salida"),
+						rs.getString("tienda"),
+						rs.getFloat("stock1"),
+						rs.getFloat("stock2"),
+						rs.getFloat("stock3"),
+						rs.getFloat("stock4")});	
+			}
+			
+			//this.tbProductos.setDefaultRenderer(Object.class, new PintarTablaVentasBuscar());
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR al cargar movimientos: " + e.getMessage());
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (consulta != null)
+					consulta.reset();
+            } catch (Exception ex) {
+            	JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
+            }
+		}
 	}
 
 	public class Modelaso extends DefaultTableModel {
@@ -282,14 +246,21 @@ public class Movimientos extends JInternalFrame {
 		return porcentaje * this.scrollPane.getWidth() / 100;
 	}
 
+	//"ID", "FECHA", "PRODUCTO", "REFEENCIA", "INGRESO", "SALIDA", "TIENDA", "T1","T2","T3","T4"
+
 	public void ajustarAnchoColumnas() {
 		TableColumnModel tcm = this.tbProductos.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(anchoColumna(1));
-		tcm.getColumn(1).setPreferredWidth(anchoColumna(47));
-		tcm.getColumn(2).setPreferredWidth(anchoColumna(15));
-		tcm.getColumn(3).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(4).setPreferredWidth(anchoColumna(8));
-		tcm.getColumn(5).setPreferredWidth(anchoColumna(15));
+		tcm.getColumn(0).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(1).setPreferredWidth(anchoColumna(10));
+		tcm.getColumn(2).setPreferredWidth(anchoColumna(35));
+		tcm.getColumn(3).setPreferredWidth(anchoColumna(15));
+		tcm.getColumn(4).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(5).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(6).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(7).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(8).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(9).setPreferredWidth(anchoColumna(5));
+		tcm.getColumn(10).setPreferredWidth(anchoColumna(5));
 
 		for (int i = 0; i < this.tbProductos.getColumnCount(); i++)
 			if (this.tbProductos.getColumnName(i).equals("FECHA VENC."))
@@ -320,82 +291,8 @@ public class Movimientos extends JInternalFrame {
 
 	protected void mouseClickedMnaadirStock(MouseEvent arg0) {
 
-		JOptionPane.showMessageDialog(null, "Guardando, espere un momento...");
 		
-		String nota = "";
-
-		Date date = new Date();
-		Object date2 = new Timestamp(date.getTime());
-
-		this.model.iniciar();
-		this.model.registrarKardex(date2, nota);
-
-		this.rs = this.model.ObtenerUltimoNroKardex();
-		int idkardex = 0;
-		try {
-			this.rs.next();
-			idkardex = this.rs.getInt("idkardex");
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "ERROR al obtener ultimo kardex: " + ex);
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.model != null)
-					this.model.reset();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		} finally {
-			try {
-				if (this.rs != null)
-					this.rs.close();
-				if (this.model != null)
-					this.model.reset();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-			}
-		}
-		DefaultTableModel tm = (DefaultTableModel) this.tbProductos.getModel();
-		try {
-			int cantProductos = this.tbProductos.getRowCount();
-			for (int i = 0; i < cantProductos; i++) {
-				String idProducto = String.valueOf(tm.getValueAt(i, 0));
-				for (int j = 0; j < this.tbProductos.getColumnCount(); j++) {
-					if (this.tbProductos.getColumnName(j).equals("CONTEO")) {
-						float conteo = Float.parseFloat(String.valueOf(tm.getValueAt(i, j)));
-
-						this.model.iniciar();
-						try {
-							this.model.registrarDetallesKardex(idkardex, idProducto, conteo);
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(null, "error al guardar detalles de kardes " + e);
-							try {
-								if (this.rs != null)
-									this.rs.close();
-								if (this.model != null)
-									this.model.reset();
-							} catch (Exception ex) {
-								JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-							}
-						} finally {
-							try {
-								if (this.rs != null)
-									this.rs.close();
-								if (this.model != null)
-									this.model.reset();
-							} catch (Exception ex) {
-								JOptionPane.showMessageDialog(null, "Error al cerrar consulta");
-							}
-						}
-					}
-				}
-			}
-
-			dispose();
-			JOptionPane.showMessageDialog(null, "CONTEO SALVADO CORRECTAMENTE");
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Error al guardar: " + ex.getMessage());
-		}
+		
 	}
 
 	public double redondearDecimales(double valorInicial, int numeroDecimales) {

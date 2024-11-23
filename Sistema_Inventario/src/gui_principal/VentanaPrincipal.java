@@ -414,7 +414,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void cargar(){
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
 		
 		verificarNotificaciones();
